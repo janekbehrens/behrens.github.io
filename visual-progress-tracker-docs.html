@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — Visual Progress Tracker for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #6B778C; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #FF991F; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
+    .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
+    .toc h3 { margin-top: 0; color: #172B4D; font-size: 1rem; margin-bottom: 12px; }
+    .toc ol { margin-bottom: 0; }
+    .toc li { margin-bottom: 4px; }
+    .badge { display: inline-block; background: #00875A; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+    .badge.free { background: #00875A; }
+    .badge.paid { background: #0052CC; }
+    .feature-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .feature-table th { background: #F4F5F7; text-align: left; padding: 10px 14px; border: 1px solid #DFE1E6; font-weight: 600; }
+    .feature-table td { padding: 10px 14px; border: 1px solid #DFE1E6; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Documentation</h1>
+    <p class="subtitle">Visual Progress Tracker for Jira — Complete Setup Guide</p>
+
+    <!-- Video -->
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/lxaBMYre-cU" title="Visual Progress Tracker for Jira — Quick Start" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#add-fields">Adding Progress Bar Fields</a></li>
+        <li><a href="#manual">Field Type 1: Manual Progress Bar</a></li>
+        <li><a href="#status">Field Type 2: Status-Based Progress</a></li>
+        <li><a href="#subtask">Field Type 3: Subtask Progress</a></li>
+        <li><a href="#listview">Viewing Progress in List View</a></li>
+        <li><a href="#admin">Admin Settings</a></li>
+        <li><a href="#dashboard">Dashboard Gadget</a></li>
+        <li><a href="#editions">Free vs. Advanced Edition</a></li>
+        <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      Visual Progress Tracker adds <strong>color-coded progress bars</strong> directly to your Jira issues.
+      Choose from three field types to match how your team tracks work:
+    </p>
+    <ul>
+      <li><strong>Manual Progress Bar</strong> — Drag a slider to set any percentage (0–100%).</li>
+      <li><strong>Status-Based Progress</strong> — Automatically maps workflow statuses to percentages.</li>
+      <li><strong>Subtask Progress</strong> — Automatically calculates completion from resolved subtasks.</li>
+    </ul>
+    <p>
+      All three types display a colored bar that shifts from <span style="color:#DE350B;">red</span>
+      to <span style="color:#FF991F;">yellow</span> to <span style="color:#00875A;">green</span>
+      as progress increases — giving your team instant, at-a-glance visibility.
+    </p>
+    <img src="img/ticket.png" alt="Jira issue view showing all three progress bar field types with color-coded bars">
+
+    <!-- 2. Installation -->
+    <h2 id="install">2. Installation</h2>
+    <div class="step-box">
+      <h3>Step 1 — Install from Marketplace</h3>
+      <ol>
+        <li>Go to the <a href="https://marketplace.atlassian.com/" target="_blank" rel="noopener">Atlassian Marketplace</a> and search for <strong>Visual Progress Tracker</strong>.</li>
+        <li>Click <strong>Get it now</strong> (or <strong>Try it free</strong> for the Advanced edition).</li>
+        <li>Select your Jira Cloud site and confirm the installation.</li>
+      </ol>
+    </div>
+    <div class="step-box">
+      <h3>Step 2 — Verify Installation</h3>
+      <ol>
+        <li>In Jira, click <strong>Apps</strong> in the top navigation bar.</li>
+        <li>You should see <strong>Visual Progress Tracker</strong> in the dropdown. Click it to open the Admin Settings page.</li>
+      </ol>
+    </div>
+    <div class="tip">
+      <strong>Tip:</strong> You only need to add the specific field types your team needs. You can use one, two, or all three — the app works with any combination.
+    </div>
+
+    <!-- 3. Adding Fields -->
+    <h2 id="add-fields">3. Adding Progress Bar Fields</h2>
+    <p>After installation, you need to add the progress bar fields to your Jira projects.</p>
+    <div class="step-box">
+      <h3>How to Add a Custom Field</h3>
+      <ol>
+        <li>Go to <strong>Jira Settings</strong> (gear icon) → <strong>Issues</strong> → <strong>Custom fields</strong>.</li>
+        <li>Click <strong>Create custom field</strong>.</li>
+        <li>In the search box, type <code>Progress Bar</code>. You will see the three available types:
+          <ul>
+            <li><strong>Progress Bar (Manual)</strong></li>
+            <li><strong>Progress Bar (Status)</strong></li>
+            <li><strong>Progress Bar (Subtasks)</strong></li>
+          </ul>
+        </li>
+        <li>Select the field type you want, give it a name (e.g., "Progress"), and click <strong>Create</strong>.</li>
+        <li>Choose which screens the field should appear on (recommended: all screens).</li>
+      </ol>
+    </div>
+    <div class="tip">
+      <strong>Tip:</strong> You can name the fields anything you like — for example "Sprint Progress", "Completion", or "Task Status". The app detects fields by their type, not by name.
+    </div>
+
+    <!-- 4. Manual -->
+    <h2 id="manual">4. Field Type 1: Manual Progress Bar</h2>
+    <p>
+      The <strong>Manual Progress Bar</strong> lets users set the progress percentage by hand.
+      This is ideal for tasks where completion is subjective or estimated.
+    </p>
+    <h3>How it Works</h3>
+    <ol>
+      <li>Open any Jira issue that has the manual progress bar field.</li>
+      <li>You will see a colored progress bar with a <strong>drag slider</strong>.</li>
+      <li>Drag the slider left or right to set the percentage (0–100%).</li>
+      <li>The value saves automatically.</li>
+    </ol>
+    <h3>Use Cases</h3>
+    <ul>
+      <li>Design work, content creation, or other tasks with subjective milestones.</li>
+      <li>Teams that want simple, quick progress tracking without automation.</li>
+      <li>Combining with other estimation methods (story points, hours).</li>
+    </ul>
+    <div class="tip">
+      <strong>Tip:</strong> The manual field also appears during issue creation and transition screens, so team members can update progress as part of their normal workflow.
+    </div>
+
+    <!-- 5. Status -->
+    <h2 id="status">5. Field Type 2: Status-Based Progress</h2>
+    <p>
+      The <strong>Status Progress Bar</strong> automatically calculates a percentage based on the issue's
+      current workflow status. You configure which status maps to which percentage.
+    </p>
+    <h3>How it Works</h3>
+    <ol>
+      <li>Open the Admin Settings page (<strong>Apps → Visual Progress Tracker</strong>).</li>
+      <li>In the <strong>Status Mapping</strong> section, you'll see your workflow statuses listed.</li>
+      <li>Assign a percentage to each status (e.g., "To Do" = 0%, "In Progress" = 50%, "Done" = 100%).</li>
+      <li>Click <strong>Save</strong>.</li>
+      <li>Now every issue with the Status progress bar field will automatically show the mapped percentage.</li>
+    </ol>
+    <img src="img/admin-progress.png" alt="Admin page showing status-to-progress mapping configuration">
+    <h3>Use Cases</h3>
+    <ul>
+      <li>Teams with well-defined workflows where status = progress.</li>
+      <li>Sprint tracking — instantly see where every issue stands.</li>
+      <li>Reporting dashboards that need automated, consistent data.</li>
+    </ul>
+    <div class="warning">
+      <strong>Note:</strong> If an issue's status is not mapped in the admin settings, the bar will show 0%. Make sure to map all your workflow statuses.
+    </div>
+
+    <!-- 6. Subtask -->
+    <h2 id="subtask">6. Field Type 3: Subtask Progress</h2>
+    <p>
+      The <strong>Subtask Progress Bar</strong> automatically calculates the percentage of resolved
+      child issues (subtasks). No configuration needed — it works out of the box.
+    </p>
+    <h3>How it Works</h3>
+    <ol>
+      <li>Add the Subtask progress bar field to a parent issue that has subtasks.</li>
+      <li>The bar automatically shows: <code>(resolved subtasks / total subtasks) × 100%</code>.</li>
+      <li>When subtasks are completed (resolved), the bar updates automatically via a trigger.</li>
+    </ol>
+    <h3>Example</h3>
+    <p>
+      A story has 4 subtasks. 2 are resolved, 2 are open → the bar shows <strong>50%</strong> in yellow.
+      When all 4 are done → <strong>100%</strong> in green.
+    </p>
+    <h3>Use Cases</h3>
+    <ul>
+      <li>Epic or story tracking with subtask breakdowns.</li>
+      <li>QA checklists — split testing tasks into subtasks and watch progress fill up.</li>
+      <li>Onboarding or setup tasks with multiple steps.</li>
+    </ul>
+
+    <!-- 7. List View -->
+    <h2 id="listview">7. Viewing Progress in List View</h2>
+    <p>
+      All three field types are visible as <strong>columns in Jira list view</strong>, giving you a
+      project-wide overview of progress across all issues.
+    </p>
+    <img src="img/listview.png" alt="Jira list view with progress bar columns showing red, yellow, and green bars">
+    <div class="step-box">
+      <h3>How to Add the Column</h3>
+      <ol>
+        <li>Open a project's <strong>List View</strong> (or Backlog).</li>
+        <li>Click the <strong>Columns</strong> icon (or right-click a column header).</li>
+        <li>Search for the name of your progress bar field.</li>
+        <li>Check the box to add it as a visible column.</li>
+      </ol>
+    </div>
+    <div class="tip">
+      <strong>Tip:</strong> Progress bars are fully color-coded in list view too. Scan your project for red bars to quickly identify items that need attention.
+    </div>
+
+    <!-- 8. Admin -->
+    <h2 id="admin">8. Admin Settings</h2>
+    <p>
+      Access the settings page from <strong>Apps → Visual Progress Tracker</strong> in the top navigation bar.
+    </p>
+    <img src="img/admin-colors.png" alt="Admin page showing color threshold settings with red, yellow, and green zones">
+    <h3>Color Thresholds</h3>
+    <p>
+      Customize when progress bars switch colors. Default values:
+    </p>
+    <ul>
+      <li><span style="color:#DE350B;"><strong>Red</strong></span> — 0% to 33%</li>
+      <li><span style="color:#FF991F;"><strong>Yellow</strong></span> — 34% to 66%</li>
+      <li><span style="color:#00875A;"><strong>Green</strong></span> — 67% to 100%</li>
+    </ul>
+    <p>
+      Adjust these thresholds to match your team's expectations. For example, set the green threshold to 80% if you only want bars to turn green near completion.
+    </p>
+    <h3>Status Mapping</h3>
+    <p>
+      Map each Jira workflow status to a percentage. This drives the Status-Based Progress field.
+      Click <strong>Save</strong> after making changes.
+    </p>
+    <h3>Field Sync (Recalculate)</h3>
+    <p>
+      Use the <strong>Recalculate</strong> button to bulk-update all Status and Subtask progress fields
+      across all projects. This is useful after changing status mappings or when first setting up the app.
+    </p>
+    <div class="tip">
+      <strong>Tip:</strong> Manual progress bars are user-set and are not affected by the recalculate function.
+    </div>
+
+    <!-- 9. Dashboard -->
+    <h2 id="dashboard">9. Dashboard Gadget</h2>
+    <p>
+      The <strong>Progress Tracker Overview</strong> dashboard gadget shows a table of all issues
+      in a selected project with their progress values — perfect for team leads and stakeholders.
+    </p>
+    <img src="img/dashboard.png" alt="Jira dashboard showing the Progress Tracker Overview gadget with a project summary table">
+    <div class="step-box">
+      <h3>How to Add the Gadget</h3>
+      <ol>
+        <li>Open any Jira <strong>Dashboard</strong>.</li>
+        <li>Click <strong>Add gadget</strong>.</li>
+        <li>Search for <strong>Progress Tracker Overview</strong>.</li>
+        <li>Click <strong>Add</strong>.</li>
+        <li>In the gadget's edit mode, select a <strong>Project</strong> from the dropdown.</li>
+        <li>The gadget displays a table with all issues and their current progress.</li>
+      </ol>
+    </div>
+
+    <!-- 10. Editions -->
+    <h2 id="editions">10. Free vs. Advanced Edition</h2>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Standard <span class="badge free">FREE</span></th>
+          <th>Advanced <span class="badge paid">PAID</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manual Progress Bar</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Status-Based Progress</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Subtask Progress</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Default color thresholds</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Custom color thresholds</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Custom status mappings</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Dashboard Gadget</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Priority support</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 11. FAQ -->
+    <h2 id="faq">11. FAQ &amp; Troubleshooting</h2>
+
+    <h3>The progress bar shows 0% even though the issue has a status mapped.</h3>
+    <p>
+      Click <strong>Recalculate</strong> in the Admin Settings to sync all fields. This is needed
+      after you first set up status mappings or change them.
+    </p>
+
+    <h3>I only see the manual field type — where are the others?</h3>
+    <p>
+      Each field type must be added separately as a custom field. Go to
+      <strong>Jira Settings → Issues → Custom fields → Create custom field</strong>
+      and search for "Progress Bar" to see all three types.
+    </p>
+
+    <h3>Can I use multiple field types on the same issue?</h3>
+    <p>
+      Yes! You can add all three fields to the same issue. For example, use the Manual bar for
+      overall progress and the Subtask bar to track child issue completion side-by-side.
+    </p>
+
+    <h3>Do progress bars update automatically?</h3>
+    <p>
+      <strong>Status and Subtask</strong> fields update automatically whenever an issue is created or updated
+      (via a background trigger). Manual fields only update when a user moves the slider.
+    </p>
+
+    <h3>I changed the color thresholds but the bars still show old colors.</h3>
+    <p>
+      Make sure you clicked <strong>Save</strong> in the Admin Settings. Then refresh the issue page.
+      The new thresholds apply immediately to all fields.
+    </p>
+
+    <h3>Where is my data stored?</h3>
+    <p>
+      All configuration data is stored in <strong>Atlassian Forge Storage</strong> within your Jira Cloud instance.
+      No data is sent to external servers. The app runs entirely on Atlassian infrastructure
+      (<a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>).
+    </p>
+
+    <h3>How do I uninstall?</h3>
+    <p>
+      Go to <strong>Jira Settings → Apps → Manage apps</strong>, find Visual Progress Tracker, and click
+      <strong>Uninstall</strong>. This removes all app configuration data. Custom field values remain
+      in Jira until you delete the custom fields.
+    </p>
+
+    <!-- 12. Support -->
+    <h2 id="support">12. Support</h2>
+    <div class="contact-box">
+      <p>
+        Need help? We're here for you.
+      </p>
+      <ul style="margin-bottom: 0;">
+        <li><strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></li>
+        <li><strong>Response time:</strong> Within 24 hours on business days.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #DFE1E6;">
+      <p style="font-size: 0.85rem; color: #6B778C;">
+        <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="visual-progress-tracker-terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp;
+        &copy; 2026 Janek Behrens
+      </p>
+    </div>
+  </div>
+</body>
+</html>
