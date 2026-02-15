@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Visual Progress Tracker for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #6B778C; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: February 15, 2026</p>
+
+    <h2>1. Introduction</h2>
+    <p>
+      This Privacy Policy explains how Visual Progress Tracker ("the App"), developed by
+      Janek Behrens ("we", "us", "our"), handles data when installed on your Atlassian
+      Jira Cloud instance. We are committed to protecting your privacy and being
+      transparent about our data practices.
+    </p>
+
+    <h2>2. Data We Access</h2>
+    <p>The App accesses the following Jira data solely to provide its functionality:</p>
+    <ul>
+      <li><strong>Issue data:</strong> Issue keys, summaries, statuses, subtask relationships, and resolution states — used to calculate progress percentages.</li>
+      <li><strong>Project data:</strong> Project keys and names — used to scope progress calculations and the dashboard gadget.</li>
+      <li><strong>Custom field values:</strong> Progress bar field values created by the App — used to display and update progress bars.</li>
+    </ul>
+
+    <h2>3. Data We Store</h2>
+    <p>
+      The App stores the following configuration data using <strong>Atlassian Forge Storage</strong>
+      (hosted and managed by Atlassian within your cloud instance):
+    </p>
+    <ul>
+      <li>Status-to-progress mapping (e.g., "In Progress" = 50%)</li>
+      <li>Color threshold settings (e.g., red below 34%, green above 67%)</li>
+      <li>App preferences (review prompt state, install date)</li>
+    </ul>
+    <p><strong>We do not store any issue content, personal data, or user information.</strong></p>
+
+    <h2>4. Data We Do NOT Collect</h2>
+    <ul>
+      <li>We do <strong>not</strong> collect, transmit, or store any personally identifiable information (PII).</li>
+      <li>We do <strong>not</strong> send any data to external servers, third-party services, or analytics platforms.</li>
+      <li>We do <strong>not</strong> use cookies, tracking pixels, or any form of user tracking.</li>
+      <li>We do <strong>not</strong> access user emails, names, or account details beyond what Jira provides in API responses for issue data.</li>
+    </ul>
+
+    <h2>5. Data Processing Location</h2>
+    <p>
+      All data processing occurs entirely within the <strong>Atlassian Forge runtime environment</strong>.
+      The App runs on Atlassian's infrastructure as part of the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      program. No data leaves the Atlassian platform.
+    </p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>
+      The App does <strong>not</strong> integrate with or send data to any third-party services.
+      There are no external API calls, no analytics services, and no advertising networks.
+    </p>
+
+    <h2>7. Data Retention</h2>
+    <ul>
+      <li><strong>Configuration data</strong> (status mappings, thresholds) is retained in Forge Storage as long as the App is installed. Uninstalling the App removes all stored data.</li>
+      <li><strong>Custom field values</strong> are stored by Jira as standard custom field data. Removing the custom fields from Jira deletes these values.</li>
+    </ul>
+
+    <h2>8. GDPR Compliance</h2>
+    <p>
+      Since we do not collect or process any personal data, GDPR data subject requests
+      (access, rectification, erasure, portability) are not directly applicable to the App.
+      However, uninstalling the App will remove all App-related configuration data.
+    </p>
+    <p>If you have any GDPR-related concerns, please contact us at the email address below.</p>
+
+    <h2>9. Security</h2>
+    <p>The App follows Atlassian Forge security best practices:</p>
+    <ul>
+      <li>Runs in a sandboxed environment with no egress to external networks.</li>
+      <li>Uses scoped Jira API permissions (only reads/writes issue and field data).</li>
+      <li>Does not store credentials, tokens, or secrets.</li>
+    </ul>
+
+    <h2>10. Children's Privacy</h2>
+    <p>
+      The App is a business productivity tool and is not directed at children under 16.
+      We do not knowingly collect data from children.
+    </p>
+
+    <h2>11. Changes to This Policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. Changes will be reflected in the
+      "Last updated" date above. Continued use of the App after changes constitutes acceptance
+      of the updated policy.
+    </p>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">12. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For questions or concerns about this Privacy Policy, contact us at:<br>
+        <strong>Email:</strong> <a href="mailto:progressbar@janekbehrens.de">progressbar@janekbehrens.de</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
