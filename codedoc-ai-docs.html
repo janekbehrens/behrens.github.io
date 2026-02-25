@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — CodeDoc AI for Confluence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #6B778C; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    h4 { font-size: 0.95rem; font-weight: 600; margin-top: 20px; margin-bottom: 8px; color: #344563; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #FF991F; }
+    .danger { background: #FFEBE6; border-left: 4px solid #DE350B; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .danger strong { color: #DE350B; }
+    .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
+    .toc h3 { margin-top: 0; color: #172B4D; font-size: 1rem; margin-bottom: 12px; }
+    .toc ol { margin-bottom: 0; }
+    .toc li { margin-bottom: 4px; }
+    .toc ol ol { margin-top: 4px; margin-bottom: 0; }
+    .badge { display: inline-block; background: #00875A; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+    .badge.free { background: #00875A; }
+    .badge.paid { background: #0052CC; }
+    .feature-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .feature-table th { background: #F4F5F7; text-align: left; padding: 10px 14px; border: 1px solid #DFE1E6; font-weight: 600; }
+    .feature-table td { padding: 10px 14px; border: 1px solid #DFE1E6; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Documentation</h1>
+    <p class="subtitle">CodeDoc AI for Confluence — Setup &amp; User Guide</p>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li>
+          <a href="#setup">Initial Setup</a>
+          <ol>
+            <li><a href="#setup-ai">Step 1: Connect AI Provider</a></li>
+            <li><a href="#setup-git">Step 2: Connect Git Provider</a></li>
+          </ol>
+        </li>
+        <li><a href="#repos">Adding Repositories</a></li>
+        <li>
+          <a href="#jobs">Creating Documentation Jobs</a>
+          <ol>
+            <li><a href="#jobs-presets">Documentation Presets</a></li>
+            <li><a href="#jobs-triggers">Trigger Types</a></li>
+            <li><a href="#jobs-files">File Selection &amp; Analysis</a></li>
+            <li><a href="#jobs-target">Confluence Target</a></li>
+          </ol>
+        </li>
+        <li><a href="#queue">Queue &amp; Generation History</a></li>
+        <li>
+          <a href="#settings">Settings</a>
+          <ol>
+            <li><a href="#settings-ai">AI Provider</a></li>
+            <li><a href="#settings-git">Git Providers</a></li>
+            <li><a href="#settings-webhook">Webhooks</a></li>
+          </ol>
+        </li>
+        <li><a href="#providers">Supported Providers</a></li>
+        <li><a href="#editions">Free vs. Paid Edition</a></li>
+        <li><a href="#data">Data Processing &amp; Privacy</a></li>
+        <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol>
+    </div>
+
+    <!-- ==================== 1. OVERVIEW ==================== -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      <strong>CodeDoc AI for Confluence</strong> automatically generates documentation from your source code repositories
+      and publishes it directly to Confluence. You bring your own AI provider (BYOK — Bring Your Own Key), connect your
+      Git hosting, and the app takes care of the rest: analyzing your codebase, generating structured documentation in
+      Confluence-native format, and keeping it up to date.
+    </p>
+    <p>Key capabilities:</p>
+    <ul>
+      <li><strong>Multi-provider AI</strong> — Works with Anthropic (Claude), OpenAI (GPT), and Google (Gemini).</li>
+      <li><strong>Multi-provider Git</strong> — Supports GitHub, GitLab, Bitbucket, and Azure DevOps, including self-hosted instances.</li>
+      <li><strong>8 documentation presets</strong> — From developer deep-dives to management overviews, compliance audits, and onboarding guides.</li>
+      <li><strong>10 languages</strong> — Generate documentation in English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese, Korean, or a custom language.</li>
+      <li><strong>Automatic triggers</strong> — Run jobs manually, on every commit via webhook, or on a daily/weekly/monthly schedule.</li>
+      <li><strong>AI-powered file selection</strong> — Let the AI identify the most relevant files in your repository instead of including everything.</li>
+    </ul>
+
+    <!-- ==================== 2. HOW IT WORKS ==================== -->
+    <h2 id="how-it-works">2. How It Works</h2>
+    <ol>
+      <li><strong>Connect</strong> — Add your AI API key and Git access token in the setup wizard.</li>
+      <li><strong>Add Repositories</strong> — Browse or paste the URL of the repositories you want to document.</li>
+      <li><strong>Create a Job</strong> — Select repositories, choose a documentation preset, pick a language, set a trigger, and choose the Confluence space where the page will be created.</li>
+      <li><strong>Generate</strong> — The app reads your code from Git, sends it to your AI provider, receives the documentation, and publishes it as a formatted Confluence page.</li>
+    </ol>
+    <p>
+      Every generation is tracked with token usage, file count, AI model used, and a direct link to the created Confluence page.
+    </p>
+
+    <!-- ==================== 3. INSTALLATION ==================== -->
+    <h2 id="install">3. Installation</h2>
+    <div class="step-box">
+      <h3>Step 1 — Install from Marketplace</h3>
+      <ol>
+        <li>Go to the <a href="https://marketplace.atlassian.com/" target="_blank" rel="noopener">Atlassian Marketplace</a> and search for <strong>CodeDoc AI</strong>.</li>
+        <li>Click <strong>Get it now</strong> (or <strong>Try it free</strong> for the paid edition).</li>
+        <li>Select your Confluence Cloud site and confirm the installation.</li>
+      </ol>
+    </div>
+    <div class="step-box">
+      <h3>Step 2 — Open the App</h3>
+      <ol>
+        <li>In Confluence, click <strong>Apps</strong> in the top navigation bar.</li>
+        <li>Select <strong>CodeDoc AI</strong>.</li>
+        <li>On first launch you will see the <strong>Setup Wizard</strong> (see next section).</li>
+      </ol>
+    </div>
+
+    <!-- ==================== 4. INITIAL SETUP ==================== -->
+    <h2 id="setup">4. Initial Setup</h2>
+    <p>
+      The setup wizard has two steps: connecting an AI provider and connecting a Git provider. Both require an API key or access token from the respective service.
+    </p>
+
+    <h3 id="setup-ai">Step 1: Connect AI Provider</h3>
+    <p>
+      CodeDoc AI uses a <strong>Bring Your Own Key (BYOK)</strong> model. You need an API key from one of the supported providers. The app never stores your source code — it sends it directly from Git to the AI provider using your key.
+    </p>
+    <div class="step-box">
+      <h3>Instructions</h3>
+      <ol>
+        <li>Select your <strong>AI Provider</strong> from the dropdown (Anthropic, OpenAI, or Google AI).</li>
+        <li>Paste your <strong>API Key</strong>.</li>
+        <li>Click <strong>Connect &amp; Validate</strong>. The app verifies the key and fetches available models.</li>
+        <li>Select your preferred <strong>Model</strong> from the dropdown. Models are discovered automatically from your provider — when new models are released, they appear here.</li>
+        <li>Click <strong>Continue to Step 2</strong>.</li>
+      </ol>
+    </div>
+    <p>Where to get your API key:</p>
+    <ul>
+      <li><strong>Anthropic</strong> — <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com/settings/keys</a></li>
+      <li><strong>OpenAI</strong> — <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a></li>
+      <li><strong>Google AI (Gemini)</strong> — <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></li>
+    </ul>
+    <div class="tip">
+      <strong>Tip:</strong> Anthropic offers a Batch API at 50% reduced cost. Batch requests are processed within 24 hours instead of instantly — ideal for scheduled documentation runs where you don't need immediate results.
+    </div>
+
+    <h3 id="setup-git">Step 2: Connect Git Provider</h3>
+    <p>
+      Connect your Git hosting service so the app can read your repositories. You need a personal access token or repository access token with <strong>read</strong> permissions.
+    </p>
+    <div class="step-box">
+      <h3>Instructions</h3>
+      <ol>
+        <li>Select your <strong>Git Provider</strong> (GitHub, GitLab, Bitbucket, or Azure DevOps).</li>
+        <li>Paste your <strong>Access Token</strong>.</li>
+        <li>Optionally set a <strong>Display Name</strong> (recommended when using multiple providers, e.g. "Work GitHub").</li>
+        <li>For <strong>self-hosted</strong> instances, enter the base URL (e.g. <code>https://gitlab.your-company.com</code>). Leave empty for cloud-hosted services.</li>
+        <li>For <strong>Azure DevOps</strong>, the organization URL is <strong>required</strong> (e.g. <code>https://dev.azure.com/your-org</code>).</li>
+        <li>Click <strong>Connect &amp; Validate</strong>.</li>
+      </ol>
+    </div>
+
+    <h4>Creating Access Tokens</h4>
+    <p>Each Git provider has its own way of creating tokens. Below is a brief summary — follow the link for full instructions from the provider.</p>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Token Type &amp; Required Scope</th>
+          <th>Instructions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GitHub</strong></td>
+          <td>Personal Access Token (classic or fine-grained)<br>Scope: <code>repo</code> (read)</td>
+          <td><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub Docs: Managing personal access tokens</a></td>
+        </tr>
+        <tr>
+          <td><strong>GitLab</strong></td>
+          <td>Personal Access Token<br>Scopes: <code>read_api</code>, <code>read_repository</code></td>
+          <td><a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">GitLab Docs: Personal access tokens</a></td>
+        </tr>
+        <tr>
+          <td><strong>Bitbucket</strong></td>
+          <td>Repository Access Token <em>or</em> API Token with scopes<br>Scope: Repositories Read</td>
+          <td><a href="https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/" target="_blank" rel="noopener">Bitbucket Docs: Access tokens</a></td>
+        </tr>
+        <tr>
+          <td><strong>Azure DevOps</strong></td>
+          <td>Personal Access Token<br>Scope: <code>Code (Read)</code></td>
+          <td><a href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate" target="_blank" rel="noopener">Microsoft Docs: Use personal access tokens</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      <strong>Bitbucket Note:</strong> Bitbucket supports two token types. A <strong>Repository Access Token</strong> (created in repository settings) gives access to a single repository and works with just the token value. A <strong>user-level API Token with scopes</strong> (created in Atlassian account settings) gives access to all your workspaces and must be entered as <code>email:api_token</code>. Repository Access Tokens cannot browse all repositories — use "Add by URL" instead.
+    </div>
+
+    <!-- ==================== 5. ADDING REPOSITORIES ==================== -->
+    <h2 id="repos">5. Adding Repositories</h2>
+    <p>After setup, go to the <strong>Repositories</strong> tab to add the repositories you want to document.</p>
+
+    <h3>Option A: Browse Repositories</h3>
+    <ol>
+      <li>Click <strong>Browse Repos</strong>.</li>
+      <li>If you have multiple Git providers configured, select which one to browse.</li>
+      <li>Use the search field to filter by name.</li>
+      <li>Check the repositories you want to add.</li>
+      <li>Click <strong>Add Selected</strong>.</li>
+    </ol>
+    <div class="tip">
+      <strong>Tip:</strong> Browse fetches up to 100 repositories sorted by last updated. If your repository doesn't appear, use "Add by URL" instead.
+    </div>
+
+    <h3>Option B: Add by URL</h3>
+    <ol>
+      <li>Click <strong>Add URL</strong>.</li>
+      <li>Paste the full repository URL (e.g. <code>https://github.com/org/repo</code>).</li>
+      <li>Set the <strong>branch</strong> to document (default: <code>main</code>).</li>
+      <li>Click <strong>Add</strong>. The app validates access before adding.</li>
+    </ol>
+    <p>
+      This method works for all token types and is the only option when using Bitbucket Repository Access Tokens (which are scoped to a single repository).
+    </p>
+
+    <!-- ==================== 6. CREATING JOBS ==================== -->
+    <h2 id="jobs">6. Creating Documentation Jobs</h2>
+    <p>
+      A <strong>job</strong> defines what to document, how to format it, and where to publish it. Go to the <strong>Jobs</strong> tab and click <strong>Create Job</strong>.
+    </p>
+
+    <h3 id="jobs-presets">Documentation Presets</h3>
+    <p>
+      Presets control the structure, tone, and depth of the generated documentation. Each preset produces a different Confluence page layout tailored to its audience.
+    </p>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Preset</th>
+          <th>Audience</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Developer Documentation</strong></td>
+          <td>Developers</td>
+          <td>Technical details with code examples, architecture overview, API reference, configuration, and troubleshooting. 9 structured sections.</td>
+        </tr>
+        <tr>
+          <td><strong>Comprehensive Technical</strong></td>
+          <td>Developers</td>
+          <td>Full deep-dive covering every module, data model, security implementation, build pipeline, testing strategy, and known limitations. 12 sections.</td>
+        </tr>
+        <tr>
+          <td><strong>Management Overview</strong></td>
+          <td>Stakeholders</td>
+          <td>High-level business view without technical jargon. Covers capabilities, risks, scalability, and strategic recommendations. No code examples.</td>
+        </tr>
+        <tr>
+          <td><strong>Customer Documentation</strong></td>
+          <td>External customers</td>
+          <td>Professional documentation for end users. Features, getting started guide, and integration instructions. No internal implementation details.</td>
+        </tr>
+        <tr>
+          <td><strong>Compliance &amp; Audit</strong></td>
+          <td>Security / Compliance</td>
+          <td>Security controls, data classification, access management, GDPR/ISO 27001/SOC2 mappings, and risk register.</td>
+        </tr>
+        <tr>
+          <td><strong>Onboarding Guide</strong></td>
+          <td>New team members</td>
+          <td>Step-by-step setup, key concepts explained simply, day-to-day workflows, and common mistakes to avoid.</td>
+        </tr>
+        <tr>
+          <td><strong>Quick Reference</strong></td>
+          <td>Developers</td>
+          <td>Minimal and concise: tech stack table, key commands, project structure, and important config values. 5 sections.</td>
+        </tr>
+        <tr>
+          <td><strong>Custom</strong></td>
+          <td>Any</td>
+          <td>Define your own documentation style with a custom prompt (up to 2000 characters). Full control over structure and content.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="jobs-triggers">Trigger Types</h3>
+    <p>Each job has a trigger that determines when it runs.</p>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Trigger</th>
+          <th>How it works</th>
+          <th>Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Manual</strong></td>
+          <td>Click "Run" on the job to generate documentation. One-time execution.</td>
+          <td><span class="badge free">FREE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Webhook</strong></td>
+          <td>Triggered automatically when code is pushed or merged in your Git provider. You add the webhook URL (provided by the app) to your repository settings and choose which Git events fire it.</td>
+          <td><span class="badge paid">PAID</span></td>
+        </tr>
+        <tr>
+          <td><strong>Scheduled</strong></td>
+          <td>Runs on a recurring schedule: daily, weekly, monthly, or a custom cron expression. All times are in UTC.</td>
+          <td><span class="badge paid">PAID</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Webhook Setup</h4>
+    <p>
+      When you select the Webhook trigger, the app displays a <strong>Webhook URL</strong>. Copy this URL and add it to your Git repository's webhook settings. You decide which events (push, pull request, merge) should trigger the webhook — the app processes all incoming events and matches them to jobs by repository and branch.
+    </p>
+    <p>Where to configure webhooks in your Git provider:</p>
+    <ul>
+      <li><strong>GitHub</strong> — Repository &rarr; Settings &rarr; Webhooks &rarr; Add webhook. Set Content type to <code>application/json</code>. <a href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks" target="_blank" rel="noopener">GitHub Docs</a></li>
+      <li><strong>GitLab</strong> — Repository &rarr; Settings &rarr; Webhooks. <a href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html" target="_blank" rel="noopener">GitLab Docs</a></li>
+      <li><strong>Bitbucket</strong> — Repository &rarr; Repository settings &rarr; Webhooks. <a href="https://support.atlassian.com/bitbucket-cloud/docs/manage-webhooks/" target="_blank" rel="noopener">Bitbucket Docs</a></li>
+      <li><strong>Azure DevOps</strong> — Project settings &rarr; Service hooks &rarr; Web Hooks. <a href="https://learn.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks" target="_blank" rel="noopener">Microsoft Docs</a></li>
+    </ul>
+
+    <h4>Schedule Options</h4>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Configuration</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Daily</td>
+          <td>Select hour (0–23 UTC)</td>
+          <td>Every day at 02:00 UTC</td>
+        </tr>
+        <tr>
+          <td>Weekly</td>
+          <td>Select day of week + hour</td>
+          <td>Every Monday at 08:00 UTC</td>
+        </tr>
+        <tr>
+          <td>Monthly</td>
+          <td>Select day of month (1–28) + hour</td>
+          <td>1st of each month at 06:00 UTC</td>
+        </tr>
+        <tr>
+          <td>Custom</td>
+          <td>Cron expression: <code>min hour dom month dow</code></td>
+          <td><code>0 2 * * 1</code> = Monday 02:00 UTC</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="jobs-files">File Selection &amp; Analysis</h3>
+    <p>
+      Before generating documentation, the app analyzes your repository to determine which files to include. You have several options:
+    </p>
+    <ul>
+      <li><strong>All files</strong> — Every code file in the repository (or filtered path) is sent to the AI.</li>
+      <li><strong>AI-selected</strong> — Click "Select with AI" and the AI analyzes file names and structure to pick the most relevant files. You can then lock the selection (fixed for every run) or leave it dynamic (re-selected each time).</li>
+      <li><strong>Path filter</strong> — Restrict analysis to a subdirectory (e.g. <code>/src</code> or <code>/backend</code>).</li>
+      <li><strong>Include/Exclude patterns</strong> — Use glob patterns to fine-tune which files are included. For example, exclude <code>**/*.test.ts</code> or include only <code>src/**</code>.</li>
+    </ul>
+    <p>
+      The analysis preview shows the <strong>total file count</strong>, <strong>code file count</strong>, and <strong>estimated token usage</strong> before you run the job.
+    </p>
+    <div class="tip">
+      <strong>Tip:</strong> AI-powered file selection is especially useful for large repositories. Instead of sending hundreds of files (and consuming many tokens), let the AI pick the 20–50 most relevant ones. This produces better documentation at lower cost.
+    </div>
+
+    <h4>Output Token Limit</h4>
+    <p>
+      Under <strong>Advanced AI Settings</strong>, you can set a maximum output token limit (default: 8192). This controls the length of the generated documentation — not the input. Increase this for comprehensive presets or very large codebases.
+    </p>
+
+    <h3 id="jobs-target">Confluence Target</h3>
+    <p>
+      Each job publishes to a specific Confluence space. You can optionally select a <strong>parent page</strong> to nest the documentation under an existing page, or choose "Root (no parent)" to create a top-level page.
+    </p>
+
+    <!-- ==================== 7. QUEUE & HISTORY ==================== -->
+    <h2 id="queue">7. Queue &amp; Generation History</h2>
+    <p>
+      The <strong>Queue &amp; History</strong> tab shows everything that's running, queued, completed, or failed.
+    </p>
+
+    <h3>Active Queue</h3>
+    <p>
+      Shows jobs currently being processed or waiting in line. Each entry displays the job name, a spinner while running, and a <strong>Cancel</strong> button to remove it from the queue.
+    </p>
+
+    <h3>Generation History</h3>
+    <p>
+      A complete log of every documentation generation with the following details:
+    </p>
+    <ul>
+      <li><strong>Job</strong> — Which job triggered the generation.</li>
+      <li><strong>Status</strong> — Completed or failed. Click a "failed" badge to see the full error message.</li>
+      <li><strong>AI Provider &amp; Model</strong> — Which AI service and model were used.</li>
+      <li><strong>Files</strong> — Number of files analyzed (e.g. "42/128" means 42 selected out of 128 total).</li>
+      <li><strong>Method</strong> — How files were selected: "AI-selected", "Auto-sorted", or "All files".</li>
+      <li><strong>Tokens</strong> — Total input + output tokens consumed (relevant for cost tracking).</li>
+      <li><strong>Link</strong> — Direct link to the generated Confluence page.</li>
+    </ul>
+
+    <h3>Upcoming Scheduled Jobs</h3>
+    <p>
+      When you have jobs with scheduled triggers, this section shows the next run time with a countdown (e.g. "in 3h 45m"), the schedule description, and when the job last ran.
+    </p>
+
+    <!-- ==================== 8. SETTINGS ==================== -->
+    <h2 id="settings">8. Settings</h2>
+    <p>
+      The <strong>Settings</strong> tab lets you manage AI providers, Git providers, and webhooks after initial setup.
+    </p>
+
+    <h3 id="settings-ai">AI Provider</h3>
+    <p>
+      View your current AI provider and model, or switch to a different one. When you change providers or keys, the app validates the connection and fetches available models. Click <strong>Refresh Models</strong> to discover newly released models from your provider.
+    </p>
+
+    <h3 id="settings-git">Git Providers</h3>
+    <p>
+      You can connect <strong>multiple Git providers</strong> simultaneously — for example, a work GitHub and a personal GitLab. Each provider is listed with its type, display label, connected user, and date added.
+    </p>
+    <ul>
+      <li>Click <strong>Add Provider</strong> to connect an additional Git service.</li>
+      <li>Click <strong>Remove</strong> to disconnect a provider (you cannot remove the last one).</li>
+    </ul>
+
+    <h3 id="settings-webhook">Webhooks</h3>
+    <p>
+      The Settings page displays your <strong>Webhook URL</strong> — a single URL that works for all your webhook-triggered jobs. Add this URL to any repository's webhook configuration in your Git provider. The app automatically matches incoming events to the correct jobs based on the repository and branch.
+    </p>
+
+    <!-- ==================== 9. SUPPORTED PROVIDERS ==================== -->
+    <h2 id="providers">9. Supported Providers</h2>
+
+    <h3>AI Providers</h3>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Notable Models</th>
+          <th>Key Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Anthropic</strong></td>
+          <td>Claude Opus, Sonnet, Haiku</td>
+          <td>Batch API available at 50% cost. Dynamic model discovery.</td>
+        </tr>
+        <tr>
+          <td><strong>OpenAI</strong></td>
+          <td>GPT-4o, GPT-4, o1, o3</td>
+          <td>Filters to chat-capable models (gpt-*, o1-*, chatgpt-*).</td>
+        </tr>
+        <tr>
+          <td><strong>Google AI</strong></td>
+          <td>Gemini Pro, Gemini Flash</td>
+          <td>Filters to models supporting content generation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Git Providers</h3>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Cloud</th>
+          <th>Self-Hosted</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GitHub</strong></td>
+          <td>github.com</td>
+          <td>GitHub Enterprise Server</td>
+          <td>Personal access token with <code>repo</code> scope.</td>
+        </tr>
+        <tr>
+          <td><strong>GitLab</strong></td>
+          <td>gitlab.com</td>
+          <td>Self-managed GitLab</td>
+          <td>Token with <code>read_api</code> + <code>read_repository</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Bitbucket</strong></td>
+          <td>bitbucket.org</td>
+          <td>—</td>
+          <td>Repository Access Token (Bearer) or API Token with scopes (<code>email:token</code>).</td>
+        </tr>
+        <tr>
+          <td><strong>Azure DevOps</strong></td>
+          <td>dev.azure.com</td>
+          <td>Azure DevOps Server</td>
+          <td>PAT with <code>Code (Read)</code>. Organization URL required.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ==================== 10. FREE VS PAID ==================== -->
+    <h2 id="editions">10. Free vs. Paid Edition</h2>
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free <span class="badge free">FREE</span></th>
+          <th>Paid <span class="badge paid">PAID</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>All 8 documentation presets</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>All 10 languages</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>All 3 AI providers</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>All 4 Git providers</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>AI-powered file selection</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Repositories</td>
+          <td>1 repository</td>
+          <td>Unlimited</td>
+        </tr>
+        <tr>
+          <td>Documentation jobs</td>
+          <td>1 job</td>
+          <td>Unlimited</td>
+        </tr>
+        <tr>
+          <td>Manual trigger</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Webhook trigger (on commit/merge)</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Scheduled trigger (daily/weekly/monthly/cron)</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Multiple Git providers</td>
+          <td>—</td>
+          <td>Yes</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip">
+      <strong>Tip:</strong> The free edition is fully functional for trying the app with a single repository and manual generation. Upgrade when you need multiple repos, automation, or webhook triggers.
+    </div>
+
+    <!-- ==================== 11. DATA & PRIVACY ==================== -->
+    <h2 id="data">11. Data Processing &amp; Privacy</h2>
+    <p>Understanding how your data flows through CodeDoc AI:</p>
+    <ol>
+      <li><strong>Source code</strong> is fetched from your Git provider using your access token.</li>
+      <li><strong>Code is sent</strong> to your chosen AI provider using your API key.</li>
+      <li><strong>Documentation</strong> is generated by the AI and returned to the app.</li>
+      <li><strong>A Confluence page</strong> is created or updated with the documentation.</li>
+    </ol>
+
+    <div class="warning">
+      <strong>Important:</strong> Your source code is transmitted to your AI provider for processing. The app does not cache or retain source code after transmission. However, each AI provider has its own data handling and retention policies. Review your AI provider's terms before sending sensitive code.
+    </div>
+
+    <ul>
+      <li>All data transfers are encrypted with <strong>TLS</strong>.</li>
+      <li>The app runs entirely within the <strong>Atlassian Forge</strong> security boundary — no external servers are involved beyond your Git and AI providers.</li>
+      <li>API keys and access tokens are stored in <strong>Forge encrypted storage</strong> within your Confluence instance.</li>
+      <li>No analytics or telemetry data is collected beyond what Atlassian provides by default.</li>
+    </ul>
+
+    <!-- ==================== 12. FAQ ==================== -->
+    <h2 id="faq">12. FAQ &amp; Troubleshooting</h2>
+
+    <h3>The generation failed with an XHTML parsing error.</h3>
+    <p>
+      This can happen when the AI produces markup that isn't valid Confluence XHTML. The app includes an automatic repair engine that detects and fixes broken macros. If the error persists after retries, the app falls back to a simplified format (plain text with headings) to ensure the page is always created. No action required on your part.
+    </p>
+
+    <h3>Bitbucket: "Token is invalid or not supported for this endpoint"</h3>
+    <p>
+      You are likely using an <strong>Atlassian Account API token</strong> (without scopes). Bitbucket requires either a <strong>Repository Access Token</strong> (created in repository settings) or an <strong>API Token with scopes</strong> (created via Account settings &rarr; Security &rarr; "Create API token with scopes" &rarr; select Bitbucket &rarr; Repositories Read). See <a href="#setup-git">Step 2: Connect Git Provider</a> for details.
+    </p>
+
+    <h3>Bitbucket: "Browse" doesn't show my repositories.</h3>
+    <p>
+      Repository Access Tokens are scoped to a single repository and cannot list all repositories. Use <strong>"Add by URL"</strong> instead to paste the repository URL directly. To browse all repositories, you need a Workspace Access Token (requires Bitbucket Premium) or a user-level API Token with scopes.
+    </p>
+
+    <h3>Can I use different AI models for different jobs?</h3>
+    <p>
+      Currently, one model is selected globally and used for all jobs. You can change the model at any time in Settings. If you need different models, run the first job, switch models in Settings, then run the second job.
+    </p>
+
+    <h3>How much does AI usage cost?</h3>
+    <p>
+      CodeDoc AI itself charges no per-generation fee — you pay only for the Marketplace subscription (free or paid plan). AI costs are billed directly by your AI provider based on token usage. Each generation's token count is tracked in the history so you can monitor costs. A typical documentation generation for a medium repository uses 10,000–50,000 input tokens and 2,000–8,000 output tokens.
+    </p>
+
+    <h3>Can I document multiple repositories in one job?</h3>
+    <p>
+      Yes. Each job can include up to <strong>2 repositories</strong>. The AI receives code from all selected repositories and generates a single unified documentation page.
+    </p>
+
+    <h3>What languages does the documentation support?</h3>
+    <p>
+      English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese, and Korean are built in. You can also select "Custom" and specify any language — the AI will attempt to generate documentation in that language (quality depends on the AI model's capabilities).
+    </p>
+
+    <h3>Where is my documentation stored?</h3>
+    <p>
+      Documentation is published as a regular <strong>Confluence page</strong> in the space you selected. You can edit, move, or delete it like any other Confluence page. Running the job again will update the existing page (not create a duplicate).
+    </p>
+
+    <h3>Do webhook and schedule triggers re-generate from scratch?</h3>
+    <p>
+      Yes. Each trigger causes a full regeneration — the app re-reads the current code from Git, sends it to the AI, and updates the Confluence page with fresh documentation.
+    </p>
+
+    <h3>How do I uninstall?</h3>
+    <p>
+      Go to <strong>Confluence Settings &rarr; Apps &rarr; Manage apps</strong>, find CodeDoc AI, and click <strong>Uninstall</strong>. This removes all app configuration and stored data. Generated Confluence pages remain in your spaces — delete them manually if needed.
+    </p>
+
+    <!-- ==================== 13. SUPPORT ==================== -->
+    <h2 id="support">13. Support</h2>
+    <div class="contact-box">
+      <p>Need help? We're here for you.</p>
+      <ul style="margin-bottom: 0;">
+        <li><strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></li>
+        <li><strong>Response time:</strong> Within 24 hours on business days.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #DFE1E6;">
+      <p style="font-size: 0.85rem; color: #6B778C;">
+        <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+        <a href="codedoc-ai-terms-of-service.html">Terms of Service</a> &nbsp;&middot;&nbsp;
+        &copy; 2026 Janek Behrens
+      </p>
+    </div>
+  </div>
+</body>
+</html>
