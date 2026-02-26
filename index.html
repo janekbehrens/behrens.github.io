@@ -7,7 +7,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.6; }
-    .container { max-width: 720px; margin: 0 auto; padding: 64px 24px 80px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 64px 24px 40px; }
 
     /* Header */
     .site-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
@@ -26,6 +26,8 @@
     .product-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
     .product-header img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; flex-shrink: 0; }
     .product-header h2 { font-size: 1.15rem; font-weight: 600; }
+    .product-header h2 a { color: #172B4D; text-decoration: none; }
+    .product-header h2 a:hover { color: #0052CC; text-decoration: underline; }
     .product p { color: #505F79; font-size: 0.95rem; margin-bottom: 16px; }
     .product-links { display: flex; flex-wrap: wrap; gap: 6px 0; border-top: 1px solid #F0F1F3; padding-top: 14px; }
     .product-links a {
@@ -38,9 +40,19 @@
     .product-links a:hover { text-decoration: underline; }
 
     /* Footer */
-    .contact { margin-top: 48px; color: #6B778C; font-size: 0.875rem; }
-    .contact a { color: #0052CC; text-decoration: none; }
-    .contact a:hover { text-decoration: underline; }
+    .site-footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #DFE1E6;
+      color: #6B778C;
+      font-size: 0.825rem;
+      line-height: 1.7;
+    }
+    .site-footer a { color: #0052CC; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    .impressum { margin-bottom: 16px; }
+    .impressum h3 { font-size: 0.85rem; font-weight: 600; color: #505F79; margin-bottom: 4px; }
+    .footer-links { margin-top: 12px; padding-top: 12px; border-top: 1px solid #EBECF0; }
   </style>
 </head>
 <body>
@@ -56,7 +68,7 @@
     <div class="product">
       <div class="product-header">
         <img src="img/codedoc-ai-icon.png" alt="CodeDoc AI Icon">
-        <h2>CodeDoc AI for Confluence</h2>
+        <h2><a href="codedoc-ai-docs.html">CodeDoc AI for Confluence</a></h2>
       </div>
       <p>
         Automatically generate documentation from your Git repositories using AI.
@@ -76,7 +88,7 @@
     <div class="product">
       <div class="product-header">
         <img src="img/progresstracker144logo.png" alt="Visual Progress Tracker Icon">
-        <h2>Visual Progress Tracker</h2>
+        <h2><a href="visual-progress-tracker-docs.html">Visual Progress Tracker</a></h2>
       </div>
       <p>
         Add color-coded progress bars to your Jira issues. Three field types — Manual,
@@ -90,9 +102,30 @@
       </div>
     </div>
 
-    <div class="contact">
-      <p>Contact: <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></p>
-    </div>
+    <!-- Footer with Impressum -->
+    <footer class="site-footer">
+      <div class="impressum">
+        <h3>Impressum (Legal Notice)</h3>
+        <p>
+          Janek Behrens<br>
+          Einzelunternehmer (Sole Proprietor)<br>
+          E-Mail: <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+        </p>
+        <p>
+          Verantwortlich f&uuml;r den Inhalt gem&auml;&szlig; &sect; 5 TMG und &sect; 18 Abs. 2 MStV:<br>
+          Janek Behrens (Anschrift wie oben)
+        </p>
+      </div>
+      <div class="footer-links">
+        <p>
+          <a href="codedoc-ai-privacy-policy.html">CodeDoc AI Privacy Policy</a> &nbsp;&middot;&nbsp;
+          <a href="codedoc-ai-terms-of-service.html">CodeDoc AI Terms</a> &nbsp;&middot;&nbsp;
+          <a href="visual-progress-tracker-privacy-policy.html">VPT Privacy Policy</a> &nbsp;&middot;&nbsp;
+          <a href="visual-progress-tracker-terms-of-service.html">VPT Terms</a>
+        </p>
+        <p style="margin-top: 8px;">&copy; 2026 Janek Behrens. All rights reserved.</p>
+      </div>
+    </footer>
 
   </div>
 </body>
