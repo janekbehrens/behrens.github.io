@@ -66,6 +66,10 @@
       <li>Repository list (repository URLs, branches, provider references)</li>
       <li>Job configuration (selected repositories, documentation preset, trigger settings, target space)</li>
       <li>Generation history (job name, status, timestamp, token usage, page link — no source code or generated content)</li>
+      <li>Job execution status (ephemeral progress state during active job runs)</li>
+      <li>Webhook deduplication data (recent event IDs to prevent duplicate processing — no payload content)</li>
+      <li>Webhook signature secret (if configured by you for webhook verification)</li>
+      <li>App-level settings (general preferences and configuration flags)</li>
     </ul>
     <p><strong>We do not store your source code or the generated documentation content.</strong> Source code is read, processed, and discarded within a single job execution. Generated documentation is written directly to Confluence.</p>
 
@@ -138,6 +142,7 @@
       <li>No credentials are logged, exposed in error messages, or transmitted to us.</li>
       <li>The App uses minimal Confluence API scopes: <code>storage:app</code>, <code>read:space</code>, <code>read:page</code>, and <code>write:page</code>.</li>
     </ul>
+    <p>For comprehensive details, see our <a href="codedoc-ai-security.html">Security Statement</a>.</p>
 
     <h2>11. Children's Privacy</h2>
     <p>

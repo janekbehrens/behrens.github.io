@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Statement — CodeDoc AI for Confluence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #6B778C; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.88rem; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #DFE1E6; color: #344563; }
+    th { font-weight: 600; color: #172B4D; background: #F4F5F7; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Security Statement</h1>
+    <p class="updated">Last updated: February 27, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      CodeDoc AI for Confluence ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and follows the principle of <strong>minimal data access, zero external infrastructure, and
+      user-controlled credentials</strong>. This document describes the security architecture, data
+      protection measures, and operational practices of the App.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <p>The App runs entirely within Atlassian's Forge runtime:</p>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is hosted by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions execute in isolated, sandboxed containers with restricted system access.</li>
+      <li><strong>Network isolation:</strong> Outbound network requests are restricted to domains explicitly declared in the App's manifest and allowlisted by Atlassian. The App cannot make arbitrary network calls.</li>
+      <li><strong>No ingress:</strong> The App does not expose any endpoints to the public internet except a Forge webtrigger URL for Git webhook events (validated and scoped).</li>
+    </ul>
+
+    <h2>3. Credential Management (BYOK)</h2>
+    <p>
+      The App operates on a <strong>Bring Your Own Key</strong> model. Users provide their own API
+      keys (AI providers) and access tokens (Git providers). These credentials are handled as follows:
+    </p>
+    <table>
+      <tr>
+        <th>Measure</th>
+        <th>Details</th>
+      </tr>
+      <tr>
+        <td>Storage</td>
+        <td>All credentials stored via Atlassian Forge's encrypted secret storage (<code>storage.setSecret()</code>), encrypted at rest by Atlassian.</td>
+      </tr>
+      <tr>
+        <td>Access scope</td>
+        <td>Credentials are only read by the App's backend functions during job execution. They are never exposed to the frontend UI after initial save.</td>
+      </tr>
+      <tr>
+        <td>Developer access</td>
+        <td><strong>None.</strong> We cannot read, export, or access your credentials. They reside in your Confluence instance's Forge storage.</td>
+      </tr>
+      <tr>
+        <td>Logging</td>
+        <td>Credentials are never logged, included in error messages, or transmitted to us.</td>
+      </tr>
+      <tr>
+        <td>Deletion</td>
+        <td>Credentials are removed when the App is uninstalled or when you delete a provider configuration.</td>
+      </tr>
+    </table>
+
+    <h2>4. Data Protection</h2>
+
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All communication between the App and external services (Git providers, AI providers) uses <strong>TLS encryption</strong> (HTTPS only).</li>
+      <li>The App rejects non-HTTPS Git provider URLs at configuration time.</li>
+      <li>Forge-to-Confluence API calls use Atlassian's internal secured transport.</li>
+    </ul>
+
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>Sensitive credentials: Encrypted via Forge secret storage (AES-256, managed by Atlassian).</li>
+      <li>Configuration data: Stored in Forge app storage within the customer's Confluence instance.</li>
+      <li>Source code: <strong>Never stored.</strong> Fetched on demand, processed in memory, and discarded after each job execution.</li>
+    </ul>
+
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App only accesses the minimum data needed: source code files (read-only), Confluence space/page metadata (for publishing).</li>
+      <li>Generation history stores only metadata (job name, status, timestamp, token count) — no source code or documentation content.</li>
+      <li>Webhook deduplication stores only event IDs (last 50), not payload content.</li>
+    </ul>
+
+    <h2>5. Network Security &amp; Allowlisted Domains</h2>
+    <p>
+      The App's Forge manifest declares the following external domains. Outbound requests are
+      <strong>only possible</strong> to these domains — no other network communication can occur:
+    </p>
+    <table>
+      <tr>
+        <th>Service</th>
+        <th>Domains</th>
+      </tr>
+      <tr>
+        <td>GitHub</td>
+        <td><code>api.github.com</code></td>
+      </tr>
+      <tr>
+        <td>GitLab</td>
+        <td><code>gitlab.com</code> (+ user-configured self-hosted instances)</td>
+      </tr>
+      <tr>
+        <td>Bitbucket</td>
+        <td><code>api.bitbucket.org</code></td>
+      </tr>
+      <tr>
+        <td>Azure DevOps</td>
+        <td><code>dev.azure.com</code>, <code>*.visualstudio.com</code></td>
+      </tr>
+      <tr>
+        <td>Anthropic</td>
+        <td><code>api.anthropic.com</code></td>
+      </tr>
+      <tr>
+        <td>OpenAI</td>
+        <td><code>api.openai.com</code></td>
+      </tr>
+      <tr>
+        <td>Google AI</td>
+        <td><code>generativelanguage.googleapis.com</code></td>
+      </tr>
+    </table>
+
+    <p><strong>IP blocking:</strong> The App validates Git provider URLs and blocks connections to private, reserved, and loopback IP ranges to prevent SSRF attacks.</p>
+
+    <h2>6. Authentication &amp; Authorization</h2>
+    <ul>
+      <li><strong>Confluence access:</strong> Uses Atlassian Forge's built-in OAuth. User-initiated actions run with the user's permissions (<code>api.asUser()</code>); background jobs run with app-level permissions (<code>api.asApp()</code>).</li>
+      <li><strong>Minimal API scopes:</strong> The App requests only the scopes it needs:
+        <code>storage:app</code>, <code>read:space:confluence</code>, <code>read:page:confluence</code>, <code>write:page:confluence</code>.</li>
+      <li><strong>Webhook verification:</strong> Supports optional webhook signature verification (HMAC) using a user-configured secret to prevent unauthorized trigger events.</li>
+      <li><strong>Permission pre-flight:</strong> Before publishing, the App verifies write permissions on the target Confluence space to fail early with a clear message.</li>
+    </ul>
+
+    <h2>7. Input Validation &amp; Output Safety</h2>
+    <ul>
+      <li><strong>URL validation:</strong> Git provider URLs must be HTTPS and are checked against private IP ranges.</li>
+      <li><strong>Content sanitization:</strong> AI-generated documentation passes through a multi-layer XML validation and repair pipeline before publishing to Confluence, preventing malformed content from being injected.</li>
+      <li><strong>Token budget limits:</strong> File fetching is bounded by configurable token budgets (~120,000 tokens) and content size limits (~1 MB) to prevent resource exhaustion.</li>
+      <li><strong>Webhook deduplication:</strong> Duplicate webhook events are detected and rejected to prevent replay-style abuse.</li>
+    </ul>
+
+    <h2>8. Dependency Management</h2>
+    <ul>
+      <li>The App has <strong>zero runtime npm dependencies</strong>. All logic is self-contained to minimize supply chain risk.</li>
+      <li>The only dependencies are Atlassian's Forge packages (<code>@forge/api</code>, <code>@forge/ui</code>, <code>@forge/resolver</code>) which are maintained by Atlassian.</li>
+      <li>Build and development dependencies are kept to a minimum and are not shipped in the production runtime.</li>
+    </ul>
+
+    <h2>9. Vulnerability Management</h2>
+    <ul>
+      <li>We monitor for security issues in the App and Forge platform updates.</li>
+      <li>Security patches are deployed promptly via Forge's deployment mechanism.</li>
+      <li>The Forge runtime is maintained and patched by Atlassian, including the Node.js environment.</li>
+    </ul>
+
+    <h2>10. Incident Response</h2>
+    <p>
+      If a security issue is discovered in the App:
+    </p>
+    <ul>
+      <li>We will investigate and remediate promptly.</li>
+      <li>Affected customers will be notified via the Atlassian Marketplace listing and/or direct contact.</li>
+      <li>Fixes will be deployed as a priority update.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, please contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — CodeDoc AI"</strong>.
+    </p>
+
+    <h2>11. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> The App does not collect or process personal data. See our <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> for details.</li>
+      <li><strong>Atlassian Security:</strong> The App follows <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a> and runs within Atlassian's "Runs on Atlassian" trust boundary.</li>
+      <li><strong>No sub-processors:</strong> We do not engage sub-processors. All third-party data transmission is initiated by the user via their own credentials.</li>
+    </ul>
+
+    <h2>12. What We Do NOT Have Access To</h2>
+    <p>For complete transparency:</p>
+    <ul>
+      <li>Your API keys or Git access tokens</li>
+      <li>Your source code or repository contents</li>
+      <li>The generated documentation content</li>
+      <li>Your Confluence instance data beyond what the App's scopes allow</li>
+      <li>User identity, email addresses, or personal data</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">13. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — CodeDoc AI
+      </p>
+    </div>
+  </div>
+</body>
+</html>
