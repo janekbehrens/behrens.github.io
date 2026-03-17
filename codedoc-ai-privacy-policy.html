@@ -23,6 +23,20 @@
     .pdf-btn { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 4px; padding: 5px 12px; font-size: 0.82rem; color: #505F79; cursor: pointer; font-family: inherit; }
     .pdf-btn:hover { background: #EBECF0; color: #172B4D; }
     @media print { .back, .pdf-btn { display: none !important; } body { background: #fff; } .container { padding: 20px 0; } }
+    .flow-box { background: #fff; border: 2px solid #DFE1E6; border-radius: 8px; padding: 10px 12px; text-align: center; font-size: 0.82rem; font-weight: 600; color: #172B4D; display: flex; flex-direction: column; justify-content: center; }
+    .flow-box.forge { border-color: #0052CC; background: #DEEBFF; color: #0052CC; }
+    .flow-box.byok { border-color: #FF8B00; background: #FFF7E6; color: #974F0C; }
+    .flow-sub { display: block; font-size: 0.72rem; font-weight: 400; color: #6B778C; margin-top: 3px; line-height: 1.3; }
+    .flow-box.byok .flow-sub { color: #974F0C; opacity: 0.75; }
+    .flow-label { font-size: 0.8rem; color: #6B778C; margin-bottom: 20px; }
+    .hub-wrap { overflow-x: auto; margin: 16px 0; min-width: 420px; }
+    .hub-center { display: flex; justify-content: center; margin-bottom: 10px; }
+    .hub-center .flow-box { flex: none; min-width: 220px; max-width: 380px; }
+    .hub-spokes { display: flex; gap: 10px; }
+    .hub-spoke { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+    .hub-spoke .flow-box { flex: none; }
+    .hub-spoke-label { font-size: 0.76rem; color: #0052CC; font-weight: 600; text-align: center; line-height: 1.3; padding: 2px 0; }
+    .hub-spoke-note { font-size: 0.72rem; color: #6B778C; font-style: italic; text-align: center; line-height: 1.3; margin-top: 2px; }
   </style>
 </head>
 <body>
@@ -97,6 +111,39 @@
       <li><strong>Your Git provider</strong> (GitHub, GitLab, Bitbucket, or Azure DevOps) — to read source code files from your repositories.</li>
       <li><strong>Your AI provider</strong> (Anthropic, OpenAI, or Google AI) — to generate documentation from the source code.</li>
     </ul>
+    <div class="hub-wrap">
+      <div class="hub-center">
+        <div class="flow-box forge">
+          Atlassian Forge Runtime
+          <span class="flow-sub">Hub — sandboxed, on Atlassian infrastructure</span>
+        </div>
+      </div>
+      <div class="hub-spokes">
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; fetch code (HTTPS)</div>
+          <div class="flow-box byok">
+            Your Git Provider
+            <span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps<br>Your credentials (BYOK)</span>
+          </div>
+          <div class="hub-spoke-note">Webhook triggers: Git &#8594; Forge (inbound)</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; send code · receive docs</div>
+          <div class="flow-box byok">
+            Your AI Provider
+            <span class="flow-sub">Anthropic / OpenAI / Google AI<br>Your credentials (BYOK)</span>
+          </div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; read/write pages</div>
+          <div class="flow-box forge">
+            Confluence Cloud
+            <span class="flow-sub">Documentation pages published here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="flow-label">Blue = Atlassian infrastructure &nbsp;&nbsp;|&nbsp;&nbsp; Orange = services you configure with your own credentials</p>
     <p>
       <strong>Important:</strong> Each third-party provider has its own data handling and retention
       policies. We have no control over how your Git provider or AI provider processes, stores, or
