@@ -46,6 +46,14 @@
     .sp-table th { background: #F4F5F7; color: #172B4D; font-weight: 600; text-align: left; padding: 9px 12px; border: 1px solid #DFE1E6; }
     .sp-table td { padding: 9px 12px; border: 1px solid #DFE1E6; color: #344563; vertical-align: top; }
     .sp-table tr:nth-child(even) td { background: #FAFBFC; }
+    .hub-wrap { overflow-x: auto; margin-bottom: 8px; min-width: 420px; }
+    .hub-center { display: flex; justify-content: center; margin-bottom: 10px; }
+    .hub-center .flow-box { flex: none; min-width: 220px; max-width: 380px; }
+    .hub-spokes { display: flex; gap: 10px; }
+    .hub-spoke { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+    .hub-spoke .flow-box { flex: none; }
+    .hub-spoke-label { font-size: 0.76rem; color: #0052CC; font-weight: 600; text-align: center; line-height: 1.3; padding: 2px 0; }
+    .hub-spoke-note { font-size: 0.72rem; color: #6B778C; font-style: italic; text-align: center; line-height: 1.3; margin-top: 2px; }
   </style>
 </head>
 <body>
@@ -153,15 +161,36 @@
     </p>
 
     <p><strong>CodeDoc AI for Confluence</strong></p>
-    <div class="flow-wrap">
-      <div class="flow">
-        <div class="flow-box forge">Atlassian Forge Runtime<span class="flow-sub">Sandboxed, on Atlassian infrastructure</span></div>
-        <div class="flow-arrow">&#8594;</div>
-        <div class="flow-box byok">Your Git Provider<span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps<br>Your credentials (BYOK)</span></div>
-        <div class="flow-arrow">&#8594;</div>
-        <div class="flow-box byok">Your AI Provider<span class="flow-sub">Anthropic / OpenAI / Google AI<br>Your credentials (BYOK)</span></div>
-        <div class="flow-arrow">&#8594;</div>
-        <div class="flow-box forge">Confluence Cloud<span class="flow-sub">Documentation written to your instance</span></div>
+    <div class="hub-wrap">
+      <div class="hub-center">
+        <div class="flow-box forge">
+          Atlassian Forge Runtime
+          <span class="flow-sub">Hub — sandboxed, on Atlassian infrastructure</span>
+        </div>
+      </div>
+      <div class="hub-spokes">
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; fetch code (HTTPS)</div>
+          <div class="flow-box byok">
+            Your Git Provider
+            <span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps<br>Your credentials (BYOK)</span>
+          </div>
+          <div class="hub-spoke-note">Webhook triggers: Git &#8594; Forge (inbound)</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; send code · receive docs</div>
+          <div class="flow-box byok">
+            Your AI Provider
+            <span class="flow-sub">Anthropic / OpenAI / Google AI<br>Your credentials (BYOK)</span>
+          </div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">&#8597; app UI · read/write pages</div>
+          <div class="flow-box forge">
+            Confluence Cloud
+            <span class="flow-sub">App UI rendered here<br>Documentation pages published here</span>
+          </div>
+        </div>
       </div>
     </div>
     <p class="flow-label">
