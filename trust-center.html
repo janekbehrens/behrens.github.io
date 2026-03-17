@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Center — Janek Behrens</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #6B778C; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; border-top: 1px solid #DFE1E6; padding-top: 28px; }
+    h2:first-of-type { border-top: none; padding-top: 0; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    .badge-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .badge { background: #E3FCEF; color: #006644; border: 1px solid #ABF5D1; border-radius: 4px; padding: 4px 10px; font-size: 0.85rem; font-weight: 600; }
+    .app-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px; }
+    .app-table th { background: #F4F5F7; color: #172B4D; font-weight: 600; text-align: left; padding: 10px 12px; border: 1px solid #DFE1E6; }
+    .app-table td { padding: 10px 12px; border: 1px solid #DFE1E6; color: #344563; vertical-align: top; }
+    .app-table tr:nth-child(even) td { background: #FAFBFC; }
+    .flow-wrap { overflow-x: auto; margin-bottom: 8px; }
+    .flow { display: flex; align-items: stretch; min-width: 540px; gap: 0; }
+    .flow-box { background: #fff; border: 2px solid #DFE1E6; border-radius: 8px; padding: 10px 12px; text-align: center; font-size: 0.82rem; font-weight: 600; color: #172B4D; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .flow-box.forge { border-color: #0052CC; background: #DEEBFF; color: #0052CC; }
+    .flow-box.byok { border-color: #FF8B00; background: #FFF7E6; color: #974F0C; }
+    .flow-sub { display: block; font-size: 0.72rem; font-weight: 400; color: #6B778C; margin-top: 3px; line-height: 1.3; }
+    .flow-box.byok .flow-sub { color: #974F0C; opacity: 0.75; }
+    .flow-arrow { color: #97A0AF; padding: 0 6px; display: flex; align-items: center; font-size: 1.1rem; flex-shrink: 0; }
+    .flow-label { font-size: 0.8rem; color: #6B778C; margin-bottom: 20px; }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .cert-card { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 14px 16px; }
+    .cert-card strong { display: block; font-size: 0.875rem; color: #172B4D; margin-bottom: 3px; }
+    .cert-card span { font-size: 0.8rem; color: #6B778C; }
+    .highlight-box { background: #E3FCEF; border: 1px solid #ABF5D1; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; }
+    .highlight-box p { color: #006644; margin-bottom: 0; font-size: 0.9rem; }
+    .sp-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 16px; }
+    .sp-table th { background: #F4F5F7; color: #172B4D; font-weight: 600; text-align: left; padding: 9px 12px; border: 1px solid #DFE1E6; }
+    .sp-table td { padding: 9px 12px; border: 1px solid #DFE1E6; color: #344563; vertical-align: top; }
+    .sp-table tr:nth-child(even) td { background: #FAFBFC; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Trust Center</h1>
+    <p class="updated">Last updated: March 17, 2026</p>
+
+    <p>
+      This Trust Center provides a transparent overview of the security practices, data handling,
+      and privacy principles that apply to all apps published by <strong>Janek Behrens</strong> on
+      the Atlassian Marketplace. It is intended to help customers, administrators, and security
+      teams evaluate the trustworthiness of our apps before and after installation.
+    </p>
+
+    <h2>1. About the Vendor</h2>
+    <p>
+      Janek Behrens is an independent Atlassian Marketplace Partner developing productivity apps
+      for Atlassian Cloud products. All apps are built exclusively on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a>
+      platform and listed on the
+      <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener">Atlassian Marketplace</a>.
+    </p>
+
+    <h2>2. Infrastructure &amp; Hosting</h2>
+    <div class="badge-row">
+      <span class="badge">Runs on Atlassian</span>
+      <span class="badge">No External Servers</span>
+      <span class="badge">Forge Platform</span>
+    </div>
+    <p>
+      All apps are built on <strong>Atlassian Forge</strong>, Atlassian's native cloud development
+      platform. This means:
+    </p>
+    <ul>
+      <li>App code runs entirely within Atlassian's infrastructure — there are no third-party servers, no external cloud providers, and no infrastructure operated by Janek Behrens.</li>
+      <li>App logic runs within the Forge runtime on Atlassian's infrastructure. Where an app makes outbound calls (e.g., to AI or Git providers you configure), these are made via Forge's allowlisted external fetch mechanism — not through any infrastructure operated by Janek Behrens.</li>
+      <li>Apps qualify for the <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a> designation, meaning Atlassian provides the underlying security, availability, and compliance guarantees for the hosting layer.</li>
+    </ul>
+    <p>
+      For Atlassian's own infrastructure security and compliance certifications (ISO 27001, SOC 2, etc.),
+      refer to the <a href="https://www.atlassian.com/trust" target="_blank" rel="noopener">Atlassian Trust Center</a>.
+    </p>
+
+    <h2>3. Data Privacy Principles</h2>
+    <p>All apps adhere to the following data privacy principles:</p>
+    <ul>
+      <li><strong>Data minimization:</strong> Apps only request the Atlassian API scopes strictly necessary to deliver their functionality. No speculative permissions are requested.</li>
+      <li><strong>No personal data collection:</strong> Apps do not collect, transmit, or store personally identifiable information (PII) such as names, email addresses, user keys, or account details on any system controlled by Janek Behrens.</li>
+      <li><strong>No data sent to Janek Behrens:</strong> No app transmits any data to servers operated by Janek Behrens. Any external calls made by an app go exclusively to services that you explicitly configure using your own credentials (Bring Your Own Key model), or to no external services at all. See the app overview table below for details per app.</li>
+      <li><strong>No tracking:</strong> Apps do not use cookies, tracking pixels, session recording, or any form of behavioral analytics.</li>
+      <li><strong>Configuration data only (in Atlassian storage):</strong> The only data stored by apps is app-level configuration (via Atlassian Forge Storage) — such as settings, mappings, credentials you provide, or job history metadata. This data resides on Atlassian's infrastructure and is automatically deleted upon app uninstallation.</li>
+    </ul>
+
+    <h2>4. App Overview</h2>
+    <table class="app-table">
+      <thead>
+        <tr>
+          <th>App</th>
+          <th>Platform</th>
+          <th>Stores PII</th>
+          <th>External Calls</th>
+          <th>Privacy Policy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Visual Progress Tracker for Jira</a></td>
+          <td>Jira Cloud</td>
+          <td>No</td>
+          <td>None</td>
+          <td><a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a></td>
+        </tr>
+        <tr>
+          <td><a href="codedoc-ai-docs.html">CodeDoc AI for Confluence</a></td>
+          <td>Confluence Cloud</td>
+          <td>No</td>
+          <td>Your Git provider (GitHub, GitLab, Bitbucket, Azure DevOps) &amp; your AI provider (Anthropic, OpenAI, Google AI) — via BYOK, using your own credentials</td>
+          <td><a href="codedoc-ai-privacy-policy.html">Privacy Policy</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      For app-specific details on data access, storage, and retention, refer to the individual
+      Privacy Policy linked above for each app.
+    </p>
+
+    <h2>5. GDPR Compliance</h2>
+    <p>
+      All apps are designed to be compliant with the General Data Protection Regulation (GDPR)
+      and applicable data protection laws. Key measures include:
+    </p>
+    <ul>
+      <li><strong>Lawful basis:</strong> Data access is based on the legitimate interest of delivering the app's contractual functionality to the installing organization.</li>
+      <li><strong>Data subject rights:</strong> Since no personal data is stored outside the Atlassian platform, data subject requests (access, rectification, erasure, portability) can be addressed by uninstalling the app or contacting us directly.</li>
+      <li><strong>Data processing location:</strong> All data is processed within Atlassian's infrastructure. Atlassian provides GDPR-compliant data processing agreements as part of its standard terms. Apps do not introduce additional data processors.</li>
+      <li><strong>Breach notification:</strong> In the unlikely event of a security incident affecting app-related data, affected customers will be notified in accordance with GDPR Article 33/34 requirements and applicable law.</li>
+    </ul>
+
+    <h2>6. Data Flow</h2>
+    <p>
+      The diagrams below show exactly how data moves when each app runs. No data passes through
+      infrastructure operated by Janek Behrens at any point.
+    </p>
+
+    <p><strong>CodeDoc AI for Confluence</strong></p>
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-box forge">Atlassian Forge Runtime<span class="flow-sub">Sandboxed, on Atlassian infrastructure</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box byok">Your Git Provider<span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps<br>Your credentials (BYOK)</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box byok">Your AI Provider<span class="flow-sub">Anthropic / OpenAI / Google AI<br>Your credentials (BYOK)</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box forge">Confluence Cloud<span class="flow-sub">Documentation written to your instance</span></div>
+      </div>
+    </div>
+    <p class="flow-label">
+      Blue = Atlassian infrastructure &nbsp;&nbsp;|&nbsp;&nbsp; Orange = services you configure with your own credentials
+    </p>
+
+    <p><strong>Visual Progress Tracker for Jira</strong></p>
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-box forge">Jira Cloud<span class="flow-sub">Issue &amp; project data</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box forge">Atlassian Forge Runtime<span class="flow-sub">Progress calculation</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box forge">Jira Cloud<span class="flow-sub">Custom field values written</span></div>
+      </div>
+    </div>
+    <p class="flow-label">All data stays within Atlassian infrastructure. No external calls.</p>
+
+    <h2>7. Data Processing Agreement (DPA)</h2>
+    <div class="highlight-box">
+      <p>
+        <strong>No separate DPA with Janek Behrens is required.</strong>
+        Janek Behrens does not act as a data processor for your organization's data under GDPR Article 4(8),
+        because no personal data is transmitted to or processed on systems controlled by Janek Behrens.
+      </p>
+    </div>
+    <p>
+      All data processing occurs within <strong>Atlassian's platform</strong> (Forge runtime, Forge Storage,
+      Jira and Confluence APIs). Atlassian acts as the data processor for this infrastructure layer, governed
+      by <a href="https://www.atlassian.com/legal/data-processing-addendum" target="_blank" rel="noopener">Atlassian's Data Processing Addendum</a>,
+      which is part of Atlassian's standard Cloud Terms of Service.
+    </p>
+    <p>
+      For <strong>CodeDoc AI</strong>: outbound calls to your Git and AI providers are made using credentials
+      you supply (Bring Your Own Key). You hold the direct contractual relationship with those providers —
+      Janek Behrens is not a party to that data flow.
+    </p>
+    <p>
+      If your organization's procurement process requires a written confirmation of this arrangement,
+      please contact <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.
+    </p>
+
+    <h2>8. Subprocessors</h2>
+    <p>
+      The table below lists all third-party services involved in data processing per app.
+      "Customer-configured" means Janek Behrens has no contractual relationship with that provider —
+      you supply your own credentials and your organization is the controller of that connection.
+    </p>
+    <table class="sp-table">
+      <thead>
+        <tr>
+          <th>App</th>
+          <th>Subprocessor</th>
+          <th>Purpose</th>
+          <th>Type</th>
+          <th>Data Center</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>All apps</td>
+          <td><a href="https://www.atlassian.com/trust" target="_blank" rel="noopener">Atlassian</a></td>
+          <td>Forge runtime, Forge Storage, Jira &amp; Confluence APIs, identity</td>
+          <td>Mandatory</td>
+          <td>Per your Atlassian instance region</td>
+        </tr>
+        <tr>
+          <td>CodeDoc AI</td>
+          <td>GitHub / GitLab / Bitbucket / Azure DevOps</td>
+          <td>Repository access to fetch source code for documentation generation</td>
+          <td>Customer-configured (BYOK)</td>
+          <td>Per provider / customer account</td>
+        </tr>
+        <tr>
+          <td>CodeDoc AI</td>
+          <td>Anthropic / OpenAI / Google AI</td>
+          <td>AI-powered documentation generation using your API key</td>
+          <td>Customer-configured (BYOK)</td>
+          <td>Per provider / customer account</td>
+        </tr>
+        <tr>
+          <td>Visual Progress Tracker</td>
+          <td><em>None</em></td>
+          <td>No external calls — all processing within Atlassian Forge</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This subprocessor list is reviewed and updated whenever a new integration is introduced.
+      Last reviewed: March 17, 2026.
+    </p>
+
+    <h2>9. Compliance &amp; Certifications</h2>
+    <p>
+      Janek Behrens does not independently hold SOC 2 or ISO certifications. However, because all apps
+      run exclusively on <strong>Atlassian Forge</strong>, they operate within Atlassian's certified infrastructure.
+      Atlassian maintains the following certifications for its cloud platform:
+    </p>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <strong>SOC 2 Type II</strong>
+        <span>Security, Availability, Confidentiality — independently audited annually</span>
+      </div>
+      <div class="cert-card">
+        <strong>ISO 27001</strong>
+        <span>Information security management system</span>
+      </div>
+      <div class="cert-card">
+        <strong>ISO 27018</strong>
+        <span>Protection of PII in public cloud environments</span>
+      </div>
+      <div class="cert-card">
+        <strong>CSA STAR Level 1</strong>
+        <span>Cloud Security Alliance self-assessment</span>
+      </div>
+    </div>
+    <p>
+      Full certificates and audit reports are available via the
+      <a href="https://www.atlassian.com/trust" target="_blank" rel="noopener">Atlassian Trust Center</a>.
+    </p>
+    <p>
+      In addition, all apps undergo <strong>Atlassian's Marketplace security review</strong> before each
+      version is made publicly available. This includes automated security scanning, scope justification
+      review, and privacy guideline compliance checks.
+    </p>
+
+    <h2>10. Security Practices</h2>
+    <p>All apps are developed following Atlassian's security guidelines for Marketplace Partners:</p>
+    <ul>
+      <li><strong>Least privilege:</strong> Only the minimum required Atlassian API scopes are requested. Permission justifications are provided during the Marketplace approval process.</li>
+      <li><strong>Sandboxed execution:</strong> Forge apps run in a sandboxed environment with no access to the underlying host system.</li>
+      <li><strong>No credential storage:</strong> Apps do not store API keys, tokens, passwords, or secrets.</li>
+      <li><strong>Dependency management:</strong> Dependencies are kept up to date to minimize exposure to known vulnerabilities.</li>
+      <li><strong>Atlassian security review:</strong> All versions submitted to the Atlassian Marketplace undergo Atlassian's security review process before becoming publicly available.</li>
+    </ul>
+
+    <h2>11. Vulnerability Disclosure</h2>
+    <p>
+      If you discover a security vulnerability in any of our apps, please report it responsibly
+      by contacting us directly at the email address below. We commit to:
+    </p>
+    <ul>
+      <li>Acknowledging your report within <strong>5 business days</strong>.</li>
+      <li>Investigating and addressing confirmed vulnerabilities in accordance with
+          <a href="https://developer.atlassian.com/platform/marketplace/security-guidelines/" target="_blank" rel="noopener">Atlassian's security bug fix SLAs</a>.</li>
+      <li>Keeping you informed of progress during remediation.</li>
+    </ul>
+    <p>Please do not publicly disclose vulnerabilities until a fix has been released.</p>
+
+    <h2>12. Atlassian Marketplace Compliance</h2>
+    <p>
+      All apps comply with the
+      <a href="https://developer.atlassian.com/platform/marketplace/app-approval-guidelines/" target="_blank" rel="noopener">Atlassian Marketplace App Approval Guidelines</a>
+      and the
+      <a href="https://developer.atlassian.com/platform/marketplace/data-privacy-guidelines/" target="_blank" rel="noopener">Atlassian Data Privacy Guidelines for Developers</a>.
+      Each app version is reviewed and approved by Atlassian before being made available to customers.
+    </p>
+
+    <h2>13. Changes to This Document</h2>
+    <p>
+      This Trust Center may be updated as new apps are published or practices evolve.
+      Material changes will be reflected in the "Last updated" date above.
+      We recommend periodically reviewing this page if you have ongoing compliance requirements.
+    </p>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0; border-top: none; padding-top: 0;">Contact &amp; Security Inquiries</h2>
+      <p>For security disclosures, privacy questions, data subject requests, or any trust-related inquiries:</p>
+      <p style="margin-bottom: 0;">
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Vendor Profile:</strong> <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener">marketplace.atlassian.com/vendors/92692174</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
