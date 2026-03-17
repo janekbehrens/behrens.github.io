@@ -699,6 +699,9 @@
     <p>
       When you run the same job again, the existing Confluence page is <strong>updated in place</strong> — no duplicate pages are created.
     </p>
+    <div class="tip">
+      <strong>Title Conflict Detection:</strong> Confluence requires page titles to be unique per space. When you create or edit a job, the app automatically checks whether a Confluence page with the same name already exists in the selected space. If a conflict is found, a warning appears in the modal — you can rename the job or click <strong>"Create anyway"</strong> to proceed. Jobs with an unresolved conflict also show a <strong>⚠ Title conflict</strong> badge under the job name, and clicking Run shows an additional warning before queuing.
+    </div>
 
     <h3 id="jobs-approval">Approval Workflow</h3>
     <p>
@@ -714,7 +717,7 @@
       </ol>
       <ul>
         <li><strong>View Draft</strong> — Opens the draft page in Confluence so you can review the content, check formatting, and even edit it before publishing.</li>
-        <li><strong>Publish</strong> — Removes the <code>[DRAFT]</code> prefix from the title, making the page a regular published page. The job status changes to <strong>Completed</strong>.</li>
+        <li><strong>Publish</strong> — Removes the <code>[DRAFT]</code> prefix from the title, making the page a regular published page. The job status changes to <strong>Completed</strong>, and the Generation History entry changes to <strong>Approved</strong> with the approver's details.</li>
         <li><strong>Discard</strong> — Deletes the draft page from Confluence and resets the job so you can run it again.</li>
       </ul>
     </div>
@@ -801,7 +804,14 @@
     </p>
     <ul>
       <li><strong>Job</strong> — Which job triggered the generation.</li>
-      <li><strong>Status</strong> — Completed, Failed, or Pending Review. Click a <strong>FAILED</strong> badge to see the full error message in a dialog. <strong>Pending Review</strong> indicates the job used the approval workflow and the draft is awaiting review.</li>
+      <li><strong>Status</strong> — One of four values:
+        <ul>
+          <li><strong>Completed</strong> — Documentation was generated and published successfully.</li>
+          <li><strong>Pending Review</strong> — The job uses the approval workflow and the draft is awaiting review.</li>
+          <li><strong>Approved</strong> — The draft was reviewed and published. Click the green <strong>Approved</strong> badge to see who approved it and when.</li>
+          <li><strong>Failed</strong> — Generation failed. Click the red <strong>Failed</strong> badge to see the full error message.</li>
+        </ul>
+      </li>
       <li><strong>AI Provider &amp; Model</strong> — Which AI service and model were used.</li>
       <li><strong>Files</strong> — Number of files analyzed (e.g. "42/128" means 42 selected out of 128 total).</li>
       <li><strong>Method</strong> — How files were selected: "AI-selected", "Auto-sorted", or "All files".</li>
@@ -1053,6 +1063,18 @@
 
     <!-- ==================== 14. TROUBLESHOOTING ==================== -->
     <h2 id="troubleshooting">16. Troubleshooting</h2>
+
+    <h3>Generation failed: "A Confluence page with this title already exists"</h3>
+    <p>
+      Confluence requires page titles to be unique per space. If a page with the same name as your job already exists in the target space at a different location, the generation will fail. Solutions:
+    </p>
+    <ul>
+      <li><strong>Rename the job</strong> — Edit the job and choose a unique name.</li>
+      <li><strong>Rename or delete the conflicting page</strong> — In Confluence, rename or move the existing page that is causing the conflict.</li>
+    </ul>
+    <p>
+      The app now warns you about this proactively: when creating or editing a job, a warning appears if a conflict is detected before you save. Jobs with known conflicts show a <strong>⚠ Title conflict</strong> badge under the job name.
+    </p>
 
     <h3>Generation failed: "AI response was empty or invalid"</h3>
     <p>
