@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Complete setup and user guide for CodeDoc AI for Confluence — connect AI and Git providers, create documentation jobs, and auto-generate Confluence pages from source code.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
@@ -11,7 +12,7 @@
     .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
     .back:hover { text-decoration: underline; }
     h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
-    .subtitle { color: #6B778C; font-size: 1rem; margin-bottom: 40px; }
+    .subtitle { color: #505F79; font-size: 1rem; margin-bottom: 40px; }
     h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
     h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
     h4 { font-size: 0.95rem; font-weight: 600; margin-top: 20px; margin-bottom: 8px; color: #344563; }
@@ -44,8 +45,13 @@
     .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
-    .screenshot { display: block; max-width: 100%; border: 1px solid #DFE1E6; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .screenshot-caption { font-size: 0.85rem; color: #6B778C; text-align: center; margin-top: -16px; margin-bottom: 24px; }
+    .screenshot { display: block; max-width: 100%; border: 1px solid #DFE1E6; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; opacity: 0.8; border: none; background: none; padding: 4px 8px; }
+    .lightbox-close:hover { opacity: 1; }
+    .screenshot-caption { font-size: 0.85rem; color: #505F79; text-align: center; margin-top: -16px; margin-bottom: 24px; }
     @media (max-width: 600px) {
       .container { padding: 32px 16px; }
       h1 { font-size: 1.5rem; }
@@ -155,7 +161,7 @@
     </nav>
   </nav>
 
-  <div class="container">
+  <main class="container">
     <a class="back" href="index.html">&larr; Back</a>
 
     <h1>Documentation</h1>
@@ -163,7 +169,7 @@
 
     <!-- Video Introduction -->
     <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/TGMBjKaMuM4" title="CodeDoc AI — Introduction Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="https://www.youtube-nocookie.com/embed/TGMBjKaMuM4" title="CodeDoc AI — Introduction Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
 
     <!-- Table of Contents -->
@@ -230,7 +236,7 @@
       Git hosting, and the app takes care of the rest: analyzing your codebase, generating structured documentation in
       Confluence-native format, and keeping it up to date.
     </p>
-    <img src="imgCodeDoc/DashboardTop.png" alt="CodeDoc AI Dashboard" class="screenshot">
+    <img src="imgCodeDoc/DashboardTop.png" alt="CodeDoc AI Dashboard" class="screenshot" width="730" height="296" loading="lazy">
     <p>Key capabilities:</p>
     <ul>
       <li><strong>Multi-provider AI</strong> — Works with Anthropic (Claude), OpenAI (GPT), and Google (Gemini).</li>
@@ -262,17 +268,17 @@
 
     <h3>Overview &amp; Tech Stack</h3>
     <p>The AI generates a structured overview with a technology table listing all frameworks, tools, and cloud services detected in the codebase.</p>
-    <img src="imgCodeDoc/exampleGenerations/3.png" alt="Example: Overview and Tech Stack table" class="screenshot">
+    <img src="imgCodeDoc/exampleGenerations/3.png" alt="Example: Overview and Tech Stack table" class="screenshot" width="730" height="1052" loading="lazy">
     <p class="screenshot-caption">Auto-generated overview with tech stack table — versions, roles, and descriptions extracted from code</p>
 
     <h3>Architecture &amp; Key Modules</h3>
     <p>Complex architectures are broken down into core principles, data flow descriptions, and module-by-module documentation with file references.</p>
-    <img src="imgCodeDoc/exampleGenerations/1.png" alt="Example: Architecture documentation with modules" class="screenshot">
+    <img src="imgCodeDoc/exampleGenerations/1.png" alt="Example: Architecture documentation with modules" class="screenshot" width="730" height="617" loading="lazy">
     <p class="screenshot-caption">Architecture section with core principles, component interaction, and key modules</p>
 
     <h3>API Reference &amp; Dependencies</h3>
     <p>The AI documents APIs, configuration outputs, and software dependencies including version ranges and installation requirements.</p>
-    <img src="imgCodeDoc/exampleGenerations/2.png" alt="Example: API Reference and Dependencies" class="screenshot">
+    <img src="imgCodeDoc/exampleGenerations/2.png" alt="Example: API Reference and Dependencies" class="screenshot" width="730" height="354" loading="lazy">
     <p class="screenshot-caption">API reference with code examples and dependency list</p>
 
     <div class="tip">
@@ -312,7 +318,7 @@
     <p>
       CodeDoc AI uses a <strong>Bring Your Own Key (BYOK)</strong> model. You need an API key from one of the supported providers. The app never stores your source code — it sends it directly from Git to the AI provider using your key.
     </p>
-    <img src="imgCodeDoc/SettingAIProvider.png" alt="AI Provider Configuration" class="screenshot">
+    <img src="imgCodeDoc/SettingAIProvider.png" alt="AI Provider Configuration" class="screenshot" width="730" height="196" loading="lazy">
     <div class="step-box">
       <h3>Instructions</h3>
       <ol>
@@ -337,7 +343,7 @@
     <p>
       Connect your Git hosting service so the app can read your repositories. You need a personal access token or repository access token with <strong>read</strong> permissions.
     </p>
-    <img src="imgCodeDoc/SettingsGitProvider.png" alt="Git Provider Configuration" class="screenshot">
+    <img src="imgCodeDoc/SettingsGitProvider.png" alt="Git Provider Configuration" class="screenshot" width="730" height="292" loading="lazy">
     <div class="step-box">
       <h3>Instructions</h3>
       <ol>
@@ -391,7 +397,7 @@
     <!-- ==================== 6. ADDING REPOSITORIES ==================== -->
     <h2 id="repos">6. Adding Repositories</h2>
     <p>After setup, go to the <strong>Repositories</strong> tab to add the repositories you want to document.</p>
-    <img src="imgCodeDoc/RepoSelection.png" alt="Repository Selection" class="screenshot">
+    <img src="imgCodeDoc/RepoSelection.png" alt="Repository Selection" class="screenshot" width="730" height="179" loading="lazy">
 
     <h3>Option A: Browse Repositories</h3>
     <ol>
@@ -421,7 +427,7 @@
     <p>
       A <strong>job</strong> defines what to document, how to format it, and where to publish it. Go to the <strong>Jobs</strong> tab and click <strong>Create Job</strong>.
     </p>
-    <img src="imgCodeDoc/CreateJobMiddle.png" alt="Create Job — Configuration" class="screenshot">
+    <img src="imgCodeDoc/CreateJobMiddle.png" alt="Create Job — Configuration" class="screenshot" width="730" height="816" loading="lazy">
     <p class="screenshot-caption">Job creation: select repositories, preset, language, and trigger</p>
 
     <h3 id="jobs-presets">Documentation Presets</h3>
@@ -519,7 +525,7 @@
     <p>
       Webhook triggers allow your documentation to automatically regenerate when code changes. The app provides a single <strong>Webhook URL</strong> that works for all jobs. You add this URL to your Git repository's webhook settings, and the app matches incoming events to the correct jobs by repository URL and branch.
     </p>
-    <img src="imgCodeDoc/EditJobWebhook.png" alt="Webhook Trigger Configuration" class="screenshot">
+    <img src="imgCodeDoc/EditJobWebhook.png" alt="Webhook Trigger Configuration" class="screenshot" width="730" height="650" loading="lazy">
     <p class="screenshot-caption">Webhook URL displayed when selecting On Commit or On Merge trigger</p>
 
     <h4>Supported Webhook Events per Provider</h4>
@@ -660,7 +666,7 @@
         </tr>
       </tbody>
     </table>
-    <img src="imgCodeDoc/UpcomingJobSchedule.png" alt="Upcoming Scheduled Jobs" class="screenshot">
+    <img src="imgCodeDoc/UpcomingJobSchedule.png" alt="Upcoming Scheduled Jobs" class="screenshot" width="730" height="107" loading="lazy">
     <p class="screenshot-caption">Upcoming scheduled jobs with countdown timer and last run time</p>
 
     <div class="warning">
@@ -671,7 +677,7 @@
     <p>
       Before generating documentation, the app analyzes your repository to determine which files to include. You have several options:
     </p>
-    <img src="imgCodeDoc/CreateJobButtom.png" alt="File Analysis Preview" class="screenshot">
+    <img src="imgCodeDoc/CreateJobButtom.png" alt="File Analysis Preview" class="screenshot" width="730" height="564" loading="lazy">
     <p class="screenshot-caption">Analysis preview showing file count, token estimate, and AI-selected files</p>
     <ul>
       <li><strong>All files</strong> — Every code file in the repository (or filtered path) is sent to the AI.</li>
@@ -734,7 +740,7 @@
       Custom Presets let you save a complete documentation configuration as a named, reusable template. Instead of re-configuring documentation style, language, file filters, and output settings for every new job, you create a preset once and load it with one click.
     </p>
 
-    <img src="imgCodeDoc/Presets.png" alt="Custom Presets Tab" class="screenshot">
+    <img src="imgCodeDoc/Presets.png" alt="Custom Presets Tab" class="screenshot" width="730" height="398" loading="lazy">
     <p class="screenshot-caption">Presets tab — create, edit, duplicate, and delete reusable documentation configurations</p>
 
     <h3>What a Preset Stores</h3>
@@ -777,7 +783,7 @@
     <p>
       The Dashboard is the first screen you see when opening CodeDoc AI. It provides an overview of your documentation activity.
     </p>
-    <img src="imgCodeDoc/DashboardFull.png" alt="Dashboard — Full View" class="screenshot">
+    <img src="imgCodeDoc/DashboardFull.png" alt="Dashboard — Full View" class="screenshot" width="730" height="611" loading="lazy">
     <p class="screenshot-caption">Dashboard with generation activity chart and quick-run job list</p>
     <ul>
       <li><strong>Generation Activity Chart</strong> — Visualizes your generation history over 7 days, 4 weeks, or 12 months. Shows completed (green) and failed (red) runs.</li>
@@ -797,7 +803,7 @@
     </p>
 
     <h3>Generation History</h3>
-    <img src="imgCodeDoc/GenerationHistory.png" alt="Generation History" class="screenshot">
+    <img src="imgCodeDoc/GenerationHistory.png" alt="Generation History" class="screenshot" width="730" height="204" loading="lazy">
     <p class="screenshot-caption">Complete generation log with status, model, file count, and token usage</p>
     <p>
       A complete log of every documentation generation with the following details:
@@ -834,13 +840,13 @@
     </p>
 
     <h3 id="settings-ai">AI Provider</h3>
-    <img src="imgCodeDoc/SettingAIProvider.png" alt="AI Provider Settings" class="screenshot">
+    <img src="imgCodeDoc/SettingAIProvider.png" alt="AI Provider Settings" class="screenshot" width="730" height="196" loading="lazy">
     <p>
       View your current AI provider and model, or switch to a different one. When you change providers or keys, the app validates the connection and fetches available models. Click <strong>Refresh Models</strong> to discover newly released models from your provider.
     </p>
 
     <h3 id="settings-git">Git Providers</h3>
-    <img src="imgCodeDoc/SettingsGitProvider.png" alt="Git Provider Settings" class="screenshot">
+    <img src="imgCodeDoc/SettingsGitProvider.png" alt="Git Provider Settings" class="screenshot" width="730" height="292" loading="lazy">
     <p>
       You can connect <strong>multiple Git providers</strong> simultaneously — for example, a work GitHub and a personal GitLab. Each provider is listed with its type, display label, connected user, and date added.
     </p>
@@ -850,7 +856,7 @@
     </ul>
 
     <h3 id="settings-webhook">Webhook Configuration</h3>
-    <img src="imgCodeDoc/SettingWebhookConfiguration.png" alt="Webhook Configuration" class="screenshot">
+    <img src="imgCodeDoc/SettingWebhookConfiguration.png" alt="Webhook Configuration" class="screenshot" width="730" height="236" loading="lazy">
     <p>
       The Settings page displays your <strong>Webhook URL</strong> — a single URL that works for all your webhook-triggered jobs. Add this URL to any repository's webhook configuration in your Git provider. The app automatically matches incoming events to the correct jobs based on the repository URL and branch.
     </p>
@@ -859,7 +865,7 @@
     </div>
 
     <h3 id="settings-limits">Generation Limits</h3>
-    <img src="imgCodeDoc/SettingsGenerationLimits.png" alt="Generation Limits Settings" class="screenshot">
+    <img src="imgCodeDoc/SettingsGenerationLimits.png" alt="Generation Limits Settings" class="screenshot" width="730" height="301" loading="lazy">
     <p>
       Fine-tune how the app handles large repositories:
     </p>
@@ -1015,7 +1021,7 @@
       <li>Under <strong>Job Operator Groups</strong>, add the group(s) whose members should be able to create and run jobs.</li>
       <li>To manage group members, go to <strong>Confluence Settings &rarr; Groups</strong> and add or remove users there.</li>
     </ol>
-    <img src="imgCodeDoc/PermissionManagement.png" alt="CodeDoc AI Permissions tab showing Administrator Groups and Job Operator Groups" class="screenshot">
+    <img src="imgCodeDoc/PermissionManagement.png" alt="CodeDoc AI Permissions tab showing Administrator Groups and Job Operator Groups" class="screenshot" width="730" height="565" loading="lazy">
     <p class="screenshot-caption">Permissions tab — two dedicated groups assigned to their respective roles. The current user's role (Administrator) is shown in the top-right corner next to the AI provider and model.</p>
 
     <div class="tip">
@@ -1265,15 +1271,38 @@
         &copy; 2026 Janek Behrens
       </p>
     </div>
+  </main>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
   </div>
 
   <script>
+    // Lightbox
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.src;
+      lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('.screenshot').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+
     (function () {
       var ids = [
         'overview', 'how-it-works', 'examples', 'install',
         'setup', 'setup-ai', 'setup-git',
         'repos',
-        'jobs', 'jobs-presets', 'jobs-triggers', 'jobs-webhooks', 'jobs-schedule', 'jobs-files', 'jobs-target',
+        'jobs', 'jobs-presets', 'jobs-triggers', 'jobs-webhooks', 'jobs-schedule', 'jobs-files', 'jobs-target', 'jobs-approval',
+        'presets',
         'dashboard', 'queue',
         'settings', 'settings-ai', 'settings-git', 'settings-webhook', 'settings-limits',
         'providers', 'editions',
@@ -1283,30 +1312,39 @@
 
       var tocLinks = document.querySelectorAll('.sidebar-toc a[href^="#"]');
 
-      function findActiveId() {
-        var scrollTop = window.pageYOffset + 130;
-        var active = ids[0];
-        for (var i = 0; i < ids.length; i++) {
-          var el = document.getElementById(ids[i]);
-          if (el && el.getBoundingClientRect().top + window.pageYOffset <= scrollTop) {
-            active = ids[i];
-          }
-        }
-        return active;
+      // Cache section positions — avoids getBoundingClientRect() in scroll handler (forced reflow)
+      var sectionTops = [];
+      function recalcPositions() {
+        sectionTops = ids.map(function (id) {
+          var el = document.getElementById(id);
+          return el ? el.offsetTop : 0;
+        });
       }
+      recalcPositions();
+      window.addEventListener('resize', recalcPositions, { passive: true });
 
-      function update() {
-        var active = findActiveId();
+      var activeId = null;
+      function setActive(id) {
+        if (id === activeId) return;
+        activeId = id;
         for (var i = 0; i < tocLinks.length; i++) {
-          var href = tocLinks[i].getAttribute('href');
-          var isActive = href === '#' + active;
-          if (isActive && !tocLinks[i].classList.contains('active')) {
+          var isActive = tocLinks[i].getAttribute('href') === '#' + id;
+          if (isActive) {
             tocLinks[i].classList.add('active');
             tocLinks[i].scrollIntoView({ block: 'nearest' });
-          } else if (!isActive) {
+          } else {
             tocLinks[i].classList.remove('active');
           }
         }
+      }
+
+      function update() {
+        var scrollTop = window.pageYOffset + 130;
+        var active = ids[0];
+        for (var i = 0; i < sectionTops.length; i++) {
+          if (sectionTops[i] <= scrollTop) active = ids[i];
+        }
+        setActive(active);
       }
 
       var ticking = false;
