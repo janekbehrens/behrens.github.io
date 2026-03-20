@@ -677,7 +677,7 @@
     <p>
       Before generating documentation, the app analyzes your repository to determine which files to include. You have several options:
     </p>
-    <img src="imgCodeDoc/CreateJobButtom.png" alt="File Analysis Preview" class="screenshot" width="730" height="564" loading="lazy">
+    <img src="imgCodeDoc/Fileselection.png" alt="File Analysis Preview" class="screenshot" width="730" height="564" loading="lazy">
     <p class="screenshot-caption">Analysis preview showing file count, token estimate, and AI-selected files</p>
     <ul>
       <li><strong>All files</strong> — Every code file in the repository (or filtered path) is sent to the AI.</li>
@@ -691,6 +691,77 @@
     </p>
     <div class="tip">
       <strong>Tip:</strong> AI-powered file selection is especially useful for large repositories. Instead of sending hundreds of files (and consuming many tokens), let the AI pick the 20–50 most relevant ones. This produces better documentation at lower cost.
+    </div>
+
+    <h4>Advanced: Custom File Filters</h4>
+    <p>
+      Expand the <strong>Advanced: Custom file filters</strong> section to fine-tune exactly which files are included or excluded using glob patterns.
+    </p>
+    <img src="imgCodeDoc/Fileselection-advanced.png" alt="Advanced Custom File Filters" class="screenshot" width="730" height="310" loading="lazy">
+    <p class="screenshot-caption">Advanced file filters — exclude test files and restrict to specific directories</p>
+    <ul>
+      <li><strong>Exclude patterns</strong> — One pattern per line. Files matching any of these patterns are removed from the file list before analysis. Example: <code>**/*.test.ts</code>, <code>**/*.spec.js</code>, <code>migrations/**</code>.</li>
+      <li><strong>Include patterns</strong> — One pattern per line. Files matching these patterns are always kept, even if they also match an exclude pattern. Include patterns act as an override for excludes — they do not restrict the total file list to only matching files. Example: <code>src/**</code>, <code>lib/**</code>.</li>
+    </ul>
+    <p>
+      Both fields use glob syntax: <code>*</code> matches any filename characters (not path separators), <code>**</code> matches any path depth including subdirectories. Leave both fields empty to use the smart defaults (common build artifacts, lock files, and binary files are already filtered automatically).
+    </p>
+
+    <h4>Common Pattern Examples</h4>
+    <table class="feature-table">
+      <thead>
+        <tr><th>Pattern</th><th>What it matches</th><th>Field</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>**/*.test.ts</code></td>
+          <td>All TypeScript test files anywhere in the repo</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>**/*.spec.js</code></td>
+          <td>All JavaScript spec files anywhere in the repo</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>**/migrations/**</code></td>
+          <td>All files inside any <code>migrations/</code> folder, at any depth</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>**/__tests__/**</code></td>
+          <td>All files inside any <code>__tests__/</code> folder (Jest convention)</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>**/fixtures/**</code></td>
+          <td>All test fixture files, wherever they live</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>**/*.min.js</code></td>
+          <td>All minified JavaScript files (already excluded by default, but usable as example)</td>
+          <td>Exclude</td>
+        </tr>
+        <tr>
+          <td><code>src/**</code></td>
+          <td>Only files under the top-level <code>src/</code> directory</td>
+          <td>Include (override)</td>
+        </tr>
+        <tr>
+          <td><code>lib/**</code></td>
+          <td>Only files under the top-level <code>lib/</code> directory</td>
+          <td>Include (override)</td>
+        </tr>
+        <tr>
+          <td><code>backend/src/**</code></td>
+          <td>Only files under <code>backend/src/</code> in a monorepo</td>
+          <td>Include (override)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip">
+      <strong>Include patterns do not act as a whitelist.</strong> They only rescue files that would have been removed by an exclude pattern. A file that matches neither include nor exclude is always kept. To restrict analysis to a specific directory without using excludes, use the <strong>Path filter</strong> field instead.
     </div>
 
     <h4>Output Token Limit</h4>
