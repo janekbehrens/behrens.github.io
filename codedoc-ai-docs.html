@@ -1127,7 +1127,7 @@
     </ol>
 
     <div class="warning">
-      <strong>Important:</strong> All processing takes place on <strong>Atlassian's Forge infrastructure</strong>. This means your source code and generated documentation transit through Atlassian-managed servers at every step. Additionally, your source code is transmitted to your external AI provider for processing. The app does not cache or retain source code after transmission. Each AI provider has its own data handling and retention policies — review your AI provider's terms before sending sensitive code.
+      <strong>Important:</strong> All processing takes place on <strong>Atlassian's Forge infrastructure</strong>. This means your source code is fetched from Git and loaded directly into the Forge runtime (running on Atlassian's servers), where it is held in memory and processed before being forwarded to your AI provider. The generated documentation is likewise processed within the Forge runtime before being written to Confluence. Additionally, your source code is transmitted to your external AI provider for processing. The app does not cache or retain source code after the Forge function completes. Each AI provider has its own data handling and retention policies — review your AI provider's terms before sending sensitive code.
     </div>
 
     <ul>

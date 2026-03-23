@@ -70,7 +70,7 @@
     <h2>3. Data We Access</h2>
     <p>The App accesses the following data solely to provide its functionality:</p>
     <ul>
-      <li><strong>Source code:</strong> Fetched from your Git repositories using your access token. Code is read on demand when a documentation job runs and is not cached or retained after processing.</li>
+      <li><strong>Source code:</strong> Fetched from your Git repositories by the <strong>Atlassian Forge runtime</strong> (running on Atlassian's infrastructure) using your access token. The code is loaded into the Forge runtime's memory, processed there, and forwarded to your AI provider. Code is not cached or retained after the job execution completes.</li>
       <li><strong>Confluence data:</strong> Space names and page IDs — used to create or update documentation pages in the spaces you select.</li>
       <li><strong>AI API:</strong> Your source code is sent to your chosen AI provider using your API key for documentation generation. The response (generated documentation) is published to Confluence.</li>
     </ul>
@@ -168,7 +168,7 @@
     <ul>
       <li><strong>Configuration data</strong> (providers, jobs, repositories) is retained in Forge Storage as long as the App is installed. Uninstalling the App removes all stored data.</li>
       <li><strong>Generation history</strong> (metadata only — no source code or content) is stored until you clear it via the "Clear History" function or uninstall the App.</li>
-      <li><strong>Source code</strong> is never stored. It is read from Git, sent to the AI provider, and discarded within the same job execution.</li>
+      <li><strong>Source code</strong> is never stored. It is fetched from Git into the Atlassian Forge runtime, processed in memory, forwarded to the AI provider, and discarded within the same job execution.</li>
       <li><strong>Generated documentation</strong> is stored as standard Confluence pages. These pages persist independently of the App and are not deleted upon uninstallation.</li>
     </ul>
 
@@ -180,9 +180,10 @@
     </p>
     <p>
       However, if your source code or generated documentation contains personal data, please note
-      that this data is transmitted to your AI provider as part of the generation process. Review your
-      AI provider's GDPR compliance and data processing agreement before processing code that
-      contains personal data.
+      that this data is loaded into and processed by the <strong>Atlassian Forge runtime</strong> (on
+      Atlassian's infrastructure) and is also transmitted to your AI provider as part of the generation
+      process. Review both Atlassian's and your AI provider's GDPR compliance and data processing
+      agreements before processing code that contains personal data.
     </p>
     <p>If you have any GDPR-related concerns, please contact us at the email address below.</p>
 
