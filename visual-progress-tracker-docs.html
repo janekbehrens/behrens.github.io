@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
   <title>Documentation — Visual Progress Tracker for Jira</title>
+  <meta name="description" content="Complete setup and user guide for Visual Progress Tracker for Jira — add color-coded progress bars to your issues, configure status mappings, and track progress in list view and dashboards.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
@@ -20,7 +22,12 @@
     strong { color: #172B4D; }
     a { color: #0052CC; text-decoration: none; }
     a:hover { text-decoration: underline; }
-    img { max-width: 100%; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    img { display: block; max-width: 100%; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; border: none; margin: 0; }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; opacity: 0.8; border: none; background: none; padding: 4px 8px; }
+    .lightbox-close:hover { opacity: 1; }
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
     .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
@@ -167,7 +174,7 @@
       to <span style="color:#FF991F;">yellow</span> to <span style="color:#00875A;">green</span>
       as progress increases — giving your team instant, at-a-glance visibility.
     </p>
-    <img src="img/ticket.png" alt="Jira issue view showing all three progress bar field types with color-coded bars">
+    <img src="img/ticket.png" alt="Jira issue view showing all three progress bar field types with color-coded bars" class="screenshot" width="730" height="366" loading="lazy">
 
     <!-- 2. Installation -->
     <h2 id="install">2. Installation</h2>
@@ -250,7 +257,7 @@
       <li>Click <strong>Save</strong>.</li>
       <li>Now every issue with the Status progress bar field will automatically show the mapped percentage.</li>
     </ol>
-    <img src="img/admin-progress.png" alt="Admin page showing status-to-progress mapping configuration">
+    <img src="img/admin-progress.png" alt="Admin page showing status-to-progress mapping configuration" class="screenshot" width="730" height="884" loading="lazy">
     <h3>Use Cases</h3>
     <ul>
       <li>Teams with well-defined workflows where status = progress.</li>
@@ -302,7 +309,7 @@
       All three field types are visible as <strong>columns in Jira list view</strong>, giving you a
       project-wide overview of progress across all issues.
     </p>
-    <img src="img/listview.png" alt="Jira list view with progress bar columns showing red, yellow, and green bars">
+    <img src="img/listview.png" alt="Jira list view with progress bar columns showing red, yellow, and green bars" class="screenshot" width="730" height="669" loading="lazy">
     <div class="step-box">
       <h3>How to Add the Column</h3>
       <ol>
@@ -324,7 +331,7 @@
     <p>
       Access the settings page from <strong>Apps → Visual Progress Tracker</strong> in the top navigation bar.
     </p>
-    <img src="img/admin-colors.png" alt="Admin page showing color threshold settings with red, yellow, and green zones">
+    <img src="img/admin-colors.png" alt="Admin page showing color threshold settings with red, yellow, and green zones" class="screenshot" width="730" height="485" loading="lazy">
     <h3>Color Thresholds</h3>
     <p>
       Customize when progress bars switch colors. Default values:
@@ -361,7 +368,7 @@
       The <strong>Progress Tracker Overview</strong> dashboard gadget shows a table of all issues
       in a selected project with their progress values — perfect for team leads and stakeholders.
     </p>
-    <img src="img/dashboard.png" alt="Jira dashboard showing the Progress Tracker Overview gadget with a project summary table">
+    <img src="img/dashboard.png" alt="Jira dashboard showing the Progress Tracker Overview gadget with a project summary table" class="screenshot" width="730" height="603" loading="lazy">
     <div class="step-box">
       <h3>How to Add the Gadget</h3>
       <ol>
@@ -510,7 +517,29 @@
     </div>
   </div>
 
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
   <script>
+    // Lightbox
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.src;
+      lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('img.screenshot').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+
     (function () {
       var ids = [
         'overview', 'install', 'add-fields',
