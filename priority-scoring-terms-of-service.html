@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <title>Terms of Service — Priority Scoring for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #505F79; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .legal-caps { font-size: 0.9rem; color: #505F79; text-transform: none; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    .pdf-btn { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 4px; padding: 5px 12px; font-size: 0.82rem; color: #505F79; cursor: pointer; font-family: inherit; }
+    .pdf-btn:hover { background: #EBECF0; color: #172B4D; }
+    @media print { .back, .pdf-btn { display: none !important; } body { background: #fff; } .container { padding: 20px 0; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+      <a class="back" style="margin-bottom: 0;" href="index.html">&larr; Back</a>
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: March 30, 2026</p>
+
+    <h2>1. Agreement</h2>
+    <p>
+      By installing or using Priority Scoring — RICE, WSJF, ICE &amp; Rovo AI for Jira
+      ("the App"), you agree to these Terms of Service ("Terms"). If you do not agree,
+      do not install or use the App. These Terms apply in addition to the
+      <a href="https://www.atlassian.com/licensing/marketplace/termsofuse" target="_blank" rel="noopener">Atlassian Marketplace Terms of Use</a>
+      and the
+      <a href="https://www.atlassian.com/legal/software-license-agreement" target="_blank" rel="noopener">Atlassian Customer Agreement</a>.
+    </p>
+
+    <h2>2. Description of the App</h2>
+    <p>Priority Scoring for Jira is a Jira Cloud app that helps teams prioritise their backlog using structured scoring frameworks. The App provides:</p>
+    <ul>
+      <li><strong>Three custom field types</strong> on Jira issues: RICE score (Reach × Impact × Confidence ÷ Effort), WSJF score (Business Value + Time Criticality + Risk Reduction ÷ Job Size), and ICE score (Impact × Confidence × Ease).</li>
+      <li><strong>A global dashboard page</strong> for project-level priority ranking and backlog health analysis.</li>
+      <li><strong>A dashboard gadget</strong> showing ranked priority scores across a project's issues.</li>
+      <li><strong>A Rovo AI agent</strong> ("Priority Scoring") that can suggest and — depending on the configured apply mode — apply RICE, WSJF, or ICE scores by analysing Jira issue content.</li>
+    </ul>
+
+    <h2>3. License</h2>
+    <p>
+      Subject to these Terms, we grant you a limited, non-exclusive, non-transferable license
+      to use the App on your Atlassian Jira Cloud instance in accordance with your Atlassian
+      Marketplace subscription.
+    </p>
+
+    <h2>4. Acceptable Use</h2>
+    <p>You agree to:</p>
+    <ul>
+      <li>Use the App only for its intended purpose within Jira Cloud.</li>
+      <li>Not reverse-engineer, decompile, or attempt to extract the source code of the App.</li>
+      <li>Not use the App in any way that violates applicable laws or Atlassian's terms.</li>
+      <li>Configure the Rovo AI apply mode appropriately for your organisation's policies before enabling score-writing via Rovo.</li>
+    </ul>
+
+    <h2>5. AI Features — Important Notice</h2>
+    <p>
+      The App includes a Rovo AI agent that uses Atlassian's Rovo platform to analyse Jira
+      issue content and suggest or apply priority scores. By using this feature, you
+      acknowledge and agree to the following:
+    </p>
+    <ul>
+      <li><strong>Scores are advisory.</strong> AI-generated scoring suggestions are decision-support tools only. They are not a substitute for professional judgement, business expertise, or due diligence. Your team is solely responsible for all prioritisation decisions.</li>
+      <li><strong>Atlassian's AI terms apply.</strong> Issue content processed by the Rovo agent is subject to
+        <a href="https://www.atlassian.com/legal/privacy-policy" target="_blank" rel="noopener">Atlassian's Privacy Policy</a>
+        and their AI data handling terms. We do not control or operate Atlassian's AI infrastructure.</li>
+      <li><strong>Apply mode controls what the Rovo agent is permitted to do.</strong> The App offers three modes: suggest (read-only, no writes), confirm (single-issue writes), and auto (bulk writes). In all cases, Rovo presents a summary of planned actions before executing them and requires explicit user confirmation. Administrators are responsible for choosing the mode appropriate to their organisation and for setting a sensible bulk limit.</li>
+      <li><strong>Optional comment writing.</strong> If enabled, the Rovo AI agent may post comments on Jira issues. This feature is disabled by default and must be explicitly activated by an administrator.</li>
+      <li><strong>AI output accuracy.</strong> We make no representations about the accuracy, completeness, or suitability of AI-generated score suggestions. Results depend on the quality and completeness of issue descriptions in your Jira instance.</li>
+    </ul>
+
+    <h2>6. Availability and Support</h2>
+    <ul>
+      <li>The App is provided on an "as available" basis. We aim for high availability but do not guarantee uninterrupted service.</li>
+      <li>The App runs on the Atlassian Forge platform; its availability depends on Atlassian's infrastructure.</li>
+      <li>Support is available Monday – Sunday, including holidays. Support requests can be sent to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>. We aim to respond within 24 hours. For critical issues, include "URGENT" in the subject line.</li>
+    </ul>
+
+    <h2>7. Data and Privacy</h2>
+    <p>
+      Our handling of data is described in our <a href="priority-scoring-privacy-policy.html">Privacy Policy</a>. In summary:
+    </p>
+    <ul>
+      <li>The App processes Jira issue data solely to compute and display priority scores and backlog health metrics.</li>
+      <li>All data remains within the Atlassian platform. We operate no external servers.</li>
+      <li>Score dimensions and configuration are stored in Atlassian Forge Storage and are deleted when the App is uninstalled.</li>
+      <li>When the Rovo AI agent analyses issues, issue summaries and descriptions are processed within Atlassian's Rovo platform, subject to Atlassian's AI data handling terms.</li>
+    </ul>
+
+    <h2>8. Intellectual Property</h2>
+    <p>
+      The App, including its code, design, and documentation, is the intellectual property
+      of Janek Behrens. Your license to use the App does not transfer any ownership rights.
+      Scoring methodologies (RICE, WSJF, ICE) are established industry frameworks and are
+      not owned by us.
+    </p>
+
+    <h2>9. Disclaimer of Warranties</h2>
+    <p class="legal-caps">
+      The App is provided "as is" and "as available" without warranties of any kind, express
+      or implied, including but not limited to warranties of merchantability, fitness for a
+      particular purpose, and non-infringement. We do not warrant that the App will be
+      error-free, secure, or uninterrupted. We make no warranty regarding the accuracy,
+      reliability, or completeness of AI-generated scoring suggestions.
+    </p>
+
+    <h2>10. Limitation of Liability</h2>
+    <p class="legal-caps">
+      To the maximum extent permitted by applicable law, in no event shall Janek Behrens be
+      liable for any indirect, incidental, special, consequential, or punitive damages, or any
+      loss of profits, data, business opportunities, or goodwill, arising out of or in
+      connection with your use of the App or reliance on AI-generated scores, regardless of
+      the theory of liability.
+    </p>
+    <p class="legal-caps">
+      Our total liability for any claim arising from or related to the App shall not exceed
+      the amount you paid for the App in the twelve (12) months preceding the claim.
+    </p>
+
+    <h2>11. Termination</h2>
+    <ul>
+      <li>You may stop using the App at any time by uninstalling it from your Jira instance.</li>
+      <li>We may discontinue or modify the App at any time. We will provide reasonable notice for significant changes.</li>
+      <li>Upon uninstallation, all App-related data in Forge Storage is deleted. Custom field values remain in Jira until the fields are removed from Jira's field configuration.</li>
+    </ul>
+
+    <h2>12. Changes to These Terms</h2>
+    <p>
+      We may update these Terms from time to time. The "Last updated" date above reflects
+      the most recent revision. Continued use of the App after changes constitutes acceptance
+      of the updated Terms.
+    </p>
+
+    <h2>13. Governing Law</h2>
+    <p>
+      These Terms are governed by the laws of the Federal Republic of Germany. Any disputes
+      shall be subject to the exclusive jurisdiction of the courts in Germany.
+    </p>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">14. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For questions about these Terms, contact us at:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #DFE1E6; color: #505F79; font-size: 0.825rem; line-height: 1.7;">
+      <p>
+        <a href="impressum.html" style="color: #0052CC; text-decoration: none;">Impressum</a> &nbsp;&middot;&nbsp;
+        <a href="index.html" style="color: #0052CC; text-decoration: none;">All Products</a>
+      </p>
+      <p style="margin-top: 8px;">&copy; 2026 Janek Behrens. All rights reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>
