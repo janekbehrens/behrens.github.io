@@ -23,7 +23,8 @@
     strong { color: #172B4D; }
     a { color: #0052CC; text-decoration: none; }
     a:hover { text-decoration: underline; }
-    img { display: block; max-width: 100%; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    p a, li a { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
     .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
     .lightbox-overlay.active { display: flex; }
     .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; border: none; margin: 0; }
@@ -36,10 +37,10 @@
     .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
     .tip strong { color: #0052CC; }
     .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
-    .warning strong { color: #FF991F; }
+    .warning strong { color: #6B3D00; }
     code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
     .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
-    .toc h3 { margin-top: 0; color: #172B4D; font-size: 1rem; margin-bottom: 12px; }
+    .toc h2 { margin-top: 0; color: #172B4D; font-size: 1rem; font-weight: 600; border-bottom: none; padding-bottom: 0; margin-bottom: 12px; }
     .toc ol { margin-bottom: 0; }
     .toc li { margin-bottom: 4px; }
     .badge { display: inline-block; background: #00875A; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
@@ -72,7 +73,7 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #97A0AF;
+      color: #5E6C84;
       margin-bottom: 14px;
       padding-left: 12px;
     }
@@ -142,7 +143,7 @@
 
     <!-- Table of Contents (shown on narrow screens) -->
     <div class="toc">
-      <h3>Contents</h3>
+      <h2>Contents</h2>
       <ol>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#install">Installation</a></li>
@@ -171,8 +172,8 @@
       <li><strong>Subtask Progress</strong> — Automatically calculates completion from resolved subtasks.</li>
     </ul>
     <p>
-      All three types display a colored bar that shifts from <span style="color:#DE350B;">red</span>
-      to <span style="color:#FF991F;">yellow</span> to <span style="color:#00875A;">green</span>
+      All three types display a colored bar that shifts from <span style="color:#AE2A19;">red</span>
+      to <span style="color:#974B00;">yellow</span> to <span style="color:#006644;">green</span>
       as progress increases — giving your team instant, at-a-glance visibility.
     </p>
     <img src="img/ticket.png" alt="Jira issue view showing all three progress bar field types with color-coded bars" class="screenshot" width="730" height="366" loading="lazy">
@@ -338,9 +339,9 @@
       Customize when progress bars switch colors. Default values:
     </p>
     <ul>
-      <li><span style="color:#DE350B;"><strong>Red</strong></span> — 0% to 33%</li>
-      <li><span style="color:#FF991F;"><strong>Yellow</strong></span> — 34% to 66%</li>
-      <li><span style="color:#00875A;"><strong>Green</strong></span> — 67% to 100%</li>
+      <li><span style="color:#AE2A19;"><strong>Red</strong></span> — 0% to 33%</li>
+      <li><span style="color:#974B00;"><strong>Yellow</strong></span> — 34% to 66%</li>
+      <li><span style="color:#006644;"><strong>Green</strong></span> — 67% to 100%</li>
     </ul>
     <p>
       Adjust these thresholds to match your team's expectations. For example, set the green threshold to 80% if you only want bars to turn green near completion.
