@@ -24,17 +24,18 @@
     strong { color: #172B4D; }
     a { color: #0052CC; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    p a, li a { text-decoration: underline; }
     code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
     .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
     .step-box h3 { margin-top: 0; }
     .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
     .tip strong { color: #0052CC; }
     .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
-    .warning strong { color: #FF991F; }
+    .warning strong { color: #6B3D00; }
     .danger { background: #FFEBE6; border-left: 4px solid #DE350B; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
     .danger strong { color: #DE350B; }
     .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
-    .toc h3 { margin-top: 0; color: #172B4D; font-size: 1rem; margin-bottom: 12px; }
+    .toc h2 { margin-top: 0; color: #172B4D; font-size: 1rem; font-weight: 600; border-bottom: none; padding-bottom: 0; margin-bottom: 12px; }
     .toc ol { margin-bottom: 0; }
     .toc li { margin-bottom: 4px; }
     .toc ol ol { margin-top: 4px; margin-bottom: 0; }
@@ -47,7 +48,7 @@
     .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
-    .screenshot { display: block; max-width: 100%; border: 1px solid #DFE1E6; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .screenshot { display: block; max-width: 100%; height: auto; border: 1px solid #DFE1E6; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
     .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
     .lightbox-overlay.active { display: flex; }
     .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; }
@@ -77,7 +78,7 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #97A0AF;
+      color: #5E6C84;
       margin-bottom: 14px;
       padding-left: 12px;
     }
@@ -106,7 +107,7 @@
     .sidebar-toc a.sub-item {
       font-size: 0.76rem;
       padding-left: 22px;
-      color: #97A0AF;
+      color: #5E6C84;
     }
     .sidebar-toc a.sub-item.active {
       color: #0052CC;
@@ -176,7 +177,7 @@
 
     <!-- Table of Contents -->
     <div class="toc">
-      <h3>Contents</h3>
+      <h2>Contents</h2>
       <ol>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#how-it-works">How It Works</a></li>
