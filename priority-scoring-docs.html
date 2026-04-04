@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <title>Documentation — Priority Scoring — RICE, WSJF &amp; ICE for Jira</title>
+  <meta name="description" content="Complete setup and user guide for Priority Scoring — RICE, WSJF &amp; ICE for Jira. Add structured priority scores to your backlog, configure Board Health, and let the Rovo AI agent score issues automatically.">
+  <link rel="canonical" href="https://janekbehrens.de/priority-scoring-docs.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Priority Scoring — RICE, WSJF &amp; ICE for Jira",
+        "description": "Atlassian Forge app that brings structured priority scoring frameworks (RICE, WSJF, ICE) to Jira — with Rovo AI integration for automatic scoring, Board Health monitoring, and Portfolio-wide visibility.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free trial available, then per-user subscription"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Documentation — Priority Scoring — RICE, WSJF &amp; ICE for Jira",
+        "description": "Complete setup and user guide for Priority Scoring — RICE, WSJF &amp; ICE for Jira.",
+        "url": "https://janekbehrens.de/priority-scoring-docs.html",
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #505F79; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p a, li a, .tip a, .warning a, .danger a { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; border: none; margin: 0; }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; opacity: 0.8; border: none; background: none; padding: 4px 8px; }
+    .lightbox-close:hover { opacity: 1; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #6B3D00; }
+    .danger { background: #FFEBE6; border-left: 4px solid #DE350B; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .danger strong { color: #AE2A19; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+    .formula { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 6px; padding: 12px 18px; margin: 12px 0 20px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.95rem; color: #172B4D; text-align: center; }
+    .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
+    .toc h2 { margin-top: 0; color: #172B4D; font-size: 1rem; font-weight: 600; border-bottom: none; padding-bottom: 0; margin-bottom: 12px; }
+    .toc ol { margin-bottom: 0; }
+    .toc li { margin-bottom: 4px; }
+    .badge { display: inline-block; background: #00875A; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+    .badge.free { background: #00875A; }
+    .badge.paid { background: #0052CC; }
+    .feature-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .feature-table th { background: #F4F5F7; text-align: left; padding: 10px 14px; border: 1px solid #DFE1E6; font-weight: 600; }
+    .feature-table td { padding: 10px 14px; border: 1px solid #DFE1E6; vertical-align: top; }
+    .feature-table tr:nth-child(even) td { background: #FAFBFC; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+
+    /* ===== Flow Diagram ===== */
+    .flow-diagram {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0;
+      background: #fff;
+      border: 1px solid #DFE1E6;
+      border-radius: 8px;
+      padding: 28px 16px;
+      margin: 24px 0;
+      justify-content: center;
+    }
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 128px;
+    }
+    .flow-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #0052CC;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+    .flow-circle.green { background: #00875A; }
+    .flow-label {
+      font-size: 0.82rem;
+      text-align: center;
+      color: #172B4D;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+    .flow-sublabel {
+      font-size: 0.72rem;
+      text-align: center;
+      color: #5E6C84;
+      line-height: 1.3;
+      margin-top: 4px;
+    }
+    .flow-connector {
+      width: 36px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #97A0AF;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-bottom: 24px;
+    }
+
+    /* ===== Sticky sidebar TOC ===== */
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 0;
+      width: 220px;
+      height: 100vh;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding: 52px 16px 52px 0;
+    }
+    .sidebar::-webkit-scrollbar { display: none; }
+    .sidebar-toc-heading {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5E6C84;
+      margin-bottom: 14px;
+      padding-left: 12px;
+    }
+    .sidebar-toc a {
+      display: block;
+      font-size: 0.81rem;
+      line-height: 1.4;
+      color: #505F79;
+      text-decoration: none;
+      padding: 3px 8px 3px 10px;
+      border-left: 2px solid transparent;
+      margin-bottom: 1px;
+      transition: color 0.18s, border-color 0.18s, background-color 0.18s;
+      border-radius: 0 4px 4px 0;
+    }
+    .sidebar-toc a:hover { color: #172B4D; text-decoration: none; }
+    .sidebar-toc a.active {
+      color: #0052CC;
+      border-left-color: #0052CC;
+      font-weight: 500;
+      background: rgba(0, 82, 204, 0.05);
+    }
+    @media (min-width: 1260px) {
+      .sidebar { display: block; left: calc(50vw - 630px); }
+      .toc { display: none; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; }
+      .flow-diagram { gap: 0; padding: 20px 8px; }
+      .flow-step { width: 90px; }
+      .flow-label { font-size: 0.72rem; }
+      .flow-sublabel { font-size: 0.65rem; }
+      .flow-connector { width: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky sidebar (visible on wide screens) -->
+  <nav class="sidebar">
+    <div class="sidebar-toc-heading">Contents</div>
+    <nav class="sidebar-toc">
+      <a href="#overview">1. Overview</a>
+      <a href="#install">2. Installation</a>
+      <a href="#create-fields">3. Create Custom Fields</a>
+      <a href="#add-to-screens">4. Add Fields to Screens</a>
+      <a href="#score-issue">5. Score an Issue</a>
+      <a href="#dashboard">6. The Dashboard</a>
+      <a href="#board-health">7. Board Health</a>
+      <a href="#rovo">8. Rovo AI Agent</a>
+      <a href="#settings">9. Settings</a>
+      <a href="#portfolio">10. Portfolio View</a>
+      <a href="#activity">11. Activity Log</a>
+      <a href="#import">12. Import Scores</a>
+      <a href="#gadget">13. Dashboard Gadget</a>
+      <a href="#faq">14. FAQ &amp; Troubleshooting</a>
+      <a href="#support">15. Support</a>
+    </nav>
+  </nav>
+
+  <main class="container">
+    <a class="back" href="index.html">&larr; Back</a>
+
+    <h1>Documentation</h1>
+    <p class="subtitle">Priority Scoring — RICE, WSJF &amp; ICE for Jira &nbsp;&middot;&nbsp; Complete Setup &amp; User Guide</p>
+
+    <!-- Table of Contents (shown on narrow screens) -->
+    <div class="toc">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#create-fields">Step 1 — Create Custom Fields</a></li>
+        <li><a href="#add-to-screens">Step 2 — Add Fields to Issue Screens</a></li>
+        <li><a href="#score-issue">Scoring an Issue</a></li>
+        <li><a href="#dashboard">The Dashboard</a></li>
+        <li><a href="#board-health">Board Health</a></li>
+        <li><a href="#rovo">Rovo AI Agent</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#portfolio">Portfolio View</a></li>
+        <li><a href="#activity">Activity Log</a></li>
+        <li><a href="#import">Import Scores from Another App</a></li>
+        <li><a href="#gadget">Board Health Dashboard Gadget</a></li>
+        <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      <strong>Priority Scoring</strong> brings structured, data-driven prioritization to your Jira backlog.
+      Instead of gut-feel ordering, your team picks a scoring framework, enters a few dimension values per issue,
+      and the app calculates a comparable priority score across your entire backlog.
+    </p>
+    <p>
+      Three industry-standard frameworks are supported — choose the one that fits your team's workflow,
+      or mix and match across different projects:
+    </p>
+
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Framework</th>
+          <th>Formula</th>
+          <th>Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RICE</strong></td>
+          <td><code>(Reach &times; Impact &times; Confidence) &divide; Effort</code></td>
+          <td>Product teams, user-facing features, roadmap planning</td>
+        </tr>
+        <tr>
+          <td><strong>WSJF</strong></td>
+          <td><code>(Business Value + Time Criticality + Risk Reduction) &divide; Job Size</code></td>
+          <td>SAFe teams, enterprise delivery, compliance-driven work</td>
+        </tr>
+        <tr>
+          <td><strong>ICE</strong></td>
+          <td><code>Impact &times; Confidence &times; Ease</code></td>
+          <td>Growth teams, experiments, fast iteration cycles</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Beyond individual scores, the app provides:</p>
+    <ul>
+      <li><strong>Board Health Score (0–100)</strong> — a real-time quality signal for your backlog, configurable per project and team type.</li>
+      <li><strong>Priority Ranking</strong> — a sorted list of all scored issues so you always know what to tackle next.</li>
+      <li><strong>Portfolio View</strong> — health at a glance across all your Jira projects in one table.</li>
+      <li><strong>Rovo AI Agent</strong> — ask Rovo to suggest, apply, or bulk-score issues using natural language.</li>
+      <li><strong>Score Audit Trail</strong> — a per-issue history of every score change, including who set it and whether it was via Rovo.</li>
+    </ul>
+
+    <div class="tip">
+      <strong>Runs on Atlassian:</strong> The app runs entirely on Atlassian's Forge infrastructure — no external servers,
+      no data leaving your Jira instance. <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Learn more about Forge security.</a>
+    </div>
+
+    <!-- 2. Installation -->
+    <h2 id="install">2. Installation</h2>
+    <div class="step-box">
+      <h3>Install from the Atlassian Marketplace</h3>
+      <ol>
+        <li>Go to the <a href="https://marketplace.atlassian.com" target="_blank" rel="noopener">Atlassian Marketplace</a> and search for <strong>Priority Scoring</strong>.</li>
+        <li>Click <strong>Get it now</strong> (or <strong>Try it free</strong> to start a trial).</li>
+        <li>Select your Jira Cloud site and confirm the installation.</li>
+        <li>Once installed, open Jira and click <strong>Apps</strong> in the top navigation — you should see <strong>Priority Scoring</strong> in the dropdown.</li>
+      </ol>
+    </div>
+    <div class="tip">
+      <strong>Tip:</strong> Installation only takes a minute, but the app won't show scores on issues until you complete the
+      two setup steps below: creating custom fields and adding them to your project screens.
+    </div>
+
+    <p>Here's a birds-eye view of the complete setup flow before we go step by step:</p>
+
+    <!-- Setup flow diagram -->
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <div class="flow-circle">1</div>
+        <div class="flow-label">Install App</div>
+        <div class="flow-sublabel">from Marketplace</div>
+      </div>
+      <div class="flow-connector">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-circle">2</div>
+        <div class="flow-label">Create Fields</div>
+        <div class="flow-sublabel">Jira Settings &rarr; Fields</div>
+      </div>
+      <div class="flow-connector">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-circle">3</div>
+        <div class="flow-label">Add to Screens</div>
+        <div class="flow-sublabel">Jira Settings &rarr; Screens</div>
+      </div>
+      <div class="flow-connector">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-circle green">4</div>
+        <div class="flow-label">Start Scoring</div>
+        <div class="flow-sublabel">Sliders visible on issues</div>
+      </div>
+    </div>
+
+    <!-- 3. Create Custom Fields -->
+    <h2 id="create-fields">3. Step 1 — Create Custom Fields</h2>
+    <p>
+      After installation, the app's scoring field types become available in Jira's field library —
+      but they don't appear on issues automatically. You need to create a custom field for each
+      framework you want to use (RICE, WSJF, and/or ICE) and then assign them to your project screens.
+    </p>
+    <p>This section covers creating the fields. <a href="#add-to-screens">Step 2</a> covers assigning them to screens.</p>
+
+    <div class="step-box">
+      <h3>How to Create a Priority Scoring Field</h3>
+      <ol>
+        <li>In Jira, click the <strong>gear icon</strong> (top right) to open <strong>Jira Settings</strong>.</li>
+        <li>In the left sidebar, navigate to <strong>Work items</strong> (or <strong>Issues</strong> in classic Jira) &rarr; <strong>Fields</strong>.</li>
+        <li>Click <strong>Create new field</strong> in the top right corner.</li>
+      </ol>
+    </div>
+
+    <img src="imgPriorityScorer/AddCustomField-Step1.png" alt="Jira Settings — Fields admin page showing the list of all custom fields with a 'Create new field' button" class="screenshot" loading="lazy">
+
+    <div class="step-box">
+      <h3>Selecting the Field Type</h3>
+      <ol>
+        <li>In the <strong>Create field</strong> dialog, type <code>prio</code> or <code>priority scoring</code> in the search box.</li>
+        <li>You will see the available field types from the app:
+          <ul>
+            <li><strong>Priority Scoring — RICE</strong></li>
+            <li><strong>Priority Scoring — WSJF</strong></li>
+            <li><strong>Priority Scoring — ICE</strong></li>
+          </ul>
+        </li>
+        <li>Select the framework you want (e.g. <strong>Priority Scoring — RICE</strong>) and click <strong>Next</strong>.</li>
+        <li>Give the field a name — the default name (e.g. <em>"Priority Scoring — RICE"</em>) is recommended so the app and your team can identify it clearly.</li>
+        <li>Click <strong>Create</strong>.</li>
+        <li>Repeat for each additional framework you want to use (WSJF, ICE).</li>
+      </ol>
+    </div>
+
+    <img src="imgPriorityScorer/AddCustomField-Step2.png" alt="Create field dialog showing search results for 'prio' with Priority Scoring — ICE, RICE, and WSJF options listed" class="screenshot" loading="lazy">
+
+    <div class="tip">
+      <strong>Which frameworks do I need?</strong> You don't have to create all three. Start with one —
+      RICE is the most commonly used for product teams. You can always add more frameworks later.
+      Each framework creates its own independent custom field.
+    </div>
+    <div class="warning">
+      <strong>Note:</strong> Creating the field is not enough on its own. Scores won't appear on issues
+      until you also add the field to the relevant screens (Step 2 below).
+    </div>
+
+    <!-- 4. Add to Screens -->
+    <h2 id="add-to-screens">4. Step 2 — Add Fields to Issue Screens</h2>
+    <p>
+      Jira uses <strong>screens</strong> to control which fields are visible on an issue.
+      After creating your Priority Scoring fields, you need to add them to the screen(s) used by your projects.
+      This is a one-time setup step per project.
+    </p>
+
+    <div class="step-box">
+      <h3>How to Add a Field to a Screen</h3>
+      <ol>
+        <li>Go to <strong>Jira Settings</strong> &rarr; <strong>Work items</strong> &rarr; <strong>Screens</strong>.</li>
+        <li>Find the screen used by your project. For a Kanban project this is typically the <em>"[Project Name] Kanban Default Issue Screen"</em>; for Scrum it is usually the <em>"[Project Name] Scrum Default Issue Screen"</em>.</li>
+        <li>Click the screen name to open its field configuration.</li>
+        <li>At the bottom of the field list, use the <strong>Select Field…</strong> dropdown to find <em>"Priority Scoring — RICE"</em> (or WSJF / ICE).</li>
+        <li>Click <strong>Add</strong>. The field now appears on every issue in that project.</li>
+        <li>Repeat for each framework field you created.</li>
+      </ol>
+    </div>
+
+    <img src="imgPriorityScorer/AddCustomField-Step3.png" alt="Configure Screen page in Jira Settings showing Priority Scoring — ICE, RICE, and WSJF fields already added to the Kanban Default Issue Screen" class="screenshot" loading="lazy">
+
+    <div class="danger">
+      <strong>Critical:</strong> If you skip this step, the score sliders will not appear on your issues.
+      The Board Health Score will also treat all issues as "unscored" and show a low health score,
+      even if Rovo has technically written a value. Always confirm the fields are on the correct screens.
+    </div>
+    <div class="tip">
+      <strong>Tip:</strong> If your Jira instance uses <strong>multiple screens</strong> (e.g. separate screens for
+      create, edit, and view), add the Priority Scoring fields to all of them — especially the <em>view</em> screen —
+      so scores are always visible when you open an issue.
+    </div>
+    <div class="tip">
+      <strong>Team-managed projects:</strong> In team-managed (next-gen) Jira projects, go to
+      <strong>Project settings &rarr; Issue types</strong> and add the fields there instead of via global Screens.
+    </div>
+
+    <!-- 5. Score an Issue -->
+    <h2 id="score-issue">5. Scoring an Issue</h2>
+    <p>
+      With the setup complete, open any Jira issue in your project. You will see the Priority Scoring fields
+      in the issue details panel — one per framework you added. Each field shows a color-coded score bar
+      and a set of dimension sliders.
+    </p>
+
+    <img src="imgPriorityScorer/PriorityScoresOnTicket.png" alt="Jira issue details panel showing Priority Scoring fields for ICE, RICE, and WSJF with colored score bars and an Audit trail link" class="screenshot" loading="lazy">
+
+    <h3>Setting Dimension Values</h3>
+    <p>Click on a Priority Scoring field to expand it. You will see individual sliders for each dimension:</p>
+    <ul>
+      <li><strong>RICE:</strong> Reach, Impact, Confidence, Effort</li>
+      <li><strong>WSJF:</strong> Business Value, Time Criticality, Risk Reduction, Job Size</li>
+      <li><strong>ICE:</strong> Impact, Confidence, Ease</li>
+    </ul>
+    <p>
+      Drag each slider to the appropriate value. The score is calculated live and shown above the sliders.
+      Click the <strong>checkmark &#10003;</strong> to save, or <strong>&times;</strong> to cancel.
+    </p>
+
+    <img src="imgPriorityScorer/ConfigureFieldValues.png" alt="Expanded ICE scoring field showing individual sliders for Impact (7), Confidence (9), and Ease (10) with a calculated score of 630" class="screenshot" loading="lazy">
+
+    <div class="tip">
+      <strong>Score color bands:</strong> The score bar changes color based on the thresholds you configure in Settings.
+      By default: red = low, yellow = medium, green = high. You can adjust these thresholds to match your team's
+      scoring scale — see <a href="#settings">Section 9 — Settings</a>.
+    </div>
+
+    <h3>Rovo Suggest Panel</h3>
+    <p>
+      When viewing an issue, Rovo can suggest scores directly in the side panel — showing its reasoning
+      for each dimension before you decide whether to apply the values. This is especially useful for
+      understanding <em>why</em> an issue scores the way it does.
+    </p>
+
+    <img src="imgPriorityScorer/Task-Add-Score-Flow.png" alt="Jira issue view with Rovo side panel open, showing Priority Scoring suggestions with reasoning for each dimension alongside the score fields on the issue" class="screenshot" loading="lazy">
+
+    <!-- 6. Dashboard -->
+    <h2 id="dashboard">6. The Dashboard</h2>
+    <p>
+      Open Priority Scoring from the <strong>Apps</strong> menu in Jira's top navigation bar.
+      The app has five tabs: <strong>Dashboard</strong>, <strong>Activity</strong>, <strong>Portfolio</strong>,
+      <strong>Settings</strong>, and <strong>Import</strong>.
+    </p>
+    <p>
+      The <strong>Dashboard</strong> tab is your command center. Select a project and scoring framework
+      from the dropdowns at the top, and the dashboard shows two things simultaneously:
+    </p>
+    <ul>
+      <li><strong>Board Health</strong> — a 0–100 health score with a breakdown of quality signals across your backlog.</li>
+      <li><strong>Priority Ranking</strong> — all scored issues sorted by score descending, so you can see the full prioritized backlog at a glance.</li>
+    </ul>
+
+    <img src="imgPriorityScorer/AppStartpage_Dashboard.png" alt="Priority Scoring Dashboard showing Board Health score of 84/100 (Excellent), health criteria tiles, and a Priority Ranking table with RICE scores sorted highest to lowest" class="screenshot" loading="lazy">
+
+    <h3>Priority Ranking Table</h3>
+    <p>
+      The ranking table shows every scored issue in your project, sorted by score. Each row includes
+      the issue key, summary, type, status, sprint, due date, and score bar. Use the
+      <strong>All assignees</strong> dropdown to filter by team member, and the page-size selector to show
+      25, 50, or 100 issues at a time.
+    </p>
+    <p>
+      Click <strong>Export CSV</strong> in the toolbar to download the full ranking as a spreadsheet —
+      useful for stakeholder reports or sprint planning sessions.
+    </p>
+
+    <h3>Refreshing Data</h3>
+    <p>
+      The Board Health score is cached for <strong>up to 1 hour</strong> to keep performance fast.
+      When you set scores via the sliders or via Rovo, the cache is invalidated automatically and
+      the health score updates immediately. Click <strong>Refresh</strong> in the toolbar to manually
+      trigger a reload.
+    </p>
+    <div class="warning">
+      <strong>Note:</strong> If scores are changed externally (e.g. via a third-party import script or
+      Jira REST API), the cache is not invalidated automatically. The health score will reflect those
+      changes after the cache expires (up to 1 hour), or immediately after you click Refresh.
+    </div>
+
+    <!-- 7. Board Health -->
+    <h2 id="board-health">7. Board Health</h2>
+    <p>
+      The <strong>Board Health score</strong> (labeled "Board Health" in the app, not "Backlog Health")
+      analyses all <em>open</em> issues in a project — including In Progress, not just the backlog —
+      and calculates a quality score from 0 to 100. A score of 84 means 84% of your issues meet the
+      quality standards you've configured.
+    </p>
+    <p>
+      Each health <strong>criterion tile</strong> shows:
+    </p>
+    <ul>
+      <li>How many issues are affected (e.g. <em>4/19 missing a description</em>)</li>
+      <li>The percentage that are OK (e.g. <em>79% ok</em>)</li>
+      <li>How many score points this criterion is currently subtracting from your health score (e.g. <em>−3 score pts</em>)</li>
+    </ul>
+    <p>
+      This "−N score pts" view helps you prioritize which issues to fix first — tackle the criterion
+      with the highest penalty first for the biggest health improvement.
+    </p>
+
+    <h3>Configure Health Criteria per Project</h3>
+    <p>
+      Every project has different needs. A Scrum team cares deeply about Story Points and Due Dates;
+      a Kanban team cares more about Assignees and Labels. Priority Scoring lets you configure exactly
+      which criteria count toward the health score, <em>per project</em>.
+    </p>
+    <p>
+      Click <strong>Health Criteria…</strong> in the dashboard toolbar to open the configuration dialog.
+    </p>
+
+    <img src="imgPriorityScorer/BoardHealthConfig-Step1-ProjectSelection.png" alt="Configure Board Health Criteria dialog — Step 1: project selection dropdown with a prompt to select a project to configure its health criteria" class="screenshot" loading="lazy">
+
+    <p>
+      Select a project from the dropdown, and the full list of 8 configurable criteria appears,
+      with Quick Presets for SCRUM and KANBAN teams:
+    </p>
+
+    <img src="imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png" alt="Configure Board Health Criteria dialog — Step 2: SP project selected, showing all 8 criteria toggles (Stale, Missing Description, Missing Story Points, Unscored, Missing Assignee, Overdue, Missing Priority, Missing Labels) with SCRUM/KANBAN tags and Quick Preset buttons" class="screenshot" loading="lazy">
+
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>What it checks</th>
+          <th>Default</th>
+          <th>Recommended for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Stale Issues</strong></td>
+          <td>Issues not updated within the stale threshold (configurable 7–180 days, default 60)</td>
+          <td>On</td>
+          <td>Scrum &amp; Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Missing Description</strong></td>
+          <td>Issues with no description content</td>
+          <td>On</td>
+          <td>Scrum &amp; Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Missing Story Points</strong></td>
+          <td>No story points set on the issue</td>
+          <td>On</td>
+          <td>Scrum only</td>
+        </tr>
+        <tr>
+          <td><strong>Unscored</strong></td>
+          <td>No RICE, WSJF, or ICE score applied yet</td>
+          <td>On</td>
+          <td>Scrum &amp; Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Missing Assignee</strong></td>
+          <td>Issue has no assignee set</td>
+          <td>Off</td>
+          <td>Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Overdue</strong></td>
+          <td>Issue has a due date that is in the past</td>
+          <td>Off</td>
+          <td>Scrum &amp; Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Missing Priority</strong></td>
+          <td>Jira's built-in Priority field is empty or "None"</td>
+          <td>Off</td>
+          <td>Scrum &amp; Kanban</td>
+        </tr>
+        <tr>
+          <td><strong>Missing Labels / Components</strong></td>
+          <td>Neither labels nor components are set on the issue</td>
+          <td>Off</td>
+          <td>Kanban</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Each <strong>enabled criterion contributes equally</strong> to the score penalty. With 4 criteria active,
+      each can subtract up to 25 points. With 6 criteria, each can subtract up to ~16.7 points.
+      The score range is always 0–100 regardless of how many criteria are enabled.
+    </p>
+
+    <p>Click <strong>Save &amp; Refresh</strong> to apply your configuration. The health score recalculates immediately.</p>
+
+    <div class="tip">
+      <strong>Stale threshold:</strong> The stale criterion uses a configurable threshold — the default is 60 days.
+      You can adjust it directly inside this dialog (the slider appears under the Stale toggle when it is enabled).
+      New issues are never marked as stale regardless of the threshold.
+    </div>
+    <div class="tip">
+      <strong>Quick Presets:</strong> Not sure where to start? Click <strong>SCRUM Defaults</strong> or
+      <strong>KANBAN Defaults</strong> to instantly apply a sensible starting configuration for your workflow,
+      then fine-tune individual toggles.
+    </div>
+
+    <!-- 8. Rovo Agent -->
+    <h2 id="rovo">8. Rovo AI Agent</h2>
+    <p>
+      Priority Scoring ships with a built-in <strong>Rovo Agent</strong> that understands your scoring frameworks
+      and can suggest, apply, explain, and bulk-score issues directly from a Rovo chat conversation —
+      no manual slider work required.
+    </p>
+
+    <h3>How to Activate the Agent</h3>
+    <p>
+      Open <strong>Rovo</strong> from the Atlassian navigation bar (the "Ask Rovo" button).
+      In the chat, click the agent selector and search for <strong>Priority Scoring</strong>.
+    </p>
+
+    <img src="imgPriorityScorer/SelectPriorityScoringAgentInRovo.png" alt="Rovo agent selector showing Priority Scoring starred and listed among available agents including Rovo Expert, Decision Director, and others" class="screenshot" loading="lazy">
+
+    <p>
+      Once selected, you can address the agent in plain English. The agent understands all three frameworks
+      and reads the Rovo Apply Mode setting you configure in the Settings tab.
+    </p>
+
+    <h3>Rovo Agent Capabilities</h3>
+
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th>What you can ask</th>
+          <th>What the agent does</th>
+          <th>Mode required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Suggest a RICE score for PROJ-123"</td>
+          <td>Analyses the issue and provides recommended dimension values with written reasoning — does <em>not</em> write to Jira</td>
+          <td>Suggest, Confirm, or Auto</td>
+        </tr>
+        <tr>
+          <td>"Apply a WSJF score to PROJ-42"</td>
+          <td>Calculates and writes the score directly to the issue's Priority Scoring field</td>
+          <td>Confirm or Auto</td>
+        </tr>
+        <tr>
+          <td>"Score all unscored tasks in project SP"</td>
+          <td>Finds unscored issues, calculates scores in bulk, and applies them — up to the configured bulk limit per run</td>
+          <td>Confirm or Auto</td>
+        </tr>
+        <tr>
+          <td>"Explain the score for PROJ-55"</td>
+          <td>Reads the saved dimension values and explains why each dimension was set to its value</td>
+          <td>Any</td>
+        </tr>
+        <tr>
+          <td>"Find unscored issues in project PROJ"</td>
+          <td>Returns a list of issues that have no Priority Score set yet</td>
+          <td>Any</td>
+        </tr>
+        <tr>
+          <td>"What is the board health for project SP?"</td>
+          <td>Returns the current Board Health score and a summary of the main issues dragging it down</td>
+          <td>Any</td>
+        </tr>
+        <tr>
+          <td>"Migrate my RICE scores from our old app to project SP"</td>
+          <td>Scans for existing RICE/WSJF/ICE fields from other apps and imports the values</td>
+          <td>Confirm or Auto</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Bulk Scoring in Action</h3>
+    <p>
+      Bulk scoring is one of the most powerful Rovo features — you can score an entire backlog of
+      unscored issues with a single prompt. Rovo will ask you to confirm the tool use, then process
+      all unscored issues up to the bulk limit.
+    </p>
+
+    <img src="imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProject.png" alt="Rovo chat showing a bulk WSJF scoring request, with the 'Bulk Apply Priority Scores' tool selected and dimension descriptions shown before confirmation" class="screenshot" loading="lazy">
+
+    <p>
+      After confirmation, Rovo processes the issues and returns a summary of all applied scores:
+    </p>
+
+    <img src="imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProjectSuccess.png" alt="Rovo chat showing bulk scoring success — 15 unscored WSJF tasks found and scored, each with their issue key and applied score value listed" class="screenshot" loading="lazy">
+
+    <div class="warning">
+      <strong>Multiple confirmation dialogs:</strong> When Rovo bulk-scores many issues, you may see
+      multiple Atlassian confirmation dialogs appear. This is normal — Rovo uses internal batching
+      and the Atlassian platform requires a native security dialog for every batch of write actions.
+      Simply confirm each one.
+    </div>
+
+    <h3>Rovo Issue Comments</h3>
+    <p>
+      When the <strong>"Write Rovo reasoning to issue comments"</strong> option is enabled in Settings,
+      Rovo adds a comment to the issue every time it applies a score — explaining the reasoning behind
+      each dimension value in plain language.
+    </p>
+
+    <img src="imgPriorityScorer/RovoCommentDescisionOnTicket.png" alt="Jira issue comment from the Priority Scoring Rovo agent showing WSJF score 6.7 with written reasoning for Business Value, Time Criticality, Risk Reduction, and Job Size dimensions" class="screenshot" loading="lazy">
+
+    <p>
+      These comments are especially useful for async teams and stakeholders who want to understand
+      <em>why</em> an issue was prioritized without opening a Rovo chat.
+    </p>
+
+    <h3>Apply Modes — How Rovo Handles Write Actions</h3>
+    <p>
+      The <strong>Apply Mode</strong> (configured in Settings) controls how much autonomy Rovo has
+      when scoring issues. There are three modes:
+    </p>
+    <ul>
+      <li>
+        <strong>Suggest</strong> — Rovo only outputs text recommendations. It never writes to Jira.
+        You read the suggestions and manually enter values using the sliders on the issue.
+        <em>Use this if you want full manual control and just want AI inspiration.</em>
+      </li>
+      <li>
+        <strong>Confirm</strong> — Rovo asks "Shall I apply this score?" in the chat before writing.
+        You approve each action. <em>This is the recommended mode for most teams.</em>
+      </li>
+      <li>
+        <strong>Auto</strong> — Rovo skips the in-chat confirmation and applies scores directly.
+        Atlassian's native security dialog still appears for all write actions — this is a
+        platform-level safeguard that cannot be disabled. <em>Use Auto for large bulk operations
+        where you want minimal friction.</em>
+      </li>
+    </ul>
+
+    <div class="warning">
+      <strong>Mode change requires a new Rovo chat:</strong> Rovo caches its settings context at the start
+      of each conversation. If you change the Apply Mode in Settings while a Rovo chat is open,
+      the <em>current</em> chat will still use the old mode. Open a new Rovo chat for the updated
+      mode to take effect.
+    </div>
+
+    <!-- 9. Settings -->
+    <h2 id="settings">9. Settings</h2>
+    <p>
+      Open the <strong>Settings</strong> tab in the Priority Scoring app. Settings are saved automatically
+      (with a short debounce delay) — there is no Save button to click for most options.
+    </p>
+
+    <img src="imgPriorityScorer/Settings1.png" alt="Priority Scoring Settings tab showing Rovo Agent Apply Mode set to Auto with a bulk limit slider, Issue Comments toggle enabled, Board Health Settings stale threshold slider, and Score Audit Trail toggle" class="screenshot" loading="lazy">
+
+    <h3>Rovo Agent — Apply Mode</h3>
+    <p>
+      Choose between <strong>Suggest</strong>, <strong>Confirm</strong>, and
+      <strong>Auto</strong> (see <a href="#rovo">Section 8</a> for full descriptions).
+    </p>
+
+    <h3>Bulk Limit</h3>
+    <p>
+      When Rovo bulk-scores a project, this slider controls the maximum number of issues scored in
+      a single run (up to 26 at a time). Lower the limit if you want more control over each batch;
+      raise it to process more issues in one go.
+    </p>
+
+    <h3>Issue Comments</h3>
+    <p>
+      Toggle <strong>"Write Rovo reasoning to issue comments"</strong> to enable or disable the automatic
+      reasoning comments Rovo posts on issues after scoring. Useful for transparency; can be disabled
+      if you prefer a cleaner issue history.
+    </p>
+
+    <h3>Board Health Settings — Stale Threshold</h3>
+    <p>
+      Set how many days without an update before an issue is considered "stale" (range: 7–180 days,
+      default: 60). This is the global fallback threshold. Individual projects can override this value
+      directly in the <a href="#board-health">Health Criteria configuration dialog</a>.
+    </p>
+
+    <h3>Score Audit Trail</h3>
+    <p>
+      When enabled, one audit entry per day is recorded for each issue — logging the score value,
+      whether it changed, and whether it was set manually or via Rovo. The audit trail appears
+      directly on the issue field (click "Show audit trail" to expand it).
+    </p>
+
+    <img src="imgPriorityScorer/AuditTrailUnderFields-DailyBasisLogs.png" alt="Issue field showing 'Hide audit trail' expanded with two entries: Apr 4 showing score 7 with +0.3 increase arrow, and Mar 31 showing score 6.7 set via Rovo" class="screenshot" loading="lazy">
+
+    <div class="tip">
+      <strong>Audit trail is disabled by default.</strong> Enable it in Settings when you want full
+      traceability — useful for regulated environments or retrospective analysis of how priorities
+      evolved over time.
+    </div>
+
+    <h3>Dimension Weights</h3>
+    <p>
+      Each scoring dimension (except the denominator) can be weighted from ×1 (standard) to ×5 (five times more influence).
+      This lets your team adjust the formula to reflect what matters most without abandoning the framework.
+    </p>
+
+    <img src="imgPriorityScorer/Settings2.png" alt="Settings showing Dimension Weights for RICE Score (Reach, Impact, Confidence sliders all at ×1) and Score Thresholds for RICE Score (Low below 3, High above 10) with green/yellow/red color band labels" class="screenshot" loading="lazy">
+
+    <p>Examples of how weights can be used:</p>
+    <ul>
+      <li><strong>Growth team using RICE:</strong> Set Reach ×3 — issues reaching more users are automatically ranked higher even with similar other dimensions.</li>
+      <li><strong>Enterprise team using WSJF:</strong> Set Business Value ×2 — revenue-critical issues get a bigger boost even when Time Criticality is moderate.</li>
+      <li><strong>All three ICE dimensions</strong> are weightable since ICE has no denominator.</li>
+    </ul>
+
+    <div class="warning">
+      <strong>Why can't I weight Effort / Job Size?</strong> Effort and Job Size are in the <em>denominator</em> of the formula.
+      A weight of ×2 on a denominator <em>halves</em> the score — the opposite of what you'd expect.
+      To de-emphasise effort, increase the numerator dimensions instead. The result is the same,
+      but the behaviour is intuitive.
+    </div>
+    <div class="warning">
+      <strong>After changing weights:</strong> Existing scores are not recalculated automatically.
+      They will update to the new formula the next time a score is saved on each issue (via slider or Rovo).
+      It is also a good idea to adjust your Score Thresholds after weight changes, since the achievable
+      score range shifts.
+    </div>
+
+    <h3>Score Thresholds</h3>
+    <p>
+      Configure the breakpoints for the color bands in the score bar. Set the <strong>Low</strong> upper bound
+      (issues scoring below this show red) and the <strong>High</strong> lower bound (issues scoring above this
+      show green). Everything in between shows yellow.
+    </p>
+
+    <!-- 10. Portfolio View -->
+    <h2 id="portfolio">10. Portfolio View</h2>
+    <p>
+      The <strong>Portfolio</strong> tab gives a single-page overview of Board Health across all Jira projects
+      your account has access to. No need to switch projects one by one.
+    </p>
+
+    <img src="imgPriorityScorer/PortfolioHealthBetweenSpaces.png" alt="Portfolio tab showing a table with 5 projects (MPAL, NFPT, TEST, SCRUMP1, SP) with their health score, grade (Poor/Fair/Good/Excellent), issue count, stale count, unscored count, and last checked time" class="screenshot" loading="lazy">
+
+    <p>Each row shows:</p>
+    <ul>
+      <li><strong>Project key and name</strong></li>
+      <li><strong>Health score</strong> with a grade label (Poor / Fair / Good / Excellent)</li>
+      <li><strong>Issue count</strong> — total open issues analyzed</li>
+      <li><strong>Stale</strong> — number of stale issues</li>
+      <li><strong>Unscored</strong> — issues without a Priority Score</li>
+      <li><strong>Last checked</strong> — how long ago the health data was refreshed</li>
+    </ul>
+
+    <p>
+      Use the <strong>Grade</strong> filter to quickly surface only projects rated Poor or Fair.
+      Click <strong>Check</strong> on any row to trigger an immediate health refresh for that project.
+    </p>
+    <p>
+      The search box at the top filters by project key or name — useful when you manage many projects.
+    </p>
+
+    <div class="tip">
+      <strong>Use Portfolio for sprint planning kick-offs:</strong> Before planning, filter for projects
+      with a "Poor" or "Fair" health score. That gives you a concrete list of backlogs that need
+      attention before they're ready to pull from.
+    </div>
+
+    <!-- 11. Activity Log -->
+    <h2 id="activity">11. Activity Log</h2>
+    <p>
+      The <strong>Activity</strong> tab shows a full log of every score applied via the Rovo agent —
+      across all projects, all frameworks, and all modes. Use it to audit what Rovo has done,
+      verify that bulk operations completed as expected, or review scoring history for a project.
+    </p>
+
+    <img src="imgPriorityScorer/RovoActivity.png" alt="Activity tab showing 33 Rovo applies total in a table with columns for Time, Issue, Framework, Score, and Mode — rows span multiple projects and frameworks including WSJF and RICE scores applied in auto mode" class="screenshot" loading="lazy">
+
+    <p>Each log entry shows:</p>
+    <ul>
+      <li><strong>Time</strong> — date and time of the apply action</li>
+      <li><strong>Issue</strong> — the issue key (e.g. SP-6, SCRUMP1-2)</li>
+      <li><strong>Framework</strong> — RICE, WSJF, or ICE</li>
+      <li><strong>Score</strong> — the value that was applied</li>
+      <li><strong>Mode</strong> — whether it was applied in <em>auto</em> or <em>confirm</em> mode</li>
+    </ul>
+
+    <p>
+      The activity log is paginated (25 entries per page by default, configurable). Use it alongside
+      the <a href="#score-issue">Audit Trail on individual issues</a> for a complete picture of scoring history.
+    </p>
+
+    <!-- 12. Import -->
+    <h2 id="import">12. Import Scores from Another App</h2>
+    <p>
+      Already using a different RICE, WSJF, or ICE scoring tool? The <strong>Import</strong> tab lets you
+      migrate existing scores into Priority Scoring automatically — without manually re-entering every value.
+    </p>
+
+    <img src="imgPriorityScorer/ImportFieldDataWithRovo.png" alt="Import tab showing 'Import Scores from Another App' heading with a description and a 'Scan for Existing Score Fields' button" class="screenshot" loading="lazy">
+
+    <div class="step-box">
+      <h3>How to Import Scores</h3>
+      <ol>
+        <li>Open the <strong>Import</strong> tab in Priority Scoring.</li>
+        <li>Click <strong>Scan for Existing Score Fields</strong>. The app scans all custom fields in your Jira instance for fields containing "RICE", "WSJF", or "ICE" in their name that are <em>not</em> from Priority Scoring itself.</li>
+        <li>Review the detected fields — the app shows the framework, field name, field ID, and import type (<em>score-only</em> or <em>full</em>).</li>
+        <li>Select a project and click <strong>Import [Framework] Scores</strong>.</li>
+        <li>The app copies the source values into your Priority Scoring fields. Up to 200 issues per import run.</li>
+      </ol>
+    </div>
+
+    <p>
+      You can also trigger an import via Rovo:
+    </p>
+    <p>
+      <em>"Migrate my RICE scores from our old app to project SP"</em> — Rovo will detect available
+      fields, confirm the import with you, and apply the scores with a single confirmation step.
+      Requires Confirm or Auto mode.
+    </p>
+
+    <div class="tip">
+      <strong>score-only vs. full import:</strong> If the source app stored only a composite score
+      (one number), only that total is imported — the individual dimension values (Reach, Impact, etc.)
+      won't be available and the Explain Score feature won't work for imported issues until you
+      re-score them with the sliders. If the source app stored separate dimension fields,
+      a <em>full</em> import captures those too.
+    </div>
+    <div class="warning">
+      <strong>Field name recognition:</strong> The scanner detects fields whose names contain "RICE",
+      "WSJF", "weighted shortest", or "ICE". Fields with custom naming conventions that don't
+      include these terms won't be detected automatically.
+    </div>
+
+    <!-- 13. Dashboard Gadget -->
+    <h2 id="gadget">13. Board Health Dashboard Gadget</h2>
+    <p>
+      Priority Scoring includes a <strong>Board Health gadget</strong> that you can add to any
+      Jira Dashboard. It shows the health score, grade, and criterion tiles for a single project —
+      giving you at-a-glance visibility without opening the full app.
+    </p>
+
+    <img src="imgPriorityScorer/AppDashboardFeature.png" alt="Jira Dashboard showing two Priority Scoring gadgets side by side: Board Health gadget for SP project with score 84/100 and criterion tiles, and Priority Ranking gadget showing a sorted RICE score table" class="screenshot" loading="lazy">
+
+    <div class="step-box">
+      <h3>How to Add the Gadget</h3>
+      <ol>
+        <li>Open any Jira <strong>Dashboard</strong> (from the Jira navigation &rarr; Dashboards).</li>
+        <li>Click <strong>Edit</strong> (top right of the dashboard), then <strong>Add gadget</strong>.</li>
+        <li>Search for <strong>Board Health</strong> or <strong>Priority Scoring</strong>.</li>
+        <li>Click <strong>Add</strong> to place the gadget on the dashboard.</li>
+        <li>In the gadget's configuration, select the <strong>project</strong> to monitor.</li>
+        <li>Save — the gadget now shows live health data for that project.</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <strong>Tip:</strong> Add the Board Health gadget to your team's shared Jira Dashboard so everyone
+      sees the backlog health score during standups or sprint reviews — no one needs to navigate into
+      the app to get the overview.
+    </div>
+    <div class="tip">
+      <strong>Priority Ranking gadget:</strong> A second gadget, <em>Priority Scoring — Priority Ranking</em>,
+      is also available and shows the sorted issue ranking table directly on a dashboard. Add both to
+      create a complete backlog health + prioritization overview on one screen.
+    </div>
+
+    <!-- 14. FAQ -->
+    <h2 id="faq">14. FAQ &amp; Troubleshooting</h2>
+
+    <h3>The score sliders don't appear on my issues.</h3>
+    <p>
+      This almost always means the field hasn't been added to the project's screen.
+      Go to <strong>Jira Settings &rarr; Work items &rarr; Screens</strong>, find the screen for your project,
+      and add the Priority Scoring field to it. See <a href="#add-to-screens">Step 2 — Add Fields to Screens</a>
+      for the full walkthrough.
+    </p>
+
+    <h3>Rovo applied scores but the Board Health still shows all issues as "Unscored".</h3>
+    <p>
+      This happens when the Priority Scoring field is not on the project's screen (<code>fieldSynced: false</code>).
+      Rovo can write values to the app's internal storage regardless, but the Jira custom field won't
+      show a value until the field is on the screen. Fix the screen setup, then click Refresh in the dashboard.
+    </p>
+
+    <h3>The Explain Score feature says "No score has been saved yet" but the issue shows a value.</h3>
+    <p>
+      The Explain Score feature reads dimension values from the app's internal storage (KVS), not from
+      the Jira field value directly. If the score was set externally — via REST API or a third-party
+      import — the dimension breakdown was never stored, so the explanation is not available.
+      Re-score the issue via the sliders or Rovo to enable explanations going forward.
+    </p>
+
+    <h3>I changed the Apply Mode but Rovo is still using the old mode.</h3>
+    <p>
+      Rovo reads the mode setting at the start of a conversation and caches it for the rest of that chat.
+      Open a <strong>new Rovo chat</strong> after changing the mode for the new setting to take effect.
+    </p>
+
+    <h3>In Auto mode, Rovo still shows a confirmation dialog. Is this a bug?</h3>
+    <p>
+      No. In Auto mode, Rovo skips its own in-chat confirmation prompt — but Atlassian's platform
+      always shows a native security dialog before any write action. This is a platform-level safeguard
+      built into Forge and cannot be disabled by the app. Simply click Confirm in that dialog.
+    </p>
+
+    <h3>The Board Health score doesn't update after I click Refresh.</h3>
+    <p>
+      The Refresh button triggers a fresh data fetch, but if the 1-hour cache is still valid, it returns
+      the cached result. The cache is automatically invalidated when scores are set via the app sliders
+      or via Rovo. For external changes, wait up to 1 hour for the cache to expire, then click Refresh again.
+    </p>
+
+    <h3>The "Find unscored issues" action doesn't list all my issues.</h3>
+    <p>
+      The unscored-issue search checks up to the first 50 issues (client-side filter, since Forge custom
+      fields are not indexed in JQL). For large projects with more than 50 issues, use the Dashboard
+      Priority Ranking table to identify unscored items — it processes up to 500 issues for the Board
+      Health calculation.
+    </p>
+
+    <h3>Story Points are not recognised in the Board Health "Missing Story Points" criterion.</h3>
+    <p>
+      The app checks both <code>customfield_10016</code> and <code>customfield_10028</code> — the two
+      most common Jira field IDs for Story Points. No configuration is required. If points are still
+      not detected, contact support with your Jira instance URL and we can investigate.
+    </p>
+
+    <h3>I adjusted Dimension Weights but my scores look the same.</h3>
+    <p>
+      Existing scores are not retroactively recalculated. They update when a score is next saved on
+      each issue — either by moving a slider or by having Rovo re-score the issue. After changing
+      weights significantly, run a Rovo bulk re-score to update all issues at once.
+    </p>
+
+    <h3>Where is my data stored?</h3>
+    <p>
+      All app data — scores, configurations, audit trail — is stored in <strong>Atlassian Forge Storage</strong>
+      within your Jira Cloud instance. No data is sent to or stored on external servers.
+      The app runs entirely on Atlassian's infrastructure
+      (<a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>).
+    </p>
+
+    <h3>How do I uninstall the app?</h3>
+    <p>
+      Go to <strong>Jira Settings &rarr; Apps &rarr; Manage apps</strong>, find Priority Scoring, and click
+      <strong>Uninstall</strong>. This removes all app configuration and stored data. Custom fields created
+      during setup will remain in Jira until you delete them manually via
+      <strong>Settings &rarr; Work items &rarr; Fields</strong>.
+    </p>
+
+    <!-- 15. Support -->
+    <h2 id="support">15. Support</h2>
+    <div class="contact-box">
+      <p>
+        Have a question, found a bug, or want to request a feature? We're happy to help.
+      </p>
+      <ul style="margin-bottom: 0;">
+        <li><strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></li>
+        <li><strong>Response time:</strong> Within 24 hours on business days.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #DFE1E6;">
+      <p style="font-size: 0.85rem; color: #505F79;">
+        <a href="priority-scoring-privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+        <a href="priority-scoring-terms-of-service.html">Terms of Service</a> &nbsp;&middot;&nbsp;
+        <a href="impressum.html">Impressum</a> &nbsp;&middot;&nbsp;
+        &copy; 2026 Janek Behrens
+      </p>
+    </div>
+  </main>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
+    // Lightbox
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.src;
+      lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('img.screenshot').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+
+    // Active TOC highlighting
+    (function () {
+      var ids = [
+        'overview', 'install', 'create-fields', 'add-to-screens', 'score-issue',
+        'dashboard', 'board-health', 'rovo', 'settings', 'portfolio',
+        'activity', 'import', 'gadget', 'faq', 'support'
+      ];
+
+      var tocLinks = document.querySelectorAll('.sidebar-toc a[href^="#"]');
+
+      function findActiveId() {
+        var scrollTop = window.pageYOffset + 130;
+        var active = ids[0];
+        for (var i = 0; i < ids.length; i++) {
+          var el = document.getElementById(ids[i]);
+          if (el && el.getBoundingClientRect().top + window.pageYOffset <= scrollTop) {
+            active = ids[i];
+          }
+        }
+        return active;
+      }
+
+      function update() {
+        var active = findActiveId();
+        for (var i = 0; i < tocLinks.length; i++) {
+          var href = tocLinks[i].getAttribute('href');
+          var isActive = href === '#' + active;
+          if (isActive && !tocLinks[i].classList.contains('active')) {
+            tocLinks[i].classList.add('active');
+            tocLinks[i].scrollIntoView({ block: 'nearest' });
+          } else if (!isActive) {
+            tocLinks[i].classList.remove('active');
+          }
+        }
+      }
+
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            update();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      update();
+    })();
+  </script>
+</body>
+</html>
