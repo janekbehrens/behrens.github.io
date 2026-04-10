@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Automating Confluence Documentation: From Manual Updates to CI/CD | Janek Behrens</title>
+  <meta name="description" content="How to fully automate Confluence documentation with webhooks, schedules, and AI — from the first manual run to a commit-triggered CI/CD documentation pipeline.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/automate-confluence-documentation.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Automating Confluence Documentation: From Manual Updates to CI/CD",
+    "description": "How to fully automate Confluence documentation with webhooks, schedules, and AI — from the first manual run to a commit-triggered CI/CD documentation pipeline.",
+    "url": "https://janekbehrens.de/blog/automate-confluence-documentation.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png",
+    "keywords": ["Confluence", "Documentation", "Automation", "CI/CD", "Atlassian"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Automating Confluence Documentation: From Manual Updates to CI/CD">
+  <meta property="og:description" content="Webhooks, scheduled triggers, AI file selection, and approval workflows — how to build a complete Confluence documentation automation pipeline.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/automate-confluence-documentation.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Automation">
+  <meta property="article:tag" content="CI/CD">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Automating Confluence Documentation: From Manual Updates to CI/CD">
+  <meta name="twitter:description" content="Commit-triggered, scheduled, and approval-gated documentation pipelines for Confluence — a developer's guide to full automation.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Automating Confluence Documentation: From Manual Updates to CI/CD",
+    "description": "How to fully automate Confluence documentation with webhooks, schedules, and AI — from the first manual run to a commit-triggered CI/CD documentation pipeline.",
+    "image": "https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/automate-confluence-documentation.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Confluence documentation be automated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. With CodeDoc AI for Confluence, you can trigger documentation generation automatically on every Git commit or pull request merge via a webhook, or on a recurring schedule (daily, weekly, or monthly). The generated documentation is published directly to a Confluence page without manual intervention."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between On Commit and On Merge documentation triggers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On Commit triggers a new documentation generation every time code is pushed to the configured branch. On Merge triggers only when a pull or merge request is merged into the branch. On Commit keeps documentation as current as possible; On Merge limits generations to reviewed, approved code and produces less noise for teams with many WIP commits."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I set up automatic Confluence documentation from a GitHub repository?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install CodeDoc AI from the Atlassian Marketplace, connect your GitHub personal access token and AI provider API key, add your repository, create a documentation job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Documentation will regenerate automatically on the next qualifying event."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I prevent low-quality AI documentation from being published automatically?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enable 'Require approval before publishing' on the job. Generated documentation is saved as a Confluence draft with a [DRAFT] prefix. You review it from the Dashboard and publish or discard manually. This is recommended for customer-facing or compliance documentation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Confluence documentation automation work with GitLab, Bitbucket, and Azure DevOps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. CodeDoc AI supports webhook triggers from GitHub, GitLab, Bitbucket, and Azure DevOps. The webhook URL is the same for all providers — the app identifies the correct job by repository URL and branch name. Scheduled triggers work independently of the Git provider."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: #E3FCEF; color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(23,43,77,0.07); }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* Trigger comparison table */
+    .trigger-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.88rem; }
+    .trigger-table th {
+      background: #F4F5F7; text-align: left; padding: 10px 12px;
+      border: 1px solid var(--border); font-weight: 700; font-size: 0.8rem;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .trigger-table td { padding: 10px 12px; border: 1px solid var(--border-2); color: var(--text-3); vertical-align: top; }
+    .trigger-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .trigger-table tr:hover td { background: #FAFBFC; }
+
+    /* Pipeline illustration */
+    .pipeline-vertical { margin: 20px 0; background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .pv-step { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border-2); }
+    .pv-step:last-child { border-bottom: none; }
+    .pv-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pv-content { flex: 1; }
+    .pv-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .pv-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence · Automation</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 8 min read</span>
+      </div>
+      <h1>Automating Confluence Documentation: From Manual Updates to CI/CD</h1>
+      <p class="article-intro">
+        Most teams start with "we'll update the Confluence page when we ship." That doesn't work — documentation always loses to the next feature. Here's how to build a documentation pipeline where the update happens automatically, triggered by the commit itself.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">The documentation debt problem</h2>
+      <p>
+        Documentation debt accumulates quietly. A feature ships, the Confluence page gets a quick update, and everyone moves on. A month later the page is slightly wrong. Six months later it's describing a system that no longer exists. A year later it's actively misleading new engineers trying to onboard.
+      </p>
+      <p>
+        The problem isn't that engineers don't value documentation. Most do. The problem is that documentation is a task that sits outside the feedback loop of software delivery. It doesn't block the CI build. It doesn't cause a test to fail. It can be deferred indefinitely without anything breaking immediately.
+      </p>
+      <p>
+        The way to fix this is the same way teams fix other manual processes: automate it. Make documentation regeneration part of the delivery event — a consequence of merging code, not a separate task added to the backlog.
+      </p>
+
+      <h2 id="the-pipeline">The documentation automation pipeline</h2>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> supports four trigger types. Together, they cover the full spectrum from exploratory manual runs to fully automated CI/CD-like pipelines:
+      </p>
+
+      <div class="pipeline-vertical">
+        <div class="pv-step">
+          <div class="pv-num">1</div>
+          <div class="pv-content">
+            <div class="pv-title">Manual trigger</div>
+            <div class="pv-desc">Click "Run" on any job. Start here — validate that your job, file selection, and preset produce the output you want before connecting automation.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">2</div>
+          <div class="pv-content">
+            <div class="pv-title">Scheduled trigger (daily / weekly / monthly)</div>
+            <div class="pv-desc">Documentation regenerates on a recurring basis without any webhook setup. Suitable for slowly-changing systems, compliance documentation, or teams that want regular updates without per-commit noise.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">3</div>
+          <div class="pv-content">
+            <div class="pv-title">On Merge trigger (webhook)</div>
+            <div class="pv-desc">Documentation regenerates when a pull or merge request is merged into the configured branch. Reflects stable, reviewed code — not every work-in-progress push. The most common choice for active development teams.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">4</div>
+          <div class="pv-content">
+            <div class="pv-title">On Commit trigger (webhook)</div>
+            <div class="pv-desc">Documentation regenerates on every push to the branch. Maximum freshness. Best for teams that push infrequently or want real-time accuracy regardless of PR workflow.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="trigger-comparison">Choosing the right trigger</h2>
+      <p>
+        The trigger you choose determines how frequently documentation regenerates — and therefore how much your AI token usage is. Here's a practical comparison:
+      </p>
+
+      <table class="trigger-table">
+        <thead>
+          <tr>
+            <th>Trigger</th>
+            <th>Runs when</th>
+            <th>Best for</th>
+            <th>Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manual</td>
+            <td>You click "Run"</td>
+            <td>Initial setup and testing, one-off generations</td>
+            <td>All plans</td>
+          </tr>
+          <tr>
+            <td>Scheduled</td>
+            <td>Daily, weekly, or monthly at a set time</td>
+            <td>Infrastructure, slow-changing systems, compliance docs</td>
+            <td>Subscription</td>
+          </tr>
+          <tr>
+            <td>On Merge</td>
+            <td>Pull/merge request merged to branch</td>
+            <td>Active development — docs track reviewed, stable code</td>
+            <td>Subscription</td>
+          </tr>
+          <tr>
+            <td>On Commit</td>
+            <td>Any push to the configured branch</td>
+            <td>High-value repos where maximum freshness matters most</td>
+            <td>Subscription</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>Practical recommendation:</strong> Start with Manual to validate your configuration. Switch to Scheduled once the output quality is confirmed. Upgrade to On Merge when the team is ready for documentation to be part of the pull request flow.</p>
+      </div>
+
+      <h2 id="webhooks">Setting up webhook triggers</h2>
+      <p>
+        Webhook-based triggers (On Commit and On Merge) work by registering CodeDoc AI's Webhook URL in your Git provider. The app provides a single URL that works for all jobs and all providers — it identifies which job to run based on the incoming repository URL and branch.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/EditJobWebhook.png" alt="Webhook URL in CodeDoc AI job settings for On Commit and On Merge triggers" loading="lazy">
+        <p class="diagram-caption">The Webhook URL appears when you select On Commit or On Merge — copy it to your Git provider's webhook settings</p>
+      </div>
+
+      <p>
+        Quick setup per provider:
+      </p>
+      <ul>
+        <li><strong>GitHub:</strong> Repository → Settings → Webhooks → Add webhook. Set Content-type to <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">application/json</code>. Select "Just the push event" (On Commit) or "Pull requests" (On Merge). Full instructions at <a href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks" target="_blank" rel="noopener">docs.github.com</a>.</li>
+        <li><strong>GitLab:</strong> Project → Settings → Webhooks. Check "Push events" (On Commit) or "Merge request events" (On Merge).</li>
+        <li><strong>Bitbucket:</strong> Repository → Repository settings → Webhooks. Trigger: "Repository Push" (On Commit) or "Pull Request Fulfilled" (On Merge).</li>
+        <li><strong>Azure DevOps:</strong> Project settings → Service hooks → Create subscription → Web Hooks. Event: "Code pushed" or "Pull request merged".</li>
+      </ul>
+      <p>
+        You only need to register the webhook once per repository — the same URL handles all jobs that reference that repository.
+      </p>
+
+      <h2 id="schedules">Scheduled documentation</h2>
+      <p>
+        Scheduled triggers run without any webhook configuration. Three schedule types are available:
+      </p>
+      <ul>
+        <li><strong>Daily</strong> — Select the earliest UTC hour. Runs within approximately one hour after the configured time.</li>
+        <li><strong>Weekly</strong> — Select the day of week and earliest UTC hour.</li>
+        <li><strong>Monthly</strong> — Select the day of month (1–28) and earliest UTC hour.</li>
+      </ul>
+      <p>
+        Scheduled triggers are the lowest-friction path to automation. No webhook, no Git provider configuration required. They work well for:
+      </p>
+      <ul>
+        <li>Infrastructure repositories (Terraform, Kubernetes, CloudFormation) that change slowly but need current documentation for audits.</li>
+        <li>Compliance documentation that needs to reflect the production state on a known schedule.</li>
+        <li>Teams using monorepos where webhook events are too frequent to trigger a full documentation job on every push.</li>
+      </ul>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/UpcomingJobSchedule.png" alt="Upcoming scheduled documentation jobs in CodeDoc AI with countdown timers and last run info" loading="lazy">
+        <p class="diagram-caption">Upcoming scheduled jobs — next run time and countdown visible on the dashboard</p>
+      </div>
+
+      <h2 id="file-selection">AI file selection: keeping documentation relevant</h2>
+      <p>
+        One of the biggest variables in documentation quality and cost is which files you send to the AI. Sending everything in a repository — including test fixtures, generated files, migration scripts, and lock files — produces documentation that buries the important parts in noise, and it consumes more tokens than necessary.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview in CodeDoc AI showing file count, token estimate, and AI-selected files" loading="lazy">
+        <p class="diagram-caption">File analysis preview — estimated token usage and AI-selected files before the job runs</p>
+      </div>
+
+      <p>
+        CodeDoc AI offers several approaches to file selection:
+      </p>
+      <ul>
+        <li><strong>All files</strong> — Every code file in the repository. Use for small, well-structured repos.</li>
+        <li><strong>AI-selected (dynamic)</strong> — The AI re-selects the most relevant files on each run. Adapts as the codebase evolves.</li>
+        <li><strong>AI-selected (locked)</strong> — The AI picks once; you review and lock the list. Predictable token cost on subsequent runs.</li>
+        <li><strong>Manual selection</strong> — You choose which files to include from the analysis preview.</li>
+        <li><strong>Path filter</strong> — Restrict analysis to a subdirectory (e.g. <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/src</code> or <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/backend</code>).</li>
+        <li><strong>Glob patterns</strong> — Include or exclude files using glob syntax. For example, exclude <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">**/*.test.ts</code> to skip test files.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Token cost tip:</strong> AI-selected (dynamic) with a locked path filter is a good default for automated jobs. The AI continuously picks the most relevant files from your source directory, adapting to new modules without including test files or generated code.</p>
+      </div>
+
+      <h2 id="approval">The approval workflow as a quality gate</h2>
+      <p>
+        Fully automated documentation works well when you trust the output — which is reasonable for internal developer reference documentation that gets used and corrected over time. For documentation with a wider audience or higher stakes, you want a review step before anything goes live.
+      </p>
+      <p>
+        The approval workflow in CodeDoc AI inserts a human review step without breaking the automation. When enabled, the generated documentation is saved as a Confluence draft with a <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code> prefix. The job still runs on schedule or webhook trigger — you just don't publish until you've reviewed it.
+      </p>
+      <p>
+        Practical split:
+      </p>
+      <ul>
+        <li><strong>No approval (fully automatic):</strong> Developer documentation, quick references, onboarding guides. High refresh rate, acceptable if occasionally imperfect.</li>
+        <li><strong>With approval:</strong> Customer documentation, compliance &amp; audit pages, management overviews. Lower refresh rate, reviewed before going public.</li>
+      </ul>
+      <p>
+        You set this per job, not globally. A single Confluence space can have some fully-automated jobs and some approval-gated jobs running simultaneously.
+      </p>
+
+      <h2 id="history">Generation history and observability</h2>
+      <p>
+        Every documentation generation is logged in the <strong>Generation History</strong> view. Each entry shows:
+      </p>
+      <ul>
+        <li>Timestamp of the run</li>
+        <li>AI model used</li>
+        <li>Number of files analyzed</li>
+        <li>Token count consumed</li>
+        <li>Status (success / draft pending approval / failed)</li>
+        <li>Direct link to the resulting Confluence page</li>
+      </ul>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/GenerationHistory.png" alt="Generation History in CodeDoc AI with charts and individual run details including token counts" loading="lazy">
+        <p class="diagram-caption">Generation History — activity charts (7 days, 4 weeks, 12 months) and individual run details</p>
+      </div>
+
+      <p>
+        The history view also includes activity charts for 7 days, 4 weeks, and 12 months. This lets you monitor generation frequency, spot unexpected spikes (for example, a webhook misconfiguration that triggers the job on every push), and track cumulative token usage over time.
+      </p>
+
+      <h2 id="example-pipeline">A complete automation example</h2>
+      <p>
+        Here is how a mid-sized engineering team might configure a complete documentation pipeline for their main application repository:
+      </p>
+      <ol>
+        <li><strong>Developer documentation job</strong> — Trigger: On Merge. Preset: Developer Documentation. File selection: AI-selected (dynamic), excluding <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">**/*.test.*</code>. Approval: off. Target: Engineering Confluence space → "Service: [Repo Name]" page.</li>
+        <li><strong>Management overview job</strong> — Trigger: Scheduled weekly (Monday 09:00 UTC). Preset: Management Overview. File selection: same as above. Approval: on. Target: Product Confluence space → "System Overview: [Repo Name]" page.</li>
+        <li><strong>Onboarding guide job</strong> — Trigger: Scheduled monthly. Preset: Onboarding Guide. File selection: path filter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/src</code>. Approval: on. Target: Engineering Confluence space → "Onboarding: [Repo Name]" page.</li>
+      </ol>
+      <p>
+        One repository, three jobs, three Confluence pages serving three different audiences — all maintained automatically without anyone writing documentation manually.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Can Confluence documentation be automated?</p>
+        <p class="faq-a">Yes. With CodeDoc AI for Confluence, documentation regenerates automatically on Git commits, PR merges, or a recurring schedule. The result is a native Confluence page that updates without manual intervention.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between On Commit and On Merge triggers?</p>
+        <p class="faq-a">On Commit regenerates documentation on every push to the branch. On Merge regenerates only when a pull or merge request is merged. On Merge is more common for teams that want documentation to reflect reviewed, stable code rather than every WIP commit.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I set up automatic Confluence documentation from GitHub?</p>
+        <p class="faq-a">Install CodeDoc AI, connect your GitHub token and AI provider key, add your repository, create a job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Full step-by-step instructions in <a href="/blog/confluence-documentation-github.html">this article</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I prevent low-quality documentation from being published automatically?</p>
+        <p class="faq-a">Enable "Require approval before publishing" on the job. Documentation is saved as a draft with a [DRAFT] prefix and only published after you review and approve it from the Dashboard.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Confluence documentation automation work with GitLab, Bitbucket, and Azure DevOps?</p>
+        <p class="faq-a">Yes. The same single webhook URL works for all four providers. Scheduled triggers work independently of the Git provider entirely.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Will documentation generation create duplicate Confluence pages?</p>
+        <p class="faq-a">No. The job updates the existing page on each run. If the page doesn't exist yet, it creates it. Subsequent runs update it in place — no duplicates.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Turn your next merge into a documentation update</h3>
+        <p>CodeDoc AI is free to try — all triggers, AI file selection, and the approval workflow included from day one.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">The documentation debt problem</a></li>
+          <li><a href="#the-pipeline">The automation pipeline</a></li>
+          <li><a href="#trigger-comparison">Choosing the right trigger</a></li>
+          <li><a href="#webhooks">Setting up webhooks</a></li>
+          <li><a href="#schedules">Scheduled documentation</a></li>
+          <li><a href="#file-selection">AI file selection</a></li>
+          <li><a href="#approval">The approval workflow</a></li>
+          <li><a href="#history">Generation history</a></li>
+          <li><a href="#example-pipeline">Complete example</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Auto-Generate Confluence Docs from GitHub</a>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">AI Documentation for Atlassian Teams</a>
+        <a href="/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">BYOK AI for Atlassian: What It Means</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

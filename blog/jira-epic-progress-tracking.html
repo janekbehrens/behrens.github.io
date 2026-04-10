@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Tracking Epic Progress in Jira: The Subtask Approach | Janek Behrens</title>
+  <meta name="description" content="Epics are often a blind spot in Jira — you can see the stories inside, but not how close the epic is to done. Here's how subtask-based progress tracking gives you that number automatically.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Tracking Epic Progress in Jira: The Subtask Approach",
+    "description": "Epics are often a blind spot in Jira — you can see the stories inside, but not how close the epic is to done. Here's how subtask-based progress tracking gives you that number automatically.",
+    "url": "https://janekbehrens.de/blog/jira-epic-progress-tracking.html",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "keywords": ["Jira", "Atlassian", "Epic", "Progress Tracking"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tracking Epic Progress in Jira: The Subtask Approach">
+  <meta property="og:description" content="Epics are often a blind spot in Jira. Here's how subtask-based progress tracking gives you an automatic percentage — and a drill-down into every child issue.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/ticket.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-07">
+  <meta property="article:modified_time" content="2026-04-07">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Epic">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tracking Epic Progress in Jira: The Subtask Approach">
+  <meta name="twitter:description" content="Epics are a blind spot in Jira. Here's how to get an automatic progress percentage based on child issue completion.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/ticket.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Tracking Epic Progress in Jira: The Subtask Approach",
+    "description": "Epics are often a blind spot in Jira — you can see the stories inside, but not how close the epic is to done. Here's how subtask-based progress tracking gives you that number automatically.",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-epic-progress-tracking.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I track epic progress in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most reliable approach is subtask-based tracking: count how many child issues (stories or subtasks) are resolved, divide by the total, and express the result as a percentage. Apps like Visual Progress Tracker for Jira automate this as a custom field — the percentage updates every time a child issue is resolved, with no manual input required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira show progress on epics automatically?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira Cloud does not have a native progress percentage field for epics. The epic detail view lists child stories and their statuses, but there is no automatic completion percentage displayed as a progress bar on the epic itself. A custom field app from the Atlassian Marketplace adds this capability."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is subtask-based progress tracking in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Subtask-based progress calculates the number of resolved child issues divided by the total number of child issues, expressed as a percentage. For example, if an epic has 8 stories and 6 are resolved, the epic shows 75% complete. This approach works for any parent-child relationship in Jira: subtasks on a story, stories under an epic, or child epics under a parent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I see individual child issue progress on an epic in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With Visual Progress Tracker for Jira, yes. The subtask-based progress field includes a Details button on the epic that expands a breakdown of each child issue — showing each child's key, current status, and individual progress percentage. This lets you see which stories are pulling the epic's progress down without leaving the epic view."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* ── Child issue breakdown mock ── */
+    .child-breakdown {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      max-width: 480px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+      font-size: 0.85rem;
+    }
+    .child-breakdown-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .child-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-top: 1px solid var(--border-2);
+    }
+    .child-row:first-of-type { border-top: none; }
+    .child-key { font-size: 0.75rem; font-weight: 600; color: var(--blue); min-width: 70px; }
+    .child-status { font-size: 0.75rem; color: var(--text-2); flex: 1; }
+    .child-pct-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      min-width: 42px;
+      text-align: center;
+    }
+    .badge-red    { background: #FFEBE6; color: #BF2600; }
+    .badge-yellow { background: #FFF4E5; color: #974F0C; }
+    .badge-green  { background: #E3FCEF; color: #006644; }
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+    .summary-label { font-size: 0.8rem; font-weight: 600; color: var(--text-2); }
+    .summary-count { font-size: 0.8rem; color: var(--text-faint); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">April 7, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>Tracking Epic Progress in Jira: The Subtask Approach</h1>
+      <p class="article-intro">
+        Epics in Jira show you what's inside them, but not how close they are to done. You can count child stories by hand, or you can have a progress bar that calculates the answer automatically every time a story is resolved.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">Epics are a blind spot in Jira</h2>
+      <p>
+        Jira gives epics a list of child stories, but not a completion percentage. You can open the epic, see which stories are "Done" and which are still open, and mentally calculate a rough figure — but that number isn't surfaced anywhere by default. It doesn't appear on the epic card in the backlog, in the list view, or on a dashboard.
+      </p>
+      <p>
+        For teams managing multiple epics in parallel, this creates a common problem: you know each sprint is moving, but you don't know which epics are nearly done and which are stuck at 20% after three sprints. That information lives in your head, not in Jira.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira does not show a native progress percentage on epics. You add one by installing a custom field app that automatically calculates completed child issues ÷ total child issues as a percentage. No formulas, no scripting.</p>
+      </div>
+
+      <h2 id="subtask-approach">Why the subtask approach works</h2>
+      <p>
+        There are a few ways teams try to track epic progress in Jira:
+      </p>
+      <ul>
+        <li><strong>Story points:</strong> Divide completed points by total points. Works if estimates are accurate and consistent — which they often aren't mid-epic.</li>
+        <li><strong>Manual percentage field:</strong> A team member updates a custom number field. Requires discipline and maintenance.</li>
+        <li><strong>Subtask count:</strong> Count resolved child issues ÷ total child issues. This is objective, automatic, and reflects actual delivery rather than estimates.</li>
+      </ul>
+      <p>
+        The subtask approach has one major advantage: it requires no human input after the field is set up. When a story is resolved, the epic's percentage updates automatically. There is nothing to maintain.
+      </p>
+
+      <h2 id="how-it-works">How Visual Progress Tracker calculates it</h2>
+      <p>
+        The <strong>Progress Bar (Subtasks)</strong> field in Visual Progress Tracker is a Jira custom field that reads the parent issue's child hierarchy and computes:
+      </p>
+      <p style="text-align:center;padding:12px 0;">
+        <code style="background:#F4F5F7;padding:4px 10px;border-radius:4px;font-size:0.92rem;">progress = resolved children ÷ total children × 100</code>
+      </p>
+      <p>
+        This works at every level of Jira's hierarchy: subtasks under a story, stories under an epic, or child epics under a parent. The field also displays a "X/Y done" count alongside the bar — for example "3/5 done" — so the raw numbers are always visible without clicking through.
+      </p>
+      <p>
+        The color coding follows the same thresholds as the other field types: red below 34%, yellow up to 67%, green above. All thresholds are configurable in Admin Settings.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/progress-closeup.png" alt="Progress bar on a Jira issue showing subtask-based completion with a percentage badge and 'X/Y done' count" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">The subtask-based field on an issue — percentage badge, "X/Y done" count, and color-coded bar</p>
+      </div>
+
+      <h2 id="details">The Details view: drill into child issues</h2>
+      <p>
+        The subtask field includes a <strong>Details</strong> button. Clicking it expands a per-child breakdown directly below the progress bar — each child issue is listed with its key, current status, and individual progress percentage. The list lazy-loads on demand, so it doesn't slow down the issue view when you just want a quick look at the top-level number.
+      </p>
+      <p>
+        This makes it easy to answer questions like "which stories are pulling this epic's completion down?" without leaving the epic view or running a separate JQL query.
+      </p>
+
+      <!-- Mock child breakdown diagram -->
+      <div class="diagram">
+        <div class="child-breakdown">
+          <div class="child-breakdown-title">Child issues — 3 / 5 done</div>
+          <div class="child-row">
+            <span class="child-key">PROJ-12</span>
+            <span class="child-status">Done</span>
+            <span class="child-pct-badge badge-green">100%</span>
+          </div>
+          <div class="child-row">
+            <span class="child-key">PROJ-13</span>
+            <span class="child-status">Done</span>
+            <span class="child-pct-badge badge-green">100%</span>
+          </div>
+          <div class="child-row">
+            <span class="child-key">PROJ-14</span>
+            <span class="child-status">Done</span>
+            <span class="child-pct-badge badge-green">100%</span>
+          </div>
+          <div class="child-row">
+            <span class="child-key">PROJ-15</span>
+            <span class="child-status">In Review</span>
+            <span class="child-pct-badge badge-yellow">75%</span>
+          </div>
+          <div class="child-row">
+            <span class="child-key">PROJ-16</span>
+            <span class="child-status">In Progress</span>
+            <span class="child-pct-badge badge-red">20%</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Epic Progress</span>
+            <span class="summary-count">60% (3/5 resolved)</span>
+          </div>
+        </div>
+        <p class="diagram-caption">The Details view — per-child status and individual progress, expandable directly on the epic</p>
+      </div>
+
+      <h2 id="list-view">Tracking all epics at once</h2>
+      <p>
+        Adding the subtask progress field as a column to the Jira list view or backlog makes it possible to scan all epics simultaneously. Sort the column ascending to bring the lowest-completion epics to the top. You can immediately see which epics need attention and which are on track.
+      </p>
+      <p>
+        If you use the <strong>Progress Tracker Overview</strong> dashboard gadget, you can configure it to show only epics by adding a JQL filter like <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">type = Epic</code>. The gadget then shows every epic with a progress bar and an overall average — useful for quarterly planning reviews or stakeholder updates.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/listview.png" alt="Jira list view with progress bar column showing multiple epics and their subtask-based completion percentages" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Progress bar column in the Jira list view — sort to surface which epics need attention</p>
+      </div>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> You can use all three field types on the same issue. Add a subtask field on your epics for automatic completion tracking, and a manual field on individual stories where you want to capture effort that doesn't map cleanly to subtask count.</p>
+      </div>
+
+      <h2 id="setup">Setting it up</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Visual Progress Tracker</strong> from the <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>. Free trial available, no credit card required.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Create the field.</strong> Go to Jira Settings → Work items → Fields → Create field. Select "Progress Bar (Subtasks)" and give it a name — for example "Epic Progress" or just "Progress".</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Add it to your epic screen.</strong> Go to Project Settings → Screens → Edit screen and add the field. It will now appear on every epic (and any other issue type that has child issues).</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Add it as a list view column.</strong> In any Jira list view, click the column area and add the field. Now you can see all epics ranked by completion at a glance.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>(Optional) Add the dashboard gadget.</strong> Open a Jira Dashboard → Add gadget → search "Progress Tracker Overview". Enter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">type = Epic</code> as a JQL filter to see all epics with progress bars and an overall average.</div>
+        </li>
+      </ol>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I track epic progress in Jira?</p>
+        <p class="faq-a">The most reliable method is subtask-based tracking: count how many child issues (stories or subtasks) are resolved and divide by the total. Apps like <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> automate this as a custom field — the percentage updates automatically every time a child issue is resolved.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira show progress on epics automatically?</p>
+        <p class="faq-a">Jira Cloud does not have a native progress percentage field for epics. The epic detail view lists child stories and their statuses, but there is no automatic completion percentage displayed as a progress bar. A custom field app from the Atlassian Marketplace adds this capability.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is subtask-based progress tracking in Jira?</p>
+        <p class="faq-a">Subtask-based progress calculates the number of resolved child issues divided by the total number of child issues. If an epic has 8 stories and 6 are resolved, it shows 75% complete. This approach is objective, automatic, and works at every level of the Jira hierarchy: subtasks on a story, stories under an epic, and child epics under a parent.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I see per-child issue progress on an epic?</p>
+        <p class="faq-a">Yes. The subtask-based field includes a Details button on the parent issue that expands a breakdown of each child — showing the child issue's key, status, and individual progress percentage. This is useful for identifying which specific stories are blocking an epic from reaching 100%.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I use progress bars on issues other than epics?</p>
+        <p class="faq-a">Yes. The subtask-based field works on any issue that has child issues — stories with subtasks, features with user stories, and so on. The manual and status-based fields work on any issue type. You can add all three field types to a project and use different ones on different issue types as needed.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>See your epic progress automatically</h3>
+        <p>Visual Progress Tracker adds a subtask-based progress bar to every epic — and a Details drill-down to see exactly which stories are holding it back. Free trial, no credit card required.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Epics as a blind spot in Jira</a></li>
+          <li><a href="#subtask-approach">Why the subtask approach works</a></li>
+          <li><a href="#how-it-works">How Visual Progress Tracker calculates it</a></li>
+          <li><a href="#details">The Details drill-down</a></li>
+          <li><a href="#list-view">Tracking all epics at once</a></li>
+          <li><a href="#setup">Setting it up</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issue Progress Visually</a>
+        <a href="/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">How to Build a Sprint Health Dashboard in Jira</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

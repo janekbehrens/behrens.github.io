@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeDoc AI for Confluence — Auto-Generate Code Documentation with AI</title>
+  <meta name="description" content="CodeDoc AI automatically generates Confluence documentation from your Git repositories. Connect GitHub, GitLab, or Bitbucket, choose an AI provider, and publish structured docs in minutes.">
+  <link rel="canonical" href="https://janekbehrens.de/codedoc-ai.html">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CodeDoc AI for Confluence — Auto-Generate Code Documentation with AI">
+  <meta property="og:description" content="CodeDoc AI automatically generates Confluence documentation from your Git repositories. Connect GitHub, GitLab, or Bitbucket, choose an AI provider, and publish structured docs in minutes.">
+  <meta property="og:url" content="https://janekbehrens.de/codedoc-ai.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/DashboardTop.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CodeDoc AI for Confluence",
+    "description": "AI-powered Atlassian Forge app that automatically generates code documentation pages in Confluence from Git repositories. Supports GitHub, GitLab, Bitbucket, Azure DevOps, and AI providers including Anthropic Claude, OpenAI GPT, and Google Gemini.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Atlassian Confluence Cloud",
+    "url": "https://janekbehrens.de/codedoc-ai.html",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Free trial available, then per-user subscription"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.6; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+    }
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 82, 204, 0.18);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: #172B4D;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: #505F79;
+      max-width: 540px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .btn-primary {
+      background: #0052CC;
+      color: #fff;
+      padding: 13px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: #0747A6; }
+    .btn-secondary {
+      background: #fff;
+      color: #0052CC;
+      padding: 13px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 2px solid #0052CC;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background: #DEEBFF; }
+    .hero-note {
+      font-size: 0.82rem;
+      color: #97A0AF;
+      margin-bottom: 52px;
+    }
+    .hero-screenshot-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .hero-screenshot {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #DFE1E6;
+      box-shadow: 0 12px 48px rgba(23, 43, 77, 0.12);
+      display: block;
+    }
+
+    /* ── Shared section layout ── */
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0052CC;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #172B4D;
+      margin-bottom: 44px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Features ── */
+    .features {
+      background: #fff;
+      border-top: 1px solid #DFE1E6;
+      border-bottom: 1px solid #DFE1E6;
+      padding: 64px 0;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: #FAFBFC;
+      border: 1px solid #DFE1E6;
+      border-radius: 10px;
+      padding: 24px 26px;
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: #DEEBFF;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: #0052CC;
+      flex-shrink: 0;
+    }
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #172B4D;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #505F79;
+      line-height: 1.65;
+    }
+    .feature-extras {
+      margin-top: 28px;
+      background: #fff;
+      border: 1px solid #DFE1E6;
+      border-radius: 10px;
+      padding: 20px 26px;
+    }
+    .feature-extras-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7A869A;
+      margin-bottom: 14px;
+    }
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 32px;
+      list-style: none;
+    }
+    .feature-list li {
+      font-size: 0.875rem;
+      color: #344563;
+      padding-left: 16px;
+      position: relative;
+    }
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00875A;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* ── How it works ── */
+    .how-it-works {
+      padding: 64px 0;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .step {
+      text-align: center;
+      padding: 20px 12px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #DFE1E6;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: #0052CC;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin: 0 auto 14px;
+    }
+    .step h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #172B4D;
+      margin-bottom: 6px;
+    }
+    .step p {
+      font-size: 0.83rem;
+      color: #505F79;
+      line-height: 1.5;
+    }
+
+    /* ── Providers ── */
+    .providers {
+      background: #fff;
+      border-top: 1px solid #DFE1E6;
+      border-bottom: 1px solid #DFE1E6;
+      padding: 52px 0;
+      text-align: center;
+    }
+    .provider-groups {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .provider-group h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #97A0AF;
+      margin-bottom: 12px;
+    }
+    .provider-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .provider-badge {
+      background: #F4F5F7;
+      border: 1px solid #DFE1E6;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #344563;
+    }
+
+    /* ── CTA bottom ── */
+    .cta-bottom {
+      text-align: center;
+      padding: 72px 24px;
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+    }
+    .cta-bottom h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .cta-bottom p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+    .btn-white {
+      background: #fff;
+      color: #0052CC;
+      padding: 13px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-white:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    /* ── Responsive ── */
+    .jobs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    @media (max-width: 720px) {
+      .hero { padding: 52px 16px 40px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-list { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .jobs-grid { grid-template-columns: 1fr; gap: 24px; }
+      .page-nav { padding: 0 16px; }
+      .page-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .section-title { font-size: 1.4rem; }
+    }
+    @media (max-width: 460px) {
+      .steps { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+  <nav id="site-nav"></nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <picture>
+      <source srcset="img/codedoc-ai-icon.webp" type="image/webp">
+      <img src="img/codedoc-ai-icon.png" alt="CodeDoc AI Icon" width="80" height="80" class="hero-icon">
+    </picture>
+    <h1>CodeDoc AI<br>for Confluence</h1>
+    <p class="hero-tagline">
+      Automatically generate Confluence documentation from your Git repositories — powered by your own AI provider.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary">Try it free</a>
+      <a href="codedoc-ai-docs.html" class="btn-secondary">View Documentation</a>
+    </div>
+    <p class="hero-note">Free trial available &nbsp;·&nbsp; BYOK — your key, your data &nbsp;·&nbsp; Hosted on Atlassian infrastructure</p>
+    <div class="hero-screenshot-wrap">
+      <img src="imgCodeDoc/DashboardTop.png" alt="CodeDoc AI Dashboard — documentation jobs overview" width="730" height="373" class="hero-screenshot" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="section-inner">
+      <p class="section-label">What you get</p>
+      <h2 class="section-title">Everything your team needs for up-to-date docs</h2>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          </div>
+          <h3>Bring Your Own AI Key</h3>
+          <p>Use Anthropic Claude, OpenAI GPT, or Google Gemini — your API key, your costs, your data. No middleman, no token markup.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+          </div>
+          <h3>All Major Git Providers</h3>
+          <p>GitHub, GitLab, Bitbucket, and Azure DevOps — public and private repos. Connect as many repositories as you need.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3>8 Documentation Presets</h3>
+          <p>Developer deep-dives, management overviews, compliance audits, onboarding guides, and more — pick the format that fits your audience.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <h3>Always Up to Date</h3>
+          <p>Trigger documentation on every commit via webhook, on a daily or weekly schedule, or run manually. Docs stay current when code changes.</p>
+        </div>
+      </div>
+
+      <div class="feature-extras">
+        <p class="feature-extras-title">Also included</p>
+        <ul class="feature-list">
+          <li>Approval workflow — review drafts before publishing</li>
+          <li>10 output languages — English, German, French, Japanese &amp; more</li>
+          <li>AI-powered file selection — smart context filtering</li>
+          <li>Generation history with token usage tracking</li>
+          <li>Role-based access control — Admin, Editor, Viewer</li>
+          <li>Up to 2 repositories per documentation job</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Jobs section -->
+  <section style="background:#fff; border-top:1px solid #DFE1E6; border-bottom:1px solid #DFE1E6; padding:64px 0;">
+    <div class="section-inner">
+      <div class="jobs-grid">
+        <div>
+          <p class="section-label">Documentation Jobs</p>
+          <h2 style="font-size:1.5rem; font-weight:700; color:#172B4D; margin-bottom:14px; letter-spacing:-0.01em;">Build exactly the docs your team needs</h2>
+          <p style="font-size:0.925rem; color:#505F79; line-height:1.65; margin-bottom:12px;">Each job defines what to document, how to document it, and where to publish it — with full control over every detail.</p>
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li style="font-size:0.88rem; color:#344563; padding-left:18px; position:relative; margin-bottom:6px;"><span style="position:absolute; left:0; color:#00875A; font-weight:700;">✓</span>Choose a preset or write fully custom instructions</li>
+            <li style="font-size:0.88rem; color:#344563; padding-left:18px; position:relative; margin-bottom:6px;"><span style="position:absolute; left:0; color:#00875A; font-weight:700;">✓</span>Select exactly which files the AI should analyze</li>
+            <li style="font-size:0.88rem; color:#344563; padding-left:18px; position:relative; margin-bottom:6px;"><span style="position:absolute; left:0; color:#00875A; font-weight:700;">✓</span>Set trigger type: manual, webhook, or schedule</li>
+            <li style="font-size:0.88rem; color:#344563; padding-left:18px; position:relative; margin-bottom:6px;"><span style="position:absolute; left:0; color:#00875A; font-weight:700;">✓</span>Target any Confluence space and parent page</li>
+            <li style="font-size:0.88rem; color:#344563; padding-left:18px; position:relative; margin-bottom:6px;"><span style="position:absolute; left:0; color:#00875A; font-weight:700;">✓</span>Enable approval workflow to review before publishing</li>
+          </ul>
+        </div>
+        <div>
+          <img src="imgCodeDoc/Jobs.png" alt="CodeDoc AI Jobs list — showing configured documentation jobs with trigger type, preset, and status" width="730" height="397" style="width:100%; height:auto; border-radius:10px; border:1px solid #DFE1E6; box-shadow:0 4px 20px rgba(23,43,77,0.08);" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <div class="section-inner">
+      <p class="section-label">Setup</p>
+      <h2 class="section-title">Up and running in 4 steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Connect</h3>
+          <p>Add your AI API key and Git access token in the setup wizard.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Add Repositories</h3>
+          <p>Browse or paste the URL of any repo you want to document.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Create a Job</h3>
+          <p>Choose a preset, output language, trigger type, and Confluence target space.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Done</h3>
+          <p>The app reads your code, generates documentation, and publishes to Confluence automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Providers -->
+  <section class="providers">
+    <div class="section-inner">
+      <h2 class="section-title" style="margin-bottom: 0;">Works with your existing stack</h2>
+      <div class="provider-groups">
+        <div class="provider-group">
+          <h4>AI Providers</h4>
+          <div class="provider-list">
+            <span class="provider-badge">Anthropic Claude</span>
+            <span class="provider-badge">OpenAI GPT</span>
+            <span class="provider-badge">Google Gemini</span>
+          </div>
+        </div>
+        <div class="provider-group">
+          <h4>Git Providers</h4>
+          <div class="provider-list">
+            <span class="provider-badge">GitHub</span>
+            <span class="provider-badge">GitLab</span>
+            <span class="provider-badge">Bitbucket</span>
+            <span class="provider-badge">Azure DevOps</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Also from Janek Behrens -->
+  <section style="background:#FAFBFC; border-top:1px solid #DFE1E6; padding:48px 0;">
+    <div class="section-inner">
+      <p class="section-label" style="margin-bottom:20px;">Also from Janek Behrens</p>
+      <a href="visual-progress-tracker.html" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #DFE1E6;border-radius:12px;padding:20px 24px;text-decoration:none;transition:box-shadow 0.15s,border-color 0.15s;max-width:520px;" onmouseover="this.style.boxShadow='0 4px 20px rgba(23,43,77,0.09)';this.style.borderColor='#BAD6FB'" onmouseout="this.style.boxShadow='';this.style.borderColor='#DFE1E6'">
+        <picture>
+          <source srcset="img/progresstracker144logo.webp" type="image/webp">
+          <img src="img/progresstracker144logo.png" alt="Visual Progress Tracker Icon" width="44" height="44" style="border-radius:10px;object-fit:contain;flex-shrink:0;" loading="lazy">
+        </picture>
+        <div>
+          <div style="font-size:1rem;font-weight:700;color:#172B4D;margin-bottom:4px;">Visual Progress Tracker for Jira</div>
+          <div style="font-size:0.88rem;color:#505F79;line-height:1.5;">Color-coded progress bars on every Jira issue — Manual, Status-based, and Subtask-based.</div>
+        </div>
+        <span style="margin-left:auto;flex-shrink:0;font-size:0.9rem;color:#0052CC;font-weight:600;">View →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <h2>Start documenting your code today</h2>
+    <p>Free trial available — all features included from day one.</p>
+    <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Get it on Atlassian Marketplace →</a>
+  </section>
+
+  <!-- Footer injected by components.js -->
+  <footer id="site-footer"></footer>
+
+  <script src="/components.js"></script>
+</body>
+</html>

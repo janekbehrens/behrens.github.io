@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Progress Bar: How to Track Issue Progress Visually | Janek Behrens</title>
+  <meta name="description" content="Learn how to add color-coded progress bars to Jira issues — automatically calculated from status, subtasks, or set manually. Three field types, zero JQL required.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-progress-bar.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Progress Bar: How to Track Issue Progress Visually",
+    "description": "Learn how to add color-coded progress bars to Jira issues — automatically calculated from status, subtasks, or set manually. Three field types, zero JQL required.",
+    "url": "https://janekbehrens.de/blog/jira-progress-bar.html",
+    "datePublished": "2026-04-05T00:00:00+02:00",
+    "dateModified": "2026-04-05T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "keywords": ["Jira", "Atlassian", "Project Management", "Progress Tracking"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Progress Bar: How to Track Issue Progress Visually">
+  <meta property="og:description" content="Three ways to add color-coded progress bars to Jira issues — manual, status-based, and subtask-based. No JQL, no scripting, no hassle.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-progress-bar.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/ticket.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-05">
+  <meta property="article:modified_time" content="2026-04-05">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Project Management">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Progress Bar: How to Track Issue Progress Visually">
+  <meta name="twitter:description" content="Three ways to add color-coded progress bars to Jira issues — manual, status-based, and subtask-based. No JQL, no scripting, no hassle.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/ticket.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Jira Progress Bar: How to Track Issue Progress Visually",
+    "description": "Learn how to add color-coded progress bars to Jira issues — automatically calculated from status, subtasks, or set manually. Three field types, zero JQL required.",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "datePublished": "2026-04-05T00:00:00+02:00",
+    "dateModified": "2026-04-05T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-progress-bar.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Jira have a built-in progress bar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira Cloud does not have a native progress bar custom field for individual issues. You can see subtask counts in the issue detail, but there is no visual bar that appears in list views, backlogs, or dashboards without an app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I add a progress bar to a Jira issue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install a custom field app from the Atlassian Marketplace — for example Visual Progress Tracker for Jira. After installation, create a progress bar custom field in Jira Settings → Custom Fields, add it to your project screens, and the bar will appear on every issue. Status-based and subtask-based types update automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I show progress bars in the Jira list view?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Once you add a progress bar custom field, you can add it as a column to any Jira list view or backlog. Each field type gets its own column showing a color-coded dot and the percentage value. You can show multiple field types side by side."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between status-based and subtask-based progress in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Status-based progress maps your Jira workflow statuses (e.g. To Do, In Progress, Done) to percentages. Subtask-based progress calculates resolved subtasks ÷ total subtasks. Use status-based for single issues that move through a workflow; use subtask-based for epics or parent issues that have child tasks."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* Jira issue mock */
+    .mock-issue {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 560px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .mock-issue-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mock-issue-key {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--blue);
+      background: var(--blue-lite);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .mock-field-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-top: 1px solid var(--border-2);
+    }
+    .mock-field-label {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .mock-field-value { flex: 1; }
+    .progress-bar-wrap {
+      background: #F4F5F7;
+      border-radius: 4px;
+      height: 10px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .bar-red    { background: #DE350B; }
+    .bar-yellow { background: #FF8B00; }
+    .bar-green  { background: #00875A; }
+    .mock-bar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-2);
+      width: 32px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .mock-status {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .status-inprogress { background: #DEEBFF; color: var(--blue); }
+    .status-done       { background: #E3FCEF; color: #006644; }
+    .status-todo       { background: #F4F5F7; color: var(--text-2); }
+
+    /* List view mock */
+    .mock-listview {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+      font-size: 0.82rem;
+    }
+    .mock-listview table { width: 100%; border-collapse: collapse; }
+    .mock-listview thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .mock-listview tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: middle;
+    }
+    .mock-listview tbody tr:last-child td { border-bottom: none; }
+    .mock-listview tbody tr:hover td { background: #FAFBFC; }
+    .mock-issue-link { color: var(--blue); font-weight: 500; text-decoration: none; font-size: 0.82rem; }
+    .mock-prog-col { width: 140px; }
+    .mini-bar-wrap { display: flex; align-items: center; gap: 6px; }
+    .mini-bar { background: #F4F5F7; border-radius: 3px; height: 8px; flex: 1; overflow: hidden; }
+    .mini-bar-fill { height: 100%; border-radius: 3px; }
+    .mini-pct { font-size: 0.75rem; color: var(--text-2); font-weight: 600; width: 28px; text-align: right; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">April 5, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>Jira Progress Bar: How to Track Issue Progress Visually</h1>
+      <p class="article-intro">
+        Jira doesn't show you a progress bar on issues out of the box. You open a ticket, check the status, maybe count subtasks — and still don't know how done something actually is. Here's how to fix that with color-coded progress bars that update automatically.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">The problem: Jira shows status, not progress</h2>
+      <p>
+        Jira is excellent at tracking <em>state</em> — a ticket is either To Do, In Progress, or Done. But state and progress are different things. An issue marked "In Progress" could be 5% done or 95% done. A sprint with ten "In Progress" tickets tells you almost nothing about how close you are to shipping.
+      </p>
+      <p>
+        Teams work around this in different ways: adding percentage fields manually, reading subtask counts, or running JQL reports. None of these give you a quick visual answer in the list view or on a dashboard.
+      </p>
+      <p>
+        A Jira progress bar solves this by surfacing progress as a visual element — directly on the issue, in list view columns, and in dashboard gadgets.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira Cloud does not have a native progress bar field. You add one via a Marketplace app that creates a custom field. Setup takes under five minutes.</p>
+      </div>
+
+      <h2 id="three-types">Three types of progress bar for Jira</h2>
+      <p>
+        Not every issue tracks progress the same way. A design task has different checkpoints than a bug fix, which is different again from an epic with ten subtasks. That's why it helps to have three distinct field types available:
+      </p>
+
+      <h3 id="manual">1. Manual progress bar</h3>
+      <p>
+        You set the percentage yourself by dragging a slider. Simple and completely flexible. Useful for creative work, tasks with subjective milestones, or any situation where completion isn't determined by system events.
+      </p>
+      <p><strong>Best for:</strong> design tasks, content creation, research, discovery work.</p>
+
+      <h3 id="status-based">2. Status-based progress bar</h3>
+      <p>
+        Maps your Jira workflow statuses to percentage values. When the issue moves from "To Do" to "In Progress" to "Done", the bar advances automatically. Zero extra clicks required.
+      </p>
+      <p>You configure the mapping once in Admin Settings — for example:</p>
+      <ul>
+        <li><strong>To Do</strong> → 0%</li>
+        <li><strong>In Progress</strong> → 50%</li>
+        <li><strong>In Review</strong> → 75%</li>
+        <li><strong>Done</strong> → 100%</li>
+      </ul>
+      <p>After that, the bar updates every time someone changes the issue status. No manual input needed.</p>
+      <p><strong>Best for:</strong> sprint tickets, bugs, standard development tasks — any issue that moves through a defined workflow.</p>
+
+      <h3 id="subtask-based">3. Subtask-based progress bar</h3>
+      <p>
+        Calculates <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">resolved subtasks ÷ total subtasks</code> automatically. No setup required beyond adding the field — it reads Jira's own subtask data. The field also shows the raw count ("2/3 done") next to the bar.
+      </p>
+      <p><strong>Best for:</strong> epics, stories with subtasks, QA checklists, multi-step tasks, onboarding flows with child issues.</p>
+
+      <div class="diagram">
+        <img src="../img/progress-closeup.png" alt="All three progress bar types on a Jira issue: Manual at 70%, Subtasks at 83% (2/3 done), Status at 50% (In Progress)" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">All three field types on a single issue — Manual (70%), Subtasks (83%, 2/3 done), Status (50%, In Progress)</p>
+      </div>
+
+      <h2 id="list-view">Progress in the Jira list view</h2>
+      <p>
+        The real power isn't on the individual issue — it's when you add progress fields as columns to the list view or backlog. Each field type gets its own column: you can show Manual, Status-based, and Subtask-based side by side, or just the one that fits your workflow.
+      </p>
+      <p>
+        The columns display a colored dot and the percentage value. Red is immediately visible — a sprint with three red dots at 10% on day four of five is a risk signal that no status column would surface this clearly.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/listview.png" alt="Jira list view showing three progress bar columns: Progress Bar, Progress Bar (Status), and Progress Bar (Subtasks) — each with a colored dot and percentage" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Three progress columns in the Jira list view — each field type has its own column with a color-coded dot and percentage</p>
+      </div>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> Sort any progress column ascending to surface at-risk items at the top. Issues sitting at 0% mid-sprint are the ones that need a conversation — not a status update.</p>
+      </div>
+
+      <h2 id="setup">How to set up a progress bar in Jira</h2>
+      <p>
+        The following steps apply to <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a>, available on the Atlassian Marketplace. The app is built on Atlassian Forge, so it runs entirely on Atlassian's own infrastructure — no external servers, no data leaving your Jira site.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install the app</strong> from the <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>. Free trial available, no credit card required.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Go to Jira Settings → Custom Fields.</strong> Create a new custom field and select one of the three progress bar types: Manual, Status-Based, or Subtask-Based.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Add the field to your project screens.</strong> Jira will then display the progress bar on all relevant issue views in that project.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Add the field as a list view column</strong> by clicking the column header area in any Jira list or backlog. The progress bar is now visible across your entire project at a glance.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>(Optional) Add the dashboard gadget.</strong> The Progress Tracker Overview gadget gives team leads a summary table of every issue in a project, sortable by progress value.</div>
+        </li>
+      </ol>
+
+      <p>
+        For Status-Based fields, one additional step: go to <strong>App Settings → Status Mappings</strong> and assign a percentage to each of your workflow statuses. After that, everything is automatic.
+      </p>
+
+      <h2 id="color-thresholds">Color thresholds: when does a bar turn red?</h2>
+      <p>
+        By default, the color coding works like a traffic light:
+      </p>
+      <ul>
+        <li><strong style="color:#DE350B;">Red:</strong> 0–33%</li>
+        <li><strong style="color:#FF8B00;">Yellow:</strong> 34–66%</li>
+        <li><strong style="color:#00875A;">Green:</strong> 67–100%</li>
+      </ul>
+      <p>
+        These thresholds are configurable in Admin Settings. If your team considers anything below 50% at-risk, you can adjust the yellow/green boundary accordingly. The color change propagates immediately across all views — list, issue detail, and dashboard.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have a built-in progress bar?</p>
+        <p class="faq-a">Jira Cloud does not have a native progress bar custom field for individual issues. You can see subtask counts in the issue detail view, but there is no visual bar that appears in list views, backlogs, or dashboards without an app.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I add a progress bar to a Jira issue?</p>
+        <p class="faq-a">Install a custom field app from the Atlassian Marketplace — for example <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a>. Create a progress bar custom field in Jira Settings → Custom Fields, add it to your project screens, and the bar appears on every issue. Status-based and subtask-based types update automatically.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I show progress bars in the Jira list view?</p>
+        <p class="faq-a">Yes. Once you add a progress bar custom field, you can add it as a column to any Jira list view or backlog. Each field type gets its own column, showing a color-coded dot and the percentage value. You can add one column per field type — for example, Status-based and Subtask-based side by side.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between status-based and subtask-based progress in Jira?</p>
+        <p class="faq-a">Status-based progress maps your Jira workflow statuses to percentages. Subtask-based progress calculates resolved subtasks ÷ total subtasks. Use status-based for individual issues that move through a workflow; use subtask-based for epics or parent issues with child tasks.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does a Jira progress bar work with JQL?</p>
+        <p class="faq-a">Yes. Custom fields created by the app are JQL-compatible. You can filter, sort, and report on progress values using standard Jira Query Language — for example, finding all issues where progress is below 25% across a project.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is there a free Jira progress bar app?</p>
+        <p class="faq-a">Visual Progress Tracker for Jira offers a free trial on the Atlassian Marketplace with all features included. After the trial, it is a per-user subscription.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>Try it in your Jira project</h3>
+        <p>Visual Progress Tracker is free to try — all three field types, list view columns, and the dashboard gadget included from day one.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why Jira shows status, not progress</a></li>
+          <li><a href="#three-types">Three types of progress bar</a></li>
+          <li><a href="#manual">Manual progress bar</a></li>
+          <li><a href="#status-based">Status-based progress bar</a></li>
+          <li><a href="#subtask-based">Subtask-based progress bar</a></li>
+          <li><a href="#list-view">Progress in the list view</a></li>
+          <li><a href="#setup">How to set it up</a></li>
+          <li><a href="#color-thresholds">Color thresholds</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How to Build a Sprint Health Dashboard in Jira</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Tracking Epic Progress in Jira: The Subtask Approach</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

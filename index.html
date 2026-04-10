@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Janek Behrens — Atlassian Productivity Tools</title>
+  <meta name="description" content="Atlassian Forge apps by Janek Behrens — CodeDoc AI for automatic code documentation in Confluence, Visual Progress Tracker for Jira, and Priority Scoring for Jira.">
+  <link rel="canonical" href="https://janekbehrens.de/">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 24px 72px;
+      text-align: center;
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue-lite);
+      color: var(--blue);
+      border: 1px solid #BAD6FB;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero-badge svg { flex-shrink: 0; }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      max-width: 540px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 480px) {
+      .hero { padding: 56px 20px 52px; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+    }
+
+    /* ── Section wrappers ── */
+    .section-apps    { padding: 72px 0; }
+    .section-about   { padding: 72px 0; border-top: 1px solid var(--border); }
+
+    /* ── Section headings ── */
+    .section-head { margin-bottom: 36px; }
+    .section-head .section-label { display: block; margin-bottom: 6px; }
+
+    /* ── App cards grid ── */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .apps-grid { grid-template-columns: 1fr; }
+    }
+    .app-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .app-card:hover {
+      box-shadow: 0 4px 20px rgba(23,43,77,0.09);
+      border-color: #BAD6FB;
+    }
+    .app-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .app-card-header img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .app-card-meta { flex: 1; min-width: 0; }
+    .app-card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .app-card-platform {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      font-weight: 500;
+    }
+    .app-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .app-card-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .app-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+      border-top: 1px solid var(--border-2);
+      padding-top: 14px;
+      margin-top: auto;
+    }
+    .app-card-actions a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .app-action-primary {
+      color: var(--blue);
+      font-weight: 600;
+      margin-right: 16px;
+    }
+    .app-action-primary:hover { text-decoration: underline; }
+    .app-action-secondary { color: var(--text-2); margin-right: 14px; }
+    .app-action-secondary:hover { color: var(--blue); text-decoration: underline; }
+
+    /* ── Clickable card titles ── */
+    .app-card-name a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .app-card-name a:hover { color: var(--blue); }
+
+    /* ── New badge ── */
+    .badge-new {
+      background: #FFF3E0;
+      color: #E65100;
+      border-color: #FFCC80;
+    }
+
+    /* ── Featured app card (full-width, 2-col interior) ── */
+    .app-card-featured {
+      grid-column: 1 / -1;
+      border-left: 4px solid var(--blue);
+      background: linear-gradient(135deg, #F5F9FF 0%, var(--white) 60%);
+    }
+    .app-card-featured .app-card-header img {
+      width: 52px;
+      height: 52px;
+    }
+    .app-card-featured .app-card-name {
+      font-size: 1.15rem;
+    }
+    .app-card-featured-body {
+      display: flex;
+      gap: 32px;
+    }
+    .app-card-featured-left {
+      flex: 1;
+      min-width: 0;
+    }
+    .app-card-featured-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .app-card-featured-right {
+      flex-shrink: 0;
+      width: 300px;
+      align-self: stretch;
+      display: flex;
+      align-items: stretch;
+    }
+    .featured-banner {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 18px rgba(23,43,77,0.16);
+      display: block;
+    }
+    @media (max-width: 680px) {
+      .app-card-featured-body { flex-direction: column; gap: 16px; }
+      .app-card-featured-right { width: 100%; }
+    }
+
+    /* ── About + Blog ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    }
+    .about-block h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .about-block p {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .about-block a { color: var(--blue); text-decoration: none; }
+    .about-block a:hover { text-decoration: underline; }
+    .blog-list { list-style: none; padding: 0; }
+    .blog-list li {
+      border-top: 1px solid var(--border-2);
+      padding: 14px 0;
+    }
+    .blog-list li:first-child { border-top: none; padding-top: 0; }
+    .blog-topic {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+    .blog-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .blog-title:hover { color: var(--blue); }
+    .blog-date { font-size: 0.78rem; color: var(--text-faint); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Forge-native &middot; Hosted on Atlassian infrastructure
+    </div>
+    <h1>Productivity tools built for Jira and Confluence teams</h1>
+    <p class="hero-subtitle">
+      Lightweight, AI-powered apps for the Atlassian ecosystem — designed by a developer, for teams who want less setup and more done.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary">Browse apps on Marketplace</a>
+      <a href="/blog/" class="btn-secondary">Read the blog</a>
+    </div>
+  </section>
+
+  <!-- ── Live Apps ── -->
+  <section class="section-apps" id="apps">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label">Live apps</span>
+        <h2 class="section-title">Available on the Atlassian Marketplace</h2>
+      </div>
+
+      <div class="apps-grid">
+
+        <!-- Priority Scoring — Featured (NEW) -->
+        <div class="app-card app-card-featured">
+          <div class="app-card-featured-body">
+            <div class="app-card-featured-left">
+              <div class="app-card-header">
+                <picture>
+                  <source srcset="img/priority-scoring-icon.webp" type="image/webp">
+                  <img src="img/priority-scoring-icon.png" alt="Priority Scoring Icon" width="52" height="52" loading="lazy">
+                </picture>
+                <div class="app-card-meta">
+                  <div class="app-card-name"><a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener">Priority Scoring for Jira</a></div>
+                  <div class="app-card-platform">Jira Cloud</div>
+                </div>
+              </div>
+              <p class="app-card-desc">
+                Score and rank your Jira backlog automatically. Choose from RICE, WSJF,
+                or ICE frameworks — or define your own weighted formula. The built-in
+                Rovo AI agent triages your entire backlog on command, explains every
+                score it sets, and bulk-applies scores across sprints or epics.
+              </p>
+              <div class="app-card-badges">
+                <span class="badge badge-new">✦ New</span>
+                <span class="badge">Forge</span>
+                <span class="badge">Rovo AI</span>
+                <span class="badge-green badge">Free trial</span>
+              </div>
+              <div class="app-card-actions">
+                <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="app-action-primary">Try it free →</a>
+                <a href="priority-scoring-docs.html" class="app-action-secondary">Docs</a>
+                <a href="priority-scoring-support.html" class="app-action-secondary">Support</a>
+              </div>
+            </div>
+            <div class="app-card-featured-right">
+              <img src="imgPriorityScorer/priorityScorer-banner.jpg"
+                   alt="Priority Scoring for Jira — RICE, WSJF, ICE and Rovo AI"
+                   class="featured-banner"
+                   width="640" height="360" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+        <!-- CodeDoc AI -->
+        <div class="app-card">
+          <div class="app-card-header">
+            <picture>
+              <source srcset="img/codedoc-ai-icon.webp" type="image/webp">
+              <img src="img/codedoc-ai-icon.png" alt="CodeDoc AI Icon" width="44" height="44" loading="lazy">
+            </picture>
+            <div class="app-card-meta">
+              <div class="app-card-name"><a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">CodeDoc AI for Confluence</a></div>
+              <div class="app-card-platform">Confluence Cloud</div>
+            </div>
+          </div>
+          <p class="app-card-desc">
+            Automatically generate documentation from your Git repositories using AI.
+            Connect your own AI provider, select repositories, and publish structured
+            docs to Confluence — on demand, on commit, or on a schedule.
+          </p>
+          <div class="app-card-badges">
+            <span class="badge">Forge</span>
+            <span class="badge">BYOK</span>
+            <span class="badge-green badge">Free tier</span>
+          </div>
+          <div class="app-card-actions">
+            <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="app-action-primary">Try it free →</a>
+            <a href="codedoc-ai-docs.html" class="app-action-secondary">Docs</a>
+            <a href="codedoc-ai-setup.html" class="app-action-secondary">Quick Start</a>
+            <a href="codedoc-ai-support.html" class="app-action-secondary">Support</a>
+          </div>
+        </div>
+
+        <!-- Visual Progress Tracker -->
+        <div class="app-card">
+          <div class="app-card-header">
+            <picture>
+              <source srcset="img/progresstracker144logo.webp" type="image/webp">
+              <img src="img/progresstracker144logo.png" alt="Visual Progress Tracker Icon" width="44" height="44" loading="lazy">
+            </picture>
+            <div class="app-card-meta">
+              <div class="app-card-name"><a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Visual Progress Tracker for Jira</a></div>
+              <div class="app-card-platform">Jira Cloud</div>
+            </div>
+          </div>
+          <p class="app-card-desc">
+            Add color-coded progress bars to your Jira issues. Three field types —
+            Manual, Status-based, and Subtask-based — give teams instant visibility
+            into project health across list views, issue details, and dashboards.
+          </p>
+          <div class="app-card-badges">
+            <span class="badge">Forge</span>
+            <span class="badge-green badge">Free trial</span>
+          </div>
+          <div class="app-card-actions">
+            <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="app-action-primary">Try it free →</a>
+            <a href="visual-progress-tracker-docs.html" class="app-action-secondary">Docs</a>
+            <a href="visual-progress-tracker-support.html" class="app-action-secondary">Support</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About + Blog ── -->
+  <section class="section-about">
+    <div class="section-inner">
+      <div class="about-grid">
+
+        <!-- About -->
+        <div class="about-block">
+          <h2>About</h2>
+          <p>
+            I'm Janek Behrens, an independent Atlassian Marketplace Partner based in Germany.
+            I build Forge-native apps — meaning every app runs entirely on Atlassian's own
+            infrastructure, with no external servers operated by me.
+          </p>
+          <p>
+            My focus is on privacy-first design: no telemetry, no data leaving your Atlassian
+            site unless you explicitly configure it, and full BYOK support where AI is involved.
+          </p>
+          <p>
+            <a href="trust-center.html">Trust Center &amp; Security →</a>
+          </p>
+        </div>
+
+        <!-- Blog teaser -->
+        <div class="about-block">
+          <h2>From the blog</h2>
+          <ul class="blog-list">
+            <li>
+              <div class="blog-topic">Jira</div>
+              <a href="/blog/jira-prioritization-framework-comparison.html" class="blog-title">RICE vs. WSJF vs. ICE: Which Jira Prioritization Framework Is Right for You?</a>
+              <div class="blog-date">April 9, 2026</div>
+            </li>
+            <li>
+              <div class="blog-topic">Confluence</div>
+              <a href="/blog/ai-documentation-confluence.html" class="blog-title">AI-Powered Documentation for Atlassian Teams: A Practical Guide</a>
+              <div class="blog-date">April 9, 2026</div>
+            </li>
+            <li>
+              <div class="blog-topic">Atlassian</div>
+              <a href="/blog/byok-ai-atlassian.html" class="blog-title">BYOK AI for Atlassian: What It Means and Why It Matters</a>
+              <div class="blog-date">April 9, 2026</div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+</body>
+</html>

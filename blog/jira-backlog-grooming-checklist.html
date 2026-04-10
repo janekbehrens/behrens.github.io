@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Backlog Grooming Checklist for Product Owners (2026) | Janek Behrens</title>
+  <meta name="description" content="A 12-point Jira backlog grooming checklist for Product Owners and Scrum Masters — covering story points, acceptance criteria, priority scores, stale issues, and more. Ready to copy and use.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-backlog-grooming-checklist.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Backlog Grooming Checklist for Product Owners (2026)",
+    "description": "A 12-point Jira backlog grooming checklist for Product Owners and Scrum Masters — covering story points, acceptance criteria, priority scores, stale issues, and more. Ready to copy and use.",
+    "url": "https://janekbehrens.de/blog/jira-backlog-grooming-checklist.html",
+    "datePublished": "2026-04-10T00:00:00+02:00",
+    "dateModified": "2026-04-10T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png",
+    "keywords": ["jira backlog grooming", "backlog refinement checklist", "product owner checklist", "jira backlog health", "scrum backlog"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Jira Backlog Grooming Checklist for Product Owners (2026)",
+    "description": "A 12-point Jira backlog grooming checklist for Product Owners and Scrum Masters — covering story points, acceptance criteria, priority scores, stale issues, and more. Ready to copy and use.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png",
+    "datePublished": "2026-04-10T00:00:00+02:00",
+    "dateModified": "2026-04-10T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-backlog-grooming-checklist.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is backlog grooming in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Backlog grooming — officially called Product Backlog Refinement in the 2020 Scrum Guide — is the ongoing process of reviewing, clarifying, and ordering backlog items so they are ready for upcoming sprints. In Jira, this means ensuring each issue has a clear title and description, acceptance criteria, story point estimate, assignee, priority score, and no stale or duplicate entries. The Scrum Guide recommends spending no more than 10% of the sprint's capacity on refinement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should be on a backlog grooming checklist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A practical Jira backlog grooming checklist covers: (1) clear title and description, (2) acceptance criteria defined, (3) story points or effort estimated, (4) priority score set (RICE, WSJF, or ICE), (5) assignee or team assigned, (6) correct issue type, (7) labels and components applied, (8) no stale issues older than 90 days without update, (9) no duplicate issues, (10) dependencies linked, (11) due dates set where applicable, (12) DoR (Definition of Ready) confirmed. Items without at least the first five should not enter a sprint."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should you do backlog grooming?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 2020 Scrum Guide treats Product Backlog Refinement as an ongoing activity rather than a fixed ceremony — it should happen continuously, not just once per sprint. In practice, most Scrum teams hold one dedicated refinement session per sprint (mid-sprint) and supplement it with ad-hoc refinement as new items arrive. The Scrum Guide suggests no more than 10% of sprint capacity should go toward refinement activities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between backlog grooming and sprint planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Backlog grooming (refinement) prepares issues for future sprints — it's about clarifying, estimating, and ordering the backlog so items are ready. Sprint planning selects from the prepared backlog and commits to a sprint goal for the next sprint. Grooming should happen before sprint planning, ideally throughout the sprint, so that sprint planning is fast and focused rather than spending time on unclear or unestimated tickets."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I automate backlog health checks in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Priority Scoring for Jira includes a Board Health Score (0–100) that automatically checks your backlog against up to 8 configurable criteria — missing descriptions, missing story points, stale issues, unscored items, missing assignees, overdue issues, missing priority, and missing labels. Instead of running through a checklist manually before each refinement session, the score gives you a live health reading and a breakdown of which criteria are pulling it down."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Backlog Grooming Checklist for Product Owners (2026)">
+  <meta property="og:description" content="12-point checklist: story points, acceptance criteria, priority scores, stale issues, duplicates, and more — plus how to automate it with a Board Health Score.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-backlog-grooming-checklist.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-10">
+  <meta property="article:modified_time" content="2026-04-10">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Backlog Grooming">
+  <meta property="article:tag" content="Scrum">
+  <meta property="article:tag" content="Product Management">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Backlog Grooming Checklist for Product Owners (2026)">
+  <meta name="twitter:description" content="12-point checklist for Jira backlog grooming — story points, acceptance criteria, priority scores, stale issues, and more.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Checklist table ── */
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 0.88rem;
+    }
+    .checklist-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .checklist-table tbody td {
+      padding: 10px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .checklist-table tbody td:first-child {
+      width: 28px;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .checklist-table tbody td:nth-child(2) {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .checklist-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .checklist-table strong { color: var(--text); }
+    .priority-tag {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tag-must   { background: #FFEBE6; color: #BF2600; }
+    .tag-should { background: #FFFAE6; color: #974F00; }
+    .tag-nice   { background: #E3FCEF; color: #006644; }
+
+    /* ── Sprint-ready bar ── */
+    .readiness-bar {
+      background: #F4F5F7;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .readiness-bar-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 16px;
+    }
+    .readiness-levels {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .readiness-level {
+      flex: 1;
+      min-width: 130px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .readiness-score {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .readiness-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .readiness-desc {
+      font-size: 0.78rem;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+    .level-green .readiness-score { color: #00875A; }
+    .level-green .readiness-label { color: #006644; }
+    .level-yellow .readiness-score { color: #FF8B00; }
+    .level-yellow .readiness-label { color: #974F00; }
+    .level-red .readiness-score { color: #DE350B; }
+    .level-red .readiness-label { color: #BF2600; }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Scrum</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">April 10, 2026</span>
+        <span class="article-readtime">· 8 min read</span>
+      </div>
+      <h1>Jira Backlog Grooming Checklist for Product Owners (2026)</h1>
+      <p class="article-intro">
+        Refinement sessions that drift into scope debates, estimates without context, and issues that re-appear sprint after sprint — most of these problems trace back to the same root cause: no shared standard for what "ready" means. This 12-point checklist gives your team that standard, item by item.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="grooming-vs-refinement">Grooming vs. refinement — a quick note</h2>
+      <p>
+        The 2020 update to the <a href="https://scrumguides.org/scrum-guide.html" target="_blank" rel="noopener">Scrum Guide</a> replaced "backlog grooming" with <strong>Product Backlog Refinement</strong> as the official term, and reframed it as an ongoing activity rather than a discrete ceremony. In practice, "backlog grooming" remains the widely used term you'll find in most Jira workflows, job postings, and team discussions — so this article uses both.
+      </p>
+      <p>
+        The Scrum Guide's guidance: refinement should consume no more than 10% of the team's sprint capacity. For a two-week sprint with a team of five, that's roughly four hours per sprint — less than an hour per person. If your refinement sessions regularly run longer, the checklist below usually points to why.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Definition of Ready (DoR):</strong> A shared agreement on the minimum conditions an issue must meet before it can enter a sprint. The 12 items below are a solid starting DoR for most Jira teams. Adapt the list to your context — a startup and an enterprise team will weight the items differently.</p>
+      </div>
+
+      <h2 id="checklist">The 12-point Jira backlog grooming checklist</h2>
+      <p>
+        Each item is tagged by priority: <span class="priority-tag tag-must">Must</span> items block sprint entry; <span class="priority-tag tag-should">Should</span> items cause rework if skipped; <span class="priority-tag tag-nice">Nice</span> items improve quality over time but rarely block delivery.
+      </p>
+
+      <table class="checklist-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Check</th>
+            <th>What to verify</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>☐</td>
+            <td>Clear title</td>
+            <td>Title describes <em>what</em> changes, not a vague label. "Add CSV export for filtered board view" is good; "CSV export" is not.</td>
+            <td><span class="priority-tag tag-must">Must</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Description written</td>
+            <td>At minimum: background context, what the expected outcome is, and who benefits. A one-paragraph description prevents 20 minutes of clarification at sprint planning.</td>
+            <td><span class="priority-tag tag-must">Must</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Acceptance criteria defined</td>
+            <td>Specific, testable conditions that determine "done." Format: "Given / When / Then" or bullet list. Without these, done is a judgment call — and judgment calls cause disagreements at sprint review.</td>
+            <td><span class="priority-tag tag-must">Must</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Story points estimated</td>
+            <td>Team has agreed on a relative size. Unestimated stories make sprint capacity planning impossible. If the issue is too large to estimate, split it first.</td>
+            <td><span class="priority-tag tag-must">Must</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Priority score set</td>
+            <td>A RICE, WSJF, or ICE score is present — not just a categorical "High / Medium / Low." Scores make prioritization decisions defensible and comparable across the backlog.</td>
+            <td><span class="priority-tag tag-must">Must</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Assignee or team assigned</td>
+            <td>Either a specific person or a team label is set. Issues floating without an owner create ambiguity at sprint planning and delay triage when blockers arise.</td>
+            <td><span class="priority-tag tag-should">Should</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Correct issue type</td>
+            <td>Story, Bug, Task, Epic — each has different DoD implications. A bug masquerading as a story skips root cause analysis. An epic that should be a story inflates the backlog artificially.</td>
+            <td><span class="priority-tag tag-should">Should</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Labels and components applied</td>
+            <td>At least one label or component tag. This enables filtering, sprint planning by area, and reporting. Teams without labels can't answer "how much work is infrastructure vs. new features?"</td>
+            <td><span class="priority-tag tag-should">Should</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Not stale</td>
+            <td>Issue has been updated within the last 90 days. Issues older than 90 days without activity should be questioned: is this still relevant? Should it be archived or deleted?</td>
+            <td><span class="priority-tag tag-should">Should</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>No duplicate</td>
+            <td>A quick search confirms there is no existing open issue for the same work. Duplicates fragment discussion, split votes, and waste estimation time on work that may already be in progress.</td>
+            <td><span class="priority-tag tag-should">Should</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Dependencies linked</td>
+            <td>If this issue is blocked by or blocks another issue, the link is set in Jira. Unlinked dependencies are invisible in sprint planning and cause surprise blockers mid-sprint.</td>
+            <td><span class="priority-tag tag-nice">Nice</span></td>
+          </tr>
+          <tr>
+            <td>☐</td>
+            <td>Due date set (if applicable)</td>
+            <td>For compliance items, external commitments, or SLA-bound bugs: a due date is set and realistic. Not every issue needs one — but when one exists, it should be in Jira, not in someone's head.</td>
+            <td><span class="priority-tag tag-nice">Nice</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="dor">Using the checklist as a Definition of Ready</h2>
+      <p>
+        A Definition of Ready (DoR) is not a gate that slows teams down — it's a contract that speeds sprint planning up. When every item that enters the sprint meets the same minimum standard, planning becomes a logistics conversation ("who takes what") rather than a discovery session ("what is this even asking for?").
+      </p>
+      <p>
+        For most teams, the five <span class="priority-tag tag-must">Must</span> items are the right minimum DoR. An issue without a description, acceptance criteria, or estimate should not enter a sprint — regardless of how urgent it feels. The time "saved" by skipping those in refinement gets paid back with interest during the sprint as engineers ask clarifying questions, re-open items, or discover mid-implementation that the scope was different from what they understood.
+      </p>
+
+      <div class="readiness-bar">
+        <div class="readiness-bar-title">Sprint readiness by checklist completion</div>
+        <div class="readiness-levels">
+          <div class="readiness-level level-green">
+            <div class="readiness-score">10–12 ✓</div>
+            <div class="readiness-label">Sprint-ready</div>
+            <div class="readiness-desc">All must-haves and most should-haves. Plan with confidence.</div>
+          </div>
+          <div class="readiness-level level-yellow">
+            <div class="readiness-score">5–9 ✓</div>
+            <div class="readiness-label">Needs work</div>
+            <div class="readiness-desc">Gaps in should-haves. Refine before next sprint planning.</div>
+          </div>
+          <div class="readiness-level level-red">
+            <div class="readiness-score">0–4 ✓</div>
+            <div class="readiness-label">Not ready</div>
+            <div class="readiness-desc">Missing must-haves. Do not enter sprint — refine first.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="priority-scoring">Item 5: why a priority score matters more than a label</h2>
+      <p>
+        The one checklist item that most teams skip — or implement incorrectly — is the priority score. Jira's built-in Priority field (Highest, High, Medium, Low, Lowest) gives you a <em>category</em>, not a score. Categories don't help when two issues are both "High": they tell you both matter, but not which one matters more.
+      </p>
+      <p>
+        A numeric priority score — from <a href="/blog/rice-scoring-jira.html">RICE</a>, <a href="/blog/wsjf-jira.html">WSJF</a>, or <a href="/blog/ice-scoring-jira.html">ICE</a> — gives you a ranking. When sprint capacity runs short, the team doesn't negotiate: they look at the ranked list and pull from the top. That removes the largest source of friction in most sprint planning sessions.
+      </p>
+      <p>
+        If your team doesn't have a scoring framework yet, see the decision guide: <a href="/blog/jira-prioritization-framework-comparison.html">RICE vs. WSJF vs. ICE — which framework is right for your team?</a> ICE is the fastest to adopt and requires no analytics setup — a good entry point for teams starting from scratch.
+      </p>
+
+      <h2 id="stale-issues">Item 9: the stale issue problem</h2>
+      <p>
+        Stale issues are the most common backlog health problem — and the hardest to keep up with manually. An issue created 18 months ago in response to a feature request, updated once, and never closed — it's still in the backlog, occupying space in sprint planning discussions, and probably no longer relevant.
+      </p>
+      <p>
+        The 90-day threshold is a practical heuristic, not a hard rule. Some issues legitimately sit for longer — a compliance requirement waiting on legal approval, or a known limitation with a deferred fix date. What matters is that the issue has been <em>intentionally</em> kept, with an updated comment explaining why. An issue that's stale because nobody has looked at it in six months is a different thing from one that's intentionally deferred.
+      </p>
+      <p>
+        During refinement, run a JQL query to surface stale candidates:
+      </p>
+
+      <div class="callout callout-blue">
+        <p><code>project = PROJ AND status != Done AND updated &lt;= -90d ORDER BY updated ASC</code></p>
+        <p style="margin-top:8px;">Work through this list from oldest to newest. For each issue: close it, update it with current context, or explicitly defer it with a comment explaining when to revisit.</p>
+      </div>
+
+      <h2 id="automate">From checklist to automated health score</h2>
+      <p>
+        Running through a 12-point checklist manually before every refinement session is a significant overhead on large backlogs. When a project has 150+ open issues, the checklist becomes something teams intend to use but rarely complete.
+      </p>
+      <p>
+        <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> turns this checklist into a live <strong>Board Health Score</strong> — a 0–100 number that reflects how well your backlog meets up to 8 configurable health criteria. Instead of checking 12 points manually, you see the score at a glance and drill into the breakdown to find which criteria are pulling it down.
+      </p>
+      <p>
+        The 8 health criteria map directly to checklist items:
+      </p>
+      <ul>
+        <li><strong>Missing Description</strong> → checklist item 2</li>
+        <li><strong>Missing Story Points</strong> → checklist item 4</li>
+        <li><strong>Unscored Issues</strong> → checklist item 5 (no priority score)</li>
+        <li><strong>Missing Assignee</strong> → checklist item 6</li>
+        <li><strong>Stale Issues</strong> → checklist item 9</li>
+        <li><strong>Missing Labels</strong> → checklist item 8</li>
+        <li><strong>Missing Priority</strong> → categorical priority field check</li>
+        <li><strong>Overdue Issues</strong> → checklist item 12</li>
+      </ul>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png" alt="Configuring the Board Health Score criteria in Priority Scoring for Jira — toggles for Stale Issues, Missing Description, Missing Story Points, and other health signals" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Board Health Score configuration — toggle each criterion on or off per project, with Scrum and Kanban presets</p>
+      </div>
+
+      <p>
+        You can configure which criteria are active per project — so a Kanban project can disable the Story Points check, and a compliance-heavy project can weight the Overdue criterion more heavily. The score auto-updates as issues are edited; there's no manual refresh required.
+      </p>
+
+      <h2 id="how-often">How often to run refinement</h2>
+      <p>
+        The Scrum Guide (2020) treats refinement as an ongoing activity — not a once-per-sprint meeting. In practice, most teams find a rhythm that combines both:
+      </p>
+      <ul>
+        <li><strong>One mid-sprint refinement session</strong> (~60–90 minutes) — work through the top items in the backlog using the checklist, estimate unestimated stories, clean up stale items.</li>
+        <li><strong>Continuous async refinement</strong> — when new issues are created, the creator fills in description and acceptance criteria immediately. Labels and story points are added before the issue reaches the top of the backlog.</li>
+      </ul>
+      <p>
+        The Board Health Score gives you an objective signal of how well the continuous refinement is holding up. If the score drops sharply between sessions, it means new issues are being created without sufficient context — a process problem to address at the team level, not just a checklist problem.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is backlog grooming in Jira?</p>
+        <p class="faq-a">Backlog grooming — officially called Product Backlog Refinement in the 2020 Scrum Guide — is the process of reviewing and clarifying backlog items so they are ready for sprint planning. In Jira, this means ensuring each issue has a clear title, description, acceptance criteria, story point estimate, priority score, and no stale or duplicate entries. The Scrum Guide recommends no more than 10% of sprint capacity on refinement activities.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What should be on a backlog grooming checklist?</p>
+        <p class="faq-a">At minimum: clear title, description written, acceptance criteria defined, story points estimated, priority score set. Additional checks that prevent rework: assignee set, correct issue type, labels applied, no stale issues (90+ days without update), no duplicates. Nice-to-have: dependencies linked, due date set where applicable.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How often should you do backlog grooming?</p>
+        <p class="faq-a">The 2020 Scrum Guide treats refinement as an ongoing activity, not a fixed ceremony. Most teams combine one dedicated mid-sprint refinement session per sprint with continuous async refinement as new issues are created. Total refinement time should stay under 10% of sprint capacity. If sessions regularly run longer, the checklist above usually points to the underlying cause.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between backlog grooming and sprint planning?</p>
+        <p class="faq-a">Grooming (refinement) prepares issues for future sprints — clarifying, estimating, and ordering. Sprint planning selects from the prepared backlog and commits to a sprint goal. Grooming should happen throughout the sprint so that sprint planning can focus on selection and commitment, not on discovering what tickets actually mean.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How can I automate backlog health checks in Jira?</p>
+        <p class="faq-a"><a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> includes a Board Health Score (0–100) that automatically monitors your backlog against 8 configurable criteria — missing descriptions, missing story points, stale issues, unscored items, missing assignees, overdue issues, missing priority, and missing labels. It updates automatically as issues change, so you always have a live reading without running through a checklist by hand. See more: <a href="/blog/jira-backlog-health.html">Jira Backlog Health: Measure Your Project Quality Score</a>.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <!-- TODO: Replace vendor URL with direct Marketplace listing URL once approved -->
+      <div class="article-cta">
+        <h3>Automate this checklist with a live Board Health Score</h3>
+        <p>Priority Scoring for Jira checks your backlog against 8 health criteria automatically — so your refinement sessions can focus on decisions, not chasing missing fields.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#grooming-vs-refinement">Grooming vs. refinement</a></li>
+          <li><a href="#checklist">The 12-point checklist</a></li>
+          <li><a href="#dor">Using it as a Definition of Ready</a></li>
+          <li><a href="#priority-scoring">Why a score beats a label</a></li>
+          <li><a href="#stale-issues">The stale issue problem</a></li>
+          <li><a href="#automate">From checklist to health score</a></li>
+          <li><a href="#how-often">How often to run refinement</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Board Health · Forge</div>
+          </div>
+        </a>
+        <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Backlog Health: Measure Your Project Quality Score</a>
+        <a href="/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE Scoring in Jira: The Complete Setup Guide</a>
+        <a href="/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">RICE vs. WSJF vs. ICE: Which Framework Is Right for You?</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

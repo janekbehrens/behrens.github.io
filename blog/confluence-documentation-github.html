@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>How to Auto-Generate Confluence Documentation from GitHub | Janek Behrens</title>
+  <meta name="description" content="Step-by-step guide: connect GitHub to Confluence with CodeDoc AI. Set up a personal access token, configure a webhook, and auto-generate documentation on every push.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/confluence-documentation-github.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Auto-Generate Confluence Documentation from GitHub",
+    "description": "Step-by-step guide: connect GitHub to Confluence with CodeDoc AI. Set up a personal access token, configure a webhook, and auto-generate documentation on every push.",
+    "url": "https://janekbehrens.de/blog/confluence-documentation-github.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgCodeDoc/GenerationHistory.png",
+    "keywords": ["Confluence", "GitHub", "Documentation", "Atlassian", "Automation"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Auto-Generate Confluence Documentation from GitHub">
+  <meta property="og:description" content="Connect your GitHub repository to Confluence and generate documentation automatically on every push — no manual writing required.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/confluence-documentation-github.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/GenerationHistory.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="GitHub">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Atlassian">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Auto-Generate Confluence Documentation from GitHub">
+  <meta name="twitter:description" content="Connect GitHub to Confluence and generate documentation automatically on every push — step-by-step setup guide.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/GenerationHistory.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Auto-Generate Confluence Documentation from GitHub",
+    "description": "Step-by-step guide: connect GitHub to Confluence with CodeDoc AI. Set up a personal access token, configure a webhook, and auto-generate documentation on every push.",
+    "image": "https://janekbehrens.de/imgCodeDoc/GenerationHistory.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/confluence-documentation-github.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Confluence automatically pull documentation from GitHub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Confluence does not have a built-in GitHub sync. You need an app such as CodeDoc AI, which reads your GitHub repository, generates structured documentation using an AI model, and publishes it as a Confluence page — triggered manually, on every push, on PR merges, or on a schedule."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I connect GitHub to Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With CodeDoc AI: create a GitHub Personal Access Token with repo read scope, add it in the app's Git Provider settings, browse and add your repository, then create a documentation job. For automatic updates, add the app's Webhook URL to your GitHub repository's webhook settings and select the push or pull_request event."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does GitHub documentation automation work with private repositories?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The app uses your personal access token to authenticate. As long as the token has read access to the repository, it works with both public and private GitHub repositories."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often does the Confluence documentation update from GitHub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depending on the trigger you configure: On Commit regenerates documentation on every push to the branch; On Merge regenerates when a pull request is merged; Scheduled regenerates daily, weekly, or monthly; Manual requires you to click Run. Teams that want accurate docs without noise typically use On Merge."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will running the job again overwrite the existing Confluence page?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — the job updates the existing Confluence page rather than creating a new one. No duplicates are created. If you enable the approval workflow, the updated version first appears as a draft with a [DRAFT] prefix until you publish it."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: #E3FCEF;
+      color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img {
+      width: 100%; height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      font-size: 0.85rem;
+    }
+    .pipeline-step {
+      flex: 1;
+      padding: 14px 12px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-2);
+      border-right: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    .pipeline-step:last-child { border-right: none; }
+    .pipeline-step .ps-icon { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+    .pipeline-step.ps-active { background: var(--blue-lite); color: var(--blue); }
+    @media (max-width: 600px) {
+      .pipeline { flex-direction: column; }
+      .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .pipeline-step:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>How to Auto-Generate Confluence Documentation from GitHub</h1>
+      <p class="article-intro">
+        GitHub holds your source of truth. Confluence holds your documentation. The gap between the two is where outdated docs live. Here's how to close it automatically — from token creation to your first AI-generated Confluence page.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">The gap between code and documentation</h2>
+      <p>
+        Most engineering teams have some version of the same problem: the code evolves, but the Confluence page from the last sprint planning stays unchanged. Updating documentation competes with shipping features, so documentation loses — every time.
+      </p>
+      <p>
+        The root cause isn't laziness. It's friction. Documentation lives in a different tool, in a different context, requiring a manual context switch at the moment engineers are most focused on code. The fix isn't to add more documentation reminders to the ticket workflow. It's to make documentation update itself.
+      </p>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> connects your GitHub repository to Confluence via a webhook trigger. When code is pushed or a pull request is merged, the app reads the repository, sends the relevant files to your AI provider, and publishes updated documentation to the target Confluence page — automatically.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>What you need:</strong> A Confluence Cloud instance with CodeDoc AI installed, a GitHub account, and an API key from one of the supported AI providers (Anthropic, OpenAI, or Google Gemini). The AI key is your own — the app uses BYOK (Bring Your Own Key), meaning your code never passes through the app's own servers.</p>
+      </div>
+
+      <h2 id="pipeline">How the pipeline works</h2>
+      <p>
+        Before setting anything up, it helps to understand the full flow:
+      </p>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <span class="ps-icon">⬆️</span>
+          Git push / PR merge
+        </div>
+        <div class="pipeline-step ps-active">
+          <span class="ps-icon">🔗</span>
+          GitHub webhook
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">🤖</span>
+          CodeDoc AI reads repo
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">✨</span>
+          AI generates docs
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">📄</span>
+          Confluence page updated
+        </div>
+      </div>
+
+      <p>
+        The app is built on <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a>, which means it runs entirely on Atlassian's own infrastructure. There are no external servers involved between GitHub and Confluence — only the AI provider you choose receives your code, using the API key you supply.
+      </p>
+
+      <h2 id="step1">Step 1 — Create a GitHub Personal Access Token</h2>
+      <p>
+        CodeDoc AI needs read access to your repository. The recommended approach is a <strong>Personal Access Token (PAT)</strong> with the <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> scope (read access is sufficient — the app never writes to your repository).
+      </p>
+      <p>
+        Create one at <strong>GitHub → Settings → Developer settings → Personal access tokens</strong>. For fine-grained tokens, select "Repository contents: Read-only". For classic tokens, tick the <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> scope. GitHub's full token documentation is at <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">docs.github.com</a>.
+      </p>
+      <p>
+        Copy the token immediately — GitHub will not show it again.
+      </p>
+
+      <h2 id="step2">Step 2 — Connect GitHub in CodeDoc AI</h2>
+      <p>
+        Open CodeDoc AI from the Confluence Apps menu and go to <strong>Settings → Git Providers</strong>. Select GitHub, paste your access token, and click <strong>Connect &amp; Validate</strong>. The app verifies the token and confirms access.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/SettingsGitProvider.png" alt="Git Provider Settings in CodeDoc AI — GitHub token configuration" loading="lazy">
+        <p class="diagram-caption">Git Provider settings — connect GitHub with your personal access token</p>
+      </div>
+
+      <p>
+        If you use multiple Git providers (for example, both GitHub and GitLab), you can add them all here. You can also give each connection a display name, which makes it easier to identify when selecting repositories later.
+      </p>
+
+      <h2 id="step3">Step 3 — Add your repository</h2>
+      <p>
+        Go to the <strong>Repositories</strong> tab. Click <strong>Browse Repos</strong> to see all repositories the token can access, use the search field to filter, and click <strong>Add Selected</strong>. Alternatively, click <strong>Add URL</strong> and paste the repository URL directly — this works for any token type and any visibility level.
+      </p>
+      <p>
+        When adding by URL, you also set the <strong>branch</strong> to document (default: <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">main</code>). If your main branch has a different name, change it here.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/RepoSelection.png" alt="Repository selection screen in CodeDoc AI showing GitHub repos" loading="lazy">
+        <p class="diagram-caption">Browse and add GitHub repositories — or paste a URL directly for any visibility level</p>
+      </div>
+
+      <h2 id="step4">Step 4 — Create a documentation job</h2>
+      <p>
+        A <strong>job</strong> is what ties everything together: which repository, which documentation style (preset), which language, and where the result goes in Confluence. Go to the <strong>Jobs</strong> tab and click <strong>Create Job</strong>.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/CreateJobMiddle.png" alt="Documentation job creation form in CodeDoc AI — preset, language, and trigger selection" loading="lazy">
+        <p class="diagram-caption">Job creation — select the repository, preset, language, and trigger type</p>
+      </div>
+
+      <p>
+        The key settings for a GitHub-connected job:
+      </p>
+      <ul>
+        <li><strong>Repository:</strong> Select the one you just added.</li>
+        <li><strong>Preset:</strong> Choose a documentation style. <em>Developer Documentation</em> is a good starting point — it generates 9 structured sections including architecture, API reference, and troubleshooting. See the <a href="/codedoc-ai-docs.html#jobs-presets">full preset list</a> for all 8 options.</li>
+        <li><strong>Language:</strong> The language in which the page will be written. 10 languages available including English, German, French, and Japanese.</li>
+        <li><strong>Trigger:</strong> Select <em>On Commit</em> (every push) or <em>On Merge</em> (only merged pull requests). For most teams, On Merge avoids generating documentation for every work-in-progress push.</li>
+        <li><strong>Confluence Space:</strong> The space where the page will be created or updated.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Tip: AI file selection.</strong> For large repositories, enable AI-powered file selection before saving the job. The AI analyzes your file names and structure, picks the most relevant source files, and generates documentation from those only — lower token cost, better-focused output.</p>
+      </div>
+
+      <h2 id="step5">Step 5 — Set up the GitHub webhook</h2>
+      <p>
+        When you select On Commit or On Merge, the job creation screen shows a <strong>Webhook URL</strong>. Copy it — you'll paste it into GitHub in the next step.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/EditJobWebhook.png" alt="Webhook URL displayed in CodeDoc AI job settings" loading="lazy">
+        <p class="diagram-caption">The webhook URL appears automatically when you select an automatic trigger</p>
+      </div>
+
+      <p>
+        In GitHub, go to your repository → <strong>Settings → Webhooks → Add webhook</strong>:
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">Paste the <strong>Webhook URL</strong> from CodeDoc AI into the "Payload URL" field.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">Set <strong>Content type</strong> to <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">application/json</code>.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">Under "Which events would you like to trigger this webhook?": select <strong>Just the push event</strong> for On Commit, or <strong>Let me select individual events → Pull requests</strong> for On Merge.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">Click <strong>Add webhook</strong>. GitHub will send a ping event — the app accepts it silently.</div>
+        </li>
+      </ol>
+
+      <p>
+        You only need one webhook URL for all jobs. The app matches incoming GitHub events to the correct jobs by repository URL and branch name. Full GitHub webhook documentation is at <a href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks" target="_blank" rel="noopener">docs.github.com</a>.
+      </p>
+
+      <h2 id="step6">Step 6 — Generate and review</h2>
+      <p>
+        After the webhook is registered, push a commit to the branch (or run the job manually from the Jobs tab to test immediately). The app reads your repository, passes the selected files to the AI, and publishes the result as a Confluence page.
+      </p>
+      <p>
+        Every generation is logged in the <strong>Generation History</strong> view with the token count, file count, AI model used, timestamp, and a direct link to the Confluence page.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/GenerationHistory.png" alt="Generation History view in CodeDoc AI showing completed documentation runs with token counts and links" loading="lazy">
+        <p class="diagram-caption">Generation History — every run is logged with token usage, file count, and a direct link to the Confluence page</p>
+      </div>
+
+      <h2 id="approval">Optional: review before publishing</h2>
+      <p>
+        If you want a quality gate before documentation goes live — for example in regulated environments or for customer-facing docs — enable <strong>Require approval before publishing</strong> in the job settings. The generated page is saved as a Confluence draft with a <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code> prefix. You review it from the Dashboard and publish or discard it manually.
+      </p>
+      <p>
+        For internal developer documentation that updates frequently, approval adds friction. For compliance documentation or onboarding guides that go to a wider audience, it's a sensible safeguard.
+      </p>
+
+      <h2 id="example">What the output looks like</h2>
+      <p>
+        Here is an example of generated documentation in Confluence — created automatically from a Terraform infrastructure repository using the Developer Documentation preset. The AI extracted the tech stack, described the architecture, documented the API surface, and listed dependencies — all formatted as a structured Confluence page.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/exampleGenerations/3.png" alt="Example auto-generated Confluence page showing overview, tech stack table, and architecture documentation" loading="lazy">
+        <p class="diagram-caption">Auto-generated Confluence page — structured overview with tech stack, architecture, and API reference</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Can Confluence automatically pull documentation from GitHub?</p>
+        <p class="faq-a">Confluence does not have a built-in GitHub sync. CodeDoc AI bridges the gap: it reads your repository via webhook, generates documentation using your AI provider, and publishes it as a native Confluence page — triggered by commits, PR merges, or a schedule.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I connect GitHub to Confluence?</p>
+        <p class="faq-a">Create a GitHub Personal Access Token with repo read scope, add it in CodeDoc AI's Git Provider settings, add your repository, create a documentation job with an automatic trigger, and register the app's webhook URL in your GitHub repository settings. The complete walkthrough is in this article.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does GitHub documentation automation work with private repositories?</p>
+        <p class="faq-a">Yes. The app uses your personal access token to authenticate with GitHub. Public and private repositories both work as long as the token has read access.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How often does the documentation update?</p>
+        <p class="faq-a">On Commit triggers regenerate documentation on every push. On Merge triggers regenerate only when a pull request is merged. Scheduled triggers run daily, weekly, or monthly. You can also run any job manually at any time.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Will running the job again create a duplicate Confluence page?</p>
+        <p class="faq-a">No. The job updates the existing Confluence page. If the approval workflow is enabled, the update appears as a draft first — no duplicates are created in either case.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What AI providers can I use with CodeDoc AI?</p>
+        <p class="faq-a">Anthropic (Claude), OpenAI (GPT models), and Google (Gemini). You bring your own API key — the app charges no per-generation fee. Google Gemini has a free tier, which means you can run generations at zero AI cost while evaluating the app.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Connect your GitHub repository to Confluence</h3>
+        <p>CodeDoc AI is free to try — all triggers, all presets, and AI file selection included from day one.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">The documentation gap</a></li>
+          <li><a href="#pipeline">How the pipeline works</a></li>
+          <li><a href="#step1">Step 1 — GitHub access token</a></li>
+          <li><a href="#step2">Step 2 — Connect GitHub</a></li>
+          <li><a href="#step3">Step 3 — Add repository</a></li>
+          <li><a href="#step4">Step 4 — Create a job</a></li>
+          <li><a href="#step5">Step 5 — Set up webhook</a></li>
+          <li><a href="#step6">Step 6 — Generate and review</a></li>
+          <li><a href="#approval">Approval workflow</a></li>
+          <li><a href="#example">Example output</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">AI-Powered Documentation for Atlassian Teams</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Automating Confluence Docs: From Manual to CI/CD</a>
+        <a href="/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">BYOK AI for Atlassian: What It Means</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

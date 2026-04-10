@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>AI-Powered Documentation for Atlassian Teams: A Practical Guide | Janek Behrens</title>
+  <meta name="description" content="How AI documentation for Confluence actually works in practice — from documentation presets and language support to approval workflows and cost control with BYOK.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/ai-documentation-confluence.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AI-Powered Documentation for Atlassian Teams: A Practical Guide",
+    "description": "How AI documentation for Confluence actually works in practice — from documentation presets and language support to approval workflows and cost control with BYOK.",
+    "url": "https://janekbehrens.de/blog/ai-documentation-confluence.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgCodeDoc/DashboardTop.png",
+    "keywords": ["Confluence", "AI", "Documentation", "Atlassian"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI-Powered Documentation for Atlassian Teams: A Practical Guide">
+  <meta property="og:description" content="How AI documentation for Confluence actually works — presets, triggers, approval workflows, and cost control. A practical guide for Atlassian teams.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/ai-documentation-confluence.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/DashboardTop.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Atlassian">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI-Powered Documentation for Atlassian Teams: A Practical Guide">
+  <meta name="twitter:description" content="AI documentation for Confluence — presets, triggers, approval workflows, and BYOK cost control explained for Atlassian teams.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/DashboardTop.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AI-Powered Documentation for Atlassian Teams: A Practical Guide",
+    "description": "How AI documentation for Confluence actually works in practice — documentation presets, language support, approval workflows, and cost control with BYOK.",
+    "image": "https://janekbehrens.de/imgCodeDoc/DashboardTop.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/ai-documentation-confluence.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can AI write documentation for Confluence automatically?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Tools like CodeDoc AI read your source code repository and use an AI model (Anthropic Claude, OpenAI GPT, or Google Gemini) to generate structured documentation pages directly in Confluence. The output is a native Confluence page — not a PDF or export — that you can edit, comment on, or version like any other page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a documentation preset?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A preset is a template that controls the structure, tone, and depth of the generated Confluence page. Different presets target different audiences: Developer Documentation produces 9 technical sections with code examples and API references; Management Overview produces a non-technical business summary; Compliance & Audit produces a security controls and GDPR mapping table. CodeDoc AI includes 8 built-in presets plus a Custom option."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does AI documentation for Confluence cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CodeDoc AI charges no per-generation fee — you pay only for the Marketplace subscription. AI costs are billed directly by your provider. Google Gemini has a free tier suitable for evaluation. Anthropic Claude Haiku or OpenAI gpt-4o-mini typically cost $0.01–0.05 per generation for a medium-sized repository."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What programming languages does AI documentation support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CodeDoc AI supports all text-based source files — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin, and more. There is no language whitelist. Binary files, build outputs, and lock files are automatically excluded from analysis."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I review AI documentation before it goes live in Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Enable 'Require approval before publishing' in the job settings. The generated page is saved as a Confluence draft with a [DRAFT] prefix and only published when you approve it from the Dashboard."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: #E3FCEF; color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(23,43,77,0.07); }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* Preset table */
+    .preset-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.88rem; }
+    .preset-table th {
+      background: #F4F5F7; text-align: left; padding: 10px 12px;
+      border: 1px solid var(--border); font-weight: 700; font-size: 0.8rem;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .preset-table td { padding: 10px 12px; border: 1px solid var(--border-2); color: var(--text-3); vertical-align: top; }
+    .preset-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .preset-table tr:hover td { background: #FAFBFC; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence · AI</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>AI-Powered Documentation for Atlassian Teams: A Practical Guide</h1>
+      <p class="article-intro">
+        AI can write your Confluence documentation — but only if you give it the right structure, the right audience, and the right quality gate. Here's a practical look at how AI documentation for Atlassian teams actually works, what to expect from it, and where it still needs a human in the loop.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Why documentation always falls behind</h2>
+      <p>
+        Documentation has a fundamental timing problem. The moment when documentation would be most accurate — right after a feature is built — is also the moment when everyone wants to move on to the next ticket. So documentation gets deferred. Then a sprint becomes a quarter, and the quarter becomes "we'll do it properly when we have time."
+      </p>
+      <p>
+        The result is Confluence spaces full of pages that are 80% accurate at best, with no clear signal about which sections are outdated. New team members can't trust them. Auditors can't rely on them. Support engineers waste time tracking down whoever wrote the code.
+      </p>
+      <p>
+        AI documentation changes the economics of this problem. Instead of asking an engineer to spend two hours writing a Confluence page, you let AI draft it in under a minute — and then spend fifteen minutes reviewing and adjusting. The time investment drops by an order of magnitude, and the accuracy floor rises because the AI reads the actual code rather than someone's memory of it.
+      </p>
+
+      <h2 id="what-it-does">What AI documentation for Confluence actually does</h2>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> reads your source code from a connected Git repository (GitHub, GitLab, Bitbucket, or Azure DevOps) and generates a structured Confluence page using the AI model of your choice. It is an <a href="/blog/byok-ai-atlassian.html">BYOK (Bring Your Own Key)</a> app — you connect your own Anthropic, OpenAI, or Google AI account, and the code goes directly from Git to your AI provider. The app itself never stores your source code.
+      </p>
+      <p>
+        The output is a native Confluence page, not a PDF or an attachment. You can edit it, add inline comments, apply a page template to it, move it between spaces, or version it — exactly like any other page your team creates manually.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/DashboardTop.png" alt="CodeDoc AI Dashboard showing documentation jobs, generation history, and active repositories" loading="lazy">
+        <p class="diagram-caption">The CodeDoc AI dashboard — documentation jobs, recent generations, and status at a glance</p>
+      </div>
+
+      <h2 id="presets">The 8 documentation presets — who they're for</h2>
+      <p>
+        Not all documentation serves the same audience. A developer reading your API reference needs different information than a compliance officer checking your GDPR controls, and both need something different than a new hire trying to understand the codebase for the first time. That's why presets exist.
+      </p>
+      <p>
+        Each preset produces a different page structure tailored to its audience:
+      </p>
+
+      <table class="preset-table">
+        <thead>
+          <tr>
+            <th>Preset</th>
+            <th>Audience</th>
+            <th>What it generates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Developer Documentation</td>
+            <td>Developers</td>
+            <td>Technical overview, architecture, API reference, configuration, troubleshooting. 9 sections.</td>
+          </tr>
+          <tr>
+            <td>Comprehensive Technical</td>
+            <td>Developers</td>
+            <td>Deep-dive covering every module, data model, security, build pipeline, testing, known limitations. 12 sections.</td>
+          </tr>
+          <tr>
+            <td>Management Overview</td>
+            <td>Stakeholders</td>
+            <td>Business capabilities, risks, scalability, strategic recommendations. No code examples.</td>
+          </tr>
+          <tr>
+            <td>Customer Documentation</td>
+            <td>External users</td>
+            <td>Features, getting-started guide, integration instructions. No internal implementation details.</td>
+          </tr>
+          <tr>
+            <td>Compliance &amp; Audit</td>
+            <td>Security / Compliance</td>
+            <td>Security controls, data classification, access management, GDPR/ISO 27001/SOC2 mappings, risk register.</td>
+          </tr>
+          <tr>
+            <td>Onboarding Guide</td>
+            <td>New team members</td>
+            <td>Step-by-step setup, key concepts explained simply, day-to-day workflows, common mistakes to avoid.</td>
+          </tr>
+          <tr>
+            <td>Quick Reference</td>
+            <td>Developers</td>
+            <td>Concise tech stack table, key commands, project structure, important config values. 5 sections.</td>
+          </tr>
+          <tr>
+            <td>Custom</td>
+            <td>Any</td>
+            <td>Your own prompt (up to 2,000 characters). Full control over structure and content.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/Presets.png" alt="Preset selection screen in CodeDoc AI showing all 8 documentation presets" loading="lazy">
+        <p class="diagram-caption">The 8 built-in presets — select the one that matches your audience</p>
+      </div>
+
+      <div class="callout callout-blue">
+        <p><strong>Practical tip:</strong> Run the same repository through two different presets and publish both pages. A management stakeholder and a new engineer both need documentation — they just need different documentation. Two jobs, one codebase, two audiences covered automatically.</p>
+      </div>
+
+      <h2 id="languages">Documentation in 10 languages</h2>
+      <p>
+        Multilingual teams often have Confluence spaces in multiple languages, but documentation tends to be written in English because it's the path of least resistance. With CodeDoc AI, you select the output language when creating the job. The current options are:
+      </p>
+      <p>
+        English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese (Simplified), Korean, and Custom (define your own language or dialect in the prompt).
+      </p>
+      <p>
+        Language is a job-level setting. You can run the same repository twice — once in English for your engineering team and once in German for a local compliance requirement — by creating two separate jobs pointing to the same repository.
+      </p>
+
+      <h2 id="file-selection">AI-powered file selection: quality over quantity</h2>
+      <p>
+        The quality of AI-generated documentation depends heavily on which files you feed it. A repository with 400 files — including lock files, build artifacts, migration scripts, and vendor code — produces worse documentation than a carefully selected 30-file subset of the core application logic.
+      </p>
+      <p>
+        CodeDoc AI addresses this with a two-step file selection process. First, the AI analyzes the repository's file names and structure to identify the most relevant source files. Then you review the selection, lock it (fixed for every run) or leave it dynamic (re-evaluated each run), and optionally apply glob-pattern filters to include or exclude specific paths.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview showing selected files, token estimate, and AI-selected files in CodeDoc AI" loading="lazy">
+        <p class="diagram-caption">File analysis preview — token estimate and AI-selected files before generation</p>
+      </div>
+
+      <p>
+        The analysis preview shows the <strong>total file count</strong>, <strong>code file count</strong>, and <strong>estimated token cost</strong> before you run the job. For large repositories, AI file selection typically reduces token usage by 60–80% while producing more focused documentation.
+      </p>
+
+      <h2 id="triggers">When does documentation regenerate?</h2>
+      <p>
+        The trigger setting controls how often a job runs. There are four options:
+      </p>
+      <ul>
+        <li><strong>Manual:</strong> Click "Run" on the job. Good for one-off generations and testing.</li>
+        <li><strong>On Commit:</strong> Runs automatically when code is pushed to the configured branch via a webhook. Keeps docs as fresh as possible — every push regenerates.</li>
+        <li><strong>On Merge:</strong> Runs when a pull request is merged. A better fit for teams that want documentation to reflect stable, reviewed code rather than every work-in-progress commit.</li>
+        <li><strong>Scheduled:</strong> Runs daily, weekly, or monthly at a time you choose. Suits documentation that covers long-lived infrastructure or systems that change slowly.</li>
+      </ul>
+      <p>
+        For more on setting up webhook triggers with GitHub, GitLab, Bitbucket, and Azure DevOps, see <a href="/blog/automate-confluence-documentation.html">Automating Confluence Documentation: From Manual Updates to CI/CD</a>.
+      </p>
+
+      <h2 id="approval">The approval workflow: a human quality gate</h2>
+      <p>
+        AI-generated documentation is accurate about what the code does. It is not always accurate about what the code <em>should</em> do, the business context behind an architectural decision, or the historical reason a particular component looks the way it does. Those nuances require a human.
+      </p>
+      <p>
+        The approval workflow lets you insert a review step before anything reaches the live Confluence page. When enabled, the generated documentation is saved as a Confluence draft with a <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code> prefix. It sits there until you open the Dashboard, review it, and publish or discard it.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/Jobs.png" alt="Jobs overview in CodeDoc AI showing job status, last run, and approval queue" loading="lazy">
+        <p class="diagram-caption">Jobs overview — pending approvals appear here before going live in Confluence</p>
+      </div>
+
+      <p>
+        When to use it: customer-facing documentation, compliance pages, onboarding guides. When to skip it: internal developer references that update on every merge and where speed matters more than editorial precision.
+      </p>
+
+      <h2 id="example">Real-world example: onboarding a new engineer</h2>
+      <p>
+        A common pain point for growing teams is onboarding documentation that becomes outdated within weeks of being written. Here's how a team might solve this with CodeDoc AI:
+      </p>
+      <ol>
+        <li>Create one job per repository using the <strong>Onboarding Guide</strong> preset.</li>
+        <li>Set the trigger to <strong>On Merge</strong> — the guide regenerates every time a significant change is merged.</li>
+        <li>Enable the <strong>approval workflow</strong> — a senior engineer reviews the draft and adds context the AI couldn't know (the "why" behind architectural decisions).</li>
+        <li>Publish the approved page to the team's Confluence onboarding space.</li>
+      </ol>
+      <p>
+        The result is onboarding documentation that reflects the current codebase, not the one from six months ago. New engineers get accurate setup instructions, a clear view of the project structure, and an explanation of common patterns — without a senior engineer spending an afternoon writing it.
+      </p>
+
+      <h2 id="cost">Understanding the cost</h2>
+      <p>
+        CodeDoc AI charges no per-generation fee. You pay only for the Atlassian Marketplace subscription. AI costs are billed directly by your provider based on token usage:
+      </p>
+      <ul>
+        <li><strong>Google Gemini</strong> has a free tier — good for evaluation and light use.</li>
+        <li><strong>Anthropic Claude Haiku</strong> and <strong>OpenAI gpt-4o-mini</strong> are the most affordable paid options: typically $0.01–0.05 per generation for a medium-sized repository.</li>
+        <li>Larger models (Claude Sonnet, GPT-4o) cost more but produce more nuanced output for complex codebases.</li>
+      </ul>
+      <p>
+        The file selection step is also key for cost control: selecting 30 relevant files instead of sending 300 can reduce token usage — and therefore AI cost — by 80% or more.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Can AI write documentation for Confluence automatically?</p>
+        <p class="faq-a">Yes. CodeDoc AI reads your source code from a connected Git repository and generates structured Confluence pages using an AI model you choose. Triggers include manual runs, Git webhooks (on commit or merge), and scheduled runs.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a documentation preset?</p>
+        <p class="faq-a">A preset controls the structure, tone, and depth of the generated page. Developer Documentation produces technical sections with API references; Management Overview produces a non-technical business summary; Compliance &amp; Audit produces security controls and regulatory mapping tables. CodeDoc AI includes 8 built-in presets plus a fully custom option.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How much does AI documentation for Confluence cost?</p>
+        <p class="faq-a">The app itself charges no per-generation fee — you pay for the Marketplace subscription only. AI costs are billed by your provider: Google Gemini has a free tier; Anthropic Haiku and OpenAI gpt-4o-mini typically run $0.01–0.05 per generation for a medium repository.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What programming languages are supported?</p>
+        <p class="faq-a">All text-based source files are supported — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin, and more. There is no language whitelist. Binary files, build artifacts, and lock files are excluded automatically.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I review AI-generated documentation before it goes live?</p>
+        <p class="faq-a">Yes. Enable "Require approval before publishing" in the job settings. The page is saved as a Confluence draft with a [DRAFT] prefix and published only when you approve it from the Dashboard.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does CodeDoc AI support multiple Git providers?</p>
+        <p class="faq-a">Yes — GitHub, GitLab, Bitbucket, and Azure DevOps (cloud). You can connect multiple providers simultaneously and create separate jobs for repositories on different platforms.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Start generating documentation for your team</h3>
+        <p>CodeDoc AI is free to try on the Atlassian Marketplace — all 8 presets, 10 languages, and automatic triggers included.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why docs always fall behind</a></li>
+          <li><a href="#what-it-does">What AI documentation does</a></li>
+          <li><a href="#presets">The 8 documentation presets</a></li>
+          <li><a href="#languages">Documentation in 10 languages</a></li>
+          <li><a href="#file-selection">AI file selection</a></li>
+          <li><a href="#triggers">When does it regenerate?</a></li>
+          <li><a href="#approval">The approval workflow</a></li>
+          <li><a href="#example">Real-world example</a></li>
+          <li><a href="#cost">Understanding the cost</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Auto-Generate Confluence Docs from GitHub</a>
+        <a href="/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">BYOK AI for Atlassian: What It Means</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Automating Confluence Docs: From Manual to CI/CD</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

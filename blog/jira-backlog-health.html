@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Backlog Health: How to Measure and Improve Your Project Quality Score | Janek Behrens</title>
+  <meta name="description" content="Learn what makes a Jira backlog unhealthy, which 8 quality signals to track, and how to turn them into a single 0–100 Board Health score that updates automatically.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-backlog-health.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Backlog Health: How to Measure and Improve Your Project Quality Score",
+    "description": "Learn what makes a Jira backlog unhealthy, which 8 quality signals to track, and how to turn them into a single 0–100 Board Health score that updates automatically.",
+    "url": "https://janekbehrens.de/blog/jira-backlog-health.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+    "keywords": ["jira backlog health", "backlog quality", "jira board health score", "backlog refinement", "Jira", "Atlassian"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Jira Backlog Health: How to Measure and Improve Your Project Quality Score",
+    "description": "Learn what makes a Jira backlog unhealthy, which 8 quality signals to track, and how to turn them into a single 0–100 Board Health score that updates automatically.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-backlog-health.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Jira backlog health?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira backlog health is a measure of how well-maintained and actionable your backlog items are. A healthy backlog has issues with clear descriptions, story point estimates, assigned owners, up-to-date status, and a priority score. An unhealthy backlog accumulates stale issues, missing fields, and unscored items — making sprint planning harder and slowing the team down."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you measure backlog health in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Backlog health in Jira can be measured with a Board Health Score (0–100) that checks your open issues against multiple quality criteria: stale issues, missing descriptions, missing story points, missing assignees, overdue items, missing priority fields, missing labels, and unscored issues. Apps like Priority Scoring for Jira calculate this score automatically and break it down criterion by criterion so you know exactly where to focus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes a Jira backlog unhealthy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most common signs of an unhealthy Jira backlog are: issues not updated in 30–60+ days (stale), issues without a description or acceptance criteria, issues without story point estimates, issues with no assignee, issues past their due date, and issues that have never been scored by priority. Each of these reduces the team's ability to make confident sprint planning decisions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a stale issue in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A stale issue is a Jira issue that has not been updated — no status change, no comment, no field edit — for a configurable number of days (typically 30–90). Stale issues represent work that is either forgotten, blocked without being marked as such, or no longer relevant. They are one of the clearest indicators of a backlog that needs refinement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira show a backlog health score natively?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Jira does not include a backlog or board health score out of the box. You can manually run JQL queries to find stale or incomplete issues, but there is no automatic aggregated score. Priority Scoring for Jira adds a Board Health Score (0–100) with per-criterion breakdown, configurable per project, with no JQL or scripting required."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Backlog Health: How to Measure and Improve Your Project Quality Score">
+  <meta property="og:description" content="8 quality signals, one 0–100 score — how to measure Jira backlog health automatically and know exactly which issues are dragging the team down.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-backlog-health.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Backlog Health">
+  <meta property="article:tag" content="Scrum">
+  <meta property="article:tag" content="Agile">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Backlog Health: How to Measure and Improve Your Project Quality Score">
+  <meta name="twitter:description" content="8 quality signals, one 0–100 Board Health score — measure Jira backlog health automatically, no JQL required.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue  { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Health score gauge ── */
+    .health-gauge-row {
+      display: flex;
+      gap: 16px;
+      margin: 20px 0 24px;
+      flex-wrap: wrap;
+    }
+    .health-gauge {
+      flex: 1;
+      min-width: 140px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(23,43,77,0.05);
+    }
+    .health-score-num {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .score-red    { color: #DE350B; }
+    .score-yellow { color: #FF8B00; }
+    .score-green  { color: #00875A; }
+    .health-score-label {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .health-score-desc {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ── Criteria grid ── */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+    @media (max-width: 520px) { .criteria-grid { grid-template-columns: 1fr; } }
+    .criterion-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .criterion-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .icon-default { background: #F4F5F7; }
+    .icon-scrum   { background: #DEEBFF; }
+    .icon-kanban  { background: #E3FCEF; }
+    .criterion-text { flex: 1; }
+    .criterion-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .criterion-desc {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .criterion-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-top: 5px;
+    }
+    .tag-both   { background: #F4F5F7; color: var(--text-faint); }
+    .tag-scrum  { background: #DEEBFF; color: #0052CC; }
+    .tag-kanban { background: #E3FCEF; color: #006644; }
+
+    /* ── Score breakdown mock ── */
+    .health-breakdown {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .health-breakdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #F4F5F7;
+      border-bottom: 1px solid var(--border);
+    }
+    .breakdown-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+    }
+    .breakdown-score {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border-2);
+      gap: 12px;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green  { background: #00875A; }
+    .dot-yellow { background: #FF8B00; }
+    .dot-red    { background: #DE350B; }
+    .breakdown-criterion { flex: 1; font-size: 0.88rem; color: var(--text); font-weight: 600; }
+    .breakdown-ok  { font-size: 0.82rem; color: var(--text-2); margin-right: 4px; }
+    .breakdown-penalty {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      min-width: 56px;
+      text-align: right;
+    }
+    .penalty-ok     { color: #00875A; }
+    .penalty-warn   { background: #FFFAE6; color: #974F00; }
+    .penalty-bad    { background: #FFEBE6; color: #BF2600; }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px;
+      text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p  { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 9 min read</span>
+      </div>
+      <h1>Jira Backlog Health: How to Measure and Improve Your Project Quality Score</h1>
+      <p class="article-intro">
+        Most Jira backlogs are quietly rotting. Issues without descriptions sit unrefined for months. Tickets nobody owns accumulate. Scores are never set. Sprint planning gets harder every quarter — not because the team is slower, but because the raw material has degraded. Here's how to measure that degradation with a single score, and act on it before it becomes a crisis.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="symptoms">The symptoms of an unhealthy Jira backlog</h2>
+      <p>
+        Backlog health problems rarely announce themselves. They build gradually until the symptoms become impossible to ignore: sprint planning that takes three hours instead of one, constant "can someone give this more context?" questions in Slack, and the slow creep of issues that were "important" two quarters ago and haven't moved since.
+      </p>
+      <p>
+        The underlying causes are almost always the same few issues:
+      </p>
+      <ul>
+        <li><strong>Stale issues:</strong> Tickets that haven't been touched in weeks or months. Nobody knows if they're still relevant. Nobody wants to delete them in case they are.</li>
+        <li><strong>Missing descriptions:</strong> The summary says "Fix login bug." The description is empty. The developer who filed it left the team six months ago.</li>
+        <li><strong>No story point estimates:</strong> Sprint capacity planning becomes guesswork. Velocity tracking becomes meaningless.</li>
+        <li><strong>No assignees:</strong> In a Kanban flow, unassigned work is work that nobody is accountable for moving forward.</li>
+        <li><strong>Overdue items:</strong> Due dates were set, then missed, then never updated. The backlog now contains a graveyard of past commitments.</li>
+        <li><strong>No priority score:</strong> The team uses "Priority: High" for everything. When everything is urgent, nothing is.</li>
+      </ul>
+      <p>
+        Each of these issues is individually manageable. The problem is that they compound silently — and by the time a Scrum Master or Product Owner notices, the backlog has hundreds of issues in various states of disrepair.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira does not include a backlog health score natively. You can run JQL queries to find specific issues, but there is no automatic aggregated score. Priority Scoring for Jira calculates a Board Health Score (0–100) across up to 8 configurable quality criteria — no JQL, no scripting.</p>
+      </div>
+
+      <h2 id="what-is-health-score">What is a Board Health Score?</h2>
+      <p>
+        A Board Health Score is a single number between 0 and 100 that represents the overall quality of all open (non-done) issues in a Jira project. It's not just the backlog — it includes issues currently In Progress, In Review, or in any other active workflow state. The name "Board Health" reflects that: it's the health of everything your team is actively responsible for, not just the queue.
+      </p>
+      <p>
+        The score is calculated by checking each open issue against a set of quality criteria. Each criterion that fails subtracts from the total. A score of 100 means every active issue passes all checks. A score of 40 means 60% of your open work has at least one quality problem.
+      </p>
+
+      <div class="health-gauge-row">
+        <div class="health-gauge">
+          <div class="health-score-num score-green">85–100</div>
+          <div class="health-score-label">Healthy</div>
+          <div class="health-score-desc">Minor gaps only. Backlog is largely refinement-ready.</div>
+        </div>
+        <div class="health-gauge">
+          <div class="health-score-num score-yellow">60–84</div>
+          <div class="health-score-label">Needs attention</div>
+          <div class="health-score-desc">Visible gaps in 1–2 criteria. Book a refinement session.</div>
+        </div>
+        <div class="health-gauge">
+          <div class="health-score-num score-red">0–59</div>
+          <div class="health-score-label">Unhealthy</div>
+          <div class="health-score-desc">Multiple criteria failing. Sprint planning will suffer.</div>
+        </div>
+      </div>
+
+      <p>
+        The score is most useful as a <em>trend</em>. A team that scores 62 this week and 71 next week is improving. A team that scores 80 consistently but drops to 55 after a busy release crunch has a clear signal: time to refinement.
+      </p>
+
+      <h2 id="eight-criteria">The 8 health criteria — and what each one catches</h2>
+      <p>
+        Different teams care about different quality signals. A Scrum team without story points can't plan velocity. A Kanban team without assignees has no accountability for work in flight. Priority Scoring for Jira tracks eight criteria — you activate only the ones relevant to your workflow, per project.
+      </p>
+
+      <div class="criteria-grid">
+        <div class="criterion-card">
+          <div class="criterion-icon icon-default">⏱️</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Stale Issues</div>
+            <div class="criterion-desc">Issues not updated within a configurable threshold (default: 60 days, range: 7–180). Flags forgotten or abandoned work.</div>
+            <span class="criterion-tag tag-both">Scrum &amp; Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-default">📝</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Missing Description</div>
+            <div class="criterion-desc">Issues with an empty description field. Without context, engineers can't estimate or start work confidently.</div>
+            <span class="criterion-tag tag-both">Scrum &amp; Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-scrum">📊</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Missing Story Points</div>
+            <div class="criterion-desc">Issues without a story point estimate. Blocks velocity tracking and sprint capacity planning.</div>
+            <span class="criterion-tag tag-scrum">Scrum</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-default">🎯</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Unscored (No Priority Score)</div>
+            <div class="criterion-desc">Issues without a RICE, WSJF, or ICE score. Means ranking decisions are still based on gut feel.</div>
+            <span class="criterion-tag tag-both">Scrum &amp; Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-kanban">👤</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Missing Assignee</div>
+            <div class="criterion-desc">Issues with no assigned owner. In a pull-based Kanban flow, unassigned work often stalls indefinitely.</div>
+            <span class="criterion-tag tag-kanban">Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-default">📅</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Overdue</div>
+            <div class="criterion-desc">Issues past their due date. Signals missed commitments or due dates that were set and forgotten.</div>
+            <span class="criterion-tag tag-both">Scrum &amp; Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-default">🔴</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Missing Priority</div>
+            <div class="criterion-desc">Issues where the Jira priority field is null or "None". Makes triage and escalation harder.</div>
+            <span class="criterion-tag tag-both">Scrum &amp; Kanban</span>
+          </div>
+        </div>
+        <div class="criterion-card">
+          <div class="criterion-icon icon-kanban">🏷️</div>
+          <div class="criterion-text">
+            <div class="criterion-name">Missing Labels / Components</div>
+            <div class="criterion-desc">Issues with neither labels nor components set. Blocks routing, filtering, and reporting by area of the product.</div>
+            <span class="criterion-tag tag-kanban">Kanban</span>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Each active criterion contributes equally to the score. With four active criteria, each is worth up to 25 points. With six, each is worth up to ~16.7 points. The score always stays on a 0–100 scale regardless of how many criteria are active.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Don't activate everything at once.</strong> A team that turns on all 8 criteria immediately will see a score of 20 and feel demoralized. Start with the 3–4 that reflect your team's actual Definition of Ready. Add more criteria as those improve.</p>
+      </div>
+
+      <h2 id="presets">Scrum vs. Kanban profiles</h2>
+      <p>
+        Scrum and Kanban teams have fundamentally different quality concerns, so Priority Scoring provides one-click presets to configure the right criteria from the start:
+      </p>
+      <ul>
+        <li><strong>Scrum defaults:</strong> Stale Issues, Missing Description, Missing Story Points, Unscored, Overdue — the signals that block velocity planning and sprint commitment.</li>
+        <li><strong>Kanban defaults:</strong> Stale Issues, Missing Description, Unscored, Missing Assignee, Missing Priority, Missing Labels — the signals that block flow and routing in a continuous-delivery context.</li>
+      </ul>
+      <p>
+        Both presets are starting points. A Scrum team that also uses labels for area ownership can add the Missing Labels criterion without affecting the others. A Kanban team that doesn't use due dates can leave Overdue disabled entirely.
+      </p>
+
+      <h2 id="reading-breakdown">Reading the score breakdown</h2>
+      <p>
+        The raw score matters less than understanding which criterion is costing you the most points. The health panel in Priority Scoring shows a breakdown card per active criterion — with the percentage of issues currently passing and the exact number of score points being deducted.
+      </p>
+
+      <div class="health-breakdown">
+        <div class="health-breakdown-header">
+          <span class="breakdown-title">Board Health — Project CORE</span>
+          <span class="breakdown-score score-yellow">67 / 100</span>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-green"></div>
+          <div class="breakdown-criterion">Missing Description</div>
+          <span class="breakdown-ok">96% OK</span>
+          <span class="breakdown-penalty penalty-ok">−1 pt</span>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-yellow"></div>
+          <div class="breakdown-criterion">Stale Issues</div>
+          <span class="breakdown-ok">74% OK</span>
+          <span class="breakdown-penalty penalty-warn">−7 pts</span>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-red"></div>
+          <div class="breakdown-criterion">Unscored (No Priority Score)</div>
+          <span class="breakdown-ok">48% OK</span>
+          <span class="breakdown-penalty penalty-bad">−13 pts</span>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-yellow"></div>
+          <div class="breakdown-criterion">Missing Story Points</div>
+          <span class="breakdown-ok">78% OK</span>
+          <span class="breakdown-penalty penalty-warn">−5 pts</span>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-green"></div>
+          <div class="breakdown-criterion">Overdue</div>
+          <span class="breakdown-ok">93% OK</span>
+          <span class="breakdown-penalty penalty-ok">−2 pts</span>
+        </div>
+      </div>
+
+      <p>
+        In the example above, the team's biggest problem is clear: <strong>52% of issues have no priority score</strong>, costing 13 points. Fixing that one criterion alone would lift the score to 80. Stale issues are the second priority. Description quality is nearly irrelevant. This breakdown converts an abstract score into a clear work order — exactly what a retrospective needs.
+      </p>
+
+      <h2 id="setup">How to enable Board Health in Jira</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Priority Scoring for Jira</strong> from the Atlassian Marketplace. The Board Health feature is included in the free trial — no extra configuration needed to access it.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Open the Priority Scoring dashboard</strong> via the global page in your Jira navigation. Select your project. The Board Health panel appears on the right side of the dashboard with an initial score.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Configure your health criteria.</strong> Click "Health Criteria…" in the toolbar. Select your project, choose the Scrum or Kanban quick preset, then toggle individual criteria on or off. Set the stale threshold (default: 60 days). Click "Save &amp; Refresh."</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Read the breakdown.</strong> Each criterion card shows the percentage of passing issues and the exact score penalty. Start working from the highest-penalty criterion downward.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>(Optional) Add the Board Health gadget to your Jira dashboard.</strong> The gadget shows the score and criterion breakdown for a selected project — useful for Scrum Masters and team leads who want health visible on their Jira home dashboard without opening the full app.</div>
+        </li>
+      </ol>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/BoardHealthConfig-Step1-ProjectSelection.png" alt="Priority Scoring Board Health configuration dialog — step 1: project selection dropdown" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Step 1: Select the project to configure health criteria for — each project can have its own set of active signals</p>
+      </div>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png" alt="Priority Scoring Board Health configuration dialog — step 2: toggle active criteria with Scrum and Kanban preset buttons, stale threshold slider" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Step 2: Enable individual criteria, use Scrum or Kanban presets, and configure the stale threshold per project</p>
+      </div>
+
+      <h2 id="acting">Turning a score into action</h2>
+      <p>
+        A health score is useless if it doesn't change behaviour. The most effective way to use it is to bring the breakdown into your regular ceremonies:
+      </p>
+      <h3 id="sprint-retro">In sprint retrospectives</h3>
+      <p>
+        Open the Board Health panel at the end of each sprint. If the score dropped during the sprint, identify which criterion is responsible. Often it's Unscored (new issues were created without RICE/WSJF scores) or Stale (issues were deprioritized mid-sprint but not deferred or closed). This takes two minutes and makes the "process" conversation concrete.
+      </p>
+      <h3 id="refinement">In backlog refinement sessions</h3>
+      <p>
+        Use the criterion breakdown to focus refinement energy. If Missing Descriptions is costing 12 points, spend the first 15 minutes of refinement adding acceptance criteria to the worst offenders. The Rovo AI Agent in Priority Scoring can also help: <em>"Find issues needing attention in project CORE — missing description category"</em> returns a filtered list immediately.
+      </p>
+      <h3 id="portfolio">Across multiple projects</h3>
+      <p>
+        The Portfolio view in Priority Scoring shows a health score for every project in your Jira instance side by side. Engineering managers and VPs with 4–8 active teams can see at a glance which projects are healthy and which need a refinement intervention — without opening each project individually. See more: <a href="/blog/jira-portfolio-backlog-health.html">Portfolio Backlog Health in Jira</a>.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Score cache note:</strong> The Board Health Score is cached for 1 hour to avoid repeated computation on large projects. When you apply a priority score via the app or the Rovo agent, the cache is invalidated automatically — you see the updated score immediately. After external changes (JQL bulk edits, imports), click "Refresh" to trigger a fresh calculation.</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is Jira backlog health?</p>
+        <p class="faq-a">Jira backlog health is a measure of how well-maintained and sprint-ready your open issues are. A healthy backlog has issues with clear descriptions, story point estimates, assigned owners, up-to-date status, and a priority score. An unhealthy backlog accumulates stale issues, missing fields, and unscored items — making sprint planning harder and slowing the team down.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do you measure backlog health in Jira?</p>
+        <p class="faq-a">You can measure it with a Board Health Score (0–100) that automatically checks all open issues against quality criteria: stale age, missing descriptions, missing story points, missing assignees, overdue dates, missing priority, missing labels, and missing scores. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> calculates this score automatically with a per-criterion breakdown, configurable per project. No JQL or scripting needed.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What makes a Jira backlog unhealthy?</p>
+        <p class="faq-a">The most common causes: issues not updated in 30–90+ days (stale), issues without a description or acceptance criteria, missing story point estimates, no assignee, overdue items with missed deadlines, and issues never scored for priority. Each problem individually is manageable — combined across a 200-issue backlog they make sprint planning unreliable.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a stale issue in Jira?</p>
+        <p class="faq-a">A stale issue is one that has not been updated — no status change, comment, or field edit — for a configurable number of days. The threshold is typically 30–90 days. Stale issues represent work that is forgotten, blocked without being marked as such, or no longer relevant. In Priority Scoring for Jira, the stale threshold is configurable per project between 7 and 180 days.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira show a backlog health score natively?</p>
+        <p class="faq-a">No. Jira does not include an aggregated backlog or board health score out of the box. You can manually run JQL queries to find stale or incomplete issues, but there is no automatic score. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> adds a Board Health Score with a per-criterion breakdown and a Jira Dashboard gadget, with no JQL or custom formula required.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How often should I check backlog health?</p>
+        <p class="faq-a">For Scrum teams, once per sprint — ideally at the retrospective. For Kanban teams, weekly or bi-weekly. The score is most useful as a trend: a rising score over four weeks confirms your refinement process is working. A sudden drop after a sprint is a signal to investigate what changed. The Board Health gadget on your Jira dashboard makes this a passive check rather than an active task.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+      <div class="article-cta">
+        <h3>See your Board Health Score in minutes</h3>
+        <p>Priority Scoring for Jira calculates a 0–100 Board Health Score across 8 configurable criteria — broken down by criterion, configurable per project, with a Jira Dashboard gadget included. Free trial available.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#symptoms">Symptoms of an unhealthy backlog</a></li>
+          <li><a href="#what-is-health-score">What is a Board Health Score?</a></li>
+          <li><a href="#eight-criteria">The 8 health criteria</a></li>
+          <li><a href="#presets">Scrum vs. Kanban profiles</a></li>
+          <li><a href="#reading-breakdown">Reading the breakdown</a></li>
+          <li><a href="#setup">How to enable Board Health</a></li>
+          <li><a href="#acting">Turning a score into action</a></li>
+          <li><a href="#sprint-retro">In retrospectives</a></li>
+          <li><a href="#refinement">In refinement sessions</a></li>
+          <li><a href="#portfolio">Across multiple projects</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Board Health · RICE · WSJF · ICE · Forge</div>
+          </div>
+        </a>
+        <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE Scoring in Jira: The Complete Setup Guide</a>
+        <a href="/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE vs. WSJF vs. ICE: Which Framework Is Right for You?</a>
+        <a href="/blog/jira-backlog-grooming-checklist.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira Backlog Grooming Checklist for Product Owners</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

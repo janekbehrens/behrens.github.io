@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Progress Tracker for Jira — Color-Coded Progress Bars for Every Issue</title>
+  <meta name="description" content="Visual Progress Tracker adds color-coded progress bars to Jira issues. Three field types — Manual, Status-Based, and Subtask — give your team instant visibility into project progress.">
+  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker.html">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Visual Progress Tracker for Jira — Color-Coded Progress Bars for Every Issue">
+  <meta property="og:description" content="Visual Progress Tracker adds color-coded progress bars to Jira issues. Three field types — Manual, Status-Based, and Subtask — give your team instant visibility into project progress.">
+  <meta property="og:url" content="https://janekbehrens.de/visual-progress-tracker.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/ticket.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Visual Progress Tracker for Jira",
+    "description": "Atlassian Forge app that adds color-coded progress bars to Jira issues. Three field types — Manual, Status-Based, and Subtask — with list view columns and a dashboard gadget.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Atlassian Jira Cloud",
+    "url": "https://janekbehrens.de/visual-progress-tracker.html",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Free for up to 10 users, then per-user subscription"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.6; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+    }
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 82, 204, 0.18);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: #172B4D;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: #505F79;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .btn-primary {
+      background: #0052CC;
+      color: #fff;
+      padding: 13px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: #0747A6; }
+    .btn-secondary {
+      background: #fff;
+      color: #0052CC;
+      padding: 13px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 2px solid #0052CC;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background: #DEEBFF; }
+    .hero-note {
+      font-size: 0.82rem;
+      color: #97A0AF;
+      margin-bottom: 52px;
+    }
+    .hero-screenshot-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .hero-screenshot {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #DFE1E6;
+      box-shadow: 0 12px 48px rgba(23, 43, 77, 0.12);
+      display: block;
+    }
+
+    /* ── Shared ── */
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0052CC;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #172B4D;
+      margin-bottom: 44px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Field types ── */
+    .field-types {
+      background: #fff;
+      border-top: 1px solid #DFE1E6;
+      border-bottom: 1px solid #DFE1E6;
+      padding: 64px 0;
+    }
+    .field-types-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .field-card {
+      border: 1px solid #DFE1E6;
+      border-radius: 10px;
+      padding: 24px 22px;
+      background: #FAFBFC;
+    }
+    .field-card-accent {
+      height: 4px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .accent-manual { background: linear-gradient(90deg, #AE2A19 0%, #974B00 50%, #006644 100%); }
+    .accent-status { background: #0052CC; }
+    .accent-subtask { background: #00875A; }
+    .field-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #172B4D;
+      margin-bottom: 8px;
+    }
+    .field-card .field-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #505F79;
+      background: #F4F5F7;
+      border: 1px solid #DFE1E6;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-bottom: 12px;
+    }
+    .field-card p {
+      font-size: 0.88rem;
+      color: #505F79;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .field-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .field-card ul li {
+      font-size: 0.83rem;
+      color: #344563;
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .field-card ul li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #97A0AF;
+      font-size: 0.75rem;
+      top: 1px;
+    }
+
+    /* ── More features ── */
+    .more-features {
+      background: #fff;
+      border: 1px solid #DFE1E6;
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .more-features-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7A869A;
+      margin-bottom: 14px;
+    }
+    .more-features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 32px;
+    }
+    .more-features-grid li {
+      list-style: none;
+      font-size: 0.875rem;
+      color: #344563;
+      padding-left: 16px;
+      position: relative;
+    }
+    .more-features-grid li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00875A;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* ── How it works ── */
+    .how-it-works {
+      padding: 64px 0;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .step {
+      text-align: center;
+      padding: 24px 16px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #DFE1E6;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: #0052CC;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin: 0 auto 14px;
+    }
+    .step h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #172B4D;
+      margin-bottom: 6px;
+    }
+    .step p {
+      font-size: 0.85rem;
+      color: #505F79;
+      line-height: 1.55;
+    }
+
+    /* ── List view preview ── */
+    .listview-section {
+      background: #fff;
+      border-top: 1px solid #DFE1E6;
+      border-bottom: 1px solid #DFE1E6;
+      padding: 64px 0;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .two-col-text h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #172B4D;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .two-col-text p {
+      font-size: 0.925rem;
+      color: #505F79;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .two-col-text ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .two-col-text ul li {
+      font-size: 0.88rem;
+      color: #344563;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .two-col-text ul li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00875A;
+      font-weight: 700;
+    }
+    .two-col-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid #DFE1E6;
+      box-shadow: 0 4px 20px rgba(23, 43, 77, 0.08);
+    }
+
+    /* ── CTA bottom ── */
+    .cta-bottom {
+      text-align: center;
+      padding: 72px 24px;
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+    }
+    .cta-bottom h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .cta-bottom p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+    .btn-white {
+      background: #fff;
+      color: #0052CC;
+      padding: 13px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-white:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      .field-types-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .two-col-img { order: -1; }
+      .steps { grid-template-columns: 1fr; }
+      .more-features-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 52px 16px 40px; }
+      .hero h1 { font-size: 1.75rem; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .page-nav { padding: 0 16px; }
+      .page-footer { flex-direction: column; align-items: flex-start; }
+      .section-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+  <nav id="site-nav"></nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <picture>
+      <source srcset="img/progresstracker144logo.webp" type="image/webp">
+      <img src="img/progresstracker144logo.png" alt="Visual Progress Tracker Icon" width="80" height="80" class="hero-icon">
+    </picture>
+    <h1>Visual Progress Tracker<br>for Jira</h1>
+    <p class="hero-tagline">
+      Color-coded progress bars on every Jira issue — automatically calculated from status, subtasks, or set manually.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary">Try it free</a>
+      <a href="visual-progress-tracker-docs.html" class="btn-secondary">View Documentation</a>
+    </div>
+    <p class="hero-note">Free for teams up to 10 users &nbsp;·&nbsp; Status &amp; Subtask types update automatically &nbsp;·&nbsp; Runs on Atlassian</p>
+    <div class="hero-screenshot-wrap">
+      <img src="img/ticket.png" alt="Jira issue with all three progress bar types — Manual, Status-Based, and Subtask" width="730" height="366" class="hero-screenshot" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Field Types -->
+  <section class="field-types">
+    <div class="section-inner">
+      <p class="section-label">Three field types</p>
+      <h2 class="section-title">Track progress the way your team actually works</h2>
+
+      <div class="field-types-grid">
+        <div class="field-card">
+          <div class="field-card-accent accent-manual"></div>
+          <span class="field-tag">Manual</span>
+          <h3>Manual Progress Bar</h3>
+          <p>Drag a slider to set any percentage from 0 to 100%. Simple, flexible, and always under your control.</p>
+          <ul>
+            <li>Design, content, and creative work</li>
+            <li>Tasks with subjective milestones</li>
+            <li>Quick updates during standups</li>
+          </ul>
+        </div>
+
+        <div class="field-card">
+          <div class="field-card-accent accent-status"></div>
+          <span class="field-tag">Status-Based</span>
+          <h3>Status Progress Bar</h3>
+          <p>Automatically maps your Jira workflow statuses to percentages. Zero extra clicks — moves when the issue moves.</p>
+          <ul>
+            <li>Teams with well-defined workflows</li>
+            <li>Sprint tracking at a glance</li>
+            <li>Consistent, automated reporting</li>
+          </ul>
+        </div>
+
+        <div class="field-card">
+          <div class="field-card-accent accent-subtask"></div>
+          <span class="field-tag">Subtask</span>
+          <h3>Subtask Progress Bar</h3>
+          <p>Automatically calculates (resolved subtasks ÷ total subtasks). Works out of the box — no setup needed.</p>
+          <ul>
+            <li>Epics and stories with subtasks</li>
+            <li>QA checklists and multi-step tasks</li>
+            <li>Onboarding flows with child issues</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="more-features">
+        <p class="more-features-title">Also included</p>
+        <ul class="more-features-grid">
+          <li>Color-coded bars — red → yellow → green as progress increases</li>
+          <li>Configurable color thresholds in Admin Settings</li>
+          <li>Progress columns in Jira list view and backlog</li>
+          <li>Dashboard gadget — project-wide progress overview table</li>
+          <li>Subtask details expandable view on each issue</li>
+          <li>JQL-compatible field values for search and filtering</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- List view section -->
+  <section class="listview-section">
+    <div class="section-inner">
+      <div class="two-col">
+        <div class="two-col-text">
+          <h2>Project-wide visibility in list view</h2>
+          <p>Add progress bars as columns to any Jira list view or backlog. Scan your entire project in seconds — no opening individual issues.</p>
+          <ul>
+            <li>All three field types visible as columns</li>
+            <li>Color-coded bars stay consistent across views</li>
+            <li>Spot red bars immediately — find at-risk work fast</li>
+            <li>Dashboard gadget for team leads and stakeholders</li>
+          </ul>
+        </div>
+        <div class="two-col-img">
+          <img src="img/listview.png" alt="Jira list view with color-coded progress bar columns showing red, yellow, and green bars" width="730" height="669" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard section -->
+  <section class="listview-section" style="border-top: none;">
+    <div class="section-inner">
+      <div class="two-col" style="direction: rtl;">
+        <div class="two-col-text" style="direction: ltr;">
+          <h2>Project health at a glance</h2>
+          <p>The Progress Tracker Overview dashboard gadget gives team leads and stakeholders a live summary table of every issue in a project — with progress values front and center.</p>
+          <ul>
+            <li>Add to any Jira dashboard in seconds</li>
+            <li>Three calculation modes: Manual, Status, or Subtask</li>
+            <li>Sortable table — spot lagging items instantly</li>
+            <li>Data refreshes on demand or auto-caches for speed</li>
+          </ul>
+        </div>
+        <div class="two-col-img" style="direction: ltr;">
+          <img src="img/dashboard.png" alt="Jira dashboard showing the Progress Tracker Overview gadget with a sortable project summary table" width="730" height="603" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <div class="section-inner">
+      <p class="section-label">Setup</p>
+      <h2 class="section-title">Running in 3 steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Install</h3>
+          <p>Get the app from the Atlassian Marketplace and confirm the installation on your Jira site.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Add Fields</h3>
+          <p>Create one or more progress bar custom fields in Jira Settings and add them to your project screens.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Done</h3>
+          <p>Progress bars appear on your issues immediately. Status and Subtask types calculate automatically — no further setup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Also from Janek Behrens -->
+  <section style="background:#FAFBFC; border-top:1px solid #DFE1E6; padding:48px 0;">
+    <div class="section-inner">
+      <p class="section-label" style="margin-bottom:20px;">Also from Janek Behrens</p>
+      <a href="codedoc-ai.html" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #DFE1E6;border-radius:12px;padding:20px 24px;text-decoration:none;transition:box-shadow 0.15s,border-color 0.15s;max-width:520px;" onmouseover="this.style.boxShadow='0 4px 20px rgba(23,43,77,0.09)';this.style.borderColor='#BAD6FB'" onmouseout="this.style.boxShadow='';this.style.borderColor='#DFE1E6'">
+        <picture>
+          <source srcset="img/codedoc-ai-icon.webp" type="image/webp">
+          <img src="img/codedoc-ai-icon.png" alt="CodeDoc AI Icon" width="44" height="44" style="border-radius:10px;object-fit:contain;flex-shrink:0;" loading="lazy">
+        </picture>
+        <div>
+          <div style="font-size:1rem;font-weight:700;color:#172B4D;margin-bottom:4px;">CodeDoc AI for Confluence</div>
+          <div style="font-size:0.88rem;color:#505F79;line-height:1.5;">Auto-generate Confluence documentation from your Git repositories — powered by your own AI provider.</div>
+        </div>
+        <span style="margin-left:auto;flex-shrink:0;font-size:0.9rem;color:#0052CC;font-weight:600;">View →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <h2>See your backlog in a new light</h2>
+    <p>Free for teams up to 10 users — all features included.</p>
+    <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Atlassian Marketplace →</a>
+  </section>
+
+  <!-- Footer injected by components.js -->
+  <footer id="site-footer"></footer>
+
+  <script src="/components.js"></script>
+</body>
+</html>

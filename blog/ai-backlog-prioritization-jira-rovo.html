@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically | Janek Behrens</title>
+  <meta name="description" content="Rovo AI can suggest, confirm, or automatically apply RICE, WSJF, and ICE scores to your Jira backlog. Learn the three modes, when to use each, and how to score an entire backlog in minutes.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically",
+    "description": "Rovo AI can suggest, confirm, or automatically apply RICE, WSJF, and ICE scores to your Jira backlog. Learn the three modes, when to use each, and how to score an entire backlog in minutes.",
+    "url": "https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png",
+    "keywords": ["AI backlog prioritization", "Jira AI", "Rovo", "RICE scoring", "WSJF", "ICE scoring", "Atlassian Intelligence"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically",
+    "description": "Rovo AI can suggest, confirm, or automatically apply RICE, WSJF, and ICE scores to your Jira backlog. Learn the three modes, when to use each, and how to score an entire backlog in minutes.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Jira automatically prioritize my backlog with AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, with the right Marketplace app. Priority Scoring for Jira integrates with Rovo — Atlassian's AI agent platform — to suggest or automatically apply RICE, WSJF, and ICE scores to your issues. Rovo reads the issue title, description, and acceptance criteria, then reasons through the scoring dimensions and writes the result to Jira's native custom fields. Three modes are available: Suggest (advisory only), Confirm (waits for your approval), and Auto (writes directly)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Rovo in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rovo is Atlassian's AI agent platform, part of Atlassian Intelligence. It enables purpose-built AI agents that can search, read, and take actions across Jira, Confluence, and connected tools. Third-party Marketplace apps can extend Rovo with custom agents and actions — for example, Priority Scoring for Jira adds a Rovo agent that can score backlog issues using RICE, WSJF, or ICE on demand."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is AI-generated scoring safe to use in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With appropriate mode settings, yes. In Suggest mode, Rovo only recommends values — no writes happen without human action. In Confirm mode, Rovo asks for explicit approval before writing each score. Auto mode applies scores directly but Atlassian's native permission dialog still appears as a platform safeguard. For sensitive backlogs, start with Suggest or Confirm mode until you've calibrated the AI's judgment for your team's context."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use Rovo to score my entire Jira backlog?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In a Rovo chat, type: 'Score all unscored issues in project PROJ with RICE' (replacing PROJ with your project key). Rovo will work through the unscored list, applying dimension values and calculating scores. This requires Auto mode to be enabled in the Priority Scoring settings. A bulk limit applies per call (default: 10 issues) to prevent uncontrolled mass updates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Rovo send my Jira data to external servers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Priority Scoring for Jira is a Forge-native app, meaning it runs entirely on Atlassian's own cloud infrastructure. Your Jira data never leaves Atlassian's systems. Rovo itself is also an Atlassian-native product. No third-party servers are involved in the scoring workflow."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically">
+  <meta property="og:description" content="Rovo AI can suggest, confirm, or auto-apply RICE, WSJF, and ICE scores to your Jira backlog. Three modes, real examples, and how to bulk-score in minutes.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Rovo">
+  <meta property="article:tag" content="Backlog Prioritization">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically">
+  <meta name="twitter:description" content="Rovo AI: suggest, confirm, or auto-apply RICE/WSJF/ICE scores to your Jira backlog. Three modes, real examples.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Mode comparison table ── */
+    .mode-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .mode-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .mode-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .mode-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .mode-table strong { color: var(--text); }
+    .mode-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-suggest { background: var(--blue-lite); color: var(--blue); }
+    .badge-confirm { background: #FFFAE6; color: #974F00; }
+    .badge-auto    { background: #E3FCEF; color: #006644; }
+
+    /* ── Chat simulation ── */
+    .chat-box {
+      background: #F4F5F7;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-size: 0.88rem;
+    }
+    .chat-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 16px;
+    }
+    .chat-msg {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .chat-msg:last-child { margin-bottom: 0; }
+    .chat-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .avatar-user { background: #DFE1E6; color: var(--text); }
+    .avatar-rovo { background: var(--blue); color: #fff; }
+    .chat-bubble {
+      background: #fff;
+      border: 1px solid var(--border-2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      color: var(--text-3);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .chat-bubble strong { color: var(--text); }
+    .chat-bubble .score-line {
+      margin: 6px 0 2px;
+      font-size: 0.82rem;
+    }
+    .chat-bubble .score-line span {
+      display: inline-block;
+      background: var(--blue-lite);
+      color: var(--blue);
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      margin-left: 4px;
+    }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-tag" style="background:#EAE6FF;color:#403294;">AI · Rovo</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 9 min read</span>
+      </div>
+      <h1>AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically</h1>
+      <p class="article-intro">
+        Scoring 80 backlog issues manually takes hours. Rovo — Atlassian's AI agent — can do it in minutes. It reads your issue content, reasons through the RICE, WSJF, or ICE dimensions, and writes the scores directly to Jira. You control how much autonomy it gets. This guide explains the three operating modes and shows you exactly what a Rovo scoring session looks like.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">The manual scoring bottleneck</h2>
+      <p>
+        Frameworks like <a href="/blog/rice-scoring-jira.html">RICE</a>, <a href="/blog/wsjf-jira.html">WSJF</a>, and <a href="/blog/ice-scoring-jira.html">ICE</a> solve the "everything is high priority" problem — but they introduce a new one: someone has to fill in the scores. On a team with a 60-issue backlog, that's 60 issues × 3–4 dimensions × time to think about each one. Most teams start with good intentions and trail off somewhere around ticket #15.
+      </p>
+      <p>
+        The result is a partially scored backlog — which is almost worse than an unscored one, because it gives false confidence: the top of the list looks data-driven, but the bottom is still guesswork.
+      </p>
+      <p>
+        AI-assisted scoring addresses this directly. Not by replacing human judgment, but by handling the initial estimate — giving every ticket a plausible starting score that the team can review, adjust, and own. The AI does the first pass; humans do the final judgment.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Priority Scoring for Jira integrates with Rovo — Atlassian's built-in AI agent platform — to suggest or automatically apply RICE, WSJF, and ICE scores to your issues. Three modes: Suggest (advisory), Confirm (human approval required), and Auto (writes directly). All data stays on Atlassian's infrastructure.</p>
+      </div>
+
+      <h2 id="what-is-rovo">What Rovo is — and what it isn't</h2>
+      <p>
+        <a href="https://www.atlassian.com/software/rovo" target="_blank" rel="noopener">Rovo</a> is Atlassian's AI agent platform, introduced as part of Atlassian Intelligence. It provides a chat interface within Jira and Confluence where you can interact with purpose-built AI agents — agents that don't just answer questions, but can take actions: search your content, read issues, create pages, update fields.
+      </p>
+      <p>
+        Rovo is not a general-purpose chatbot you connect your own API key to. It's a platform with a defined permission model, and third-party Marketplace apps extend it with custom agents and actions. Priority Scoring for Jira publishes a Rovo agent that has exactly one purpose: reading Jira issues and suggesting or writing priority scores.
+      </p>
+      <p>
+        Rovo requires Atlassian Intelligence to be enabled on your instance. If your organization hasn't enabled it yet, your Jira admin can do so via Atlassian Administration. Rovo is available as part of Atlassian's Premium and Enterprise cloud plans.
+      </p>
+
+      <h2 id="how-it-works">How the Priority Scoring Rovo agent works</h2>
+      <p>
+        When you invoke the Priority Scoring agent in a Rovo chat, it can read any Jira issue you point it at — title, description, acceptance criteria, labels, and existing field values. It then applies a reasoning process to each scoring dimension:
+      </p>
+      <ul>
+        <li><strong>For RICE:</strong> estimates how many users might be affected (Reach), how much the feature would move a key metric (Impact), how well-supported the estimate is (Confidence), and how much work it requires (Effort).</li>
+        <li><strong>For WSJF:</strong> estimates Business Value, Time Criticality, and Risk Reduction (all relative to other backlog items), plus Job Size in Fibonacci units.</li>
+        <li><strong>For ICE:</strong> estimates Impact on the team's current key metric, Confidence based on evidence in the issue, and Ease based on the apparent implementation scope.</li>
+      </ul>
+      <p>
+        Crucially, Rovo returns its reasoning — not just numbers. For each dimension, it explains why it picked that value. This is what makes AI scoring usable in practice: you can read the reasoning, disagree with it, and correct the value on the slider in seconds. That's much faster than reasoning from scratch.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/SelectPriorityScoringAgentInRovo.png" alt="Selecting the Priority Scoring agent in the Rovo chat interface in Jira" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Selecting the Priority Scoring agent in Rovo — accessible from the Rovo chat in any Jira context</p>
+      </div>
+
+      <h2 id="three-modes">The three operating modes</h2>
+      <p>
+        Priority Scoring's Rovo integration has three modes, configurable in the app's Settings. The mode determines how much autonomy Rovo has — how far it goes from suggestion to written score without additional human input.
+      </p>
+
+      <table class="mode-table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>What Rovo does</th>
+            <th>Human step required</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mode-badge badge-suggest">Suggest</span></td>
+            <td>Returns recommended dimension values and reasoning in the chat. No writes to Jira.</td>
+            <td>You manually apply values via sliders on the issue.</td>
+            <td>Teams new to AI scoring; high-stakes backlogs; calibration phase</td>
+          </tr>
+          <tr>
+            <td><span class="mode-badge badge-confirm">Confirm</span></td>
+            <td>Proposes a score in the chat, then asks: <em>"Shall I apply this to PROJ-123?"</em> Waits for your reply.</td>
+            <td>You type "yes" or "no" per issue.</td>
+            <td>Most teams: good balance of speed and oversight</td>
+          </tr>
+          <tr>
+            <td><span class="mode-badge badge-auto">Auto</span></td>
+            <td>Applies scores directly to Jira fields. Atlassian's native permission dialog appears as a platform-level safeguard.</td>
+            <td>You approve Atlassian's permission prompt once.</td>
+            <td>Bulk scoring; large backlogs; teams confident in AI judgment</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The mode is enforced server-side in the app — it's not a client setting a user can bypass. If the admin has set the team to Confirm mode, the agent will always request confirmation before writing, regardless of how the chat prompt is phrased.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Switching modes:</strong> When you change the mode in Settings, it takes effect in new Rovo chat sessions. An active chat retains the mode it was started with. Open a new Rovo chat after a mode change to pick up the new behavior.</p>
+      </div>
+
+      <h2 id="example">What a scoring session looks like</h2>
+      <p>
+        Here's a representative exchange in Confirm mode. The PM types a request; the Priority Scoring Rovo agent reasons through the RICE dimensions and asks for confirmation before writing:
+      </p>
+
+      <div class="chat-box">
+        <div class="chat-box-title">Rovo Chat — Confirm mode, RICE scoring</div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-user">PM</div>
+          <div class="chat-bubble">Suggest a RICE score for PROJ-47.</div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-rovo">R</div>
+          <div class="chat-bubble">
+            <strong>PROJ-47: "Add bulk export to CSV for filtered views"</strong><br><br>
+            Based on the issue description and similar export requests in your backlog, here's my assessment:
+            <div class="score-line">Reach <span>200</span> — Power users with large datasets; roughly 15% of active users per quarter based on reported usage in PROJ-31.</div>
+            <div class="score-line">Impact <span>2 (High)</span> — Eliminates a manual workaround that users currently report as the main friction in their workflow.</div>
+            <div class="score-line">Confidence <span>80%</span> — Good qualitative evidence; no quantitative data on exact user count.</div>
+            <div class="score-line">Effort <span>1 person-month</span> — Frontend UI + backend export endpoint; no new infrastructure.</div>
+            <div class="score-line" style="margin-top:10px;">RICE Score = (200 × 2 × 0.8) ÷ 1 = <strong>320</strong></div>
+            <br>Shall I apply this score to PROJ-47?
+          </div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-user">PM</div>
+          <div class="chat-bubble">Yes, but change Reach to 150 — the export feature will be gated to premium users only.</div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-rovo">R</div>
+          <div class="chat-bubble">
+            Noted — updated Reach to 150. New RICE Score = (150 × 2 × 0.8) ÷ 1 = <strong>240</strong>. Applied to PROJ-47.
+          </div>
+        </div>
+      </div>
+
+      <p>
+        This exchange takes 30–60 seconds per issue. The PM corrected one dimension — and the interaction surfaced exactly the kind of context that an AI can't know: the feature is behind a paywall, so the effective reach is lower. That's how the human-in-the-loop is supposed to work.
+      </p>
+
+      <h2 id="bulk-scoring">Bulk scoring your backlog</h2>
+      <p>
+        The most time-saving use of Auto mode is bulk scoring — working through a list of unscored issues in a single command. In a Rovo chat, with Auto mode enabled:
+      </p>
+
+      <div class="callout callout-blue">
+        <p><em>"Score all unscored issues in project PROJ with RICE."</em></p>
+      </div>
+
+      <p>
+        Rovo fetches the unscored issues, applies RICE dimension values to each one based on its content, and writes the scores to the custom fields. A bulk limit applies per call (default: 10 issues) to prevent uncontrolled mass updates. After the first batch, you can re-run the command for the next batch.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProject.png" alt="Rovo bulk scoring unscored Jira issues with the Priority Scoring agent" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo bulk-scoring unscored issues in a project — applied values visible in the Rovo activity feed</p>
+      </div>
+
+      <p>
+        After bulk scoring, review the ranked backlog in the Priority Scoring dashboard. Filter for issues with scores outside your expected range — outliers often reveal either an unusually well-described ticket (high score) or a vague, under-specified one (low score). Both are actionable signals for your next refinement session.
+      </p>
+
+      <h2 id="rovo-on-ticket">Rovo reasoning attached to issues</h2>
+      <p>
+        In Confirm and Auto mode, the Priority Scoring agent can optionally attach a brief reasoning note to the Jira issue — explaining why each dimension was scored the way it was. This creates an audit trail that's readable by any team member opening the issue later, not just the PM who ran the scoring session.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/RovoCommentDescisionOnTicket.png" alt="Rovo AI reasoning comment attached to a Jira issue after scoring" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo attaches a scoring rationale to the Jira issue — the reasoning is visible alongside the field values</p>
+      </div>
+
+      <h2 id="accuracy">How accurate is AI scoring?</h2>
+      <p>
+        AI scoring accuracy depends heavily on issue quality. Well-written issues — with a clear description, acceptance criteria, and context about the affected users — consistently get reasonable first-pass scores. Sparse issues ("Add dark mode") get generic scores that are only marginally better than a random starting point.
+      </p>
+      <p>
+        The most common corrections teams make after reviewing AI suggestions:
+      </p>
+      <ul>
+        <li><strong>Reach:</strong> AI estimates based on visible text; teams often know the actual user segment is narrower or broader than implied.</li>
+        <li><strong>Confidence:</strong> AI tends toward 80% for most issues with any description. Teams with hard data (analytics, interviews) should bump this up; teams with pure hypotheses should knock it down.</li>
+        <li><strong>Effort:</strong> AI underestimates effort for cross-team dependencies and overestimates for well-understood UI changes. Engineers should review effort scores before they're accepted.</li>
+      </ul>
+      <p>
+        A practical calibration approach: run Suggest mode for two weeks, record which AI suggestions you accept vs. override, and look for patterns. Once you trust the AI's judgment in specific areas (e.g., Impact and Confidence for your product type), switch those to Confirm or Auto.
+      </p>
+
+      <h2 id="security">Data security</h2>
+      <p>
+        Priority Scoring for Jira is a Forge-native app — it runs entirely on Atlassian's own cloud infrastructure with no external servers. When Rovo processes a scoring request, the issue content is handled within the Atlassian platform. No issue data is sent to third-party AI providers by Priority Scoring itself. Rovo's underlying AI capabilities are provided by Atlassian Intelligence, which operates under <a href="https://www.atlassian.com/trust/security/security-practices" target="_blank" rel="noopener">Atlassian's security practices</a>.
+      </p>
+      <p>
+        This is the "Runs on Atlassian" advantage — for enterprise teams with data residency requirements or strict data processing agreements, it removes the category of risk introduced by third-party AI integrations entirely.
+      </p>
+
+      <h2 id="setup">Getting started with AI scoring</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Priority Scoring for Jira from the Atlassian Marketplace.</strong> The Rovo integration is included — no separate installation or API key needed.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Verify that Atlassian Intelligence is enabled on your site.</strong> Rovo requires Atlassian Intelligence. If it's not enabled, contact your Atlassian admin. It's available on Jira Cloud Premium and Enterprise plans.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Set your Rovo mode in Priority Scoring Settings.</strong> Navigate to the Priority Scoring global settings and choose Suggest, Confirm, or Auto under the Rovo section. Start with Suggest if you're new to AI scoring.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Open a Rovo chat and select the Priority Scoring agent.</strong> Type a scoring request: <em>"Suggest a RICE score for PROJ-123."</em> Review the reasoning and apply, adjust, or discard the suggestion.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Review the ranked backlog after scoring.</strong> Open the Priority Scoring dashboard to see the ranked view. Look for outliers — issues scoring much higher or lower than you expected — and use those as starting points for your next refinement session.</div>
+        </li>
+      </ol>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Can Jira automatically prioritize my backlog with AI?</p>
+        <p class="faq-a">Yes, with the right Marketplace app. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> integrates with Rovo to suggest or automatically apply RICE, WSJF, and ICE scores to your issues. Rovo reads each issue's content, reasons through the scoring dimensions, and writes results to Jira's native custom fields. Three modes control the level of automation: Suggest, Confirm, and Auto.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is Rovo in Jira?</p>
+        <p class="faq-a">Rovo is <a href="https://www.atlassian.com/software/rovo" target="_blank" rel="noopener">Atlassian's AI agent platform</a>, part of Atlassian Intelligence. It enables purpose-built AI agents that can search, read, and take actions across Jira, Confluence, and connected tools. Third-party Marketplace apps — like Priority Scoring for Jira — extend Rovo with custom agents that perform specific tasks, such as scoring backlog issues.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is AI-generated scoring safe to use in Jira?</p>
+        <p class="faq-a">With appropriate mode settings, yes. In Suggest mode, Rovo only recommends values — nothing is written to Jira without human action. In Confirm mode, Rovo requests explicit approval before writing each score. Auto mode applies scores directly but Atlassian's native permission dialog still appears as a platform safeguard. For sensitive backlogs, start with Suggest or Confirm mode until you've calibrated the AI's judgment.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I bulk-score my entire Jira backlog with Rovo?</p>
+        <p class="faq-a">In a Rovo chat with Auto mode enabled, type: <em>"Score all unscored issues in project PROJ with RICE"</em> (use your project key). Rovo processes the unscored issues in batches of up to 10 per call. After each batch, you can repeat the command for the next batch. Review the results in the Priority Scoring dashboard.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Rovo send my Jira data to external servers?</p>
+        <p class="faq-a">No. Priority Scoring for Jira runs entirely on Atlassian's cloud infrastructure (Forge-native, "Runs on Atlassian" badge). Rovo itself is an Atlassian product. Your issue data is processed within Atlassian's systems and is not transmitted to any third-party servers by this app.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <!-- TODO: Replace vendor URL with direct Marketplace listing URL once approved -->
+      <div class="article-cta">
+        <h3>Score your backlog with Rovo AI — in minutes, not hours</h3>
+        <p>Priority Scoring for Jira includes the Rovo AI agent, three scoring frameworks, Board Health score, and Portfolio view. Free trial on Marketplace.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">The manual scoring bottleneck</a></li>
+          <li><a href="#what-is-rovo">What Rovo is</a></li>
+          <li><a href="#how-it-works">How the Rovo agent works</a></li>
+          <li><a href="#three-modes">The three operating modes</a></li>
+          <li><a href="#example">What a scoring session looks like</a></li>
+          <li><a href="#bulk-scoring">Bulk scoring your backlog</a></li>
+          <li><a href="#rovo-on-ticket">Reasoning attached to issues</a></li>
+          <li><a href="#accuracy">How accurate is AI scoring?</a></li>
+          <li><a href="#security">Data security</a></li>
+          <li><a href="#setup">Getting started</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rovo AI · Forge</div>
+          </div>
+        </a>
+        <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE Scoring in Jira: The Complete Setup Guide</a>
+        <a href="/blog/wsjf-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">WSJF in Jira: SAFe Prioritization Without Spreadsheets</a>
+        <a href="/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira Backlog Health: Measure Your Project Quality Score</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

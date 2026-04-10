@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>RICE Scoring in Jira: The Complete Setup Guide (2026) | Janek Behrens</title>
+  <meta name="description" content="Learn how to implement RICE scoring in Jira — understand the formula, score your backlog correctly, and set up native custom fields in under 10 minutes. No scripting required.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/rice-scoring-jira.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "RICE Scoring in Jira: The Complete Setup Guide (2026)",
+    "description": "Learn how to implement RICE scoring in Jira — understand the formula, score your backlog correctly, and set up native custom fields in under 10 minutes. No scripting required.",
+    "url": "https://janekbehrens.de/blog/rice-scoring-jira.html",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png",
+    "keywords": ["RICE scoring", "Jira", "backlog prioritization", "product management", "Atlassian"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RICE Scoring in Jira: The Complete Setup Guide (2026)",
+    "description": "Learn how to implement RICE scoring in Jira — understand the formula, score your backlog correctly, and set up native custom fields in under 10 minutes. No scripting required.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png",
+    "datePublished": "2026-04-09T00:00:00+02:00",
+    "dateModified": "2026-04-09T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/rice-scoring-jira.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is RICE scoring in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RICE is a product prioritization framework that scores each backlog item using four factors: Reach (how many users are affected), Impact (how much it moves the needle), Confidence (certainty of estimates), and Effort (total team time required). The RICE Score = (Reach × Impact × Confidence) ÷ Effort. A higher score means higher priority. Jira does not include RICE scoring natively — you add it with a Marketplace app like Priority Scoring for Jira."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate a RICE score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RICE Score = (Reach × Impact × Confidence) ÷ Effort. Example: a feature that reaches 200 users per quarter, with an impact of 1 (medium), 80% confidence, and 2 person-months of effort scores (200 × 1 × 0.8) ÷ 2 = 80. A feature scoring 80 ranks higher than one scoring 40 and lower than one scoring 120. Use consistent time periods for Reach and person-months for Effort across all issues."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira have built-in RICE scoring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Jira Cloud does not include RICE scoring out of the box. You can add it through the Atlassian Marketplace — for example, Priority Scoring for Jira adds native RICE, WSJF, and ICE custom fields directly to your issue view, with sliders for each dimension and automatic score calculation. No scripting or custom formulas are needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good RICE score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RICE scores are relative, not absolute — a score of 20 may be excellent in one backlog and poor in another, depending on your reach numbers and team size. What matters is the ranking across issues, not the absolute value. As a rough guide: scores in the top 25% of your backlog are high priority, the bottom 25% should be questioned or deferred. Color-coded thresholds (🟢🟡🔴) in Priority Scoring for Jira help teams see at a glance which items need attention."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between RICE, WSJF, and ICE scoring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RICE (Reach, Impact, Confidence, Effort) is ideal for product teams prioritizing features by user impact. WSJF (Weighted Shortest Job First) is used in SAFe agile to sequence work by cost of delay — better for enterprise engineering orgs. ICE (Impact, Confidence, Ease) is a faster, simpler framework for teams that need quick scoring with minimal data. All three are supported in Priority Scoring for Jira."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use RICE scoring in Jira without scripting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Apps like Priority Scoring for Jira add RICE scoring as native Jira custom fields — no ScriptRunner, no Automation rules, no custom formulas required. You install the app, add the RICE field to your project screen, and the sliders and automatic score calculation are immediately available on every issue."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RICE Scoring in Jira: The Complete Setup Guide (2026)">
+  <meta property="og:description" content="Understand the RICE formula, score your backlog correctly, and set up native RICE custom fields in Jira in under 10 minutes — no scripting required.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/rice-scoring-jira.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-09">
+  <meta property="article:modified_time" content="2026-04-09">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="RICE Scoring">
+  <meta property="article:tag" content="Product Management">
+  <meta property="article:tag" content="Backlog Prioritization">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RICE Scoring in Jira: The Complete Setup Guide (2026)">
+  <meta name="twitter:description" content="Understand the RICE formula, score your backlog correctly, and set up native RICE custom fields in Jira — no scripting required.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Formula display ── */
+    .formula-box {
+      background: #F4F5F7;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .formula-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .formula-main {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .formula-main .fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+    .formula-main .numerator {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 3px;
+      margin-bottom: 3px;
+      font-size: 1rem;
+    }
+    .formula-main .denominator { font-size: 1rem; }
+    .formula-parts {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .formula-part {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 10px 16px;
+      text-align: center;
+      min-width: 100px;
+    }
+    .formula-part-letter {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .formula-part-name {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      margin-top: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .formula-part-desc {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* ── Dimension table ── */
+    .dimension-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .dimension-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .dimension-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+    }
+    .dimension-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .dimension-table strong { color: var(--text); }
+
+    /* ── Score example box ── */
+    .example-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .example-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .example-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-top: 1px solid var(--border-2);
+      gap: 10px;
+    }
+    .example-row:first-of-type { border-top: none; }
+    .example-dim { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .example-val { font-size: 0.88rem; color: var(--text-2); }
+    .example-result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--blue-lite);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 12px;
+    }
+    .example-result-label { font-size: 0.88rem; font-weight: 700; color: var(--blue); }
+    .example-result-score { font-size: 1.3rem; font-weight: 800; color: var(--blue); }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">April 9, 2026</span>
+        <span class="article-readtime">· 9 min read</span>
+      </div>
+      <h1>RICE Scoring in Jira: The Complete Setup Guide (2026)</h1>
+      <p class="article-intro">
+        "Everything is high priority" is the backlog death spiral. RICE scoring breaks it — by replacing gut feeling with a number: <em>(Reach × Impact × Confidence) ÷ Effort</em>. This guide explains the formula, walks through a real worked example, and shows you exactly how to add RICE as a native field to your Jira issues — no scripting, no spreadsheets.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">The problem: Jira priorities are opinions</h2>
+      <p>
+        Jira gives you a Priority field out of the box — Highest, High, Medium, Low, Lowest. In most teams, 70% of the backlog is "High" within a year. It's not that everything is genuinely high priority. It's that the field is subjective, so people default upward.
+      </p>
+      <p>
+        The consequence: sprint planning becomes a negotiation. The loudest stakeholder wins. Engineers don't know which ticket to pull next when two "High" issues are waiting. And product managers can't explain — to their team or their leadership — why one feature ships before another.
+      </p>
+      <p>
+        RICE scoring fixes this by making the trade-offs explicit. Two features can both matter and both be urgent. RICE forces you to say which one matters <em>more</em>, and to show your work.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira does not include RICE scoring natively. You add it via a Marketplace app that creates custom fields — sliders for each dimension, automatic score calculation, and a ranking table across your backlog. Setup takes under 10 minutes.</p>
+      </div>
+
+      <h2 id="formula">The RICE formula explained</h2>
+      <p>
+        RICE was developed by <a href="https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/" target="_blank" rel="noopener">Sean McBride at Intercom</a> as a way to standardize feature prioritization across a growing product team. The formula has four factors:
+      </p>
+
+      <div class="formula-box">
+        <div class="formula-label">RICE Score Formula</div>
+        <div class="formula-main">
+          RICE Score &nbsp;=&nbsp;
+          <span class="fraction">
+            <span class="numerator">Reach &nbsp;×&nbsp; Impact &nbsp;×&nbsp; Confidence</span>
+            <span class="denominator">Effort</span>
+          </span>
+        </div>
+        <div class="formula-parts">
+          <div class="formula-part">
+            <div class="formula-part-letter">R</div>
+            <div class="formula-part-name">Reach</div>
+            <div class="formula-part-desc">Users affected per quarter</div>
+          </div>
+          <div class="formula-part">
+            <div class="formula-part-letter">I</div>
+            <div class="formula-part-name">Impact</div>
+            <div class="formula-part-desc">Effect per user (0.25–3)</div>
+          </div>
+          <div class="formula-part">
+            <div class="formula-part-letter">C</div>
+            <div class="formula-part-name">Confidence</div>
+            <div class="formula-part-desc">Certainty (10–100%)</div>
+          </div>
+          <div class="formula-part">
+            <div class="formula-part-letter">E</div>
+            <div class="formula-part-name">Effort</div>
+            <div class="formula-part-desc">Person-months of work</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="reach">Reach — how many people benefit?</h3>
+      <p>
+        Reach is the number of users or customers who will be affected by this feature within a defined time period — typically one quarter. Use real numbers, not percentages. "500 users per quarter" is better than "medium reach."
+      </p>
+      <p>
+        The key is consistency: all issues in your backlog must use the same time window. Mixing quarterly and annual estimates will skew every score in your ranking.
+      </p>
+
+      <h3 id="impact">Impact — how much does it move the needle?</h3>
+      <p>
+        Impact is a multiplier that represents the effect on each individual user. Intercom defined a standard scale to keep estimates comparable across features:
+      </p>
+
+      <table class="dimension-table">
+        <thead>
+          <tr>
+            <th>Impact label</th>
+            <th>Multiplier</th>
+            <th>When to use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Massive</strong></td><td>3×</td><td>Core workflow change — users will notice it daily</td></tr>
+          <tr><td><strong>High</strong></td><td>2×</td><td>Significant improvement — noticeably faster or easier</td></tr>
+          <tr><td><strong>Medium</strong></td><td>1×</td><td>Useful addition — nice to have, some will use it</td></tr>
+          <tr><td><strong>Low</strong></td><td>0.5×</td><td>Minor improvement — affects edge cases or power users</td></tr>
+          <tr><td><strong>Minimal</strong></td><td>0.25×</td><td>Negligible effect on most users</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        Impact is the most subjective dimension. The multiplier scale helps — it forces you to commit to "this is 2× better than average" rather than vague labels like "important."
+      </p>
+
+      <h3 id="confidence">Confidence — how sure are you?</h3>
+      <p>
+        Confidence is expressed as a percentage and reflects how well-supported your estimates are. Intercom's original guidance suggested three levels: 100% (high confidence — you have data), 80% (medium — some data, some assumption), 50% (low — mostly assumption). Values below 50% are valid but signal that the issue needs more discovery before scoring reliably.
+      </p>
+      <p>
+        Confidence acts as a risk discount. A feature with a fantastic RICE score at 50% confidence will rank lower than a more modest feature at 100% confidence — which is exactly what you want. Don't inflate confidence to make a pet feature look good.
+      </p>
+
+      <h3 id="effort">Effort — how much does it cost?</h3>
+      <p>
+        Effort is the total time all team members will spend on this issue, expressed in person-months. A frontend engineer and a backend engineer working for two weeks each = 1 person-month. Include QA, design, and PM time — not just engineering.
+      </p>
+      <p>
+        Effort is the denominator: a high-effort issue is penalized even if it has excellent reach and impact. This is RICE's key insight — it's not just about value delivered, but value per unit of work.
+      </p>
+
+      <h2 id="example">A worked example</h2>
+      <p>
+        Let's score two features competing for the same sprint slot:
+      </p>
+
+      <div class="example-box">
+        <div class="example-box-title">Feature A — Bulk email export</div>
+        <div class="example-row"><span class="example-dim">Reach</span><span class="example-val">400 users/quarter</span></div>
+        <div class="example-row"><span class="example-dim">Impact</span><span class="example-val">1 (Medium)</span></div>
+        <div class="example-row"><span class="example-dim">Confidence</span><span class="example-val">80%</span></div>
+        <div class="example-row"><span class="example-dim">Effort</span><span class="example-val">2 person-months</span></div>
+        <div class="example-result">
+          <span class="example-result-label">RICE Score = (400 × 1 × 0.8) ÷ 2</span>
+          <span class="example-result-score">160</span>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-box-title">Feature B — Advanced filter in settings</div>
+        <div class="example-row"><span class="example-dim">Reach</span><span class="example-val">80 users/quarter</span></div>
+        <div class="example-row"><span class="example-dim">Impact</span><span class="example-val">2 (High)</span></div>
+        <div class="example-row"><span class="example-dim">Confidence</span><span class="example-val">100%</span></div>
+        <div class="example-row"><span class="example-dim">Effort</span><span class="example-val">0.5 person-months</span></div>
+        <div class="example-result">
+          <span class="example-result-label">RICE Score = (80 × 2 × 1.0) ÷ 0.5</span>
+          <span class="example-result-score">320</span>
+        </div>
+      </div>
+
+      <p>
+        Feature B ranks higher — despite being wanted by far fewer users — because it delivers twice the impact per user, costs a quarter of the effort, and you're certain it will work. RICE surfaces this trade-off cleanly where a pure "Priority: High" label on both would hide it entirely.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Common mistake:</strong> Mixing time windows for Reach. If one issue uses "annual users" and another uses "monthly active users," the scores are not comparable. Decide on a time window (typically one quarter) and use it for every issue in the backlog.</p>
+      </div>
+
+      <h2 id="fit">When RICE is the right fit — and when it isn't</h2>
+      <p>
+        RICE works best when your team can estimate reach with real data — user analytics, support ticket volume, interview counts. It rewards features that affect many people, which aligns well with product teams working on consumer-facing or broadly-used software.
+      </p>
+      <p>
+        RICE is less suited for teams where:
+      </p>
+      <ul>
+        <li><strong>You're in SAFe / PI Planning:</strong> Use <a href="/blog/wsjf-jira.html">WSJF (Weighted Shortest Job First)</a> instead — it models cost of delay and job duration, which maps better to SAFe sequencing decisions.</li>
+        <li><strong>You have many small ideas and limited discovery time:</strong> ICE (Impact, Confidence, Ease) is faster to fill in and gives directionally correct results without requiring user data.</li>
+        <li><strong>Your issues are large epics:</strong> RICE scores on epics mix concerns and become unreliable. Break epics into stories first, then score.</li>
+      </ul>
+      <p>
+        For teams unsure which framework fits, see the comparison guide: <a href="/blog/jira-prioritization-framework-comparison.html">RICE vs. WSJF vs. ICE — which Jira framework is right for you?</a>
+      </p>
+
+      <h2 id="setup">How to set up RICE scoring in Jira</h2>
+      <p>
+        The steps below use <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> — a Forge-native app that adds RICE, WSJF, and ICE as native custom fields. It runs entirely on Atlassian's infrastructure ("Runs on Atlassian" badge), so no data leaves your Jira site.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Priority Scoring from the Atlassian Marketplace.</strong> Search for "Priority Scoring" and install it to your Jira Cloud site. A free trial is available with all features included.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Add the RICE Score field to your project screen.</strong> Go to <em>Jira Settings → Work Items → Screens</em>, find the screen for your project, and add the "Priority Scoring — RICE" field. Without this step, the sliders won't appear on issues.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Open a Jira issue and set your first RICE score.</strong> You'll see four sliders — Reach, Impact, Confidence, and Effort. Drag each slider to the appropriate value. The RICE score is calculated live and displayed above the sliders.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>View your ranked backlog in the Priority Scoring dashboard.</strong> Open the Priority Scoring global page. Switch to the RICE framework, select your project, and see all scored issues ranked from highest to lowest score — with sprint, due date, and assignee columns.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>(Optional) Configure score thresholds.</strong> In Settings, set Low and High thresholds for the RICE framework. Issues below the low threshold display a 🔴 badge; above the high threshold a 🟢. Teams at a glance see which issues are priority without reading individual scores.</div>
+        </li>
+      </ol>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/PriorityScoresOnTicket.png" alt="Jira issue view showing the Priority Scoring RICE, WSJF, and ICE custom fields with sliders for each dimension and live score calculation" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">RICE, WSJF, and ICE score fields on a Jira issue — sliders for each dimension, score calculated live</p>
+      </div>
+
+      <h2 id="ranking">Seeing your ranked backlog</h2>
+      <p>
+        Individual issue scores are useful, but the real value is the ranked view across your entire project. The Priority Scoring dashboard shows a sortable table of all scored issues — rank, RICE score (with color badge), issue key, summary, sprint, assignee, and due date.
+      </p>
+      <p>
+        Sort descending to work from the top. Issues sitting at the bottom of the ranking — especially those with a 🔴 badge — are the ones to question: should they be in the backlog at all?
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/AppStartpage_Dashboard.png" alt="Priority Scoring dashboard showing the Priority Ranking table with RICE scores, color-coded badges, sprint and assignee columns, and a Board Health score panel" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Priority Scoring dashboard — ranked RICE scores across all backlog issues, with Board Health panel on the right</p>
+      </div>
+
+      <h2 id="rovo">Going further: AI-assisted scoring with Rovo</h2>
+      <p>
+        Scoring every issue manually is the biggest adoption barrier for RICE. Priority Scoring includes a <strong>Rovo AI Agent</strong> that reads issue content — summary, description, acceptance criteria — and suggests dimension values with written reasoning.
+      </p>
+      <p>
+        The agent operates in three modes, configurable in Settings:
+      </p>
+      <ul>
+        <li><strong>Suggest mode:</strong> Rovo recommends values in the chat, you apply them manually via sliders. Good starting point for teams new to AI-assisted scoring.</li>
+        <li><strong>Confirm mode:</strong> Rovo asks "Shall I apply this RICE score to PROJ-123?" and waits for your approval before writing to Jira.</li>
+        <li><strong>Auto mode:</strong> Rovo applies scores directly — Atlassian's native permission dialog still appears as a platform-level safeguard.</li>
+      </ul>
+      <p>
+        To score an issue via Rovo, open a Rovo chat and type: <em>"Suggest a RICE score for PROJ-123."</em> Rovo fetches the issue, reasons through the dimensions, and returns suggested values. In confirm or auto mode, it can then write the score to the field directly.
+      </p>
+      <p>
+        Bulk scoring is available in auto mode: <em>"Score all unscored issues in project PROJ with RICE."</em> Rovo works through the list up to the configured bulk limit (default: 10 issues per call).
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Note on AI suggestions:</strong> Rovo's suggestions are a starting point, not a verdict. Impact and Confidence in particular benefit from human review — the AI doesn't know your company's strategic bets or which customer segments matter most this quarter. Use Suggest or Confirm mode until you've calibrated the agent's judgment against your own.</p>
+      </div>
+
+      <h2 id="team-consistency">Keeping scores consistent across your team</h2>
+      <p>
+        RICE scoring only works if the team uses the same definitions. A Reach of "1,000 users" means nothing if one person estimates monthly users and another estimates total registered users. Before you start, agree on three things:
+      </p>
+      <ul>
+        <li><strong>Time window for Reach</strong> — pick one (quarterly is standard) and never mix it.</li>
+        <li><strong>What "users" means</strong> — all registered users? Monthly active? Paying customers? Write it down.</li>
+        <li><strong>Effort unit</strong> — person-weeks or person-months, your choice, but stick to it.</li>
+      </ul>
+      <p>
+        The Score Audit Trail in Priority Scoring (Settings → Score Audit Trail) logs who set what value and when, which helps teams spot outliers and recalibrate over time.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is RICE scoring in Jira?</p>
+        <p class="faq-a">RICE is a product prioritization framework that scores each backlog item using four factors: Reach (how many users are affected), Impact (how much it moves the needle), Confidence (certainty of estimates), and Effort (total team time). The score formula is <em>(Reach × Impact × Confidence) ÷ Effort</em>. Jira doesn't include RICE natively — you add it with an app like <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I calculate a RICE score?</p>
+        <p class="faq-a">Multiply Reach × Impact × Confidence, then divide by Effort. Example: 200 users/quarter × 1 (medium impact) × 0.8 (80% confidence) ÷ 2 person-months = RICE Score of 80. A higher score means higher priority. Compare scores across your backlog — the absolute value doesn't matter, only the ranking.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have built-in RICE scoring?</p>
+        <p class="faq-a">No. Jira Cloud does not include RICE scoring out of the box. You add it through the Atlassian Marketplace. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> adds native RICE custom fields (sliders per dimension, automatic calculation) directly to the issue view — no scripting or custom Automation rules needed.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a good RICE score?</p>
+        <p class="faq-a">RICE scores are relative, not absolute. What matters is the ranking across your backlog, not the number itself. A score of 50 might be top-tier in one backlog and average in another. Use color-coded thresholds (🟢🟡🔴) to highlight the top and bottom of your ranking at a glance — Priority Scoring for Jira lets you configure these thresholds per framework.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between RICE, WSJF, and ICE in Jira?</p>
+        <p class="faq-a">RICE is best for product teams prioritizing features by user impact. <a href="/blog/wsjf-jira.html">WSJF</a> is designed for SAFe engineering orgs and focuses on cost of delay. ICE is a faster, simpler framework for teams that need quick directional scoring without detailed data. All three are supported as native custom fields in Priority Scoring for Jira.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I use RICE scoring in Jira without scripting?</p>
+        <p class="faq-a">Yes. Priority Scoring for Jira adds RICE as a native custom field — no ScriptRunner, no Automation rules, no formulas to maintain. Install the app, add the field to your project screen, and the sliders are immediately available on every issue.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <!-- TODO: Replace vendor URL with direct Marketplace listing URL once approved -->
+      <div class="article-cta">
+        <h3>Add RICE scoring to your Jira backlog</h3>
+        <p>Priority Scoring for Jira — native RICE, WSJF, and ICE fields, Rovo AI agent, Board Health score, and Portfolio view. Free trial included.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why Jira priorities are opinions</a></li>
+          <li><a href="#formula">The RICE formula explained</a></li>
+          <li><a href="#reach">Reach</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#confidence">Confidence</a></li>
+          <li><a href="#effort">Effort</a></li>
+          <li><a href="#example">A worked example</a></li>
+          <li><a href="#fit">When RICE fits — and when it doesn't</a></li>
+          <li><a href="#setup">How to set up RICE in Jira</a></li>
+          <li><a href="#ranking">Viewing your ranked backlog</a></li>
+          <li><a href="#rovo">AI-assisted scoring with Rovo</a></li>
+          <li><a href="#team-consistency">Keeping scores consistent</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rovo AI · Forge</div>
+          </div>
+        </a>
+        <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE vs. WSJF vs. ICE: Which Framework Is Right for You?</a>
+        <a href="/blog/wsjf-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">WSJF in Jira: SAFe Prioritization Without Spreadsheets</a>
+        <a href="/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira Backlog Health: Measure Your Project Quality Score</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

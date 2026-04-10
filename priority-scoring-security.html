@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <title>Security Policy — Priority Scoring for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #505F79; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.88rem; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #DFE1E6; color: #344563; }
+    th { font-weight: 600; color: #172B4D; background: #F4F5F7; }
+    .pdf-btn { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 4px; padding: 5px 12px; font-size: 0.82rem; color: #505F79; cursor: pointer; font-family: inherit; }
+    .pdf-btn:hover { background: #EBECF0; color: #172B4D; }
+    @media print { .back, .pdf-btn { display: none !important; } body { background: #fff; } .container { padding: 20px 0; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Security Policy</h1>
+    <p class="updated">Last updated: April 6, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      Priority Scoring — RICE, WSJF, ICE &amp; Rovo AI for Jira ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and operates entirely within Atlassian's infrastructure under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      trust boundary. The App makes <strong>no outbound network calls to any external server</strong>
+      and stores no credentials of any kind. This document describes the App's security architecture,
+      data protection measures, and our security practices.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <p>The App runs entirely within Atlassian's Forge runtime:</p>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is provided by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions execute in isolated, sandboxed containers with restricted system access managed by Atlassian.</li>
+      <li><strong>No external network egress:</strong> The App does not make outbound requests to any server outside the Atlassian platform. There are no external API keys, third-party services, or developer-controlled endpoints involved.</li>
+      <li><strong>Rovo AI:</strong> The AI scoring feature is powered entirely by Atlassian's Rovo platform. Issue content passed to the Rovo agent stays within Atlassian's infrastructure and is governed by <a href="https://www.atlassian.com/trust/privacy/atlassian-intelligence-privacy" target="_blank" rel="noopener">Atlassian Intelligence data handling terms</a>.</li>
+    </ul>
+
+    <h2>3. Access Control</h2>
+    <table>
+      <tr>
+        <th>Control</th>
+        <th>Details</th>
+      </tr>
+      <tr>
+        <td>User-context actions</td>
+        <td>Score values written to Jira custom fields as a direct result of user input use <code>api.asUser()</code>, inheriting the user's existing Jira permissions.</td>
+      </tr>
+      <tr>
+        <td>App-context actions</td>
+        <td>All other Jira API calls (reading issues, health checks, field discovery) as well as Rovo AI agent actions use <code>api.asApp()</code> with app-level scopes declared in the manifest.</td>
+      </tr>
+      <tr>
+        <td>Minimal API scopes</td>
+        <td>The App requests only the scopes required for its features: <code>storage:app</code>, <code>read:jira-work</code>, <code>write:jira-work</code>, and Rovo-specific scopes. No admin-level Jira permissions are requested.</td>
+      </tr>
+      <tr>
+        <td>Rovo AI apply-mode control</td>
+        <td>Administrators can restrict the Rovo AI agent to "suggest only" or "confirm before apply" mode, preventing the agent from autonomously writing scores without user approval.</td>
+      </tr>
+      <tr>
+        <td>Developer access</td>
+        <td><strong>None.</strong> We cannot read, access, or export any data stored in your Jira instance or Forge storage. All data resides within Atlassian's infrastructure.</td>
+      </tr>
+    </table>
+
+    <h2>4. Data Protection</h2>
+
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All Forge-to-Jira API calls use Atlassian's internal secured transport (TLS).</li>
+      <li>The App makes no outbound HTTPS calls to external services.</li>
+    </ul>
+
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>Score dimensions, computed scores, framework configuration, and settings are stored in <strong>Atlassian Forge Storage (KVS)</strong>, hosted by Atlassian within your cloud instance.</li>
+      <li>No credentials, tokens, or secrets are stored by the App — there are none to store.</li>
+      <li>Issue descriptions and free-text content are never stored by the App.</li>
+    </ul>
+
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App stores only numeric values (scores, dimension inputs, weights) and Jira issue keys — no personal data, no issue content, no free-text.</li>
+      <li>The Rovo AI activity log is capped at 50 entries (issue keys, scores, timestamps only) and older entries are overwritten automatically.</li>
+      <li>The backlog health cache stores only aggregated project-level metrics and expires after one hour.</li>
+    </ul>
+
+    <h2>5. No External Credentials or Integrations</h2>
+    <p>
+      Unlike apps that connect to external services, Priority Scoring does not require or accept
+      any API keys, tokens, passwords, or third-party credentials. There is no configuration
+      that could expose user secrets, and there are no external integrations beyond the Atlassian
+      platform itself.
+    </p>
+
+    <h2>6. Dependency Management</h2>
+    <ul>
+      <li>The App's runtime dependencies are limited to Atlassian's official Forge packages (<code>@forge/api</code>, <code>@forge/resolver</code>, <code>@forge/react</code>), maintained and patched by Atlassian.</li>
+      <li>Before each Marketplace submission, we run <code>npm audit</code> and resolve identified vulnerabilities, including dev-only dependencies.</li>
+      <li>Build and development tooling dependencies are not included in the production runtime bundle.</li>
+    </ul>
+
+    <h2>7. Vulnerability Management</h2>
+    <ul>
+      <li>We monitor the App for security issues and subscribe to Atlassian Forge platform security advisories.</li>
+      <li>Security patches are deployed promptly via Forge's deployment mechanism; the Forge runtime (Node.js environment) is maintained and patched by Atlassian.</li>
+      <li>Reported vulnerabilities are triaged and remediated based on severity, with critical issues addressed as the highest priority.</li>
+      <li>We run <code>npm audit</code> before every Marketplace release and document any residual dev-only findings in our submission notes.</li>
+    </ul>
+
+    <h2>8. Incident Response</h2>
+    <p>If a security issue is discovered in the App:</p>
+    <ul>
+      <li>We will investigate and begin remediation promptly upon notification or discovery.</li>
+      <li>A fix will be deployed as a priority update via the Forge deployment pipeline.</li>
+      <li>Affected customers will be notified via the Atlassian Marketplace listing and, where contact information is available, directly.</li>
+      <li>For vulnerabilities with potential data impact, we will assess scope and provide clear communication about what was affected and what action (if any) is required from customers.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, please contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — Priority Scoring"</strong>. We aim to acknowledge reports within
+      2 business days.
+    </p>
+
+    <h2>9. Organizational Security Controls</h2>
+    <ul>
+      <li><strong>Access to production:</strong> App deployments are performed exclusively by the App maintainer (Janek Behrens) via the authenticated Forge CLI. No other parties have deployment access.</li>
+      <li><strong>Source code:</strong> The App's source code is maintained in a private repository with access limited to the maintainer.</li>
+      <li><strong>Forge app credentials:</strong> The Forge app identity (app ID) is managed via Atlassian's Forge platform. There are no shared secrets or passwords for app operation.</li>
+      <li><strong>No sub-processors:</strong> We do not engage sub-processors. All processing occurs within the Atlassian platform.</li>
+    </ul>
+
+    <h2>10. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> The App does not collect or store personal data. Transient user display names from Jira API responses are used only for in-session display and are not stored. See our <a href="priority-scoring-privacy-policy.html">Privacy Policy</a> for full details.</li>
+      <li><strong>Atlassian Security Requirements:</strong> The App is built to comply with <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a> and participates in the Atlassian Marketplace security review process.</li>
+      <li><strong>Runs on Atlassian:</strong> The App operates under Atlassian's "Runs on Atlassian" trust boundary, meaning Atlassian's own infrastructure, security controls, and compliance certifications (SOC 2, ISO 27001, etc.) apply to the underlying platform.</li>
+    </ul>
+
+    <h2>11. What We Cannot Access</h2>
+    <p>For complete transparency, we have no technical means to access:</p>
+    <ul>
+      <li>Any data stored in your Jira instance (issues, comments, attachments, user data)</li>
+      <li>Score data stored in Forge Storage within your instance</li>
+      <li>Your Atlassian account credentials or session tokens</li>
+      <li>The content of any Rovo AI interactions</li>
+      <li>Any personal data of your team members</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">12. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — Priority Scoring
+      </p>
+    </div>
+  </main>
+  <script src="/components.js"></script>
+</body>
+</html>

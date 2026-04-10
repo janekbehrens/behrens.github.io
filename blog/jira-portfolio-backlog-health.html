@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026) | Janek Behrens</title>
+  <meta name="description" content="How engineering managers and VPs can monitor backlog health across multiple Jira projects in one view — without opening each project individually. Includes Board Health Score setup and portfolio dashboard walkthrough.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-portfolio-backlog-health.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)",
+    "description": "How engineering managers and VPs can monitor backlog health across multiple Jira projects in one view — without opening each project individually. Includes Board Health Score setup and portfolio dashboard walkthrough.",
+    "url": "https://janekbehrens.de/blog/jira-portfolio-backlog-health.html",
+    "datePublished": "2026-04-10T00:00:00+02:00",
+    "dateModified": "2026-04-10T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/PortfolioHealthBetweenSpaces.png",
+    "keywords": ["jira portfolio health", "jira multiple projects", "backlog health score", "engineering manager jira", "jira portfolio view"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)",
+    "description": "How engineering managers and VPs can monitor backlog health across multiple Jira projects in one view — without opening each project individually.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/PortfolioHealthBetweenSpaces.png",
+    "datePublished": "2026-04-10T00:00:00+02:00",
+    "dateModified": "2026-04-10T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-portfolio-backlog-health.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Jira show backlog health across multiple projects at once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira Cloud does not include a cross-project backlog health view natively. You can query across projects with JQL, but there is no built-in aggregate health metric per project. Priority Scoring for Jira adds a Portfolio view that shows a Board Health Score (0–100) per project side by side — so an engineering manager can see at a glance which projects have healthy backlogs and which need attention, without opening each project individually."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a Board Health Score in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Board Health Score is a 0–100 metric that measures how well a Jira project's backlog meets a set of quality criteria — such as missing descriptions, missing story points, unscored issues, stale issues, missing assignees, overdue items, missing priority, and missing labels. Each active criterion contributes equally to the score. The score is calculated automatically and cached for up to one hour; editing an issue resets the cache for that project. The concept is similar to a code coverage percentage — it gives a single number you can track over time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many projects can I track in the portfolio view?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Priority Scoring portfolio view supports multiple Jira projects simultaneously. You select which projects to include in the portfolio. Each project appears as a row with its Board Health Score, a breakdown by criterion, and a count of open issues. There is no hard limit on the number of projects, though performance is best with up to 20–30 projects per portfolio view."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What criteria does the Board Health Score check?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Priority Scoring checks up to 8 criteria: Missing Description, Missing Story Points, Unscored Issues (no priority score), Missing Assignee, Stale Issues (no update in 90+ days), Overdue Issues (past due date), Missing Priority (no categorical priority field set), and Missing Labels. Each criterion can be toggled on or off per project. Scrum and Kanban presets are available — for example, the Kanban preset disables the Story Points check by default."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often does the Board Health Score update?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Board Health Score is cached for up to one hour per project. Editing an issue invalidates the cache for that project, triggering a fresh calculation on the next request. This means the score reflects recent changes within minutes of an issue being updated, while avoiding excessive recalculation for large backlogs with many concurrent edits."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)">
+  <meta property="og:description" content="Monitor backlog health across all your Jira projects in one view — Board Health Scores, per-criterion breakdowns, and what to act on first.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-portfolio-backlog-health.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/PortfolioHealthBetweenSpaces.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-10">
+  <meta property="article:modified_time" content="2026-04-10">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Portfolio Management">
+  <meta property="article:tag" content="Backlog Health">
+  <meta property="article:tag" content="Engineering Management">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)">
+  <meta name="twitter:description" content="Board Health Scores across all your Jira projects — one view, no clicking through each project individually.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/PortfolioHealthBetweenSpaces.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue  { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow{ background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Portfolio mock ── */
+    .portfolio-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .portfolio-mock-header {
+      background: #F4F5F7;
+      padding: 10px 16px;
+      display: grid;
+      grid-template-columns: 1fr 80px 120px 56px;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      border-bottom: 1px solid var(--border);
+    }
+    .portfolio-mock-row {
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr 80px 120px 56px;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px solid var(--border-2);
+      font-size: 0.875rem;
+    }
+    .portfolio-mock-row:last-child { border-bottom: none; }
+    .project-name { font-weight: 600; color: var(--text); }
+    .project-issues { color: var(--text-faint); font-size: 0.8rem; }
+    .health-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .health-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: #DFE1E6;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .health-bar-fill { height: 100%; border-radius: 3px; }
+    .health-val { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 24px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .pill-green  { background: #E3FCEF; color: #006644; }
+    .pill-yellow { background: #FFFAE6; color: #974F00; }
+    .pill-red    { background: #FFEBE6; color: #BF2600; }
+
+    /* ── Criteria breakdown table ── */
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.87rem;
+    }
+    .criteria-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .criteria-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: middle;
+    }
+    .criteria-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .criteria-table strong { color: var(--text); }
+    .criteria-table .icon { text-align: center; font-size: 1rem; }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#EAE6FF;color:#403294;">Portfolio</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">April 10, 2026</span>
+        <span class="article-readtime">· 8 min read</span>
+      </div>
+      <h1>Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)</h1>
+      <p class="article-intro">
+        Managing three Jira projects is fine. Managing eight is when the cracks start showing — and you find them by accident, usually mid-sprint. A portfolio health view gives you a single number per project, updated automatically, so you can spot which teams need support before a release is at risk.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">The multi-project visibility problem</h2>
+      <p>
+        Jira is built around individual projects. The backlog view, the board, the sprint — all scoped to one project at a time. For a single Scrum team, that's exactly right. For an engineering manager overseeing five teams, or a VP reviewing eight squads before a quarterly planning session, it's a navigation problem masquerading as a visibility problem.
+      </p>
+      <p>
+        The typical workaround: open each project in turn, scan the backlog, check recent activity, close the tab, open the next project. Five projects × ten minutes = fifty minutes of low-quality review that still misses the issues nobody thought to flag. By the time a chronic problem surfaces — a backlog where half the stories have no acceptance criteria, or a project where unscored tickets have been accumulating for two sprints — it's already costing the team.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Priority Scoring for Jira includes a Portfolio view that shows a Board Health Score (0–100) per project alongside issue counts and a per-criterion breakdown — all in one page, without navigating into individual projects. The score updates automatically as issues are edited.</p>
+      </div>
+
+      <h2 id="what-health-score">What the Board Health Score measures</h2>
+      <p>
+        The Board Health Score is a 0–100 metric for a single Jira project. It aggregates up to 8 configurable criteria — each one representing a quality signal that affects how smoothly a backlog moves through sprints. Each active criterion contributes equally to the score: a project with 4 active criteria and no violations scores 100; one active criterion with 50% of issues failing it contributes 12.5 points to the deficit.
+      </p>
+
+      <table class="criteria-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Criterion</th>
+            <th>What it checks</th>
+            <th>Default: Scrum</th>
+            <th>Default: Kanban</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="icon">📝</td>
+            <td><strong>Missing Description</strong></td>
+            <td>Issue has no description text</td>
+            <td>✅ On</td>
+            <td>✅ On</td>
+          </tr>
+          <tr>
+            <td class="icon">📐</td>
+            <td><strong>Missing Story Points</strong></td>
+            <td>Story point field is empty</td>
+            <td>✅ On</td>
+            <td>❌ Off</td>
+          </tr>
+          <tr>
+            <td class="icon">🎯</td>
+            <td><strong>Unscored Issues</strong></td>
+            <td>No priority score set (RICE/WSJF/ICE)</td>
+            <td>✅ On</td>
+            <td>✅ On</td>
+          </tr>
+          <tr>
+            <td class="icon">👤</td>
+            <td><strong>Missing Assignee</strong></td>
+            <td>Issue has no assignee</td>
+            <td>✅ On</td>
+            <td>✅ On</td>
+          </tr>
+          <tr>
+            <td class="icon">🕰️</td>
+            <td><strong>Stale Issues</strong></td>
+            <td>No update in 90+ days</td>
+            <td>✅ On</td>
+            <td>✅ On</td>
+          </tr>
+          <tr>
+            <td class="icon">⏰</td>
+            <td><strong>Overdue Issues</strong></td>
+            <td>Due date is in the past</td>
+            <td>✅ On</td>
+            <td>✅ On</td>
+          </tr>
+          <tr>
+            <td class="icon">🏷️</td>
+            <td><strong>Missing Priority</strong></td>
+            <td>Categorical priority field (High/Medium/Low) not set</td>
+            <td>✅ On</td>
+            <td>❌ Off</td>
+          </tr>
+          <tr>
+            <td class="icon">🔖</td>
+            <td><strong>Missing Labels</strong></td>
+            <td>No labels applied</td>
+            <td>❌ Off</td>
+            <td>❌ Off</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Each criterion can be toggled per project. A frontend team that doesn't use story points can disable that check without affecting the scoring logic for other projects. The Scrum and Kanban presets apply sensible defaults for the most common workflows — you can override them per project.
+      </p>
+
+      <h2 id="portfolio-view">The portfolio view across multiple projects</h2>
+      <p>
+        The portfolio view in Priority Scoring aggregates Board Health Scores across multiple projects onto a single page. Each project appears as a row. Here's what the view looks like for a team managing six Jira projects:
+      </p>
+
+      <!-- Simulated portfolio view -->
+      <div class="portfolio-mock">
+        <div class="portfolio-mock-header">
+          <span>Project</span>
+          <span>Open issues</span>
+          <span>Health score</span>
+          <span>Status</span>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">PLATFORM</div>
+            <div class="project-issues">Platform Infrastructure</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">42</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:88%;background:#00875A;"></div></div>
+            <span class="health-val" style="color:#00875A;">88</span>
+          </div>
+          <div><span class="score-pill pill-green">🟢</span></div>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">CORE</div>
+            <div class="project-issues">Core Product</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">67</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:74%;background:#FF8B00;"></div></div>
+            <span class="health-val" style="color:#FF8B00;">74</span>
+          </div>
+          <div><span class="score-pill pill-yellow">🟡</span></div>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">MOBILE</div>
+            <div class="project-issues">Mobile Apps</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">31</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:91%;background:#00875A;"></div></div>
+            <span class="health-val" style="color:#00875A;">91</span>
+          </div>
+          <div><span class="score-pill pill-green">🟢</span></div>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">DATA</div>
+            <div class="project-issues">Data &amp; Analytics</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">89</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:51%;background:#DE350B;"></div></div>
+            <span class="health-val" style="color:#DE350B;">51</span>
+          </div>
+          <div><span class="score-pill pill-red">🔴</span></div>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">INTG</div>
+            <div class="project-issues">Integrations</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">28</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:67%;background:#FF8B00;"></div></div>
+            <span class="health-val" style="color:#FF8B00;">67</span>
+          </div>
+          <div><span class="score-pill pill-yellow">🟡</span></div>
+        </div>
+
+        <div class="portfolio-mock-row">
+          <div>
+            <div class="project-name">GROW</div>
+            <div class="project-issues">Growth &amp; Experiments</div>
+          </div>
+          <div style="color:var(--text-faint);font-size:0.85rem;">53</div>
+          <div class="health-bar-wrap">
+            <div class="health-bar-bg"><div class="health-bar-fill" style="width:83%;background:#00875A;"></div></div>
+            <span class="health-val" style="color:#00875A;">83</span>
+          </div>
+          <div><span class="score-pill pill-green">🟢</span></div>
+        </div>
+      </div>
+
+      <p>
+        The Data &amp; Analytics project (score 51) stands out immediately — a red flag visible without opening the project. The Integrations project at 67 is borderline. Platform at 88 and Mobile at 91 need no action. This took seconds to read. The equivalent manual review would have taken 30–40 minutes.
+      </p>
+
+      <h2 id="drill-down">Drilling into the red project</h2>
+      <p>
+        Clicking into the DATA project expands the criterion breakdown — which of the 8 checks are failing, and by how much:
+      </p>
+      <ul>
+        <li><strong>Unscored Issues:</strong> 38 of 89 open issues (43%) have no priority score. This is the largest contributor to the low health score.</li>
+        <li><strong>Stale Issues:</strong> 14 issues (16%) have not been updated in 90+ days — classic backlog zombie tickets.</li>
+        <li><strong>Missing Description:</strong> 9 issues (10%) have no description at all.</li>
+        <li><strong>Missing Assignee:</strong> 6 issues (7%) are unowned.</li>
+        <li><strong>Missing Story Points:</strong> 4 issues (4%) — mostly epics, acceptable.</li>
+        <li>Overdue, Missing Priority, Missing Labels: all green (0 violations).</li>
+      </ul>
+      <p>
+        That breakdown produces a concrete remediation agenda: start with the 38 unscored issues (use Rovo AI to bulk-score them), then work through the 14 stale issues (close or update them), then fill in descriptions for the 9 bare issues. Three actions, clear order, no ambiguity.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>For 1-on-1s:</strong> The portfolio health score gives engineering managers a neutral, data-driven starting point for team health conversations. "Your project is at 51 — the main driver is 38 unscored issues and 14 stale tickets" is a more productive opener than "I noticed some backlog problems last week."</p>
+      </div>
+
+      <h2 id="real-screenshot">The portfolio view in Priority Scoring</h2>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/PortfolioHealthBetweenSpaces.png" alt="Priority Scoring portfolio view showing Board Health Scores across multiple Jira projects" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Portfolio view — Board Health Scores across multiple Jira projects, with per-project breakdown</p>
+      </div>
+
+      <h2 id="score-cadence">How frequently to review portfolio health</h2>
+      <p>
+        The Board Health Score is cached for up to one hour per project, and the cache is invalidated whenever an issue in that project is edited. In practice, the score reflects the current state of the backlog within minutes of any change — there's no need to manually trigger a refresh.
+      </p>
+      <p>
+        Useful review cadences by role:
+      </p>
+      <ul>
+        <li><strong>Engineering Manager:</strong> Check the portfolio view once per sprint during sprint planning prep. A score that drops significantly between sprints signals a team that's been creating issues without completing them or maintaining quality.</li>
+        <li><strong>VP of Engineering / CTO:</strong> Weekly or before each quarterly planning cycle. The portfolio view provides a factual health baseline when discussing resourcing, team capacity, or technical debt investments.</li>
+        <li><strong>Scrum Master:</strong> Monitor the score for their team's project continuously and use it as a pre-refinement checklist anchor. See the <a href="/blog/jira-backlog-grooming-checklist.html">backlog grooming checklist</a> for how the 8 criteria map to the 12-point DoR.</li>
+      </ul>
+
+      <h2 id="setup">Setting up portfolio health monitoring</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Priority Scoring for Jira from the Atlassian Marketplace.</strong> The portfolio view and Board Health Score are included. A free trial with all features is available.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Open Priority Scoring and navigate to the Board Health section.</strong> Select the first project you want to monitor. The health score calculates automatically on first load.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Configure the active criteria per project.</strong> For each project, choose the Scrum or Kanban preset as a starting point, then toggle individual criteria on or off as needed. A Kanban project that doesn't use story points should have that criterion disabled — otherwise the score will permanently penalize a non-issue.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Switch to the Portfolio tab to see all projects at once.</strong> All projects where you have configured health criteria appear as rows in the portfolio view. The scores are live — no manual refresh needed.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Drill into red and yellow projects to get the criterion breakdown.</strong> Click any project row to expand the breakdown. Use the breakdown to prioritize remediation: address the criterion with the highest failure rate first.</div>
+        </li>
+      </ol>
+
+      <h2 id="beyond-health">Beyond health: priority scores across the portfolio</h2>
+      <p>
+        The portfolio view in Priority Scoring also shows the priority ranking for each project — not just health. An engineering manager can see, for any project, which issues are currently scored highest by RICE, WSJF, or ICE, without switching project context. This matters when capacity decisions cut across teams: if the Data project has a RICE score of 480 on a critical analytics Feature and the Platform project has a WSJF score of 4.8 on a dependent enabler, both signals are visible in one place.
+      </p>
+      <p>
+        For more on each scoring framework: <a href="/blog/rice-scoring-jira.html">RICE</a> · <a href="/blog/wsjf-jira.html">WSJF</a> · <a href="/blog/ice-scoring-jira.html">ICE</a> · <a href="/blog/jira-prioritization-framework-comparison.html">comparison guide</a>.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Can Jira show backlog health across multiple projects at once?</p>
+        <p class="faq-a">Not natively. Jira Cloud doesn't include a cross-project health metric. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> adds a Portfolio view that shows a Board Health Score (0–100) per project side by side — so you can see at a glance which projects need attention without opening each one individually.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a Board Health Score in Jira?</p>
+        <p class="faq-a">A 0–100 metric that measures how well a Jira project's backlog meets a set of quality criteria — missing descriptions, missing story points, unscored issues, stale issues (90+ days without update), missing assignees, overdue items, missing priority field, and missing labels. Each active criterion contributes equally. The score updates automatically as issues are edited. See the full breakdown: <a href="/blog/jira-backlog-health.html">Jira Backlog Health: Measure Your Project Quality Score</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How many projects can I track in the portfolio view?</p>
+        <p class="faq-a">There is no fixed project limit. You select which projects to include in the portfolio. Each project appears as a row with its Board Health Score and criterion breakdown. Performance is best with up to 20–30 projects per portfolio view.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What criteria does the Board Health Score check?</p>
+        <p class="faq-a">Up to 8 criteria: Missing Description, Missing Story Points, Unscored Issues (no RICE/WSJF/ICE score), Missing Assignee, Stale Issues, Overdue Issues, Missing Priority (categorical field), and Missing Labels. Each can be toggled per project. Scrum and Kanban presets apply sensible defaults.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How often does the Board Health Score update?</p>
+        <p class="faq-a">The score is cached for up to one hour per project. Editing any issue in the project invalidates the cache and triggers a fresh calculation on the next request — so the score reflects recent changes within minutes of an issue being updated.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <!-- TODO: Replace vendor URL with direct Marketplace listing URL once approved -->
+      <div class="article-cta">
+        <h3>See the health of every project in one view</h3>
+        <p>Priority Scoring for Jira adds a portfolio view with Board Health Scores across all your Jira projects — plus RICE, WSJF, and ICE scoring, Rovo AI, and a dashboard gadget. Free trial included.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">The multi-project visibility problem</a></li>
+          <li><a href="#what-health-score">What the Board Health Score measures</a></li>
+          <li><a href="#portfolio-view">The portfolio view</a></li>
+          <li><a href="#drill-down">Drilling into a red project</a></li>
+          <li><a href="#real-screenshot">Portfolio view screenshot</a></li>
+          <li><a href="#score-cadence">How often to review</a></li>
+          <li><a href="#setup">Setup guide</a></li>
+          <li><a href="#beyond-health">Beyond health: priority scores</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Board Health · Forge</div>
+          </div>
+        </a>
+        <!-- TODO: Replace vendor URL with direct Marketplace listing URL once listing is approved -->
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Backlog Health: Measure Your Project Quality Score</a>
+        <a href="/blog/jira-backlog-grooming-checklist.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Backlog Grooming Checklist for Product Owners</a>
+        <a href="/blog/ai-backlog-prioritization-jira-rovo.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">AI Backlog Prioritization in Jira with Rovo</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <title>Quick Setup Guide — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Get started with CodeDoc AI in minutes — connect your Git repository and AI provider, then generate your first code documentation page in Confluence automatically.">
+  <link rel="canonical" href="https://janekbehrens.de/codedoc-ai-setup.html">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    .back { color: #0052CC; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 32px; }
+    .back:hover { text-decoration: underline; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #505F79; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    h4 { font-size: 0.95rem; font-weight: 600; margin-top: 20px; margin-bottom: 8px; color: #344563; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #FF991F; }
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; }
+    }
+
+    /* Tab navigation */
+    .tab-bar { display: flex; gap: 4px; margin: 24px 0 0; border-bottom: 2px solid #DFE1E6; flex-wrap: wrap; }
+    .tab-btn {
+      background: none; border: none; border-bottom: 3px solid transparent;
+      padding: 10px 18px; font-size: 0.9rem; font-weight: 600; color: #505F79;
+      cursor: pointer; margin-bottom: -2px; border-radius: 4px 4px 0 0;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: #0052CC; }
+    .tab-btn.active { color: #0052CC; border-bottom-color: #0052CC; background: #F4F5F7; }
+
+    /* Tab panels */
+    .tab-panel { padding-top: 20px; }
+    .tab-panel.hidden { display: none; }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <h1>Quick Setup Guide</h1>
+    <p class="subtitle">CodeDoc AI for Confluence &mdash; Get connected in 5 minutes</p>
+
+    <div class="tip">
+      <strong>Before you start:</strong> You need two things: (1) an API key from your AI provider
+      and (2) a personal access token from your Git hosting service. Both are free to create and
+      take about 2 minutes each. The setup wizard in the app walks you through each step.
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- STEP 1: AI PROVIDER                                   -->
+    <!-- ===================================================== -->
+    <h2>Step 1: Connect Your AI Provider</h2>
+    <p>Select the AI service you want to use. CodeDoc AI supports Anthropic Claude, OpenAI GPT, and Google Gemini.
+    Your API key stays in your provider account &mdash; CodeDoc AI never stores your source code.</p>
+
+    <div class="tab-bar" id="ai-tab-bar">
+      <button class="tab-btn active" data-tab="ai-anthropic">Anthropic (Claude)</button>
+      <button class="tab-btn" data-tab="ai-openai">OpenAI (GPT)</button>
+      <button class="tab-btn" data-tab="ai-google">Google (Gemini)</button>
+    </div>
+
+    <!-- Anthropic -->
+    <div class="tab-panel" id="ai-anthropic">
+      <div class="step-box">
+        <h3>Anthropic &mdash; Claude Models</h3>
+        <ol>
+          <li>Go to <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener noreferrer">platform.claude.com/settings/keys</a></li>
+          <li>Click <strong>Create Key</strong>, give it a name (e.g. &ldquo;CodeDoc AI&rdquo;), and copy the key.</li>
+          <li>In the CodeDoc AI setup wizard, select <strong>Anthropic</strong> as your AI provider.</li>
+          <li>Paste the key into the <strong>API Key</strong> field and click <strong>Connect &amp; Validate</strong>.</li>
+          <li>Select your preferred Claude model from the dropdown that appears.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Cost tip:</strong> Claude Haiku is the most affordable model and fast enough for most documentation jobs.
+        Typical cost: $0.01&ndash;0.05 per generation for a medium-sized repository.
+      </div>
+      <div class="warning">
+        <strong>Billing required:</strong> Anthropic requires a credit card on file even for low usage.
+        Add a payment method at <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener noreferrer">platform.claude.com/settings/billing</a>
+        before generating your key.
+      </div>
+    </div>
+
+    <!-- OpenAI -->
+    <div class="tab-panel hidden" id="ai-openai">
+      <div class="step-box">
+        <h3>OpenAI &mdash; GPT Models</h3>
+        <ol>
+          <li>Go to <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">platform.openai.com/api-keys</a></li>
+          <li>Click <strong>+ Create new secret key</strong>, give it a name, and copy the key (shown only once).</li>
+          <li>In the CodeDoc AI setup wizard, select <strong>OpenAI</strong> as your AI provider.</li>
+          <li>Paste the key and click <strong>Connect &amp; Validate</strong>.</li>
+          <li>Select your preferred GPT model from the dropdown.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Cost tip:</strong> <code>gpt-4o-mini</code> is the most affordable option.
+        Make sure your account has credits at
+        <a href="https://platform.openai.com/settings/organization/billing" target="_blank" rel="noopener noreferrer">platform.openai.com/settings/organization/billing</a>.
+      </div>
+    </div>
+
+    <!-- Google -->
+    <div class="tab-panel hidden" id="ai-google">
+      <div class="step-box">
+        <h3>Google &mdash; Gemini Models</h3>
+        <ol>
+          <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/app/apikey</a></li>
+          <li>Click <strong>Create API key</strong>. Select a Google Cloud project or create a new one.</li>
+          <li>Copy the key and paste it into the CodeDoc AI setup wizard.</li>
+          <li>Select <strong>Google</strong> as your AI provider, paste the key, and click <strong>Connect &amp; Validate</strong>.</li>
+          <li>Select your preferred Gemini model from the dropdown.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Free tier available:</strong> Google Gemini offers a generous free tier &mdash; ideal for trying CodeDoc AI
+        at zero AI cost. The free tier has rate limits but is sufficient for occasional documentation runs.
+      </div>
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- STEP 2: GIT PROVIDER                                  -->
+    <!-- ===================================================== -->
+    <h2>Step 2: Connect Your Git Provider</h2>
+    <p>Select your Git hosting service. CodeDoc AI only needs <strong>read</strong> access to your repositories &mdash;
+    no write permissions are required.</p>
+
+    <div class="tab-bar" id="git-tab-bar">
+      <button class="tab-btn active" data-tab="git-github">GitHub</button>
+      <button class="tab-btn" data-tab="git-gitlab">GitLab</button>
+      <button class="tab-btn" data-tab="git-bitbucket">Bitbucket</button>
+      <button class="tab-btn" data-tab="git-azure">Azure DevOps</button>
+    </div>
+
+    <!-- GitHub -->
+    <div class="tab-panel" id="git-github">
+      <div class="step-box">
+        <h3>GitHub &mdash; Personal Access Token</h3>
+        <ol>
+          <li>Go to <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener noreferrer">github.com/settings/tokens/new</a> (classic token).</li>
+          <li>Give it a name (e.g. &ldquo;CodeDoc AI&rdquo;), set an expiration date, and tick the <code>repo</code> scope.</li>
+          <li>Click <strong>Generate token</strong> and copy the value &mdash; it starts with <code>ghp_</code> and is shown only once.</li>
+          <li>In CodeDoc AI, paste the token into the <strong>Personal Access Token</strong> field and click <strong>Connect &amp; Validate</strong>.</li>
+          <li>You should see your GitHub username confirmed.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Fine-grained tokens:</strong> You can also use a fine-grained personal access token for better security.
+        Select the specific repositories you want to grant access to and enable <strong>Contents: Read</strong> permission.
+      </div>
+    </div>
+
+    <!-- GitLab -->
+    <div class="tab-panel hidden" id="git-gitlab">
+      <div class="step-box">
+        <h3>GitLab &mdash; Personal Access Token</h3>
+        <ol>
+          <li>Go to <a href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" rel="noopener noreferrer">gitlab.com/-/user_settings/personal_access_tokens</a></li>
+          <li>Click <strong>Add new token</strong> and give it a name.</li>
+          <li>Select the scopes: <code>read_api</code> and <code>read_repository</code>.</li>
+          <li>Click <strong>Create personal access token</strong>. Copy the value &mdash; it starts with <code>glpat-</code> and is shown only once.</li>
+          <li>In CodeDoc AI, paste the token and click <strong>Connect &amp; Validate</strong>.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Self-hosted GitLab:</strong> CodeDoc AI supports self-hosted GitLab instances.
+        Enter your instance URL in the <strong>Base URL</strong> field that appears after selecting GitLab.
+      </div>
+    </div>
+
+    <!-- Bitbucket -->
+    <div class="tab-panel hidden" id="git-bitbucket">
+      <div class="step-box">
+        <h3>Bitbucket &mdash; Two Token Options</h3>
+        <p>Bitbucket supports two different token types. Choose one based on how you want to use CodeDoc AI:</p>
+
+        <h4>Option A: Repository Access Token (single repository)</h4>
+        <ol>
+          <li>Open your Bitbucket repository and go to <strong>Repository settings &rarr; Security &rarr; Access tokens</strong>.</li>
+          <li>Create a token with <strong>Repositories: Read</strong> scope.</li>
+          <li>Paste the token value directly into the CodeDoc AI wizard.</li>
+          <li>Use <strong>Add by URL</strong> in CodeDoc AI&rsquo;s Repositories tab to add the specific repository.</li>
+        </ol>
+
+        <h4>Option B: User API Token (all workspaces)</h4>
+        <ol>
+          <li>Go to <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" rel="noopener noreferrer">id.atlassian.com &rarr; Security &rarr; API tokens</a> and create a token.</li>
+          <li>In CodeDoc AI, enter the token as <strong>your-email@example.com:the-api-token</strong> (colon-separated, no spaces).</li>
+          <li>This gives access to all your Bitbucket workspaces and supports the Browse Repositories feature.</li>
+        </ol>
+      </div>
+      <div class="warning">
+        <strong>Important:</strong> Repository Access Tokens (Option A) cannot browse all repositories &mdash;
+        use the <strong>Add by URL</strong> option in CodeDoc AI&rsquo;s Repositories tab.
+        User API Tokens (Option B) support browsing all workspaces freely.
+      </div>
+    </div>
+
+    <!-- Azure DevOps -->
+    <div class="tab-panel hidden" id="git-azure">
+      <div class="step-box">
+        <h3>Azure DevOps &mdash; Personal Access Token</h3>
+        <ol>
+          <li>Go to <a href="https://dev.azure.com" target="_blank" rel="noopener noreferrer">dev.azure.com</a> and open your organization.</li>
+          <li>Click your profile icon (top right) &rarr; <strong>Personal access tokens</strong>.</li>
+          <li>Click <strong>+ New Token</strong>, give it a name, and set the <strong>Code</strong> scope to <strong>Read</strong> only.</li>
+          <li>Click <strong>Create</strong> and copy the token &mdash; it is shown only once.</li>
+          <li>In CodeDoc AI, paste the token and also enter your <strong>Organization URL</strong>: <code>https://dev.azure.com/your-org</code>.</li>
+          <li>Click <strong>Connect &amp; Validate</strong>.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <strong>Organization URL required:</strong> The Organization URL field is mandatory for Azure DevOps.
+        It looks like <code>https://dev.azure.com/mycompany</code> &mdash; find it in your browser&rsquo;s address bar
+        when logged into Azure DevOps.
+      </div>
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ACCESS CONTROL                                        -->
+    <!-- ===================================================== -->
+    <h2>Access Control (Optional)</h2>
+    <p>
+      By default, only <strong>Confluence Administrators</strong> can access CodeDoc AI. To grant access to other users,
+      go to the <strong>Permissions</strong> tab and assign Confluence groups to one of two roles:
+    </p>
+    <ul>
+      <li><strong>Administrator</strong> &mdash; Full access including Settings and Permissions.</li>
+      <li><strong>Job Operator</strong> &mdash; Can create and run documentation jobs, but cannot change Settings or Permissions.</li>
+    </ul>
+    <p>
+      Add the groups that should have access &mdash; then manage their members in the
+      <strong>Confluence Admin UI</strong> (&rarr; Confluence Settings &rarr; Groups). No changes to the app are needed
+      when users join or leave a group.
+    </p>
+    <div class="tip">
+      <strong>Tip:</strong> Create a dedicated group like <code>codedoc-ai-operators</code> in Confluence and add it to the
+      Job Operator role. Your Confluence admin can then manage access without touching the app.
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- WHAT'S NEXT                                           -->
+    <!-- ===================================================== -->
+    <h2>What&rsquo;s Next</h2>
+    <p>Once both providers are connected, the wizard closes and you land on the <strong>Dashboard</strong>. From there:</p>
+    <ol>
+      <li>Go to the <strong>Repositories</strong> tab and add the repos you want to document.</li>
+      <li>Go to <strong>Jobs &rarr; Create Job</strong> &mdash; select your repos, choose a documentation template, and set a trigger.</li>
+      <li>Click <strong>Run Now</strong> or wait for your trigger to fire (schedule, webhook, etc.).</li>
+      <li>Your documentation appears as a Confluence page in the space you selected.</li>
+    </ol>
+    <div class="tip">
+      <strong>Tip:</strong> Google Gemini&rsquo;s free tier is perfect for a first test run at zero cost.
+      You can switch to Anthropic or OpenAI later in <strong>Settings &rarr; AI Provider</strong>.
+    </div>
+
+
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #DFE1E6;">
+      <p style="font-size: 0.85rem; color: #505F79;">
+        <a href="codedoc-ai-docs.html">Full Documentation</a> &nbsp;&middot;&nbsp;
+        <a href="codedoc-ai-support.html">Support</a> &nbsp;&middot;&nbsp;
+        <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+        <a href="impressum.html">Impressum</a> &nbsp;&middot;&nbsp;
+        &copy; 2026 Janek Behrens
+      </p>
+    </div>
+
+  </main><!-- /.container -->
+
+  <script>
+    // Tab switcher — scopes by ID prefix (ai- or git-)
+    // Graceful degradation: all panels visible without JS (class "hidden" added below)
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      if (!p.classList.contains('active') && p.id !== 'ai-anthropic' && p.id !== 'git-github') {
+        // already marked hidden in HTML; no-op here
+      }
+    });
+
+    function initTabBar(barId) {
+      var bar = document.getElementById(barId);
+      if (!bar) return;
+      bar.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var targetId = btn.getAttribute('data-tab');
+          var prefix = targetId.split('-')[0] + '-';
+
+          // Deactivate all buttons in this bar
+          bar.querySelectorAll('.tab-btn').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          btn.classList.add('active');
+
+          // Hide all panels for this group, show the target
+          document.querySelectorAll('.tab-panel').forEach(function(panel) {
+            if (panel.id.startsWith(prefix)) {
+              panel.classList.add('hidden');
+            }
+          });
+          var target = document.getElementById(targetId);
+          if (target) target.classList.remove('hidden');
+        });
+      });
+    }
+
+    initTabBar('ai-tab-bar');
+    initTabBar('git-tab-bar');
+  </script>
+  <script src="/components.js"></script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Progress Tracking Without Scripting or Complex Custom Fields | Janek Behrens</title>
+  <meta name="description" content="Adding a progress custom field to Jira doesn't require scripting, JQL, or admin expertise. Here's how to set up automatic progress tracking in under two minutes — with a UI, not code.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-progress-no-scripting.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Progress Tracking Without Scripting or Complex Custom Fields",
+    "description": "Adding a progress custom field to Jira doesn't require scripting, JQL, or admin expertise. Here's how to set up automatic progress tracking in under two minutes — with a UI, not code.",
+    "url": "https://janekbehrens.de/blog/jira-progress-no-scripting.html",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "keywords": ["Jira", "Atlassian", "Custom Fields", "No-Code"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Progress Tracking Without Scripting or Complex Custom Fields">
+  <meta property="og:description" content="Progress tracking in Jira doesn't need scripting, JQL, or admin complexity. Here's how to get automatic progress bars set up in two minutes — with a UI, not code.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-progress-no-scripting.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/ticket.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-07">
+  <meta property="article:modified_time" content="2026-04-07">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Custom Fields">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Progress Tracking Without Scripting or Complex Custom Fields">
+  <meta name="twitter:description" content="Progress tracking in Jira doesn't need scripting or JQL. Here's how to get automatic progress bars in two minutes.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/ticket.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Jira Progress Tracking Without Scripting or Complex Custom Fields",
+    "description": "Adding a progress custom field to Jira doesn't require scripting, JQL, or admin expertise. Here's how to set up automatic progress tracking in under two minutes — with a UI, not code.",
+    "image": "https://janekbehrens.de/img/ticket.png",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-progress-no-scripting.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I add a progress custom field in Jira without scripting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install a Marketplace app like Visual Progress Tracker for Jira. It adds three ready-made progress bar field types: one that calculates from subtask completion, one that maps workflow statuses to percentages, and one that team members set manually. All configuration is done through an admin UI — no JQL, no scripting, no formulas required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the easiest way to track progress in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The easiest setup is the status-based progress field: install the app, create the field, and the bar automatically advances when issues move through your workflow. If your statuses are standard (To Do, In Progress, In Review, Done), the default mapping works without any configuration changes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira have a built-in progress custom field?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira Cloud does not include a native progress bar custom field. The built-in custom field options include text, number, date, and select fields, but not a visual progress bar that calculates from workflow status or subtask completion. That requires a custom field app from the Atlassian Marketplace."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I track progress in Jira without JQL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Status-based and subtask-based progress fields update automatically from Jira's native data — no JQL queries needed. The only configuration required is assigning percentages to your workflow statuses via a UI in the app's admin settings. Manual progress fields require no configuration at all."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* ── Status mapping mock ── */
+    .status-mapping-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 440px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .sm-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .sm-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 0;
+      border-top: 1px solid var(--border-2);
+      font-size: 0.85rem;
+    }
+    .sm-row:first-of-type { border-top: none; }
+    .sm-status { font-weight: 600; color: var(--text); flex: 1; }
+    .sm-pct-field {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.82rem;
+      color: var(--text-2);
+      width: 54px;
+      text-align: right;
+    }
+    .sm-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      min-width: 42px;
+      text-align: center;
+    }
+    .badge-red    { background: #FFEBE6; color: #BF2600; }
+    .badge-yellow { background: #FFF4E5; color: #974F0C; }
+    .badge-green  { background: #E3FCEF; color: #006644; }
+
+    /* ── Slider mock ── */
+    .slider-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 360px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .slider-bar-wrap { background: #F4F5F7; border-radius: 4px; height: 8px; margin: 12px 0 10px; position: relative; }
+    .slider-bar-fill { height: 100%; border-radius: 4px; background: #FF8B00; width: 50%; }
+    .slider-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .preset-btn {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-2);
+      cursor: default;
+    }
+    .preset-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">April 7, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>Jira Progress Tracking Without Scripting or Complex Custom Fields</h1>
+      <p class="article-intro">
+        Adding progress visibility to Jira doesn't require a scripting tool, JQL knowledge, or an admin who writes post-functions. A progress bar custom field — one that updates automatically — takes about two minutes to configure with a UI.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">Why teams avoid progress tracking in Jira</h2>
+      <p>
+        Teams that want progress visibility in Jira often hit the same wall: every path to automation involves complexity. A calculated custom field needs a formula. A scripted field needs someone to write and maintain Groovy code. A JQL-based gadget needs the right query syntax. And workflow post-functions need an admin who understands how the transition engine works.
+      </p>
+      <p>
+        So most teams skip it entirely. They rely on status columns and mental arithmetic during standups. They know it's not ideal. They just don't want to own a scripted solution that breaks every time a workflow is edited.
+      </p>
+      <p>
+        There's a simpler path: a dedicated progress bar custom field that reads Jira's native data — subtask completion, workflow status — and displays it as a visual percentage. No scripting. No formulas. No maintenance burden.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> A Forge-native custom field app adds progress bars to Jira issues with a UI-only setup. Status-based and subtask-based fields update automatically. The manual field needs no configuration at all.</p>
+      </div>
+
+      <h2 id="three-approaches">Three approaches, zero scripting required</h2>
+      <p>
+        Visual Progress Tracker provides three field types, each representing a different way to answer "how complete is this issue?" — none of which requires writing code:
+      </p>
+
+      <h3 id="manual-field">Progress Bar (Manual)</h3>
+      <p>
+        The simplest option. A team member opens an issue and sets the percentage themselves using a slider or a set of quick-select buttons: 0%, 10%, 25%, 50%, 75%, or 100%. No configuration required — the field works immediately after it's added to the project screen.
+      </p>
+      <p>
+        The value persists until someone changes it. Best for tasks where completion is subjective or follows milestones that don't map cleanly to subtask counts or workflow statuses.
+      </p>
+
+      <div class="diagram">
+        <div class="slider-mock">
+          <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px;">Progress</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="flex:1;">
+              <div class="slider-bar-wrap">
+                <div class="slider-bar-fill"></div>
+              </div>
+            </div>
+            <span style="font-size:0.82rem;font-weight:700;color:#974F0C;background:#FFF4E5;padding:3px 8px;border-radius:3px;">50%</span>
+          </div>
+          <div class="slider-presets">
+            <span class="preset-btn">0%</span>
+            <span class="preset-btn">10%</span>
+            <span class="preset-btn">25%</span>
+            <span class="preset-btn active">50%</span>
+            <span class="preset-btn">75%</span>
+            <span class="preset-btn">100%</span>
+          </div>
+        </div>
+        <p class="diagram-caption">The manual field in edit mode — slider plus quick-select preset buttons, no setup required</p>
+      </div>
+
+      <h3 id="status-field">Progress Bar (Status)</h3>
+      <p>
+        Maps each Jira workflow status to a percentage. When an issue moves from "In Progress" to "In Review", the bar advances automatically — zero extra clicks for the team. The configuration is a one-time admin task: open the Status Mapping tab, assign a number to each status name, and save.
+      </p>
+      <p>
+        The app ships with a sensible default mapping that works for most Scrum and Kanban workflows out of the box:
+      </p>
+      <ul>
+        <li><strong>To Do / Backlog</strong> → 0%</li>
+        <li><strong>Selected for Development</strong> → 25%</li>
+        <li><strong>In Progress</strong> → 50%</li>
+        <li><strong>In Review</strong> → 75%</li>
+        <li><strong>Done / Closed</strong> → 100%</li>
+      </ul>
+      <p>
+        You can add, edit, or remove any status. The matching is case-insensitive, so "in progress", "In Progress", and "IN PROGRESS" all resolve to the same value.
+      </p>
+
+      <h3 id="subtask-field">Progress Bar (Subtasks)</h3>
+      <p>
+        Calculates resolved child issues ÷ total child issues automatically. No configuration needed — the field reads Jira's own subtask and child issue data. Ideal for epics with stories or stories with subtasks. The field also shows the raw count alongside the bar (for example "3/5 done") and includes a Details button that expands a per-child breakdown.
+      </p>
+
+      <h2 id="status-mapping">Configuring status mappings — the UI way</h2>
+      <p>
+        If you use the status-based field, the one configuration step is setting up your status-to-percentage mapping. This is done entirely through a visual admin interface — no code, no post-functions, no Groovy.
+      </p>
+      <p>
+        The Status Mapping tab shows all your current mappings sorted by percentage value. You can edit any percentage directly, remove statuses you don't need, and add new ones using a text field and a number input. Changes take effect immediately after saving.
+      </p>
+
+      <div class="diagram">
+        <div class="status-mapping-mock">
+          <div class="sm-title">Status-to-Progress Mapping</div>
+          <div class="sm-row">
+            <span class="sm-status">To Do</span>
+            <span class="sm-pct-field">0</span>
+            <span class="sm-badge badge-red">0%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">In Progress</span>
+            <span class="sm-pct-field">50</span>
+            <span class="sm-badge badge-yellow">50%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">In Review</span>
+            <span class="sm-pct-field">75</span>
+            <span class="sm-badge badge-yellow">75%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">Done</span>
+            <span class="sm-pct-field">100</span>
+            <span class="sm-badge badge-green">100%</span>
+          </div>
+        </div>
+        <p class="diagram-caption">The Status Mapping admin UI — enter a percentage for each workflow status, save once, update automatically forever after</p>
+      </div>
+
+      <div class="callout callout-green">
+        <p><strong>Custom workflows:</strong> If your project uses non-standard statuses like "Awaiting Deployment" or "UAT", just add them to the mapping. The matching is case-insensitive, so typos in status names won't cause silent failures.</p>
+      </div>
+
+      <h2 id="color-settings">Color thresholds — a UI with live preview</h2>
+      <p>
+        By default, the progress bar color follows a traffic light pattern: red below 34%, yellow up to 67%, green above. These thresholds are configurable in the Color Settings tab — also entirely through a UI.
+      </p>
+      <p>
+        You set two numbers: the red-to-yellow boundary and the yellow-to-green boundary. A live preview shows exactly how the bar colors will look before you save. If your team's definition of "at risk" is anything below 50%, you change one number and the new thresholds apply everywhere — the issue view, the list view column, and the dashboard gadget.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/admin-colors.png" alt="Visual Progress Tracker color threshold settings showing the admin UI with configurable red, yellow, and green boundaries and a live preview" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Color Settings tab — set the red and yellow thresholds and see a live preview before saving</p>
+      </div>
+
+      <h2 id="setup">Setup in two minutes</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Visual Progress Tracker</strong> from the <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>. Free trial available.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Create the field.</strong> Go to Jira Settings → Work items → Fields → Create field. Search for "Progress Bar" and choose the type that fits: Manual, Status, or Subtasks. Give it a name and click Create.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Add it to your project screen.</strong> Go to Project Settings → Screens → Edit screen and drag the field to your preferred position. It now appears on every issue in that project.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>(Status field only) Check the status mapping.</strong> Open App Settings → Status Mapping. The default mapping covers the most common workflow statuses. Edit any value or add your custom statuses if needed.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Done.</strong> Open any issue to see the progress bar. Add the field as a list view column to see progress across all issues at a glance.</div>
+        </li>
+      </ol>
+
+      <p>
+        That's the full setup for the most common case. There's no post-function to configure, no Groovy to write, no JQL to maintain.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I add a progress custom field in Jira without scripting?</p>
+        <p class="faq-a">Install an app like <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> from the Atlassian Marketplace. It provides three ready-made progress bar field types that you configure through an admin UI — no JQL, no scripting, no post-functions. The status-based field updates automatically when issues move through your workflow.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the easiest way to track progress in Jira?</p>
+        <p class="faq-a">The status-based progress field is the lowest-friction option: install the app, create the field, and it updates automatically on every status change. If your workflow uses standard statuses (To Do, In Progress, In Review, Done), the default mapping works without any edits. The manual field is even simpler — no configuration at all, just open an issue and set the slider.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have a built-in progress custom field?</p>
+        <p class="faq-a">Jira Cloud does not include a native progress bar custom field. The built-in field types include text, number, date, and select — but not a visual progress bar that calculates from workflow status or subtask completion. That requires a Marketplace app.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I track progress in Jira without writing JQL?</p>
+        <p class="faq-a">Yes. Status-based and subtask-based fields read Jira's native data automatically — no query language required. The only admin task is mapping status names to percentages through a visual UI. Manual fields need no setup at all. JQL is optional — you can use it in the dashboard gadget filter, but it's not required for the fields to function.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How is this different from a scripted progress field?</p>
+        <p class="faq-a">A scripted field (for example via a Groovy-based scripting app) is maintained as code in a separate tool. It breaks when workflows change, requires a developer to update, and adds maintenance overhead. A Forge-native custom field app runs on Atlassian's infrastructure, updates automatically from Jira's own data, and is configured entirely through a UI with no code to maintain.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>Two minutes to progress bars in Jira</h3>
+        <p>Visual Progress Tracker adds automatic, color-coded progress bars to your Jira issues — no scripting, no JQL, no post-functions. Free trial available, all three field types included from day one.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why teams avoid progress tracking</a></li>
+          <li><a href="#three-approaches">Three approaches, zero scripting</a></li>
+          <li><a href="#manual-field">Manual progress bar</a></li>
+          <li><a href="#status-field">Status-based progress bar</a></li>
+          <li><a href="#subtask-field">Subtask-based progress bar</a></li>
+          <li><a href="#status-mapping">Configuring status mappings</a></li>
+          <li><a href="#color-settings">Color thresholds</a></li>
+          <li><a href="#setup">Setup in two minutes</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issue Progress Visually</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Tracking Epic Progress in Jira: The Subtask Approach</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

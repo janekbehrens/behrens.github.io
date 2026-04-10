@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>How to Build a Sprint Health Dashboard in Jira | Janek Behrens</title>
+  <meta name="description" content="Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint — with color-coded bars and a dashboard gadget that needs zero JQL.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-sprint-health-dashboard.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Build a Sprint Health Dashboard in Jira",
+    "description": "Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint — with color-coded bars and a dashboard gadget that needs zero JQL.",
+    "url": "https://janekbehrens.de/blog/jira-sprint-health-dashboard.html",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/dashboard.png",
+    "keywords": ["Jira", "Atlassian", "Sprint", "Dashboard"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Sprint Health Dashboard in Jira">
+  <meta property="og:description" content="Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint — with color-coded bars and a dashboard gadget.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-sprint-health-dashboard.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-07">
+  <meta property="article:modified_time" content="2026-04-07">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Sprint">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Build a Sprint Health Dashboard in Jira">
+  <meta name="twitter:description" content="Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/dashboard.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Build a Sprint Health Dashboard in Jira",
+    "description": "Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint — with color-coded bars and a dashboard gadget that needs zero JQL.",
+    "image": "https://janekbehrens.de/img/dashboard.png",
+    "datePublished": "2026-04-07T00:00:00+02:00",
+    "dateModified": "2026-04-07T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-sprint-health-dashboard.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does sprint health mean in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sprint health describes how likely a sprint is to complete its committed work on time. In Jira, the default sprint board shows issue statuses but not how far along each issue actually is. A healthy sprint has in-progress items that are genuinely advancing, no hidden blockers, and an overall completion rate on track for the end date. Progress visibility at the issue level is required to assess this accurately."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I see sprint progress in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira's built-in Sprint Report shows completed vs remaining story points but not per-issue progress percentages. To see that, add a progress bar custom field via an app like Visual Progress Tracker for Jira. You can then add the field as a list view column and use the dashboard gadget with a JQL filter like 'sprint in openSprints()' to see all sprint issues and an average completion percentage at a glance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I filter the Jira progress dashboard gadget by sprint?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The Visual Progress Tracker dashboard gadget (called 'Progress Tracker Overview') includes an optional JQL filter field. Enter 'sprint in openSprints()' to show only issues in the active sprint. The average progress bar at the top then reflects sprint-level completion rather than the full project."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira have a built-in sprint health dashboard?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira's built-in Sprint Report shows a burndown chart and story point completion but does not show per-issue progress percentages or a visual completion indicator per ticket. To add that layer, install a custom field app from the Atlassian Marketplace that provides progress bar fields and a dashboard gadget."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">April 7, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>How to Build a Sprint Health Dashboard in Jira</h1>
+      <p class="article-intro">
+        Sprint health is not just about whether tickets are in the right column. It's about knowing how far along each in-progress item actually is — and spotting the ones at risk before the sprint ends. Here's how to make that visible in Jira.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">The problem with Jira's default sprint view</h2>
+      <p>
+        Jira's sprint board tells you one thing: which column each ticket is in. To Do, In Progress, Done. That's useful — but it isn't sprint health. An issue marked "In Progress" could be hours from done or just starting. You can't tell from the label.
+      </p>
+      <p>
+        The built-in Sprint Report focuses on story points completed vs remaining. That tells you how much work has left the sprint, not how far along the remaining work is. On day nine of a two-week sprint, knowing that four tickets are "In Progress" is very different from knowing they're each at 80% — or each at 10%.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira does not show per-issue progress percentages by default. You add that layer with a progress bar custom field and a dashboard gadget — neither requires JQL knowledge or scripting.</p>
+      </div>
+
+      <h2 id="what-is-sprint-health">What sprint health actually means</h2>
+      <p>
+        A healthy sprint has three properties:
+      </p>
+      <ul>
+        <li><strong>In-progress items are advancing.</strong> Not just labeled "In Progress" by status, but genuinely moving forward day over day.</li>
+        <li><strong>No hidden blockers.</strong> An issue that has been "In Progress" for six days without movement is a risk signal — whether or not it has a formal blocker tag.</li>
+        <li><strong>The overall completion rate is on track.</strong> If the sprint has ten stories and it's day eight of ten, an average progress below 70% warrants a conversation.</li>
+      </ul>
+      <p>
+        None of these are visible in Jira's default views. You need progress information at the issue level, not just at the status level.
+      </p>
+
+      <h2 id="progress-bars">Progress bars: the missing layer</h2>
+      <p>
+        Adding a progress bar custom field gives each issue a color-coded bar and a percentage. That percentage can come from one of three sources:
+      </p>
+      <ul>
+        <li><strong>Status-based:</strong> automatically maps each workflow status to a percentage. When someone moves a ticket from "In Progress" to "In Review", the bar advances from 50% to 75% with no extra clicks. You configure the mapping once in Admin Settings.</li>
+        <li><strong>Subtask-based:</strong> calculates resolved subtasks ÷ total subtasks. Useful for stories with detailed acceptance criteria broken into child issues.</li>
+        <li><strong>Manual:</strong> the assignee sets the percentage themselves using a slider or quick-select buttons (0%, 25%, 50%, 75%, 100%). Useful for tasks where status alone does not capture complexity.</li>
+      </ul>
+      <p>
+        The color coding is configurable: red below 34%, yellow up to 67%, green above — or whatever thresholds fit your team's definition of "at risk". The same thresholds apply everywhere the field appears: the issue view, the list view column, and the dashboard.
+      </p>
+
+      <h2 id="list-view">Sprint health in the list view</h2>
+      <p>
+        Once a progress bar field exists, add it as a column to your Jira list view or backlog. During standup, open the list view and sort by progress ascending. The lowest-progress in-progress items surface at the top — those are the tickets that need a conversation.
+      </p>
+      <p>
+        A sprint full of yellow and green bars on day three looks very different from one full of red on day nine. That difference is visible in a glance rather than buried in a report.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/listview.png" alt="Jira list view showing a progress bar column with color-coded percentages across sprint issues" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Progress bar column in the Jira list view — sort ascending to bring at-risk items to the top</p>
+      </div>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> Sort any progress column ascending to surface issues at 0% mid-sprint. An issue with zero progress in the second half of a sprint is a concrete conversation starter — not a vague "is this on track?" question.</p>
+      </div>
+
+      <h2 id="dashboard">The dashboard gadget: a sprint-level overview</h2>
+      <p>
+        The Visual Progress Tracker dashboard gadget — called <strong>Progress Tracker Overview</strong> — gives you a table of all issues in a project, each with a progress bar, plus an overall average completion percentage at the top.
+      </p>
+      <p>
+        To scope it to your active sprint, use the optional JQL filter when configuring the gadget. Enter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">sprint in openSprints()</code> to show only issues in the current sprint. Combine it with <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">type = Story</code> if you only want stories, not sub-tasks.
+      </p>
+      <p>
+        The table shows each issue's key, summary, type, status, and a progress bar. Any column is sortable — clicking the Progress header lets you rank issues by completion. The average at the top gives you a single number: how done is this sprint right now.
+      </p>
+      <p>
+        The gadget caches data for up to one hour to keep Jira API usage low. A Refresh button and a "X minutes ago" indicator give you control over when it updates.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/dashboard.png" alt="Visual Progress Tracker dashboard gadget showing sprint issues with progress bars, project average at top, and a sortable issue table" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">The Progress Tracker Overview gadget on a Jira Dashboard — sprint average at top, all issues listed with color-coded progress bars</p>
+      </div>
+
+      <h2 id="setup">Setting it up</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Visual Progress Tracker</strong> from the <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>. Free trial available, no credit card required.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Create a progress bar field.</strong> Go to Jira Settings → Work items → Fields → Create field. Choose "Progress Bar (Status)" for automatic updates based on workflow movement.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Configure status mappings.</strong> In App Settings → Status Mapping, assign a percentage to each workflow status — for example: In Progress → 50%, In Review → 75%, Done → 100%. A default mapping is pre-loaded as a starting point.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Add the field to your project screen.</strong> Go to Project Settings → Screens → Edit screen and add the progress field. The bar now appears on every issue.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Add the field as a list view column.</strong> In any Jira list view or backlog, click the column header area and add the progress bar field.</div>
+        </li>
+        <li>
+          <div class="step-num">6</div>
+          <div class="step-text"><strong>Add the gadget to a Jira Dashboard.</strong> Click Add gadget, search for "Progress Tracker Overview", select your project, and optionally enter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">sprint in openSprints()</code> as the JQL filter to scope it to the active sprint.</div>
+        </li>
+      </ol>
+
+      <p>
+        That's the full setup. Once configured, the progress bars update automatically on every status change — no manual maintenance needed.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What does sprint health mean in Jira?</p>
+        <p class="faq-a">Sprint health describes how likely a sprint is to complete its committed work on time. Key signals include whether in-progress items are genuinely advancing, whether any items appear stuck, and whether the overall completion rate is on track. Jira's default sprint board shows status but not progress, which makes sprint health assessment difficult without additional tooling.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I see sprint progress in Jira?</p>
+        <p class="faq-a">Add a progress bar custom field via an app like <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a>, then add it as a list view column. Use the dashboard gadget with the JQL filter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">sprint in openSprints()</code> to see all sprint issues and an average completion percentage in one view.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I filter the dashboard gadget by sprint?</p>
+        <p class="faq-a">Yes. The Progress Tracker Overview gadget has an optional JQL filter field. Enter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">sprint in openSprints()</code> to limit the view to your current sprint's issues. The average progress bar at the top then reflects that sprint's overall completion, not the full project's.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have a built-in sprint health dashboard?</p>
+        <p class="faq-a">Jira's built-in Sprint Report shows completed vs remaining story points and a burndown chart, but does not show per-issue progress percentages or a visual completion indicator per ticket. An app that adds progress bar custom fields and a dashboard gadget fills that gap.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between a sprint health dashboard and Jira's Sprint Report?</p>
+        <p class="faq-a">The Sprint Report focuses on story points — how many were completed and how many remain. A sprint health dashboard focuses on progress at the issue level: how far along each ticket actually is, which ones are at risk, and what the average completion looks like across the sprint. Both views are useful and complement each other.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>See your sprint health in minutes</h3>
+        <p>Visual Progress Tracker adds color-coded progress to every Jira issue — and a dashboard gadget that gives you the full sprint picture at a glance. Free trial, no credit card required.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why Jira's sprint view isn't sprint health</a></li>
+          <li><a href="#what-is-sprint-health">What sprint health means</a></li>
+          <li><a href="#progress-bars">Progress bars: the missing layer</a></li>
+          <li><a href="#list-view">Sprint health in the list view</a></li>
+          <li><a href="#dashboard">The dashboard gadget</a></li>
+          <li><a href="#setup">Setting it up</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issue Progress Visually</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Tracking Epic Progress in Jira: The Subtask Approach</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

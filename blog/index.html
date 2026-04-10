@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Janek Behrens</title>
+  <meta name="description" content="Articles on building for Atlassian — Jira, Confluence, Forge, AI documentation, and productivity tips from an independent Atlassian developer.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "url": "https://janekbehrens.de/blog/",
+    "name": "Atlassian dev, explained",
+    "description": "Practical articles on building for Jira and Confluence — Forge, AI documentation, productivity patterns, and marketplace lessons.",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": [
+        "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+      ],
+      "publication": {
+        "@type": "ScholarlyArticle",
+        "url": "https://dl.gi.de/items/76deef09-2b36-4bfa-b62d-a473220e947d",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Gesellschaft für Informatik"
+        }
+      }
+    }
+  }
+  </script>
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .blog-hero {
+      padding: 64px 24px 52px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--white) 0%, var(--bg) 100%);
+    }
+    .blog-hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .blog-hero p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    .blog-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .blog-layout { grid-template-columns: 1fr; gap: 40px; }
+      .blog-sidebar { order: -1; }
+    }
+
+    /* ── Article list ── */
+    .post-list { list-style: none; padding: 0; }
+    .post-item {
+      border-bottom: 1px solid var(--border-2);
+      padding: 28px 0;
+    }
+    .post-item:first-child { padding-top: 0; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .post-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .tag-confluence { background: #E3FCEF; color: #006644; }
+    .tag-jira       { background: var(--blue-lite); color: var(--blue); }
+    .tag-atlassian  { background: #FFF7E6; color: #974F0C; }
+    .tag-forge      { background: #EAE6FF; color: #403294; }
+    .post-date { font-size: 0.8rem; color: var(--text-faint); }
+    .post-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.35;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .post-title:hover { color: var(--blue); }
+    .post-excerpt {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .post-readmore {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .post-readmore:hover { text-decoration: underline; }
+
+    /* Coming-soon overlay card */
+    .post-item.coming-soon { opacity: 0.55; pointer-events: none; }
+    .post-item.coming-soon .post-readmore {
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    /* ── Sidebar ── */
+    .blog-sidebar {}
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .sidebar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .sidebar-tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-card);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      text-decoration: none;
+    }
+    .sidebar-tag:hover { background: var(--blue-lite); color: var(--blue); border-color: #BAD6FB; }
+    .sidebar-apps { list-style: none; padding: 0; }
+    .sidebar-apps li { margin-bottom: 10px; }
+    .sidebar-apps a {
+      font-size: 0.88rem;
+      color: var(--text-3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-apps a:hover { color: var(--blue); }
+    .sidebar-apps img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      object-fit: contain;
+    }
+    .sidebar-about-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .sidebar-about-header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .sidebar-about-header-text { line-height: 1.3; }
+    .sidebar-about-header-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .sidebar-about-header-text a {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sidebar-about-header-text a:hover { color: var(--blue); }
+    .sidebar-about p {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .sidebar-about a { color: var(--blue); text-decoration: none; }
+    .sidebar-about a:hover { text-decoration: underline; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-2);
+      display: none;
+    }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 16px; opacity: 0.4; }
+    .empty-state h2 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .empty-state p { font-size: 0.9rem; line-height: 1.65; max-width: 360px; margin: 0 auto; }
+
+    /* ── Search & filter controls ── */
+    .blog-controls {
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .blog-search-wrap { position: relative; }
+    .blog-search {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 14px 9px 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s;
+      font-family: inherit;
+    }
+    .blog-search:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,82,204,0.1); }
+    .blog-search::placeholder { color: var(--text-faint); }
+    .blog-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      pointer-events: none;
+    }
+    .blog-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .sort-btn {
+      margin-left: auto;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all .15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .page-btn {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .page-btn:hover:not([disabled]) { border-color: var(--blue); color: var(--blue); }
+    .page-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .page-btn[disabled] { opacity: 0.35; cursor: default; }
+    .page-info { font-size: 0.8rem; color: var(--text-faint); margin-left: 6px; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Blog hero ── -->
+  <div class="blog-hero">
+    <div style="max-width:1000px;margin:0 auto;padding:0 24px;">
+      <span class="section-label" style="display:block;margin-bottom:10px;">Blog</span>
+      <h1>Atlassian dev, explained</h1>
+      <p>Practical articles on building for Jira and Confluence — Forge, AI documentation, productivity patterns, and marketplace lessons.</p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="blog-layout">
+
+    <!-- Article list -->
+    <main>
+
+      <!-- Search / filter / sort -->
+      <div class="blog-controls">
+        <div class="blog-search-wrap">
+          <svg class="blog-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" class="blog-search" id="blogSearch" placeholder="Search articles…" autocomplete="off">
+        </div>
+        <div class="blog-filter-row">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="jira">Jira</button>
+          <button class="filter-btn" data-filter="priorityscoring">Priority Scoring</button>
+          <button class="filter-btn" data-filter="confluence">Confluence</button>
+          <button class="filter-btn" data-filter="enterprise">Enterprise</button>
+          <button class="sort-btn" id="sortBtn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+            Newest first
+          </button>
+        </div>
+      </div>
+
+            <ul class="post-list" id="postList">
+      </ul>
+
+      <!-- Empty state (shown by JS when no results) -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔍</div>
+        <h2>No articles found</h2>
+        <p>Try a different search term or clear the filter to see all articles.</p>
+      </div>
+
+      <!-- Pagination (rendered by JS) -->
+      <div class="pagination" id="pagination"></div>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+
+      <div class="sidebar-block">
+        <h3>Topics</h3>
+        <div class="sidebar-tags">
+          <a href="#" class="sidebar-tag">Confluence</a>
+          <a href="#" class="sidebar-tag">Jira</a>
+          <a href="#" class="sidebar-tag">Forge</a>
+          <a href="#" class="sidebar-tag">AI</a>
+          <a href="#" class="sidebar-tag">Marketplace</a>
+          <a href="#" class="sidebar-tag">Documentation</a>
+        </div>
+      </div>
+
+      <div class="sidebar-block sidebar-about">
+        <h3>About the author</h3>
+        <div class="sidebar-about-header">
+          <img src="/img/janek-behrens.webp" alt="Janek Behrens" width="48" height="48">
+          <div class="sidebar-about-header-text">
+            <strong>Janek Behrens</strong>
+            <a href="https://www.linkedin.com/in/janek-behrens-55b3651b6/" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <p>
+          Cloud technology consultant and
+          independent Atlassian developer based in Germany.
+          Builds Forge-native apps — <a href="/codedoc-ai.html">CodeDoc AI</a> and
+          <a href="/visual-progress-tracker.html">Visual Progress Tracker</a> — for the Atlassian Marketplace.
+          Published researcher (Gesellschaft für Informatik).
+          <br><br>
+          <a href="/">All apps →</a>
+        </p>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Apps</h3>
+        <ul class="sidebar-apps">
+          <li>
+            <a href="/codedoc-ai.html">
+              <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" loading="lazy">
+              CodeDoc AI for Confluence
+            </a>
+          </li>
+          <li>
+            <a href="/visual-progress-tracker.html">
+              <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" loading="lazy">
+              Visual Progress Tracker for Jira
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js"></script>
+
+  <!-- ── Blog post list — loaded dynamically from posts.json ── -->
+  <script>
+  (function () {
+    var PER_PAGE = 8;
+    var currentFilter = 'all';
+    var currentSort   = 'desc';
+    var currentSearch = '';
+    var currentPage   = 1;
+
+    var list       = document.getElementById('postList');
+    var searchEl   = document.getElementById('blogSearch');
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var sortBtn    = document.getElementById('sortBtn');
+    var pagination = document.getElementById('pagination');
+    var emptyState = document.getElementById('emptyState');
+
+    var allItems = [];
+
+    function escHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function tagClass(tags) {
+      if (tags.indexOf('confluence') !== -1) return 'tag-confluence';
+      if (tags.indexOf('enterprise') !== -1) return 'tag-atlassian';
+      return 'tag-jira';
+    }
+
+    function buildItem(post) {
+      var li = document.createElement('li');
+      li.className = 'post-item';
+      li.dataset.tags = post.tags.join(' ');
+      li.dataset.date = post.date;
+      li.innerHTML =
+        '<div class="post-meta">' +
+          '<span class="post-tag ' + tagClass(post.tags) + '">' + escHtml(post.label) + '</span>' +
+          '<span class="post-date">' + escHtml(post.dateStr) + '</span>' +
+          '<span class="post-date">\u00b7 ' + post.readTime + ' min read</span>' +
+        '</div>' +
+        '<a href="/blog/' + escHtml(post.file) + '" class="post-title">' + escHtml(post.title) + '</a>' +
+        '<p class="post-excerpt">' + escHtml(post.description) + '</p>' +
+        '<a href="/blog/' + escHtml(post.file) + '" class="post-readmore">Read article \u2192</a>';
+      return li;
+    }
+
+    function textOf(item) {
+      var t = item.querySelector('.post-title');
+      var e = item.querySelector('.post-excerpt');
+      return ((t ? t.textContent : '') + ' ' + (e ? e.textContent : '')).toLowerCase();
+    }
+
+    function render() {
+      var visible = allItems.filter(function (item) {
+        var tags = item.dataset.tags || '';
+        var matchFilter = currentFilter === 'all' || tags.indexOf(currentFilter) !== -1;
+        var matchSearch = !currentSearch || textOf(item).indexOf(currentSearch) !== -1;
+        return matchFilter && matchSearch;
+      });
+
+      visible.sort(function (a, b) {
+        var da = a.dataset.date || '';
+        var db = b.dataset.date || '';
+        return currentSort === 'desc' ? db.localeCompare(da) : da.localeCompare(db);
+      });
+
+      var totalPages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      var start = (currentPage - 1) * PER_PAGE;
+      var slice = visible.slice(start, start + PER_PAGE);
+
+      allItems.forEach(function (item) { item.style.display = 'none'; });
+      slice.forEach(function (item) { item.style.display = ''; });
+
+      emptyState.style.display = visible.length === 0 ? '' : 'none';
+
+      pagination.innerHTML = '';
+      if (totalPages > 1) {
+        function makeBtn(label, page, disabled, active) {
+          var btn = document.createElement('button');
+          btn.className = 'page-btn' + (active ? ' active' : '');
+          btn.textContent = label;
+          if (disabled) btn.setAttribute('disabled', '');
+          if (!disabled) btn.addEventListener('click', function () {
+            currentPage = page;
+            render();
+            list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          return btn;
+        }
+        pagination.appendChild(makeBtn('\u2190', currentPage - 1, currentPage === 1, false));
+        for (var i = 1; i <= totalPages; i++) {
+          pagination.appendChild(makeBtn(String(i), i, false, i === currentPage));
+        }
+        pagination.appendChild(makeBtn('\u2192', currentPage + 1, currentPage === totalPages, false));
+        var info = document.createElement('span');
+        info.className = 'page-info';
+        info.textContent = visible.length + ' article' + (visible.length === 1 ? '' : 's');
+        pagination.appendChild(info);
+      }
+    }
+
+    function init(posts) {
+      list.innerHTML = '';
+      posts.forEach(function (post) {
+        var li = buildItem(post);
+        list.appendChild(li);
+        allItems.push(li);
+      });
+
+      searchEl.addEventListener('input', function () {
+        currentSearch = searchEl.value.trim().toLowerCase();
+        currentPage = 1;
+        render();
+      });
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          currentPage = 1;
+          render();
+        });
+      });
+
+      sortBtn.addEventListener('click', function () {
+        currentSort = currentSort === 'desc' ? 'asc' : 'desc';
+        sortBtn.innerHTML =
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M6 12h12M10 18h4"/></svg> ' +
+          (currentSort === 'desc' ? 'Newest first' : 'Oldest first');
+        currentPage = 1;
+        render();
+      });
+
+      render();
+    }
+
+    fetch('/blog/posts.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('posts.json ' + r.status);
+        return r.json();
+      })
+      .then(init)
+      .catch(function () {
+        list.innerHTML = '';
+        emptyState.style.display = '';
+      });
+
+  })();
+  </script>
+
+</body>
+</html>
