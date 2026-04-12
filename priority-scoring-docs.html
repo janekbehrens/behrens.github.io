@@ -980,41 +980,177 @@
       Already using a different RICE, WSJF, or ICE scoring tool? The <strong>Import</strong> tab lets you
       migrate existing scores into Priority Scoring automatically — without manually re-entering every value.
     </p>
+    <div class="warning">
+      <strong>Preview Feature:</strong> Score import is an early-access feature. It works best when your
+      previous app stored scores in numeric Jira custom fields with "RICE", "WSJF", or "ICE" in the field
+      name. Always verify a few issues after import before relying on the results.
+    </div>
 
     <img src="imgPriorityScorer/ImportFieldDataWithRovo.png" alt="Import tab showing 'Import Scores from Another App' heading with a description and a 'Scan for Existing Score Fields' button" class="screenshot" loading="lazy">
 
+    <h3>Step 1 — Enable the Import Feature</h3>
+    <p>
+      The import feature is disabled by default to prevent accidental overwrites. To unlock it, flip
+      the <strong>Enable Import Feature</strong> toggle at the top of the Import tab.
+    </p>
+    <p>
+      A confirmation dialog will appear explaining that this feature can overwrite existing Priority Scoring
+      field values. You need to actively confirm that you understand this before you can proceed.
+      Your preference is saved per user — once you have confirmed, you won't be asked again unless
+      you disable and re-enable the toggle.
+    </p>
+
     <div class="step-box">
-      <h3>How to Import Scores</h3>
+      <h3>Step 2 — Scan, Preview, and Confirm</h3>
       <ol>
-        <li>Open the <strong>Import</strong> tab in Priority Scoring.</li>
-        <li>Click <strong>Scan for Existing Score Fields</strong>. The app scans all custom fields in your Jira instance for fields containing "RICE", "WSJF", or "ICE" in their name that are <em>not</em> from Priority Scoring itself.</li>
-        <li>Review the detected fields — the app shows the framework, field name, field ID, and import type (<em>score-only</em> or <em>full</em>).</li>
-        <li>Select a project and click <strong>Import [Framework] Scores</strong>.</li>
-        <li>The app copies the source values into your Priority Scoring fields. Up to 200 issues per import run.</li>
+        <li>Open the <strong>Import</strong> tab and enable the feature with the toggle.</li>
+        <li>Click <strong>Scan for Existing Score Fields</strong>. Priority Scoring reads the list of all
+          custom fields in your Jira instance and looks for numeric fields containing "RICE", "WSJF", or
+          "ICE" in their name that belong to a <em>different</em> app — your Priority Scoring fields are
+          never shown as an import source.</li>
+        <li>Review the detected fields. Each card shows the framework, field name, and whether a
+          <em>score-only</em> or <em>full</em> import is available (see below).</li>
+        <li>Select the <strong>Target Project</strong> you want to import scores into.</li>
+        <li>Click <strong>Preview &amp; Import [Framework] Scores</strong>. Priority Scoring first runs a
+          <strong>dry run</strong> — it reads all open issues in the project and counts how many have a
+          source value, without writing anything yet.</li>
+        <li>A confirmation dialog shows you exactly what will happen: the project, the source field, how
+          many issues will be updated, and how many will be skipped (because they have no value in the
+          source field). It also shows a <strong>sample of the first 10 issues</strong> that will be
+          imported, including the source value for each — so you can verify that the right tickets are
+          being picked up before committing. Review this carefully.</li>
+        <li>Click <strong>Overwrite N issues — import now</strong> to run the actual import. Only then
+          are any values written.</li>
       </ol>
     </div>
 
+    <div class="warning">
+      <strong>Import is scoped to one project at a time.</strong> Each import run only affects the
+      single project you selected. Other projects are never touched.
+    </div>
+
+    <h3>Import Limits at a Glance</h3>
     <p>
-      You can also trigger an import via Rovo:
+      Priority Scoring only considers <strong>open (non-Done) issues</strong>. Issues with the
+      status category "Done" are always skipped automatically — even if a project has thousands of
+      closed tickets, only the active backlog counts.
+    </p>
+    <table style="width:100%;border-collapse:collapse;margin:1em 0;">
+      <thead>
+        <tr style="background:#f4f5f7;text-align:left;">
+          <th style="padding:10px 14px;border:1px solid #dfe1e6;">Open (non-Done) issues in project</th>
+          <th style="padding:10px 14px;border:1px solid #dfe1e6;">What happens</th>
+          <th style="padding:10px 14px;border:1px solid #dfe1e6;">Typical duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">Up to 100</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">All processed</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">A few seconds</td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">Up to 500</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">All processed</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">Up to ~20 seconds</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">More than 500</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">First 500 processed, rest skipped in this run</td>
+          <td style="padding:10px 14px;border:1px solid #dfe1e6;">Up to ~20 seconds</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The 500-issue limit keeps imports reliable and fast. In practice, most active projects have
+      far fewer than 500 open issues — and Done tickets, no matter how many, do not count towards
+      this limit at all.
     </p>
     <p>
-      <em>"Migrate my RICE scores from our old app to project SP"</em> — Rovo will detect available
-      fields, confirm the import with you, and apply the scores with a single confirmation step.
-      Requires Confirm or Auto mode.
+      When your project exceeds 500 open issues, Priority Scoring shows you exactly how many issues
+      won't be covered — for example: <em>"Only the first 500 of 1,234 open issues will be imported.
+      734 issues won't be covered in this run."</em> The confirmation dialog also includes a direct
+      link to contact support for a larger import.
     </p>
+    <div class="tip">
+      <strong>Need to import more than 500 issues?</strong><br>
+      <a href="mailto:support@janekbehrens.de?subject=Priority%20Scoring%20%E2%80%93%20Large%20Import%20Request&body=Hi%2C%0A%0AI%20need%20to%20import%20more%20than%20500%20issues%20into%20Priority%20Scoring.%0A%0AProject%3A%20%5Byour%20project%20name%20and%20key%5D%0AFramework%3A%20%5BRICE%20%2F%20WSJF%20%2F%20ICE%5D%0AOpen%20issues%20in%20project%3A%20%5Bnumber%5D%0A%0APlease%20advise%20on%20the%20best%20approach.%0A">
+        Contact support for a large import
+      </a>
+      — this opens a pre-filled email. We'll get back to you with the best approach for your project size.
+    </div>
+
+    <h3>What Gets Overwritten — and What Doesn't</h3>
+    <p>
+      Import <strong>only writes to Priority Scoring's own custom fields</strong> (e.g. the
+      "Priority Scoring — RICE" field). It is technically impossible for the import to write to any other
+      field in your Jira instance — the app identifies its own fields by a unique app identifier embedded
+      in the field metadata, not just by name. Any other app's fields, built-in Jira fields, or fields
+      from other Forge apps are completely off-limits.
+    </p>
+    <p>
+      What <em>will</em> be overwritten is any existing Priority Scoring value an issue already has for
+      the imported framework. If you have already scored some issues manually in Priority Scoring and then
+      run an import, those manual scores will be replaced by the imported values.
+    </p>
+
+    <h3>How Field Detection Works</h3>
+    <p>
+      The scanner reads all custom fields in your Jira instance and applies the following rules to decide
+      whether a field might be a RICE, WSJF, or ICE field from another app:
+    </p>
+    <ul>
+      <li>The field must be a <strong>numeric</strong> custom field.</li>
+      <li>The field name must contain <strong>"RICE"</strong>, <strong>"WSJF"</strong>,
+        <strong>"weighted shortest"</strong>, or <strong>"ICE"</strong>.</li>
+      <li>The field must <strong>not</strong> belong to Priority Scoring itself.</li>
+    </ul>
+    <p>
+      This is a name-based heuristic — it is not guaranteed to find every external scoring field, and
+      in rare cases it may surface a field that happens to match the pattern but is unrelated. This is
+      why the preview step exists: always check the field name shown in the confirmation dialog before
+      confirming the import.
+    </p>
+
+    <div class="tip">
+      <strong>Examples of fields that will be detected:</strong>
+      <ul>
+        <li>"RICE Score" ✓</li>
+        <li>"RICE Priority" ✓</li>
+        <li>"WSJF" ✓</li>
+        <li>"WSJF Score" ✓</li>
+        <li>"ICE Score" ✓</li>
+        <li>"RICE Reach", "RICE Impact", "RICE Confidence", "RICE Effort" ✓ (individual dimensions — full import)</li>
+      </ul>
+      <strong>Examples of fields that will NOT be detected:</strong>
+      <ul>
+        <li>"Priority Score" ✗ — no RICE/WSJF/ICE keyword</li>
+        <li>"Scoring Value" ✗ — no framework keyword</li>
+        <li>"Custom Prioritization" ✗ — no framework keyword</li>
+        <li>"ICE Cream Count" — would match "ICE", but the preview would immediately reveal the wrong field name so you can cancel safely</li>
+      </ul>
+      If your previous app used a custom field name that doesn't match these patterns, try using the
+      <strong>Rovo Agent</strong> instead — it can run a more flexible scan.
+    </div>
 
     <div class="tip">
       <strong>score-only vs. full import:</strong> If the source app stored only a composite score
       (one number), only that total is imported — the individual dimension values (Reach, Impact, etc.)
       won't be available and the Explain Score feature won't work for imported issues until you
-      re-score them with the sliders. If the source app stored separate dimension fields,
-      a <em>full</em> import captures those too.
+      re-score them with the sliders. If the source app stored separate dimension fields (e.g. "RICE Reach",
+      "RICE Impact"), Priority Scoring detects these automatically and runs a <em>full</em> import:
+      both the score and the individual dimension values are imported, and Explain Score works immediately.
     </div>
-    <div class="warning">
-      <strong>Field name recognition:</strong> The scanner detects fields whose names contain "RICE",
-      "WSJF", "weighted shortest", or "ICE". Fields with custom naming conventions that don't
-      include these terms won't be detected automatically.
-    </div>
+
+    <h3>Import via Rovo Agent</h3>
+    <p>
+      You can also trigger an import via the Rovo AI agent:
+    </p>
+    <p>
+      <em>"Migrate my RICE scores from our old app to project SP"</em> — Rovo will detect available
+      fields, confirm the import with you, and apply the scores. Requires Confirm or Auto mode in
+      the Rovo settings. The agent will always ask for your confirmation before writing anything.
+    </p>
 
     <!-- 13. Dashboard Gadget -->
     <h2 id="gadget">13. Board Health Dashboard Gadget</h2>
