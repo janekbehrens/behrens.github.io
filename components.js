@@ -48,6 +48,8 @@
     '      <span aria-hidden="true">&middot;</span>',
     '      <a href="/privacy-policy.html">Privacy Policy</a>',
     '      <span aria-hidden="true">&middot;</span>',
+    '      <a href="/datenschutz.html">Datenschutz</a>',
+    '      <span aria-hidden="true">&middot;</span>',
     '      <a href="/impressum.html">Impressum</a>',
     '    </nav>',
     '  </div>',
@@ -111,10 +113,25 @@
     }, { passive: true });
   }
 
+  function initYouTubeConsent() {
+    document.querySelectorAll('.yt-consent').forEach(function (el) {
+      el.querySelector('.yt-play-btn').addEventListener('click', function () {
+        var iframe = document.createElement('iframe');
+        iframe.src = el.dataset.src;
+        iframe.title = el.dataset.title || 'YouTube Video';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:8px;';
+        el.replaceWith(iframe);
+      });
+    });
+  }
+
   // Run immediately if DOM is ready, otherwise wait
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectComponents);
+    document.addEventListener('DOMContentLoaded', function () { injectComponents(); initYouTubeConsent(); });
   } else {
     injectComponents();
+    initYouTubeConsent();
   }
 })();

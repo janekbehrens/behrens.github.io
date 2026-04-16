@@ -259,7 +259,15 @@
 
     <!-- Video Introduction -->
     <div class="video-wrapper">
-      <iframe src="https://www.youtube-nocookie.com/embed/TGMBjKaMuM4" title="CodeDoc AI — Introduction Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <div class="yt-consent"
+           data-src="https://www.youtube-nocookie.com/embed/TGMBjKaMuM4?autoplay=1"
+           data-title="CodeDoc AI — Introduction Video">
+        <button class="yt-play-btn" aria-label="Load and play video">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <p class="yt-consent-label">Click to load video from YouTube (youtube-nocookie.com).<br>
+          <a href="/privacy-policy.html#youtube">Privacy Policy</a></p>
+      </div>
     </div>
 
     <!-- Table of Contents -->
