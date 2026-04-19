@@ -351,7 +351,9 @@ body {
 /* ── YouTube 2-click consent overlay ── */
 .yt-consent {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: #1a2840;
+  background-color: #1a2840;
+  background-size: cover;
+  background-position: center;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -359,7 +361,15 @@ body {
   justify-content: center;
   gap: 14px;
   cursor: pointer;
+  overflow: hidden;
 }
+.yt-consent::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 8px;
+}
+.yt-consent > * { position: relative; z-index: 1; }
 .yt-play-btn {
   width: 64px; height: 64px;
   border-radius: 50%;
