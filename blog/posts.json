@@ -1,5 +1,82 @@
 [
   {
+    "file": "atlassian-forge-vs-connect.html",
+    "title": "Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)",
+    "description": "Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "enterprise",
+      "forge"
+    ],
+    "label": "Enterprise · Forge",
+    "readTime": 7
+  },
+  {
+    "file": "best-jira-progress-tracking-apps.html",
+    "title": "Best Jira Progress Tracking Apps in 2026: An Honest Comparison",
+    "description": "Comparing the top Jira progress tracking apps in 2026 — from native fields to Forge-native visual trackers. Honest about trade-offs, including the weaknesses of each option.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "jira",
+      "forge"
+    ],
+    "label": "Jira · Forge",
+    "readTime": 8
+  },
+  {
+    "file": "jira-custom-priority-scoring-weights.html",
+    "title": "Custom Priority Scoring in Jira: Adjust Dimension Weights for Your Team (2026)",
+    "description": "Standard RICE weights don't fit every team. Learn how to customize RICE, WSJF, and ICE dimension weights (×1–×5) in Jira — no scripting, live-preview score, no spreadsheets.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 9
+  },
+  {
+    "file": "jira-priority-ranking.html",
+    "title": "Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026)",
+    "description": "Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 8
+  },
+  {
+    "file": "jira-progress-no-code.html",
+    "title": "No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026)",
+    "description": "You don't need JQL, ScriptRunner, or a Jira admin to add progress tracking to your issues. Here's how to set up automatic, visual progress tracking in Jira in under 2 minutes — no code required.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 7
+  },
+  {
+    "file": "jira-project-documentation.html",
+    "title": "How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026)",
+    "description": "Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so your project documentation writes itself and stays current automatically.",
+    "date": "2026-04-21",
+    "dateStr": "April 21, 2026",
+    "tags": [
+      "confluence",
+      "jira"
+    ],
+    "label": "Confluence · Jira",
+    "readTime": 8
+  },
+  {
     "file": "jira-backlog-grooming-checklist.html",
     "title": "Jira Backlog Grooming Checklist for Product Owners (2026)",
     "description": "A 12-point Jira backlog grooming checklist for Product Owners and Scrum Masters — covering story points, acceptance criteria, priority scores, stale issues, and more. Ready to copy and use.",

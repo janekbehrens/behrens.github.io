@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026) | Janek Behrens</title>
+  <meta name="description" content="Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so your project documentation writes itself and stays current automatically.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-project-documentation.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026)",
+    "description": "Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so your project documentation writes itself and stays current automatically.",
+    "url": "https://janekbehrens.de/blog/jira-project-documentation.html",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgCodeDoc/DashboardFull.png",
+    "keywords": ["jira project documentation", "confluence documentation automation", "jira confluence integration", "atlassian documentation best practices", "codedoc ai"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026)",
+    "description": "Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so project documentation writes itself and stays current.",
+    "image": "https://janekbehrens.de/imgCodeDoc/DashboardFull.png",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": { "@type": "ImageObject", "url": "https://janekbehrens.de/img/companyLogo.png" }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-project-documentation.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I automatically document a Jira project in Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most effective approach combines three layers: (1) Jira Automation rules that create or update linked Confluence pages when issue status changes — for sprint summaries and release notes; (2) native Jira-Confluence linking to embed live issue macros in project pages; and (3) AI-powered documentation tools like CodeDoc AI for Confluence to auto-generate technical documentation from code repositories linked to your Jira project."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I link Jira issues to Confluence pages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Jira Cloud, open an issue, scroll to the 'Confluence Pages' section, and click 'Link Confluence Page'. You can link to an existing page or create a new one. The linked page appears on the issue and vice versa. In Confluence, you can embed a live Jira Issues macro that shows all issues from a project or filter — it updates automatically without editing the Confluence page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best way to keep Confluence documentation up to date with Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use a combination of live macros (Jira Issues macro in Confluence pulls issue data in real time) and automation triggers (Jira Automation creates or updates Confluence pages on sprint close or version release). For code documentation, tools like CodeDoc AI for Confluence auto-generate technical pages from code changes, triggered by GitHub or GitLab webhooks. This eliminates the main cause of documentation rot: waiting for engineers to manually update pages."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026)">
+  <meta property="og:description" content="Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so documentation writes itself and stays current.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-project-documentation.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/DashboardFull.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-21">
+  <meta property="article:modified_time" content="2026-04-21">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Documentation">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Document a Jira Project Automatically (2026)">
+  <meta name="twitter:description" content="Connect Jira to Confluence so sprint summaries, release notes, and code documentation write themselves — no manual updates.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/DashboardFull.png">
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px;
+      gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: var(--blue-lite); color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px; background: var(--blue); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .layer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px; margin: 20px 0;
+    }
+    .layer-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .layer-card-num {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-faint); margin-bottom: 6px;
+    }
+    .layer-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .layer-card-desc { font-size: 0.83rem; color: var(--text-3); line-height: 1.55; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence</span>
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#F4F5F7;color:var(--text-2);">Documentation</span>
+        <span class="article-date">April 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>How to Document a Jira Project Automatically: From Manual Updates to Living Docs</h1>
+      <p class="article-intro">
+        The problem isn't that teams don't document. It's that documentation requires someone to remember to write it — and no one has time. The solution is removing "remember" from the equation: documentation that generates itself from the events that are already happening in your Jira project.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="the-problem">Why Jira projects go undocumented</h2>
+      <p>
+        In most engineering teams, Jira is where work lives — tickets, epics, sprints, history. Confluence is where documentation is supposed to live — architecture decisions, runbooks, API references, onboarding guides. The gap between the two is where knowledge goes to die.
+      </p>
+      <p>
+        Engineers close Jira tickets. Nobody updates the Confluence page. Three months later, a new team member reads the "current architecture" doc and works from assumptions that broke in sprint 14. Every team that uses both tools has experienced this.
+      </p>
+      <p>
+        The root cause isn't neglect — it's friction. Updating documentation is always optional in the moment when a ticket is closed. It requires opening a second tool, finding the right page, and writing context that feels repetitive when the Jira ticket already describes what changed. Automation removes that friction by triggering documentation events from the work events that are already happening.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Three layers of automation create self-maintaining Jira project documentation: (1) native Jira–Confluence linking for live issue embeds, (2) Jira Automation rules for sprint summaries and release notes, and (3) AI-powered code documentation tools for technical references that update on every code push.</p>
+      </div>
+
+      <h2 id="three-layers">The three documentation layers</h2>
+
+      <div class="layer-grid">
+        <div class="layer-card">
+          <div class="layer-card-num">Layer 1</div>
+          <div class="layer-card-title">Live issue embeds</div>
+          <div class="layer-card-desc">Confluence's Jira Issues macro shows live issue data inline in any page — no manual updates needed. The macro always reflects current status.</div>
+        </div>
+        <div class="layer-card">
+          <div class="layer-card-num">Layer 2</div>
+          <div class="layer-card-title">Automation-triggered pages</div>
+          <div class="layer-card-desc">Jira Automation rules create or update Confluence pages when a sprint completes or a version is released — sprint summaries and release notes without a single manual step.</div>
+        </div>
+        <div class="layer-card">
+          <div class="layer-card-num">Layer 3</div>
+          <div class="layer-card-title">AI-generated code docs</div>
+          <div class="layer-card-desc">CodeDoc AI watches your GitHub or GitLab repository and regenerates technical documentation in Confluence on every push. Architecture references, API docs, and READMEs — always current.</div>
+        </div>
+      </div>
+
+      <p>
+        Most teams need all three. Layer 1 takes 5 minutes to set up and solves "what's the current status?" Layer 2 takes 30 minutes and solves "what changed this sprint?" Layer 3 takes an hour to configure and solves "what does this codebase actually do?"
+      </p>
+
+      <h2 id="layer1">Layer 1 — Live issue macros in Confluence</h2>
+      <p>
+        The Jira Issues macro (built into Confluence Cloud) lets you embed a live issue table on any Confluence page. The table pulls from a JQL query and refreshes automatically — no editing the Confluence page when new tickets are added or statuses change.
+      </p>
+      <p>
+        A minimal project documentation page might contain:
+      </p>
+      <ul>
+        <li>A Jira Issues macro filtered to <code>project = PROJ AND status != Done ORDER BY created DESC</code> — shows active backlog at a glance</li>
+        <li>A second macro showing open bugs: <code>project = PROJ AND issuetype = Bug AND status != Done</code></li>
+        <li>A third macro for the current sprint: <code>project = PROJ AND sprint in openSprints()</code></li>
+      </ul>
+      <p>
+        The result: a Confluence page that's always current without anyone touching it. Engineers and stakeholders open the page and see the live state of the project — not a snapshot from two weeks ago.
+      </p>
+
+      <h3 id="linking">Linking specific Jira issues to Confluence pages</h3>
+      <p>
+        For individual complex features, link the Jira issue directly to its specification page in Confluence. In Jira, open the issue and use the Confluence Pages section to link or create a page. The link appears on the issue (visible to anyone looking at the ticket) and in Confluence (showing which Jira issue this page relates to).
+      </p>
+      <p>
+        When an engineer opens a Jira ticket for a feature they're implementing, the linked spec is one click away. When a PM opens the Confluence spec, they can see the current issue status without switching tools.
+      </p>
+
+      <h2 id="layer2">Layer 2 — Automation-triggered sprint summaries</h2>
+      <p>
+        Jira Automation can create or update a Confluence page when a sprint completes. A simple rule looks like this:
+      </p>
+      <ul>
+        <li><strong>Trigger:</strong> Sprint completed</li>
+        <li><strong>Action:</strong> Create Confluence page in the project space with the sprint name as the title</li>
+        <li><strong>Content template:</strong> Completed issues (from smart values), started-but-not-finished issues, sprint dates</li>
+      </ul>
+      <p>
+        After initial setup, every sprint close automatically creates a documented sprint summary in Confluence — without anyone needing to remember to write it. After six months, you have a complete history of what shipped and when.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Common mistake:</strong> Trying to make automation-generated pages too rich. Start with a simple template: sprint name, dates, completed issue list, incomplete issue list. Resist the urge to add velocity charts or analysis until the basic automation is running reliably. A simple summary that exists is better than a perfect summary that never runs.</p>
+      </div>
+
+      <h2 id="layer3">Layer 3 — AI-generated code documentation with CodeDoc AI</h2>
+      <p>
+        The hardest documentation problem for engineering teams isn't sprint summaries — it's technical documentation. Architecture diagrams, API references, data model descriptions, onboarding guides. These require writing skills, technical accuracy, and recency. They're also the most expensive to produce manually and the most likely to go stale.
+      </p>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> connects your GitHub or GitLab repository to Confluence and generates technical documentation automatically. On every push to a configured branch, the app reads the changed files, generates documentation using your configured presets, and updates the corresponding Confluence page.
+      </p>
+      <p>
+        The result: your "codebase overview" Confluence page regenerates every time the code changes. Engineers don't have to remember to update documentation — the documentation follows the code.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/DashboardFull.png" alt="CodeDoc AI for Confluence dashboard showing documentation jobs, generation history, and repository connections" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">CodeDoc AI dashboard — documentation jobs connect your GitHub repository to Confluence pages, triggered automatically on each push</p>
+      </div>
+
+      <h3 id="codedoc-setup">Setting up GitHub-to-Confluence documentation</h3>
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install CodeDoc AI for Confluence from the Marketplace.</strong> It's a Forge app — no external servers, runs inside Atlassian infrastructure.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Connect your GitHub or GitLab repository.</strong> Add a personal access token with read access to the repo. CodeDoc AI reads your repository files — it never writes to your repo.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Configure a documentation job.</strong> Select which files to include (e.g., <code>src/**/*.ts</code>), choose a documentation preset (codebase overview, API reference, README), and select the target Confluence page where the output should be written.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Set the trigger.</strong> Run on-demand for the first generation, then enable the webhook trigger so the documentation regenerates automatically on every push to your main branch.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Review and refine the output.</strong> Read the first generated page and check the preset configuration. Common adjustments: narrowing the file selection to exclude test files, adding a custom prompt to focus on a specific aspect of the codebase (e.g., "document the public API surface only").</div>
+        </li>
+      </ol>
+
+      <p>
+        For a full walkthrough with screenshots, see <a href="/blog/confluence-documentation-github.html">How to Auto-Generate Confluence Documentation from GitHub</a>.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgCodeDoc/Jobs.png" alt="CodeDoc AI jobs list showing configured documentation jobs with repository, target Confluence page, and last generation status" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">CodeDoc AI jobs — each job connects one or more repository paths to a Confluence page, with configurable trigger settings</p>
+      </div>
+
+      <h2 id="page-structure">Recommended Confluence structure for a Jira project</h2>
+      <p>
+        A well-organized project space in Confluence mirrors the natural structure of a Jira project. One space per team or product area, with sub-pages for:
+      </p>
+      <ul>
+        <li><strong>Project overview</strong> — live Jira Issues macro + key decisions and goals (human-written, rarely changes)</li>
+        <li><strong>Architecture &amp; codebase</strong> — AI-generated by CodeDoc AI, updates automatically</li>
+        <li><strong>Sprint history</strong> — one sub-page per sprint, auto-created by Jira Automation on sprint close</li>
+        <li><strong>Decisions</strong> — Architecture Decision Records (ADRs), manually written, lightweight format</li>
+        <li><strong>Runbooks</strong> — operational guides, maintained by engineers, linked from relevant Jira issue types</li>
+      </ul>
+      <p>
+        The key insight is that layers 1–3 handle the pages that need to stay current automatically. Human-written pages (decisions, runbooks) can stay manual because they change rarely and require judgment that automation can't provide.
+      </p>
+
+      <h2 id="ai-byok">Keeping code documentation private: BYOK AI</h2>
+      <p>
+        For teams in regulated industries, sending source code to an AI provider is a significant privacy consideration. CodeDoc AI supports Bring Your Own Key (BYOK) — you configure your own OpenAI or Anthropic API key in the app settings, so your code is processed under your own organization's agreement with the AI provider, not a shared vendor key.
+      </p>
+      <p>
+        For a detailed breakdown of why this matters for enterprise and compliance teams, see <a href="/blog/byok-ai-atlassian.html">BYOK AI for Atlassian: What It Means and Why It Matters</a>.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I automatically document a Jira project in Confluence?</p>
+        <p class="faq-a">Combine three layers: (1) Confluence's Jira Issues macro for live issue embeds in project pages; (2) Jira Automation rules that create sprint summary pages on sprint close; and (3) AI-powered code documentation with <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> to generate technical documentation from your GitHub or GitLab repository automatically on every push.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I link Jira issues to Confluence pages?</p>
+        <p class="faq-a">In Jira Cloud, open an issue and scroll to the Confluence Pages section. Click "Link Confluence Page" to attach an existing page, or create a new one. In Confluence, use the Jira Issues macro to embed a live table of issues filtered by project, sprint, or any JQL query — the table stays current without editing the page.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the best way to keep Confluence documentation up to date with Jira?</p>
+        <p class="faq-a">The most reliable approach removes humans from the update loop wherever possible. Live Jira macros update automatically. Sprint summary pages are created by automation. Code documentation is regenerated by <a href="/blog/automate-confluence-documentation.html">CodeDoc AI on every code push</a>. Human-written pages (decisions, runbooks) change slowly and can stay manual. The goal is that the pages most at risk of going stale — status, architecture, API references — never require a manual update.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Auto-generate Confluence docs from your code repository</h3>
+        <p>CodeDoc AI for Confluence — AI-powered documentation from GitHub and GitLab, triggered on every push. Forge-native. Free trial included.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#the-problem">Why projects go undocumented</a></li>
+          <li><a href="#three-layers">Three documentation layers</a></li>
+          <li><a href="#layer1">Layer 1 — Live issue macros</a></li>
+          <li><a href="#linking">Linking issues to pages</a></li>
+          <li><a href="#layer2">Layer 2 — Sprint summaries</a></li>
+          <li><a href="#layer3">Layer 3 — AI code docs</a></li>
+          <li><a href="#codedoc-setup">CodeDoc AI setup</a></li>
+          <li><a href="#page-structure">Recommended Confluence structure</a></li>
+          <li><a href="#ai-byok">BYOK for private code</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/codedoc-ai-icon.webp" alt="CodeDoc AI for Confluence" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">GitHub · GitLab · BYOK · Forge</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related articles</h3>
+        <a href="/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Auto-Generate Confluence Docs from GitHub</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Automating Confluence Documentation: CI/CD Guide</a>
+        <a href="/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">BYOK AI for Atlassian: Why It Matters</a>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">AI Documentation for Atlassian Teams</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

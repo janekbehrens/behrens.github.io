@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026) | Janek Behrens</title>
+  <meta name="description" content="You don't need JQL, ScriptRunner, or a Jira admin to add progress tracking to your issues. Here's how to set up automatic, visual progress tracking in Jira in under 2 minutes — no code required.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-progress-no-code.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026)",
+    "description": "You don't need JQL, ScriptRunner, or a Jira admin to add progress tracking to your issues. Set up automatic, visual progress tracking in Jira in under 2 minutes — no code required.",
+    "url": "https://janekbehrens.de/blog/jira-progress-no-code.html",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/progress-closeup.png",
+    "keywords": ["jira progress no-code", "jira progress tracking without scripting", "jira progress bar no admin", "visual progress jira", "jira no-code"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026)",
+    "description": "You don't need JQL, ScriptRunner, or a Jira admin to add progress tracking to your issues. Set up automatic, visual progress tracking in Jira in under 2 minutes — no code required.",
+    "image": "https://janekbehrens.de/img/progress-closeup.png",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": { "@type": "ImageObject", "url": "https://janekbehrens.de/img/companyLogo.png" }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-progress-no-code.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I add a progress bar to Jira without scripting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install Visual Progress Tracker for Jira from the Atlassian Marketplace. The app adds a custom field with a color-coded progress bar that is automatically calculated from subtask or child issue status. No JQL, no ScriptRunner, no Automation rules. Setup takes under 2 minutes: install, add the field to your project screen, and the bar appears on every issue that has subtasks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Jira have no-code progress tracking?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira Cloud includes basic sprint burndown charts and an Epic-level progress indicator, but neither requires configuration. For a visual percentage bar on individual issues — updated automatically as subtasks are completed — you need a Marketplace app. Visual Progress Tracker for Jira is a no-code option: install it, add the field, and it works automatically with zero configuration beyond that."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between manual and automatic progress tracking in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Manual progress tracking uses a Number field that team members update by typing a percentage — which requires discipline and tends to fall out of date. Automatic progress tracking calculates the percentage from objective data: the ratio of completed subtasks to total subtasks, or the status of child issues. Automatic tracking requires zero team discipline to maintain because the bar updates itself when subtask statuses change."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026)">
+  <meta property="og:description" content="You don't need JQL, ScriptRunner, or a Jira admin. Set up visual progress tracking in Jira in under 2 minutes — no code, no admin overhead.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-progress-no-code.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/progress-closeup.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-21">
+  <meta property="article:modified_time" content="2026-04-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Progress Tracking">
+  <meta property="article:tag" content="No-Code">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="No-Code Progress Tracking for Jira: No Scripts, No Admin, 2 Minutes">
+  <meta name="twitter:description" content="Add visual progress bars to every Jira issue — automatically calculated from subtasks, no JQL or scripting required.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/progress-closeup.png">
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px;
+      gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: var(--blue-lite); color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px; background: var(--blue); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .option-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0; border-top: 1px solid var(--border-2);
+    }
+    .option-row:first-of-type { border-top: none; }
+    .option-icon {
+      width: 36px; height: 36px; border-radius: 8px; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; background: #F4F5F7;
+    }
+    .option-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .option-desc { font-size: 0.88rem; color: var(--text-3); line-height: 1.6; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">No-Code</span>
+        <span class="article-date">April 21, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script</h1>
+      <p class="article-intro">
+        Most guides to Jira progress tracking assume you have a Jira admin, time to write Automation rules, or budget for ScriptRunner. This one doesn't. Here's how to add automatic, visual progress tracking to your Jira issues in under two minutes — no code, no admin, no ongoing maintenance.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="why-no-code">Why no-code matters for Jira progress tracking</h2>
+      <p>
+        Jira is a powerful tool, but it comes with a reputation: "to do anything interesting, you need a Jira admin." Progress tracking often falls into this trap. The DIY approach — create a Number custom field, write an Automation rule that updates it when subtasks transition, test edge cases, maintain it when your workflow changes — can easily become a part-time job.
+      </p>
+      <p>
+        The result is that most teams either live with Jira's basic Epic progress indicator (which only works at the Epic level) or they skip progress tracking entirely and rely on verbal status updates in standups. Neither is scalable.
+      </p>
+      <p>
+        No-code progress tracking means: install an app, add a field to your project screen, done. The bar calculates itself from your existing subtasks. No rules to write. No formulas to maintain. No admin expertise required.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Install <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> from the Atlassian Marketplace. Add the field to your screen. Progress bars appear automatically on every issue that has subtasks — calculated from subtask status, with no further configuration needed.</p>
+      </div>
+
+      <h2 id="three-approaches">Three no-code progress field types</h2>
+      <p>
+        Visual Progress Tracker offers three modes — you pick the one that fits how your team works. All three are configured through a UI, not through code.
+      </p>
+
+      <div class="option-row">
+        <div class="option-icon">🔄</div>
+        <div>
+          <div class="option-title">Status-based (automatic)</div>
+          <div class="option-desc">Progress is calculated from the issue's own status transitions. An issue in "To Do" = 0%, "In Progress" = 50%, "Done" = 100%. You define which statuses map to which percentages in a simple UI — no JQL. Works for any issue type, including epics and stories.</div>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-icon">✅</div>
+        <div>
+          <div class="option-title">Subtask-based (automatic)</div>
+          <div class="option-desc">Progress is calculated as the ratio of completed subtasks to total subtasks. 3 of 5 subtasks done = 60%. The bar updates automatically every time a subtask status changes — no human input needed. Most useful for stories and epics that have multiple subtasks or child issues.</div>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-icon">✏️</div>
+        <div>
+          <div class="option-title">Manual percentage</div>
+          <div class="option-desc">Team members type a percentage (0–100) directly into the field on the issue. Useful for issues where subtask tracking isn't practical — long-running tasks, research work, or issues tracked in a different tool. Requires team discipline to stay current.</div>
+        </div>
+      </div>
+
+      <p>
+        The subtask-based mode is the most valuable for most teams — because it requires zero ongoing discipline. The bar just works. Team members do what they already do (transition subtask statuses), and the progress updates itself.
+      </p>
+
+      <h2 id="setup">Setup in under 2 minutes</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Visual Progress Tracker from the Atlassian Marketplace.</strong> Search "Visual Progress Tracker" in Marketplace and install to your Jira Cloud site. The free trial gives you full access.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Add the Progress field to your project screen.</strong> Go to <em>Jira Settings → Work Items → Screens</em>, find the screen for your project, and add the "Progress" field from Visual Progress Tracker. This is the only admin step required — and it's three clicks.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Choose your tracking mode.</strong> In the app settings, select Status-based, Subtask-based, or Manual for each project. If you're unsure, start with Subtask-based — it requires the least ongoing effort from your team.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Open any issue with subtasks.</strong> The progress bar appears immediately — color-coded green/yellow/red based on the percentage. In the list view, you'll see the bar in the column alongside your other fields.</div>
+        </li>
+      </ol>
+
+      <div class="diagram">
+        <img src="../img/progress-closeup.png" alt="Close-up of a Jira issue showing a color-coded progress bar automatically calculated from subtask status — Visual Progress Tracker for Jira" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Progress bar on a Jira issue — green/yellow/red, automatically calculated from subtask status</p>
+      </div>
+
+      <h2 id="list-view">Progress in the Jira list view</h2>
+      <p>
+        The real power of no-code progress tracking appears when you add the Progress field as a column in your project's list view. Instead of opening each issue individually to check the bar, you see the color-coded percentage for every issue at a glance — in the same view as issue key, summary, assignee, and sprint.
+      </p>
+      <p>
+        This turns a list of issues into a progress dashboard without any extra configuration. At a sprint planning meeting, sort by progress ascending to see which issues are furthest behind. In a daily standup, the list view shows at a glance what's red without anyone having to open a ticket.
+      </p>
+
+      <div class="diagram">
+        <img src="../img/listview.png" alt="Jira list view showing a progress bar column with color-coded percentages for each issue — Visual Progress Tracker for Jira" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Progress column in the Jira list view — color-coded bars for every issue, no clicks required to check status</p>
+      </div>
+
+      <h2 id="epic-progress">Epic progress tracking without extra setup</h2>
+      <p>
+        When you add the Progress field to Epics as well as Stories, you get epic-level progress calculated from child story completion — without any additional configuration. An epic with 4 of 8 stories done shows 50%. As stories close, the epic bar updates automatically.
+      </p>
+      <p>
+        This replaces the native Epic progress indicator (which shows raw counts like "4/8 stories") with a visual percentage that's immediately readable at a glance. For a deeper look at epic tracking approaches, see <a href="/blog/jira-epic-progress-tracking.html">Tracking Epic Progress in Jira: The Subtask Approach</a>.
+      </p>
+
+      <h2 id="sprint-gadget">Sprint progress in the dashboard</h2>
+      <p>
+        Visual Progress Tracker also includes a dashboard gadget that shows the overall progress of the current sprint — a summary bar across all issues, with a breakdown by status category. No-code setup: add the gadget to any Jira dashboard, select your board, and the sprint overview appears.
+      </p>
+      <p>
+        For a full guide to sprint-level visibility, see <a href="/blog/jira-sprint-health-dashboard.html">How to Build a Sprint Health Dashboard in Jira</a>.
+      </p>
+
+      <h2 id="vs-scripting">No-code vs. scripting: what you give up</h2>
+      <p>
+        There are things scripting-based progress tracking can do that no-code can't. If you need progress calculated from story points (weighted by points, not issue count), or from custom field values that aren't standard Jira fields, scripting gives you more flexibility.
+      </p>
+      <p>
+        For the vast majority of teams, issue count is a perfectly adequate proxy. "3 of 5 subtasks done" is meaningful and accurate. The no-code approach works immediately and stays working as the team grows. See the full comparison in <a href="/blog/jira-progress-no-scripting.html">Jira Progress Tracking Without Scripting or Complex Custom Fields</a>.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Bottom line:</strong> If you're spending more than 10 minutes setting up progress tracking in Jira, you're overcomplicating it. Install Visual Progress Tracker, add the field to your screen, choose subtask-based mode, and move on to shipping product.</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I add a progress bar to Jira without scripting?</p>
+        <p class="faq-a">Install <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> from the Atlassian Marketplace. Add the custom field to your project screen. The bar appears automatically on issues with subtasks — calculated from subtask status. No JQL, no ScriptRunner, no Automation rules needed.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have no-code progress tracking?</p>
+        <p class="faq-a">Jira Cloud includes basic burndown charts and an Epic progress indicator. For a visual percentage bar on individual issues — updated automatically as subtasks complete — a Marketplace app is needed. Visual Progress Tracker for Jira is a no-code option: zero configuration beyond installing and adding the field to your screen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between manual and automatic progress tracking in Jira?</p>
+        <p class="faq-a">Manual tracking uses a Number field that team members update themselves — requires discipline, tends to fall out of date. Automatic tracking calculates progress from existing Jira data (subtask statuses or issue status transitions). Automatic is always preferred because it requires zero team discipline to maintain.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is Visual Progress Tracker for Jira safe for enterprise use?</p>
+        <p class="faq-a">Yes. Visual Progress Tracker is an Atlassian Forge app — it runs entirely within Atlassian's own infrastructure ("Runs on Atlassian" badge). No data passes through external servers. For enterprise teams with data residency or compliance requirements, see <a href="/blog/atlassian-forge-vs-connect.html">Forge vs. Connect: Which Is More Secure?</a></p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Add progress bars to every Jira issue — in 2 minutes</h3>
+        <p>Visual Progress Tracker for Jira — automatic subtask-based progress bars, list view column, sprint dashboard gadget. Forge-native. Free trial included.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#why-no-code">Why no-code matters</a></li>
+          <li><a href="#three-approaches">Three field types</a></li>
+          <li><a href="#setup">Setup in 2 minutes</a></li>
+          <li><a href="#list-view">Progress in list view</a></li>
+          <li><a href="#epic-progress">Epic progress tracking</a></li>
+          <li><a href="#sprint-gadget">Sprint gadget</a></li>
+          <li><a href="#vs-scripting">No-code vs. scripting</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.webp" alt="Visual Progress Tracker for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">No-code · Auto-calculated · Forge</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related articles</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issues Visually</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Tracking Epic Progress in Jira</a>
+        <a href="/blog/jira-progress-no-scripting.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Without Scripting or Custom Fields</a>
+        <a href="/blog/best-jira-progress-tracking-apps.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Best Jira Progress Tracking Apps 2026</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

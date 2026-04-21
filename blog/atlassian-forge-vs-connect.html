@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Atlassian Forge vs Connect Apps: Which Is More Secure? (2026) | Janek Behrens</title>
+  <meta name="description" content="Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/atlassian-forge-vs-connect.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)",
+    "description": "Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.",
+    "url": "https://janekbehrens.de/blog/atlassian-forge-vs-connect.html",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/companyLogo.png",
+    "keywords": ["atlassian forge vs connect", "forge app security", "atlassian forge GDPR", "runs on atlassian", "atlassian connect security", "atlassian marketplace security"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)",
+    "description": "Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.",
+    "image": "https://janekbehrens.de/img/companyLogo.png",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": { "@type": "ImageObject", "url": "https://janekbehrens.de/img/companyLogo.png" }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/atlassian-forge-vs-connect.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Atlassian Forge and Connect apps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Atlassian Forge apps run entirely within Atlassian's own cloud infrastructure — no external servers, no data leaving the Atlassian platform. Connect apps run on external servers hosted by the app vendor — Jira sends data to the vendor's infrastructure when the app is used. Forge apps have stronger security and data residency guarantees; Connect apps offer more flexibility for developers but require trust in the vendor's infrastructure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are Forge apps GDPR compliant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Atlassian states that Forge, as part of the Atlassian Platform, has completed ISO 27001 and SOC 2 evaluation processes and that contractual, technical, and organizational measures are in place to help ensure Forge complies with GDPR. Because Forge apps run inside Atlassian's infrastructure, they inherit Atlassian's data processing agreements and residency commitments. Connect apps are governed by separate DPAs with each individual vendor."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'Runs on Atlassian' mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "'Runs on Atlassian' is the official badge awarded to Atlassian Forge apps on the Marketplace. It indicates that the app runs entirely within Atlassian's cloud — Atlassian-hosted compute, Atlassian-managed storage, Atlassian data residency. No customer data is sent to third-party servers. Enterprise procurement teams often require this badge as a baseline for apps approved for internal use."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will Atlassian Connect apps stop working?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Atlassian has phased out new Connect app listings on the Marketplace from September 2025. Existing Connect apps continue to work, but Atlassian has announced plans to eventually sunset Connect in favor of Forge. Enterprise teams evaluating new apps should prefer Forge-native options to avoid future migration risk."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)">
+  <meta property="og:description" content="Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. What the security difference means for enterprise Atlassian admins.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/atlassian-forge-vs-connect.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-21">
+  <meta property="article:modified_time" content="2026-04-21">
+  <meta property="article:tag" content="Atlassian Forge">
+  <meta property="article:tag" content="Security">
+  <meta property="article:tag" content="Enterprise">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)">
+  <meta name="twitter:description" content="Forge runs inside Atlassian. Connect runs on external servers. What that means for your data, GDPR compliance, and enterprise security posture.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/companyLogo.png">
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px;
+      gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: var(--blue-lite); color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .comparison-table {
+      width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 0.85rem;
+    }
+    .comparison-table thead th {
+      background: #F4F5F7; color: var(--text-faint); font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 9px 12px; text-align: left; border: 1px solid var(--border);
+    }
+    .comparison-table tbody td {
+      padding: 9px 12px; border: 1px solid var(--border-2);
+      color: var(--text-3); vertical-align: top;
+    }
+    .comparison-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .comparison-table strong { color: var(--text); }
+    .check { color: #006644; font-weight: 700; }
+    .cross { color: #BF2600; font-weight: 700; }
+    .partial { color: #974F00; }
+    .arch-box {
+      background: #F4F5F7; border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin: 20px 0;
+    }
+    .arch-box h4 { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .arch-flow {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-size: 0.85rem; color: var(--text-3);
+    }
+    .arch-node {
+      background: #fff; border: 1px solid var(--border); border-radius: 6px;
+      padding: 6px 12px; font-weight: 600; color: var(--text); white-space: nowrap;
+    }
+    .arch-arrow { color: var(--text-faint); font-size: 1rem; }
+    .arch-node.external { border-color: #FF8B00; color: #974F00; background: #FFFAE6; }
+    .arch-node.atlassian { border-color: #00875A; color: #006644; background: #E3FCEF; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .timeline-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 12px 0; border-top: 1px solid var(--border-2);
+    }
+    .timeline-item:first-of-type { border-top: none; }
+    .timeline-date {
+      font-size: 0.78rem; font-weight: 700; color: var(--blue);
+      background: var(--blue-lite); padding: 3px 8px; border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .timeline-text { font-size: 0.9rem; color: var(--text-3); line-height: 1.6; }
+    .timeline-text strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Enterprise</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Security</span>
+        <span class="article-date">April 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>Atlassian Forge vs Connect Apps: Which Is More Secure?</h1>
+      <p class="article-intro">
+        When your security team asks "where does this app store our Jira data?", the answer depends entirely on whether the app was built on Forge or Connect. One runs entirely inside Atlassian's infrastructure. The other runs on the vendor's own servers. For enterprise teams, this is not a small distinction.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="two-platforms">Two platforms, two architectures</h2>
+      <p>
+        The Atlassian Marketplace currently hosts apps built on two different technical platforms: <strong>Connect</strong> (the older, established approach) and <strong>Forge</strong> (Atlassian's newer serverless platform, first available in 2021). Both platforms let developers extend Jira and Confluence — but they run in fundamentally different places.
+      </p>
+
+      <h3 id="connect-arch">How Connect apps work</h3>
+      <p>
+        Connect apps are built and hosted by the app vendor on their own external servers. When you install a Connect app and use it, Jira sends requests and data to the vendor's server infrastructure. The vendor's code processes that data, returns results to Jira, and may store data on their own systems.
+      </p>
+
+      <div class="arch-box">
+        <h4>Connect — data flow</h4>
+        <div class="arch-flow">
+          <span class="arch-node atlassian">Your Jira Cloud</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node external">Vendor's external server</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node external">Vendor's external storage</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node atlassian">Response back to Jira</span>
+        </div>
+      </div>
+
+      <p>
+        The flexibility of Connect is valuable for developers — they can use any language, any cloud provider, any database. But the security implication is clear: your Jira data travels outside the Atlassian platform to a server controlled by a third party.
+      </p>
+
+      <h3 id="forge-arch">How Forge apps work</h3>
+      <p>
+        Forge apps run as serverless functions inside Atlassian's own infrastructure. The code lives on Atlassian's cloud, executes on Atlassian's compute, and stores data in Atlassian's key-value store. There are no public-facing endpoints for the app — Atlassian invokes the functions internally. The vendor never needs to run a server.
+      </p>
+
+      <div class="arch-box">
+        <h4>Forge — data flow</h4>
+        <div class="arch-flow">
+          <span class="arch-node atlassian">Your Jira Cloud</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node atlassian">Atlassian Forge runtime</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node atlassian">Atlassian-managed storage</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node atlassian">Response back to Jira</span>
+        </div>
+      </div>
+
+      <p>
+        From a security perspective, this changes the trust boundary entirely. You're not trusting a third-party vendor's infrastructure — you're trusting Atlassian's, which you're already trusting by using Jira Cloud in the first place.
+      </p>
+
+      <h2 id="comparison">Security comparison: Forge vs Connect</h2>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Security factor</th>
+            <th>Forge</th>
+            <th>Connect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Data leaves Atlassian?</strong></td>
+            <td><span class="check">No</span> — runs inside Atlassian</td>
+            <td><span class="cross">Yes</span> — routed to vendor servers</td>
+          </tr>
+          <tr>
+            <td><strong>Data residency</strong></td>
+            <td>Inherits Atlassian's residency settings</td>
+            <td>Depends on vendor's server location</td>
+          </tr>
+          <tr>
+            <td><strong>GDPR compliance</strong></td>
+            <td>Covered by Atlassian's DPA</td>
+            <td>Separate DPA required per vendor</td>
+          </tr>
+          <tr>
+            <td><strong>ISO 27001 / SOC 2</strong></td>
+            <td>Covered by Atlassian's certifications</td>
+            <td>Depends on vendor's own certifications</td>
+          </tr>
+          <tr>
+            <td><strong>Public endpoint exposure</strong></td>
+            <td><span class="check">None</span> — no public endpoints</td>
+            <td><span class="cross">Yes</span> — vendor exposes webhook/API endpoints</td>
+          </tr>
+          <tr>
+            <td><strong>Vendor security review</strong></td>
+            <td>Simplified — Atlassian trusts own runtime</td>
+            <td>Detailed — vendor must document data handling</td>
+          </tr>
+          <tr>
+            <td><strong>"Runs on Atlassian" badge</strong></td>
+            <td><span class="check">Yes</span></td>
+            <td><span class="cross">No</span></td>
+          </tr>
+          <tr>
+            <td><strong>Platform future</strong></td>
+            <td>Active development — Atlassian's strategic platform</td>
+            <td>End of new listings Sept 2025; support timeline unclear</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="enterprise-implications">What this means for enterprise Atlassian admins</h2>
+      <p>
+        If your organization has data residency requirements — GDPR, HIPAA, financial services regulations, or internal policies mandating that data stays within a defined geographic or vendor boundary — Forge apps are the safer default. When data never leaves Atlassian's infrastructure, your Atlassian-level data processing agreements and residency settings cover the app automatically.
+      </p>
+      <p>
+        For Connect apps, you need to investigate each vendor individually: Where are their servers? Do they have a DPA? What is their own ISO or SOC 2 status? In a large organization with many installed apps, this becomes a significant procurement overhead.
+      </p>
+      <p>
+        Enterprise security teams increasingly use the "Runs on Atlassian" badge as a fast filter. It's not a perfect signal — a badly written Forge app can still have security flaws in its own logic — but it does eliminate an entire category of risk: vendor infrastructure trust.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Note for procurement teams:</strong> "Runs on Atlassian" means the app's compute and storage run on Atlassian's infrastructure. It does not guarantee the absence of external API calls — a Forge app could still call a third-party AI API, for example. Check the app's Trust Center or privacy policy for the full picture. Apps built with Bring Your Own Key (BYOK) AI — like <a href="/blog/byok-ai-atlassian.html">BYOK AI for Atlassian</a> — provide additional control over AI data flows.</p>
+      </div>
+
+      <h2 id="timeline">The Connect sunset timeline</h2>
+      <p>
+        Atlassian has signaled a clear strategic direction: Forge is the future, Connect is legacy. The transition is happening in phases:
+      </p>
+
+      <div class="timeline-item">
+        <span class="timeline-date">Sept 2025</span>
+        <div class="timeline-text"><strong>No new Connect app listings</strong> on the Atlassian Marketplace. New apps must be built on Forge to be listed.</div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">Mar 2026</span>
+        <div class="timeline-text"><strong>Connect descriptor update enforcement.</strong> Connect apps can no longer publish descriptor changes to the Marketplace.</div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">Q4 2026+</span>
+        <div class="timeline-text"><strong>Connect enters end-of-support.</strong> Existing Connect apps will continue to function for an extended period, but Atlassian's active investment moves fully to Forge.</div>
+      </div>
+
+      <p>
+        For enterprise teams evaluating new Marketplace apps in 2026, this timeline matters. Choosing a Connect app today means a migration to Forge in the vendor's future roadmap — or a migration away from the app entirely when Connect support ends.
+      </p>
+
+      <h2 id="developer-perspective">A developer's perspective: what you give up with Forge</h2>
+      <p>
+        Forge's security advantages come with real constraints for app developers. Forge functions have execution time limits, memory limits, and an opinionated runtime environment. Complex apps that need long-running processes, heavy computation, or access to custom infrastructure can't be built as pure Forge apps — they need a hybrid approach or remain on Connect.
+      </p>
+      <p>
+        For AI-powered apps that need to call external AI providers (OpenAI, Anthropic, etc.), this is handled through explicit external fetch permissions in the Forge manifest. Atlassian requires apps to declare all external calls, making the data flow auditable in a way that Connect never was.
+      </p>
+      <p>
+        The result is that complex enterprise apps may have legitimate reasons to be on Connect — for now. But the direction is clear: Forge is where Atlassian is investing, and new enterprise apps should default to Forge unless there's a specific technical reason they can't.
+      </p>
+
+      <h2 id="apps">Forge-native apps from this publisher</h2>
+      <p>
+        All three apps in this catalog are built on Atlassian Forge — no external servers, no third-party storage:
+      </p>
+      <ul>
+        <li><strong><a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a></strong> — progress bars on issues, sprint gadget</li>
+        <li><strong><a href="/priority-scoring-docs.html">Priority Scoring for Jira</a></strong> — RICE, WSJF, ICE scoring, Rovo AI, Board Health</li>
+        <li><strong><a href="/codedoc-ai.html">CodeDoc AI for Confluence</a></strong> — AI-powered documentation from GitHub/GitLab</li>
+      </ul>
+      <p>
+        All carry the "Runs on Atlassian" badge. Data processed by any of these apps never leaves Atlassian's infrastructure.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between Atlassian Forge and Connect apps?</p>
+        <p class="faq-a">Forge apps run entirely within Atlassian's own cloud infrastructure — no data leaves the Atlassian platform. Connect apps run on external servers hosted by the app vendor — Jira data is sent to the vendor's infrastructure when the app is used. Forge provides stronger data residency and security guarantees; Connect offers more developer flexibility but requires trusting the vendor's external infrastructure.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Are Forge apps GDPR compliant?</p>
+        <p class="faq-a">Atlassian states that Forge has completed ISO 27001 and SOC 2 evaluations and that contractual, technical, and organizational measures are in place to support GDPR compliance. Because Forge apps run inside Atlassian's infrastructure, they inherit Atlassian's existing data processing agreements and residency commitments. Individual Connect app vendors are responsible for their own GDPR compliance separately.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What does "Runs on Atlassian" mean?</p>
+        <p class="faq-a">"Runs on Atlassian" is the official Marketplace badge for Forge apps. It indicates the app's compute and storage run entirely within Atlassian's cloud — no customer data is sent to third-party servers. Enterprise procurement teams often use this badge as a minimum requirement for approved apps. Note that it does not prevent apps from calling external APIs (such as AI providers) if explicitly declared in the app manifest.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Will Atlassian Connect apps stop working?</p>
+        <p class="faq-a">Atlassian stopped accepting new Connect app listings from September 2025 and is phasing Connect toward end-of-support. Existing Connect apps continue to work during the transition period. Enterprise teams evaluating new apps should prefer Forge-native options (those with the "Runs on Atlassian" badge) to avoid future migration risk.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>All three apps — built on Forge, "Runs on Atlassian"</h3>
+        <p>Visual Progress Tracker, Priority Scoring, and CodeDoc AI run entirely on Atlassian infrastructure. Free trials available on the Marketplace.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Browse apps on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#two-platforms">Two platforms, two architectures</a></li>
+          <li><a href="#connect-arch">How Connect apps work</a></li>
+          <li><a href="#forge-arch">How Forge apps work</a></li>
+          <li><a href="#comparison">Security comparison</a></li>
+          <li><a href="#enterprise-implications">Enterprise implications</a></li>
+          <li><a href="#timeline">The Connect sunset timeline</a></li>
+          <li><a href="#developer-perspective">Developer trade-offs</a></li>
+          <li><a href="#apps">Forge-native apps</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related articles</h3>
+        <a href="/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">BYOK AI for Atlassian: Why It Matters for Enterprise</a>
+        <a href="/blog/best-jira-progress-tracking-apps.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Best Jira Progress Tracking Apps 2026</a>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">AI Documentation for Atlassian Teams</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Forge-native apps</h3>
+        <a href="/visual-progress-tracker.html" style="display:block;font-size:0.85rem;color:var(--blue);text-decoration:none;line-height:1.5;margin-bottom:8px;font-weight:600;">Visual Progress Tracker for Jira</a>
+        <a href="/priority-scoring-docs.html" style="display:block;font-size:0.85rem;color:var(--blue);text-decoration:none;line-height:1.5;margin-bottom:8px;font-weight:600;">Priority Scoring for Jira</a>
+        <a href="/codedoc-ai.html" style="display:block;font-size:0.85rem;color:var(--blue);text-decoration:none;line-height:1.5;font-weight:600;">CodeDoc AI for Confluence</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

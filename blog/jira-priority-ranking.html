@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026) | Janek Behrens</title>
+  <meta name="description" content="Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-priority-ranking.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026)",
+    "description": "Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.",
+    "url": "https://janekbehrens.de/blog/jira-priority-ranking.html",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+    "keywords": ["jira priority ranking", "jira sort backlog by score", "jira backlog prioritization", "priority score", "product management"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026)",
+    "description": "Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.",
+    "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+    "datePublished": "2026-04-21T00:00:00+02:00",
+    "dateModified": "2026-04-21T00:00:00+02:00",
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Janek Behrens",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://janekbehrens.de/img/companyLogo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://janekbehrens.de/blog/jira-priority-ranking.html"
+    }
+  }
+  </script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I rank issues in Jira by priority score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira's native backlog sorts by 'Rank' (drag-and-drop order) and does not automatically sort by a numeric priority score. To get a true score-based ranking, you need a Marketplace app like Priority Scoring for Jira, which calculates RICE, WSJF, or ICE scores per issue and displays a ranked table — sortable by score, filterable by sprint, assignee, and due date — outside the native backlog view."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Jira rank and priority?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira rank is a manual, drag-and-drop ordering of issues within the backlog. Jira priority is a categorical field with values like Highest, High, Medium, Low. Neither is a numeric score. A true priority ranking based on RICE, WSJF, or ICE scoring requires an additional app that calculates and displays numeric scores across your backlog."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Jira automatically sort the backlog by priority?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not natively. Jira's backlog uses a rank field for ordering, and changing the sort from rank to priority disables drag-and-drop. For automatic numeric-score-based sorting, apps like Priority Scoring for Jira provide a separate Priority Ranking table that shows all issues sorted descending by their RICE, WSJF, or ICE score — without modifying the backlog's native rank order."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get rid of the 'everything is high priority' problem in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Replace the categorical Priority field (High/Medium/Low) with a numeric scoring framework like RICE. RICE scores are calculated from four objective dimensions — Reach, Impact, Confidence, Effort — producing a number that creates a natural ranking across your backlog. Two issues can both be important, but RICE forces a quantitative comparison that shows which one deserves to ship first."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the Priority Ranking table in Jira show?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Priority Ranking table in Priority Scoring for Jira shows all scored issues in descending score order. Columns include rank position, score (with a color-coded badge), issue key and summary, current sprint, due date, and assignee. Issues with a score below the configured low threshold display a red badge; issues above the high threshold display green. The table is filterable and updates as new scores are added."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026)">
+  <meta property="og:description" content="Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-priority-ranking.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-21">
+  <meta property="article:modified_time" content="2026-04-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Priority Ranking">
+  <meta property="article:tag" content="Backlog Prioritization">
+  <meta property="article:tag" content="Product Management">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Priority Ranking: Automatically Sort Your Backlog by Score (2026)">
+  <meta name="twitter:description" content="Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table. No scripting required.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .dimension-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .dimension-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .dimension-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+    }
+    .dimension-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .dimension-table strong { color: var(--text); }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem; color: var(--text-2); text-decoration: none;
+      line-height: 1.4; display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center; font-size: 0.8rem;
+      color: var(--text-faint); margin-top: 8px; font-style: italic;
+    }
+    .rank-mockup {
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; margin: 20px 0; box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .rank-mockup-header {
+      background: #F4F5F7; padding: 10px 16px;
+      display: grid; grid-template-columns: 36px 80px 1fr 100px 90px 90px;
+      gap: 12px; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint);
+      border-bottom: 1px solid var(--border);
+    }
+    .rank-mockup-row {
+      padding: 10px 16px;
+      display: grid; grid-template-columns: 36px 80px 1fr 100px 90px 90px;
+      gap: 12px; font-size: 0.87rem;
+      border-bottom: 1px solid var(--border-2); align-items: center;
+    }
+    .rank-mockup-row:last-child { border-bottom: none; }
+    .rank-num { font-weight: 700; color: var(--text-faint); }
+    .score-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 3px 9px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;
+    }
+    .score-green { background: #E3FCEF; color: #006644; }
+    .score-yellow { background: #FFFAE6; color: #974F00; }
+    .score-red { background: #FFEBE6; color: #BF2600; }
+    .issue-key { font-size: 0.8rem; color: var(--blue); font-weight: 600; }
+    .issue-summary { color: var(--text-3); line-height: 1.4; }
+    .sprint-tag {
+      font-size: 0.75rem; background: #EAE6FF; color: #403294;
+      padding: 2px 7px; border-radius: 3px; font-weight: 600;
+    }
+    @media (max-width: 600px) {
+      .rank-mockup-header, .rank-mockup-row {
+        grid-template-columns: 36px 70px 1fr;
+      }
+      .rank-mockup-header > *:nth-child(n+4),
+      .rank-mockup-row > *:nth-child(n+4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">April 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>Jira Priority Ranking: How to Automatically Sort Your Backlog by Score</h1>
+      <p class="article-intro">
+        When 80% of your backlog is marked "High Priority," the label stops meaning anything. Numeric scoring replaces labels with numbers — and numbers create a true ranking. Here's how to go from "everything is urgent" to a backlog that tells you exactly what to build next.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="problem">The "everything is P1" problem</h2>
+      <p>
+        Jira ships with a Priority field containing five levels: Highest, High, Medium, Low, Lowest. In most teams, issues accumulate at the top within months. Stakeholders mark their requests "High" by default. PMs mark engineering issues "High" to compete for sprint slots. The level inflates until it's meaningless.
+      </p>
+      <p>
+        The result: sprint planning becomes a negotiation where the loudest voice wins. Engineers don't know which ticket to pull when two "High" issues are waiting. Leadership can't see any ordering rationale in the backlog. And when something slips, nobody can articulate why issue A was prioritized over issue B — because there was no real rationale, just opinions.
+      </p>
+      <p>
+        The fix is not a new process or a new meeting. It's a number. A single numeric score — calculated from objective dimensions — creates a natural ranking that everyone can see and that requires no meeting to interpret.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Jira does not natively sort the backlog by a numeric priority score. Priority Scoring for Jira adds RICE, WSJF, and ICE scoring to every issue and displays a Priority Ranking table — sorted descending by score, with sprint, due date, and assignee columns — that shows your ranked backlog at a glance.</p>
+      </div>
+
+      <h2 id="categorical-vs-numeric">Categorical priority vs. numeric ranking</h2>
+      <p>
+        The fundamental problem with High/Medium/Low is that it's categorical. Two issues can both be "High" and the label gives you no way to compare them. Categorical fields answer "is this important?" but not "is this more important than that?"
+      </p>
+      <p>
+        Numeric scoring answers the comparative question. A RICE score of 240 ranks above 180 — no discussion required. The score is derived from specific inputs (Reach, Impact, Confidence, Effort), which means the ranking is auditable. You can look at issue A's score and say: "It scores higher because it reaches three times as many users for half the effort." That's a defensible rationale, not a gut feeling.
+      </p>
+
+      <table class="dimension-table">
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Answers "important?"</th>
+            <th>Answers "more important than?"</th>
+            <th>Auditable</th>
+            <th>Scales to large backlogs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>High/Medium/Low</strong></td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No — inflates over time</td>
+          </tr>
+          <tr>
+            <td><strong>Manual rank (drag-and-drop)</strong></td>
+            <td>Yes</td>
+            <td>Yes — but subjective</td>
+            <td>No</td>
+            <td>No — needs constant maintenance</td>
+          </tr>
+          <tr>
+            <td><strong>Numeric scoring (RICE/WSJF/ICE)</strong></td>
+            <td>Yes</td>
+            <td>Yes — objective</td>
+            <td>Yes</td>
+            <td>Yes — scores update as backlog grows</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="ranking-table">The Priority Ranking table</h2>
+      <p>
+        In <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a>, the dashboard's Ranking tab shows all scored issues in descending score order. Each row displays the rank position, score with color badge, issue key, summary, sprint, due date, and assignee. Filtering by sprint, assignee, or label narrows the view to the relevant subset.
+      </p>
+
+      <div class="rank-mockup">
+        <div class="rank-mockup-header">
+          <span>#</span>
+          <span>Score</span>
+          <span>Issue</span>
+          <span>Sprint</span>
+          <span>Due</span>
+          <span>Assignee</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">1</span>
+          <span><span class="score-badge score-green">312</span></span>
+          <div><div class="issue-key">PROJ-47</div><div class="issue-summary">Bulk import for CSV files</div></div>
+          <span><span class="sprint-tag">Sprint 18</span></span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">A. Müller</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">2</span>
+          <span><span class="score-badge score-green">275</span></span>
+          <div><div class="issue-key">PROJ-31</div><div class="issue-summary">Slack notification integration</div></div>
+          <span><span class="sprint-tag">Sprint 18</span></span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">Apr 30</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">T. Nguyen</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">3</span>
+          <span><span class="score-badge score-yellow">148</span></span>
+          <div><div class="issue-key">PROJ-62</div><div class="issue-summary">Advanced filter in settings panel</div></div>
+          <span style="font-size:0.82rem;color:var(--text-faint);">Backlog</span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">Unassigned</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">4</span>
+          <span><span class="score-badge score-red">38</span></span>
+          <div><div class="issue-key">PROJ-19</div><div class="issue-summary">Legacy report export (PDF v1)</div></div>
+          <span style="font-size:0.82rem;color:var(--text-faint);">Backlog</span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">Unassigned</span>
+        </div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-faint);text-align:center;margin-top:-10px;margin-bottom:20px;font-style:italic;">Example Priority Ranking table — scores sorted descending, color badges reflect configured thresholds</p>
+
+      <p>
+        Issues at the bottom of the ranking — especially those with a 🔴 badge — are the ones to question. Should they be in the backlog at all? The ranking surfaces this conversation in a way that a backlog of "High" tickets never does.
+      </p>
+
+      <h2 id="due-date">Due-date flags and overdue detection</h2>
+      <p>
+        Score alone doesn't always capture urgency. A low-scoring issue with a hard deadline next week should still get attention. The ranking table displays the due date column and highlights overdue issues — so time-sensitive work is never buried under high-scoring but less urgent items.
+      </p>
+      <p>
+        The combination of score and due-date creates a two-axis view: what is most valuable, and what is most urgent. The ranking table lets you see both at once, rather than toggling between a sorted score view and a calendar view.
+      </p>
+
+      <h2 id="rovo-bulk">Bulk-score your backlog in minutes with Rovo</h2>
+      <p>
+        The biggest barrier to a ranked backlog is scoring every existing issue. If you have 150 issues and none are scored, the ranking table is empty. The <a href="/blog/ai-backlog-prioritization-jira-rovo.html">Rovo AI agent</a> in Priority Scoring can read each issue's summary, description, and acceptance criteria and suggest dimension values — so you can populate scores across the backlog without filling in 600 individual sliders.
+      </p>
+      <p>
+        In auto mode: <em>"Score all unscored issues in project PROJ with RICE."</em> Rovo works through the list, reasons through each issue, and writes the scores. The resulting ranking is a starting point — review the bottom and top before your next sprint planning session, and adjust any scores that feel off.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProject.png" alt="Rovo AI agent bulk-scoring unscored Jira issues with RICE, creating an initial priority ranking across the backlog" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo AI agent bulk-scoring unscored issues in a project — the fastest way to populate a ranked backlog from scratch</p>
+      </div>
+
+      <h2 id="dashboard-gadget">Adding priority ranking to your Jira dashboard</h2>
+      <p>
+        The Priority Scoring ranking table is also available as a Jira dashboard gadget. Add it to your project dashboard so the ranked backlog is visible to the whole team without navigating to a separate app page.
+      </p>
+      <p>
+        For engineering managers overseeing multiple projects, the portfolio view shows ranking and health across all projects simultaneously — see the <a href="/blog/jira-portfolio-backlog-health.html">portfolio backlog health guide</a> for setup details.
+      </p>
+
+      <div class="diagram">
+        <img src="../imgPriorityScorer/AppStartpage_Dashboard.png" alt="Priority Scoring dashboard showing the full Priority Ranking table with RICE scores, color badges, sprint and due-date columns, and Board Health panel" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Priority Scoring dashboard — full ranking table with scores, sprint assignment, due dates, and Board Health panel</p>
+      </div>
+
+      <h2 id="setup">Getting your ranked backlog in five minutes</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Install Priority Scoring from the Atlassian Marketplace.</strong> Search "Priority Scoring" and install to your Jira Cloud site. Free trial includes all features.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Score your first 10 issues.</strong> Open issues one by one and set RICE values with the sliders — Reach, Impact, Confidence, Effort. The score appears immediately. Or use the Rovo agent to bulk-score all unscored issues if you prefer AI-suggested values as a starting point.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Open the Priority Scoring dashboard.</strong> Navigate to the Priority Scoring global page, select your project, and click the Ranking tab. Your scored issues appear sorted by score descending.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Configure score thresholds.</strong> In Settings, set a Low and High threshold for your framework. Issues below the low threshold show 🔴; above the high threshold show 🟢. This makes the ranking immediately readable without studying individual numbers.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Use the ranking in sprint planning.</strong> Open the Ranking tab before planning and work top-down. Issues at the bottom of the list are candidates for removal from the backlog. Check the <a href="/blog/jira-backlog-grooming-checklist.html">backlog grooming checklist</a> for the full 12-point review.</div>
+        </li>
+      </ol>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> Don't aim for 100% scoring coverage before your first ranked planning session. Score the top 30–40 issues, run one planning meeting with the ranking visible, and let the team experience the difference. Coverage increases naturally when the ranking becomes useful.</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I rank issues in Jira by priority score?</p>
+        <p class="faq-a">Jira's native backlog sorts by drag-and-drop rank, not by a numeric score. <a href="/priority-scoring-docs.html">Priority Scoring for Jira</a> adds a separate Priority Ranking table — sorted descending by RICE, WSJF, or ICE score — outside the native backlog. Both views coexist; the ranking table doesn't change your backlog's native Rank field.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between Jira rank and priority?</p>
+        <p class="faq-a">Jira rank is a manual ordering (drag-and-drop) within the backlog. Jira priority is a categorical label (High/Medium/Low). Neither is a numeric score. True priority ranking based on <a href="/blog/rice-scoring-jira.html">RICE</a>, <a href="/blog/wsjf-jira.html">WSJF</a>, or <a href="/blog/ice-scoring-jira.html">ICE</a> requires an app that calculates and displays numeric scores per issue.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can Jira automatically sort the backlog by priority?</p>
+        <p class="faq-a">Not natively. Changing the backlog's sort to Priority (Highest/High/Medium) disables drag-and-drop. Priority Scoring for Jira provides a separate ranking table sorted by numeric score — without modifying the backlog's native ordering.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I get rid of the "everything is high priority" problem in Jira?</p>
+        <p class="faq-a">Replace subjective "High" labels with a numeric scoring framework. <a href="/blog/rice-scoring-jira.html">RICE</a> forces a quantitative comparison using Reach, Impact, Confidence, and Effort. Two issues can both be important — RICE produces a number showing which one delivers more value per unit of work. See <a href="/blog/jira-prioritization-framework-comparison.html">RICE vs. WSJF vs. ICE</a> to pick the right framework for your team.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What does the Priority Ranking table show?</p>
+        <p class="faq-a">The Priority Ranking table in Priority Scoring for Jira shows all scored issues sorted descending by score. Columns include rank, score (color-coded), issue key, summary, current sprint, due date, and assignee. Issues below the low threshold have a 🔴 badge; issues above the high threshold have 🟢. The table is filterable by sprint, assignee, and label.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>See your ranked backlog in 5 minutes</h3>
+        <p>Priority Scoring for Jira — RICE, WSJF, and ICE scoring, Priority Ranking table, Rovo AI agent, Board Health score, and Portfolio view. Free trial included.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">The "everything is P1" problem</a></li>
+          <li><a href="#categorical-vs-numeric">Categorical vs. numeric ranking</a></li>
+          <li><a href="#ranking-table">The Priority Ranking table</a></li>
+          <li><a href="#due-date">Due-date flags</a></li>
+          <li><a href="#rovo-bulk">Bulk-scoring with Rovo AI</a></li>
+          <li><a href="#dashboard-gadget">Adding to your dashboard</a></li>
+          <li><a href="#setup">Getting started in 5 minutes</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rankings · Forge</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related articles</h3>
+        <a href="/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE Scoring in Jira: The Complete Setup Guide</a>
+        <a href="/blog/jira-backlog-grooming-checklist.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Backlog Grooming Checklist for Product Owners</a>
+        <a href="/blog/ai-backlog-prioritization-jira-rovo.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">AI Backlog Prioritization in Jira with Rovo</a>
+        <a href="/blog/jira-custom-priority-scoring-weights.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Custom Priority Scoring: Adjust Dimension Weights</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>
