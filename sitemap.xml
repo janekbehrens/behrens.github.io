@@ -58,25 +58,25 @@
   <!-- Blog: Top-tier (high commercial intent, pillar content) -->
   <url>
     <loc>https://janekbehrens.de/blog/rice-scoring-jira.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/wsjf-jira.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2025-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/ice-scoring-jira.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-prioritization-framework-comparison.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -88,31 +88,31 @@
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/best-jira-progress-tracking-apps.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-backlog-health.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/automate-confluence-documentation.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/confluence-documentation-github.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-01-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/ai-documentation-confluence.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -120,55 +120,55 @@
   <!-- Blog: Mid-tier (supporting content) -->
   <url>
     <loc>https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/byok-ai-atlassian.html</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-01-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-portfolio-backlog-health.html</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-02-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-backlog-grooming-checklist.html</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-03-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/wsjf-safe-pi-planning-jira.html</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-custom-priority-scoring-weights.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-priority-ranking.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/atlassian-forge-vs-connect.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-project-documentation.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -176,31 +176,31 @@
   <!-- Blog: Supporting content (Progress Tracker cluster) -->
   <url>
     <loc>https://janekbehrens.de/blog/jira-progress-bar.html</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2025-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-sprint-health-dashboard.html</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2025-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-epic-progress-tracking.html</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2025-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-progress-no-scripting.html</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2025-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://janekbehrens.de/blog/jira-progress-no-code.html</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -17,8 +17,8 @@
     "file": "atlassian-forge-vs-connect.html",
     "title": "Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)",
     "description": "Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-04-15",
+    "dateStr": "April 15, 2026",
     "tags": [
       "enterprise",
       "forge"
@@ -30,8 +30,8 @@
     "file": "best-jira-progress-tracking-apps.html",
     "title": "Best Jira Progress Tracking Apps in 2026: An Honest Comparison",
     "description": "Comparing the top Jira progress tracking apps in 2026 — from native fields to Forge-native visual trackers. Honest about trade-offs, including the weaknesses of each option.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-04-09",
+    "dateStr": "April 9, 2026",
     "tags": [
       "jira",
       "forge"
@@ -43,8 +43,8 @@
     "file": "jira-custom-priority-scoring-weights.html",
     "title": "Custom Priority Scoring in Jira: Adjust Dimension Weights for Your Team (2026)",
     "description": "Standard RICE weights don't fit every team. Learn how to customize RICE, WSJF, and ICE dimension weights (×1–×5) in Jira — no scripting, live-preview score, no spreadsheets.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-04-02",
+    "dateStr": "April 2, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -56,8 +56,8 @@
     "file": "jira-priority-ranking.html",
     "title": "Jira Priority Ranking: How to Automatically Sort Your Backlog by Score (2026)",
     "description": "Stop arguing about which Jira issue to pull next. Numeric priority scores create a true ranked backlog — sortable, filterable, and visible across sprints in one table.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-03-26",
+    "dateStr": "March 26, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -69,8 +69,8 @@
     "file": "jira-progress-no-code.html",
     "title": "No-Code Progress Tracking for Jira: Track Every Issue Without a Single Script (2026)",
     "description": "You don't need JQL, ScriptRunner, or a Jira admin to add progress tracking to your issues. Here's how to set up automatic, visual progress tracking in Jira in under 2 minutes — no code required.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-03-17",
+    "dateStr": "March 17, 2026",
     "tags": [
       "jira"
     ],
@@ -81,8 +81,8 @@
     "file": "jira-project-documentation.html",
     "title": "How to Document a Jira Project Automatically: From Manual Updates to Living Docs (2026)",
     "description": "Most Jira projects lack documentation — and most Confluence pages go stale. Here's how to connect the two so your project documentation writes itself and stays current automatically.",
-    "date": "2026-04-21",
-    "dateStr": "April 21, 2026",
+    "date": "2026-03-12",
+    "dateStr": "March 12, 2026",
     "tags": [
       "confluence",
       "jira"
@@ -94,8 +94,8 @@
     "file": "jira-backlog-grooming-checklist.html",
     "title": "Jira Backlog Grooming Checklist for Product Owners (2026)",
     "description": "A 12-point Jira backlog grooming checklist for Product Owners and Scrum Masters — covering story points, acceptance criteria, priority scores, stale issues, and more. Ready to copy and use.",
-    "date": "2026-04-10",
-    "dateStr": "April 10, 2026",
+    "date": "2026-03-03",
+    "dateStr": "March 3, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -107,8 +107,8 @@
     "file": "jira-portfolio-backlog-health.html",
     "title": "Portfolio Backlog Health in Jira: Track Multiple Projects at Once (2026)",
     "description": "How engineering managers and VPs can monitor backlog health across multiple Jira projects in one view — without opening each project individually. Includes Board Health Score setup and portfolio dashboard walkthrough.",
-    "date": "2026-04-10",
-    "dateStr": "April 10, 2026",
+    "date": "2026-02-24",
+    "dateStr": "February 24, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -120,8 +120,8 @@
     "file": "wsjf-safe-pi-planning-jira.html",
     "title": "WSJF for SAFe PI Planning in Jira: Step-by-Step Setup (2026)",
     "description": "How to use WSJF (Weighted Shortest Job First) to sequence your ART backlog for SAFe PI Planning — formula, Fibonacci scoring, Jira setup, and what the RTE sees in the dashboard.",
-    "date": "2026-04-10",
-    "dateStr": "April 10, 2026",
+    "date": "2026-02-16",
+    "dateStr": "February 16, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -133,8 +133,8 @@
     "file": "ai-backlog-prioritization-jira-rovo.html",
     "title": "AI Backlog Prioritization in Jira: How Rovo Scores Issues Automatically",
     "description": "Rovo AI can suggest, confirm, or automatically apply RICE, WSJF, and ICE scores to your Jira backlog. Learn the three modes, when to use each, and how to score an entire backlog in minutes.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-02-10",
+    "dateStr": "February 10, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -146,8 +146,8 @@
     "file": "ai-documentation-confluence.html",
     "title": "AI-Powered Documentation for Atlassian Teams: A Practical Guide",
     "description": "How AI documentation for Confluence actually works in practice — from documentation presets and language support to approval workflows and cost control with BYOK.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-02-03",
+    "dateStr": "February 3, 2026",
     "tags": [
       "confluence"
     ],
@@ -158,8 +158,8 @@
     "file": "automate-confluence-documentation.html",
     "title": "Automating Confluence Documentation: From Manual Updates to CI/CD",
     "description": "How to fully automate Confluence documentation with webhooks, schedules, and AI — from the first manual run to a commit-triggered CI/CD documentation pipeline.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-01-27",
+    "dateStr": "January 27, 2026",
     "tags": [
       "confluence"
     ],
@@ -170,8 +170,8 @@
     "file": "byok-ai-atlassian.html",
     "title": "BYOK AI for Atlassian: What It Means and Why It Matters",
     "description": "Bring Your Own Key (BYOK) AI for Atlassian explained: data privacy, GDPR compliance, cost control, and why it matters for enterprise teams using Confluence and Jira.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-01-19",
+    "dateStr": "January 19, 2026",
     "tags": [
       "confluence",
       "enterprise"
@@ -183,8 +183,8 @@
     "file": "confluence-documentation-github.html",
     "title": "How to Auto-Generate Confluence Documentation from GitHub",
     "description": "Step-by-step guide: connect GitHub to Confluence with CodeDoc AI. Set up a personal access token, configure a webhook, and auto-generate documentation on every push.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-01-12",
+    "dateStr": "January 12, 2026",
     "tags": [
       "confluence"
     ],
@@ -195,8 +195,8 @@
     "file": "ice-scoring-jira.html",
     "title": "ICE Scoring in Jira: Fast Prioritization for Growth Teams (2026)",
     "description": "ICE scoring (Impact × Confidence × Ease) is the fastest way to rank your backlog — no user data required. Learn the formula, score 10 ideas in 20 minutes, and set it up in Jira today.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2026-01-06",
+    "dateStr": "January 6, 2026",
     "tags": [
       "priorityscoring",
       "jira"
@@ -208,8 +208,8 @@
     "file": "jira-backlog-health.html",
     "title": "Jira Backlog Health: How to Measure and Improve Your Project Quality Score",
     "description": "Learn what makes a Jira backlog unhealthy, which 8 quality signals to track, and how to turn them into a single 0–100 Board Health score that updates automatically.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2025-12-18",
+    "dateStr": "December 18, 2025",
     "tags": [
       "priorityscoring",
       "jira"
@@ -221,8 +221,8 @@
     "file": "jira-prioritization-framework-comparison.html",
     "title": "RICE vs. WSJF vs. ICE: Which Jira Prioritization Framework Is Right for You?",
     "description": "Honest comparison of RICE, WSJF, and ICE scoring frameworks for Jira. See the formulas, when each fits, and use the decision tree to pick the right one for your team.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2025-12-11",
+    "dateStr": "December 11, 2025",
     "tags": [
       "priorityscoring",
       "jira"
@@ -234,8 +234,8 @@
     "file": "rice-scoring-jira.html",
     "title": "RICE Scoring in Jira: The Complete Setup Guide (2026)",
     "description": "Learn how to implement RICE scoring in Jira — understand the formula, score your backlog correctly, and set up native custom fields in under 10 minutes. No scripting required.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2025-12-04",
+    "dateStr": "December 4, 2025",
     "tags": [
       "priorityscoring",
       "jira"
@@ -247,8 +247,8 @@
     "file": "wsjf-jira.html",
     "title": "WSJF in Jira: SAFe Prioritization Without Spreadsheets (2026)",
     "description": "Learn how Weighted Shortest Job First (WSJF) works, calculate Cost of Delay correctly, and set up native WSJF custom fields in Jira for SAFe PI Planning — no scripting required.",
-    "date": "2026-04-09",
-    "dateStr": "April 9, 2026",
+    "date": "2025-11-26",
+    "dateStr": "November 26, 2025",
     "tags": [
       "priorityscoring",
       "jira"
@@ -260,8 +260,8 @@
     "file": "jira-epic-progress-tracking.html",
     "title": "Tracking Epic Progress in Jira: The Subtask Approach",
     "description": "Epics are often a blind spot in Jira — you can see the stories inside, but not how close the epic is to done. Here's how subtask-based progress tracking gives you that number automatically.",
-    "date": "2026-04-07",
-    "dateStr": "April 7, 2026",
+    "date": "2025-11-18",
+    "dateStr": "November 18, 2025",
     "tags": [
       "jira"
     ],
@@ -272,8 +272,8 @@
     "file": "jira-progress-no-scripting.html",
     "title": "Jira Progress Tracking Without Scripting or Complex Custom Fields",
     "description": "Adding a progress custom field to Jira doesn't require scripting, JQL, or admin expertise. Here's how to set up automatic progress tracking in under two minutes — with a UI, not code.",
-    "date": "2026-04-07",
-    "dateStr": "April 7, 2026",
+    "date": "2025-11-11",
+    "dateStr": "November 11, 2025",
     "tags": [
       "jira"
     ],
@@ -284,8 +284,8 @@
     "file": "jira-sprint-health-dashboard.html",
     "title": "How to Build a Sprint Health Dashboard in Jira",
     "description": "Sprint health is more than a status column. Here's how to track real progress per issue and across your sprint — with color-coded bars and a dashboard gadget that needs zero JQL.",
-    "date": "2026-04-07",
-    "dateStr": "April 7, 2026",
+    "date": "2025-11-03",
+    "dateStr": "November 3, 2025",
     "tags": [
       "jira"
     ],
@@ -296,8 +296,8 @@
     "file": "jira-progress-bar.html",
     "title": "Jira Progress Bar: How to Track Issue Progress Visually",
     "description": "Learn how to add color-coded progress bars to Jira issues — automatically calculated from status, subtasks, or set manually. Three field types, zero JQL required.",
-    "date": "2026-04-05",
-    "dateStr": "April 5, 2026",
+    "date": "2025-10-27",
+    "dateStr": "October 27, 2025",
     "tags": [
       "jira"
     ],
