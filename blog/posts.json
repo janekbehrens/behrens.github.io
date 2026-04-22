@@ -1,5 +1,19 @@
 [
   {
+    "file": "best-jira-backlog-prioritization-apps.html",
+    "title": "Best Jira Backlog Prioritization Apps in 2026: An Honest Comparison",
+    "description": "Comparing the top Jira backlog prioritization apps in 2026 — Foxly, Priority Scoring Calculator, Dynamic Scoring, Issue Score, and Priority Scoring. Honest about installs, hosting, and trade-offs.",
+    "date": "2026-04-22",
+    "dateStr": "April 22, 2026",
+    "tags": [
+      "priorityscoring",
+      "jira",
+      "forge"
+    ],
+    "label": "Priority Scoring · Jira · Forge",
+    "readTime": 13
+  },
+  {
     "file": "atlassian-forge-vs-connect.html",
     "title": "Atlassian Forge vs Connect Apps: Which Is More Secure? (2026)",
     "description": "Forge apps run inside Atlassian's infrastructure. Connect apps run on external servers. For enterprise Atlassian admins, the security difference matters — here's what to know.",
