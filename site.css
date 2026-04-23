@@ -239,12 +239,13 @@ body {
   color: #fff !important;
   font-size: 0.875rem;
   font-weight: 600;
+  line-height: 1;
   border-radius: 6px;
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.15s;
 }
-.nav-btn-book:hover { background: var(--blue-dark); }
+.nav-btn-book:hover { background: var(--blue-dark); text-decoration: none; }
 
 /* ── Booking CTA banner (docs / support pages) ── */
 .booking-cta {
