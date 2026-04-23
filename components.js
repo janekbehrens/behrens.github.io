@@ -7,6 +7,8 @@
 (function () {
   'use strict';
 
+  var CALENDLY_URL = 'https://calendly.com/calendly-janekbehrens/30min';
+
   var NAV_HTML = [
     '<nav class="site-nav" id="site-nav" role="navigation" aria-label="Site navigation">',
     '  <div class="nav-inner">',
@@ -34,6 +36,7 @@
     '        </div>',
     '      </div>',
     '      <a href="mailto:support@janekbehrens.de" class="nav-link">Support</a>',
+    '      <a href="' + CALENDLY_URL + '" class="nav-btn-book" data-calendly-popup target="_blank" rel="noopener">Book a call</a>',
     '    </div>',
     '  </div>',
     '</nav>'
@@ -56,6 +59,30 @@
     '</footer>'
   ].join('\n');
 
+  function injectCalendly() {
+    if (!document.querySelector('link[href*="calendly"]')) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://assets.calendly.com/assets/external/widget.css';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[src*="calendly"]')) {
+      var script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }
+
+  function openCalendlyPopup(e) {
+    e.preventDefault();
+    if (window.Calendly) {
+      Calendly.initPopupWidget({ url: CALENDLY_URL });
+    } else {
+      window.open(CALENDLY_URL, '_blank', 'noopener');
+    }
+  }
+
   function injectComponents() {
     // ── Nav ──
     var existingNav = document.getElementById('site-nav');
@@ -73,7 +100,15 @@
       document.body.insertAdjacentHTML('beforeend', FOOTER_HTML);
     }
 
+    injectCalendly();
     setupNav();
+    injectBookingCTA();
+
+    // Wire any remaining [data-calendly-popup] outside the nav
+    document.querySelectorAll('[data-calendly-popup]').forEach(function (el) {
+      el.removeEventListener('click', openCalendlyPopup);
+      el.addEventListener('click', openCalendlyPopup);
+    });
   }
 
   function setupNav() {
@@ -107,10 +142,46 @@
       });
     }
 
+    // ── Calendly popup triggers ──
+    nav.querySelectorAll('[data-calendly-popup]').forEach(function (el) {
+      el.addEventListener('click', openCalendlyPopup);
+    });
+
     // ── Scroll shadow ──
     window.addEventListener('scroll', function () {
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
+  }
+
+  function injectBookingCTA() {
+    var path = window.location.pathname;
+    var isDocsOrSupport = /-(docs|support)\.html/.test(path);
+    if (!isDocsOrSupport) return;
+    if (document.querySelector('.booking-cta')) return;
+
+    var footer = document.getElementById('site-footer');
+    var html = [
+      '<section class="booking-cta">',
+      '  <div class="booking-cta-inner">',
+      '    <div class="booking-cta-text">',
+      '      <strong>Still have questions?</strong>',
+      '      <span>Book a free 30-minute call — I\'ll help you get set up.</span>',
+      '    </div>',
+      '    <a href="' + CALENDLY_URL + '" class="btn-primary booking-cta-btn" data-calendly-popup target="_blank" rel="noopener">Book a call &rarr;</a>',
+      '  </div>',
+      '</section>'
+    ].join('\n');
+
+    if (footer) {
+      footer.insertAdjacentHTML('beforebegin', html);
+    } else {
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
+
+    document.querySelectorAll('[data-calendly-popup]').forEach(function (el) {
+      el.removeEventListener('click', openCalendlyPopup);
+      el.addEventListener('click', openCalendlyPopup);
+    });
   }
 
   function initYouTubeConsent() {

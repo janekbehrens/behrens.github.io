@@ -221,6 +221,63 @@ body {
     margin-top: 4px;
     border-radius: 8px;
   }
+  .nav-btn-book {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
+}
+
+/* ── Nav "Book a call" button ── */
+.nav-btn-book {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 6px 14px;
+  background: var(--blue);
+  color: #fff !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.nav-btn-book:hover { background: var(--blue-dark); }
+
+/* ── Booking CTA banner (docs / support pages) ── */
+.booking-cta {
+  background: var(--blue-lite);
+  border-top: 1px solid #BAD6FB;
+  border-bottom: 1px solid #BAD6FB;
+  padding: 32px 24px;
+}
+.booking-cta-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.booking-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.booking-cta-text strong {
+  font-size: 1rem;
+  color: var(--text);
+}
+.booking-cta-text span {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+.booking-cta-btn { flex-shrink: 0; }
+@media (max-width: 560px) {
+  .booking-cta-inner { flex-direction: column; align-items: flex-start; }
 }
 
 /* ============================================================
