@@ -13,7 +13,7 @@
     '<nav class="site-nav" id="site-nav" role="navigation" aria-label="Site navigation">',
     '  <div class="nav-inner">',
     '    <a href="/" class="nav-brand">',
-    '      <img src="img/companyLogo_transparent.png" class="nav-logo" alt="Janek Behrens" />',
+    '      <img src="/img/companyLogo_transparent.png" class="nav-logo" alt="Janek Behrens" />',
     '      <span>Janek Behrens</span>',
     '    </a>',
     '    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">',
@@ -256,7 +256,7 @@
     box.setAttribute('aria-label', 'About the author');
     box.innerHTML = [
       '<div class="author-box-inner">',
-        '<img src="img/companyLogo_transparent.png" alt="Janek Behrens" class="author-avatar" loading="lazy" width="56" height="56" />',
+        '<img src="/img/companyLogo_transparent.png" alt="Janek Behrens" class="author-avatar" loading="lazy" width="56" height="56" />',
         '<div class="author-meta">',
           '<div class="author-name">Janek Behrens</div>',
           '<div class="author-bio">Independent Atlassian Forge developer. Builds <a href="priority-scoring-docs.html">Priority Scoring</a>, <a href="visual-progress-tracker.html">Visual Progress Tracker</a>, and <a href="codedoc-ai.html">CodeDoc AI</a> &mdash; native Forge apps for Jira and Confluence.</div>',
