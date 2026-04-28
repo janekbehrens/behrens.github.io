@@ -12,7 +12,7 @@
   var NAV_HTML = [
     '<nav class="site-nav" id="site-nav" role="navigation" aria-label="Site navigation">',
     '  <div class="nav-inner">',
-    '    <a href="" class="nav-brand">',
+    '    <a href="/" class="nav-brand">',
     '      <img src="img/companyLogo_transparent.png" class="nav-logo" alt="Janek Behrens" />',
     '      <span>Janek Behrens</span>',
     '    </a>',
