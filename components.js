@@ -12,8 +12,8 @@
   var NAV_HTML = [
     '<nav class="site-nav" id="site-nav" role="navigation" aria-label="Site navigation">',
     '  <div class="nav-inner">',
-    '    <a href="/" class="nav-brand">',
-    '      <img src="/img/companyLogo_transparent.png" class="nav-logo" alt="Janek Behrens" />',
+    '    <a href="" class="nav-brand">',
+    '      <img src="img/companyLogo_transparent.png" class="nav-logo" alt="Janek Behrens" />',
     '      <span>Janek Behrens</span>',
     '    </a>',
     '    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">',
@@ -22,17 +22,17 @@
     '      <span class="nav-toggle-bar"></span>',
     '    </button>',
     '    <div class="nav-links" id="nav-links-panel">',
-    '      <a href="/#apps" class="nav-link">Apps</a>',
-    '      <a href="/blog/" class="nav-link">Blog</a>',
+    '      <a href="#apps" class="nav-link">Apps</a>',
+    '      <a href="blog/" class="nav-link">Blog</a>',
     '      <div class="nav-dropdown">',
     '        <button class="nav-link nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">',
     '          Docs',
     '          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     '        </button>',
     '        <div class="nav-dropdown-menu" role="menu">',
-    '          <a href="/codedoc-ai-docs.html" role="menuitem">CodeDoc AI Docs</a>',
-    '          <a href="/visual-progress-tracker-docs.html" role="menuitem">Progress Tracker Docs</a>',
-    '          <a href="/priority-scoring-docs.html" role="menuitem">Priority Scoring Docs</a>',
+    '          <a href="codedoc-ai-docs.html" role="menuitem">CodeDoc AI Docs</a>',
+    '          <a href="visual-progress-tracker-docs.html" role="menuitem">Progress Tracker Docs</a>',
+    '          <a href="priority-scoring-docs.html" role="menuitem">Priority Scoring Docs</a>',
     '        </div>',
     '      </div>',
     '      <a href="mailto:support@janekbehrens.de" class="nav-link">Support</a>',
@@ -47,13 +47,13 @@
     '  <div class="footer-inner">',
     '    <p class="footer-copy">&copy; 2026 Janek Behrens</p>',
     '    <nav class="footer-links" aria-label="Footer links">',
-    '      <a href="/trust-center.html">Trust Center</a>',
+    '      <a href="trust-center.html">Trust Center</a>',
     '      <span aria-hidden="true">&middot;</span>',
-    '      <a href="/privacy-policy.html">Privacy Policy</a>',
+    '      <a href="privacy-policy.html">Privacy Policy</a>',
     '      <span aria-hidden="true">&middot;</span>',
-    '      <a href="/datenschutz.html">Datenschutz</a>',
+    '      <a href="datenschutz.html">Datenschutz</a>',
     '      <span aria-hidden="true">&middot;</span>',
-    '      <a href="/impressum.html">Impressum</a>',
+    '      <a href="impressum.html">Impressum</a>',
     '    </nav>',
     '  </div>',
     '</footer>'
@@ -231,11 +231,11 @@
     nav.innerHTML = [
       '<ol itemscope itemtype="https://schema.org/BreadcrumbList">',
         '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">',
-          '<a itemprop="item" href="/"><span itemprop="name">Home</span></a>',
+          '<a itemprop="item" href=""><span itemprop="name">Home</span></a>',
           '<meta itemprop="position" content="1" />',
         '</li>',
         '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">',
-          '<a itemprop="item" href="/blog/"><span itemprop="name">Blog</span></a>',
+          '<a itemprop="item" href="blog/"><span itemprop="name">Blog</span></a>',
           '<meta itemprop="position" content="2" />',
         '</li>',
         '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">',
@@ -256,11 +256,11 @@
     box.setAttribute('aria-label', 'About the author');
     box.innerHTML = [
       '<div class="author-box-inner">',
-        '<img src="/img/companyLogo_transparent.png" alt="Janek Behrens" class="author-avatar" loading="lazy" width="56" height="56" />',
+        '<img src="img/companyLogo_transparent.png" alt="Janek Behrens" class="author-avatar" loading="lazy" width="56" height="56" />',
         '<div class="author-meta">',
           '<div class="author-name">Janek Behrens</div>',
-          '<div class="author-bio">Independent Atlassian Forge developer. Builds <a href="/priority-scoring-docs.html">Priority Scoring</a>, <a href="/visual-progress-tracker.html">Visual Progress Tracker</a>, and <a href="/codedoc-ai.html">CodeDoc AI</a> &mdash; native Forge apps for Jira and Confluence.</div>',
-          '<div class="author-links"><a href="https://www.linkedin.com/in/janek-behrens-55b3651b6/" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener">Atlassian Marketplace</a> &middot; <a href="/blog/">More articles</a></div>',
+          '<div class="author-bio">Independent Atlassian Forge developer. Builds <a href="priority-scoring-docs.html">Priority Scoring</a>, <a href="visual-progress-tracker.html">Visual Progress Tracker</a>, and <a href="codedoc-ai.html">CodeDoc AI</a> &mdash; native Forge apps for Jira and Confluence.</div>',
+          '<div class="author-links"><a href="https://www.linkedin.com/in/janek-behrens-55b3651b6/" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener">Atlassian Marketplace</a> &middot; <a href="blog/">More articles</a></div>',
         '</div>',
       '</div>'
     ].join('');
@@ -311,7 +311,7 @@
 
         var html = '<div class="related-posts-inner"><h2>Keep reading</h2><div class="related-posts-grid">';
         picks.forEach(function (p) {
-          html += '<a href="/blog/' + encodeURIComponent(p.file) + '" class="related-post-card">' +
+          html += '<a href="blog/' + encodeURIComponent(p.file) + '" class="related-post-card">' +
             '<div class="related-post-label">' + escapeHtml(p.label || '') + '</div>' +
             '<div class="related-post-title">' + escapeHtml(p.title) + '</div>' +
             '<div class="related-post-meta">' + (p.readTime ? p.readTime + ' min read' : '') +

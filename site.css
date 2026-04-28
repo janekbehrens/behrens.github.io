@@ -382,6 +382,7 @@ body {
   color: var(--text);
   letter-spacing: -0.01em;
   line-height: 1.25;
+  margin-bottom: 32px;
 }
 .badge {
   display: inline-flex;
