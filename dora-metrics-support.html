@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
+  <title>Support — DevOps Metrics for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #505F79; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">DevOps Metrics for Jira</p>
+
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>.
+    </p>
+
+    <div class="contact-box">
+      <p style="margin-bottom: 0;">
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Documentation:</strong> <a href="dora-metrics-docs.html">dora-metrics-docs</a>
+      </p>
+    </div>
+
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="dora-metrics-docs.html">documentation</a>. Common ones:</p>
+    <ul>
+      <li><strong>"Sample data" banner</strong> — that's the built-in demo. Open the gadget's <em>Edit</em> (pencil) menu and pick your project.</li>
+      <li><strong>Deployment frequency is zero</strong> — your project has no versions marked as <em>released</em>. Switch the deployment definition to "Issues reaching a status" in the wizard.</li>
+      <li><strong>"Analyzing your project history…"</strong> — the first run reads up to 12 months of issues once; afterwards the gadget loads instantly.</li>
+      <li><strong>Many issues excluded from lead time</strong> — issues that never passed through an <em>In progress</em> status can't be measured; the Details popup lists them.</li>
+      <li><strong>"You don't have access to this project's data"</strong> — the app enforces Jira project permissions per viewer; ask your admin for Browse access.</li>
+    </ul>
+
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Your deployment definition (releases vs status transitions)</li>
+      <li>The period selected and what the footnote says (issues / releases / excluded)</li>
+      <li>What you expected vs. what you saw (a screenshot helps a lot)</li>
+    </ul>
+
+    <p style="margin-top:24px;">
+      See also: <a href="dora-metrics-privacy-policy.html">Privacy Policy</a> ·
+      <a href="dora-metrics-security.html">Security Policy</a> ·
+      <a href="dora-metrics-terms-of-service.html">Terms of Service</a>
+    </p>
+  </main>
+<p style="max-width:880px;margin:2.5rem auto 1.5rem;padding:0 1.25rem;font-size:0.78rem;line-height:1.5;color:#6b7280;text-align:center;">DORA&trade; is a trademark of Google LLC. DevOps Metrics for Jira is an independent product by Janek Behrens and is not affiliated with or endorsed by Google. &ldquo;DORA metrics&rdquo; refers to the four software delivery metrics defined by the DevOps Research and Assessment program.</p>
+  <script src="/components.js"></script>
+</body>
+</html>

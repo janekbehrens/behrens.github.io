@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Chart for Jira — Sprint Velocity on Any Dashboard</title>
+  <meta name="description" content="A configurable sprint velocity chart for any Jira dashboard. Committed vs completed with an average-velocity line, your own Definition of Done, estimation modes, team-managed boards, multi-board compare, predictability and CSV/SVG export. Forge-native.">
+  <link rel="canonical" href="https://janekbehrens.de/velocity-chart.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/velocity-chart.html">
+  <meta property="og:title" content="Velocity Chart for Jira — Sprint Velocity on Any Dashboard">
+  <meta property="og:description" content="The sprint velocity chart the native report doesn't give you — on any dashboard, every board type, with your own Definition of Done.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velocity Chart for Jira — Sprint Velocity on Any Dashboard">
+  <meta name="twitter:description" content="The sprint velocity chart the native report doesn't give you — on any dashboard, every board type, with your own Definition of Done.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Velocity Chart for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows committed vs completed sprint velocity for any Scrum board — company- or team-managed — with a configurable Definition of Done, estimation modes, predictability, multi-board compare and CSV/SVG export.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "url": "https://janekbehrens.de/velocity-chart.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How is this different from Jira's built-in velocity report?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Jira's native velocity report lives inside a single board's Reports section — there is no native way to put it on a dashboard. It is locked to one board, tied to that board's column mapping for Done and to the board's estimation setting, and it excludes sub-tasks. Velocity Chart is a dashboard gadget that works on every Scrum board type, lets you define Done and the estimation field yourself, compares multiple boards, adds a predictability (say/do) number and exports to CSV and SVG."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Velocity Chart support team-managed projects?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, fully. Team-managed Scrum boards appear in the board picker tagged “team-managed” and use the same calculation as company-managed boards."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the app change my Jira issues?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Velocity Chart is strictly read-only and requests no write permissions. It only reads sprint data to draw the chart and caches the computed numbers in Atlassian Forge Storage. Your data never leaves Atlassian."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which Jira version do I need?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Velocity Chart requires Jira Cloud. It is Forge-native and runs entirely on Atlassian's infrastructure — no Data Center or Server support. You need a Scrum board with at least one completed sprint; Kanban boards have no sprints."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Velocity Chart free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is free for teams of up to 10 users, and larger teams get a free trial. The free experience always draws a real single-board velocity chart with the average line. Pro features — configurable Definition of Done, estimation modes, sub-task control, predictability, multi-board compare, more sprints and export — unlock while your site has an active subscription."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://janekbehrens.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Velocity Chart for Jira", "item": "https://janekbehrens.de/velocity-chart.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    .section-title { margin-bottom: 40px !important; }
+    .section-label { margin-bottom: 10px !important; display: block; }
+
+    :root {
+      --app-1: #0747A6;   /* deep blue */
+      --app-2: #00A3BF;   /* teal — primary accent */
+      --app-3: #36B37E;   /* green — completed */
+      --app-lite: #E6FCFF;
+      --app-border: #79E2F2;
+    }
+
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.65s ease, transform 0.65s ease !important; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s !important; }
+    .reveal-delay-2 { transition-delay: 0.3s !important; }
+    .reveal-delay-3 { transition-delay: 0.45s !important; }
+
+    @keyframes blob1 { 0%,100% { transform: translate(0,0) scale(1); } 40% { transform: translate(45px,-40px) scale(1.1); } 70% { transform: translate(-25px,20px) scale(0.96); } }
+    @keyframes blob2 { 0%,100% { transform: translate(0,0) scale(1); } 35% { transform: translate(-50px,35px) scale(1.07); } 70% { transform: translate(28px,-45px) scale(1.04); } }
+    @keyframes blob3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,28px) scale(1.06); } }
+    @keyframes dotDrift { 0% { transform: translateY(0); } 100% { transform: translateY(-32px); } }
+
+    .hero { padding: 96px 24px 100px; text-align: center; background: #052438; position: relative; overflow: hidden; }
+    .hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .hero-blob-1 { width: 520px; height: 520px; background: radial-gradient(circle, #0052CC, transparent 70%); top: -160px; left: -60px; opacity: 0.45; animation: blob1 13s ease-in-out infinite; }
+    .hero-blob-2 { width: 440px; height: 440px; background: radial-gradient(circle, #00B8D9, transparent 70%); top: -80px; right: -80px; opacity: 0.4; animation: blob2 16s ease-in-out infinite; }
+    .hero-blob-3 { width: 320px; height: 320px; background: radial-gradient(circle, #36B37E, transparent 70%); bottom: 60px; left: 38%; opacity: 0.35; animation: blob3 10s ease-in-out infinite; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; animation: dotDrift 8s linear infinite; }
+    .hero-wave { position: absolute; bottom: 0; left: 0; right: 0; line-height: 0; z-index: 3; }
+    .hero-wave svg { display: block; width: 100%; height: 80px; }
+    .hero-inner { position: relative; z-index: 4; }
+
+    .hero-back { position: absolute; top: 20px; left: 24px; display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 500; text-decoration: none; transition: color 0.15s; z-index: 5; }
+    .hero-back:hover { color: rgba(255,255,255,0.9); }
+
+    .hero-icon { width: 88px; height: 88px; border-radius: 22px; margin: 0 auto 28px; display: block; box-shadow: 0 8px 32px rgba(0,163,191,0.4); }
+    .hero-app-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,184,217,0.15); color: #79E2F2; border: 1px solid rgba(0,184,217,0.35); border-radius: 20px; padding: 4px 14px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.08; color: #fff; letter-spacing: -0.03em; max-width: 720px; margin: 0 auto 20px; }
+    .hero h1 em { font-style: normal; background: linear-gradient(90deg, #79E2F2, #7EE2B8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-tagline { font-size: 1.1rem; color: rgba(255,255,255,0.68); max-width: 540px; margin: 0 auto 36px; line-height: 1.7; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .btn-app-primary { background: #00A3BF; color: #fff; padding: 13px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.95rem; display: inline-block; transition: background 0.15s, box-shadow 0.18s, transform 0.18s; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,163,191,0.4); }
+    .btn-app-primary:hover { background: #00875A; box-shadow: 0 8px 28px rgba(54,179,126,0.45); transform: translateY(-2px); }
+    .btn-app-secondary { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); padding: 12px 22px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.22); display: inline-block; transition: background 0.15s, color 0.15s; white-space: nowrap; backdrop-filter: blur(8px); }
+    .btn-app-secondary:hover { background: rgba(255,255,255,0.15); color: #fff; }
+    .hero-note { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+    .trust-bar { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 24px; }
+    .trust-bar-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; font-weight: 600; color: var(--text-2); }
+    .trust-item svg { color: var(--app-2); flex-shrink: 0; }
+
+    .hero-screenshot-section { background: var(--bg); padding: 56px 24px 64px; }
+    .hero-screenshot-wrap { max-width: 920px; margin: 0 auto; }
+    .hero-screenshot-frame { width: 100%; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 16px 56px rgba(23,43,77,0.13); overflow: hidden; background: #fff; }
+    .hero-screenshot { width: 100%; height: auto; display: block; }
+    .hero-screenshot-caption { text-align: center; font-size: 0.82rem; color: var(--text-faint); margin-top: 14px; }
+
+    /* ── Comparison ── */
+    .compare { background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 72px 0; }
+    .compare-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 560px; }
+    .compare-table th { text-align: left; padding: 14px 18px; font-weight: 700; color: var(--text); background: var(--bg-card); border-bottom: 1px solid var(--border); }
+    .compare-table th.col-app { background: var(--app-lite); color: var(--app-1); }
+    .compare-table td { padding: 13px 18px; border-bottom: 1px solid var(--border-2); color: var(--text-2); vertical-align: top; line-height: 1.55; }
+    .compare-table td.col-app { color: var(--text-3); font-weight: 600; background: rgba(230,252,255,0.45); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .x { color: var(--text-faint); }
+    .compare-note { font-size: 0.85rem; color: var(--text-faint); margin-top: 16px; line-height: 1.6; }
+
+    /* ── Split ── */
+    .split-section { padding: 72px 0; background: var(--white); border-bottom: 1px solid var(--border); }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    @media (max-width: 720px) { .split-grid { grid-template-columns: 1fr; gap: 28px; } }
+    .split-text .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--app-2); margin-bottom: 12px; display: block; }
+    .split-text h2 { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 14px; letter-spacing: -0.02em; line-height: 1.2; }
+    .split-text p { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin-bottom: 14px; }
+    .check-list { list-style: none; padding: 0; }
+    .check-list li { font-size: 0.88rem; color: var(--text-3); padding-left: 20px; position: relative; margin-bottom: 8px; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--app-3); font-weight: 700; }
+    .split-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 8px 32px rgba(23,43,77,0.1); cursor: zoom-in; }
+    .pro-pill { display: inline-block; background: #6554C0; color: #fff; font-size: 0.64rem; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+
+    /* ── Feature grid ── */
+    .frameworks { background: var(--bg); border-bottom: 1px solid var(--border); padding: 72px 0; }
+    .frameworks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 720px) { .frameworks-grid { grid-template-columns: 1fr; } }
+    .fw-card { border: 1px solid var(--border); border-radius: 12px; padding: 26px 22px; background: #fff; transition: box-shadow 0.15s, border-color 0.15s; }
+    .fw-card:hover { box-shadow: 0 4px 20px rgba(23,43,77,0.08); border-color: var(--app-border); }
+    .fw-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--app-lite); border: 1px solid var(--app-border); display: flex; align-items: center; justify-content: center; color: var(--app-2); margin-bottom: 14px; }
+    .fw-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .fw-card p { font-size: 0.88rem; color: var(--text-2); line-height: 1.65; }
+    .feature-extras { margin-top: 20px; border-radius: 12px; padding: 22px 28px; background: linear-gradient(135deg, var(--app-lite) 0%, #fff 100%); border: 1px solid var(--app-border); }
+    .feature-extras-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--app-2); margin-bottom: 14px; }
+    .feature-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 7px 32px; list-style: none; }
+    @media (max-width: 560px) { .feature-list { grid-template-columns: 1fr; } }
+    .feature-list li { font-size: 0.875rem; color: var(--text-3); padding-left: 18px; position: relative; }
+    .feature-list li::before { content: "✓"; position: absolute; left: 0; color: var(--app-3); font-weight: 700; }
+
+    /* ── Steps ── */
+    .how-it-works { padding: 72px 0; background: #fff; border-bottom: 1px solid var(--border); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
+    .step { text-align: center; padding: 26px 18px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border); transition: box-shadow 0.15s, border-color 0.15s; }
+    .step:hover { box-shadow: 0 4px 20px rgba(23,43,77,0.08); border-color: var(--app-border); }
+    .step-number { width: 38px; height: 38px; background: linear-gradient(135deg, var(--app-2), var(--app-3)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin: 0 auto 14px; box-shadow: 0 4px 12px rgba(0,163,191,0.35); }
+    .step h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+    .step p { font-size: 0.83rem; color: var(--text-2); line-height: 1.55; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: 72px 0; background: var(--bg); border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border-2); }
+    .faq-item:first-child { border-top: 1px solid var(--border-2); }
+    .faq-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 4px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 0.97rem; font-weight: 600; color: var(--text); text-align: left; line-height: 1.4; }
+    .faq-trigger:hover { color: var(--app-2); }
+    .faq-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--app-lite); color: var(--app-2); display: flex; align-items: center; justify-content: center; transition: transform 0.25s, background 0.15s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--app-2); color: #fff; }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-item.open .faq-body { max-height: 320px; }
+    .faq-body p { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; padding: 0 4px 18px; }
+    .faq-body a { color: var(--app-2); text-decoration: none; }
+    .faq-body a:hover { text-decoration: underline; }
+
+    /* ── Cross-sell ── */
+    .cross-sell { background: #fff; border-bottom: 1px solid var(--border); padding: 48px 0; }
+    .cross-sell-cards { display: flex; gap: 16px; flex-wrap: wrap; }
+    .cross-sell-card { display: flex; align-items: center; gap: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; text-decoration: none; transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s; flex: 1 1 0; min-width: 0; }
+    .cross-sell-card:hover { box-shadow: 0 6px 24px rgba(23,43,77,0.1); border-color: #BAD6FB; transform: translateY(-2px); }
+    .cross-sell-card img { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; object-fit: contain; }
+    .cross-sell-card-text strong { display: block; font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .cross-sell-card-text span { font-size: 0.82rem; color: var(--text-2); line-height: 1.45; }
+    .cross-sell-arrow { margin-left: auto; font-size: 0.9rem; color: var(--blue); font-weight: 600; flex-shrink: 0; }
+    @media (max-width: 720px) { .cross-sell-card { flex: 1 1 100%; } }
+
+    /* ── CTA ── */
+    .cta-bottom { text-align: center; padding: 80px 24px; background: linear-gradient(145deg, #052438 0%, #00A3BF 55%, #36B37E 100%); position: relative; overflow: hidden; }
+    .cta-bottom::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
+    .cta-bottom-inner { position: relative; z-index: 1; }
+    .cta-bottom h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .cta-bottom p { color: rgba(255,255,255,0.82); font-size: 1rem; margin-bottom: 32px; }
+    .cta-bottom-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: var(--app-1); padding: 13px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.95rem; display: inline-block; transition: box-shadow 0.15s, transform 0.15s; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .btn-white:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.3); transform: translateY(-2px); }
+    .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; padding: 12px 26px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; border: 1.5px solid rgba(255,255,255,0.4); display: inline-block; transition: background 0.15s; backdrop-filter: blur(8px); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+    /* Lightbox */
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; border: none; background: none; }
+
+    @media (max-width: 480px) { .hero { padding: 64px 20px 100px; } .hero-ctas { flex-direction: column; align-items: center; } }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <section class="hero">
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-3" aria-hidden="true"></div>
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,40 C200,0 500,80 800,30 C1050,0 1280,70 1440,20 L1440,80 L0,80 Z" fill="#FAFBFC"/>
+      </svg>
+    </div>
+    <a href="index.html" class="hero-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All apps
+    </a>
+    <div class="hero-inner">
+      <img src="img/velocity-chart-icon.png" alt="Velocity Chart for Jira icon" class="hero-icon" width="88" height="88">
+      <div class="hero-app-tag">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Jira Cloud · Forge-native · Dashboard gadget
+      </div>
+      <h1>Your real sprint velocity,<br><em>on any dashboard</em></h1>
+      <p class="hero-tagline">
+        Committed vs completed with an average-velocity line — on every Scrum board, with your own Definition of Done. The velocity chart the native report keeps locked away on the board.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-app-primary">Get it on Marketplace →</a>
+        <a href="velocity-chart-docs.html" class="btn-app-secondary">View Documentation</a>
+      </div>
+      <p class="hero-note">Free for up to 10 users · Company- &amp; team-managed boards · Read-only, runs on Atlassian</p>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Atlassian Marketplace Partner</span>
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Company- &amp; team-managed Scrum</span>
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Read-only · No data leaves Atlassian</span>
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Free for up to 10 users</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-screenshot-section reveal">
+    <div class="hero-screenshot-wrap">
+      <div class="hero-screenshot-frame">
+        <img src="imgVelocityChartForJira/screenshot-1-velocity-chart.webp" alt="Velocity Chart gadget showing committed (grey) vs completed (green) bars for ten sprints, a dashed average-velocity line at 16.1 points, and an 85% say/do ratio" class="hero-screenshot" loading="lazy" width="1568" height="942">
+      </div>
+      <p class="hero-screenshot-caption">Committed vs completed for your last sprints, with the average-velocity line and say/do — on a dashboard, not buried on the board.</p>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <section class="compare">
+    <div class="section-inner">
+      <p class="section-label reveal" style="text-align:center; color: var(--app-2);">Native report vs Velocity Chart</p>
+      <h2 class="section-title reveal">Why Jira's built-in velocity report isn't enough</h2>
+      <div class="compare-table-wrap reveal">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Native velocity report</th>
+              <th class="col-app">Velocity Chart for Jira</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="x">✕</span> Hidden in a single board's <em>Reports</em> — no native dashboard view</td>
+              <td class="col-app">Dashboard gadget, right next to your other gadgets</td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> One board per report</td>
+              <td class="col-app">Compare up to 4 boards in one gadget <span class="pro-pill">PRO</span></td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> &ldquo;Done&rdquo; = the board's fixed column mapping</td>
+              <td class="col-app">Configurable Definition of Done <span class="pro-pill">PRO</span></td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> Estimation = the board's saved setting</td>
+              <td class="col-app">Story Points, issue count, or any numeric field <span class="pro-pill">PRO</span></td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> Sub-tasks always excluded</td>
+              <td class="col-app">Sub-task inclusion is an option <span class="pro-pill">PRO</span></td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> No predictability number</td>
+              <td class="col-app">Say/do ratio per sprint and on average <span class="pro-pill">PRO</span></td>
+            </tr>
+            <tr>
+              <td><span class="x">✕</span> No built-in export</td>
+              <td class="col-app">CSV &amp; SVG export <span class="pro-pill">PRO</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="compare-note reveal">
+        Jira's velocity report is genuinely useful — but it lives inside one board's Reports section, reads only that board's
+        filter and column mapping, and leaves out sub-tasks. Velocity Chart keeps the same committed-vs-completed idea and
+        puts it where you actually watch your sprint: the dashboard. <a href="velocity-chart-docs.html">See how velocity is calculated →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Configurable Done (USP) -->
+  <section class="split-section">
+    <div class="section-inner">
+      <div class="split-grid">
+        <div class="split-text reveal">
+          <span class="section-label">Your Definition of Done</span>
+          <h2>Count exactly the work your team calls &ldquo;done&rdquo;</h2>
+          <p>The native report counts only your board's last column. But plenty of teams have <em>Released</em>, <em>QA Passed</em>, or <em>Accepted</em> statuses that really mean done — and they get left out, quietly under-reporting every sprint.</p>
+          <p>Velocity Chart lets you pick the exact statuses that count as completed, so your velocity reflects how your team actually works.</p>
+          <ul class="check-list">
+            <li>Choose any combination of statuses as &ldquo;Done&rdquo; <span class="pro-pill">PRO</span></li>
+            <li>Defaults to your board's Done column — no setup needed to start</li>
+            <li>Estimate by Story Points, issue count, or a custom numeric field <span class="pro-pill">PRO</span></li>
+            <li>Include or exclude sub-tasks <span class="pro-pill">PRO</span></li>
+          </ul>
+        </div>
+        <img src="imgVelocityChartForJira/screenshot-2-configurable-done.webp" alt="Velocity Chart configuration form: a board picker with team-managed tags, sprints-to-show, estimation mode, and checkboxes to choose which statuses count as Done" class="split-img reveal reveal-delay-1" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature grid -->
+  <section class="frameworks">
+    <div class="section-inner">
+      <p class="section-label reveal" style="text-align:center; color: var(--app-2);">Velocity, your way</p>
+      <h2 class="section-title reveal">Built for how real teams run Scrum</h2>
+      <div class="frameworks-grid">
+        <div class="fw-card reveal">
+          <div class="fw-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Every board type</h3>
+          <p>Company-managed <strong>and</strong> team-managed Scrum boards, side by side in the same picker. Team-managed boards are tagged so you always know what you're charting.</p>
+        </div>
+        <div class="fw-card reveal reveal-delay-2">
+          <div class="fw-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+          </div>
+          <h3>Average velocity</h3>
+          <p>A dashed average-velocity line across the sprints you're showing, plus the numeric average — the number you actually use to forecast how much the next sprint can hold.</p>
+        </div>
+        <div class="fw-card reveal reveal-delay-3">
+          <div class="fw-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Predictability <span class="pro-pill">PRO</span></h3>
+          <p>The say/do ratio — completed ÷ committed — per sprint and on average, so you can see how reliably the team delivers what it takes on, not just how much.</p>
+        </div>
+      </div>
+      <div class="feature-extras reveal">
+        <p class="feature-extras-title">Also included</p>
+        <ul class="feature-list">
+          <li>Committed reconstructed from real sprint scope at start</li>
+          <li>Up to 7 sprints (Free) or 20 sprints (Pro)</li>
+          <li>Full-name or numbers-only sprint labels</li>
+          <li>Clean, fast UI with dark-mode support</li>
+          <li>Multiple boards compared in one gadget (Pro)</li>
+          <li>CSV &amp; SVG export for slides and reports (Pro)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Multi-board compare -->
+  <section class="split-section" style="background: var(--bg);">
+    <div class="section-inner">
+      <div class="split-grid">
+        <img src="imgVelocityChartForJira/screenshot-3-multi-board.webp" alt="Two Scrum boards compared in a single Velocity Chart gadget, each with its own bars, average and say/do, using one shared configuration" class="split-img reveal" loading="lazy">
+        <div class="split-text reveal reveal-delay-1">
+          <span class="section-label">Compare teams the right way <span class="pro-pill">PRO</span></span>
+          <h2>Several boards, one shared yardstick</h2>
+          <p>Put up to four Scrum boards in one gadget. Each gets its own compact chart, average and say/do — all using the <strong>same Definition of Done and estimation</strong>, so you're comparing like for like in a single dashboard slot.</p>
+          <ul class="check-list">
+            <li>Up to 4 boards in one gadget, one configuration</li>
+            <li>Ideal for a program or portfolio dashboard</li>
+            <li>Export every board's numbers to CSV in one click</li>
+          </ul>
+          <p style="font-size:0.82rem;color:var(--text-faint);margin-top:4px;">A note on comparing teams: velocity is relative to each team's own estimation, so use it to spot trends and stabilise a team's own pace — not to rank teams against each other.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <div class="section-inner">
+      <p class="section-label reveal" style="text-align:center; color: var(--app-2);">Setup</p>
+      <h2 class="section-title reveal">On your dashboard in 3 steps</h2>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-number">1</div>
+          <h3>Install &amp; add the gadget</h3>
+          <p>Install from the Marketplace, open a Jira dashboard, choose <em>Add gadget</em> and search for Velocity Chart.</p>
+        </div>
+        <div class="step reveal reveal-delay-1">
+          <div class="step-number">2</div>
+          <h3>Pick a board</h3>
+          <p>Select any Scrum board — company- or team-managed — with at least one completed sprint. Save.</p>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <div class="step-number">3</div>
+          <h3>Tune it to your team</h3>
+          <p>Set your Definition of Done, estimation field and sprint count — or leave the defaults and you're done.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="section-inner" style="max-width: 720px;">
+      <p class="section-label reveal" style="text-align:center; color: var(--app-2);">FAQ</p>
+      <h2 class="section-title reveal">Common questions</h2>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-trigger">How is this different from Jira's built-in velocity report?<span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-body"><p>The native report lives inside a single board's <strong>Reports</strong> section — there's no native way to put velocity on a dashboard. It's locked to one board, tied to that board's column mapping and estimation setting, and it excludes sub-tasks. Velocity Chart is a dashboard gadget that works on every Scrum board type, lets you define Done and the estimation field yourself, compares multiple boards, adds a say/do number and exports to CSV and SVG.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-trigger">Does it support team-managed projects?<span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-body"><p>Yes — fully. Team-managed Scrum boards appear in the picker tagged &ldquo;team-managed&rdquo; and use the same committed-vs-completed calculation as company-managed boards.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-trigger">Does the app change my Jira issues?<span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-body"><p>No. Velocity Chart is strictly <strong>read-only</strong> and requests no write permissions. It reads sprint data to draw the chart and caches the computed numbers in Atlassian Forge Storage. Your data never leaves Atlassian — see the <a href="velocity-chart-security.html">Security Policy</a>.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-trigger">Which Jira version do I need?<span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-body"><p>Velocity Chart requires <strong>Jira Cloud</strong>. It's Forge-native and runs entirely on Atlassian's infrastructure — no Data Center or Server. You need a Scrum board with at least one completed sprint; Kanban boards have no sprints.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-trigger">Is it free?<span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-body"><p>It's free for teams of up to 10 users, and larger teams get a free trial. The free experience always draws a real single-board velocity chart with the average line. <strong>Pro</strong> features — configurable Definition of Done, estimation modes, sub-task control, predictability, multi-board compare, more sprints and export — unlock while your site has an active subscription. See the Marketplace listing for current per-user pricing.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-sell -->
+  <section class="cross-sell">
+    <div class="section-inner">
+      <p class="section-label reveal" style="text-align:left; margin-bottom:16px;">Also from Janek Behrens</p>
+      <div class="cross-sell-cards">
+        <a href="visual-progress-tracker.html" class="cross-sell-card reveal">
+          <img src="img/progresstracker144logo.png" alt="Visual Progress Tracker" loading="lazy">
+          <div class="cross-sell-card-text">
+            <strong>Visual Progress Tracker for Jira</strong>
+            <span>Color-coded progress bars on every Jira issue and dashboard.</span>
+          </div>
+          <span class="cross-sell-arrow">View →</span>
+        </a>
+        <a href="priority-scoring.html" class="cross-sell-card reveal reveal-delay-1">
+          <img src="img/priority-scoring-icon.png" alt="Priority Scoring" loading="lazy">
+          <div class="cross-sell-card-text">
+            <strong>Priority Scoring for Jira</strong>
+            <span>Rank your backlog with RICE, WSJF, ICE — and a Rovo AI agent.</span>
+          </div>
+          <span class="cross-sell-arrow">View →</span>
+        </a>
+        <a href="codedoc-ai.html" class="cross-sell-card reveal reveal-delay-2">
+          <img src="img/codedoc-ai-icon.png" alt="CodeDoc AI" loading="lazy">
+          <div class="cross-sell-card-text">
+            <strong>CodeDoc AI for Confluence</strong>
+            <span>Auto-generate docs from your Git repos with your own AI provider.</span>
+          </div>
+          <span class="cross-sell-arrow">View →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-bottom">
+    <div class="cta-bottom-inner">
+      <h2>See your velocity where you actually look.</h2>
+      <p>Free for up to 10 users — a real velocity chart on any dashboard, in minutes.</p>
+      <div class="cta-bottom-btns">
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Atlassian Marketplace →</a>
+        <a href="velocity-chart-docs.html" class="btn-ghost">View Documentation</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script src="components.js"></script>
+  <script>
+    function checkRevealNow() {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+        if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('visible');
+      });
+    }
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+    checkRevealNow();
+
+    document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+      btn.addEventListener('click', function() { btn.closest('.faq-item').classList.toggle('open'); });
+    });
+
+    // Lightbox for screenshots
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.currentSrc || img.src; lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('.split-img, .hero-screenshot').forEach(function (img) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+  </script>
+</body>
+</html>

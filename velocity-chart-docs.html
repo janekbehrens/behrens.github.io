@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
+  <title>Velocity Chart for Jira — Documentation &amp; Setup</title>
+  <meta name="description" content="Setup and user guide for Velocity Chart for Jira — committed vs completed sprint velocity on any dashboard, a configurable Definition of Done, estimation modes, team-managed boards, multi-board compare, predictability and CSV/SVG export.">
+  <link rel="canonical" href="https://janekbehrens.de/velocity-chart-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Velocity Chart for Jira — Documentation &amp; Setup">
+  <meta property="og:description" content="Committed vs completed sprint velocity on any Jira dashboard — configurable Definition of Done, estimation modes, team-managed boards, multi-board compare, predictability and export.">
+  <meta property="og:url" content="https://janekbehrens.de/velocity-chart-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/app-assets/logo_512.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Velocity Chart for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows committed vs completed sprint velocity for any Scrum board — company- or team-managed — with a configurable Definition of Done, estimation modes, predictability, multi-board compare and CSV/SVG export.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Velocity Chart for Jira — Documentation & Setup",
+        "description": "Setup and user guide for Velocity Chart for Jira — committed vs completed velocity, configurable Definition of Done, estimation modes, team-managed boards, multi-board compare and export.",
+        "url": "https://janekbehrens.de/velocity-chart-docs.html",
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does the velocity chart say “No closed sprints found”?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Velocity needs a Scrum board with at least one completed sprint. Kanban boards have no sprints. Start and complete a sprint, or pick a board that already has closed sprints." }
+          },
+          {
+            "@type": "Question",
+            "name": "The bars are empty or zero — why?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your issues are estimated in a different field than the board's default. Open the gadget's Edit form, go to Estimation and choose the field your team actually uses (for example Story point estimate), or switch to Issue count." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is this different from Jira's built-in velocity report?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The native report is hidden on the board, locked to one board, tied to a fixed Done column and estimation field, and weak on team-managed projects. Velocity Chart lives on any dashboard, works on every board type, lets you define Done and the estimation field yourself, compares multiple boards, and adds predictability and CSV/SVG export." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Velocity Chart support team-managed projects?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, fully. Team-managed Scrum boards appear in the board picker tagged “team-managed” and use the same calculation as company-managed boards." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the app change my Jira issues?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Velocity Chart is strictly read-only and requests no write permissions. It only reads sprint data to draw the chart and caches the computed numbers in Atlassian Forge Storage." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is committed work calculated?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Committed is the sum of estimates of the issues that were in the sprint at its start, reconstructed from the Sprint-field change history. Completed is the sum of estimates of the issues that are Done at the end of the sprint, using your configured Done statuses." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #505F79; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p a, li a, .tip a, .warning a { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; border: none; margin: 0; }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; opacity: 0.8; border: none; background: none; padding: 4px 8px; }
+    .lightbox-close:hover { opacity: 1; }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #6B3D00; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
+    .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
+    .toc h2 { margin-top: 0; color: #172B4D; font-size: 1rem; font-weight: 600; border-bottom: none; padding-bottom: 0; margin-bottom: 12px; }
+    .toc ol { margin-bottom: 0; }
+    .toc li { margin-bottom: 4px; }
+    .pro { display: inline-block; background: #6554C0; color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+    .feature-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .feature-table th { background: #F4F5F7; text-align: left; padding: 10px 14px; border: 1px solid #DFE1E6; font-weight: 600; }
+    .feature-table td { padding: 10px 14px; border: 1px solid #DFE1E6; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    @media (max-width: 600px) { .container { padding: 32px 16px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.15rem; } }
+
+    /* ===== Sticky sidebar TOC ===== */
+    .sidebar { display: none; position: fixed; top: 0; width: 230px; height: 100vh; overflow-y: auto; scrollbar-width: none; padding: 76px 16px 52px 0; }
+    .sidebar::-webkit-scrollbar { display: none; }
+    .sidebar-toc-heading { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5E6C84; margin-bottom: 14px; padding-left: 12px; }
+    .sidebar-toc a { display: block; font-size: 0.81rem; line-height: 1.4; color: #505F79; text-decoration: none; padding: 3px 8px 3px 10px; border-left: 2px solid transparent; margin-bottom: 1px; transition: color 0.18s, border-color 0.18s, background-color 0.18s; border-radius: 0 4px 4px 0; }
+    .sidebar-toc a:hover { color: #172B4D; text-decoration: none; }
+    .sidebar-toc a.active { color: #0052CC; border-left-color: #0052CC; font-weight: 500; background: rgba(0, 82, 204, 0.05); }
+    @media (min-width: 1260px) { .sidebar { display: block; left: calc(50vw - 630px); } .toc { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky sidebar (visible on wide screens) -->
+  <nav class="sidebar">
+    <div class="sidebar-toc-heading">Contents</div>
+    <nav class="sidebar-toc">
+      <a href="#overview">1. Overview</a>
+      <a href="#start">2. Quick start</a>
+      <a href="#config">3. Configuration</a>
+      <a href="#calc">4. How velocity is calculated</a>
+      <a href="#multi">5. Multiple boards</a>
+      <a href="#export">6. Export</a>
+      <a href="#plans">7. Free vs Pro</a>
+      <a href="#faq">8. FAQ &amp; Troubleshooting</a>
+      <a href="#support">9. Support</a>
+    </nav>
+  </nav>
+
+  <main class="container">
+
+    <h1>Velocity Chart for Jira — Documentation</h1>
+    <p class="subtitle">The sprint velocity chart the native report doesn't give you — on any dashboard, any board type, with your own Definition of Done.</p>
+
+    <!-- Video Introduction -->
+    <div class="video-wrapper">
+      <div class="yt-consent"
+           style="background-image: url('/imgVelocityChartForJira/app-assets/marketplace-banner.png')"
+           data-src="https://www.youtube-nocookie.com/embed/QxkwbU95n0E?autoplay=1"
+           data-title="Velocity Chart for Jira — Quick Start">
+        <button class="yt-play-btn" aria-label="Load and play video">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <p class="yt-consent-label">Click to load video from YouTube (youtube-nocookie.com).<br>
+          <a href="/velocity-chart-privacy-policy.html">Privacy Policy</a></p>
+      </div>
+    </div>
+
+    <!-- Table of Contents (shown on narrow screens) -->
+    <div class="toc">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#start">Quick start</a></li>
+        <li><a href="#config">Configuration</a></li>
+        <li><a href="#calc">How velocity is calculated</a></li>
+        <li><a href="#multi">Multiple boards</a></li>
+        <li><a href="#export">Export</a></li>
+        <li><a href="#plans">Free vs Pro</a></li>
+        <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      Velocity Chart adds a clean <strong>sprint velocity chart</strong> to any Jira dashboard. For each
+      closed sprint it shows <strong>committed</strong> (grey) versus <strong>completed</strong> (green)
+      work, a dashed <strong>average-velocity</strong> line, and your <strong>say/do ratio</strong>.
+    </p>
+    <ul>
+      <li>Works on <strong>company-managed and team-managed</strong> Scrum boards.</li>
+      <li>Define <strong>“Done” yourself</strong> — count exactly the statuses you consider complete.</li>
+      <li>Estimate by <strong>Story Points, issue count, or any numeric custom field.</strong></li>
+      <li>Compare <strong>multiple boards</strong> in one gadget and <strong>export</strong> to CSV/SVG.</li>
+    </ul>
+    <img src="imgVelocityChartForJira/screenshot-1-velocity-chart.webp" alt="Velocity chart showing committed vs completed bars with an average line and say/do ratio" class="screenshot" loading="lazy">
+
+    <!-- 2. Quick start -->
+    <h2 id="start">2. Quick start</h2>
+    <div class="step-box">
+      <h3>Step 1 — Install from the Marketplace</h3>
+      <ol>
+        <li>Go to <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Velocity Chart for Jira on the Atlassian Marketplace</a> and click <strong>Get it now</strong>.</li>
+        <li>Choose your Jira site and confirm. Free for up to 10 users.</li>
+      </ol>
+    </div>
+    <div class="step-box">
+      <h3>Step 2 — Add the gadget &amp; pick a board</h3>
+      <ol>
+        <li>Open a Jira <strong>Dashboard</strong> → <strong>Add gadget</strong> → search for <em>Velocity Chart</em> → <strong>Add</strong>.</li>
+        <li>Click the gadget's <strong>pencil / Edit</strong> icon.</li>
+        <li>Pick a <strong>Scrum board</strong> (company-managed or team-managed) → <strong>Save</strong>.</li>
+      </ol>
+    </div>
+    <img src="imgVelocityChartForJira/screenshot-4-any-dashboard.webp" alt="Adding the Velocity Chart gadget to a Jira dashboard" class="screenshot" loading="lazy">
+    <div class="warning">
+      <strong>Note:</strong> velocity needs a <strong>Scrum board with at least one completed sprint</strong>.
+      Kanban boards have no sprints and won't appear in the picker.
+    </div>
+
+    <!-- 3. Configuration -->
+    <h2 id="config">3. Configuration</h2>
+    <p>Everything is configured from the gadget's <strong>Edit</strong> mode:</p>
+    <img src="imgVelocityChartForJira/screenshot-2-configurable-done.webp" alt="The gadget configuration form including the configurable Done-status mapping" class="screenshot" loading="lazy">
+    <table class="feature-table">
+      <tr><th>Setting</th><th>What it does</th></tr>
+      <tr><td><strong>Board(s)</strong></td><td>The Scrum board to chart. Team-managed boards are tagged “team-managed”. <span class="pro">PRO</span> Select up to 4 boards to compare.</td></tr>
+      <tr><td><strong>Sprints to show</strong></td><td>How many recent <em>closed</em> sprints to display. Free: up to 7, Pro: up to 20.</td></tr>
+      <tr><td><strong>Sprint labels</strong></td><td><em>Full name</em> or <em>Numbers only</em>. Long names are shortened on the axis; hover a label for the full name.</td></tr>
+      <tr><td><strong>Estimation</strong> <span class="pro">PRO</span></td><td>Story Points (the board's estimation field, with a fallback to the standard Story Points field), Issue count, or any numeric custom field.</td></tr>
+      <tr><td><strong>Count as “Done”</strong> <span class="pro">PRO</span></td><td>Choose exactly which statuses count as completed. Defaults to your board's Done column. This is the key difference from Jira's built-in report.</td></tr>
+      <tr><td><strong>Include sub-tasks</strong> <span class="pro">PRO</span></td><td>Off by default (matches Jira's native behaviour). Turn on to include sub-task estimates.</td></tr>
+    </table>
+    <div class="tip">
+      <strong>Tip:</strong> if the bars look empty, your team estimates in a different field than the board
+      default. Set <em>Estimation → Custom numeric field</em> to the field you actually use (e.g.
+      <code>Story point estimate</code>).
+    </div>
+
+    <!-- 4. How velocity is calculated -->
+    <h2 id="calc">4. How velocity is calculated</h2>
+    <p>For each closed sprint the gadget shows two bars:</p>
+    <ul>
+      <li><strong>Committed</strong> (grey) — the sum of estimates of the issues that were in the sprint <em>at its start</em>, reconstructed from the Sprint-field change history.</li>
+      <li><strong>Completed</strong> (green) — the sum of estimates of the issues that are <em>Done at the end</em> of the sprint, where “Done” is your configured status set (or the board's Done column by default).</li>
+    </ul>
+    <p>
+      <strong>Average velocity</strong> is the mean completed work across the displayed sprints (the dashed
+      line). <strong>Say/Do ratio</strong> (predictability) is completed ÷ committed — how reliably the team
+      delivers what it commits to.
+    </p>
+    <div class="warning">
+      <strong>About committed work:</strong> committed is reconstructed over the issues still in the sprint at
+      close. An issue committed at the start but <em>removed</em> before close is not counted — this only
+      under-reports committed when scope was actively removed mid-sprint (uncommon).
+    </div>
+
+    <!-- 5. Multiple boards -->
+    <h2 id="multi">5. Multiple boards <span class="pro">PRO</span></h2>
+    <p>
+      Select several Scrum boards in one gadget to compare them side by side. Each board gets its own compact
+      chart with its own average and say/do, all using the <strong>same estimation and Definition of Done</strong>
+      — so you compare like for like in a single dashboard slot.
+    </p>
+    <img src="imgVelocityChartForJira/screenshot-3-multi-board.webp" alt="Two boards compared in one gadget with a shared configuration" class="screenshot" loading="lazy">
+
+    <!-- 6. Export -->
+    <h2 id="export">6. Export <span class="pro">PRO</span></h2>
+    <ul>
+      <li><strong>Export CSV</strong> — board, sprint, committed, completed and say/do for every displayed sprint (across all selected boards).</li>
+      <li><strong>Download SVG</strong> — the chart as a crisp, scalable image for slides and reports.</li>
+    </ul>
+
+    <!-- 7. Free vs Pro -->
+    <h2 id="plans">7. Free vs Pro</h2>
+    <p>
+      Velocity Chart has <strong>one simple plan</strong> — there is no separate &ldquo;Free&rdquo; edition to
+      buy up front. The app is <strong>free for teams of up to 10 users</strong>, and larger teams get a
+      <strong>free trial</strong>. <strong>Pro features unlock automatically while your site has an active
+      subscription</strong> (the free trial counts too).
+    </p>
+    <p>
+      You land on the reduced <strong>Free</strong> experience when a site has <strong>no active
+      subscription</strong> — typically a larger team after its trial ends, or after a paid subscription is
+      cancelled. The gadget never switches off: it keeps drawing a <strong>single-board velocity chart</strong>
+      (the board's default Done and estimation, up to 7 closed sprints) so you don't lose access to your data.
+      Re-subscribe at any time and the Pro features come back instantly.
+    </p>
+    <h3>Feature comparison</h3>
+    <table class="feature-table">
+      <tr><th>Capability</th><th>Free</th><th>Pro</th></tr>
+      <tr><td>Single-board velocity chart + average line</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Company- &amp; team-managed Scrum boards</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Sprints shown</td><td>up to 7</td><td>up to 20</td></tr>
+      <tr><td>Configurable Definition of Done</td><td>—</td><td>✓</td></tr>
+      <tr><td>Estimation mode (issue count / custom field)</td><td>board default</td><td>✓</td></tr>
+      <tr><td>Include sub-tasks</td><td>—</td><td>✓</td></tr>
+      <tr><td>Predictability / say-do</td><td>—</td><td>✓</td></tr>
+      <tr><td>Multiple boards in one gadget</td><td>—</td><td>✓</td></tr>
+      <tr><td>CSV &amp; SVG export</td><td>—</td><td>✓</td></tr>
+    </table>
+    <h3>Which plan is right for you?</h3>
+    <table class="feature-table">
+      <tr><th>&nbsp;</th><th>Free</th><th>Pro</th></tr>
+      <tr><td><strong>Best for</strong></td><td>Small teams and a quick single-board velocity check.</td><td>Several teams, custom workflows, and reporting or forecasting.</td></tr>
+      <tr><td><strong>Advantages</strong></td><td>No setup and no cost — a real committed-vs-completed chart with the average-velocity line, on any dashboard and any board type (including team-managed).</td><td>Velocity measured your way: configurable Definition of Done, estimation modes, sub-task control, predictability (say/do), multi-board compare, more sprints, and CSV/SVG export.</td></tr>
+      <tr><td><strong>Limitations</strong></td><td>One board · the board's default Done &amp; estimation · up to 7 sprints · no predictability or export.</td><td>Per-user subscription once a site has more than 10 users.</td></tr>
+    </table>
+    <p>Free for teams of up to 10 users. See the Marketplace listing for current per-user pricing.</p>
+
+    <!-- 8. FAQ -->
+    <h2 id="faq">8. FAQ &amp; Troubleshooting</h2>
+    <h3>It says “No closed sprints found”.</h3>
+    <p>The board has no completed sprint yet. Start and complete a sprint, or pick a board that already has closed sprints. Kanban boards have no sprints.</p>
+    <h3>The bars are empty / zero.</h3>
+    <p>Your issues are estimated in a different field than the board's default. Open Edit → Estimation and choose the field your team actually uses (e.g. <code>Story point estimate</code>), or switch to <em>Issue count</em>.</p>
+    <h3>A board is missing from the picker.</h3>
+    <p>Only Scrum boards (company- and team-managed) appear; classic Kanban boards are excluded because they have no sprints. Newly created boards appear immediately — the picker is not cached.</p>
+    <h3>How is this different from Jira's built-in velocity report?</h3>
+    <p>The native report is hidden on the board, locked to one board, tied to a fixed Done column and estimation field, and weak on team-managed projects. This gadget lives on any dashboard, works on every board type, lets you define “Done” and the estimation field yourself, compares multiple boards, and adds predictability and export.</p>
+    <h3>Do you support team-managed projects?</h3>
+    <p>Yes — fully. Team-managed Scrum boards appear in the picker tagged “team-managed” and use the same calculation.</p>
+    <h3>Does the app change my issues?</h3>
+    <p>No. Velocity Chart is strictly read-only and requests no write permissions. See the <a href="velocity-chart-security.html">Security Policy</a>.</p>
+
+    <!-- 9. Support -->
+    <h2 id="support">9. Support</h2>
+    <div class="contact-box">
+      <p style="margin-bottom: 0;">
+        Questions, bugs, or feature requests? We typically respond within 1–2 business days.<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>More:</strong> <a href="velocity-chart-support.html">Support</a> ·
+        <a href="velocity-chart-privacy-policy.html">Privacy</a> ·
+        <a href="velocity-chart-security.html">Security</a> ·
+        <a href="velocity-chart-terms-of-service.html">Terms</a>
+      </p>
+    </div>
+  </main>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
+    // Lightbox
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.src; lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('img.screenshot').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+
+    // Scroll-spy for the sidebar TOC
+    (function () {
+      var ids = ['overview', 'start', 'config', 'calc', 'multi', 'export', 'plans', 'faq', 'support'];
+      var tocLinks = document.querySelectorAll('.sidebar-toc a[href^="#"]');
+      function findActiveId() {
+        var scrollTop = window.pageYOffset + 130, active = ids[0];
+        for (var i = 0; i < ids.length; i++) {
+          var el = document.getElementById(ids[i]);
+          if (el && el.getBoundingClientRect().top + window.pageYOffset <= scrollTop) active = ids[i];
+        }
+        return active;
+      }
+      function update() {
+        var active = findActiveId();
+        for (var i = 0; i < tocLinks.length; i++) {
+          var isActive = tocLinks[i].getAttribute('href') === '#' + active;
+          if (isActive && !tocLinks[i].classList.contains('active')) {
+            tocLinks[i].classList.add('active');
+            tocLinks[i].scrollIntoView({ block: 'nearest' });
+          } else if (!isActive) { tocLinks[i].classList.remove('active'); }
+        }
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) { window.requestAnimationFrame(function () { update(); ticking = false; }); ticking = true; }
+      }, { passive: true });
+      update();
+    })();
+  </script>
+  <script src="/components.js"></script>
+</body>
+</html>

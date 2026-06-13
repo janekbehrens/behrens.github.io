@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Documenting Jira Issues: From Description Field to Linked Confluence Pages | Janek Behrens</title>
+  <meta name="description" content="Most teams document Jira issues in three layers — the description field, attached files, and linked Confluence pages. Here's how each layer earns its keep, what to put where, and how to keep the linked Confluence pages from going stale.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/documenting-jira-issues.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Documenting Jira Issues: From Description Field to Linked Confluence Pages",
+    "description": "Most teams document Jira issues in three layers — the description field, attached files, and linked Confluence pages. Here's how each layer earns its keep, what to put where, and how to keep the linked Confluence pages from going stale.",
+    "url": "https://janekbehrens.de/blog/documenting-jira-issues.html",
+    "datePublished": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-05-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/companyLogo.png",
+    "keywords": ["Jira", "Documentation", "Confluence", "Issue"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Documenting Jira Issues: From Description Field to Linked Confluence Pages">
+  <meta property="og:description" content="Three layers of issue documentation in Jira — description, attachments, linked Confluence pages — and what belongs in each.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/documenting-jira-issues.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Documentation">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documenting Jira Issues: From Description Field to Linked Confluence Pages">
+  <meta name="twitter:description" content="Three layers of issue documentation in Jira — description, attachments, linked Confluence pages — and what belongs in each.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I document a Jira issue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jira gives you three native places to document an issue: the description field (rich-text, lives on the issue itself), attachments (files), and links to other content including Confluence pages. The description holds the immediate context — what, why, acceptance criteria. Use Confluence links for anything that other issues will also need to reference (architecture, specs, decisions)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I link a Confluence page to a Jira issue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On the Jira issue, click Link → Confluence page, then paste the URL or search by title. The page appears in the issue's Linked content section. The reverse link appears on the Confluence page automatically if the page is in the same site. This native integration is free and works in both Jira Cloud and Confluence Cloud."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I write documentation in the Jira description or in Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Documentation that only matters for this one issue goes in the description field — acceptance criteria, reproduction steps, scope notes. Documentation that other issues, other teams, or future readers will also need goes in Confluence, linked from the issue. The rule of thumb: if you would copy-paste the same text into a second issue, it belongs in Confluence."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I keep Confluence pages linked to Jira issues from going stale?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Two common approaches: (1) tie the Confluence page to a regular review cadence, e.g. updated in the sprint that closes the related epic; (2) regenerate the Confluence page automatically from a source-of-truth, such as the underlying code repository for technical pages. CodeDoc AI for Confluence regenerates pages from source code on webhook or schedule, removing the human gap entirely."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .layer-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .layer-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .layer-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">May 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>Documenting Jira Issues: From Description Field to Linked Confluence Pages</h1>
+      <p class="article-intro">
+        Most Jira issues end up over-documented in some places and undocumented in others — a wall of text in the description that nobody reads, no links to the architecture context the work depends on. The fix isn't more writing. It's separating documentation into the three layers Jira already gives you, and using each one for what it's actually good at.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="three-layers">Three layers of issue documentation</h2>
+      <p>Every Jira issue has three native places to document. Each one is good at something different:</p>
+
+      <table class="layer-table">
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Where</th>
+            <th>What belongs there</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Issue description</strong></td>
+            <td>The description field on the issue itself</td>
+            <td>What this specific issue is, why it exists, acceptance criteria, reproduction steps</td>
+          </tr>
+          <tr>
+            <td><strong>Attachments</strong></td>
+            <td>Files attached to the issue</td>
+            <td>Screenshots, log dumps, design mockups, one-off PDFs</td>
+          </tr>
+          <tr>
+            <td><strong>Linked Confluence pages</strong></td>
+            <td>Linked content on the issue + Confluence side</td>
+            <td>Anything other issues will also reference — architecture, specs, decisions, RFCs</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>The decisive question:</strong> "Would I copy-paste this text into a second issue?" If yes, it belongs in Confluence with both issues linking to it. If no, it belongs in the description.</p>
+      </div>
+
+      <h2 id="description-field">Layer 1 — the description field</h2>
+      <p>
+        The description is the only documentation that appears <em>on the issue itself</em>. Everything in it shows up when someone clicks the ticket. So treat it as the answer to "if a developer opens this issue cold, what do they need to know in the first 30 seconds?".
+      </p>
+      <p>For a story or task, a good template is short:</p>
+      <ul>
+        <li><strong>Context</strong> — one or two sentences on why this is in the backlog.</li>
+        <li><strong>Goal</strong> — what good looks like once it's done.</li>
+        <li><strong>Acceptance criteria</strong> — bullet list of testable conditions.</li>
+        <li><strong>Notes</strong> — links to related Confluence pages, prior tickets, design mockups.</li>
+      </ul>
+      <p>For a bug, the template flips toward reproduction:</p>
+      <ul>
+        <li>Environment, browser/version, account or tenant.</li>
+        <li>Steps to reproduce.</li>
+        <li>Expected vs actual.</li>
+        <li>Logs or screenshots (as attachments).</li>
+      </ul>
+
+      <p>
+        What does <em>not</em> belong in the description: architecture explanations, system overviews, project background. Those are the same on every ticket that touches the same module — that's the cue to move them to Confluence and link from each ticket instead.
+      </p>
+
+      <h2 id="attachments">Layer 2 — attachments</h2>
+      <p>
+        Attachments are easy to overuse. They're great for one-off evidence (a screenshot of the bug as it appeared, a log fragment, a design comp). They're bad for anything that will be referenced more than once, because they're discoverable only by opening the issue.
+      </p>
+      <p>Practical rule: if an attachment matters to anyone who isn't already looking at this issue, it should be a Confluence page instead.</p>
+
+      <h2 id="confluence-links">Layer 3 — linked Confluence pages</h2>
+      <p>
+        Confluence is the right home for any documentation that more than one issue will reference. The native Jira-Confluence integration handles the linking in both directions: link the page on the issue, and the issue appears under "Jira issues" on the Confluence page.
+      </p>
+
+      <h3 id="how-to-link">How to link a Confluence page to a Jira issue</h3>
+      <ol>
+        <li>Open the Jira issue.</li>
+        <li>Click <strong>Link</strong> (the chain icon) → <strong>Confluence page</strong>.</li>
+        <li>Paste the page URL or search by title.</li>
+        <li>Save. The page now appears under <em>Linked content</em> on the issue.</li>
+        <li>Open the Confluence page — the issue shows up in the "Jira issues" macro section automatically if the page is in the same Atlassian site.</li>
+      </ol>
+
+      <h3 id="patterns">Common linking patterns</h3>
+      <ul>
+        <li><strong>Epic → spec page.</strong> Every epic links to its scoping/spec Confluence page. Stories under the epic don't need to repeat the link — it's reachable through the parent.</li>
+        <li><strong>Sprint → ceremonies page.</strong> The sprint's first issue links to the planning notes; the last issue links to the retro page.</li>
+        <li><strong>Bug → architecture context.</strong> A bug that touches a specific module links to the module's Confluence overview, so the dev fixing it has the context without trawling the codebase.</li>
+        <li><strong>Decision → decision log.</strong> When a ticket forces a non-obvious decision (which library, which API version, why a workaround), capture the decision on a Confluence page and link the page from the issue.</li>
+      </ul>
+
+      <h2 id="stale-pages">Keeping linked Confluence pages from going stale</h2>
+      <p>
+        The hardest part of this model isn't the linking — it's keeping the linked Confluence pages true. Once a page has 20 issues linked to it, the page becomes load-bearing, and the cost of it being wrong is no longer a single team's confusion.
+      </p>
+      <p>Two patterns work:</p>
+
+      <h3>1. Tie the page to a review cadence</h3>
+      <p>
+        For decision logs, RFCs, spec pages — the kind written for humans, by humans — assign the page an owner and a review interval (typically tied to the sprint or quarter where the linked epic closes). Confluence shows a "page last updated" date prominently; teams enforce that no page older than the threshold can be the source of truth.
+      </p>
+
+      <h3>2. Regenerate technical pages from source</h3>
+      <p>
+        For technical context — module overviews, API references, architecture summaries — the document the linked pages should describe is the code itself, and the source of truth is the repository. Manually keeping a Confluence page in sync with a moving codebase is a guaranteed loss.
+      </p>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> regenerates these pages from the source code automatically. Connect the repo, pick a preset (Developer Documentation, Onboarding Guide, Quick Reference, etc.), wire a webhook to a branch, and the Confluence page rewrites itself on every push. Any Jira issue linked to that page suddenly references documentation that is always current — without anyone in the team having to remember to update it.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>The sweet spot:</strong> human-written decision logs reviewed on cadence, plus AI-regenerated technical pages updated on commit. Each Jira issue links to whichever applies. Stale links become impossible for the technical half, and the human half stays small enough to actually maintain.</p>
+      </div>
+
+      <h2 id="dont-do">What not to do</h2>
+      <ul>
+        <li><strong>Don't paste architecture diagrams into the description field.</strong> They go out of date inside a single sprint and nobody updates issue descriptions retroactively.</li>
+        <li><strong>Don't attach the same PDF to 20 issues.</strong> Upload it to Confluence once, link the Confluence page from each issue.</li>
+        <li><strong>Don't write the spec inside the epic description.</strong> Epics live for weeks; specs evolve in iterations. A spec belongs on a Confluence page that the epic links to.</li>
+        <li><strong>Don't rely on links between Jira tickets to convey context.</strong> Reading three linked tickets in sequence to understand what's going on is worse than reading one Confluence page.</li>
+      </ul>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I document a Jira issue?</p>
+        <p class="faq-a">Use the description field for context, goal, and acceptance criteria specific to this issue. Use attachments for one-off evidence like screenshots or logs. Use linked Confluence pages for anything other issues will also reference — architecture, specs, decisions.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I link a Confluence page to a Jira issue?</p>
+        <p class="faq-a">On the Jira issue, click Link → Confluence page, then paste the URL or search by title. The page appears in the Linked content section of the issue, and the reverse link appears on the Confluence page automatically if the page is in the same Atlassian site.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Should I write documentation in the Jira description or in Confluence?</p>
+        <p class="faq-a">Description for content that only matters to this one issue. Confluence for content that other issues, other teams, or future readers will also need. Rule of thumb: if you would copy-paste the same text into a second issue, it belongs in Confluence.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I keep Confluence pages linked to Jira issues from going stale?</p>
+        <p class="faq-a">Two approaches. For pages written by humans (decision logs, RFCs, specs), assign an owner and a review cadence — Confluence shows the last-updated date prominently. For technical pages whose source of truth is the codebase, regenerate them automatically: CodeDoc AI rewrites the page from source on webhook or schedule, so the linked documentation stays current as the code changes.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I document multiple Jira issues in one Confluence page?</p>
+        <p class="faq-a">Yes — that's a common pattern for epics and project pages. Create the Confluence page with the broader context (scope, architecture, decisions), then link it from each related Jira issue. The page can also embed the Jira Issues macro to pull a live list of all linked tickets at the bottom.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Stop maintaining technical docs by hand</h3>
+        <p>CodeDoc AI regenerates Confluence pages from your source code on every commit. Link the pages from your Jira issues once — they stay current automatically.</p>
+        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc AI →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#three-layers">Three layers of documentation</a></li>
+          <li><a href="#description-field">The description field</a></li>
+          <li><a href="#attachments">Attachments</a></li>
+          <li><a href="#confluence-links">Linked Confluence pages</a></li>
+          <li><a href="#how-to-link">How to link them</a></li>
+          <li><a href="#patterns">Common linking patterns</a></li>
+          <li><a href="#stale-pages">Keeping pages from going stale</a></li>
+          <li><a href="#dont-do">What not to do</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related apps</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/companyLogo.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · BYOK</div>
+          </div>
+        </a>
+        <a href="/codedoc-ai.html" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Learn more →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How to Document a Jira Project Automatically</a>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">AI-Powered Documentation for Atlassian Teams</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Automating Confluence Documentation</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

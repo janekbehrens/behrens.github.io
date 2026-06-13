@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jira Sprint Health Gadget: What It Shows and How to Make It Useful | Janek Behrens</title>
+  <meta name="description" content="The Jira Sprint Health gadget covers blockers, scope change, and work complete — but only at the sprint level. Here's how it works, what it misses, and how to combine it with a progress gadget to get per-issue visibility.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-sprint-health-gadget.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Sprint Health Gadget: What It Shows and How to Make It Useful",
+    "description": "The Jira Sprint Health gadget covers blockers, scope change, and work complete — but only at the sprint level. Here's how it works, what it misses, and how to combine it with a progress gadget to get per-issue visibility.",
+    "url": "https://janekbehrens.de/blog/jira-sprint-health-gadget.html",
+    "datePublished": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-05-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/dashboard.webp",
+    "keywords": ["Jira", "Sprint Health", "Dashboard", "Gadget", "Agile"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Sprint Health Gadget: What It Shows and How to Make It Useful">
+  <meta property="og:description" content="The native gadget covers blockers, scope change, and work complete — but only at the sprint level. Here's how to use it well, and how to combine it with a progress gadget for per-issue visibility.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-sprint-health-gadget.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/dashboard.webp">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Sprint Health Gadget: What It Shows and How to Make It Useful">
+  <meta name="twitter:description" content="The native gadget covers blockers, scope change, and work complete — but only at the sprint level. Here's how to use it well.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the Jira Sprint Health gadget?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Sprint Health gadget is a native Jira dashboard gadget that summarises a single sprint along four dimensions: work complete (story points done vs committed), blockers (count of flagged or blocked issues), scope change (issues added or removed after sprint start), and time elapsed. It is configured by selecting a board and a sprint."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my Jira Sprint Health gadget not showing scope change?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Scope change only appears once the sprint has actually started in Jira's view — issues added before sprint start are part of the original commitment, not scope change. If the dashboard still shows zero scope change after the sprint started, check that the gadget's filter (if used) does not exclude the added issues, and refresh the dashboard."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I filter the Jira Sprint Health gadget?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The native Sprint Health gadget is configured by board and sprint; it does not accept arbitrary JQL filters. To filter by assignee, label, or component within a sprint, use a different gadget such as the Filter Results gadget or a custom progress-tracking gadget that accepts JQL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is sprint health different from per-issue progress?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sprint health is a single sprint-level summary — four numbers describing the sprint as a whole. Per-issue progress shows where each individual issue stands. Sprint health tells you whether the sprint is on track; per-issue progress tells you which specific tickets are stuck. Most teams need both."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">May 21, 2026</span>
+        <span class="article-readtime">· 8 min read</span>
+      </div>
+      <h1>Jira Sprint Health Gadget: What It Shows and How to Make It Useful</h1>
+      <p class="article-intro">
+        The Sprint Health gadget is one of the few Jira gadgets people actually open during stand-up. It rolls four signals into a single tile: work complete, blockers, scope change, time elapsed. That's useful, but it only tells you about the sprint as a whole — not the issues inside it. Here's how to get the most out of it, and what to add when you need per-issue visibility.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-is">What the Sprint Health gadget actually shows</h2>
+      <p>
+        The native Sprint Health gadget summarises one active sprint along four dimensions. You configure it by selecting a board and a sprint; everything else is computed by Jira.
+      </p>
+
+      <table class="dim-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>What it measures</th>
+            <th>Where the data comes from</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Work complete</strong></td>
+            <td>Story points (or count) of completed issues vs total committed</td>
+            <td>Issue status + the sprint's "Done" mapping</td>
+          </tr>
+          <tr>
+            <td><strong>Blockers</strong></td>
+            <td>Number of issues flagged as Impediment, or blocked by an "is blocked by" link</td>
+            <td>The Flagged field and Jira issue link types</td>
+          </tr>
+          <tr>
+            <td><strong>Scope change</strong></td>
+            <td>Issues added or removed after the sprint started</td>
+            <td>Sprint history (sprint field changes after sprint start)</td>
+          </tr>
+          <tr>
+            <td><strong>Time elapsed</strong></td>
+            <td>Calendar days into the sprint vs total sprint length</td>
+            <td>Sprint start and end dates</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick read:</strong> if work complete is well below time elapsed, you're behind. If scope change is high mid-sprint, the team committed to something different than what they're now delivering. If blockers are growing, the team's hands are tied somewhere they can't fix.</p>
+      </div>
+
+      <h2 id="how-to-add">How to add the gadget to a dashboard</h2>
+      <ol>
+        <li>Open the dashboard where the gadget should appear (or create a new one via <strong>Dashboards → Create dashboard</strong>).</li>
+        <li>Click <strong>Add gadget</strong> at the top right.</li>
+        <li>Search for <code>Sprint Health</code> and click <strong>Add</strong>.</li>
+        <li>Select the <strong>board</strong> (Scrum board, not Kanban — the gadget only works on boards with active sprints).</li>
+        <li>Select the <strong>sprint</strong> — typically the currently active one.</li>
+        <li>Click <strong>Save</strong>.</li>
+      </ol>
+      <p>The gadget refreshes whenever the underlying Jira data changes; you don't need to do anything to update it after sprint events.</p>
+
+      <h2 id="filters">Filtering and limitations</h2>
+      <p>This is the part most people don't realise until they hit it. The Sprint Health gadget is a fixed sprint-level summary. It does <em>not</em> accept a JQL filter to narrow by assignee, label, or component. There is no way to ask "show me sprint health for just the backend team" via the gadget itself.</p>
+      <p>Workarounds:</p>
+      <ul>
+        <li><strong>Multiple boards, one per team</strong> — if your sub-teams already have separate boards, add one Sprint Health gadget per board to the same dashboard. Clunky but it works.</li>
+        <li><strong>Filter Results gadget</strong> — to see <em>which</em> issues are scope-changed or blocked, add a Filter Results gadget with a JQL like <code>sprint in openSprints() AND flagged is not EMPTY</code> next to the Sprint Health tile.</li>
+        <li><strong>Custom dashboard composition</strong> — pair the Sprint Health gadget with a progress-tracking gadget that <em>does</em> accept JQL, to drill down per issue.</li>
+      </ul>
+
+      <h2 id="not-showing-scope-change">"It's not showing scope change" — and other gotchas</h2>
+      <p>The most common complaint about the gadget is "scope change is zero even though we definitely added work". A few things to check:</p>
+      <ul>
+        <li><strong>The sprint has to be active</strong>. Issues added <em>before</em> sprint start are part of the original commitment — that's by design. Only issues moved into the sprint after Start Sprint was clicked count as scope change.</li>
+        <li><strong>Removing an issue counts too.</strong> Pulling something out of the sprint mid-flight is scope change, even though it feels like a courtesy.</li>
+        <li><strong>The board's sprint mapping matters.</strong> The gadget reads the board's Done column to decide what's complete. If your "Done" column doesn't include all done statuses (e.g. only "Done" but you also have "Released"), work complete will undercount.</li>
+        <li><strong>Story-point fields.</strong> If your team uses Time Estimate or a custom estimation field rather than Story Points, the work-complete number defaults to issue count, which can mislead.</li>
+      </ul>
+
+      <h2 id="per-issue-gap">The per-issue visibility gap</h2>
+      <p>
+        Sprint Health tells you whether the sprint is on track. It does not tell you which individual issues are stuck. Mid-sprint, the question that actually matters is "which three tickets need a conversation today?" — and the Sprint Health gadget can't answer that, because it only reports the aggregate.
+      </p>
+      <p>
+        For that you need per-issue progress visible across the sprint. The native option is the board itself (drag cards across columns, eyeball where things sit). The board is good for status but weak for two things: it doesn't show <em>how far along</em> each in-progress card is, and it doesn't scale to 30+ issues without becoming a wall.
+      </p>
+
+      <h3 id="progress-overview-gadget">Adding a progress gadget alongside Sprint Health</h3>
+      <p>
+        A second gadget — one that shows per-issue progress in a table — complements Sprint Health well. The <a href="/visual-progress-tracker.html">Visual Progress Tracker</a> app adds a <strong>Progress Tracker Overview</strong> dashboard gadget that does exactly this:
+      </p>
+      <ul>
+        <li>Sortable table of every issue, with a colour-coded progress bar per row.</li>
+        <li>Three calculation modes — Subtasks (resolved / total), Status (workflow mapping), or Manual (user-set slider).</li>
+        <li>JQL filter support — narrow to <code>sprint in openSprints()</code>, or further to a team via <code>assignee in membersOf("backend-team")</code>.</li>
+        <li>Bounded result set on very large projects so the gadget stays fast; a note appears when more issues exist than were loaded so you know to refine the filter.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Dashboard layout that works:</strong> Sprint Health gadget across the top (sprint-level summary), Progress Tracker Overview below it filtered to <code>sprint in openSprints()</code> (per-issue table). Top half answers "how is the sprint going?", bottom half answers "which tickets need attention?".</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the Jira Sprint Health gadget?</p>
+        <p class="faq-a">A native Jira dashboard gadget that summarises one sprint along four dimensions: work complete, blockers, scope change, and time elapsed. It is configured by board and sprint.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why is my Jira Sprint Health gadget not showing scope change?</p>
+        <p class="faq-a">Scope change only counts issues moved in or out of the sprint after it started. Issues added before the sprint was started are part of the original commitment and are not flagged as scope change. Also verify the board's sprint mapping and that the gadget is pointed at the currently active sprint.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I filter the Jira Sprint Health gadget by team or label?</p>
+        <p class="faq-a">No — the native Sprint Health gadget does not accept a JQL filter. It always reports the full sprint. To slice by team, label, or assignee, pair it with a JQL-driven gadget such as the Filter Results gadget or the Progress Tracker Overview gadget from Visual Progress Tracker, both of which accept arbitrary JQL.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why are blocked issues not showing up in the gadget?</p>
+        <p class="faq-a">Blockers are counted via the Flagged field and "is blocked by" issue link types. If your team marks blockers with a label or a custom field instead, the gadget won't see them. Either standardise on the Flagged field, or add a Filter Results gadget alongside that picks up your custom convention.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How is sprint health different from per-issue progress?</p>
+        <p class="faq-a">Sprint health is a single sprint-level summary — four numbers describing the sprint as a whole. Per-issue progress shows where each individual issue stands. Sprint health tells you whether the sprint is on track; per-issue progress tells you which specific tickets are stuck. Most teams need both.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Add per-issue progress to your Sprint Health dashboard</h3>
+        <p>Visual Progress Tracker adds a JQL-filterable dashboard gadget and three progress field types to Jira — pair it with Sprint Health for both levels of visibility.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-is">What it shows</a></li>
+          <li><a href="#how-to-add">How to add it</a></li>
+          <li><a href="#filters">Filtering and limitations</a></li>
+          <li><a href="#not-showing-scope-change">Gotchas</a></li>
+          <li><a href="#per-issue-gap">Per-issue visibility gap</a></li>
+          <li><a href="#progress-overview-gadget">Adding a progress gadget</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How to Build a Sprint Health Dashboard in Jira</a>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Progress Visually</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Tracking Epic Progress in Jira</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

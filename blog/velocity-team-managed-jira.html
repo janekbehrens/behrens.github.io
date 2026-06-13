@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Velocity for Team-Managed Projects in Jira: What You Get and What's Missing | Janek Behrens</title>
+  <meta name="description" content="Team-managed Jira projects do have a velocity report — but it's limited. Here's how to enable and read it, how it differs from company-managed velocity, the common reasons it's empty, and how to get a configurable velocity chart on a dashboard.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/velocity-team-managed-jira.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Velocity for Team-Managed Projects in Jira: What You Get and What's Missing",
+    "description": "How to enable and read the team-managed velocity report, how it differs from company-managed velocity, why it's sometimes empty, and how to get a configurable velocity chart on a dashboard.",
+    "url": "https://janekbehrens.de/blog/velocity-team-managed-jira.html",
+    "datePublished": "2026-06-01T00:00:00+02:00",
+    "dateModified": "2026-06-01T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+    "keywords": ["Jira", "team-managed project", "velocity", "sprint velocity", "Scrum", "Agile", "reports"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Velocity for Team-Managed Projects in Jira: What You Get and What's Missing">
+  <meta property="og:description" content="Team-managed projects do have a velocity report — but it's limited. How to enable and read it, and how to get a configurable velocity chart on a dashboard.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/velocity-team-managed-jira.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-06-01">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velocity for Team-Managed Projects in Jira: What You Get and What's Missing">
+  <meta name="twitter:description" content="Team-managed projects do have a velocity report — but it's limited. How to enable, read, and extend it.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do team-managed Jira projects have a velocity report?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Team-managed projects include a velocity report that measures velocity in either story points or number of work items. It requires the Sprints feature to be enabled and at least one completed sprint. Other available team-managed reports include the burnup, cumulative flow diagram, cycle time and deployment frequency."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is the velocity report missing in my team-managed project?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most common reason is that the Sprints feature is turned off. Velocity needs sprints, so enable Sprints in Project settings → Features, run and complete at least one sprint, and the velocity report will appear under Reports. Kanban-style team-managed projects without sprints have no velocity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I show team-managed velocity on a Jira dashboard?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not with native Jira — the velocity report lives inside the project's reports, and there is no native velocity dashboard gadget for either project type. A Forge app such as Velocity Chart for Jira adds a dashboard gadget that works on team-managed Scrum boards and lets you configure the Definition of Done and estimation field."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">June 1, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>Velocity for Team-Managed Projects in Jira: What You Get and What's Missing</h1>
+      <p class="article-intro">
+        &ldquo;Team-managed projects can't do velocity&rdquo; used to be true. It isn't any more — but the velocity you get is more limited than many teams expect. Here's exactly what the team-managed velocity report offers today, how to switch it on, why it's sometimes blank, and how to get the configurable, dashboard-friendly version that team-managed projects still lack natively.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="yes-it-exists">Yes, team-managed projects have a velocity report</h2>
+      <p>
+        First, the good news. Team-managed Scrum projects <strong>do</strong> include a velocity report. Atlassian's <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-team-managed-velocity-report/" target="_blank" rel="noopener">team-managed velocity report documentation</a> describes it clearly: velocity is the average amount of work the team completes per sprint, and in team-managed spaces it can be measured in <strong>story points or number of work items</strong>. As in company-managed projects, the grey commitment bar shows the total estimate of work in the sprint at start, and the green completed bar shows the total completed estimate at sprint end.
+      </p>
+      <p>
+        It sits alongside the other team-managed reports — the burnup chart, cumulative flow diagram, cycle time and deployment frequency — under the project's <strong>Reports</strong> section. So if you've been avoiding team-managed projects purely because of velocity, that reason no longer holds.
+      </p>
+
+      <h2 id="enable">How to enable and find it</h2>
+      <p>Velocity depends on sprints, so the prerequisite is the Sprints feature:</p>
+      <ol>
+        <li>Go to <strong>Project settings → Features</strong> and turn on <strong>Sprints</strong> (this also requires the board to be a Scrum-style board).</li>
+        <li>Plan, <strong>start</strong>, and eventually <strong>complete</strong> at least one sprint — velocity only appears for <em>closed</em> sprints.</li>
+        <li>Open <strong>Reports</strong> in the project sidebar and choose the <strong>Velocity report</strong>.</li>
+      </ol>
+      <p>
+        If reports look turned off, an administrator can re-enable them via the project's feature settings — Atlassian documents this in <a href="https://support.atlassian.com/jira-software-cloud/docs/enable-reports/" target="_blank" rel="noopener">Enable reports</a>.
+      </p>
+
+      <h2 id="differences">How team-managed velocity differs from company-managed</h2>
+      <p>
+        The calculation is the same committed-vs-completed model. The differences are about <em>configuration and reach</em>:
+      </p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>&nbsp;</th><th>Team-managed</th><th>Company-managed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Velocity report</strong></td><td>Yes (story points or work-item count)</td><td>Yes (board's estimation statistic)</td></tr>
+          <tr><td><strong>Configuration</strong></td><td>Owned inside the project — quick to set up, less granular</td><td>Board-level estimation &amp; column mapping</td></tr>
+          <tr><td><strong>&ldquo;Done&rdquo; definition</strong></td><td>The board's Done column</td><td>The board's Done column</td></tr>
+          <tr><td><strong>Scope</strong></td><td>That one project's board</td><td>That one board (boards can span projects via filter)</td></tr>
+          <tr><td><strong>Dashboard gadget</strong></td><td>None natively</td><td>None natively</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        The headline: whichever project type you use, the velocity report is <strong>locked to one board, tied to that board's Done column, and confined to the project's reports area</strong>. Neither type gives you a velocity <em>dashboard gadget</em>, and neither lets you redefine which statuses count as done.
+      </p>
+
+      <h2 id="empty">Why the velocity report is empty or wrong</h2>
+      <p>The handful of things that trip up team-managed teams specifically:</p>
+      <ul>
+        <li><strong>Sprints aren't enabled.</strong> No Sprints feature → no velocity. This is the number-one cause of a missing report.</li>
+        <li><strong>No completed sprint yet.</strong> Velocity is built from closed sprints; an in-progress sprint won't show.</li>
+        <li><strong>Estimation mismatch.</strong> If the project is set to measure in story points but issues are estimated in a different field — or not estimated at all — the bars come out empty. Switch the report to <em>work-item count</em> to sanity-check, or make sure points live in the field the report reads.</li>
+        <li><strong>Statuses outside the Done column.</strong> Work that's really finished but sits in a status not mapped to Done won't be counted as completed.</li>
+      </ul>
+
+      <div class="callout callout-blue">
+        <p><strong>Worth knowing:</strong> team-managed workflows are owned per project, which makes it easy to add statuses like <em>In Review</em> or <em>Released</em>. That flexibility is great — but it's exactly the situation where the native velocity report, which only counts the single Done column, starts under-reporting your completed work.</p>
+      </div>
+
+      <h2 id="dashboard">Getting velocity onto a dashboard</h2>
+      <p>
+        The limitation team-managed teams hit most is reach. Velocity is stuck in one project's reports, while the team's shared, cross-project view is the dashboard. There's no native velocity gadget for <em>either</em> project type, so a Marketplace app is the only way to put velocity beside your sprint-health and burndown gadgets.
+      </p>
+      <p>
+        <a href="/velocity-chart.html">Velocity Chart for Jira</a> is built for exactly this. It's a Forge-native dashboard gadget that treats team-managed and company-managed Scrum boards identically — team-managed boards even show a &ldquo;team-managed&rdquo; tag in the picker so you always know what you're charting. On top of that it adds what the native report can't: a <strong>configurable Definition of Done</strong> (count <em>Released</em> and <em>Accepted</em>, not just the last column), a choice of estimation field, optional sub-task inclusion, the say/do predictability number, and multi-board compare. Being Forge-native, it's read-only and your data stays on Atlassian.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>For mixed estates:</strong> if your organisation runs a blend of team-managed and company-managed projects, a single dashboard gadget that handles both — with one shared Definition of Done — lets you compare their velocity on an equal footing, which the native per-project reports can't do.</p>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Do team-managed Jira projects have a velocity report?</p>
+        <p class="faq-a">Yes. Team-managed Scrum projects include a velocity report measured in story points or number of work items. It needs the Sprints feature enabled and at least one completed sprint, and sits alongside the burnup, cumulative flow, cycle time and deployment frequency reports.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why is the velocity report missing in my team-managed project?</p>
+        <p class="faq-a">Usually because the Sprints feature is off. Enable Sprints in Project settings → Features, run and complete at least one sprint, and the velocity report appears under Reports. A team-managed project without sprints has no velocity.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is team-managed velocity calculated differently from company-managed?</p>
+        <p class="faq-a">No — both use the same committed-vs-completed model. The differences are in configuration and reach: each is locked to one board, tied to that board's Done column, and confined to the project's reports area.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I show team-managed velocity on a dashboard?</p>
+        <p class="faq-a">Not with native Jira — there's no velocity dashboard gadget for either project type. A Forge app like Velocity Chart for Jira adds a dashboard gadget that works on team-managed boards and lets you configure the Definition of Done and estimation field.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Velocity on team-managed boards, on a dashboard</h3>
+        <p>Velocity Chart for Jira treats team-managed and company-managed Scrum boards the same — with your own Definition of Done, estimation field and a dashboard gadget the native report doesn't offer.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#yes-it-exists">It does exist</a></li>
+          <li><a href="#enable">Enable and find it</a></li>
+          <li><a href="#differences">Team- vs company-managed</a></li>
+          <li><a href="#empty">Why it's empty</a></li>
+          <li><a href="#dashboard">Onto a dashboard</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free tier</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Get it on Marketplace →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Velocity Chart: How to Read It</a>
+        <a href="/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How Sprint Velocity Is Calculated</a>
+        <a href="/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Sprint Predictability and the Say/Do Ratio</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

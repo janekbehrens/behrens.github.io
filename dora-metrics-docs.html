@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
+  <title>DevOps Metrics for Jira — Documentation &amp; Setup</title>
+  <meta name="description" content="Setup and user guide for DevOps Metrics for Jira — deployment frequency, lead time for changes, change failure rate and MTTR on any Jira dashboard, with benchmark bands, trends, AI impact comparison and exports. No CI/CD setup.">
+  <link rel="canonical" href="https://janekbehrens.de/dora-metrics-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DevOps Metrics for Jira — Documentation &amp; Setup">
+  <meta property="og:description" content="How DevOps Metrics for Jira calculates deployment frequency, lead time, change failure rate and MTTR from Jira data — setup wizard, definitions, AI impact and exports.">
+  <meta property="og:url" content="https://janekbehrens.de/dora-metrics-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgDoraMetricsForJira/dora-metrics-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "DevOps Metrics for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows the four DORA metrics — deployment frequency, lead time for changes, change failure rate and MTTR — calculated from Jira work items, with benchmark bands, trends, AI impact comparison and exports.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for up to 10 users, then per-user subscription" },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "DevOps Metrics for Jira — Documentation & Setup",
+        "description": "Setup and user guide for DevOps Metrics for Jira — how each DORA metric is calculated from Jira data, the setup wizard, AI impact comparison, data quality and exports.",
+        "url": "https://janekbehrens.de/dora-metrics-docs.html",
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does the gadget show sample data?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Before any configuration the gadget renders a built-in sample dataset so you can see every feature immediately. Open the gadget's Edit (pencil) menu, pick your project in step 1 and the sample is replaced by your team's real numbers." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is deployment frequency zero?",
+            "acceptedAnswer": { "@type": "Answer", "text": "In Releases mode the app counts Jira versions marked as released with a release date. If your team doesn't maintain releases, open the wizard and switch the deployment definition to 'Issues reaching a status' — every issue that first reaches the status(es) you pick counts as one deployment." }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does the first analysis take?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The first run crawls up to 12 months of completed issues in the background — typically well under a minute for normal projects, a few minutes for very large ones (capped at the most recent 10,000 issues). After that the gadget always loads instantly from precomputed weekly aggregates, refreshed nightly and on demand." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is AI involvement detected?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Three configurable signals, combined with OR: app-account activity on the issue (Rovo agents, Automation for Jira, bots), labels you define (defaults: ai-assisted, copilot, rovo) and issue types you pick. It is a transparent proxy, not telemetry — and it is only ever shown as team-level aggregates, never per person." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why are some issues excluded from lead time?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Lead time measures the first transition into 'In progress' to the last transition into 'Done'. Issues that never passed through an in-progress status (for example created straight into Done) have no measurable lead time. They still count for throughput; the footnote and the Details popup show how many were excluded and why." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 780px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #505F79; font-size: 1rem; margin-bottom: 40px; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin-top: 48px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #0052CC; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 28px; margin-bottom: 10px; color: #0052CC; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul, ol { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p a, li a, .tip a, .warning a { text-decoration: underline; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #DFE1E6; margin: 16px 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: zoom-in; }
+    .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.6); cursor: default; border: none; margin: 0; }
+    .lightbox-close { position: fixed; top: 16px; right: 20px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; opacity: 0.8; border: none; background: none; padding: 4px 8px; }
+    .lightbox-close:hover { opacity: 1; }
+    .step-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .step-box h3 { margin-top: 0; }
+    .tip { background: #DEEBFF; border-left: 4px solid #0052CC; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .tip strong { color: #0052CC; }
+    .warning { background: #FFFAE6; border-left: 4px solid #FF991F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.9rem; color: #172B4D; }
+    .warning strong { color: #6B3D00; }
+    code { background: #F4F5F7; padding: 2px 6px; border-radius: 3px; font-size: 0.9rem; color: #172B4D; }
+    .toc { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 24px; margin-bottom: 32px; }
+    .toc h2 { margin-top: 0; color: #172B4D; font-size: 1rem; font-weight: 600; border-bottom: none; padding-bottom: 0; margin-bottom: 12px; }
+    .toc ol { margin-bottom: 0; }
+    .toc li { margin-bottom: 4px; }
+    .pro { display: inline-block; background: #6554C0; color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+    .feature-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .feature-table th { background: #F4F5F7; text-align: left; padding: 10px 14px; border: 1px solid #DFE1E6; font-weight: 600; }
+    .feature-table td { padding: 10px 14px; border: 1px solid #DFE1E6; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    @media (max-width: 600px) { .container { padding: 32px 16px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.15rem; } }
+
+    /* ===== Sticky sidebar TOC ===== */
+    .sidebar { display: none; position: fixed; top: 0; width: 230px; height: 100vh; overflow-y: auto; scrollbar-width: none; padding: 76px 16px 52px 0; }
+    .sidebar::-webkit-scrollbar { display: none; }
+    .sidebar-toc-heading { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5E6C84; margin-bottom: 14px; padding-left: 12px; }
+    .sidebar-toc a { display: block; font-size: 0.81rem; line-height: 1.4; color: #505F79; text-decoration: none; padding: 3px 8px 3px 10px; border-left: 2px solid transparent; margin-bottom: 1px; transition: color 0.18s, border-color 0.18s, background-color 0.18s; border-radius: 0 4px 4px 0; }
+    .sidebar-toc a:hover { color: #172B4D; text-decoration: none; }
+    .sidebar-toc a.active { color: #0052CC; border-left-color: #0052CC; font-weight: 500; background: rgba(0, 82, 204, 0.05); }
+    @media (min-width: 1260px) { .sidebar { display: block; left: calc(50vw - 630px); } .toc { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky sidebar (visible on wide screens) -->
+  <nav class="sidebar">
+    <div class="sidebar-toc-heading">Contents</div>
+    <nav class="sidebar-toc">
+      <a href="#overview">1. Overview</a>
+      <a href="#start">2. Quick start</a>
+      <a href="#config">3. Configuration</a>
+      <a href="#calc">4. How the metrics are calculated</a>
+      <a href="#quality">5. Data quality &amp; exclusions</a>
+      <a href="#ai">6. AI Impact</a>
+      <a href="#card">7. The Metric Card gadget</a>
+      <a href="#export">8. Exports</a>
+      <a href="#plans">9. Free vs Pro</a>
+      <a href="#faq">10. FAQ &amp; Troubleshooting</a>
+      <a href="#support">11. Support</a>
+    </nav>
+  </nav>
+
+  <main class="container">
+
+    <h1>DevOps Metrics for Jira — Documentation</h1>
+    <p class="subtitle">All four DORA metrics on any Jira dashboard — calculated from the Jira data you already have, no CI/CD setup.</p>
+
+    <!-- TODO once the intro video is produced: re-enable the consent-gated
+         YouTube embed here (pattern: velocity-chart-docs.html). -->
+
+    <!-- Table of Contents (shown on narrow screens) -->
+    <div class="toc">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#start">Quick start</a></li>
+        <li><a href="#config">Configuration</a></li>
+        <li><a href="#calc">How the metrics are calculated</a></li>
+        <li><a href="#quality">Data quality &amp; exclusions</a></li>
+        <li><a href="#ai">AI Impact</a></li>
+        <li><a href="#card">The Metric Card gadget</a></li>
+        <li><a href="#export">Exports</a></li>
+        <li><a href="#plans">Free vs Pro</a></li>
+        <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      DevOps Metrics for Jira puts the four key delivery metrics from the
+      <strong>DORA research</strong> (DevOps Research &amp; Assessment) on any Jira dashboard:
+    </p>
+    <ul>
+      <li><strong>Deployment frequency</strong> — how often you ship,</li>
+      <li><strong>Lead time for changes</strong> — how long work takes from start to done,</li>
+      <li><strong>Change failure rate</strong> — the share of releases that caused problems,</li>
+      <li><strong>Time to restore (MTTR)</strong> — how quickly you recover when something breaks.</li>
+    </ul>
+    <p>
+      Everything is calculated from <strong>Jira work items</strong> — releases, status transitions, bugs and
+      incident tickets. No CI/CD integration, no second product. Every number carries a DORA
+      <strong>benchmark band</strong> (Elite / High / Medium / Low), a plain-language sentence, and a
+      &ldquo;How we calculate it&rdquo; popup.
+    </p>
+    <img src="imgDoraMetricsForJira/screenshot-1-dora-overview.webp" alt="DORA metrics overview gadget with four tiles, benchmark bands and plain-language sentences" loading="lazy" width="1840" height="900">
+
+    <!-- 2. Quick start -->
+    <h2 id="start">2. Quick start</h2>
+    <div class="step-box">
+      <h3>Step 1 — Add the gadget</h3>
+      <p>Open a Jira dashboard → <strong>Add gadget</strong> → search for <strong>&ldquo;DORA&rdquo;</strong> → add <strong>DORA Metrics — Overview</strong>. The gadget immediately shows a built-in <em>sample dataset</em> so you can explore every tab before configuring anything.</p>
+    </div>
+    <div class="step-box">
+      <h3>Step 2 — Pick your project</h3>
+      <p>Open the gadget's <strong>Edit</strong> (pencil) menu. Step 1 of the wizard lists the projects you can browse — pick one (Pro: up to 10, combined into one view).</p>
+      <img src="imgDoraMetricsForJira/screenshot-6-project-picker.webp" alt="DORA Metrics setup wizard step one with project picker" loading="lazy" width="1840" height="900">
+    </div>
+    <div class="step-box">
+      <h3>Step 3 — Accept the recommendation</h3>
+      <p>The wizard inspects your project. If it finds released Jira versions, it recommends <strong>Releases</strong> as your deployment definition — including how many it found. Click <strong>&ldquo;Use recommended settings&rdquo;</strong> and you're done; the first analysis runs in the background and the tiles fill with your real numbers.</p>
+      <img src="imgDoraMetricsForJira/screenshot-2-deployment-definition.webp" alt="Deployment definition step with releases recommended" loading="lazy" width="1840" height="900">
+    </div>
+    <div class="tip"><strong>Tip:</strong> the first analysis crawls up to 12 months of history once. After that the gadget loads instantly from precomputed weekly aggregates — refreshed nightly and via the ↻ button.</div>
+
+    <!-- 3. Configuration -->
+    <h2 id="config">3. Configuration</h2>
+    <h3>What counts as a deployment?</h3>
+    <ul>
+      <li><strong>Releases (default, recommended):</strong> every Jira version marked as <em>released</em> with a release date counts as one deployment.</li>
+      <li><strong>Issues reaching a status:</strong> every issue that <em>first</em> reaches one of the statuses you pick counts as one deployment — for teams that don't maintain releases.</li>
+    </ul>
+    <h3>Advanced <span class="pro">PRO</span></h3>
+    <ul>
+      <li><strong>Incident types:</strong> which issue types count as incidents for Time to restore (default: bug/incident-like types).</li>
+      <li><strong>Sub-tasks:</strong> include or exclude them from lead time &amp; throughput (default: excluded).</li>
+    </ul>
+    <h3>AI rollout (optional)</h3>
+    <p>Step 3 of the wizard powers the <a href="#ai">AI Impact tab</a>: rollout date, the labels that mark AI-assisted issues, which AI signals to use, and up to five custom chart markers.</p>
+    <img src="imgDoraMetricsForJira/screenshot-5-ai-setup.webp" alt="AI rollout configuration with date, labels and AI signals" loading="lazy" width="1840" height="900">
+    <p>Everything can be changed later — reopen the wizard any time via the gadget's ••• / pencil menu. Changing definitions triggers a clean recalculation.</p>
+
+    <!-- 4. Calculations -->
+    <h2 id="calc">4. How the metrics are calculated</h2>
+    <p>Buckets are ISO weeks; display periods (30 days … 12 months) aggregate weekly data. Durations use medians (P50) — robust against outliers.</p>
+    <table class="feature-table">
+      <tr><th>Metric</th><th>Calculation (default definitions)</th></tr>
+      <tr>
+        <td><strong>Deployment frequency</strong></td>
+        <td>Released Jira versions per week (or first transitions into your configured statuses). Shown as &ldquo;per week&rdquo; or &ldquo;per month&rdquo;, whichever reads naturally.</td>
+      </tr>
+      <tr>
+        <td><strong>Lead time for changes</strong></td>
+        <td>Median time from the <em>first</em> transition into the <strong>In&nbsp;progress</strong> category to the <em>last</em> transition into <strong>Done</strong>, over issues completed in the period. Re-opened issues count from their final completion.</td>
+      </tr>
+      <tr>
+        <td><strong>Change failure rate</strong></td>
+        <td>Share of releases with at least one <strong>bug raised within 14 days</strong> that is linked via fix/affected version — or, where bugs carry no version, raised within 14 days after the release. Without releases: re-open rate (transitions out of Done ÷ into Done).</td>
+      </tr>
+      <tr>
+        <td><strong>Time to restore (MTTR)</strong></td>
+        <td>Median time from an incident-type issue being <strong>created</strong> to it being <strong>resolved</strong>, for incidents resolved in the period.</td>
+      </tr>
+    </table>
+    <p>
+      <strong>Benchmark bands</strong> follow the published DORA research (the classic Elite/High/Medium/Low
+      model). The thresholds are fixed on purpose — consistent yardsticks beat configurable ones.
+    </p>
+    <div class="warning"><strong>Honest by design:</strong> these are approximations from Jira work data — directionally correct and consistently measured. If you need pipeline-level precision across CI tooling, you need a platform product; this gadget answers the question on the dashboard your team already uses.</div>
+
+    <!-- 5. Data quality -->
+    <h2 id="quality">5. Data quality &amp; exclusions</h2>
+    <p>The footnote under every view shows what the numbers are based on — e.g. <em>&ldquo;Based on 142 completed issues · 12 releases · 8 excluded&rdquo;</em>. Click <strong>Details</strong> for the full breakdown:</p>
+    <ul>
+      <li>Issues that never passed through <em>In progress</em> (lead time not measurable),</li>
+      <li>issues with inconsistent dates, and sub-tasks (if excluded),</li>
+      <li>released versions without a release date,</li>
+      <li>how each change-failure bug was attributed (version link vs time proximity).</li>
+    </ul>
+    <div class="tip"><strong>Tip:</strong> teams that mark Jira versions as <em>released</em> and set the <em>affected version</em> on bugs get the most accurate deployment frequency and change failure rate.</div>
+
+    <!-- 6. AI impact -->
+    <h2 id="ai">6. AI Impact <span class="pro">PRO</span></h2>
+    <p>
+      Set your AI rollout date (Copilot, Rovo, Claude, Cursor…) and the <strong>AI Impact</strong> tab compares
+      <strong>equal periods before and after</strong> on all four metrics, with a deterministic plain-language
+      verdict (rule-based — no LLM). A second view compares <strong>AI-involved issues vs other issues</strong>
+      completed in the same period.
+    </p>
+    <img src="imgDoraMetricsForJira/screenshot-3-ai-impact.webp" alt="AI impact tab with before/after delta cards, verdict and AI-involved versus other issues comparison" loading="lazy" width="1840" height="900">
+    <p><strong>AI involvement</strong> is detected via three configurable signals (OR-combined), each individually switchable:</p>
+    <ul>
+      <li><strong>App-account activity</strong> — a Rovo agent, Automation for Jira or another app touched the issue's workflow,</li>
+      <li><strong>labels</strong> — defaults: <code>ai-assisted</code>, <code>copilot</code>, <code>rovo</code>,</li>
+      <li><strong>issue types</strong> — if your team maintains an &ldquo;AI task&rdquo; type.</li>
+    </ul>
+    <div class="warning"><strong>Privacy:</strong> detection is a transparent proxy, not telemetry. Results are only ever shown as team-level aggregates — never per person. The app stores no account IDs and no user names.</div>
+
+    <!-- 7. Metric card -->
+    <h2 id="card">7. The Metric Card gadget <span class="pro">PRO</span></h2>
+    <p>
+      The second gadget, <strong>DORA Metric Card</strong>, shows a single metric big and readable from across
+      the room — value, benchmark band, trend arrow and sparkline. Built for TV dashboards: put four cards side
+      by side and the whole floor sees where delivery stands. It inherits the definitions you configured in the
+      Overview gadget for the same project.
+    </p>
+    <img src="imgDoraMetricsForJira/collage-metric-cards.webp" alt="Four DORA Metric Card gadgets showing deployment frequency, lead time, change failure rate and time to restore" loading="lazy" width="1696" height="1268">
+
+    <!-- 8. Exports -->
+    <h2 id="export">8. Exports <span class="pro">PRO</span></h2>
+    <ul>
+      <li><strong>PNG</strong> — a presentation-ready report image of the overview (or the current trend chart) for the QBR deck. One click, no dialog.</li>
+      <li><strong>CSV</strong> — the weekly aggregates behind the charts, for your own analysis.</li>
+      <li><strong>Copy as text</strong> — a Markdown summary table including the plain-language sentences, ready to paste into Confluence, Slack or e-mail.</li>
+    </ul>
+
+    <!-- 9. Plans -->
+    <h2 id="plans">9. Free vs Pro</h2>
+    <table class="feature-table">
+      <tr><th></th><th>Free</th><th>Pro</th></tr>
+      <tr><td>Overview gadget (tiles, benchmark bands, trends)</td><td>✓ (1 project)</td><td>✓</td></tr>
+      <tr><td>Plain-language explanations &amp; method popups</td><td>✓</td><td>✓</td></tr>
+      <tr><td>AI Impact tab (before/after + AI segment)</td><td>—</td><td>✓</td></tr>
+      <tr><td>Custom definitions (deployments, incidents, sub-tasks)</td><td>—</td><td>✓</td></tr>
+      <tr><td>Multiple projects in one gadget (up to 10)</td><td>—</td><td>✓</td></tr>
+      <tr><td>Metric Card wallboard gadget</td><td>—</td><td>✓</td></tr>
+      <tr><td>Event markers on trend charts</td><td>—</td><td>✓</td></tr>
+      <tr><td>PNG / CSV / copy-as-text exports</td><td>—</td><td>✓</td></tr>
+    </table>
+    <p>Free covers sites with up to 10 users; larger sites get a free trial. See the Marketplace listing for per-user pricing.</p>
+
+    <!-- 10. FAQ -->
+    <h2 id="faq">10. FAQ &amp; Troubleshooting</h2>
+    <h3>The gadget shows &ldquo;Sample data&rdquo;</h3>
+    <p>That's the built-in demo shown before configuration. Open <strong>Edit</strong> (pencil), pick your project, done.</p>
+    <h3>Deployment frequency is zero</h3>
+    <p>In Releases mode the app counts versions marked <em>released</em> (with a release date). If your team doesn't maintain releases, switch the deployment definition to <strong>&ldquo;Issues reaching a status&rdquo;</strong> in the wizard.</p>
+    <h3>&ldquo;Analyzing your project history…&rdquo; takes a while</h3>
+    <p>The first run reads up to 12 months of completed issues (capped at the most recent 10,000). This happens once; afterwards the gadget loads instantly and refreshes incrementally.</p>
+    <h3>Lead time shows &ldquo;—&rdquo; or excludes many issues</h3>
+    <p>Lead time needs a transition into an <em>In progress</em> status. Issues created straight into Done can't be measured — they still count for throughput, and the Details popup lists them.</p>
+    <h3>Change failure rate seems high/low</h3>
+    <p>Check the <strong>Details</strong> popup: it shows how bugs were attributed to releases (fix/affected version vs. 14-day time proximity). Setting affected versions on bugs makes CFR most accurate. With fewer than 5 releases in the period the tile adds a &ldquo;treat as directional&rdquo; note.</p>
+    <h3>&ldquo;You don't have access to this project's data&rdquo;</h3>
+    <p>The app enforces Jira project permissions per viewer: you only see metrics for projects you can browse. Ask your Jira admin for access, or pick another project.</p>
+    <h3>The AI Impact tab asks for a date even though I saved one</h3>
+    <p>Make sure the date was set in <strong>step 3 of the wizard</strong> and saved. The date picker on the tab itself is a quick preview only.</p>
+
+    <!-- 11. Support -->
+    <h2 id="support">11. Support</h2>
+    <div class="contact-box">
+      <p style="margin-bottom: 0;">
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Support page:</strong> <a href="dora-metrics-support.html">dora-metrics-support</a><br>
+        See also: <a href="dora-metrics-privacy-policy.html">Privacy Policy</a> ·
+        <a href="dora-metrics-security.html">Security Policy</a> ·
+        <a href="dora-metrics-terms-of-service.html">Terms of Service</a>
+      </p>
+    </div>
+
+  </main>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+<p style="max-width:880px;margin:2.5rem auto 1.5rem;padding:0 1.25rem;font-size:0.78rem;line-height:1.5;color:#6b7280;text-align:center;">DORA&trade; is a trademark of Google LLC. DevOps Metrics for Jira is an independent product by Janek Behrens and is not affiliated with or endorsed by Google. &ldquo;DORA metrics&rdquo; refers to the four software delivery metrics defined by the DevOps Research and Assessment program.</p>
+  <script src="/components.js"></script>
+  <script>
+    // Lightbox
+    function openLightbox(img) {
+      var lb = document.getElementById('lightbox-img');
+      lb.src = img.currentSrc || img.src; lb.alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('main img').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(this); });
+    });
+
+    // Sidebar active-section highlight
+    (function () {
+      var links = document.querySelectorAll('.sidebar-toc a');
+      if (!links.length) return;
+      var map = [];
+      links.forEach(function (a) {
+        var sec = document.querySelector(a.getAttribute('href'));
+        if (sec) map.push([sec, a]);
+      });
+      function onScroll() {
+        var y = window.scrollY + 120, current = map[0] && map[0][1];
+        map.forEach(function (pair) { if (pair[0].offsetTop <= y) current = pair[1]; });
+        links.forEach(function (a) { a.classList.toggle('active', a === current); });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>

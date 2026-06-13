@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sprint Predictability and the Say/Do Ratio: A Better Read on Velocity | Janek Behrens</title>
+  <meta name="description" content="Raw velocity tells you how much; the say/do ratio tells you how reliably. Here's how to calculate sprint predictability (completed ÷ committed), what a healthy range looks like, why both very low and very high are warning signs, and how to improve it.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/sprint-predictability-say-do-ratio.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Sprint Predictability and the Say/Do Ratio: A Better Read on Velocity",
+    "description": "How to calculate sprint predictability (completed ÷ committed), what a healthy range looks like, why both very low and very high are warning signs, and how to improve it.",
+    "url": "https://janekbehrens.de/blog/sprint-predictability-say-do-ratio.html",
+    "datePublished": "2026-05-29T00:00:00+02:00",
+    "dateModified": "2026-05-29T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+    "keywords": ["Jira", "sprint predictability", "say do ratio", "commitment reliability", "sprint velocity", "Scrum", "Agile"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sprint Predictability and the Say/Do Ratio: A Better Read on Velocity">
+  <meta property="og:description" content="Raw velocity tells you how much; the say/do ratio tells you how reliably. How to calculate it, what's healthy, and how to improve it.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/sprint-predictability-say-do-ratio.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-29">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sprint Predictability and the Say/Do Ratio: A Better Read on Velocity">
+  <meta name="twitter:description" content="Raw velocity tells you how much; the say/do ratio tells you how reliably. How to calculate it and what's healthy.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the say/do ratio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The say/do ratio, also called commitment reliability or sprint predictability, is completed work divided by committed work for a sprint, expressed as a percentage. A team that committed to 30 points and completed 24 has a say/do of 80%. Averaged over several sprints, it measures how reliably a team delivers what it takes on."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good say/do ratio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Roughly 80–100% is healthy. Consistently below about 70% suggests chronic over-commitment; consistently above 100% suggests the team is under-committing or padding estimates. The goal is a stable ratio you can plan around, not the highest possible number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is predictability better than velocity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "They answer different questions. Velocity tells you how much a team tends to deliver; predictability (say/do) tells you how reliably it hits its plan. For forecasting and stakeholder trust, a stable, predictable team is more valuable than a fast but erratic one — so the two are best read together."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-amber { background: #FFFAE6; border-left: 3px solid #FF991F; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .dim-table td.num { text-align:right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">May 29, 2026</span>
+        <span class="article-readtime">· 6 min read</span>
+      </div>
+      <h1>Sprint Predictability and the Say/Do Ratio: A Better Read on Velocity</h1>
+      <p class="article-intro">
+        Two teams both average 25 points a sprint. One delivers 24–26 every time; the other swings between 12 and 38. Their velocity is identical — but only one is predictable, and predictability is what stakeholders actually feel. The metric that captures it is the say/do ratio, and it's the number raw velocity hides.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-is">What the say/do ratio is</h2>
+      <p>
+        The <strong>say/do ratio</strong> — also called <em>commitment reliability</em> or <em>sprint predictability</em> — is simply how much you finished divided by how much you committed to:
+      </p>
+      <p style="text-align:center;font-size:1.05rem;"><code>say/do = completed ÷ committed</code></p>
+      <p>
+        A team that committed to 30 points and completed 24 has a say/do of <strong>80%</strong>. You already have both numbers — they're the grey and green bars on every <a href="jira-velocity-chart.html">velocity chart</a>. The ratio just turns that pair into a single, comparable percentage, and averaging it over several sprints tells you how reliably the team delivers on what it takes on.
+      </p>
+
+      <h2 id="why-it-matters">Why it matters more than raw velocity</h2>
+      <p>
+        Velocity answers &ldquo;how much?&rdquo;. Predictability answers &ldquo;can we count on it?&rdquo; — and for almost everyone downstream of the team, the second question is the important one. A roadmap built on a predictable team holds; a roadmap built on an erratic one is fiction, however high the average.
+      </p>
+      <p>
+        Atlassian's own <a href="https://www.atlassian.com/agile/project-management/velocity-scrum" target="_blank" rel="noopener">guidance on velocity in Scrum</a> frames velocity as a planning aid that becomes more useful as it stabilises. The say/do ratio is the most direct way to measure that stability: a flat, healthy ratio is the signal that your velocity is trustworthy enough to forecast with.
+      </p>
+
+      <h2 id="healthy-range">What a healthy ratio looks like</h2>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Say/do (avg)</th><th>What it usually means</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">80–100%</td><td>Healthy. The team plans realistically and delivers what it commits to.</td></tr>
+          <tr><td class="num">below ~70%</td><td>Chronic over-commitment. Plans are too ambitious; stakeholders see repeated misses.</td></tr>
+          <tr><td class="num">consistently &gt;100%</td><td>Under-commitment or padded estimates. The team could pull in more, or is sandbagging.</td></tr>
+          <tr><td class="num">swinging wildly</td><td>Unstable process — estimation, scope change or interruptions are dominating, not pace.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        The target is a <strong>stable</strong> ratio in the healthy band — not 100% every sprint, and definitely not &ldquo;as high as possible.&rdquo; A team that hits exactly 100% every single sprint is usually managing the number, not the work.
+      </p>
+
+      <div class="callout callout-amber">
+        <p><strong>Don't weaponise it.</strong> The moment say/do becomes a target imposed on a team, it gets gamed — teams quietly commit to less so the ratio always looks good. Use it as a conversation starter in the retrospective (&ldquo;why did we miss?&rdquo;), never as a stick. Like velocity, it's a diagnostic, not a KPI to maximise.</p>
+      </div>
+
+      <h2 id="example">A quick worked read</h2>
+      <p>Here are five sprints for one team:</p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Sprint</th><th>Committed</th><th>Completed</th><th>Say/Do</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>21</td><td class="num">28</td><td class="num">24</td><td class="num">86%</td></tr>
+          <tr><td>22</td><td class="num">30</td><td class="num">18</td><td class="num">60%</td></tr>
+          <tr><td>23</td><td class="num">26</td><td class="num">25</td><td class="num">96%</td></tr>
+          <tr><td>24</td><td class="num">32</td><td class="num">20</td><td class="num">63%</td></tr>
+          <tr><td>25</td><td class="num">27</td><td class="num">24</td><td class="num">89%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        Average velocity is a respectable ~22 — but the say/do bounces between 60% and 96%. The pattern says this team over-commits in some sprints (22, 24) and plans well in others (21, 23, 25). The fix isn't speed; it's planning to a tighter, more consistent commitment. That insight is invisible if you only look at the completed average.
+      </p>
+
+      <h2 id="improve">How to improve predictability</h2>
+      <ul>
+        <li><strong>Commit to your proven average, not your best sprint.</strong> If completed averages 22, don't plan 30. Plan ~22 and protect it.</li>
+        <li><strong>Cap work in progress.</strong> Finishing what's started beats starting everything; half-done stories at sprint end are the main drag on say/do.</li>
+        <li><strong>Make scope changes visible.</strong> If work is routinely pulled in mid-sprint, that's a planning or prioritisation problem worth surfacing — it depresses say/do even when the team is delivering.</li>
+        <li><strong>Break down big stories.</strong> One 13-pointer that slips wrecks a sprint's ratio; five 2- and 3-pointers degrade gracefully.</li>
+        <li><strong>Review the ratio in the retro.</strong> A single number the whole team can see makes the &ldquo;why did we miss?&rdquo; conversation concrete.</li>
+      </ul>
+
+      <h2 id="tracking">Tracking it without a spreadsheet</h2>
+      <p>
+        Jira's native velocity report shows the two bars but doesn't compute the ratio for you — so most teams either eyeball it or copy numbers into a spreadsheet each sprint. <a href="/velocity-chart.html">Velocity Chart for Jira</a> calculates say/do automatically, per sprint and as an average, right on the dashboard next to the committed-vs-completed bars and the average-velocity line. Because you can also set your own Definition of Done and estimation field, the ratio reflects how your team actually finishes work — and you can export the full series to CSV for a deeper look.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the say/do ratio?</p>
+        <p class="faq-a">Completed work divided by committed work for a sprint, as a percentage — also called commitment reliability or sprint predictability. Committed 30, completed 24 → 80%. Averaged over several sprints it measures how reliably a team delivers what it commits to.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a good say/do ratio?</p>
+        <p class="faq-a">Roughly 80–100% is healthy. Below about 70% points to chronic over-commitment; consistently above 100% suggests under-committing or padded estimates. Aim for a stable ratio you can plan around, not the highest number.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is predictability better than velocity?</p>
+        <p class="faq-a">They answer different questions — velocity is how much, predictability is how reliably. A stable, predictable team is more valuable for forecasting and trust than a fast but erratic one, so read the two together.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira calculate the say/do ratio?</p>
+        <p class="faq-a">The native velocity report shows committed and completed but doesn't compute the ratio. Tools like Velocity Chart for Jira calculate say/do automatically, per sprint and on average, on a dashboard.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>See your predictability, not just your pace</h3>
+        <p>Velocity Chart for Jira shows the say/do ratio per sprint and on average — alongside committed vs completed and the average line — on any dashboard.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-is">What it is</a></li>
+          <li><a href="#why-it-matters">Why it matters</a></li>
+          <li><a href="#healthy-range">A healthy range</a></li>
+          <li><a href="#example">A worked read</a></li>
+          <li><a href="#improve">How to improve it</a></li>
+          <li><a href="#tracking">Tracking it</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free tier</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Get it on Marketplace →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Velocity Chart: How to Read It</a>
+        <a href="/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How Sprint Velocity Is Calculated</a>
+        <a href="/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Build a Sprint Health Dashboard in Jira</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

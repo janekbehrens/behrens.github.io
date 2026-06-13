@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
+  <title>Privacy Policy — DevOps Metrics for Jira</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #505F79; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    .pdf-btn { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 4px; padding: 5px 12px; font-size: 0.82rem; color: #505F79; cursor: pointer; font-family: inherit; }
+    .pdf-btn:hover { background: #EBECF0; color: #172B4D; }
+    @media print { .pdf-btn { display: none !important; } body { background: #fff; } .container { padding: 20px 0; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: June 11, 2026</p>
+
+    <h2>1. Introduction</h2>
+    <p>
+      This Privacy Policy explains how DevOps Metrics for Jira ("the App"), developed by
+      Janek Behrens ("we", "us", "our"), handles data when installed on your Atlassian Jira
+      Cloud instance. The App is a <strong>read-only reporting tool</strong>: it reads Jira work
+      data to compute the four DORA delivery metrics and never modifies your issues.
+    </p>
+
+    <h2>2. Data We Access</h2>
+    <p>The App reads the following Jira data, solely to compute the metrics:</p>
+    <ul>
+      <li><strong>Completed issues of the configured project(s):</strong> issue type, labels, created and resolved dates, and current status — used for throughput, lead time, MTTR and the AI-involvement share.</li>
+      <li><strong>Status-change history:</strong> the timestamps of workflow transitions (which status an issue moved from/to and when) — used for lead time and the re-open rate. For the optional AI signal the App also checks <em>whether</em> a change author is an app account (e.g. an automation or agent) — in memory only; author identities are never persisted.</li>
+      <li><strong>Project versions (releases):</strong> names and release dates of released versions — used for deployment frequency and change failure rate.</li>
+      <li><strong>Bug-type issues:</strong> creation dates and their fix/affected version references — used for change failure rate.</li>
+      <li><strong>Project metadata:</strong> project names/keys, issue types and statuses — used by the setup wizard and pickers.</li>
+    </ul>
+    <p>
+      The App does <strong>not</strong> read or use assignee, reporter, or any other user/personal
+      fields. Metrics are reported only at the project/team level — never per individual.
+    </p>
+
+    <h2>3. Data We Store</h2>
+    <p>
+      The App stores only the following, using <strong>Atlassian Forge Storage</strong>,
+      which is hosted and managed by Atlassian within your cloud instance:
+    </p>
+    <ul>
+      <li><strong>Weekly aggregates per project:</strong> deployment counts, completed-issue counts, excluded-issue counts, change-failure numerators/denominators, incident counts, AI-involvement counts, and compact statistical summaries of durations (e.g. median lead time in hours). These persist so the gadget loads instantly, and are recomputed nightly and on demand.</li>
+      <li><strong>Operational records:</strong> background-job status, refresh watermarks (timestamps), the last-used metric definitions, and a list of recently viewed projects (IDs and timestamps only) that controls the nightly refresh.</li>
+    </ul>
+    <p>
+      <strong>We do not store issue titles, descriptions, comments, attachments, user names, emails,
+      account IDs, or any free-text content.</strong> Stored data consists of numeric aggregates and
+      project/week identifiers only.
+    </p>
+    <p>
+      Gadget configuration (selected projects, definitions, AI rollout date, labels, markers, period)
+      is stored by Jira as standard dashboard-gadget configuration.
+    </p>
+
+    <h2>4. Data We Do NOT Collect</h2>
+    <ul>
+      <li>We do <strong>not</strong> run any servers. There is no developer-operated backend or database.</li>
+      <li>We do <strong>not</strong> collect personally identifiable information (PII). The App does not read assignee or user fields and stores no account identifiers.</li>
+      <li>We do <strong>not</strong> compute or expose per-person metrics — by design, the App cannot rank individuals.</li>
+      <li>We do <strong>not</strong> use cookies, tracking pixels, analytics platforms, or advertising networks.</li>
+      <li>We do <strong>not</strong> send any data to external services. The App makes no network calls outside the Atlassian platform.</li>
+    </ul>
+
+    <h2>5. Data Processing Location</h2>
+    <p>
+      All processing occurs within the <strong>Atlassian Forge runtime environment</strong> under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      program. No data is transmitted to servers operated by us or any third party outside the Atlassian platform.
+    </p>
+
+    <h2>6. Data Retention</h2>
+    <ul>
+      <li>Weekly aggregates cover a rolling 12-month window and are overwritten as they are recomputed; projects that are no longer viewed drop out of the automatic refresh.</li>
+      <li>Uninstalling the App removes all App-stored data from Forge Storage.</li>
+      <li>Gadget configuration is removed when the gadget is removed or the App is uninstalled.</li>
+    </ul>
+
+    <h2>7. GDPR Compliance</h2>
+    <p>
+      The App does not collect or store personal data. It does not read assignee or user information,
+      and stored data is limited to numeric aggregates and project/week identifiers. The AI-involvement
+      signal is a per-issue yes/no derived in memory and stored only as weekly counts — works-council
+      and GDPR friendly by design. GDPR data-subject requests relating to data held by Jira itself
+      should be directed to Atlassian. For App-specific concerns, contact us below. Uninstalling the
+      App removes all App-related data from Forge Storage.
+    </p>
+
+    <h2>8. Security</h2>
+    <ul>
+      <li>Runs in a sandboxed Forge environment with no egress to external networks outside the Atlassian platform.</li>
+      <li>Uses minimal, <strong>read-only</strong> Jira API scopes plus app storage.</li>
+      <li>Enforces each viewer's own Jira project permissions before returning any data.</li>
+      <li>Stores no credentials, tokens, or secrets — there are none.</li>
+    </ul>
+    <p>See our <a href="dora-metrics-security.html">Security Policy</a> for full details.</p>
+
+    <h2>9. Children's Privacy</h2>
+    <p>The App is a business productivity tool and is not directed at children under 16. We do not knowingly collect data from children.</p>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. Changes will be reflected in the
+      "Last updated" date above. Continued use of the App after changes constitutes acceptance
+      of the updated policy.
+    </p>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">11. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For questions about this Privacy Policy, contact us at:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+<p style="max-width:880px;margin:2.5rem auto 1.5rem;padding:0 1.25rem;font-size:0.78rem;line-height:1.5;color:#6b7280;text-align:center;">DORA&trade; is a trademark of Google LLC. DevOps Metrics for Jira is an independent product by Janek Behrens and is not affiliated with or endorsed by Google. &ldquo;DORA metrics&rdquo; refers to the four software delivery metrics defined by the DevOps Research and Assessment program.</p>
+  <script src="/components.js"></script>
+</body>
+</html>

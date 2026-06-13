@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Confluence Progress Bar: How to Show Page and Project Progress | Janek Behrens</title>
+  <meta name="description" content="Confluence does not ship a dedicated progress bar field. Here are the native options — status macros, manual tables, chart macros — and how teams combine them with Jira progress fields for real-time project visibility.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/confluence-progress-bar.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Confluence Progress Bar: How to Show Page and Project Progress",
+    "description": "Confluence does not ship a dedicated progress bar field. Here are the native options — status macros, manual tables, chart macros — and how teams combine them with Jira progress fields for real-time project visibility.",
+    "url": "https://janekbehrens.de/blog/confluence-progress-bar.html",
+    "datePublished": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-05-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/companyLogo.png",
+    "keywords": ["Confluence", "Atlassian", "Project Tracking", "Progress Bar"],
+    "author": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de",
+      "sameAs": ["https://www.linkedin.com/in/janek-behrens-55b3651b6/"]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Janek Behrens",
+      "url": "https://janekbehrens.de"
+    }
+  }
+  </script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Confluence Progress Bar: How to Show Page and Project Progress">
+  <meta property="og:description" content="Native and Jira-linked approaches to displaying progress in Confluence — status macros, manual percentage tables, chart macros, and the Jira issue macro.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/confluence-progress-bar.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:modified_time" content="2026-05-21">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="Atlassian">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Confluence Progress Bar: How to Show Page and Project Progress">
+  <meta name="twitter:description" content="Native and Jira-linked approaches to displaying progress in Confluence — status macros, manual percentage tables, chart macros, and the Jira issue macro.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/companyLogo.png">
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Confluence have a built-in progress bar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Confluence Cloud does not ship a dedicated progress bar field or custom field that shows a coloured bar at a percentage. Teams approximate it using the Status macro for stage labels, manual tables with a percentage column, or the Chart macro built from a table of values."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I show project progress in Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three common approaches: (1) Use the Status macro on each row of a status table — IN PROGRESS, BLOCKED, DONE — and treat the count of DONE rows as progress. (2) Add a manual percentage column to a table and update it on each review. (3) Embed the Jira Issues macro to pull a live count of resolved vs total issues from a JQL filter, which then represents progress at the project level."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I show a Jira progress bar inside a Confluence page?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — partially. The Jira Issues macro displays issue keys, status, and standard fields. Custom progress fields added by Marketplace apps to Jira are accessible via JQL in the macro, but the visual coloured bar itself only renders inside Jira. The macro shows the percentage value as a column, which is still useful for status reporting in Confluence."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between the Status macro and a real progress bar in Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Status macro is a coloured label such as IN PROGRESS or DONE — it shows a stage, not a percentage. A real progress bar would render a fill from 0–100% with a colour gradient. Confluence has no native macro for this. Teams either approximate it with a Status macro per row or build a chart from a numeric table."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .approach-table { width:100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .approach-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .approach-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence</span>
+        <span class="article-date">May 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>Confluence Progress Bar: How to Show Page and Project Progress</h1>
+      <p class="article-intro">
+        Confluence is great at capturing what was decided — and surprisingly weak at showing how far you've got. There is no native progress bar field, no built-in percentage column, no project meter at the top of a space. Here are the practical options teams actually use, and how to combine them with Jira if you already have one of the progress apps installed.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="native">Does Confluence have a native progress bar?</h2>
+      <p>
+        Short answer: no. Confluence Cloud does not ship a custom field that renders a coloured bar at a percentage value. There is no equivalent of the Jira "Custom Field" concept where a Marketplace app can drop a progress bar onto every page.
+      </p>
+      <p>
+        What Confluence does offer, out of the box, is a handful of building blocks that teams stitch together when they need progress on a page:
+      </p>
+      <ul>
+        <li><strong>Status macro</strong> — a coloured pill label (e.g. <em>IN PROGRESS</em>, <em>BLOCKED</em>, <em>DONE</em>) that you can drop into a table cell or inline in text.</li>
+        <li><strong>Tables with a percentage column</strong> — a manual approach where you type the number yourself and update it on each review.</li>
+        <li><strong>Chart macro</strong> — renders a chart (including a horizontal bar) from a table of numbers on the same page.</li>
+        <li><strong>Task lists</strong> — checkboxes inside a page. Confluence shows how many are completed in some views.</li>
+        <li><strong>Jira Issues macro</strong> — embeds a JQL-driven table of Jira issues with status, assignee, and custom field columns.</li>
+      </ul>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> If you only need a stage label, use the Status macro. If you need a real percentage, build a table with a percentage column or pull the value from Jira via the Jira Issues macro.</p>
+      </div>
+
+      <h2 id="approaches">Four practical approaches</h2>
+      <p>Here are the approaches teams use most often, with the trade-offs spelled out:</p>
+
+      <table class="approach-table">
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>What you see</th>
+            <th>Updates how?</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Status macro per row</strong></td>
+            <td>Coloured pill (stage label)</td>
+            <td>Manually, when status changes</td>
+            <td>Steering committee updates, deliverable lists</td>
+          </tr>
+          <tr>
+            <td><strong>Manual % column</strong></td>
+            <td>Number, optionally with a Unicode bar</td>
+            <td>Manually, on review cadence</td>
+            <td>OKR check-ins, monthly steering updates</td>
+          </tr>
+          <tr>
+            <td><strong>Chart macro from a table</strong></td>
+            <td>Real horizontal bar chart</td>
+            <td>Refreshes when underlying table changes</td>
+            <td>Portfolio overview pages, exec reports</td>
+          </tr>
+          <tr>
+            <td><strong>Jira Issues macro</strong></td>
+            <td>Live count of resolved vs total</td>
+            <td>Automatic, from JQL</td>
+            <td>Project pages tied to a Jira epic or sprint</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="status-macro">1. Status macro</h3>
+      <p>
+        Type <code>/status</code> on any page and Confluence inserts a coloured pill. Use it next to deliverables in a table — one row per workstream, one Status macro per row. The full project then "feels" like progress: a row of green DONE pills tells the reader at a glance.
+      </p>
+      <p>
+        Limitation: it is a stage label, not a percentage. You can't say "67%" with a Status macro, only "IN PROGRESS". For most steering-committee level reporting this is enough.
+      </p>
+
+      <h3 id="manual-table">2. Manual percentage column</h3>
+      <p>
+        Add a table with columns for <em>Workstream</em>, <em>Owner</em>, <em>% Complete</em>, and <em>Notes</em>. Type the percentage manually and update it weekly. Some teams add a Unicode bar — for example <code>██████░░░░ 60%</code> — to fake a visual bar inside a table cell.
+      </p>
+      <p>
+        Limitation: it goes stale fast. The number reflects whatever the page author last typed, not the underlying work. Treat it as a snapshot, not a live indicator.
+      </p>
+
+      <h3 id="chart-macro">3. Chart macro</h3>
+      <p>
+        Insert the Chart macro and point it at a table on the same page. With a horizontal bar chart, the chart effectively becomes a multi-row progress bar — one bar per workstream, length determined by the percentage in the table.
+      </p>
+      <p>
+        Trade-off: you have to maintain the table for the chart to update, so it inherits the staleness problem from approach 2. The advantage is the rendered chart looks like a real dashboard tile, which works well in executive reports.
+      </p>
+
+      <h3 id="jira-macro">4. Jira Issues macro (live from JQL)</h3>
+      <p>
+        If your work already lives in Jira, the Jira Issues macro is the only approach that updates on its own. Configure it with a JQL filter (e.g. <code>project = ABC AND fixVersion = "Q3 release"</code>) and the table shows every matching issue with status, assignee, and any custom field columns you choose.
+      </p>
+      <p>
+        You can then compute progress two ways:
+      </p>
+      <ul>
+        <li><strong>By count</strong> — the macro shows total results and you can put a JQL for done issues alongside it. <code>Resolved: 14 of 23 (61%)</code>.</li>
+        <li><strong>By custom field</strong> — if you have a per-issue progress field (for example a manual or status-mapped progress bar set up in Jira), display the value as a column in the macro. You see the percentage for every issue without leaving Confluence.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> The visual coloured bar from a Jira progress-field app only renders inside Jira itself — the Confluence Jira macro displays the numeric value as a column. For most reporting needs that's enough, and it has the big advantage of always being current.</p>
+      </div>
+
+      <h2 id="setup-jira-macro">How to embed Jira progress in a Confluence page</h2>
+      <p>The Jira Issues macro is the most underused option for this problem. Here's how to set it up:</p>
+      <ol>
+        <li>Open the Confluence page where the progress should appear (e.g. a project home page).</li>
+        <li>Type <code>/jira</code> and select <strong>Jira Issues</strong>.</li>
+        <li>Authenticate to your Jira site if prompted.</li>
+        <li>Paste a JQL filter, for example <code>project = ABC AND sprint in openSprints()</code>.</li>
+        <li>Click <strong>Display options</strong> and add the columns you want — including any custom progress field if you have one set up in Jira.</li>
+        <li>Insert. The table is now live and updates whenever a reader loads the page.</li>
+      </ol>
+
+      <h2 id="confluence-vs-jira">When progress belongs in Confluence vs Jira</h2>
+      <p>Confluence is the right home for progress when:</p>
+      <ul>
+        <li>The audience is non-technical — stakeholders, executives, customers.</li>
+        <li>The cadence is weekly or monthly, not per-commit.</li>
+        <li>You want narrative around the number ("we hit 60% but the integration with X is the bottleneck").</li>
+      </ul>
+      <p>Jira is the right home when:</p>
+      <ul>
+        <li>The work is already tracked as issues.</li>
+        <li>Progress should update as soon as a status changes or a subtask is closed.</li>
+        <li>You want list-view columns and dashboard gadgets, not page embeds.</li>
+      </ul>
+      <p>
+        For the second case, a dedicated progress field in Jira is usually the right starting point. <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> adds three field types (manual, status-based, subtask-based) directly to Jira issues — and because the values are stored on standard Jira custom fields, they appear in any Confluence page that uses the Jira Issues macro to query that project.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Confluence have a built-in progress bar?</p>
+        <p class="faq-a">Confluence Cloud does not ship a dedicated progress bar field or custom field that shows a coloured bar at a percentage. Teams approximate it using the Status macro for stage labels, manual tables with a percentage column, or the Chart macro built from a table of values.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I show project progress in Confluence?</p>
+        <p class="faq-a">Three common approaches: (1) Use the Status macro on each row of a status table — IN PROGRESS, BLOCKED, DONE — and treat the count of DONE rows as progress. (2) Add a manual percentage column to a table and update it on each review. (3) Embed the Jira Issues macro to pull a live count of resolved vs total issues from a JQL filter, which then represents progress at the project level.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I show a Jira progress bar inside a Confluence page?</p>
+        <p class="faq-a">Partially. The Jira Issues macro displays issue keys, status, and standard fields. Custom progress fields added by Marketplace apps to Jira are accessible via JQL in the macro, but the visual coloured bar itself only renders inside Jira. The macro shows the percentage value as a column, which is still useful for status reporting in Confluence.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between the Status macro and a real progress bar in Confluence?</p>
+        <p class="faq-a">The Status macro is a coloured label such as IN PROGRESS or DONE — it shows a stage, not a percentage. A real progress bar would render a fill from 0–100% with a colour gradient. Confluence has no native macro for this. Teams either approximate it with a Status macro per row or build a chart from a numeric table.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I add a custom percentage field to a Confluence page?</p>
+        <p class="faq-a">Confluence does not have per-page custom fields the way Jira does for issues. You can add a number to a table or as page properties metadata, but it is text — it does not render as a coloured bar without using the Chart macro on top of the table.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>Tracking progress in Jira instead?</h3>
+        <p>Visual Progress Tracker for Jira adds manual, status-based, and subtask-based progress fields to every issue — values that you can pull into Confluence with the Jira Issues macro.</p>
+        <a href="/visual-progress-tracker.html" class="btn-white">See Visual Progress Tracker →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#native">Does Confluence have a progress bar?</a></li>
+          <li><a href="#approaches">Four practical approaches</a></li>
+          <li><a href="#status-macro">Status macro</a></li>
+          <li><a href="#manual-table">Manual % column</a></li>
+          <li><a href="#chart-macro">Chart macro</a></li>
+          <li><a href="#jira-macro">Jira Issues macro</a></li>
+          <li><a href="#setup-jira-macro">Embed Jira progress in Confluence</a></li>
+          <li><a href="#confluence-vs-jira">Confluence vs Jira</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Related apps</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issue Progress Visually</a>
+        <a href="/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How to Document a Jira Project Automatically</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Automating Confluence Documentation</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>
