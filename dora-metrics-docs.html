@@ -245,6 +245,28 @@
     </p>
     <div class="warning"><strong>Honest by design:</strong> these are approximations from Jira work data — directionally correct and consistently measured. If you need pipeline-level precision across CI tooling, you need a platform product; this gadget answers the question on the dashboard your team already uses.</div>
 
+    <h3>Reading the trend charts</h3>
+    <p>
+      The <strong>Trends</strong> tab plots any of the four metrics over time — switch metric with the
+      sub-tabs (<em>Deploy freq · Lead time · Failure rate · Restore time</em>) and choose
+      <strong>Weekly</strong> or <strong>Monthly</strong> top-right. The solid line is the value for each
+      period; the dashed line is a <strong>4-week rolling median</strong>, so you read the underlying
+      direction without the week-to-week noise.
+    </p>
+    <p>
+      Behind the line the chart shades the <strong>DORA™ benchmark zones</strong> (Elite / High / Medium /
+      Low). A point is never just a number — you instantly see which performance band the team was in that
+      week. Toggle the bands with the <em>Benchmarks</em> checkbox.
+    </p>
+    <img src="imgDoraMetricsForJira/screenshot-7-cfr-trend.webp" alt="Change failure rate trend over weeks with shaded Elite, High, Medium and Low benchmark zones and a CI pipeline event marker" loading="lazy" width="1840" height="900">
+    <p>
+      The example above is <strong>change failure rate</strong> across six months — flat in the Elite band,
+      then climbing after a pipeline change. The dashed vertical line is an <strong>event marker</strong>
+      <span class="pro">PRO</span>: mark your AI rollout, a CI pipeline change or any date that matters, and
+      read every metric before and after it in context. Up to five markers per gadget, configured in
+      <a href="#config">step&nbsp;3 of the wizard</a>.
+    </p>
+
     <!-- 5. Data quality -->
     <h2 id="quality">5. Data quality &amp; exclusions</h2>
     <p>The footnote under every view shows what the numbers are based on — e.g. <em>&ldquo;Based on 142 completed issues · 12 releases · 8 excluded&rdquo;</em>. Click <strong>Details</strong> for the full breakdown:</p>
