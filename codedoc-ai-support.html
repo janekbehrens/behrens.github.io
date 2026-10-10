@@ -3,115 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
   <title>Support — CodeDoc AI for Confluence</title>
   <meta name="description" content="Get help with CodeDoc AI for Confluence — FAQs, troubleshooting guides, and direct support contact for the Atlassian Forge app.">
   <link rel="canonical" href="https://janekbehrens.de/codedoc-ai-support.html">
-  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
-  <link rel="stylesheet" href="/site.css">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.6; }
-    .container { max-width: 720px; margin: 0 auto; padding: 64px 24px 40px; }
-
-    /* Header */
-    .site-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-    .site-header img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
-    .site-header h1 { font-size: 1.9rem; font-weight: 700; }
-    .subtitle { font-size: 1.05rem; color: #505F79; margin-bottom: 48px; padding-left: 64px; }
-
-    /* Page title */
-    .page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
-    .page-header img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; flex-shrink: 0; }
-    .page-header h2 { font-size: 1.4rem; font-weight: 700; }
-
-    /* Cards */
-    .card {
-      background: #fff;
-      border: 1px solid #DFE1E6;
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 16px;
-    }
-    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-    .card p { color: #505F79; font-size: 0.95rem; margin-bottom: 16px; }
-    .card p:last-child { margin-bottom: 0; }
-
-    /* Button */
-    .btn {
-      display: inline-block;
-      background: #0052CC;
-      color: #fff;
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 6px;
-    }
-    .btn:hover { background: #0065FF; }
-    .btn-secondary {
-      background: transparent;
-      color: #0052CC;
-      border: 1px solid #0052CC;
-    }
-    .btn-secondary:hover { background: #DEEBFF; }
-
-    /* Footer */
-  </style>
   <link rel="stylesheet" href="redesign.css">
   <link rel="stylesheet" href="legal.css">
 </head>
 <body class="rd legal">
   <main class="container">
-
     <h1>Support</h1>
     <p class="updated">CodeDoc AI for Confluence</p>
 
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>, or open a public
+      issue on GitHub. Check the existing issues first: your question may already have an answer.
+    </p>
 
-    <!-- Email support -->
-    <div class="card">
-      <h3>Send a support request</h3>
+    <div class="contact-box">
       <p>
-        For questions, bug reports, or feature requests, send an e-mail to the address below.
-        Please include your Confluence site URL and a brief description of the issue.
-      </p>
-      <a class="btn" href="mailto:support@janekbehrens.de?subject=CodeDoc%20AI%20Support">support@janekbehrens.de</a>
-    </div>
-
-    <!-- Issue tracker -->
-    <div class="card">
-      <h3>Report a bug or request a feature</h3>
-      <p>
-        You can also open an issue directly on GitHub. Check existing issues first —
-        your question may already have an answer.
-      </p>
-      <a class="btn btn-secondary" href="https://github.com/janekbehrens/codedoc-ai-issues/issues" target="_blank" rel="noopener">Open an issue on GitHub</a>
-    </div>
-
-    <!-- SLA -->
-    <div class="card">
-      <h3>Support hours &amp; response time</h3>
-      <p>
-        Support is available <strong>Monday – Sunday, including holidays</strong> (CET/CEST).<br>
-        Target response time: <strong>within 24 hours</strong> of your message.
-      </p>
-      <p>
-        For critical issues (app completely unavailable or data loss risk),
-        please write <strong>URGENT</strong> in the subject line — these are prioritised.
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=CodeDoc%20AI%20Support">support@janekbehrens.de</a><br>
+        <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/codedoc-ai-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/codedoc-ai-issues</a><br>
+        <strong>Documentation:</strong> <a href="codedoc-ai-docs.html">CodeDoc AI for Confluence documentation</a><br>
+        <strong>Response time:</strong> 1–2 business days (Monday to Friday)
       </p>
     </div>
 
-    <!-- Docs -->
-    <div class="card">
-      <h3>Documentation</h3>
-      <p>
-        The documentation covers setup, sync blocks, AI pages, Git and AI providers, webhooks,
-        schedules and troubleshooting.
-      </p>
-      <a class="btn btn-secondary" href="codedoc-ai-docs.html">View documentation</a>
-    </div>
-  <!-- Footer injected by components.js -->
-  <footer id="site-footer"></footer>
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="codedoc-ai-docs.html">documentation</a>: it covers setup, sync blocks, AI pages, Git and AI providers, webhooks, schedules and <a href="codedoc-ai-docs.html#troubleshooting">troubleshooting</a>. Common ones:</p>
+    <ul>
+      <li><strong>"the file or the branch does not exist (HTTP 404)"</strong>: check the file path and the branch in the block settings. Paths are case-sensitive and start below the repository root; <em>Show preview</em> checks the path before you save.</li>
+      <li><strong>"the Git provider rejected the access token (HTTP 401)"</strong>: the token stored in CodeDoc is invalid or expired. An administrator can replace it under Settings → Connections. The block keeps its last good content until the next successful update.</li>
+      <li><strong>"Settings incomplete" or "Waiting for approval"</strong>: <em>Settings incomplete</em> lists the missing settings (edit the page, select the block and click the pencil icon). <em>Waiting for approval</em> means new or changed settings are not approved yet: a Job Operator or Administrator who can edit the page has to open it once.</li>
+      <li><strong>"On every push" does not update</strong>: push updates need the CodeDoc webhook in the repository (<a href="codedoc-ai-docs.html#jobs-webhooks">webhook setup</a>) and a push to the branch the block follows. <em>Update now</em> checks the block in the meantime.</li>
+      <li><strong>"A Confluence page with this title already exists"</strong>: page titles are unique per space. Rename the AI page, or rename or move the other page in Confluence.</li>
+      <li><strong>A scheduled AI page didn't run at the expected time</strong>: schedules are checked hourly, so a run starts up to about 1 hour after the configured time.</li>
+    </ul>
 
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Your Confluence site URL</li>
+      <li>Whether it is about a sync block or an AI page, and the exact message CodeDoc shows</li>
+      <li>Easiest: the <strong>Report a bug</strong> button under <strong>Settings → Privacy &amp; help</strong> creates a pre-filled email with diagnostic information</li>
+      <li>What you expected vs. what you saw (a screenshot helps a lot)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Legal:</strong> <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> ·
+      <a href="codedoc-ai-terms-of-service.html">Terms of Service</a> ·
+      <a href="codedoc-ai-security.html">Security Statement</a>
+    </p>
   </main>
   <script src="/components.js"></script>
 </body>

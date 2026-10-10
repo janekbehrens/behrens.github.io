@@ -202,7 +202,17 @@
 .docs td { padding: 9px 12px; border: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
 @media (max-width: 640px) { .docs main table { display: block; overflow-x: auto; } }
 .docs .pro { display: inline-block; background: #6554C0; color: #fff; font-size: 0.68rem; font-weight: 700; letter-spacing: .04em; padding: 1px 7px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; }
-.docs .contact-box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 40px; }
+.docs .contact-box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 40px; overflow-wrap: anywhere; }
+.docs .contact-box > :last-child { margin-bottom: 0; }
+
+/* Labels in the text: product parts (.tag), UI labels (.ui), color dots in legends (.dot) */
+.docs .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: .03em; color: #44546F; background: #F1F2F4; border: 1px solid #DFE1E6; border-radius: 4px; padding: 1px 6px; vertical-align: 2px; }
+.docs .tag-free { color: #5E4DB2; background: #F3F0FF; border-color: #B8ACF6; }
+.docs .ui { font-weight: 650; color: var(--ink); }
+.docs .dot { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; }
+/* CodeDoc AI: long values wrap anywhere; in the compact tables of statuses and events they stay on one line */
+.docs[data-app="cd"] main code { overflow-wrap: anywhere; }
+.docs[data-app="cd"] .table-wrap td code { white-space: nowrap; }
 
 /* Screenshots: click to enlarge */
 .docs main img {

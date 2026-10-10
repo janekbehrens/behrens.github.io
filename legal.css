@@ -1,9 +1,13 @@
 /* ============================================================
-   legal.css — privacy, terms, security, Trust Center, Impressum
-   Loaded after the page's own <style>, so it only sets the shared
-   typography and width; page-specific rules stay in the page.
+   legal.css — app support, privacy, terms and security pages,
+   Trust Center, Impressum, Datenschutz.
+   The app pages (<slug>-support / -privacy-policy / -terms-of-service /
+   -security) have no <style> of their own: everything they need is here.
+   Rules inside :where(…) have zero specificity. They are the defaults
+   for those pages; the site pages that still carry their own <style>
+   (Trust Center, Impressum, Datenschutz, privacy-policy) keep their values.
    ============================================================ */
-body.legal { color: var(--ink); background: var(--page); }
+body.legal { color: var(--ink); background: var(--page); line-height: 1.7; }
 .legal main.container, .legal .container { max-width: 760px; margin: 0 auto; padding: clamp(28px, 4vw, 48px) 24px 64px; }
 .legal h1 { font-size: clamp(1.75rem, 3.4vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; color: var(--ink); margin-bottom: 8px; }
 .legal h2 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); margin-top: 40px; }
@@ -11,11 +15,66 @@ body.legal { color: var(--ink); background: var(--page); }
 .legal p, .legal li { color: var(--ink-2); }
 .legal strong { color: var(--ink); }
 .legal .updated, .legal .subtitle { color: var(--ink-3); }
-.legal .contact-box { border-color: var(--line); border-radius: 14px; }
 .legal main a { text-decoration: underline; text-decoration-color: rgba(0,82,204,.35); text-underline-offset: 3px; }
-.legal .pdf-btn { border-radius: 8px; border-color: var(--line-2); background: #fff; color: var(--ink-2); }
+
+/* ── Text defaults ── */
+:where(.legal h2) { margin-bottom: 12px; }
+:where(.legal p) { font-size: 0.95rem; margin-bottom: 16px; }
+:where(.legal ul) { color: var(--ink-2); font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+:where(.legal li) { margin-bottom: 6px; }
+/* Line under the h1: "<App name> · Last updated: <date>" (support pages: the app name only) */
+:where(.legal .updated) { font-size: 0.9rem; margin-bottom: 40px; }
+:where(.legal main code) { background: #F2F4F7; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 0.85em; word-break: break-word; }
+
+/* ── Boxes and buttons ── */
+:where(.legal .contact-box) { background: #fff; border: 1px solid var(--line); padding: 20px; margin-top: 36px; overflow-wrap: anywhere; }
+.legal .contact-box { border-color: var(--line); border-radius: 14px; }
+.legal .contact-box > :first-child { margin-top: 0; }
+.legal .contact-box > :last-child { margin-bottom: 0; }
+/* "Save as PDF" bar above the h1 */
+.legal .pdf-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+:where(.legal .pdf-btn) { padding: 5px 12px; font-size: 0.82rem; cursor: pointer; font-family: inherit; }
+.legal .pdf-btn { border: 1px solid var(--line-2); border-radius: 8px; background: #fff; color: var(--ink-2); }
+.legal .pdf-btn:hover { background: #F2F4F7; color: var(--ink); }
+/* Disclaimers in the terms of service (written in plain case, not all caps) */
+.legal .legal-caps { font-size: 0.9rem; text-transform: none; }
+/* Links at the end of a support page: Privacy · Terms · Security */
+.legal .page-links { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.9rem; }
+/* Trademark note below the page */
+.legal .tm-note { max-width: 880px; margin: 2.5rem auto 1.5rem; padding: 0 1.25rem; font-size: 0.78rem; line-height: 1.5; color: var(--ink-4); text-align: center; }
+
+/* ── Tables (security pages): bordered, scroll inside .table-wrap on small screens ── */
+:where(.legal .table-wrap) { overflow-x: auto; margin: 16px 0 24px; }
+:where(.legal .table-wrap table) { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+:where(.legal .table-wrap th, .legal .table-wrap td) { border: 1px solid var(--line); padding: 8px 12px; text-align: left; color: var(--ink-2); vertical-align: top; }
+:where(.legal .table-wrap th) { background: #F9FAFB; color: var(--ink); font-weight: 700; }
+:where(.legal .table-wrap td:first-child) { min-width: 140px; }
+
+/* ── Data-flow diagram (CodeDoc AI privacy policy; same look as the Trust Center) ── */
+:where(.legal .flow-box) { background: #fff; border: 2px solid #DFE1E6; border-radius: 8px; padding: 10px 12px; text-align: center; font-size: 0.82rem; font-weight: 600; color: #172B4D; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+:where(.legal .flow-box.forge) { border-color: #0052CC; background: #DEEBFF; color: #0052CC; }
+:where(.legal .flow-box.byok) { border-color: #FF8B00; background: #FFF7E6; color: #974F0C; }
+:where(.legal .flow-sub) { display: block; font-size: 0.72rem; font-weight: 400; color: #505F79; margin-top: 3px; line-height: 1.3; }
+:where(.legal .flow-box.byok .flow-sub) { color: #974F0C; opacity: 0.75; }
+:where(.legal .flow-label) { font-size: 0.8rem; color: #505F79; margin-bottom: 20px; }
+:where(.legal .hub-wrap) { overflow-x: auto; margin: 16px 0; }
+:where(.legal .hub-center) { display: flex; justify-content: center; margin-bottom: 10px; }
+:where(.legal .hub-center .flow-box) { flex: none; min-width: 220px; max-width: 380px; }
+:where(.legal .hub-spokes) { display: flex; gap: 10px; }
+:where(.legal .hub-spoke) { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+:where(.legal .hub-spoke .flow-box) { flex: none; }
+:where(.legal .hub-spoke-label) { font-size: 0.76rem; color: #0052CC; font-weight: 600; text-align: center; line-height: 1.3; padding: 2px 0; }
+:where(.legal .hub-spoke-note) { font-size: 0.72rem; color: #505F79; font-style: italic; text-align: center; line-height: 1.3; margin-top: 2px; }
+
 @media (max-width: 640px) {
   .legal main table { display: block; overflow-x: auto; max-width: 100%; }
+  .legal main .table-wrap > table { display: table; overflow-x: visible; }
+  :where(.legal .table-wrap th, .legal .table-wrap td) { padding: 8px 10px; }
+  :where(.legal .table-wrap td:first-child) { min-width: 104px; }
   .legal .container { padding: 24px 16px 48px; }
+  :where(.legal .hub-spokes) { flex-direction: column; }
 }
-@media print { .app-nav, .site-nav, .site-footer, .booking-cta { display: none !important; } }
+@media print {
+  .app-nav, .site-nav, .site-footer, .booking-cta { display: none !important; }
+  .legal .pdf-bar, .legal .pdf-btn { display: none !important; }
+}

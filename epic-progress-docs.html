@@ -50,13 +50,6 @@
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="redesign.css">
   <link rel="stylesheet" href="docs.css">
-  <style>
-    /* Page-specific: source tags of the macros, UI labels, color dots */
-    .docs .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: .03em; color: #44546F; background: #F1F2F4; border: 1px solid #DFE1E6; border-radius: 4px; padding: 1px 6px; vertical-align: 2px; }
-    .docs .tag-free { color: #5E4DB2; background: #F3F0FF; border-color: #B8ACF6; }
-    .docs .ui { font-weight: 650; color: var(--ink); }
-    .docs .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: -1px; }
-  </style>
 </head>
 <body class="rd docs" data-app="ep">
 
@@ -480,10 +473,17 @@
         </details>
       </section>
 
-      <section>
-        <h2 id="support">Support</h2>
-        <p>Questions, bugs, feature requests → <a href="epic-progress-support.html">Support page</a> · <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></p>
-        <p>See also: <a href="epic-progress-for-confluence.html">Overview</a> · <a href="epic-progress-privacy-policy.html">Privacy Policy</a> · <a href="epic-progress-security.html">Security Policy</a> · <a href="epic-progress-terms-of-service.html">Terms of Service</a></p>
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Questions, bugs or feature requests? We typically respond within <strong>1–2 business days</strong> (Monday to Friday).</p>
+          <p>
+            <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Epic%20Progress%20Support">support@janekbehrens.de</a><br>
+            <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/epic-progress-for-confluence-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/epic-progress-for-confluence-issues</a><br>
+            <strong>Support page:</strong> <a href="epic-progress-support.html">common questions and what to include in a bug report</a><br>
+            <strong>Legal:</strong> <a href="epic-progress-privacy-policy.html">Privacy Policy</a> · <a href="epic-progress-terms-of-service.html">Terms of Service</a> · <a href="epic-progress-security.html">Security Policy</a>
+          </p>
+        </div>
         <p class="legal-note">Atlassian, Confluence and Jira are trademarks of Atlassian. Epic Progress for Confluence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
       </section>
     </main>

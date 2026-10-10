@@ -3,128 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support — Visual Progress Tracker for Jira</title>
-  <meta name="description" content="Get help with Visual Progress Tracker for Jira: email support, the GitHub issue tracker, support hours and the documentation.">
-  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker-support.html">
   <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
   <link rel="stylesheet" href="/site.css">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.6; }
-    .container { max-width: 720px; margin: 0 auto; padding: 64px 24px 40px; }
-
-    /* Header */
-    .site-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-    .site-header img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
-    .site-header h1 { font-size: 1.9rem; font-weight: 700; }
-    .subtitle { font-size: 1.05rem; color: #505F79; margin-bottom: 48px; padding-left: 64px; }
-
-    /* Page title */
-    .page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
-    .page-header img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; flex-shrink: 0; }
-    .page-header h2 { font-size: 1.4rem; font-weight: 700; }
-
-    /* Cards */
-    .card {
-      background: #fff;
-      border: 1px solid #DFE1E6;
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 16px;
-    }
-    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-    .card p { color: #505F79; font-size: 0.95rem; margin-bottom: 16px; }
-    .card p:last-child { margin-bottom: 0; }
-
-    /* Button */
-    .btn {
-      display: inline-block;
-      background: #0052CC;
-      color: #fff;
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 6px;
-    }
-    .btn:hover { background: #0065FF; }
-    .btn-secondary {
-      background: transparent;
-      color: #0052CC;
-      border: 1px solid #0052CC;
-    }
-    .btn-secondary:hover { background: #DEEBFF; }
-
-    /* Footer */
-  </style>
+  <title>Support — Visual Progress Tracker for Jira</title>
+  <meta name="description" content="Get help with Visual Progress Tracker for Jira: email support, the GitHub issue tracker, response time, common questions and the documentation.">
+  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker-support.html">
   <link rel="stylesheet" href="redesign.css">
   <link rel="stylesheet" href="legal.css">
 </head>
 <body class="rd legal">
   <main class="container">
-
     <h1>Support</h1>
     <p class="updated">Visual Progress Tracker for Jira</p>
 
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>, or open a public
+      issue on GitHub. Check the existing issues first: your question may already have an answer.
+    </p>
 
-    <!-- Email support -->
-    <div class="card">
-      <h3>Send a support request</h3>
+    <div class="contact-box">
       <p>
-        For questions, bug reports, or feature requests, send an e-mail to the address below.
-        Please include your Jira site URL and a brief description of the issue.
-      </p>
-      <a class="btn" href="mailto:support@janekbehrens.de?subject=Visual%20Progress%20Tracker%20Support">support@janekbehrens.de</a>
-    </div>
-
-    <!-- Issue tracker -->
-    <div class="card">
-      <h3>Report a bug or request a feature</h3>
-      <p>
-        You can also open an issue directly on GitHub. Check existing issues first —
-        your question may already have an answer.
-      </p>
-      <a class="btn btn-secondary" href="https://github.com/janekbehrens/visual-progress-tracker-issues/issues" target="_blank" rel="noopener">Open an issue on GitHub</a>
-    </div>
-
-    <!-- SLA -->
-    <div class="card">
-      <h3>Support hours &amp; response time</h3>
-      <p>
-        Support is available <strong>Monday – Sunday, including holidays</strong> (CET/CEST).<br>
-        Target response time: <strong>within 24 hours</strong> of your message.
-      </p>
-      <p>
-        For critical issues (app completely unavailable or data loss risk),
-        please write <strong>URGENT</strong> in the subject line — these are prioritised.
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Visual%20Progress%20Tracker%20Support">support@janekbehrens.de</a><br>
+        <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/visual-progress-tracker-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/visual-progress-tracker-issues</a><br>
+        <strong>Documentation:</strong> <a href="visual-progress-tracker-docs.html">Visual Progress Tracker for Jira documentation</a><br>
+        <strong>Response time:</strong> 1–2 business days (Monday to Friday)
       </p>
     </div>
 
-    <!-- Docs -->
-    <div class="card">
-      <h3>Documentation</h3>
-      <p>
-        The documentation covers installation, field types, admin settings, list view
-        columns and both dashboard gadgets. Many common questions are answered there.
-      </p>
-      <a class="btn btn-secondary" href="visual-progress-tracker-docs.html">View documentation</a>
-    </div>
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="visual-progress-tracker-docs.html">documentation</a>: it covers installation, field types, admin settings, list view columns and both dashboard gadgets. Common ones:</p>
+    <ul>
+      <li><strong>The Status bar shows 0% even though the issue has a status</strong>: the status is probably not in the <a href="visual-progress-tracker-docs.html#status">status mapping</a>. Add it with its exact name and save. Then open the issue again, or click <em>Recalculate All Fields</em> to update all issues.</li>
+      <li><strong>Existing issues show "—" after adding the field to a project</strong>: Status and Subtask values are calculated when an issue is opened, so issues nobody has opened yet stay empty. Click <em>Recalculate All Fields</em> on the app's page to fill them.</li>
+      <li><strong>The Recalculate button shows a date instead of running</strong>: recalculation is limited to once every 7 days, and the page shows the next available date. Single issues recalculate when opened, so you rarely need it.</li>
+      <li><strong>Recalculate says "no field values were written"</strong>: usually the Status and Subtask fields are not on the issue screens of those projects. Add them under Jira settings → Work items → Screens, then run <em>Recalculate All Fields</em> again.</li>
+      <li><strong>The colors did not change after changing the thresholds</strong>: click <em>Save Settings</em> on the Color Settings tab and reload the issue. <a href="visual-progress-tracker-docs.html#listview">List view</a> columns always use the fixed 34% and 67% limits.</li>
+    </ul>
 
-    <!-- Legal -->
-    <div class="card">
-      <h3>Legal documents</h3>
-      <p>
-        Links to all legal documents for Visual Progress Tracker for Jira:
-      </p>
-      <p>
-        <a class="btn btn-secondary" href="visual-progress-tracker-privacy-policy.html" style="margin-right: 8px; margin-bottom: 8px;">Privacy Policy</a>
-        <a class="btn btn-secondary" href="visual-progress-tracker-security.html" style="margin-right: 8px; margin-bottom: 8px;">Security Policy</a>
-        <a class="btn btn-secondary" href="visual-progress-tracker-terms-of-service.html">Terms of Service</a>
-      </p>
-    </div>
-  <!-- Footer injected by components.js -->
-  <footer id="site-footer"></footer>
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Your Jira site URL</li>
+      <li>The field type (Manual, Status or Subtask) or the dashboard gadget involved</li>
+      <li>What you expected vs. what you saw (a screenshot helps a lot)</li>
+    </ul>
 
+    <p class="page-links">
+      <strong>Legal:</strong> <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a> ·
+      <a href="visual-progress-tracker-terms-of-service.html">Terms of Service</a> ·
+      <a href="visual-progress-tracker-security.html">Security Policy</a>
+    </p>
   </main>
   <script src="/components.js"></script>
 </body>
