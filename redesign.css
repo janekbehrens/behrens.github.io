@@ -24,11 +24,9 @@
 body.rd { background: var(--page); color: var(--ink); }
 .rd a { color: var(--brand); }
 .rd a:hover { color: var(--brand-hover); }
-/* Older buttons on docs and support pages: the booking banner (.btn-primary, site.css) and the
-   plain .btn of three support pages. `.rd a` beat their white text: blue text on a blue button. */
-.rd a.btn-primary, .rd a.btn-primary:hover,
-.rd a.btn:not(.btn-secondary):not(.btn-solid):not(.btn-ghost),
-.rd a.btn:not(.btn-secondary):not(.btn-solid):not(.btn-ghost):hover { color: #fff; }
+/* The booking banner on docs and support pages uses .btn-primary (site.css): `.rd a` would
+   turn its white text blue on the blue button. */
+.rd a.btn-primary, .rd a.btn-primary:hover { color: #fff; }
 .rd :focus-visible { outline: 3px solid #2684FF; outline-offset: 2px; border-radius: 6px; }
 
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
