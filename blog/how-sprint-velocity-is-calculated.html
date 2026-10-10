@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>How Sprint Velocity Is Calculated in Jira (Committed vs Completed) | Janek Behrens</title>
+  <meta name="description" content="A precise walk-through of how Jira calculates sprint velocity: what counts toward commitment and completed, how the estimation field and Done mapping change the numbers, why sub-tasks are excluded, and why your velocity and sprint reports sometimes disagree.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/how-sprint-velocity-is-calculated.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How Sprint Velocity Is Calculated in Jira (Committed vs Completed)",
+    "description": "What counts toward commitment and completed, how the estimation field and Done mapping change the numbers, why sub-tasks are excluded, and why your velocity and sprint reports sometimes disagree.",
+    "url": "https://janekbehrens.de/blog/how-sprint-velocity-is-calculated.html",
+    "datePublished": "2026-05-30T00:00:00+02:00",
+    "dateModified": "2026-05-30T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+    "keywords": ["Jira", "sprint velocity", "story points", "committed vs completed", "Scrum", "Agile", "velocity chart"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How Sprint Velocity Is Calculated in Jira (Committed vs Completed)">
+  <meta property="og:description" content="A precise walk-through: what counts toward commitment and completed, how the estimation field and Done mapping change the numbers, and why reports sometimes disagree.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/how-sprint-velocity-is-calculated.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-30">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How Sprint Velocity Is Calculated in Jira (Committed vs Completed)">
+  <meta name="twitter:description" content="What counts toward commitment and completed, how estimation and Done mapping change the numbers, and why reports disagree.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is sprint velocity calculated in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For each sprint Jira sums two estimates: commitment is the total estimate of all work items in the sprint when it begins, and completed is the total estimate of work finished by the time the sprint ends. Velocity is the average of the completed values over the last several sprints."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does work added mid-sprint count toward commitment?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Commitment is fixed at sprint start. An issue added after the sprint has started does not increase commitment, but if it is finished it does increase the completed value. That is why completed can occasionally exceed commitment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are sub-tasks included in the Jira velocity chart?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Atlassian's native velocity chart does not include estimates from sub-tasks; only the estimates on standard issue types are counted. Teams that estimate at the sub-task level will see velocity understated unless they use a tool that can optionally include sub-tasks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why don't my velocity chart and sprint report show the same number?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most common causes are issues re-estimated after the sprint started, issues in statuses that are not mapped to the board's columns, and scope changes during the sprint. The velocity chart's commitment is a snapshot at sprint start, so later re-estimation can make it differ from a live sum of the current story points."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-amber { background: #FFFAE6; border-left: 3px solid #FF991F; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .dim-table td.num { text-align:right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">May 30, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>How Sprint Velocity Is Calculated in Jira (Committed vs Completed)</h1>
+      <p class="article-intro">
+        &ldquo;Velocity&rdquo; sounds simple — points done per sprint — but the exact rules behind the two bars trip up a lot of teams. What counts toward commitment? What happens to work added mid-sprint? Why do sub-tasks vanish, and why does the velocity chart disagree with the sprint report? Here's precisely how Jira does the maths, with a worked example.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="two-numbers">Velocity is built from two numbers per sprint</h2>
+      <p>
+        Every velocity calculation comes down to two sums that Jira computes for each completed sprint. Atlassian's <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-velocity-chart/" target="_blank" rel="noopener">velocity chart documentation</a> defines them like this:
+      </p>
+      <ul>
+        <li><strong>Commitment</strong> — &ldquo;the total estimate of all work items in the sprint when it begins.&rdquo;</li>
+        <li><strong>Completed</strong> — &ldquo;the total completed estimates when the sprint ends.&rdquo;</li>
+      </ul>
+      <p>
+        <strong>Velocity</strong> is then &ldquo;the average of the total completed estimates over the last several sprints.&rdquo; So velocity is really just <em>the running average of the green bar</em>. Everything else is about how those two sums are computed — and that's where the detail lives.
+      </p>
+
+      <h2 id="commitment">How commitment is counted</h2>
+      <p>
+        Commitment is a <strong>snapshot taken at sprint start</strong>. When you click <em>Start sprint</em>, Jira records the estimates of every issue then in the sprint and adds them up. A few rules follow from that:
+      </p>
+      <ul>
+        <li>Issues added to the sprint <strong>before</strong> it starts are part of commitment.</li>
+        <li>Issues added <strong>after</strong> the sprint starts are <em>not</em> — they're scope change, not commitment.</li>
+        <li>Issues with no estimate contribute zero to commitment (which is exactly why unestimated work quietly distorts the picture).</li>
+      </ul>
+      <p>
+        This snapshot behaviour is the source of a lot of confusion later, because re-estimating an issue <em>after</em> the sprint started doesn't change that sprint's commitment number — the snapshot already happened.
+      </p>
+
+      <h2 id="completed">How completed is counted</h2>
+      <p>
+        Completed is measured <strong>at sprint end</strong>: the sum of estimates for issues that are <em>done</em>. &ldquo;Done&rdquo; here means the issue is in a status mapped to your board's last column (the Done column). Two consequences matter:
+      </p>
+      <ul>
+        <li>Work <strong>added mid-sprint and finished</strong> counts toward completed, even though it never counted toward commitment. This is why the green bar can occasionally be taller than the grey one.</li>
+        <li>Work that's &ldquo;basically done&rdquo; but sitting in a status that isn't mapped to the Done column does <strong>not</strong> count. If you have a <em>Released</em> or <em>Accepted</em> status that isn't in your Done column, that work is invisible to velocity.</li>
+      </ul>
+
+      <div class="callout callout-amber">
+        <p><strong>The Done-mapping trap:</strong> the native chart counts only what's in the board's Done column. Plenty of teams have more than one &ldquo;finished&rdquo; status, so their real completed work is higher than the chart shows. Aligning your board's column mapping with your actual Definition of Done is the single highest-impact fix for a velocity number that feels too low.</p>
+      </div>
+
+      <h2 id="estimation">The estimation field decides the unit</h2>
+      <p>
+        Velocity isn't always in story points. The chart uses your board's <strong>estimation statistic</strong>, which is usually one of:
+      </p>
+      <ul>
+        <li><strong>Story Points</strong> — the default for most Scrum boards.</li>
+        <li><strong>Issue count</strong> — each issue counts as 1; useful for teams that don't estimate in points.</li>
+        <li><strong>Original time estimate</strong> or a custom numeric field — depending on board configuration.</li>
+      </ul>
+      <p>
+        The classic gotcha: a board configured for &ldquo;Story Points&rdquo; while the team actually estimates in the <em>Story point estimate</em> field (or vice-versa), so the chart reads an empty field and the bars come out near zero. Per Atlassian's <a href="https://support.atlassian.com/jira/kb/story-points-calculation-in-sprint-velocity-report/" target="_blank" rel="noopener">notes on story-point calculation</a>, the report sums whatever field the board is set to use — so if the bars look wrong, check that field first.
+      </p>
+
+      <h2 id="excluded">What's left out: sub-tasks</h2>
+      <p>
+        One rule surprises almost everyone: <strong>estimates from sub-tasks are not included</strong> in the native velocity chart. Only standard issue types are counted. If your team puts its estimates on sub-tasks rather than on the parent story, the native chart will systematically understate your velocity. The options are to estimate at the story level, or to use a gadget that lets you opt sub-tasks <em>in</em>.
+      </p>
+
+      <h2 id="worked-example">A worked example</h2>
+      <p>Take one sprint. At start, four stories are in it:</p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Issue</th><th>Estimate</th><th>At sprint start?</th><th>Done at end?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>STORY-1</td><td class="num">5</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>STORY-2</td><td class="num">8</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>STORY-3</td><td class="num">3</td><td>Yes</td><td>No</td></tr>
+          <tr><td>STORY-4</td><td class="num">5</td><td>Yes</td><td>No</td></tr>
+          <tr><td>STORY-5 (pulled in mid-sprint)</td><td class="num">2</td><td>No</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul>
+        <li><strong>Commitment</strong> = 5 + 8 + 3 + 5 = <strong>21</strong> (the four issues present at start; STORY-5 is excluded).</li>
+        <li><strong>Completed</strong> = 5 + 8 + 2 = <strong>15</strong> (everything done at end, including the mid-sprint STORY-5).</li>
+      </ul>
+      <p>
+        So this sprint shows a 21-point grey bar and a 15-point green bar — a say/do ratio of about 71%. Note how the pulled-in STORY-5 lifts <em>completed</em> without ever touching <em>commitment</em>: that asymmetry is by design.
+      </p>
+
+      <h2 id="discrepancies">Why your reports sometimes disagree</h2>
+      <p>
+        A frequent support question is &ldquo;why doesn't my velocity chart match my sprint report (or a JQL sum of story points)?&rdquo; The usual culprits:
+      </p>
+      <ul>
+        <li><strong>Re-estimation after start.</strong> The velocity chart's commitment is frozen at sprint start; a live JQL sum reflects today's estimates. If anyone re-pointed an issue mid-sprint, the two will differ.</li>
+        <li><strong>Unmapped statuses.</strong> An issue in a status not mapped to any board column may be excluded from the calculation entirely.</li>
+        <li><strong>Scope changes.</strong> Items added or removed during the sprint shift completed but not commitment.</li>
+        <li><strong>Sub-tasks.</strong> A JQL sum that includes sub-task points won't match the chart, which ignores them.</li>
+      </ul>
+      <p>
+        None of these are bugs — they fall straight out of the snapshot-and-mapping rules above. But they explain why a single &ldquo;true&rdquo; velocity number is harder to pin down than it looks.
+      </p>
+
+      <h2 id="reconstructing">Measuring velocity your own way</h2>
+      <p>
+        Because the native rules are fixed, teams whose process doesn't match them — multiple Done statuses, estimates on sub-tasks, a non-default estimation field — end up with a velocity that doesn't reflect reality. <a href="/velocity-chart.html">Velocity Chart for Jira</a> recomputes the same committed-vs-completed model but lets you set the parts the native report locks down: it reconstructs commitment from the real sprint scope at start (from the sprint-field change history), lets you choose <strong>exactly which statuses count as Done</strong>, pick the estimation field, and optionally include sub-tasks — then shows it all on a dashboard, on company- and team-managed boards alike. The maths is the same; you just get to define the inputs.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How is sprint velocity calculated in Jira?</p>
+        <p class="faq-a">For each sprint, commitment is the total estimate of work in the sprint at start, and completed is the total estimate done by sprint end. Velocity is the average of the completed values over the last several sprints.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does work added mid-sprint count toward commitment?</p>
+        <p class="faq-a">No. Commitment is frozen at sprint start. Work added later doesn't raise commitment, but if it's finished it raises completed — which is why completed can sometimes exceed commitment.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Are sub-tasks included in the velocity chart?</p>
+        <p class="faq-a">No — the native velocity chart excludes sub-task estimates and counts only standard issue types. Teams estimating on sub-tasks will see velocity understated unless they use a tool that can optionally include them.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why don't my velocity chart and sprint report agree?</p>
+        <p class="faq-a">Usually issues re-estimated after sprint start (commitment is a start-of-sprint snapshot), issues in unmapped statuses, scope changes during the sprint, or a JQL sum that includes sub-task points the chart ignores.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Velocity measured the way your team works</h3>
+        <p>Choose your Definition of Done, your estimation field and sub-task handling — then see committed vs completed on any dashboard with Velocity Chart for Jira.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#two-numbers">Two numbers per sprint</a></li>
+          <li><a href="#commitment">How commitment is counted</a></li>
+          <li><a href="#completed">How completed is counted</a></li>
+          <li><a href="#estimation">The estimation field</a></li>
+          <li><a href="#excluded">What's excluded</a></li>
+          <li><a href="#worked-example">A worked example</a></li>
+          <li><a href="#discrepancies">Why reports disagree</a></li>
+          <li><a href="#reconstructing">Your own way</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free tier</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Get it on Marketplace →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Velocity Chart: How to Read It</a>
+        <a href="/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Sprint Predictability and the Say/Do Ratio</a>
+        <a href="/blog/velocity-team-managed-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Velocity for Team-Managed Projects</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

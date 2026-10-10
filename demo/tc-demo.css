@@ -1,0 +1,119 @@
+/* Team Capacity sample layouts; shared demo chrome comes from demo.css. */
+.tcs-heatmap, .tcs-settings, .tcs-export {
+  --tcs-ink: #213650;
+  --tcs-secondary: #68778e;
+  --tcs-line: #dce2eb;
+  --tcs-soft: #f5f6f9;
+  --tcs-accent: #145cc7;
+  color: var(--tcs-ink);
+}
+.tcs-red { --tcs-fill: #d74420; }
+.tcs-amber { --tcs-fill: #f68c17; }
+.tcs-green { --tcs-fill: #38ad7d; }
+.tcs-blue { --tcs-fill: #5899f3; }
+.tcs-grey { --tcs-fill: #a7b1c0; }
+
+.d-context.tcs-context { overflow: visible; padding-block: 8px; gap: 11px; }
+.tcs-breadcrumbs { flex: 1; min-inline-size: 0; gap: 9px; align-items: center; display: flex; white-space: nowrap; overflow: hidden; }
+.tcs-breadcrumbs b { text-overflow: ellipsis; overflow: hidden; }
+.tcs-plans { flex: 0 0 auto; align-items: center; display: flex; gap: 5px; }
+.tcs-plan-caption { margin-inline-end: 3px; }
+.tcs-plans button { font: inherit; font-weight: 650; font-size: 12px; line-height: 1.4; background-color: white; color: var(--d-text-2); border-radius: 20px; padding: 3px 12px; border: solid 1px var(--d-line); cursor: pointer; }
+.tcs-plans button:hover { background-color: var(--d-hover); }
+.tcs-plans button[aria-pressed="true"] { color: white; border-color: var(--d-blue); background-color: var(--d-blue); }
+
+.tcs-canvas { padding: 23px 19px; }
+.tcs-dashboard-title { max-inline-size: 978px; margin: 0 auto 17px; }
+.tcs-gadget { overflow: visible; max-inline-size: 978px; margin-inline: auto; }
+.tcs-gadget-wrap, .tcs-preview-column { min-inline-size: 0; }
+.tcs-gadget .d-gadget-head { padding: 11px 11px 5px 17px; }
+.tcs-gadget .d-gadget-body { padding: 7px 17px 15px; }
+.tcs-mode-badge { font-weight: 700; font-size: 11px; color: var(--d-blue-2); background-color: var(--d-blue-bg); padding: 1px 7px; border-radius: 4px; display: inline-block; vertical-align: 1px; margin-inline-start: 7px; }
+.tcs-columns { padding: 29px 19px 23px; gap: 29px 21px; align-items: start; display: grid; grid-template-columns: minmax(298px, .9fr) minmax(0, 1.3fr); }
+.tcs-columns .tcs-gadget, .tcs-stack .tcs-gadget { max-inline-size: none; }
+.tcs-stack { padding-block-start: 11px; margin-inline: auto; max-inline-size: 978px; row-gap: 29px; display: grid; }
+.tcs-settings-excerpt { inline-size: 100%; max-inline-size: 558px; justify-self: start; padding: 15px 17px 7px; border-radius: 9px; background-color: white; border: solid 1px var(--d-line); box-shadow: 0 3px 7px #16243814, 0 17px 38px -11px #16243836; }
+.tcs-excerpt-caption { color: var(--d-text-3); font-size: 12px; margin: 0 0 11px; }
+
+.tcs-heatmap { line-height: 1.45; font-size: 14px; }
+.tcs-heatmap-title { margin-block-end: 11px; column-gap: 13px; row-gap: 7px; align-items: center; justify-content: space-between; display: flex; flex-wrap: wrap; }
+.tcs-sprint-menu { font: inherit; font-weight: 700; color: var(--tcs-ink); max-inline-size: 262px; min-block-size: 31px; margin-inline-start: -5px; border-radius: 4px; padding: 3px 25px 3px 5px; border: none; cursor: pointer; appearance: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='m3 5 4 4 4-4' stroke='%23213650' stroke-width='2' fill='none'/%3E%3C/svg%3E") right 7px center / 13px no-repeat; }
+.tcs-sprint-menu:hover { background-color: var(--tcs-soft); }
+.tcs-totals { color: var(--tcs-secondary); font-size: 13px; }
+.tcs-totals b { color: var(--tcs-ink); }
+.tcs-person { border-radius: 5px; padding-block: 5.5px; gap: 11px; display: flex; align-items: center; }
+.tcs-person.tcs-flash { animation: d-flash 1450ms ease-out; }
+.tcs-identity { flex: 0 0 149px; min-inline-size: 0; }
+.tcs-identity strong { font-weight: 600; }
+.tcs-identity strong, .tcs-identity small { display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.tcs-identity small { font-size: 11px; color: var(--tcs-secondary); }
+.tcs-meter { flex: 1; min-inline-size: 0; block-size: 17px; border-radius: 9px; background-color: #eceff4; overflow: hidden; }
+.tcs-meter > span { display: block; min-inline-size: 3px; block-size: 100%; background-color: var(--tcs-fill); border-radius: inherit; transition: inline-size 340ms ease-out, background-color 240ms ease-out; }
+.tcs-value { flex: 0 0 99px; font-size: 12px; color: var(--tcs-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: end; }
+.tcs-value b { font-size: 13px; color: var(--tcs-ink); }
+.tcs-accessible { clip-path: inset(50%); inline-size: 1px; block-size: 1px; overflow: hidden; position: absolute; white-space: nowrap; }
+.tcs-footer { padding-block-start: 11px; gap: 11px; justify-content: space-between; align-items: center; display: flex; flex-wrap: wrap; }
+.tcs-key { font-size: 11px; color: var(--tcs-secondary); gap: 13px; display: flex; flex-wrap: wrap; }
+.tcs-key span { gap: 6px; display: flex; align-items: center; }
+.tcs-key i, .tcs-boundary i { border-radius: 1.5px; inline-size: 9px; block-size: 9px; display: inline-block; background-color: var(--tcs-fill); }
+.tcs-tools { column-gap: 11px; row-gap: 9px; display: flex; align-items: center; flex-wrap: wrap; }
+.tcs-timestamp { font-size: 12px; color: var(--tcs-secondary); }
+.tcs-button { color: var(--tcs-ink, #213650); background-color: var(--tcs-soft, #f5f6f9); border-radius: 4px; border: solid 1px var(--tcs-line, #dce2eb); padding: 4px 10px; min-block-size: 29px; white-space: nowrap; font: inherit; font-size: 12px; cursor: pointer; }
+.tcs-button:enabled:hover { background-color: #e9edf3; }
+.tcs-button:disabled { opacity: .65; cursor: not-allowed; }
+.tcs-badge { margin-inline-start: 7px; background-color: #705cc1; border-radius: 4px; padding: 2px 6px; color: white; font-weight: 700; font-size: 10px; display: inline-block; vertical-align: 1px; }
+
+.tcs-settings { font-size: 14px; line-height: 1.45; }
+.tcs-control { margin-block-end: 15px; }
+.tcs-control > label, .tcs-label { font-weight: 600; margin-block-end: 5px; display: block; }
+.tcs-input { color: var(--tcs-ink); font: inherit; background-color: white; inline-size: 100%; border-radius: 4px; border: solid 1px var(--tcs-line); padding: 7px 9px; min-block-size: 35px; }
+select.tcs-input { padding-inline-end: 29px; appearance: none; cursor: pointer; background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='m3 5 4 4 4-4' stroke='%23213650' stroke-width='1.8' fill='none'/%3E%3C/svg%3E") right 10px center / 13px no-repeat; }
+.tcs-input:disabled { cursor: not-allowed; background-color: var(--tcs-soft); }
+.tcs-help { color: var(--tcs-secondary); font-size: 12px; margin-block-start: 4px; }
+.tcs-help a { color: var(--tcs-accent); }
+.tcs-control > .tcs-check { display: flex; gap: 7px; align-items: center; cursor: pointer; }
+.tcs-check input { accent-color: var(--tcs-accent); inline-size: 15px; block-size: 15px; margin: 0; flex-shrink: 0; }
+.tcs-disabled > :not(.tcs-help) { opacity: .57; }
+.tcs-disabled .tcs-help { color: #8491a5; }
+.tcs-members { display: grid; gap: 5px; margin-block-end: 7px; }
+.tcs-member { gap: 9px; align-items: center; display: flex; }
+.tcs-member label { font-size: 13px; flex: 1; min-inline-size: 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.tcs-member .tcs-input { flex: 0 0 89px; inline-size: 89px; min-block-size: 31px; padding: 5px 7px; font-size: 13px; }
+.tcs-boundaries { display: flex; column-gap: 15px; row-gap: 9px; flex-wrap: wrap; color: var(--tcs-secondary); font-size: 12px; }
+.tcs-boundary { gap: 6px; display: inline-flex; align-items: center; white-space: nowrap; }
+.tcs-boundary .tcs-input { font-size: 12px; padding: 4px 6px; min-block-size: 29px; inline-size: 61px; }
+.tcs-submit { padding-block: 9px 11px; }
+.tcs-save { background-color: var(--tcs-accent); color: white; font: inherit; font-weight: 500; padding: 7px 15px; min-block-size: 33px; border: none; border-radius: 4px; cursor: pointer; }
+.tcs-save:hover { background-color: #114fac; }
+
+.tcs-export { border-radius: 9px; border: solid 1px var(--d-line); background-color: white; overflow: hidden; max-inline-size: 978px; margin: 17px auto 0; animation: d-pop 230ms ease-out; box-shadow: 0 3px 7px #16243814, 0 17px 38px -11px #16243836; }
+.tcs-export-title { padding: 9px 9px 9px 15px; gap: 11px; align-items: center; display: flex; background-color: #fafbfd; border-block-end: solid 1px var(--d-line-2); }
+.tcs-export-title b { min-inline-size: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tcs-export-icon { font-weight: 800; font-size: 8px; color: white; background-color: #27845d; border-radius: 5px; flex: 0 0 23px; block-size: 23px; place-items: center; display: inline-grid; }
+.tcs-export .d-table-wrap { padding: 5px 7px 0; }
+.tcs-export-table :is(th, td) { font-size: 13px; white-space: nowrap; }
+.tcs-export-table .tcs-number { font-variant-numeric: tabular-nums; text-align: end; }
+.tcs-raw { font-size: 13px; margin: 9px 15px 0; }
+.tcs-raw summary { font-weight: 600; color: var(--tcs-accent); cursor: pointer; }
+.tcs-raw pre { font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 11px 13px; margin: 9px 0 0; border-radius: 5px; overflow-x: auto; background-color: var(--tcs-soft); }
+.tcs-export-note { color: var(--tcs-secondary); font-size: 12px; margin: 9px 15px 13px; }
+
+@media (max-width: 980px) {
+  .tcs-columns { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .tcs-canvas { padding: 19px 11px 17px; }
+  .tcs-columns { padding: 25px 11px 17px; }
+  .tcs-stack { row-gap: 27px; }
+  .tcs-gadget .d-gadget-body { padding: 5px 11px 13px; }
+  .tcs-gadget .d-gadget-head { padding-inline-start: 11px; }
+  .tcs-person { gap: 9px; }
+  .tcs-identity { flex-basis: 107px; }
+  .tcs-value { flex-basis: 75px; }
+  .tcs-plan-caption { display: none; }
+  .tcs-settings-excerpt { padding: 13px 13px 5px; }
+  [data-demo="tc"] .demo-hint.is-done { flex-wrap: wrap; }
+  [data-demo="tc"] .demo-hint.is-done .demo-hint-text { flex: 1 1 calc(100% - 44px); }
+  [data-demo="tc"] .demo-hint.is-done .demo-hint-steps { margin-left: 40px; }
+  [data-demo="tc"] .demo-hint.is-done .demo-next { margin-left: auto; }
+}

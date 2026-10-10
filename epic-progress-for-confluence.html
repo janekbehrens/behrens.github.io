@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epic Progress for Confluence — Live Jira Progress Bars</title>
+  <meta name="description" content="Live progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira. Dated snapshots for readers without Jira access.">
+  <link rel="canonical" href="https://janekbehrens.de/epic-progress-for-confluence.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/epic-progress-for-confluence.html">
+  <meta property="og:title" content="Epic Progress for Confluence — Live Jira Progress Bars">
+  <meta property="og:description" content="Progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira. Dated snapshots for readers without Jira. Try the interactive demo.">
+  <meta property="og:image" content="https://janekbehrens.de/imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Epic Progress for Confluence — Live Jira Progress Bars">
+  <meta name="twitter:description" content="Progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira. Dated snapshots for readers without Jira. Try the interactive demo.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Epic Progress for Confluence",
+        "description": "Atlassian Forge app with five Confluence macros: live progress bars for Jira epics, projects, releases, saved filters and JQL searches, a list of epics with an overall row, page progress by label and manual progress bars. Every reader sees the numbers their own Jira permissions allow; page editors can publish a dated snapshot for readers without Jira access.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Confluence Cloud",
+        "url": "https://janekbehrens.de/epic-progress-for-confluence.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I show Jira epic progress on a Confluence page?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Edit a page, type /progress and choose Epic Progress. Search the epic by name or key, check the live preview and save. The bar shows how many of the epic's work items are done, in progress and to do, from their status in Jira, like Jira's own child-issue progress."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can people without Jira access see the progress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, with a published snapshot. An editor of the page who can see the work items in Jira clicks Publish snapshot, and everyone who can see the page then sees these numbers with their date. When an editor opens the page and the snapshot is older than 15 minutes, its numbers are read again with that editor's Jira permissions; this can be turned off per macro. Reading a snapshot never causes a Jira request. A snapshot keeps no assignees or account IDs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who sees which numbers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every reader sees the numbers their own Jira permissions allow. The app reads Jira and Confluence with the permissions of the person reading the page, so issue security and page restrictions apply. People without access to the work items see a short note instead of numbers, unless an editor published a snapshot."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need Jira?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Progress Bar and Page Progress work with Confluence alone. Epic Progress, Jira Progress and Progress List read Jira on the same site; a site admin connects Jira in Atlassian Administration after the app is installed in Confluence."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the app change anything in Jira or Confluence?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. It has no write access to Jira or Confluence. Besides published snapshots, it keeps only a little app data without personal data in Atlassian's Forge storage, and it runs on Atlassian with no external servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Confluence sites with up to 10 users pay nothing, with all five macros and snapshots. Larger sites start with a free trial; after the trial it is priced per user."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://janekbehrens.de/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Epic Progress for Confluence",
+            "item": "https://janekbehrens.de/epic-progress-for-confluence.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Epic Progress for Confluence — live progress bars from Jira on your pages",
+    "description": "Live progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira.",
+    "thumbnailUrl": "https://janekbehrens.de/imgEpicProgressForConfluence/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/HxG5TAB10Q0",
+    "contentUrl": "https://www.youtube.com/watch?v=HxG5TAB10Q0"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/ep-demo.css">
+</head>
+<body class="rd" data-app="ep">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/epic-progress-icon.png" alt="" width="48" height="48">
+            <div><b>Epic Progress for Confluence</b><span>Confluence Cloud · Built on Forge · Jira optional</span></div>
+          </div>
+          <h1 class="h-display">Live Jira progress on your <em>Confluence pages</em></h1>
+        </div>
+        <div>
+          <p class="lead">Progress bars for Jira epics, releases and saved filters, colored like in Jira and live for every reader. Dated snapshots for readers without Jira, and two macros that need no Jira at all.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="epic-progress-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Confluence sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="ep">
+          <noscript><img src="imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" alt="A Confluence status page with six Epic Progress macros: status, due date, percent and counts per epic" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Confluence</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Confluence site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ep-f1" aria-controls="panel-ep-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Epic progress, live on any page</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ep-f2" aria-controls="panel-ep-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Releases, filters and lists of epics</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ep-f3" aria-controls="panel-ep-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Status reports for readers without Jira</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ep-f4" aria-controls="panel-ep-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Settings with a live preview</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ep-f5" aria-controls="panel-ep-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">No Jira needed: labels and manual bars</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ep-f1" aria-labelledby="tab-ep-f1">
+              <a class="feat-shot" href="imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" alt="A Confluence status page with six Epic Progress macros: status, due date, percent and counts per epic, two of them with their open work items expanded" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Epic progress, live on any page</h3>
+                <p>Add Epic Progress from the / menu and pick the epic. The bar shows what is done, in progress and to do, colored like in Jira.</p>
+                </div>
+                <div><ul>
+                <li>Count work items or story points, with “4 of 8 work items done” next to every percent.</li>
+                <li>Status, due date, flagged work and up to 25 open work items.</li>
+                <li>Every reader sees the numbers their own Jira permissions allow.</li>
+              </ul>
+                <a class="text-link feat-more" href="epic-progress-docs.html#epic-progress">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ep-f2" aria-labelledby="tab-ep-f2" hidden>
+              <a class="feat-shot" href="imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" alt="All epics of a project, earliest due date first, with an overall row. Below: the next release with its release date, and a saved filter with the bugs from the beta" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Releases, filters and lists of epics</h3>
+                <p>Jira Progress shows a project, a release (fix version), a saved filter or a JQL search. Progress List shows several epics with an overall row.</p>
+                </div>
+                <div><ul>
+                <li>All epics of a project, the epics of an initiative or your own pick.</li>
+                <li>Least progress or earliest due date first.</li>
+                <li>Release dates, in red when an unreleased version is past its date.</li>
+              </ul>
+                <a class="text-link feat-more" href="epic-progress-docs.html#progress-list">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ep-f3" aria-labelledby="tab-ep-f3" hidden>
+              <a class="feat-shot" href="imgEpicProgressForConfluence/highlight-3-status-report-snapshot-without-jira.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgEpicProgressForConfluence/highlight-3-status-report-snapshot-without-jira.webp" alt="A steering committee page as readers see it: the list of epics as a dated snapshot, updated automatically when an editor opened the page. Inset: the editor's live view, where one click updates the snapshot" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Status reports for readers without Jira</h3>
+                <p>An editor with Jira access publishes a dated snapshot with one click. Everyone who can see the page sees it, also without Jira.</p>
+                </div>
+                <div><ul>
+                <li>Editors’ visits keep its numbers current, at most every 15 minutes, with the editor’s own Jira permissions.</li>
+                <li>Reading a snapshot never causes a Jira request.</li>
+                <li>No assignees or account IDs. Editors can remove it at any time; admins can turn snapshots off.</li>
+              </ul>
+                <a class="text-link feat-more" href="epic-progress-docs.html#snapshots">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ep-f4" aria-labelledby="tab-ep-f4" hidden>
+              <a class="feat-shot" href="imgEpicProgressForConfluence/screenshot-1-settings-live-preview.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgEpicProgressForConfluence/screenshot-1-settings-live-preview.webp" alt="Type /progress, pick a macro and set it up: search for the epic, choose what to count and show, and check the live preview before you save" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Settings with a live preview</h3>
+                <p>Type /progress and pick one of five macros. Every field has a short explanation, and the preview shows the macro with live data before you save.</p>
+                </div>
+                <div><ul>
+                <li>Search pickers for epics, projects, releases, filters and spaces.</li>
+                <li>Save checks the settings first and names what is missing.</li>
+              </ul>
+                <a class="text-link feat-more" href="epic-progress-docs.html#settings">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ep-f5" aria-labelledby="tab-ep-f5" hidden>
+              <a class="feat-shot" href="imgEpicProgressForConfluence/screenshot-2-page-progress-manual-bars.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgEpicProgressForConfluence/screenshot-2-page-progress-manual-bars.webp" alt="No Jira needed: Page Progress counts the pages below this page that carry the label approved and lists the rest. Progress Bar is set by hand, with status, note and the date of the last change" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>No Jira needed: labels and manual bars</h3>
+                <p>Page Progress counts the pages that carry a label such as “approved”. Progress Bar is set by hand, for work that is not tracked in Jira.</p>
+                </div>
+                <div><ul>
+                <li>Pages below a chosen page, in this space or in another space.</li>
+                <li>Status colors you choose: on track, at risk, off track.</li>
+                <li>“Updated 4 Oct 2026” shows how fresh a hand-set value is.</li>
+              </ul>
+                <a class="text-link feat-more" href="epic-progress-docs.html#page-progress">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of Epic Progress in Confluence.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgEpicProgressForConfluence/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/HxG5TAB10Q0?autoplay=1" data-title="Epic Progress for Confluence — live progress bars from Jira on your pages">
+              <button class="yt-play-btn" aria-label="Load and play the video: Epic Progress for Confluence — live progress bars from Jira on your pages"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Confluence alone vs. with Epic Progress</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Confluence alone</th><th scope="col" class="is-app">With Epic Progress</th></tr></thead>
+            <tbody>
+              <tr><td>Progress of an epic or release</td><td class="no">A list of work items with their status, or numbers copied from Jira by hand</td><td class="yes">One bar per epic, release or filter: “61 % · 8 of 13 work items done”, colored like in Jira</td></tr>
+              <tr><td>Readers without Jira access</td><td class="no">A pasted copy or a screenshot that someone updates by hand</td><td class="yes">A dated snapshot, published by an editor with Jira access and kept current by editors’ visits</td></tr>
+              <tr><td>Documentation reviews</td><td class="no">A list of the pages with a label, without a share done</td><td class="yes">Page Progress: the share of pages labelled “approved”, and which ones are missing</td></tr>
+              <tr><td>Progress set by hand</td><td class="no">A typed percentage without a date</td><td class="yes">A bar with a status color, a note and “Updated 4 Oct 2026”</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Confluence Cloud and Jira Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Once the app is live on the Atlassian Marketplace, a Confluence admin installs it on the Confluence site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Connect Jira</h3><p>For the Jira macros, a site admin connects Jira on the same site in Atlassian Administration. Progress Bar and Page Progress work without it.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Type /progress</h3><p>Edit a page, type /progress and pick a macro. Check the live preview, save and publish the page.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="epic-progress-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>How do I show Jira epic progress on a Confluence page?</summary><div>Edit a page, type /progress and choose Epic Progress. Search the epic by name or key, check the live preview and save. The bar shows how many of the epic's work items are done, in progress and to do, from their status in Jira, like Jira's own child-issue progress.</div></details>
+          <details><summary>Can people without Jira access see the progress?</summary><div>Yes, with a published snapshot. An editor of the page who can see the work items in Jira clicks Publish snapshot, and everyone who can see the page then sees these numbers with their date. When an editor opens the page and the snapshot is older than 15 minutes, its numbers are read again with that editor's Jira permissions; this can be turned off per macro. Reading a snapshot never causes a Jira request. A snapshot keeps no assignees or account IDs.</div></details>
+          <details><summary>Who sees which numbers?</summary><div>Every reader sees the numbers their own Jira permissions allow. The app reads Jira and Confluence with the permissions of the person reading the page, so issue security and page restrictions apply. People without access to the work items see a short note instead of numbers, unless an editor published a snapshot.</div></details>
+          <details><summary>Do I need Jira?</summary><div>No. Progress Bar and Page Progress work with Confluence alone. Epic Progress, Jira Progress and Progress List read Jira on the same site; a site admin connects Jira in Atlassian Administration after the app is installed in Confluence.</div></details>
+          <details><summary>Does the app change anything in Jira or Confluence?</summary><div>No. It has no write access to Jira or Confluence. Besides published snapshots, it keeps only a little app data without personal data in Atlassian's Forge storage, and it runs on Atlassian with no external servers.</div></details>
+          <details><summary>Is it free?</summary><div>Confluence sites with up to 10 users pay nothing, with all five macros and snapshots. Larger sites start with a free trial; after the trial it is priced per user.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="visual-progress-tracker.html"><img src="img/progresstracker144logo.png" alt="" width="44" height="44" loading="lazy"><div><b>Visual Progress Tracker for Jira</b><span>Color-coded progress bars on every Jira issue.</span></div></a>
+          <a class="card" href="codedoc-ai.html"><img src="img/codedoc-ai-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>CodeDoc AI for Confluence</b><span>Confluence pages that stay in sync with your code.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Live Jira progress for your status pages</h2>
+            <p class="muted">Free for Confluence sites with up to 10 users. Larger sites start with a free trial.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="epic-progress-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+        <p class="legal-note">Atlassian, Confluence and Jira are trademarks of Atlassian. Epic Progress for Confluence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/ep-demo.js"></script>
+</body>
+</html>

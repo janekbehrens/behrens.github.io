@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Progress Tracker for Jira — Documentation &amp; Setup</title>
+  <meta name="description" content="Set up Visual Progress Tracker for Jira: the three progress fields, the status mapping, color thresholds, list view columns and both dashboard gadgets.">
+  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/visual-progress-tracker-docs.html">
+  <meta property="og:title" content="Visual Progress Tracker for Jira — Documentation &amp; Setup">
+  <meta property="og:description" content="Set up Visual Progress Tracker for Jira: the three progress fields, the status mapping, color thresholds, list view columns and both dashboard gadgets.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Visual Progress Tracker for Jira — Documentation &amp; Setup">
+  <meta name="twitter:description" content="Set up Visual Progress Tracker for Jira: the three progress fields, the status mapping, color thresholds, list view columns and both dashboard gadgets.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Visual Progress Tracker for Jira",
+        "description": "Atlassian Forge app that adds three custom field types with color-coded progress bars to Jira issues (manual, status-based and subtask progress), plus two dashboard gadgets.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for Jira sites with up to 10 users. Larger sites start with a free trial, then a per-user subscription."
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Visual Progress Tracker for Jira — Documentation & Setup",
+        "description": "Set up Visual Progress Tracker for Jira: the three progress fields, the status mapping, color thresholds, list view columns and both dashboard gadgets.",
+        "url": "https://janekbehrens.de/visual-progress-tracker-docs.html",
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "The Status bar shows 0% even though the issue has a status.", "acceptedAnswer": { "@type": "Answer", "text": "The status is probably not in the status mapping. Add it with its exact name and save. Then open the issue again, or click Recalculate All Fields to update all issues." } },
+          { "@type": "Question", "name": "I added the field to a project but existing issues show \"—\".", "acceptedAnswer": { "@type": "Answer", "text": "Status and Subtask values are calculated when an issue is opened, so issues nobody has opened yet stay empty. Click Recalculate All Fields on the app's page to fill them." } },
+          { "@type": "Question", "name": "Can I use multiple field types on the same issue?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. For example, use the Manual bar for overall progress and the Subtask bar for child issue completion." } },
+          { "@type": "Question", "name": "Do progress bars update automatically?", "acceptedAnswer": { "@type": "Answer", "text": "Status and Subtask fields recalculate every time you open an issue. Manual fields change only when someone sets a new value." } },
+          { "@type": "Question", "name": "Are progress values available for JQL search?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. When someone opens an issue, the calculated value is saved in Jira. It is then available for JQL, the REST API and list view columns. Issues not opened since their last status change may show an older value." } },
+          { "@type": "Question", "name": "The Recalculate button shows a date instead of running.", "acceptedAnswer": { "@type": "Answer", "text": "Recalculation is limited to once every 7 days, and the page shows the next available date. A run that wrote no values does not count. Single issues recalculate when opened, so you rarely need it." } },
+          { "@type": "Question", "name": "Recalculate says \"no field values were written\".", "acceptedAnswer": { "@type": "Answer", "text": "No checked issue was updated. Usually the Status and Subtask fields are not on the issue screens of those projects. Add them under Jira settings → Work items → Screens, then run Recalculate All Fields again. This run does not use up the weekly recalculation. The message also says how many issues could not be updated and how many projects could not be read." } },
+          { "@type": "Question", "name": "Recalculate says \"recalculation paused\".", "acceptedAnswer": { "@type": "Answer", "text": "Jira answered too slowly or a request failed, so the run stopped after the issues it had finished. Click Continue within 6 hours of the start. It resumes with the next issue and does not use up another weekly recalculation. If nothing had been changed yet, run it again in a few minutes." } },
+          { "@type": "Question", "name": "I changed the color thresholds but the colors did not change.", "acceptedAnswer": { "@type": "Answer", "text": "Click Save Settings on the Color Settings tab and reload the issue. Thresholds apply to issue bars and gadgets. List view columns always use the fixed 34% and 67% limits." } },
+          { "@type": "Question", "name": "Where is my data stored?", "acceptedAnswer": { "@type": "Answer", "text": "All configuration data is stored in Atlassian Forge Storage within your Jira Cloud site. No data is sent to external servers, and the app runs entirely on Atlassian infrastructure (Runs on Atlassian). The dashboard gadgets also keep a cache of their results per viewer, used for up to 5 minutes. Details: Privacy Policy · Security Policy." } },
+          { "@type": "Question", "name": "How do I uninstall?", "acceptedAnswer": { "@type": "Answer", "text": "Go to Jira settings → Apps → Manage apps, find Visual Progress Tracker and click Uninstall. Atlassian keeps the app's stored data (settings and cache) for 28 days after the uninstall and then deletes it, see the Privacy Policy. Field values remain in Jira until you delete the fields." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="rd docs" data-app="vpt">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="On this page">
+      <div class="sidebar-toc-heading">On this page</div>
+      <div class="sidebar-toc">
+        <a href="#quick-start">Quick start</a>
+        <a href="#overview">Overview</a>
+        <a href="#install">Installation</a>
+        <a href="#add-fields">Adding fields</a>
+        <a href="#manual">Manual progress</a>
+        <a href="#status">Status-based progress</a>
+        <a href="#subtask">Subtask progress</a>
+        <a href="#listview">List view</a>
+        <a href="#admin">Admin settings</a>
+        <a href="#color-thresholds" class="sub">Color thresholds</a>
+        <a href="#recalculate" class="sub">Recalculate All Fields</a>
+        <a href="#dashboard">Overview gadget</a>
+        <a href="#jql-filter" class="sub">JQL filter</a>
+        <a href="#epic-gadget">Epic Progress Tracker</a>
+        <a href="#editions">What's included</a>
+        <a href="#faq">FAQ &amp; troubleshooting</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Visual Progress Tracker for Jira — Documentation</h1>
+      <p class="subtitle">Color-coded progress bars on Jira issues, in list views and on dashboards. The basic setup takes about two minutes.</p>
+
+      <details class="toc">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#quick-start">Quick start</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#install">Installation</a></li>
+          <li><a href="#add-fields">Adding fields</a></li>
+          <li><a href="#manual">Manual progress</a></li>
+          <li><a href="#status">Status-based progress</a></li>
+          <li><a href="#subtask">Subtask progress</a></li>
+          <li><a href="#listview">List view</a></li>
+          <li><a href="#admin">Admin settings</a></li>
+          <li><a href="#dashboard">Overview gadget</a></li>
+          <li><a href="#epic-gadget">Epic Progress Tracker</a></li>
+          <li><a href="#editions">What's included</a></li>
+          <li><a href="#faq">FAQ &amp; troubleshooting</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <div class="quickstart" id="quick-start">
+        <h2>Quick start</h2>
+        <ol>
+          <li><strong>Install</strong> the app from the <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a> on your Jira Cloud site.</li>
+          <li><strong>Create a field:</strong> Jira settings → Work items → Fields → Create field, search for <code>Progress Bar</code> and pick one of the three types.</li>
+          <li><strong>Add the field to your project screens.</strong> Open an issue: the bar is there.</li>
+          <li><strong>Using the Status or Subtasks type?</strong> Check under Apps → Visual Progress Tracker → Status Mapping that every status you use has a percentage.</li>
+          <li><strong>Optional:</strong> add the Progress Tracker Overview or Epic Progress Tracker gadget to a dashboard.</li>
+        </ol>
+      </div>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Visual Progress Tracker adds three <dfn class="term" data-tip="A field a Jira admin adds to issues, next to Jira's built-in fields such as Assignee or Priority.">custom field</dfn> types to Jira. Each shows a bar that turns <span style="color:#AE2A19;">red</span>, <span style="color:#974B00;">yellow</span> or <span style="color:#006644;">green</span> as progress rises:</p>
+        <ul>
+          <li><strong>Progress Bar (Manual)</strong>: people set the percentage with a slider or quick buttons.</li>
+          <li><strong>Progress Bar (Status)</strong>: the percentage comes from the issue's <dfn class="term" data-tip="The step of the workflow an issue is in, such as To Do, In Progress or Done.">workflow status</dfn>, using a mapping you define.</li>
+          <li><strong>Progress Bar (Subtasks)</strong>: the average progress of the issue's subtasks or child issues.</li>
+        </ul>
+        <p>Two dashboard gadgets show a whole project or one bar per epic. You choose where the colors switch (see <a href="#color-thresholds">color thresholds</a>).</p>
+        <img src="imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira issue with Status, Subtask and Manual progress bars in the Details panel. The manual field is open with its slider and the quick buttons 0, 10, 25, 50, 75 and 100%." width="1840" height="900" loading="lazy">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url('imgVisualProgressTracker/video-poster.webp')"
+               data-src="https://www.youtube-nocookie.com/embed/uQkpO3Fq0EU?autoplay=1" data-title="Visual Progress Tracker for Jira — progress bars on issues, lists and dashboards">
+            <button class="yt-play-btn" aria-label="Load and play the video: Visual Progress Tracker for Jira — progress bars on issues, lists and dashboards"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="install">
+        <h2>Installation</h2>
+        <p>Install the app once per Jira Cloud site.</p>
+        <ol>
+          <li>Open <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Visual Progress Tracker on the Atlassian Marketplace</a> and click <strong>Try it free</strong> (or <strong>Get it now</strong>).</li>
+          <li>Select your Jira Cloud site and confirm the installation.</li>
+          <li>Check: <strong>Apps</strong> in Jira's top navigation now lists <strong>Visual Progress Tracker</strong>. It opens the settings page.</li>
+        </ol>
+        <div class="tip"><strong>Tip:</strong> You only need the field types your team uses. One, two or all three work.</div>
+      </section>
+
+      <section id="add-fields">
+        <h2>Adding progress bar fields</h2>
+        <p>The app does not add fields on its own. Create each field once, then put it on your issue screens.</p>
+        <ol>
+          <li>Go to <strong>Jira settings</strong> (gear icon) → <strong>Work items</strong> → <strong>Fields</strong> (older Jira: <strong>Issues</strong> → <strong>Custom fields</strong>).</li>
+          <li>Click <strong>Create field</strong>, search for <code>Progress Bar</code> and select <strong>Progress Bar (Manual)</strong>, <strong>(Status)</strong> or <strong>(Subtasks)</strong>.</li>
+          <li>Name the field (for example "Progress") and click <strong>Create</strong>.</li>
+          <li>Add the field to the <dfn class="term" data-tip="A screen is the set of fields Jira shows on the issues of a project.">screens</dfn> of your projects (Jira settings → Work items → Screens, or the project's own screen settings).</li>
+        </ol>
+        <div class="tip"><strong>Tip:</strong> Name the fields anything you like. The app finds them by type, not by name. All three types can be on the same issue.</div>
+      </section>
+
+      <section id="manual">
+        <h2>Manual progress</h2>
+        <p>People set the percentage by hand. Use it for work where completion is an estimate, such as design or content tasks.</p>
+        <ol>
+          <li>Click into the field on an issue.</li>
+          <li>Drag the slider (5% steps) or click a quick button: 0, 10, 25, 50, 75 or 100%.</li>
+          <li>Save with the check mark.</li>
+        </ol>
+        <p>The field can also be filled in on the create and transition screens, as part of the normal workflow.</p>
+      </section>
+
+      <section id="status">
+        <h2>Status-based progress</h2>
+        <p>The bar shows the percentage you assigned to the issue's current status. One mapping applies to the whole site.</p>
+        <ol>
+          <li>Open <strong>Apps → Visual Progress Tracker</strong> and select the <strong>Status Mapping</strong> tab.</li>
+          <li>Change the percentages (0–100) and click <strong>Remove</strong> on statuses you do not use. To add one, enter the exact status name and a percentage, then click <strong>+ Add</strong>.</li>
+          <li>Click <strong>Save Mapping</strong>. Only Jira administrators can save.</li>
+        </ol>
+        <div class="warning"><strong>Note:</strong> A status that is not in the mapping counts as 0%. The app does not read your workflows, so map every status they use.</div>
+        <img src="imgVisualProgressTracker/screenshot-1-status-mapping.webp" alt="Admin page, Status Mapping tab: each workflow status with its percentage and a Remove button, a row to add a status, and the Save Mapping button." width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Default mapping and details</summary>
+          <ul>
+            <li>The list starts with: To Do 0%, Backlog 0%, Selected for Development 25%, In Progress 50%, In Review 75%, Done 100%, Closed 100%.</li>
+            <li>Status names are matched exactly first; if that fails, capitalization is ignored.</li>
+            <li>While you create an issue, the field shows "—" and "Auto-calculated from status". The value appears once the issue exists.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="subtask">
+        <h2>Subtask progress</h2>
+        <p>The bar shows the average progress of the issue's <dfn class="term" data-tip="Small pieces of work inside an issue, listed in the issue's Subtasks section.">subtasks</dfn>. Without subtasks it uses the <dfn class="term" data-tip="Issues one level below another in Jira's hierarchy, for example the stories and tasks inside an epic.">child issues</dfn> instead, for example the issues in an epic. No setup is needed.</p>
+        <ul>
+          <li>A done child counts 100%.</li>
+          <li>Every other child counts with the percentage of its status in the <a href="#status">status mapping</a>.</li>
+          <li>An issue without children shows "—".</li>
+        </ul>
+        <p><strong>Example:</strong> a story has 4 subtasks, 2 done and 2 To Do: <strong>50%</strong>. One moves to In Progress (50% by default): <strong>63%</strong>. All 4 done: <strong>100%</strong>.</p>
+        <p>Click <strong>Details</strong> next to the bar to list every child with its status and progress; <strong>Hide</strong> collapses the list.</p>
+        <details class="more">
+          <summary>What counts as done, and editing</summary>
+          <ul>
+            <li>"Done" means the child's status is in Jira's <dfn class="term" data-tip="Jira sorts every status into one of three groups: To Do, In Progress or Done.">status category</dfn> Done, whatever the mapping says for that status. Child issues also count as done when they have a resolution.</li>
+            <li>Clicking into the field shows the same list read-only, because this field cannot be edited.</li>
+            <li>While you create an issue, the field shows no value and cannot be edited. The value appears once the issue exists.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="listview">
+        <h2>Progress in list view</h2>
+        <p>All three types can be columns in Jira's <dfn class="term" data-tip="The table of a project's issues in Jira, with one column per field.">list view</dfn>. Each cell shows a red, yellow or green dot and the percentage; empty values show a dash.</p>
+        <img src="imgVisualProgressTracker/highlight-3-progress-in-jira-list-views.webp" alt="Jira list view with three progress columns (Status, Subtask and Manual), each showing a red, yellow or green dot and the percentage." width="1840" height="900" loading="lazy">
+        <ol>
+          <li>Open a project's <strong>List</strong> view.</li>
+          <li>Open the column picker and search for the name of your progress field.</li>
+          <li>Check the box to show the column.</li>
+        </ol>
+        <div class="warning"><strong>Note:</strong> List view colors are fixed: red below 34%, yellow from 34% to 66%, green from 67%. They do not follow your <a href="#color-thresholds">color thresholds</a>.</div>
+        <div class="tip"><strong>Tip:</strong> If the field is missing in the column picker, it is not on the project's screens yet. See <a href="#add-fields">Adding progress bar fields</a>.</div>
+      </section>
+
+      <section id="admin">
+        <h2>Admin settings</h2>
+        <p>The app's page under <strong>Apps → Visual Progress Tracker</strong> has three tabs: <strong>Setup Guide</strong> (a short in-app guide), <strong>Status Mapping</strong> (see <a href="#status">Status-based progress</a>) and <strong>Color Settings</strong>. Only Jira administrators can save changes.</p>
+
+        <h3 id="color-thresholds">Color thresholds</h3>
+        <p>On the <strong>Color Settings</strong> tab you set where bars change color. A live preview shows the result.</p>
+        <ul>
+          <li><span style="color:#AE2A19;"><strong>Red</strong></span>: 0% up to the first value (default 34%, so 0–33%)</li>
+          <li><span style="color:#974B00;"><strong>Yellow</strong></span>: from the first to the second value (default 34–66%)</li>
+          <li><span style="color:#006644;"><strong>Green</strong></span>: from the second value (default 67–100%)</li>
+        </ul>
+        <p>Both values must be between 1 and 99, and the first must be lower than the second. Click <strong>Save Settings</strong>. The thresholds apply to the bars on issues and in both gadgets, not to <a href="#listview">list view</a> columns.</p>
+        <img src="imgVisualProgressTracker/screenshot-2-color-thresholds.webp" alt="Admin page, Color Settings tab: red below 34%, yellow from 34% to 66%, green from 67%, with a live preview of three bars." width="1840" height="900" loading="lazy">
+
+        <h3 id="recalculate">Recalculate All Fields</h3>
+        <p>Status and Subtask values update when someone opens an issue. The <strong>Recalculate All Fields</strong> button at the top of the page updates them for all issues at once. Use it after you change the status mapping or add the fields to a project. Manual values are never changed.</p>
+        <details class="more">
+          <summary>How the recalculation runs</summary>
+          <ul>
+            <li>It runs in small batches, so it also works on large projects. The result shows how many issues were updated, skipped (field not on the issue screen) or failed, and how many projects could not be read.</li>
+            <li>It can run <strong>once every 7 days</strong>. While it is locked, the page shows the date of the next run. A manual run that writes no value does not count.</li>
+            <li>When you open the page and most recent issues have no value yet, the app runs the recalculation automatically. That run counts as the weekly one.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="dashboard">
+        <h2>Overview gadget</h2>
+        <p>The <strong>Progress Tracker Overview</strong> <dfn class="term" data-tip="A tile on a Jira dashboard that shows one report or list.">gadget</dfn> lists the issues of one project with their progress and shows the average on top.</p>
+        <img src="imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp" alt="Progress Tracker Overview gadget with the project average, a sortable table of issues with progress bars, and its settings with Progress Calculation and the JQL filter field marked." width="1840" height="900" loading="lazy">
+        <div class="step-box">
+          <h3>How to add the gadget</h3>
+          <ol>
+            <li>Open a Jira <strong>Dashboard</strong> and click <strong>Add gadget</strong>.</li>
+            <li>Search for <strong>Progress Tracker Overview</strong> and click <strong>Add</strong>.</li>
+            <li>In the gadget settings, choose:
+              <ul>
+                <li><strong>Project</strong>.</li>
+                <li><strong>Progress Calculation</strong>: <em>Subtasks</em> (default; average of the child issues), <em>Status</em> (status mapping) or <em>Manual</em> (the values of the Manual field; if the site has no Manual field, the status mapping is used).</li>
+                <li><strong>Additional JQL Filter</strong> (optional).</li>
+                <li><strong>Rows per Page</strong>: 10, 25 or 50 (default 25).</li>
+              </ul>
+            </li>
+            <li>Click <strong>Save Configuration</strong>.</li>
+          </ol>
+        </div>
+        <p>The table has the columns Key, Summary, Type, Status and Progress. Click a header to sort; the gadget starts sorted by progress, highest first. Issues without a value show "—" and are left out of the average.</p>
+
+        <h3 id="jql-filter">JQL filter</h3>
+        <p>The gadget adds your <dfn class="term" data-tip="Jira Query Language: the text filter behind Jira's advanced search, for example sprint in openSprints().">JQL</dfn> filter to the selected project, so write only the extra conditions:</p>
+        <ul>
+          <li><code>sprint in openSprints()</code>: issues in the active sprint.</li>
+          <li><code>assignee = currentUser()</code>: issues assigned to the person viewing the dashboard.</li>
+          <li><code>labels = "frontend"</code>: issues with a label.</li>
+        </ul>
+        <details class="more">
+          <summary>Limits, errors and refreshing</summary>
+          <ul>
+            <li>Keep the filter under 500 characters. An <code>ORDER BY</code> clause is ignored; sort with the column headers instead.</li>
+            <li>If Jira rejects the filter, the gadget shows Jira's error message so you can fix it in the settings.</li>
+            <li>The gadget loads up to <strong>500 issues</strong>. If more match, a note at the top says it shows the first 500. Narrow the filter (sprint, epic, label) to see the rest.</li>
+            <li>Results are kept in a <dfn class="term" data-tip="A stored copy of a result that is reused for a short time, so the gadget loads faster.">cache</dfn> for up to <strong>5 minutes</strong> per viewer. The gadget shows the age of the data (for example "5 min ago"); <strong>Refresh</strong> loads the latest data at once.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="epic-gadget">
+        <h2>Epic Progress Tracker gadget</h2>
+        <p>The <strong>Epic Progress Tracker</strong> gadget shows one bar per <dfn class="term" data-tip="A large piece of work that groups several stories or tasks.">epic</dfn>, or one bar per assignee. Use it when stakeholders want each epic's progress without opening it.</p>
+        <img src="imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp" alt="Epic Progress Tracker gadget: one bar per epic with done story points, and its settings for Group by and Progress metric." width="1840" height="900" loading="lazy">
+        <div class="step-box">
+          <h3>How to add the gadget</h3>
+          <ol>
+            <li>Open a Jira <strong>Dashboard</strong>, click <strong>Add gadget</strong>, search for <strong>Epic Progress Tracker</strong> and click <strong>Add</strong>.</li>
+            <li>In the gadget settings, choose:
+              <ul>
+                <li><strong>Project</strong>.</li>
+                <li><strong>Group by</strong>: <em>Epic</em> (one bar per epic, from its child issues) or <em>Assignee</em> (one bar per person, from their issues).</li>
+                <li><strong>Progress metric</strong>: <em>Issue count</em> or <em>Story points</em>.</li>
+                <li><strong>Additional JQL Filter</strong> (optional): in Epic mode it filters the epics, in Assignee mode the issues.</li>
+                <li><strong>Rows per Page</strong>: 10, 25 or 50 (default 10).</li>
+              </ul>
+            </li>
+            <li>Click <strong>Save Configuration</strong>.</li>
+          </ol>
+        </div>
+        <ul>
+          <li><strong>Issue count:</strong> every issue counts equally. <em>Done</em> shows done issues out of all issues (for example "8/16"). The bar is the average progress, so issues in progress count partly, based on the status mapping.</li>
+          <li><strong>Story points:</strong> each issue is weighted by its <dfn class="term" data-tip="A team's size estimate for an issue, stored in a Jira field.">story points</dfn>, so a large story moves the bar more. <em>Done</em> shows points (for example "8/16 pts"). Issues without an estimate have no weight.</li>
+        </ul>
+        <p>The bar at the top is the average of the rows. Caching and the <strong>Refresh</strong> button work as in the <a href="#dashboard">Overview gadget</a>.</p>
+        <details class="more">
+          <summary>Limits and details</summary>
+          <ul>
+            <li>In Assignee mode, epics and subtasks are left out and unassigned issues get their own row.</li>
+            <li>The gadget loads up to 100 epics (newest first) with up to 1,000 child issues for every 50 epics, or up to 500 issues in Assignee mode. If results are cut off, it shows a note; narrow the JQL filter.</li>
+            <li>Story points mode finds your site's "Story Points" or "Story point estimate" field itself. If there is none, the gadget uses issue count and shows a note.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="editions">
+        <h2>What's included</h2>
+        <p>There is one edition with every feature. Sites with up to 10 users use it for free. Larger sites start with a free trial and need a subscription after the trial; without one, the fields show a "Trial ended" message, the gadgets ask for an active license and the settings are read-only.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Feature</th><th>Included</th></tr></thead>
+            <tbody>
+              <tr><td>Manual, Status and Subtask progress fields</td><td>Yes</td></tr>
+              <tr><td>Progress Tracker Overview gadget</td><td>Yes</td></tr>
+              <tr><td>Epic Progress Tracker gadget (per epic or assignee, issue count or story points)</td><td>Yes</td></tr>
+              <tr><td>Status mapping and color thresholds</td><td>Yes</td></tr>
+              <tr><td>Color-coded list view columns</td><td>Yes</td></tr>
+              <tr><td>Email support</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ &amp; troubleshooting</h2>
+        <p>Click a question to see the answer.</p>
+
+        <details class="more">
+          <summary>The Status bar shows 0% even though the issue has a status.</summary>
+          <p>The status is probably not in the <a href="#status">status mapping</a>. Add it with its exact name and save. Then open the issue again, or click <strong>Recalculate All Fields</strong> to update all issues.</p>
+        </details>
+
+        <details class="more">
+          <summary>I added the field to a project but existing issues show "—".</summary>
+          <p>Status and Subtask values are calculated when an issue is opened, so issues nobody has opened yet stay empty. Click <strong>Recalculate All Fields</strong> on the app's page to fill them.</p>
+        </details>
+
+        <details class="more">
+          <summary>Can I use multiple field types on the same issue?</summary>
+          <p>Yes. For example, use the Manual bar for overall progress and the Subtask bar for child issue completion.</p>
+        </details>
+
+        <details class="more">
+          <summary>Do progress bars update automatically?</summary>
+          <p><strong>Status and Subtask</strong> fields recalculate every time you open an issue. Manual fields change only when someone sets a new value.</p>
+        </details>
+
+        <details class="more">
+          <summary>Are progress values available for JQL search?</summary>
+          <p>Yes. When someone opens an issue, the calculated value is saved in Jira. It is then available for JQL, the <dfn class="term" data-tip="The web interface that scripts and other tools use to read and change Jira data.">REST API</dfn> and list view columns. Issues not opened since their last status change may show an older value.</p>
+        </details>
+
+        <details class="more">
+          <summary>The Recalculate button shows a date instead of running.</summary>
+          <p>Recalculation is limited to once every 7 days, and the page shows the next available date. A run that wrote no values does not count. Single issues recalculate when opened, so you rarely need it.</p>
+        </details>
+
+        <details class="more">
+          <summary>Recalculate says "no field values were written".</summary>
+          <p>No checked issue was updated. Usually the Status and Subtask fields are not on the issue screens of those projects. Add them under <strong>Jira settings → Work items → Screens</strong>, then run <strong>Recalculate All Fields</strong> again. This run does not use up the weekly recalculation. The message also says how many issues could not be updated and how many projects could not be read.</p>
+        </details>
+
+        <details class="more">
+          <summary>Recalculate says "recalculation paused".</summary>
+          <p>Jira answered too slowly or a request failed, so the run stopped after the issues it had finished. Click <strong>Continue</strong> within 6 hours of the start. It resumes with the next issue and does not use up another weekly recalculation. If nothing had been changed yet, run it again in a few minutes.</p>
+        </details>
+
+        <details class="more">
+          <summary>I changed the color thresholds but the colors did not change.</summary>
+          <p>Click <strong>Save Settings</strong> on the Color Settings tab and reload the issue. Thresholds apply to issue bars and gadgets. <a href="#listview">List view</a> columns always use the fixed 34% and 67% limits.</p>
+        </details>
+
+        <details class="more">
+          <summary>Where is my data stored?</summary>
+          <p>All configuration data is stored in <strong>Atlassian Forge Storage</strong> within your Jira Cloud site. No data is sent to external servers, and the app runs entirely on Atlassian infrastructure (<a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>). The dashboard gadgets also keep a cache of their results per viewer, used for up to 5 minutes. Details: <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a> · <a href="visual-progress-tracker-security.html">Security Policy</a>.</p>
+        </details>
+
+        <details class="more">
+          <summary>How do I uninstall?</summary>
+          <p>Go to <strong>Jira settings → Apps → Manage apps</strong>, find Visual Progress Tracker and click <strong>Uninstall</strong>. Atlassian keeps the app's stored data (settings and cache) for 28 days after the uninstall and then deletes it, see the <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>. Field values remain in Jira until you delete the fields.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <ul style="margin-bottom:0">
+            <li><strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>. Please include your Jira site URL.</li>
+            <li><strong>Bugs and feature requests:</strong> <a href="https://github.com/janekbehrens/visual-progress-tracker-issues/issues" target="_blank" rel="noopener">GitHub issue tracker</a>.</li>
+            <li><strong>Response time:</strong> we aim to answer within 24 hours, see the <a href="visual-progress-tracker-support.html">Support page</a>.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="components.js"></script>
+  <script src="docs.js"></script>
+</body>
+</html>

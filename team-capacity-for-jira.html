@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Capacity for Jira — Sprint Workload Heatmap per Person</title>
+  <meta name="description" content="See who is overloaded each sprint: one color-coded bar per person on your Jira dashboard, from the estimates your board already uses. Try the live demo.">
+  <link rel="canonical" href="https://janekbehrens.de/team-capacity-for-jira.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/team-capacity-for-jira.html">
+  <meta property="og:title" content="Team Capacity for Jira — Sprint Workload Heatmap per Person">
+  <meta property="og:description" content="One color-coded bar per person on your Jira dashboard: who is overloaded, near capacity or has room this sprint. Try the interactive demo with sample data.">
+  <meta property="og:image" content="https://janekbehrens.de/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Team Capacity for Jira — Sprint Workload Heatmap per Person">
+  <meta name="twitter:description" content="One color-coded bar per person on your Jira dashboard: who is overloaded, near capacity or has room this sprint. Try the interactive demo with sample data.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Team Capacity for Jira",
+        "description": "Dashboard gadget for Jira Cloud, built on Atlassian Forge: one color-coded bar per person shows sprint workload against capacity, from the estimates the board already uses. Pro adds per-person capacity, remaining work, custom thresholds and a CSV export of estimate vs. actual per person.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "url": "https://janekbehrens.de/team-capacity-for-jira.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Do we have to re-enter estimates?", "acceptedAnswer": { "@type": "Answer", "text": "No. The gadget uses the estimation your board already has: story points, or time estimates converted to hours. Teams that don't estimate can count issues instead." } },
+          { "@type": "Question", "name": "Does it work with team-managed projects?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Company-managed and team-managed Scrum boards both work, including the team-managed Story point estimate field. Classic Kanban boards are not listed, because they have no sprints." } },
+          { "@type": "Question", "name": "Does it know about vacation or public holidays?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app does not read leave or holidays. With Pro you lower that person's capacity yourself; the number applies to every sprint until you change it." } },
+          { "@type": "Question", "name": "Does the gadget update on its own?", "acceptedAnswer": { "@type": "Answer", "text": "No. The footer shows when the numbers were read, for example \"Updated 09:30\". Click Refresh, or the refresh button of the gadget or the dashboard, to read Jira again." } },
+          { "@type": "Question", "name": "Is it free?", "acceptedAnswer": { "@type": "Answer", "text": "Jira sites with up to 10 users pay nothing. Larger sites start with a free trial; after the trial it is priced per user. Without an active license the heatmap keeps working; per-person capacity, remaining work, custom thresholds and CSV export need Pro." } },
+          { "@type": "Question", "name": "Does any data leave Atlassian?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app is read-only and runs on Atlassian Forge. It checks each viewer's Jira project permissions on every request, so people only see boards whose project they can browse." } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://janekbehrens.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Team Capacity for Jira", "item": "https://janekbehrens.de/team-capacity-for-jira.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Team Capacity — Sprint Workload & Resource Planning for Jira: see who's overloaded",
+    "description": "A Jira dashboard gadget with one color-coded bar per person: sprint load against capacity, from the estimates your board already uses.",
+    "thumbnailUrl": "https://janekbehrens.de/imgTeamCapacityForJira/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/klrrET1nWeQ",
+    "contentUrl": "https://www.youtube.com/watch?v=klrrET1nWeQ"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/tc-demo.css">
+</head>
+<body class="rd" data-app="tc">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/team-capacity-icon.png" alt="" width="48" height="48">
+            <div><b>Team Capacity for Jira</b><span>Jira Cloud · Built on Forge</span></div>
+          </div>
+          <h1 class="h-display">See who's overloaded <em>before the sprint starts</em></h1>
+        </div>
+        <div>
+          <p class="lead">A dashboard gadget with one color-coded bar per person: sprint load against capacity, from the story points, time or issue count your board already uses.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-sprint-workload-resource-planning-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="team-capacity-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="tc">
+          <noscript><img src="imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team Capacity gadget on a Jira dashboard: one color-coded bar per person for the active sprint, an unassigned row, team totals, Refresh and Export CSV" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app. The plan switch shows what Free looks like.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f1" aria-controls="panel-tc-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">A heatmap for the sprint</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f2" aria-controls="panel-tc-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Capacity per person</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f3" aria-controls="panel-tc-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Uses your board's estimates</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f4" aria-controls="panel-tc-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Remaining work mid-sprint</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f5" aria-controls="panel-tc-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Estimate vs. actual as CSV</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f1" aria-labelledby="tab-tc-f1">
+              <a class="feat-shot" href="imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team Capacity gadget on a Jira dashboard: one color-coded bar per person for Sprint 24, two people overloaded in red, an unassigned row, team totals, an Updated time, and Refresh and Export CSV buttons" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>A heatmap for the sprint</h3>
+                <p>One bar per person, highest share of capacity first: red is overloaded, amber near capacity, green on track, blue has room.</p>
+                </div>
+                <div><ul>
+                <li>The header shows the team total: people, load against capacity, how many are overloaded.</li>
+                <li>Unassigned work gets its own grey row and is not part of the team total.</li>
+                <li>Several teams: add the gadget once per board, each with its own sprint and capacity.</li>
+              </ul>
+                <a class="text-link feat-more" href="team-capacity-docs.html#what">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f2" aria-labelledby="tab-tc-f2" hidden>
+              <a class="feat-shot" href="imgTeamCapacityForJira/highlight-2-per-person-capacity.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgTeamCapacityForJira/highlight-2-per-person-capacity.webp" alt="Left: Team Capacity edit form with capacity overrides of 10 and 12 for two people and the three threshold fields. Right: the heatmap, where those two people show 12/10 at 120 percent and 11/12 at 92 percent" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Capacity per person <span class="pro">PRO</span></h3>
+                <p>One default capacity for the team, then individual numbers for part-timers, new joiners or anyone with less time.</p>
+                </div>
+                <div><ul>
+                <li>Blank means the default. A person's number applies to every sprint until you change it.</li>
+                <li>The app does not read leave or holidays; for time off, enter the lower number yourself.</li>
+                <li>Your own thresholds: Over &gt; 100%, Near ≥ 85% and Free &lt; 50% by default.</li>
+              </ul>
+                <a class="text-link feat-more" href="team-capacity-docs.html#capacity">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f3" aria-labelledby="tab-tc-f3" hidden>
+              <a class="feat-shot" href="imgTeamCapacityForJira/screenshot-2-board-estimate-or-issue-count.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgTeamCapacityForJira/screenshot-2-board-estimate-or-issue-count.webp" alt="Edit form of the Team Capacity gadget: board picker, sprint set to Active sprint (auto), the Measure workload by menu open with Board estimate (story points / time) and Issue count, and the default capacity per person" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Uses your board's estimates</h3>
+                <p>Workload comes from the estimation your board already has. Nothing to re-enter, nothing to sync.</p>
+                </div>
+                <div><ul>
+                <li>Story points: company-managed Story Points and team-managed Story point estimate.</li>
+                <li>Time: boards that estimate with Original estimate are counted in hours.</li>
+                <li>Issue count for teams that don't estimate. Capacity uses the same unit.</li>
+              </ul>
+                <a class="text-link feat-more" href="team-capacity-docs.html#measure">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f4" aria-labelledby="tab-tc-f4" hidden>
+              <a class="feat-shot" href="imgTeamCapacityForJira/screenshot-3-count-only-unfinished-work.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgTeamCapacityForJira/screenshot-3-count-only-unfinished-work.webp" alt="Count only unfinished work ticked in the edit form, above the heatmap: Done issues are left out, so only one person is still overloaded and the team total drops to 64 of 102 points" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Remaining work mid-sprint <span class="pro">PRO</span></h3>
+                <p>Count only unfinished work leaves Done issues out, so each bar shows the work still open.</p>
+                </div>
+                <div><ul>
+                <li>Applies to every bar and to the team total in the header.</li>
+                <li>An issue counts as done when its status is in Jira's Done category.</li>
+              </ul>
+                <a class="text-link feat-more" href="team-capacity-docs.html#capacity">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f5" aria-labelledby="tab-tc-f5" hidden>
+              <a class="feat-shot" href="imgTeamCapacityForJira/highlight-3-csv-estimate-vs-actual.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgTeamCapacityForJira/highlight-3-csv-estimate-vs-actual.webp" alt="A closed sprint in the Team Capacity heatmap with the Export CSV button, and below it the exported team-capacity-sprint-23.csv in a spreadsheet with load, capacity, utilization, status, issues, done, time spent, sprint and sprint state per person" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Estimate vs. actual as CSV <span class="pro">PRO</span></h3>
+                <p>Export CSV downloads one row per person for the sprint on screen. It opens in Excel or Google Sheets.</p>
+                </div>
+                <div><ul>
+                <li>Load, capacity, utilization %, status, issues, done and time spent in hours.</li>
+                <li>For the retro, switch to a closed sprint first: the menu lists the active sprint, upcoming ones and up to eight closed ones.</li>
+              </ul>
+                <a class="text-link feat-more" href="team-capacity-docs.html#csv">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of Team Capacity in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgTeamCapacityForJira/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/klrrET1nWeQ?autoplay=1" data-title="Team Capacity — Sprint Workload &amp; Resource Planning for Jira: see who's overloaded">
+              <button class="yt-play-btn" aria-label="Load and play the video: Team Capacity — Sprint Workload &amp; Resource Planning for Jira: see who's overloaded"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with Team Capacity</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With Team Capacity</th></tr></thead>
+            <tbody>
+              <tr><td>Workload per person</td><td class="no">Gadgets can count issues per assignee, with no capacity to compare them with</td><td class="yes">Load against each person's capacity, as a red, amber, green or blue bar</td></tr>
+              <tr><td>Planning the next sprint</td><td class="no">The backlog shows each sprint's total estimate</td><td class="yes">Switch to an upcoming sprint and see who would be overloaded</td></tr>
+              <tr><td>Remaining work mid-sprint</td><td class="no">The burndown chart shows what is left for the whole sprint</td><td class="yes">Each person's open load, with Done issues left out (Pro)</td></tr>
+              <tr><td>Estimate vs. actual</td><td class="no">Export a search as CSV, one row per issue, and add it up per person yourself</td><td class="yes">One CSV row per person with load, capacity, status and time spent (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Plans</span>
+          <h2 class="h-section">Free and Pro</h2>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">What the gadget does without an active license.</p>
+            <ul>
+              <li>The capacity heatmap for company-managed and team-managed Scrum boards</li>
+              <li>Workload from the board estimate (story points or time) or issue count</li>
+              <li>One default capacity for everyone</li>
+              <li>Sprint switch: active, upcoming and up to eight closed sprints</li>
+              <li>Refresh, and the time the numbers were read</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">No cost on Jira sites with up to 10 users. Larger sites start with a free trial; after the trial it is priced per user.</p>
+            <ul>
+              <li>Everything in Free</li>
+              <li>Capacity per person</li>
+              <li>Count only unfinished work</li>
+              <li>Your own thresholds for overloaded, near capacity and has capacity</li>
+              <li>CSV export with load, capacity, utilization, status and time spent per person</li>
+            </ul>
+          </div>
+        </div>
+        <p class="compare-note">Prices per user are on the <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-sprint-workload-resource-planning-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Get the app from the Atlassian Marketplace. A Jira site admin installs it once.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add the gadget</h3><p>On a dashboard you can edit, choose Add gadget and search for Team Capacity. No admin rights needed.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Pick a board</h3><p>In Edit, choose a Scrum board, how to measure workload and a default capacity. Save, and the heatmap appears.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="team-capacity-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>Do we have to re-enter estimates?</summary><div>No. The gadget uses the estimation your board already has: story points, or time estimates converted to hours. Teams that don't estimate can count issues instead.</div></details>
+          <details><summary>Does it work with team-managed projects?</summary><div>Yes. Company-managed and team-managed Scrum boards both work, including the team-managed Story point estimate field. Classic Kanban boards are not listed, because they have no sprints.</div></details>
+          <details><summary>Does it know about vacation or public holidays?</summary><div>No. The app does not read leave or holidays. With Pro you lower that person's capacity yourself; the number applies to every sprint until you change it.</div></details>
+          <details><summary>Does the gadget update on its own?</summary><div>No. The footer shows when the numbers were read, for example "Updated 09:30". Click Refresh, or the refresh button of the gadget or the dashboard, to read Jira again.</div></details>
+          <details><summary>Is it free?</summary><div>Jira sites with up to 10 users pay nothing. Larger sites start with a free trial; after the trial it is priced per user. Without an active license the heatmap keeps working; per-person capacity, remaining work, custom thresholds and CSV export need Pro.</div></details>
+          <details><summary>Does any data leave Atlassian?</summary><div>No. The app is read-only and runs on Atlassian Forge. It checks each viewer's Jira project permissions on every request, so people only see boards whose project they can browse.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="velocity-chart.html"><img src="img/velocity-chart-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Velocity Chart for Jira</b><span>Sprint velocity on any dashboard, with your own Definition of Done.</span></div></a>
+          <a class="card" href="visual-progress-tracker.html"><img src="img/progresstracker144logo.png" alt="" width="44" height="44" loading="lazy"><div><b>Visual Progress Tracker for Jira</b><span>Color-coded progress bars on every Jira issue.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>See who has room this sprint</h2>
+            <p class="muted">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-sprint-workload-resource-planning-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="team-capacity-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/tc-demo.js"></script>
+</body>
+</html>

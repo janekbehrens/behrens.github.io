@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Chart for Jira — Sprint Velocity on Any Dashboard</title>
+  <meta name="description" content="Sprint velocity on any Jira dashboard: committed vs completed, average line and say/do ratio, with your own Definition of Done. Try the interactive demo.">
+  <link rel="canonical" href="https://janekbehrens.de/velocity-chart.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/velocity-chart.html">
+  <meta property="og:title" content="Velocity Chart for Jira — Sprint Velocity on Any Dashboard">
+  <meta property="og:description" content="Committed vs completed for your last closed sprints, with the average line and the say/do ratio. You decide which statuses count as done. Try the interactive demo.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velocity Chart for Jira — Sprint Velocity on Any Dashboard">
+  <meta name="twitter:description" content="Committed vs completed for your last closed sprints, with the average line and the say/do ratio. You decide which statuses count as done. Try the interactive demo.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Velocity Chart for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows committed vs completed sprint velocity for company- and team-managed Scrum boards, with an average line, a configurable Definition of Done, estimation modes, say/do ratio, up to four boards per gadget and CSV/SVG export.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "url": "https://janekbehrens.de/velocity-chart.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How is this different from Jira's built-in velocity report?", "acceptedAnswer": { "@type": "Answer", "text": "Jira's report lives on the board's Reports page and uses that board's Done column and estimation setting. Velocity Chart is a dashboard gadget: you choose which statuses count as done and how to estimate, chart up to four boards in one gadget, and get an average say/do ratio and CSV/SVG export (Pro)." } },
+          { "@type": "Question", "name": "Does an issue that was carried over count in both sprints?", "acceptedAnswer": { "@type": "Answer", "text": "Only as committed. Completed adds up the issues that were done when the sprint closed, as in Jira's own velocity report. An issue that was carried over unfinished counts as completed only in the sprint in which it was finished. Committed is the work that was in the sprint when it started." } },
+          { "@type": "Question", "name": "Does it work with team-managed projects?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Team-managed Scrum boards appear in the board picker tagged “team-managed” and use the same calculation as company-managed boards." } },
+          { "@type": "Question", "name": "Which Jira do I need?", "acceptedAnswer": { "@type": "Answer", "text": "Jira Cloud and a Scrum board with at least one closed sprint. Velocity Chart is a Forge app and runs on Atlassian's infrastructure; there is no Data Center or Server version. Classic Kanban boards have no sprints and are not listed." } },
+          { "@type": "Question", "name": "Does the app change my Jira issues?", "acceptedAnswer": { "@type": "Answer", "text": "No. Velocity Chart only reads sprint data and requests no write permissions. It caches the computed numbers in Atlassian's Forge storage. No external servers operated by Janek Behrens are involved. Details in the Trust Center." } },
+          { "@type": "Question", "name": "Is it free?", "acceptedAnswer": { "@type": "Answer", "text": "Jira sites with up to 10 users use it for free; larger sites start with a free trial. Without an active subscription, for example after the trial, the gadget keeps working in Free mode: one board, up to 7 sprints, the board's estimation and its Done column." } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://janekbehrens.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Velocity Chart for Jira", "item": "https://janekbehrens.de/velocity-chart.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Velocity Chart for Jira — committed vs completed, say-do ratio and your own Definition of Done",
+    "description": "Committed vs completed for your last closed sprints, with the average line, the say/do ratio and your own Definition of Done.",
+    "thumbnailUrl": "https://janekbehrens.de/imgVelocityChartForJira/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/C6TRGm7qtg0",
+    "contentUrl": "https://www.youtube.com/watch?v=C6TRGm7qtg0"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/vel-demo.css">
+</head>
+<body class="rd" data-app="vel">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/velocity-chart-icon.png" alt="" width="48" height="48">
+            <div><b>Velocity Chart for Jira</b><span>Jira Cloud · Built on Forge</span></div>
+          </div>
+          <h1 class="h-display">Sprint velocity on <em>any dashboard</em></h1>
+        </div>
+        <div>
+          <p class="lead">Committed vs completed for your last closed sprints, with the average line and the say/do ratio. You decide which statuses count as done.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="velocity-chart-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="vel">
+          <noscript><img src="imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity Chart gadget on a Jira dashboard: ten closed sprints with committed and completed bars, a dashed average line at 26.3 points and an 81% say/do ratio" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app. Pro features are on, as in the free trial.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f1" aria-controls="panel-vel-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Velocity on any dashboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f2" aria-controls="panel-vel-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Your own Definition of Done</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f3" aria-controls="panel-vel-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Estimation and sprint count</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f4" aria-controls="panel-vel-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Up to four boards in one gadget</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f5" aria-controls="panel-vel-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Export CSV and SVG</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f1" aria-labelledby="tab-vel-f1">
+              <a class="feat-shot" href="imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity Chart gadget on a Jira dashboard: ten closed sprints with committed and completed bars, a dashed average line, average velocity 26.3 points and 81% say/do" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Velocity on any dashboard</h3>
+                <p>Committed (grey) and completed (green) for the last closed sprints of a Scrum board, with a dashed line for the average.</p>
+                </div>
+                <div><ul>
+                <li>Avg velocity next to the board name, plus say/do in Pro.</li>
+                <li>Hover a bar for its value.</li>
+                <li>Company- and team-managed Scrum boards.</li>
+              </ul>
+                <a class="text-link feat-more" href="velocity-chart-docs.html#calc">How velocity is calculated →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f2" aria-labelledby="tab-vel-f2" hidden>
+              <a class="feat-shot" href="imgVelocityChartForJira/highlight-2-your-own-definition-of-done.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVelocityChartForJira/highlight-2-your-own-definition-of-done.webp" alt="The Count as Done list with Ready for release ticked next to Done, and the chart with average velocity 29.4 points and 90% say/do" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Your own Definition of Done <span class="pro">PRO</span></h3>
+                <p>Tick the statuses that count as completed, for example Ready for release next to Done. Until you change the list, the statuses of the board's Done column count.</p>
+                </div>
+                <div><ul>
+                <li>Pick from the statuses on your board.</li>
+                <li>Leave sub-tasks out (default) or include them.</li>
+              </ul>
+                <a class="text-link feat-more" href="velocity-chart-docs.html#config">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f3" aria-labelledby="tab-vel-f3" hidden>
+              <a class="feat-shot" href="imgVelocityChartForJira/screenshot-2-estimation-and-sprint-count.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVelocityChartForJira/screenshot-2-estimation-and-sprint-count.webp" alt="Gadget settings: Sprints to show 10, Sprint labels Full name, and the Estimation options Story Points (board default), Issue count and Custom numeric field" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Estimation and sprint count</h3>
+                <p>Estimate by Story Points, issue count or a custom numeric field (Pro). Show the last 1 to 20 closed sprints (Free: up to 7).</p>
+                </div>
+                <div><ul>
+                <li>Story Points follows the board's estimation field.</li>
+                <li>Sprint labels: full name or numbers only.</li>
+              </ul>
+                <a class="text-link feat-more" href="velocity-chart-docs.html#config">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f4" aria-labelledby="tab-vel-f4" hidden>
+              <a class="feat-shot" href="imgVelocityChartForJira/highlight-3-compare-up-to-four-boards.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVelocityChartForJira/highlight-3-compare-up-to-four-boards.webp" alt="The settings with three boards ticked, one of them team-managed, and the gadget with one chart per board, each with its own average velocity and say/do" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Up to four boards in one gadget <span class="pro">PRO</span></h3>
+                <p>Each board gets its own chart, average and say/do. All of them use the same estimation and Definition of Done, so you compare like for like.</p>
+                </div>
+                <div><ul>
+                <li>Team-managed boards are tagged in the picker.</li>
+                <li>A search box appears once there are more than 7 boards to pick from.</li>
+              </ul>
+                <a class="text-link feat-more" href="velocity-chart-docs.html#multi">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f5" aria-labelledby="tab-vel-f5" hidden>
+              <a class="feat-shot" href="imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" alt="The Export CSV and Download SVG buttons below a chart, and the exported velocity.csv with the columns Board, Sprint, Committed, Completed and Say/Do %" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Export CSV and SVG <span class="pro">PRO</span></h3>
+                <p>Export CSV puts all boards of the gadget in one file, with committed, completed and say/do per sprint. Download SVG saves each chart as an image.</p>
+                </div>
+                <div><ul>
+                <li>The CSV opens in Excel and Google Sheets.</li>
+                <li>SVGs with a white background, for slides and reports.</li>
+              </ul>
+                <a class="text-link feat-more" href="velocity-chart-docs.html#export">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of Velocity Chart in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgVelocityChartForJira/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/C6TRGm7qtg0?autoplay=1" data-title="Velocity Chart for Jira — committed vs completed, say-do ratio and your own Definition of Done">
+              <button class="yt-play-btn" aria-label="Load and play the video: Velocity Chart for Jira — committed vs completed, say-do ratio and your own Definition of Done"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with Velocity Chart</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With Velocity Chart</th></tr></thead>
+            <tbody>
+              <tr><td>Where you see velocity</td><td class="no">The velocity report on the board's Reports page</td><td class="yes">A gadget on any Jira dashboard, next to your other gadgets</td></tr>
+              <tr><td>What counts as done</td><td class="no">The board's Done column</td><td class="yes">The statuses you tick, for example Done and Ready for release (Pro)</td></tr>
+              <tr><td>How work is measured</td><td class="no">The board's estimation setting</td><td class="yes">Story Points, issue count or a custom numeric field, set per gadget (Pro)</td></tr>
+              <tr><td>Several teams</td><td class="no">One report per board</td><td class="yes">Up to four boards in one gadget, with the same settings (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud without apps. With the board's own Done column the app counts like Jira's report; differences come from your own settings or from issues removed during a sprint: <a href="velocity-chart-docs.html#calc">how velocity is calculated</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Plans</span>
+          <h2 class="h-section">Free and Pro</h2>
+          <p class="muted">Free for Jira sites with up to 10 users. Larger sites start with a free trial; per-user pricing is on the <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">When the site has no active subscription, for example after the trial.</p>
+            <ul>
+              <li>One board per gadget</li>
+              <li>Velocity chart with the average line</li>
+              <li>The last 1 to 7 closed sprints</li>
+              <li>The board's estimation and its Done column</li>
+              <li>Company- and team-managed Scrum boards</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">While the site has an active subscription, the free trial included.</p>
+            <ul>
+              <li>Up to 4 boards in one gadget</li>
+              <li>The last 1 to 20 closed sprints</li>
+              <li>Count as “Done”: the statuses you choose</li>
+              <li>Story Points, issue count or a custom numeric field</li>
+              <li>Include sub-tasks</li>
+              <li>Say/do ratio</li>
+              <li>CSV and SVG export</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Get the app from the Atlassian Marketplace and confirm the installation on your Jira site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add the gadget</h3><p>Open a Jira dashboard, click Add gadget and search for Velocity Chart.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Pick a board</h3><p>Click the pencil, tick a Scrum board with at least one closed sprint and click Save.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="velocity-chart-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>How is this different from Jira's built-in velocity report?</summary><div>Jira's report lives on the board's Reports page and uses that board's Done column and estimation setting. Velocity Chart is a dashboard gadget: you choose which statuses count as done and how to estimate, chart up to four boards in one gadget, and get an average say/do ratio and CSV/SVG export (Pro).</div></details>
+          <details><summary>Does an issue that was carried over count in both sprints?</summary><div>Only as committed. Completed adds up the issues that were done when the sprint closed, as in Jira's own velocity report. An issue that was carried over unfinished counts as completed only in the sprint in which it was finished. Committed is the work that was in the sprint when it started.</div></details>
+          <details><summary>Does it work with team-managed projects?</summary><div>Yes. Team-managed Scrum boards appear in the board picker tagged “team-managed” and use the same calculation as company-managed boards.</div></details>
+          <details><summary>Which Jira do I need?</summary><div>Jira Cloud and a Scrum board with at least one closed sprint. Velocity Chart is a Forge app and runs on Atlassian's infrastructure; there is no Data Center or Server version. Classic Kanban boards have no sprints and are not listed.</div></details>
+          <details><summary>Does the app change my Jira issues?</summary><div>No. Velocity Chart only reads sprint data and requests no write permissions. It caches the computed numbers in Atlassian's Forge storage. No external servers operated by Janek Behrens are involved. Details in the <a href="trust-center.html">Trust Center</a>.</div></details>
+          <details><summary>Is it free?</summary><div>Jira sites with up to 10 users use it for free; larger sites start with a free trial. Without an active subscription, for example after the trial, the gadget keeps working in Free mode: one board, up to 7 sprints, the board's estimation and its Done column.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="team-capacity-for-jira.html"><img src="img/team-capacity-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Team Capacity for Jira</b><span>See who is over- or under-loaded each sprint.</span></div></a>
+          <a class="card" href="dora-metrics-for-jira.html"><img src="img/dora-metrics-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>DevOps Metrics for Jira</b><span>The four DORA™ metrics from your Jira data, no CI/CD setup.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Put your team's velocity on the dashboard</h2>
+            <p class="muted">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="velocity-chart-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/vel-demo.js"></script>
+</body>
+</html>

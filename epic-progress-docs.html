@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epic Progress for Confluence — Documentation &amp; Setup</title>
+  <meta name="description" content="Guide to Epic Progress for Confluence: live progress bars for Jira epics, releases and filters on Confluence pages, page progress and snapshots.">
+  <link rel="canonical" href="https://janekbehrens.de/epic-progress-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/epic-progress-docs.html">
+  <meta property="og:title" content="Epic Progress for Confluence — Documentation &amp; Setup">
+  <meta property="og:description" content="How to set up Epic Progress for Confluence, what each of the five macros shows, how published snapshots work for readers without Jira access, and who sees what.">
+  <meta property="og:image" content="https://janekbehrens.de/imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Epic Progress for Confluence",
+        "description": "Atlassian Forge app with five Confluence macros: live progress bars for Jira epics, projects, releases, saved filters and JQL searches, a list of epics, page progress by label and manual progress bars, with published snapshots for readers without Jira access.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Confluence Cloud",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for up to 10 users, then per-user subscription" },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Epic Progress for Confluence — Documentation & Setup",
+        "description": "Setup and user guide for Epic Progress for Confluence: installation, connecting Jira, the five macros and their settings, published snapshots, permissions, the admin page and data deletion.",
+        "url": "https://janekbehrens.de/epic-progress-docs.html",
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Do readers need Jira access?", "acceptedAnswer": { "@type": "Answer", "text": "For live numbers, yes: every reader sees the numbers their own Jira permissions allow. For readers without Jira access, an editor of the page can publish a dated snapshot that everyone who can see the page sees. Progress Bar and Page Progress need no Jira at all." } },
+          { "@type": "Question", "name": "Why does Confluence ask me to Allow access?", "acceptedAnswer": { "@type": "Answer", "text": "Forge apps that read data with the permissions of the person using them need each person's consent once. The first time someone opens a page with one of the macros, Confluence asks them to allow access. This also applies to readers who only see a published snapshot. Allowing access changes nothing in Jira or Confluence." } },
+          { "@type": "Question", "name": "Why does the number differ from my search in Jira?", "acceptedAnswer": { "@type": "Answer", "text": "Epic Progress counts the work items directly under the epic. Jira Progress leaves out sub-tasks for projects and releases unless you untick Leave out sub-tasks. And every reader sees only the work items they may see in Jira." } },
+          { "@type": "Question", "name": "Why 99 % when almost everything is done?", "acceptedAnswer": { "@type": "Answer", "text": "100 % means every work item is done. One open item in 200 shows 99 %." } },
+          { "@type": "Question", "name": "Can Confluence guests or anonymous visitors see the macros?", "acceptedAnswer": { "@type": "Answer", "text": "No. Forge apps run for licensed users of a site unless an app is set up for guests and anonymous visitors, and this app is not." } },
+          { "@type": "Question", "name": "Which Jira projects work?", "acceptedAnswer": { "@type": "Answer", "text": "Company-managed and team-managed projects, including their story point fields. Epics are found by their level in the work item hierarchy, also when your site renamed them." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="docs.css">
+  <style>
+    /* Page-specific: source tags of the macros, UI labels, color dots */
+    .docs .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: .03em; color: #44546F; background: #F1F2F4; border: 1px solid #DFE1E6; border-radius: 4px; padding: 1px 6px; vertical-align: 2px; }
+    .docs .tag-free { color: #5E4DB2; background: #F3F0FF; border-color: #B8ACF6; }
+    .docs .ui { font-weight: 650; color: var(--ink); }
+    .docs .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: -1px; }
+  </style>
+</head>
+<body class="rd docs" data-app="ep">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="On this page">
+      <div class="sidebar-toc-heading">On this page</div>
+      <div class="sidebar-toc">
+        <a href="#what">What it does</a>
+        <a class="sub" href="#counting">How the Jira macros count</a>
+        <a href="#setup">Setup</a>
+        <a href="#allow-access">“Allow access”</a>
+        <a href="#macros">The five macros</a>
+        <a class="sub" href="#epic-progress">Epic Progress</a>
+        <a class="sub" href="#jira-progress">Jira Progress</a>
+        <a class="sub" href="#progress-list">Progress List</a>
+        <a class="sub" href="#page-progress">Page Progress</a>
+        <a class="sub" href="#progress-bar">Progress Bar</a>
+        <a href="#settings">The settings dialog</a>
+        <a href="#snapshots">Snapshots</a>
+        <a class="sub" href="#publish">Publish a snapshot</a>
+        <a class="sub" href="#why-click">When it updates itself</a>
+        <a class="sub" href="#who-publishes">Who can change it</a>
+        <a class="sub" href="#who-sees">Who sees what</a>
+        <a class="sub" href="#snapshot-content">What is in it</a>
+        <a class="sub" href="#snapshot-storage">Storage and deletion</a>
+        <a href="#permissions">Permissions</a>
+        <a href="#admin">Admin page</a>
+        <a href="#deletion">Deleting app data</a>
+        <a href="#export">PDF and Word export</a>
+        <a href="#faq">FAQ and messages</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Epic Progress for Confluence — Documentation</h1>
+      <p class="subtitle">Progress bars on Confluence pages: live from Jira epics, projects, releases and filters, from page labels, or set by hand.</p>
+
+      <div class="quickstart">
+        <h2>Quick start</h2>
+        <ol>
+          <li>A <strong>Confluence admin</strong> installs the app once from the Atlassian Marketplace.</li>
+          <li>For the Jira macros, a <strong>site admin</strong> connects Jira in Atlassian Administration: <span class="ui">Apps → Epic Progress for Confluence → connect to Jira</span>. Progress Bar and Page Progress work without it.</li>
+          <li>Edit a page, type <strong>/progress</strong> and choose one of the <a href="#macros">five macros</a>.</li>
+          <li>Fill in the fields marked <strong>*</strong>, check the live preview, click <span class="ui">Save</span> and publish the page.</li>
+          <li>Readers without Jira access? Tick <span class="ui">Publish a snapshot for people without Jira access</span> in the macro settings, publish the page and click <span class="ui">Publish snapshot</span> below the macro (<a href="#snapshots">details</a>).</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#what">What it does</a></li>
+          <li><a href="#setup">Setup</a></li>
+          <li><a href="#allow-access">“Allow access”: once per person</a></li>
+          <li><a href="#macros">The five macros</a></li>
+          <li><a href="#settings">The settings dialog</a></li>
+          <li><a href="#snapshots">Snapshots for readers without Jira access</a></li>
+          <li><a href="#permissions">Permissions: who sees what</a></li>
+          <li><a href="#admin">Admin page</a></li>
+          <li><a href="#deletion">Deleting snapshots and app data</a></li>
+          <li><a href="#export">PDF and Word export</a></li>
+          <li><a href="#faq">FAQ and messages</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section>
+        <h2 id="what">What it does</h2>
+        <p><strong>Epic Progress for Confluence</strong> adds five <dfn class="term" data-tip="A building block you add to a Confluence page from the / menu while editing.">macros</dfn> to Confluence pages. Three of them show progress live from Jira; two work without Jira.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Macro</th><th>Shows</th><th>Source</th></tr>
+            <tr><td><a href="#epic-progress">Epic Progress</a></td><td>One <dfn class="term" data-tip="A large Jira work item that groups stories and tasks, one level above stories in the work item hierarchy.">epic</dfn>: how many of its work items are done</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#jira-progress">Jira Progress</a></td><td>A project, a release (fix version), a saved filter or a JQL search</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#progress-list">Progress List</a></td><td>Several epics as a list of progress bars, with an overall row</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#page-progress">Page Progress</a></td><td>How many pages carry a label such as <code>approved</code></td><td><span class="tag tag-free">No Jira needed</span></td></tr>
+            <tr><td><a href="#progress-bar">Progress Bar</a></td><td>A bar you set by hand</td><td><span class="tag tag-free">No Jira needed</span></td></tr>
+          </table>
+        </div>
+        <img src="imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" alt="A Confluence status page with six Epic Progress macros: status, due date, percent and counts per epic, two of them with their open work items expanded." loading="lazy" width="1840" height="900">
+
+        <h3 id="counting">How the Jira macros count</h3>
+        <ul>
+          <li><strong>Colored like in Jira.</strong> Each work item counts by the <dfn class="term" data-tip="Jira sorts every workflow status into one of three groups: To Do, In Progress or Done.">status category</dfn> of its status: <span class="dot" style="background:#1F845A"></span>green is done, <span class="dot" style="background:#0C66E4"></span>blue in progress, <span class="dot" style="background:#8590A2"></span>gray to do. So the numbers match Jira's own progress display. There is no red or yellow by percent: 30&nbsp;% can be perfectly on track.</li>
+          <li><strong>Every percent with its base:</strong> &ldquo;50&nbsp;% · 4 of 8 work items done&rdquo; and a legend &ldquo;4 done · 2 in progress · 2 to do&rdquo;. Where it applies, the macro adds &ldquo;1 flagged&rdquo; and &ldquo;3 work items without estimate&rdquo;.</li>
+          <li><strong>Work items or story points.</strong> <em>Work items</em> counts every work item once (recommended). <em>Story points</em> adds up the <dfn class="term" data-tip="Size estimates that teams put on Jira work items; bigger work gets more points.">estimates</dfn>, so a big story weighs more than a small one. Both the &ldquo;Story Points&rdquo; field (company-managed projects) and &ldquo;Story point estimate&rdquo; (team-managed projects) work.</li>
+          <li><strong>Footer.</strong> &ldquo;Live from Jira · as of 14:05&rdquo;: the numbers were loaded when the page opened, with your own permissions. <span class="ui">Refresh</span> loads them again; <span class="ui">Open in Jira</span> opens exactly these work items in Jira's search.</li>
+        </ul>
+        <details class="more">
+          <summary>Rounding and very large searches</summary>
+          <ul>
+            <li><strong>Honest numbers.</strong> 100&nbsp;% only when everything is done (199 of 200 is 99&nbsp;%). Something done, but less than 1&nbsp;%, shows &ldquo;&lt;1&nbsp;%&rdquo; instead of 0&nbsp;%.</li>
+            <li><strong>Very large searches.</strong> For big searches Jira returns an approximate count; the macro then says &ldquo;about …&rdquo; and never shows 100&nbsp;% while Jira still counts open work items.</li>
+          </ul>
+        </details>
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url('imgEpicProgressForConfluence/video-poster.webp')"
+               data-src="https://www.youtube-nocookie.com/embed/HxG5TAB10Q0?autoplay=1" data-title="Epic Progress for Confluence — live progress bars from Jira on your pages">
+            <button class="yt-play-btn" aria-label="Load and play the video: Epic Progress for Confluence — live progress bars from Jira on your pages"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 id="setup">Setup</h2>
+        <p>Install the app, connect Jira if you want the Jira macros, then add a macro to a page.</p>
+        <h3 id="install">1. Install the app in Confluence</h3>
+        <p>A Confluence admin installs <strong>Epic Progress for Confluence</strong> once from the Atlassian Marketplace. The app is installed in Confluence, not in Jira. Right after the installation, Confluence offers the app's <em>Get started</em> page, which is the <a href="#admin">admin page</a>: it shows whether Jira is connected and what to do next.</p>
+
+        <h3 id="connect-jira">2. Connect Jira (optional)</h3>
+        <p>Epic Progress, Jira Progress and Progress List read Jira. A <dfn class="term" data-tip="An administrator of the whole Atlassian site, who manages its apps and products in Atlassian Administration.">site admin</dfn> connects the app to Jira in <strong>Atlassian Administration</strong>: <span class="ui">Apps → Epic Progress for Confluence → connect to Jira</span>. Jira must be on the same site as Confluence. Until then, Progress Bar and Page Progress already work, and the Jira macros show readers a short note that Jira is not connected yet.</p>
+        <div class="tip"><strong>Tip:</strong> the <a href="#admin">admin page</a> shows <em>Connected</em> as soon as the app can reach Jira. Click <span class="ui">Check again</span> after connecting.</div>
+
+        <h3 id="add-macro">3. Add a macro to a page</h3>
+        <ol>
+          <li>Edit a page and type <strong>/progress</strong> (or the name of a macro, for example <em>/epic</em>).</li>
+          <li>Choose one of the five macros. Its <a href="#settings">settings dialog</a> opens.</li>
+          <li>Fill in the fields marked <strong>*</strong>. The preview shows the macro with live data.</li>
+          <li>Click <span class="ui">Save</span>, then publish the page.</li>
+        </ol>
+        <p>To change a macro later, edit the page, select the macro and click the <strong>pencil icon</strong>.</p>
+      </section>
+
+      <section>
+        <h2 id="allow-access">&ldquo;Allow access&rdquo;: once per person</h2>
+        <p>The first time someone opens a page with one of the macros, Confluence shows this instead of the macro: <em>a notice that the app needs access to Atlassian apps on your behalf</em>, with an <span class="ui">Allow access</span> button.</p>
+        <ul>
+          <li>This is Atlassian's standard consent for apps that read data <strong>with the permissions of the person using them</strong>: the app reads Jira and Confluence as you, with your permissions.</li>
+          <li>Each person answers it <strong>once</strong>. After that, the macros load as usual.</li>
+          <li>It also appears for <strong>readers who only see a published snapshot</strong>: Confluence asks before it shows any macro of the app, even if that macro then makes no request to Jira.</li>
+          <li>Allowing access changes nothing in Jira or Confluence. The app has no write access.</li>
+        </ul>
+        <div class="tip"><strong>Tip:</strong> on a status page with many first-time readers, a short line such as &ldquo;Click <em>Allow access</em> once to see the progress bars&rdquo; above the macros saves questions.</div>
+      </section>
+
+      <section>
+        <h2 id="macros">The five macros</h2>
+        <p>All five share the same look and one <a href="#settings">settings dialog</a>. Every setting has a short explanation in the dialog itself (the <strong>(?)</strong> icon), so the setting tables below are folded away.</p>
+
+        <h3 id="epic-progress">Epic Progress <span class="tag">Jira</span></h3>
+        <p>Live progress of one Jira epic, from the status of its work items: the epic's key as a link, its name, the bar, &ldquo;4 of 8 work items done&rdquo; and the legend. It counts the work items directly under the epic, like Jira's own child-issue progress.</p>
+        <details class="more">
+          <summary>Settings of Epic Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Setting</th><th>What it does</th></tr>
+              <tr><td><strong>Epic</strong> *</td><td>Type part of the name or the key (for example <code>PL-42</code>), or paste a link to the epic. The macro counts the work items directly under this epic, like Jira's own child-issue progress.</td></tr>
+              <tr><td>Also find other work items</td><td>Lets the search find other parents too, for example an <dfn class="term" data-tip="A work item above epics that some sites use to group several epics.">initiative</dfn> or a story with sub-tasks.</td></tr>
+              <tr><td>Count by</td><td><em>Work items</em> (recommended) or <em>Story points</em>. Work items without an estimate are shown separately.</td></tr>
+              <tr><td>Title</td><td>Optional. Empty: the name of the epic.</td></tr>
+              <tr><td>Status and due date of the epic</td><td>Shows the epic's status and its due date; hovering the date shows &ldquo;in 12 days&rdquo; or &ldquo;4 days ago&rdquo;. A passed due date turns red (&ldquo;Overdue&rdquo;) while the epic is not done.</td></tr>
+              <tr><td>A button that lists the open work items</td><td>&ldquo;Show 8 open work items&rdquo; opens a list of up to 25 open work items with key, title, status and assignee, plus &ldquo;Show all in Jira&rdquo;.</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access</td><td>See <a href="#snapshots">Snapshots</a>.</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <h3 id="jira-progress">Jira Progress <span class="tag">Jira</span></h3>
+        <p>Live progress of a Jira project, a release (<dfn class="term" data-tip="A Jira release. Work items belong to it through their Fix versions field.">fix version</dfn>), a <dfn class="term" data-tip="A Jira search saved under a name, which its owner can share with others.">saved filter</dfn> or a <dfn class="term" data-tip="Jira Query Language: the text of an advanced search in Jira, for example project = CP AND type = Bug.">JQL</dfn> search. The name links to the project, the release page or the filter; a JQL search shows the query itself. Releases show <em>Released</em> or <em>Unreleased</em> and the release date, in red once an unreleased release has passed its date.</p>
+        <p><dfn class="term" data-tip="A small work item under a story or task, for example one step of the work.">Sub-tasks</dfn> are left out by default for projects and releases, so a story and its sub-tasks do not count twice, and are counted for filters and JQL, so the number matches the filter exactly.</p>
+        <details class="more">
+          <summary>Settings of Jira Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Setting</th><th>What it does</th></tr>
+              <tr><td><strong>What to count</strong></td><td><em>A project</em>, <em>A release (fix version)</em>, <em>A saved filter</em> or <em>A JQL search (for experts)</em>.</td></tr>
+              <tr><td>Project *</td><td>All work items of this project are counted.</td></tr>
+              <tr><td>Project of the release * and Release *</td><td>First the project, then one of its releases. Unreleased versions are listed first.</td></tr>
+              <tr><td>Saved filter *</td><td>Your starred filters are listed first; type to search all filters you can see. Readers need permission to see the filter in Jira, otherwise the macro tells them it is not shared with them.</td></tr>
+              <tr><td>JQL *</td><td>Any JQL that works in Jira's search, up to 2,000 characters. Each reader runs it with their own Jira permissions. A sort order (ORDER BY) is ignored. Tip: build the search in Jira first, then copy the JQL here.</td></tr>
+              <tr><td>Leave out sub-tasks</td><td>On by default for projects and releases (otherwise a story and its sub-tasks count separately), off for filters and JQL, so the number matches the filter exactly.</td></tr>
+              <tr><td>Count by</td><td><em>Work items</em> or <em>Story points</em>. Story points work for up to 2,000 work items.</td></tr>
+              <tr><td>Title</td><td>Optional. Empty: the name of the project, release or filter.</td></tr>
+              <tr><td>A button that lists the open work items</td><td>As in Epic Progress.</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access</td><td>See <a href="#snapshots">Snapshots</a>.</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <h3 id="progress-list">Progress List <span class="tag">Jira</span></h3>
+        <p>Several epics as a list of progress bars, for roadmaps and status pages. Each row shows the epic's name (as a link) and key, its bar, the share done (&ldquo;4/8&rdquo; or &ldquo;19/34 pts&rdquo;), its status and due date. Pick the epics yourself, list all epics of a project or the children of a work item, or use a JQL search.</p>
+        <img src="imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" alt="All epics of a project, earliest due date first, with an overall row. Below: the next release with its release date, and a saved filter with the bugs from the beta." loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>Settings and limits of Progress List</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Setting</th><th>What it does</th></tr>
+              <tr><td><strong>Which epics</strong></td><td><em>Epics I choose</em> (up to 20, in the order you add them), <em>All epics of a project</em> (in Jira's rank order), <em>The children of a work item</em> (for example the epics of an initiative) or <em>Work items from a JQL search</em> (each result becomes a row, its children are counted, the order of your JQL is kept).</td></tr>
+              <tr><td>Include epics that are already done</td><td>For <em>All epics of a project</em> and <em>The children of a work item</em>.</td></tr>
+              <tr><td>Count by</td><td><em>Work items</em> or <em>Story points</em>.</td></tr>
+              <tr><td>Title</td><td>Optional, shown above the list.</td></tr>
+              <tr><td>Order</td><td><em>As chosen (or in Jira's order)</em>, <em>Least progress first</em> (the epics that need attention at the top) or <em>Earliest due date first</em>.</td></tr>
+              <tr><td>An overall row below the list</td><td>&ldquo;Overall 61&nbsp;% · 8 of 13 work items done&rdquo; with its own bar and &ldquo;Open the list in Jira&rdquo;.</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access</td><td>See <a href="#snapshots">Snapshots</a>.</td></tr>
+            </table>
+          </div>
+          <p>A list shows up to 20 rows. With more results, it says so; narrow the selection or open the list in Jira. A row the reader cannot see in Jira says &ldquo;Not found, or you cannot see it in Jira&rdquo;; the other rows and the overall row stay. Epics are the work item type one level above stories, also when your site renamed them (for example &ldquo;Feature&rdquo;).</p>
+        </details>
+
+        <h3 id="page-progress">Page Progress <span class="tag tag-free">No Jira needed</span></h3>
+        <p>How many pages carry a <dfn class="term" data-tip="A keyword on a Confluence page, added at the bottom of the page or with the label icon. Lower case, without spaces.">label</dfn>, for example how many pages of a manual are <code>approved</code>: &ldquo;75&nbsp;% · 3 of 4 pages labelled &ldquo;approved&rdquo;&rdquo;. Pages a reader cannot open are not counted for them.</p>
+        <details class="more">
+          <summary>Settings of Page Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Setting</th><th>What it does</th></tr>
+              <tr><td><strong>Which pages</strong></td><td><em>Pages below this page</em> (all levels), <em>All pages in this space</em> or <em>All pages in another space</em> (only spaces you can open are listed).</td></tr>
+              <tr><td>&ldquo;Done&rdquo; label *</td><td>A page counts as done when it has this label. Confluence labels are lower case without spaces, so &ldquo;Approved&rdquo; counts pages labelled <code>approved</code>.</td></tr>
+              <tr><td>Only count pages with this label</td><td>Optional, for example <code>doc</code>, to leave out meeting notes. Empty: all pages in scope count.</td></tr>
+              <tr><td>Title</td><td>Optional. Empty: Pages labelled &ldquo;approved&rdquo;.</td></tr>
+              <tr><td>A button that lists the pages without the label</td><td>&ldquo;Show 1 page without &ldquo;approved&rdquo;&rdquo; lists them as links.</td></tr>
+            </table>
+          </div>
+          <p>Add labels at the bottom of a page or with the label icon in the page header. A new label can take a few seconds to show up in Confluence search; click Refresh.</p>
+        </details>
+
+        <h3 id="progress-bar">Progress Bar <span class="tag tag-free">No Jira needed</span></h3>
+        <p>A progress bar you set by hand, for work that is not tracked in Jira: a migration, a hiring plan, a checklist. You choose its status color; the bar does not guess it from the number.</p>
+        <img src="imgEpicProgressForConfluence/screenshot-2-page-progress-manual-bars.webp" alt="No Jira needed: Page Progress counts the pages below this page that carry the label &quot;approved&quot; and lists the rest. Progress Bar is set by hand, with status, note and the date of the last change." loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>Settings of Progress Bar</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Setting</th><th>What it does</th></tr>
+              <tr><td><strong>Progress</strong></td><td><em>As a percentage</em> (0 to 100, decimals allowed; the bar shows whole percent) or <em>As steps</em>, for example 3 of 5 milestones (<em>Steps done</em> and <em>Total steps</em>).</td></tr>
+              <tr><td>Title</td><td>Optional, shown above the bar.</td></tr>
+              <tr><td>Status colour</td><td><em>Automatic</em> (blue, green when it reaches 100&nbsp;%), <em>On track</em> (green), <em>At risk</em> (yellow), <em>Off track</em> (red) or <em>Neutral</em> (blue, no status label). You decide the status; the bar does not guess it from the number.</td></tr>
+              <tr><td>Note under the bar</td><td>Optional, for example &ldquo;Next milestone: beta on 15 November&rdquo;.</td></tr>
+              <tr><td>Show when the value was last changed</td><td>&ldquo;Updated 4 Oct 2026&rdquo;. The date changes only when the value changes, so readers know how fresh it is.</td></tr>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <h2 id="settings">The settings dialog</h2>
+        <p>Every macro has one settings dialog. It opens when you add a macro; later, edit the page, select the macro and click the pencil icon.</p>
+        <ul>
+          <li>Every field has a <strong>(?)</strong> icon with a tooltip and a hint below it. Required fields are marked <strong>*</strong>.</li>
+          <li><strong>Search pickers</strong> find epics, projects, releases, filters and spaces by name. In the epic search you can also paste a link to the work item.</li>
+          <li><span class="ui">Save</span> checks the settings first and names the fields that are missing; the dialog stays open.</li>
+          <li>The <strong>preview</strong> shows the macro exactly as it will look on the page, with live data loaded with your permissions. After saving, publish the page to show the change to readers.</li>
+        </ul>
+        <img src="imgEpicProgressForConfluence/screenshot-1-settings-live-preview.webp" alt="Type /progress, pick a macro and set it up: search for the epic, choose what to count and show, and check the live preview before you save. The macro on the page looks exactly like the preview." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="snapshots">Snapshots for readers without Jira access</h2>
+        <p>Epic Progress, Jira Progress and Progress List can show a <strong>dated snapshot</strong> to people who cannot open Jira, for example managers or stakeholders who only read Confluence. An editor with Jira access publishes it with one click, and editors' visits keep its numbers current.</p>
+
+        <h3 id="publish">How to publish a snapshot</h3>
+        <ol>
+          <li>Edit the page, open the macro's settings and tick <span class="ui">Publish a snapshot for people without Jira access</span> (section <em>Snapshots for readers without Jira access</em>).</li>
+          <li>Choose <strong>What the snapshot shows</strong>: <em>Progress only</em> (recommended) or <em>Progress and work items</em>.</li>
+          <li>Leave <span class="ui">Keep the snapshot up to date when page editors open the page (at most every 15 minutes)</span> ticked, or untick it to keep the snapshot as it is until someone clicks <span class="ui">Update snapshot</span>.</li>
+          <li>Save and publish the page.</li>
+          <li>Below the macro, click <span class="ui">Publish snapshot</span>.</li>
+        </ol>
+        <img src="imgEpicProgressForConfluence/screenshot-4-publish-snapshot.webp" alt="Publishing a snapshot: turn it on in the macro settings, choose what it shows and whether editors&#39; visits keep it current, then click &quot;Publish snapshot&quot; below the macro. Only page editors with Jira access can do this." loading="lazy" width="1840" height="900">
+        <p>Readers then see the bar with &ldquo;Snapshot · <em>date and time</em> · published&rdquo;, or &ldquo;&hellip; · updated automatically&rdquo; after an editor's visit updated it. Once a snapshot is older than 14 days, this line turns yellow and shows its age, for example &ldquo;18 days old&rdquo;. Snapshots work on pages, not on blog posts or templates.</p>
+        <img src="imgEpicProgressForConfluence/highlight-3-status-report-snapshot-without-jira.webp" alt="A steering committee page as readers see it: the list of epics as a dated snapshot, updated automatically when an editor opened the page. Inset: the editor&#39;s live view, where one click updates the snapshot." loading="lazy" width="1840" height="900">
+
+        <h3 id="why-click">Why does publishing take a click, and when does a snapshot update itself?</h3>
+        <p>Epic Progress for Confluence reads Jira with the permissions of the person who looks at the page, so people without Jira access would see no numbers. A snapshot closes that gap: someone who can edit the page and see the work items in Jira decides, with one click, to share the current numbers on that page. It is what copying the numbers into the page would do, only dated and removable.</p>
+        <p>After that, the people who edit the page keep it up to date: when one of them opens the page and the snapshot is older than 15 minutes, the app reads the numbers again from Jira with that person's own permissions. Reading a snapshot never causes a Jira request; <span class="ui">View live</span> reads Jira with the reader's own permissions. The app never reads Jira with its own account or in the name of someone who is not there, as Atlassian asks of apps (<a href="https://developer.atlassian.com/platform/forge/shared-responsibility-model/" target="_blank" rel="noopener">Forge shared responsibility model</a>).</p>
+        <details class="more">
+          <summary>Details of the automatic update</summary>
+          <ul>
+            <li>The page does not wait for it: the stored snapshot appears at once, and the new numbers a moment later.</li>
+            <li>Automatic updates refresh the numbers of what an editor published; new epics, work items or names appear only when an editor updates the snapshot by hand, and the epics of a list stay the same until then.</li>
+            <li>If Jira shows new epics or work items, editors see the note &ldquo;New epics or work items in Jira since this snapshot. Update it to show them.&rdquo; If an epic of the snapshot is no longer in Jira (deleted, or not visible to that editor), the note says &ldquo;An epic or work item in this snapshot can't be read in Jira anymore. Update the snapshot to refresh it.&rdquo;</li>
+            <li>If a request to Jira fails during an update, the snapshot stays as it was. Only one update runs per macro at a time, and a removal always wins: a snapshot removed while an automatic update is still running stays removed.</li>
+            <li>The numbers reach readers only through editors who can read Jira themselves. Without an editor's visit the snapshot stays as it is: its date shows how fresh it is, and after 14 days it turns yellow with its age.</li>
+            <li>To keep a snapshot unchanged until someone clicks <span class="ui">Update snapshot</span>, untick <span class="ui">Keep the snapshot up to date when page editors open the page</span> in the macro settings.</li>
+          </ul>
+        </details>
+
+        <h3 id="who-publishes">Who can publish, update or remove a snapshot?</h3>
+        <p>People who can edit the page. Publishing and updating also need access to the work items in Jira, because the app reads them with that person's permissions; the automatic update works the same way and runs only when such a person opens the page. Editors find <span class="ui">Update snapshot</span> and <span class="ui">Remove snapshot</span> after clicking <span class="ui">View live</span>.</p>
+        <p>If the live numbers cannot load, for example because an editor has no Jira access any more, <span class="ui">Remove snapshot</span> is still there: removing needs edit permission on the page only, no Jira access and no active subscription. Confluence administrators can turn snapshots off for the whole site: Confluence settings → Epic Progress for Confluence → <span class="ui">Allow published snapshots</span> (see <a href="#admin">Admin page</a>).</p>
+
+        <h3 id="who-sees">Who sees what?</h3>
+        <ul>
+          <li>Everyone who can see the page sees the snapshot, with its date and time and whether it was &ldquo;published&rdquo; or &ldquo;updated automatically&rdquo;. Confluence decides who can see the page, and the app asks Confluence again, with the reader's permissions, each time before it shows a snapshot. Someone who may no longer view the page gets a neutral notice instead.</li>
+          <li><span class="ui">View live</span> shows the current numbers, loaded with the reader's own Jira permissions, for people with access to the work items. <span class="ui">Back to the snapshot</span> shows the page as other readers see it. Someone without any access to Jira keeps the snapshot on the page, with the note &ldquo;Live numbers need access to Jira&rdquo;.</li>
+          <li>Only an editor's visit can update a snapshot, at most every 15 minutes, with that editor's Jira permissions; without Jira access the snapshot simply stays as it is.</li>
+          <li>Like everyone else, readers of a snapshot answer the one-time <a href="#allow-access">&ldquo;Allow access&rdquo;</a> question first.</li>
+          <li>The macros are for licensed users of your Confluence site. Confluence guests and anonymous visitors of public pages do not see the app's macros, snapshots included.</li>
+        </ul>
+
+        <h3 id="snapshot-content">What is in a snapshot?</h3>
+        <p>You choose per macro in its settings:</p>
+        <ul>
+          <li><strong>Progress only</strong> (default): percent and counts, with the key and name of what is measured: the epic, the project, the release or saved filter, or the epics of a list. A JQL search has no name, and its text is never stored.</li>
+          <li><strong>Progress and work items</strong>: also statuses, due dates, the release date, and up to 25 open work items with key, title and status.</li>
+        </ul>
+        <p>A snapshot keeps no person fields: no assignees and no account IDs, not even of the person who published it, and never the JQL text. Titles and names are kept as your team wrote them in Jira. If someone changes the macro settings, the old snapshot is no longer shown until it is published again.</p>
+        <details class="more">
+          <summary>Why no account IDs, and what about names in titles?</summary>
+          <p>Account IDs in app storage would come with reporting duties under Atlassian's privacy rules (<a href="https://developer.atlassian.com/cloud/confluence/user-privacy-developer-guide/" target="_blank" rel="noopener">User privacy guide for app developers</a>); snapshots store none. If the title of an epic or the name of a release contains a person's name, for example &ldquo;Interview with Anna M&uuml;ller&rdquo;, the snapshot shows it. The person who publishes decides what to share, as when copying numbers into the page, and editors can remove a snapshot at any time.</p>
+        </details>
+
+        <h3 id="snapshot-storage">Where is the data stored, and how is it deleted?</h3>
+        <p>In the app's storage on Atlassian's cloud (<dfn class="term" data-tip="The storage that Atlassian hosts for each Forge app, separate from your pages and their history.">Forge storage</dfn>), not in the page. So a snapshot is not part of the page history and is not copied with the page. Forge storage stays in the <dfn class="term" data-tip="The region where Atlassian stores your site's data, for example the EU or the US.">data residency</dfn> location of your Confluence site.</p>
+        <div class="note"><strong>Removing a macro from a page?</strong> Click <span class="ui">Remove snapshot</span> first. A snapshot whose macro was deleted is no longer shown anywhere, but it stays in the app's storage until nobody has opened the macro for 120 days, or until its page is deleted.</div>
+        <details class="more">
+          <summary>When a snapshot is deleted</summary>
+          <ul>
+            <li>Someone publishes a newer one (it replaces the old one).</li>
+            <li>An editor clicks <span class="ui">Remove snapshot</span> (deleted at once).</li>
+            <li>The page is moved to the trash or deleted: a daily cleanup deletes its snapshots within 24 hours. If the page is restored before that, the snapshot stays; otherwise publish it again.</li>
+            <li>An editor opens the published page with <span class="ui">Publish a snapshot</span> turned off in the macro settings: turning it off means removing it (not while the page is being edited).</li>
+            <li>An admin blocks the app from the page with an <dfn class="term" data-tip="A rule in Atlassian Administration that keeps apps away from certain Confluence spaces or pages.">app access rule</dfn>: the daily cleanup deletes its snapshots within 24 hours.</li>
+            <li>Nobody opened its macro for 120 days, for example because the macro was removed from the page, or the page is no longer read (this also covers pages whose view restrictions keep the app itself from reading them): the daily cleanup deletes it. For this, the app keeps one small note per macro with the day it was last opened: a date only, no person.</li>
+          </ul>
+          <p>After you uninstall the app, Atlassian keeps its storage, snapshots included, for 28 days and then deletes it; within 21 days you can ask us to have it restored to a new installation (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Data lifecycle for Forge-hosted storage</a>).</p>
+        </details>
+      </section>
+
+      <section>
+        <h2 id="permissions">Permissions: who sees what</h2>
+        <p>The app reads Jira and Confluence <strong>as the person who looks at the page</strong>, never with a shared app account, and it has no write access to either.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Action</th><th>Who</th></tr>
+            <tr><td>Install the app</td><td>A <strong>Confluence admin</strong>, once, from the Atlassian Marketplace.</td></tr>
+            <tr><td>Connect Jira</td><td>A <strong>site admin</strong>, in Atlassian Administration. Jira must be on the same site.</td></tr>
+            <tr><td>Add or change a macro</td><td>Anyone who can <strong>edit the page</strong>.</td></tr>
+            <tr><td>See live numbers</td><td><strong>Every reader, with their own permissions</strong>, on every page view. Jira and Confluence apply them, including <dfn class="term" data-tip="Jira settings that hide some work items from some people.">issue security</dfn> and page restrictions. People without access to the work items see a short note, never numbers or names.</td></tr>
+            <tr><td>Publish or update a snapshot</td><td>Editors of the page who can see the work items in Jira.</td></tr>
+            <tr><td>Remove a snapshot</td><td>Editors of the page, also without Jira access or an active subscription.</td></tr>
+            <tr><td>See a snapshot</td><td>Everyone who can see the page (licensed users of your Confluence site).</td></tr>
+            <tr><td>Turn snapshots off for the site</td><td>A <strong>Confluence admin</strong>, on the <a href="#admin">admin page</a>. The app checks with Confluence, as that person, that they are a Confluence administrator.</td></tr>
+          </table>
+        </div>
+        <p>The app uses its own app account for two yes/no questions only: on the admin page, whether Jira is connected, and in the daily cleanup, whether a page with a snapshot still exists. Neither shows Jira or Confluence data to anyone. Details: <a href="epic-progress-security.html">Security Policy</a>.</p>
+      </section>
+
+      <section>
+        <h2 id="admin">Admin page</h2>
+        <p>In Confluence, open <span class="ui">Settings</span> and choose <strong>Epic Progress for Confluence</strong> in the left navigation. The same page is the app's <em>Get started</em> page after the installation.</p>
+        <ul>
+          <li><strong>Jira connection</strong>: <em>Connected</em>, or <em>Not connected</em> with the steps to connect it.</li>
+          <li><strong>Subscription</strong>: <em>Trial</em> (with its end date), <em>Active</em> or <em>Not active</em>.</li>
+          <li><strong>Who sees what</strong>: the permission rules above in two sentences.</li>
+          <li><strong>Published snapshots</strong>: the switch <span class="ui">Allow published snapshots</span>, on by default. Only Confluence administrators can change it: each time, the app checks this with Confluence, as the person changing it.</li>
+          <li><strong>The five macros</strong>, each marked <em>Jira</em> or <em>No Jira needed</em>.</li>
+        </ul>
+        <p><span class="ui">Check again</span> next to <em>Setup</em> checks the subscription and the Jira connection again.</p>
+        <details class="more">
+          <summary>What “Allow published snapshots” off does</summary>
+          <p>Snapshots are hidden on the whole site and are neither published nor updated automatically; the macros show live numbers to people with Jira access and a notice to everyone else. Existing snapshots are kept (until an editor removes them, the daily cleanup deletes them with their page, or nobody opens their macro for 120 days) and come back when you turn it on again.</p>
+        </details>
+        <img src="imgEpicProgressForConfluence/screenshot-3-admin-who-sees-what.webp" alt="The admin page in the Confluence settings, also shown right after installation: Jira connection, subscription, who sees what, and the switch for published snapshots." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="deletion">Deleting snapshots and app data</h2>
+        <p>The app keeps very little, all of it in Atlassian's Forge storage. The <strong>macro settings</strong> (for example the chosen epic, a JQL search, a title or a note) are part of the page and stored by Confluence, like any other page content: they go with the macro or the page and follow Confluence's page history.</p>
+        <details class="more">
+          <summary>What the app stores and when it is deleted</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Data</th><th>Deleted</th></tr>
+              <tr><td>Published snapshots</td><td>At once when replaced by a newer snapshot, removed by an editor, or when an editor opens the published page with the snapshot option turned off. By the daily cleanup within 24 hours after the page goes to the trash or is deleted (a page restored before that keeps its snapshot), or after an app access rule blocks the app; and when nobody opened its macro for 120 days.</td></tr>
+              <tr><td>Notes of the automatic update: when a snapshot was last checked, and a one-minute claim while an update runs (a random ID, a time and, after a removal, a removal mark; no person)</td><td>Together with their snapshot; a claim left over is deleted by the daily cleanup.</td></tr>
+              <tr><td>&ldquo;Last opened&rdquo; note of a macro with a snapshot (date only, no person)</td><td>Together with the snapshot, or by the daily cleanup once the macro has no snapshot any more.</td></tr>
+              <tr><td>The admin switch &ldquo;Allow published snapshots&rdquo;</td><td>28 days after the app is uninstalled.</td></tr>
+              <tr><td>Anonymous daily usage counters</td><td>After 8 days.</td></tr>
+              <tr><td>IDs of the site's story point fields (cache)</td><td>Refreshed every 6 hours while in use; deleted 28 days after the app is uninstalled.</td></tr>
+            </table>
+          </div>
+        </details>
+        <p>After you uninstall the app, Atlassian keeps all of the app's storage, snapshots included, for 28 days and then deletes it under its <a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">retention rules</a>. Within 21 days of the uninstall, you can ask us to have it restored to a new installation. Details: <a href="epic-progress-privacy-policy.html">Privacy Policy</a>.</p>
+      </section>
+
+      <section>
+        <h2 id="export">PDF and Word export</h2>
+        <p>PDF and Word exports and the page history show each macro as text: the same numbers as on the page, a Progress List as a table with its overall row. They are read live <strong>as the person who exports</strong>, with that person's permissions; an export never uses an app account and never contains a snapshot. If someone has not answered <a href="#allow-access">&ldquo;Allow access&rdquo;</a> yet, their export shows a neutral line instead of numbers: open the page once, allow access, and export again.</p>
+      </section>
+
+      <section>
+        <h2 id="faq">FAQ and messages</h2>
+        <p>Short answers to common questions, then the app's messages and what to do about them.</p>
+        <h3>Do readers need Jira access?</h3>
+        <p>For live numbers, yes: every reader sees the numbers their own Jira permissions allow. For readers without Jira access, an editor of the page can publish a dated snapshot that everyone who can see the page sees. Progress Bar and Page Progress need no Jira at all.</p>
+        <h3>Why does Confluence ask me to Allow access?</h3>
+        <p>Forge apps that read data with the permissions of the person using them need each person's consent once. The first time someone opens a page with one of the macros, Confluence asks them to allow access. This also applies to readers who only see a published snapshot. Allowing access changes nothing in Jira or Confluence.</p>
+        <h3>Why does the number differ from my search in Jira?</h3>
+        <p>Epic Progress counts the work items <em>directly</em> under the epic. Jira Progress leaves out sub-tasks for projects and releases unless you untick <em>Leave out sub-tasks</em>. And every reader sees only the work items they may see in Jira.</p>
+        <h3>Why 99&nbsp;% when almost everything is done?</h3>
+        <p>100&nbsp;% means every work item is done. One open item in 200 shows 99&nbsp;%.</p>
+        <h3>Can Confluence guests or anonymous visitors see the macros?</h3>
+        <p>No. Forge apps run for licensed users of a site unless an app is set up for guests and anonymous visitors, and this app is not.</p>
+        <h3>Which Jira projects work?</h3>
+        <p>Company-managed and team-managed projects, including their story point fields. Epics are found by their level in the work item hierarchy, also when your site renamed them.</p>
+
+        <p>Every message of the app names what happened, why, and what to do.</p>
+        <details class="more">
+          <summary>Messages and what to do</summary>
+          <h4>&ldquo;Live numbers need access to Jira&rdquo;</h4>
+          <p>You clicked <span class="ui">View live</span>, but your account has no access to Jira on this site. The page keeps showing the published snapshot. If you need the live numbers, ask your Jira admin for access.</p>
+          <h4>&ldquo;This progress comes from Jira, which you cannot open&rdquo;</h4>
+          <p>Your account has no access to Jira on this site. Ask your Jira admin for access, or ask an editor of the page to <a href="#snapshots">publish a snapshot</a>.</p>
+          <h4>&ldquo;Epic Progress for Confluence is not connected to Jira yet&rdquo;</h4>
+          <p>The app is installed in Confluence but cannot read Jira yet. A site admin connects it in Atlassian Administration: Apps → Epic Progress for Confluence → connect to Jira (<a href="#connect-jira">details</a>). Progress Bar and Page Progress already work.</p>
+          <h4>&ldquo;Epic Progress cannot find the work item …&rdquo;</h4>
+          <p>The work item, project, release, filter or space does not exist, or you do not have permission to see it. Check the macro settings (pencil icon while editing the page), or ask your Jira admin for access. For a saved filter, ask its owner to share it with you.</p>
+          <h4>&ldquo;Jira cannot run the search of this …&rdquo;</h4>
+          <p>The JQL is not valid. The macro shows Jira's own explanation (for example &ldquo;Field 'x' does not exist&rdquo;). Correct the JQL in the macro settings; try it in Jira's search first.</p>
+          <h4>&ldquo;Too many work items for story points&rdquo;</h4>
+          <p>Story points are added up from every work item, and the search returns more than 2,000. Narrow the search, or count work items instead.</p>
+          <h4>&ldquo;Epic Progress for Confluence: the subscription is not active&rdquo;</h4>
+          <p>The trial or subscription has ended. A Confluence admin can start or renew it under Settings → Apps → Manage apps.</p>
+          <h4>&ldquo;The snapshot was published for other macro settings and is not shown&rdquo;</h4>
+          <p>Someone changed the macro settings after publishing. An editor who can see the work items in Jira publishes it again.</p>
+        </details>
+      </section>
+
+      <section>
+        <h2 id="support">Support</h2>
+        <p>Questions, bugs, feature requests → <a href="epic-progress-support.html">Support page</a> · <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></p>
+        <p>See also: <a href="epic-progress-for-confluence.html">Overview</a> · <a href="epic-progress-privacy-policy.html">Privacy Policy</a> · <a href="epic-progress-security.html">Security Policy</a> · <a href="epic-progress-terms-of-service.html">Terms of Service</a></p>
+        <p class="legal-note">Atlassian, Confluence and Jira are trademarks of Atlassian. Epic Progress for Confluence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="components.js"></script>
+  <script src="docs.js"></script>
+</body>
+</html>

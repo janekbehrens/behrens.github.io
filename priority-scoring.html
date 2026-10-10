@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Priority Scoring for Jira — RICE, WSJF & ICE Prioritization</title>
+  <meta name="description" content="Score Jira issues with RICE, WSJF or ICE, rank the backlog and track Board Health. Rovo suggests scores with reasons. Try the demo with sample data.">
+  <link rel="canonical" href="https://janekbehrens.de/priority-scoring.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/priority-scoring.html">
+  <meta property="og:title" content="Priority Scoring for Jira — RICE, WSJF & ICE Prioritization">
+  <meta property="og:description" content="Score Jira issues with RICE, WSJF or ICE, rank the backlog and track Board Health. Try the interactive demo with sample data.">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/highlight-1-board-health-priority-ranking.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Priority Scoring for Jira — RICE, WSJF & ICE Prioritization">
+  <meta name="twitter:description" content="Score Jira issues with RICE, WSJF or ICE, rank the backlog and track Board Health. Try the interactive demo with sample data.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/highlight-1-board-health-priority-ranking.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Do I need Rovo?", "acceptedAnswer": { "@type": "Answer", "text": "Only for the AI features. The Priority Scoring agent needs Atlassian Rovo on your site. Scoring, the ranking, Board Health, the portfolio view and the gadgets work without it." } },
+      { "@type": "Question", "name": "Can I change how scores are calculated?", "acceptedAnswer": { "@type": "Answer", "text": "The app uses the standard RICE, WSJF and ICE formulas. Jira admins can weight every dimension except Effort and Job Size (×1 to ×5) and set the color thresholds per framework." } },
+      { "@type": "Question", "name": "Which Jira version do I need?", "acceptedAnswer": { "@type": "Answer", "text": "Priority Scoring needs Jira Cloud. It is a Forge app and runs on Atlassian's infrastructure. There is no Data Center or Server version." } },
+      { "@type": "Question", "name": "Does any Jira data leave Atlassian's infrastructure?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app runs on Atlassian Forge. When you use the Rovo agent, Atlassian's Rovo platform processes the issue data, not an external server. Details in the Trust Center." } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Priority Scoring for Jira — RICE, WSJF & ICE scores, Rovo AI and Board Health",
+    "description": "Score Jira issues with RICE, WSJF or ICE right on the issue, rank the backlog and check Board Health from 0 to 100.",
+    "thumbnailUrl": "https://janekbehrens.de/imgPriorityScorer/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/5Wmd8jZTKww",
+    "contentUrl": "https://www.youtube.com/watch?v=5Wmd8jZTKww"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/ps-demo.css">
+</head>
+<body class="rd" data-app="ps">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/priority-scoring-icon.png" alt="" width="48" height="48">
+            <div><b>Priority Scoring — RICE, WSJF &amp; ICE for Jira</b><span>Jira Cloud · Built on Forge · Rovo agent</span></div>
+          </div>
+          <h1 class="h-display">Score your backlog, <em>ship the right things</em></h1>
+        </div>
+        <div>
+          <p class="lead">Score Jira issues with RICE, WSJF or ICE right on the issue. The app ranks your backlog and checks Board Health from 0 to 100. The Rovo agent suggests scores and explains them.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="priority-scoring-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free trial, then a monthly or annual subscription on the Atlassian Marketplace. The AI features need Atlassian Rovo on your site.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="ps">
+          <noscript><img src="imgPriorityScorer/highlight-1-board-health-priority-ranking.webp" alt="Priority Scoring dashboard with Board Health and the ranked backlog" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app. The Rovo chat is recreated with fixed answers.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ps-f1" aria-controls="panel-ps-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Score right on the issue</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ps-f2" aria-controls="panel-ps-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Board Health and a ranked backlog</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ps-f3" aria-controls="panel-ps-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Rovo suggests, explains, and applies if you want</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ps-f4" aria-controls="panel-ps-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Health across your projects</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-ps-f5" aria-controls="panel-ps-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Weights, thresholds and an audit trail</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ps-f1" aria-labelledby="tab-ps-f1">
+              <a class="feat-shot" href="imgPriorityScorer/highlight-2-score-with-sliders-or-rovo.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgPriorityScorer/highlight-2-score-with-sliders-or-rovo.webp" alt="RICE field with sliders for Reach, Impact, Confidence and Effort and a score of 84; next to it a Rovo chat suggesting a RICE score with reasons" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Score right on the issue</h3>
+                <p>Three fields, one per framework: Priority Scoring — RICE, Priority Scoring — WSJF and Priority Scoring — ICE. Move the sliders and the score updates while you drag; it is saved with the check mark.</p>
+                <p class="feat-cap">The Rovo panel on the right is recreated for this image.</p></div>
+                <div><ul>
+                <li><b>RICE:</b> Reach × Impact × Confidence ÷ Effort</li>
+                <li><b>WSJF:</b> (Business Value + Time Criticality + Risk Reduction) ÷ Job Size</li>
+                <li><b>ICE:</b> Impact × Confidence × Ease</li>
+              </ul>
+                <a class="text-link feat-more" href="priority-scoring-docs.html#score-issue">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ps-f2" aria-labelledby="tab-ps-f2" hidden>
+              <a class="feat-shot" href="imgPriorityScorer/highlight-1-board-health-priority-ranking.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgPriorityScorer/highlight-1-board-health-priority-ranking.webp" alt="Board Health 72 of 100, rated Good, with tiles for missing description, no story points, unscored and overdue, above the priority ranking sorted by RICE score" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Board Health and a ranked backlog</h3>
+                <p>The app page shows Board Health from 0 to 100 for a project and ranks the open issues you can see in Jira by the framework you pick.</p>
+                </div>
+                <div><ul>
+                <li>Choose which of eight health criteria count, per project, or start from the Scrum or Kanban preset.</li>
+                <li>Filter the ranking by assignee or sprint; overdue issues are marked.</li>
+                <li>Export CSV gives you the ranking as text to copy into a spreadsheet.</li>
+              </ul>
+                <a class="text-link feat-more" href="priority-scoring-docs.html#board-health">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ps-f3" aria-labelledby="tab-ps-f3" hidden>
+              <a class="feat-shot" href="imgPriorityScorer/screenshot-3-rovo-scores-many-issues-at-once.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgPriorityScorer/screenshot-3-rovo-scores-many-issues-at-once.webp" alt="Rovo chat in Auto mode applying nine RICE scores in the Checkout project after confirmation" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Rovo suggests, explains, and applies if you want</h3>
+                <p>Ask the Priority Scoring agent in Rovo for a score, an explanation, Board Health or the issues that need attention. A Jira admin decides what it may write.</p>
+                <p class="feat-cap">The Rovo chat panel is recreated for this image.</p></div>
+                <div><ul>
+                <li><b>Suggest only:</b> Rovo suggests, you set the sliders.</li>
+                <li><b>Confirm:</b> Rovo asks in the chat before it writes a score (default).</li>
+                <li><b>Auto:</b> no question in the chat; Rovo applies scores after Atlassian's own confirmation, several issues per request up to your bulk limit (1 to 50).</li>
+              </ul>
+                <a class="text-link feat-more" href="priority-scoring-docs.html#rovo">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ps-f4" aria-labelledby="tab-ps-f4" hidden>
+              <a class="feat-shot" href="imgPriorityScorer/screenshot-1-portfolio-board-health-by-project.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgPriorityScorer/screenshot-1-portfolio-board-health-by-project.webp" alt="Portfolio tab: Board Health per project with grade, issue count, stale and unscored counts and a Check button" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Health across your projects</h3>
+                <p>The Portfolio tab lists Board Health for the projects you can open, worst first, with stale and unscored counts.</p>
+                </div>
+                <div><ul>
+                <li>Filter by grade: Poor, Fair, Good and better.</li>
+                <li>Check updates a project's score on demand.</li>
+              </ul>
+                <a class="text-link feat-more" href="priority-scoring-docs.html#portfolio">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-ps-f5" aria-labelledby="tab-ps-f5" hidden>
+              <a class="feat-shot" href="imgPriorityScorer/highlight-3-weights-thresholds-rovo-criteria.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgPriorityScorer/highlight-3-weights-thresholds-rovo-criteria.webp" alt="Settings for dimension weights, score thresholds and the Rovo apply mode, and the Board Health criteria dialog" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Weights, thresholds and an audit trail</h3>
+                <p>Jira admins tune the scoring for the whole site. Everyone else sees the settings read-only.</p>
+                </div>
+                <div><ul>
+                <li>Weight every dimension except Effort and Job Size, from ×1 to ×5. Scores change on their next save.</li>
+                <li>Set where the score color turns from red to yellow to green.</li>
+                <li>Optional audit trail per issue, off by default.</li>
+              </ul>
+                <a class="text-link feat-more" href="priority-scoring-docs.html#settings">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of Priority Scoring in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgPriorityScorer/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/5Wmd8jZTKww?autoplay=1" data-title="Priority Scoring for Jira — RICE, WSJF &amp; ICE scores, Rovo AI and Board Health">
+              <button class="yt-play-btn" aria-label="Load and play the video: Priority Scoring for Jira — RICE, WSJF &amp; ICE scores, Rovo AI and Board Health"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with Priority Scoring</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With Priority Scoring</th></tr></thead>
+            <tbody>
+              <tr><td>RICE, WSJF and ICE scores</td><td class="no">Number fields and formulas you build yourself, for example with automation rules</td><td class="yes">Three ready fields with sliders; the score updates while you drag</td></tr>
+              <tr><td>A ranked backlog</td><td class="no">Sort by a number field you keep up to date by hand</td><td class="yes">Every open issue ranked by score, with assignee and sprint filters and overdue marks</td></tr>
+              <tr><td>Backlog quality</td><td class="no">Filters you build and check yourself</td><td class="yes">Board Health from 0 to 100 with the criteria you choose</td></tr>
+              <tr><td>Help with the numbers</td><td class="no">You estimate every dimension yourself</td><td class="yes">The Rovo agent suggests values with a reason each and can apply them (needs Atlassian Rovo)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Get the app from the Atlassian Marketplace and confirm the installation on your Jira site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add the fields</h3><p>Create the RICE, WSJF or ICE field you need and add it to your project screens.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Score and rank</h3><p>Score issues with the sliders or with Rovo, then work through the ranking from the top.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="priority-scoring-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>Do I need Rovo?</summary><div>Only for the AI features. The Priority Scoring agent needs Atlassian Rovo on your site. Scoring, the ranking, Board Health, the portfolio view and the gadgets work without it.</div></details>
+          <details><summary>Can I change how scores are calculated?</summary><div>The app uses the standard RICE, WSJF and ICE formulas. Jira admins can weight every dimension except Effort and Job Size (×1 to ×5) and set the color thresholds per framework.</div></details>
+          <details><summary>Which Jira version do I need?</summary><div>Priority Scoring needs Jira Cloud. It is a Forge app and runs on Atlassian's infrastructure. There is no Data Center or Server version.</div></details>
+          <details><summary>Does any Jira data leave Atlassian's infrastructure?</summary><div>No. The app runs on Atlassian Forge. When you use the Rovo agent, Atlassian's Rovo platform processes the issue data, not an external server. Details in the <a href="trust-center.html">Trust Center</a>.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="visual-progress-tracker.html"><img src="img/progresstracker144logo.png" alt="" width="44" height="44" loading="lazy"><div><b>Visual Progress Tracker for Jira</b><span>Color-coded progress bars on every Jira issue.</span></div></a>
+          <a class="card" href="velocity-chart.html"><img src="img/velocity-chart-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Velocity Chart for Jira</b><span>Sprint velocity on any dashboard, with your own Definition of Done.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Stop guessing. Start scoring.</h2>
+            <p class="muted">Start with the free trial on the Marketplace.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="priority-scoring-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/ps-demo.js"></script>
+</body>
+</html>

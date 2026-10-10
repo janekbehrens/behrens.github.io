@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>How to Sort Your Jira Backlog by Priority Automatically | Janek Behrens</title>
+  <meta name="description" content="The native Jira Priority field is a five-step label, not a number — which is why most backlogs end up with 80% &quot;High&quot;. Here's how to sort by an actual numeric priority score using RICE, WSJF, or ICE — and what the limits of native sort are.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/sort-jira-backlog-by-priority.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Sort Your Jira Backlog by Priority Automatically",
+    "description": "The native Jira Priority field is a five-step label, not a number — which is why most backlogs end up with 80% &quot;High&quot;. Here's how to sort by an actual numeric priority score using RICE, WSJF, or ICE.",
+    "url": "https://janekbehrens.de/blog/sort-jira-backlog-by-priority.html",
+    "datePublished": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-05-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+    "keywords": ["Jira", "Backlog", "Priority", "RICE", "WSJF", "ICE"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Sort Your Jira Backlog by Priority Automatically">
+  <meta property="og:description" content="The native Jira Priority field is a label, not a number. Here's how to sort by a real numeric priority score using RICE, WSJF, or ICE.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/sort-jira-backlog-by-priority.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Priority Scoring">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Sort Your Jira Backlog by Priority Automatically">
+  <meta name="twitter:description" content="The native Jira Priority field is a label, not a number. Here's how to sort by a real numeric priority score using RICE, WSJF, or ICE.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I sort a Jira backlog by priority?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In a Jira backlog view, click the column header for Priority to sort by the native Priority field (Highest, High, Medium, Low, Lowest). To sort by a numeric priority score instead, add a custom field that stores a number — for example a RICE, WSJF, or ICE score — and sort by that field. Custom number fields appear as sortable columns in list view and the backlog."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does sorting by Jira's native Priority field not work well?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The native Priority field has only five values (Highest, High, Medium, Low, Lowest). In most projects 70–80% of issues end up labelled High, which makes the field useless for ordering. Sorting groups issues into five buckets but does not produce a true ranked order. To get a real rank you need a numeric score."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I rank Jira issues by RICE, WSJF, or ICE score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install a scoring app from the Atlassian Marketplace that creates a numeric custom field for the framework (RICE, WSJF, or ICE). Set dimension values on each issue with sliders or via a Rovo AI agent. The app calculates a score per issue. Add the score field as a column in the backlog and sort descending to see the ranked order."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can JQL sort a Jira backlog by a custom score field?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Once a custom number field exists, JQL supports ORDER BY on it. For example: project = ABC AND statusCategory != Done ORDER BY \"Priority Scoring — RICE\" DESC. The query returns every open issue sorted by the numeric score."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    pre.code-block { background:#172B4D; color:#fff; padding:14px 16px; border-radius:8px; font-size:0.82rem; line-height:1.55; overflow-x:auto; margin: 16px 0; }
+    pre.code-block code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">May 21, 2026</span>
+        <span class="article-readtime">· 7 min read</span>
+      </div>
+      <h1>How to Sort Your Jira Backlog by Priority Automatically</h1>
+      <p class="article-intro">
+        This is the mechanics article — column picker, JQL <code>ORDER BY</code>, REST API, the bits you wire up so the sort actually works. If you want the case for scoring frameworks first (why numeric beats labels, which framework fits your team), start with <a href="/blog/jira-priority-ranking.html">Jira Priority Ranking</a> and come back here for the implementation.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Why sorting by native Priority doesn't work</h2>
+      <p>
+        Jira's built-in Priority field is a single-select list with five values. Sorting by it does exactly what it says — it groups issues into five buckets. Within each bucket the order is whatever Jira decides (usually rank or created date). The field has two structural problems that no amount of sorting fixes:
+      </p>
+      <ul>
+        <li><strong>Coarse granularity.</strong> Five values can't differentiate the top 10 issues. If you have 30 "High" items, you still need to decide which one to pull first.</li>
+        <li><strong>Label inflation.</strong> Once a few items are "Highest", everything new also wants to be "Highest" — otherwise the requester worries it won't get done. The field drifts upwards until it stops conveying information.</li>
+      </ul>
+      <p>
+        A real ranked backlog needs a continuous numeric score per issue, so two items can be compared on a number instead of arguing about a label. The classic frameworks for that are RICE, WSJF, and ICE.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Quick answer:</strong> Add a numeric custom field that stores a calculated priority score. Sort the backlog by that field descending. The native Priority field stays useful for one thing — flagging incident severity — but it stops being the field you sort the backlog by.</p>
+      </div>
+
+      <h2 id="three-frameworks">Three frameworks that produce a number</h2>
+
+      <h3 id="rice">RICE</h3>
+      <p>
+        <strong>RICE</strong> = (Reach × Impact × Confidence) ÷ Effort. Designed at Intercom for product teams ranking user-facing features. Reach is "how many users in a period", Impact is a scale 0.25–3, Confidence is a percentage, Effort is person-months. The output is a number — typically 1 to 1000+ — that can be compared across the entire backlog.
+      </p>
+      <p>See: <a href="/blog/rice-scoring-jira.html">RICE Scoring in Jira: The Complete Setup Guide</a>.</p>
+
+      <h3 id="wsjf">WSJF</h3>
+      <p>
+        <strong>WSJF</strong> = (Business Value + Time Criticality + Risk Reduction) ÷ Job Size. The SAFe standard for sequencing the ART backlog, scored on a Fibonacci scale. Output is typically 0.1 to 10+. Useful when "value" has to be decomposed because the team is weighing economic value against time pressure.
+      </p>
+      <p>See: <a href="/blog/wsjf-jira.html">WSJF in Jira: SAFe Prioritization Without Spreadsheets</a>.</p>
+
+      <h3 id="ice">ICE</h3>
+      <p>
+        <strong>ICE</strong> = Impact × Confidence × Ease. The fastest of the three — three dimensions, no division. Output is typically 1 to 1000. Right for growth teams running experiments where speed of decision matters more than depth.
+      </p>
+      <p>See: <a href="/blog/ice-scoring-jira.html">ICE Scoring in Jira: Fast Prioritization for Growth Teams</a>.</p>
+
+      <p>
+        Not sure which to pick? The <a href="/blog/jira-prioritization-framework-comparison.html">RICE vs WSJF vs ICE comparison</a> walks through the decision tree.
+      </p>
+
+      <h2 id="how-to">How to sort by a real priority score in Jira</h2>
+      <p>
+        The mechanics are the same regardless of which framework you choose. You need a numeric custom field on every issue, a way to populate it consistently, and a backlog or list view sorted by that field.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Add a numeric score field to your project.</strong> Either a plain Jira number custom field (you compute the score elsewhere and paste it in), or a field type from a scoring app that calculates the score from dimension sliders.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Add the field to your issue screens.</strong> Jira Settings → Work items → Screens. Add the score field to the create, edit, and view screens of every relevant screen scheme.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Populate the score on each issue.</strong> Either manually, or via a Rovo AI agent that proposes values, or in bulk via the import path.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Add the score field as a column in the backlog or list view.</strong> Click the column-picker icon, search for the field name, enable it.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Click the column header to sort descending.</strong> The highest-scoring issue is now at the top.</div>
+        </li>
+      </ol>
+
+      <h2 id="with-priority-scoring">Doing it with Priority Scoring</h2>
+      <p>
+        <a href="/priority-scoring.html">Priority Scoring for Jira</a> is one Marketplace app that builds steps 1 and 3 in for you. It registers three custom field types — <em>Priority Scoring — RICE</em>, <em>Priority Scoring — WSJF</em>, and <em>Priority Scoring — ICE</em> — that each store dimension values, calculate the score live, and store the result as a sortable numeric value on the issue.
+      </p>
+      <p>The setup once installed:</p>
+      <ol>
+        <li><strong>Create the field</strong> — Jira Settings → Work items → Fields → Create new field. Search <code>priority scoring</code>, pick the framework, name it.</li>
+        <li><strong>Add to screens</strong> — Jira Settings → Work items → Screens. Add the field to the project's screen.</li>
+        <li><strong>Score issues</strong> — open an issue, click the score field, drag the dimension sliders. The score updates live. Save with the checkmark.</li>
+        <li><strong>Open the Priority Ranking tab</strong> in the app — every scored issue in the project, sorted by score descending, with issue key, summary, type, status, sprint, due date, and score bar. Export to CSV from there if you need to drop it into a steering deck.</li>
+      </ol>
+
+      <div class="callout callout-green">
+        <p><strong>Bulk scoring:</strong> for backlogs with dozens or hundreds of unscored issues, the Rovo AI agent that ships with the app can propose values for all dimensions across the whole backlog and either save them automatically or open a per-issue confirm step. It's the practical way to get from zero scores to a ranked backlog in a single session.</p>
+      </div>
+
+      <h2 id="jql">Sorting via JQL</h2>
+      <p>
+        Once a numeric custom field exists — whether from an app or a plain Jira number field — JQL supports ORDER BY on it. This is the cleanest way to drive filters, gadgets, and exports:
+      </p>
+      <pre class="code-block"><code>project = "MYPROJ"
+  AND statusCategory != Done
+  ORDER BY "Priority Scoring — RICE" DESC</code></pre>
+      <p>
+        Save the query as a filter. You can then:
+      </p>
+      <ul>
+        <li>Subscribe to it for a weekly digest email of the top N items.</li>
+        <li>Use it as the source for a Filter Results dashboard gadget.</li>
+        <li>Reference it in the Confluence Jira Issues macro to embed the ranked list on a project page.</li>
+      </ul>
+
+      <h2 id="keep-jira-priority">Keep the native Priority field — for one thing</h2>
+      <p>
+        The native Jira Priority field doesn't have to go. It still has one role it does well: <em>severity</em>. Use it to mark incident severity or production-impacting urgency (Highest = page someone, Lowest = next quarter's polish). Use the numeric score field for everything else — roadmap decisions, sprint planning, backlog grooming.
+      </p>
+      <p>
+        Those are two different questions. Severity is "how bad if we don't do it"; priority score is "how valuable per unit of effort". They should produce different orderings on purpose.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I sort a Jira backlog by priority?</p>
+        <p class="faq-a">In any Jira backlog or list view, click the column header for Priority to sort by the native Priority field. For a true ranked order, add a numeric custom field that stores a calculated score (RICE, WSJF, or ICE), add it as a column, and click that header to sort descending.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why does sorting by Jira's native Priority field not work well?</p>
+        <p class="faq-a">The native field has only five values. Sorting groups issues into five buckets but produces no order within each bucket. Most projects also experience label inflation, where 70–80% of issues end up tagged High. The result is that sorting by Priority does not produce a meaningful rank.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I rank Jira issues by RICE, WSJF, or ICE score?</p>
+        <p class="faq-a">Install a Marketplace app that creates a numeric custom field for the framework. Set dimension values on each issue. The app calculates a score per issue. Add the field as a column in the backlog and sort descending. Or open the app's Priority Ranking view, which shows the entire scored backlog already sorted by score.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can JQL sort a Jira backlog by a custom score field?</p>
+        <p class="faq-a">Yes. JQL supports ORDER BY on any numeric custom field. Example: <code>project = ABC AND statusCategory != Done ORDER BY "Priority Scoring — RICE" DESC</code>. Save the JQL as a filter and use it as a gadget source or in the Confluence Jira macro.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Should I get rid of the native Priority field?</p>
+        <p class="faq-a">No. The native Priority field still works well for severity (Highest for production incidents, Lowest for cosmetic issues). What you should stop doing is sorting the planning backlog by it. Use the numeric score for sequencing decisions; keep Priority for severity flagging.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Get a ranked Jira backlog out of the box</h3>
+        <p>Priority Scoring creates RICE, WSJF, and ICE custom fields, scores issues live with sliders or via Rovo AI, and shows the full sorted ranking in one dashboard view.</p>
+        <a href="/priority-scoring.html" class="btn-white">See Priority Scoring →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Why native Priority sort fails</a></li>
+          <li><a href="#three-frameworks">Three frameworks</a></li>
+          <li><a href="#how-to">How to sort by a real score</a></li>
+          <li><a href="#with-priority-scoring">Doing it with the app</a></li>
+          <li><a href="#jql">Sorting via JQL</a></li>
+          <li><a href="#keep-jira-priority">Keep native Priority for severity</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/priority-scoring.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../imgPriorityScorer/priorityScorer-banner.webp" alt="Priority Scoring" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Forge</div>
+          </div>
+        </a>
+        <a href="/priority-scoring.html" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Learn more →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-priority-ranking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Priority Ranking: Automatically Sort by Score</a>
+        <a href="/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE vs WSJF vs ICE: Which Framework?</a>
+        <a href="/blog/ai-backlog-prioritization-jira-rovo.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">AI Backlog Prioritization with Rovo</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

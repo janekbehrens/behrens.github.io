@@ -1,0 +1,574 @@
+/* ============================================================
+   demo.css — interactive app demos on the product pages
+   Sample data only. Nothing in here talks to Jira or a server.
+   The inner window imitates the Atlassian design tokens so the
+   demo looks like the app inside Jira; the frame around it uses
+   the website's own style.
+   ============================================================ */
+
+.demo {
+  --d-text: #292A2E;
+  --d-text-2: #505258;
+  --d-text-3: #6B6E76;
+  --d-line: #DDDEE1;
+  --d-line-2: #EBECED;
+  --d-bg: #FFFFFF;
+  --d-bg-2: #F8F8F8;
+  --d-hover: #F0F1F2;
+  --d-blue: #1868DB;
+  --d-blue-2: #1558BC;
+  --d-blue-bg: #E9F2FE;
+  --d-blue-lozenge: #CFE1FD;
+  --d-track: #EBECED;
+  --d-red: #C9372C;
+  --d-red-bg: #FFD5D2;
+  --d-red-fg: #AE2E24;
+  --d-red-soft: #FFECEB;
+  --d-yellow: #FBC828;
+  --d-yellow-bg: #FCE4A6;
+  --d-yellow-fg: #7F5F01;
+  --d-yellow-soft: #FFF5DB;
+  --d-green: #5B7F24;
+  --d-green-bg: #D3F1A7;
+  --d-green-fg: #4C6B1F;
+  --d-green-soft: #EFFFD6;
+  --d-focus: #2684FF;
+  --d-font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  position: relative;
+  background: linear-gradient(180deg, #EEF2F7 0%, #E7ECF3 100%);
+  border-radius: 24px;
+  padding: clamp(10px, 2vw, 22px);
+  color: var(--d-text);
+}
+
+/* ── Top bar: scenario tabs + label + reset ── */
+.demo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: clamp(10px, 1.6vw, 18px);
+}
+.demo-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid #DCE2EA;
+  border-radius: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+.demo-tabs::-webkit-scrollbar { display: none; }
+.demo-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #344054;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.demo-tab:hover { background: #fff; color: #101828; }
+.demo-tab[aria-selected="true"] {
+  background: #fff;
+  color: #0052CC;
+  box-shadow: 0 1px 2px rgba(16,24,40,.08), 0 2px 8px rgba(16,24,40,.06);
+}
+.demo-tab-num {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #E4E7EC;
+  color: #475467;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.demo-tab[aria-selected="true"] .demo-tab-num { background: #0052CC; color: #fff; }
+.demo-tab.is-done .demo-tab-num { background: #12B76A; color: #fff; }
+.demo-meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.demo-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #475467;
+}
+.demo-label::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #12B76A;
+  box-shadow: 0 0 0 3px rgba(18,183,106,.18);
+}
+.demo-reset {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #D0D5DD;
+  border-radius: 9px;
+  background: #fff;
+  color: #344054;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.demo-reset:hover { border-color: #98A2B3; color: #101828; }
+
+/* ── Stage: depth and a gentle entrance tilt ── */
+.demo-stage {
+  perspective: 1600px;
+}
+.demo-window {
+  position: relative;
+  background: var(--d-bg);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 2px rgba(16,24,40,.06),
+    0 12px 28px -6px rgba(16,24,40,.14),
+    0 32px 64px -24px rgba(16,24,40,.22);
+  font-family: var(--d-font);
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--d-text);
+  transform-origin: 50% 0;
+  transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .6s ease;
+  min-height: 400px;
+  overflow: clip;
+}
+.demo.is-hidden .demo-window { transform: rotateX(10deg) translateY(18px) scale(.97); opacity: .4; }
+@media (prefers-reduced-motion: reduce) {
+  .demo-window { transition: none; }
+  .demo.is-hidden .demo-window { transform: none; opacity: 1; }
+}
+.demo-panel[hidden] { display: none; }
+.demo-panel { animation: d-fade .25s ease; }
+@keyframes d-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .demo-panel { animation: none; } }
+
+/* Thin product context strip ("where in Jira am I") */
+.d-context {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--d-line-2);
+  background: var(--d-bg-2);
+  color: var(--d-text-3);
+  font-size: 12px;
+  border-radius: 14px 14px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.d-context b { color: var(--d-text-2); font-weight: 600; }
+.d-context .d-sep { color: #B7B9BE; }
+/* Right-aligned note in the strip, e.g. "Pro features on, as in the trial" (DORA, Velocity) */
+.d-context .d-ctx-note { margin-left: auto; padding-left: 12px; color: var(--d-text-3); }
+@media (max-width: 720px) { .d-context .d-ctx-note { display: none; } }
+
+/* ── Hint bar (guided steps) ── */
+.demo-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(10px, 1.6vw, 16px);
+  padding: 12px 14px;
+  background: rgba(255,255,255,.8);
+  border: 1px solid #DCE2EA;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  color: #101828;
+  min-height: 52px;
+}
+.demo-hint-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0052CC;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.demo-hint.is-done .demo-hint-icon { background: #12B76A; }
+.demo-hint-text { flex: 1; min-width: 0; }
+.demo-hint-text strong { font-weight: 700; }
+.demo-hint-steps { display: flex; gap: 5px; flex-shrink: 0; }
+.demo-hint-steps i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #D0D5DD;
+}
+.demo-hint-steps i.on { background: #0052CC; }
+.demo-hint-steps i.ok { background: #12B76A; }
+.demo-next {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 9px;
+  background: #0052CC;
+  color: #fff;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.demo-next:hover { background: #003D99; }
+
+/* Pulsing ring around the element the current step points at */
+.d-pulse {
+  position: relative;
+  border-radius: 6px;
+  animation: d-ring 1.8s ease-out infinite;
+}
+@keyframes d-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(24,104,219,.55); }
+  70%  { box-shadow: 0 0 0 9px rgba(24,104,219,0); }
+  100% { box-shadow: 0 0 0 0 rgba(24,104,219,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .d-pulse { animation: none; box-shadow: 0 0 0 3px rgba(24,104,219,.5); }
+}
+
+/* The parts that belong to the app get a quiet marker, so visitors
+   can tell the app from the surrounding Jira context. */
+.d-app {
+  position: relative;
+  border-radius: 10px;
+  outline: 2px dashed rgba(24,104,219,.38);
+  outline-offset: 6px;
+}
+.d-app-tag {
+  position: absolute;
+  top: -17px;
+  right: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--d-blue);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+/* ── Atlassian-like primitives ── */
+.d-h1 { font-size: 20px; font-weight: 650; line-height: 1.3; margin: 0 0 6px; letter-spacing: -.005em; }
+.d-h2 { font-size: 16px; font-weight: 650; margin: 0 0 8px; }
+.d-h3 { font-size: 14px; font-weight: 650; margin: 0 0 6px; }
+.d-sub { color: var(--d-text-2); font-size: 13px; }
+.d-faint { color: var(--d-text-3); }
+.d-small { font-size: 12px; }
+.d-key { color: var(--d-blue); font-weight: 500; white-space: nowrap; }
+
+.d-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--d-track);
+  overflow: hidden;
+}
+.d-bar > i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  width: 0;
+  transition: width .35s cubic-bezier(.2,.7,.2,1), background-color .25s;
+}
+.d-bar.is-red > i    { background: var(--d-red); }
+.d-bar.is-yellow > i { background: var(--d-yellow); }
+.d-bar.is-green > i  { background: var(--d-green); }
+.d-bar.is-blue > i   { background: var(--d-blue); }
+
+.d-loz {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+  height: 18px;
+  border-radius: 3px;
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color .25s, color .25s;
+}
+.d-loz.is-red    { background: var(--d-red-bg); color: var(--d-red-fg); }
+.d-loz.is-yellow { background: var(--d-yellow-bg); color: var(--d-yellow-fg); }
+.d-loz.is-green  { background: var(--d-green-bg); color: var(--d-green-fg); }
+.d-loz.is-blue   { background: var(--d-blue-lozenge); color: var(--d-blue-2); }
+.d-loz.is-grey   { background: #DDDEE1; color: #44474D; }
+
+.d-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--d-line);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--d-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .12s, border-color .12s;
+}
+.d-btn:hover { background: var(--d-hover); }
+.d-btn.is-primary { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
+.d-btn.is-primary:hover { background: var(--d-blue-2); }
+.d-btn.is-subtle { border-color: transparent; background: transparent; }
+.d-btn.is-subtle:hover { background: var(--d-hover); }
+.d-btn.is-compact { min-height: 24px; padding: 0 8px; font-size: 13px; }
+.d-btn.is-selected { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
+.d-btn.is-icon { width: 32px; padding: 0; }
+
+.d-select, .d-input {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid #8C8F97;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--d-text);
+  font: inherit;
+  font-size: 14px;
+  max-width: 100%;
+}
+.d-select { padding-right: 28px; appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23505258' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 9px center; cursor: pointer; }
+.d-input.is-num { width: 64px; text-align: left; }
+.d-label { display: block; font-size: 12px; font-weight: 650; color: var(--d-text-2); margin-bottom: 4px; }
+.d-help { font-size: 12px; color: var(--d-text-3); margin-top: 4px; }
+
+.demo button:focus-visible,
+.demo select:focus-visible,
+.demo input:focus-visible,
+.demo [tabindex]:focus-visible {
+  outline: 2px solid var(--d-focus);
+  outline-offset: 2px;
+}
+
+/* Range slider (Atlassian look) */
+.d-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+.d-range::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, #505258 var(--p, 50%), #DDDEE1 var(--p, 50%)); }
+.d-range::-moz-range-track { height: 4px; border-radius: 2px; background: #DDDEE1; }
+.d-range::-moz-range-progress { height: 4px; border-radius: 2px; background: #505258; }
+.d-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; background: #505258; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.d-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #505258; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+
+/* Tables */
+.d-table-wrap { overflow-x: auto; }
+.d-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.d-table th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--d-text-2);
+  padding: 8px 8px;
+  border-bottom: 2px solid var(--d-line);
+  white-space: nowrap;
+}
+.d-table td { padding: 7px 8px; border-bottom: 1px solid var(--d-line-2); vertical-align: middle; }
+.d-table tr:last-child td { border-bottom: 0; }
+.d-table tbody tr { transition: background .2s; }
+.d-table tbody tr:hover { background: #FAFAFB; }
+.d-table tbody tr.is-flash { animation: d-flash 1.4s ease; }
+@keyframes d-flash { 0%, 30% { background: #E9F2FE; } 100% { background: transparent; } }
+.d-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: none;
+  padding: 2px 0;
+  font: inherit;
+  font-weight: 650;
+  color: inherit;
+  cursor: pointer;
+}
+.d-sort:hover { color: var(--d-text); }
+.d-cell-bar { display: flex; align-items: center; gap: 8px; min-width: 140px; }
+.d-cell-bar .d-bar { flex: 1; }
+.d-num { font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; font-size: 12px; }
+
+/* Gadget / card chrome */
+.d-gadget {
+  border: 1px solid var(--d-line);
+  border-top: 3px solid var(--d-blue);
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+.d-gadget-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 6px;
+}
+.d-gadget-title { font-size: 15px; font-weight: 650; flex: 1; min-width: 0; }
+.d-gadget-body { padding: 4px 14px 12px; }
+.d-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--d-text-2);
+  cursor: pointer;
+}
+.d-icon-btn:hover { background: var(--d-hover); }
+.d-icon-btn[aria-expanded="true"] { background: var(--d-blue-bg); color: var(--d-blue); }
+
+/* Popover card that "floats" out of the window (the depth look of
+   the listing images) */
+.d-pop {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--d-line);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(16,24,40,.08), 0 18px 40px -12px rgba(16,24,40,.28);
+  padding: 14px;
+  animation: d-pop .22s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes d-pop { from { opacity: 0; transform: translateY(-4px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .d-pop { animation: none; } }
+
+/* Toast */
+.d-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  background: #292A2E;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  z-index: 20;
+  animation: d-pop .2s ease;
+  pointer-events: none;
+  max-width: calc(100% - 32px);
+  text-align: center;
+}
+
+/* Status button (Jira-like) */
+.d-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px 0 12px;
+  border: 0;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 30px;
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23292A2E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+.d-status.cat-todo { background-color: #DDDEE1; color: #292A2E; }
+.d-status.cat-prog { background-color: #CFE1FD; color: #1558BC; }
+.d-status.cat-done { background-color: #D3F1A7; color: #4C6B1F; }
+.d-status.is-small { min-height: 24px; font-size: 12px; padding-left: 8px; padding-right: 24px; background-position: right 6px center; }
+
+/* Fields list ("Details" panel) */
+.d-fields { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 14px 12px; align-items: start; }
+.d-field-name { color: var(--d-text-2); font-size: 14px; font-weight: 500; padding-top: 2px; }
+.d-field-val { min-width: 0; }
+.d-field-edit { cursor: pointer; border-radius: 4px; padding: 2px 4px; margin: -2px -4px; }
+.d-field-edit:hover { background: var(--d-hover); }
+
+.d-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Responsive helpers */
+@media (max-width: 720px) {
+  .d-hide-sm { display: none !important; }
+  .demo-meta { margin-left: 0; width: 100%; justify-content: space-between; }
+  .demo-window { min-height: 0; }
+}
+
+/* On phones the hint sits above the window, so the next step is visible */
+@media (max-width: 720px) {
+  .demo { display: flex; flex-direction: column; }
+  .demo-bar { order: 0; }
+  .demo-hint { order: 1; margin: 0 0 10px; }
+  .demo-stage { order: 2; }
+  .demo-tab { padding: 0 10px; }
+}
+
+/* An app marker on a gadget must not be clipped by the gadget's rounded corners */
+.d-gadget.d-app { overflow: visible; }
+.d-gadget.d-app > .d-gadget-head { border-radius: 6px 6px 0 0; }
+
+/* Done hint with the "Next" button wraps instead of squeezing the text */
+.demo-hint { flex-wrap: wrap; }
+.demo-hint-text { flex: 1 1 200px; }
+.demo-next { margin-left: auto; }
+
+/* Lozenges as in the current Atlassian design (thin darker border, weight 500) */
+.d-loz { height: 20px; padding: 0 5px; border: 1px solid transparent; font-size: 12px; font-weight: 500; }
+.d-loz.is-red    { border-color: #FD9891; color: #5D1F1A; }
+.d-loz.is-yellow { border-color: #F5CD47; color: #533F04; }
+.d-loz.is-green  { border-color: #B3DF72; color: #37471F; }
+.d-loz.is-blue   { border-color: #8FB8F6; color: #1C2B41; }
+.d-loz.is-grey   { border-color: #B7B9BE; color: #292A2E; }
+
+/* The panel's bottom margin must not collapse through the window (dashed app outline stays visible) */
+.demo-panel { display: flow-root; }

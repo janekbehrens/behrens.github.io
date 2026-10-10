@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <title>CodeDoc AI Docs: Sync Blocks and AI Pages for Confluence</title>
+  <meta name="description" content="Keep Confluence pages in sync with your code: versions, config values, README sections and snippets from GitHub, GitLab, Bitbucket or Azure DevOps.">
+  <link rel="canonical" href="https://janekbehrens.de/codedoc-ai-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CodeDoc AI for Confluence — Documentation">
+  <meta property="og:description" content="Sync versions, config values, README sections and code snippets from GitHub, GitLab, Bitbucket or Azure DevOps onto any Confluence page, or let AI write whole documentation pages.">
+  <meta property="og:url" content="https://janekbehrens.de/codedoc-ai-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "CodeDoc AI for Confluence",
+        "description": "Atlassian Forge app that keeps Confluence documentation in step with your Git repositories: sync blocks keep values, tables, sections and code from files up to date on any page, and optional AI pages write whole documentation pages. Supports GitHub, GitLab, Bitbucket Cloud, Azure DevOps and your own GitHub Enterprise or GitLab server.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Atlassian Confluence Cloud",
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "CodeDoc AI for Confluence — Documentation",
+        "description": "Setup and user guide for CodeDoc AI for Confluence: connect Git, add sync blocks to Confluence pages, and optionally let AI write documentation pages from your code.",
+        "url": "https://janekbehrens.de/codedoc-ai-docs.html",
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do sync blocks use AI or cost tokens?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. A sync block copies exactly what is in the file: no AI calls, no token costs, nothing sent to an AI provider."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Confluence search find the content of a sync block?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The synced content is stored in the page like normal text, so Confluence search, PDF and Word export and the page history include it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will sync blocks fill up the page history?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. CodeDoc writes to the page only when the content in Git changed, so every page version stands for a real change in the file."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does CodeDoc use our Rovo or Atlassian AI credits?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Atlassian AI in CodeDoc Advanced has its own monthly allowance, included in the subscription. Nothing is taken from your Rovo or Atlassian AI credits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can CodeDoc read our GitLab or GitHub Enterprise behind a firewall?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Only if the server is reachable from Atlassian's cloud: CodeDoc runs on Forge, not inside your network. Allow Atlassian's outgoing IP addresses or make the server reachable over HTTPS. See Your own Git server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does AI usage cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "With Atlassian AI (Advanced), AI pages are included up to the monthly allowance, with no extra charge. With your own key, CodeDoc adds no per-page fee: your AI provider bills the tokens, and the run history shows the token count of every run. A medium repository typically uses 10,000–50,000 input and 2,000–8,000 output tokens. Rough cost per page with your own key: Google Gemini's free tier costs nothing (Google may use free-tier data to improve its products); Claude Haiku or a GPT mini model usually $0.01–0.05; larger models (Claude Sonnet, the full GPT models) $0.10–0.50, depending on repository size."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use different AI models for different AI pages?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Not yet: one model is used for all AI pages. Change it any time in Settings → Connections; the next run uses it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I document several repositories in one AI page?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, up to 2 repositories per AI page. The AI receives the code of both and writes one combined page."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What programming languages and file types are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All text-based files; there is no language whitelist. How well the AI understands a file type depends on the model. CodeDoc leaves out dependencies and build output, lock files and minified files, binary and media files, and never reads files that usually hold credentials (.env files, private keys and certificates, Terraform state and variable files, credentials files), even if an include pattern names them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What languages can the documentation be written in?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese and Korean are in the list; Other language… accepts any language you type (quality depends on the model)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is my documentation stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "As a regular Confluence page in the space you selected. Edit, move or delete it like any page. Running the AI page again updates the same page, no duplicate. With review switched on, each run is first saved as a [DRAFT] page."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I review documentation before it goes live?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Tick Review each run before it is published in step 3 of the AI page. The published page changes only when you publish the draft in CodeDoc. Discard keeps the published page unchanged; Undo last run brings back the version before a run. See Review and undo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do webhook and schedule updates write the AI page from scratch?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Each update reads the current code from Git, the AI writes the page again and CodeDoc updates the Confluence page in place."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the app with private repositories?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. CodeDoc uses your access token; with read access to a repository, public or private, it works."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I uninstall?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Go to Confluence Settings → Apps → Manage apps, find CodeDoc and click Uninstall. From then on, the app can no longer read its configuration and stored data; Atlassian keeps it for 28 days and then deletes it (within 21 days, you can ask us to have it restored to a new installation). Generated Confluence pages remain in your spaces; delete them manually if needed."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="docs.css">
+  <style>
+    /* Page-specific: compact tables of statuses and events */
+    .docs main code { overflow-wrap: anywhere; }
+    .docs .table-wrap td code { white-space: nowrap; }
+  </style>
+</head>
+<body class="rd docs" data-app="cd">
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="On this page">
+      <div class="sidebar-toc-heading">On this page</div>
+      <div class="sidebar-toc">
+        <a href="#overview">Overview</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#install">Installation</a>
+        <a href="#setup">Initial setup</a>
+        <a href="#repos">Repositories</a>
+        <a href="#sync">Sync blocks</a>
+        <a href="#sync-add" class="sub">Add a block</a>
+        <a href="#sync-kinds" class="sub">What it can show</a>
+        <a href="#sync-latest" class="sub">Version check</a>
+        <a href="#sync-updates" class="sub">Update rules</a>
+        <a href="#sync-approval" class="sub">Who can set up</a>
+        <a href="#sync-status" class="sub">Status &amp; messages</a>
+        <a href="#sync-manage" class="sub">Manage all blocks</a>
+        <a href="#jobs">AI pages</a>
+        <a href="#jobs-presets" class="sub">Writing styles</a>
+        <a href="#jobs-triggers" class="sub">Updates</a>
+        <a href="#jobs-webhooks" class="sub">Webhook setup</a>
+        <a href="#jobs-schedule" class="sub">Schedules</a>
+        <a href="#jobs-files" class="sub">File selection</a>
+        <a href="#jobs-target" class="sub">Confluence target</a>
+        <a href="#jobs-approval" class="sub">Review and undo</a>
+        <a href="#presets">Saved styles</a>
+        <a href="#dashboard">Overview tab</a>
+        <a href="#queue">Runs</a>
+        <a href="#settings">Settings</a>
+        <a href="#providers">Supported providers</a>
+        <a href="#editions">Editions &amp; trial</a>
+        <a href="#permissions">Access control</a>
+        <a href="#data">Data &amp; privacy</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>CodeDoc AI for Confluence — Documentation</h1>
+      <p class="subtitle">Show versions, config values, README sections and code from Git on any Confluence page and keep them current. Optional: let AI write whole documentation pages.</p>
+
+      <div class="quickstart">
+        <h2>Quick start</h2>
+        <ol>
+          <li>Install CodeDoc from the <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Atlassian Marketplace</a> (30-day free trial) and open <strong>Apps → CodeDoc</strong>.</li>
+          <li>Connect Git with a read-only access token. That is all sync blocks need; the <a href="codedoc-ai-setup.html">Quick start guide</a> has the token steps per provider.</li>
+          <li>Add the repositories CodeDoc may read in the <strong>Repositories</strong> tab.</li>
+          <li>Edit a page, type <code>/</code>, choose <strong>CodeDoc Sync Block</strong> and paste the link to a file. Check the preview, save, publish.</li>
+          <li>Optional: create an AI page with Atlassian AI (Advanced edition) or your own AI key.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#install">Installation</a> · <a href="#setup">Initial setup</a> · <a href="#repos">Repositories</a></li>
+          <li><a href="#sync">Sync blocks</a>: <a href="#sync-add">add</a>, <a href="#sync-kinds">what it can show</a>, <a href="#sync-latest">version check</a>, <a href="#sync-updates">updates</a>, <a href="#sync-status">status</a></li>
+          <li><a href="#jobs">AI pages</a>: <a href="#jobs-presets">styles</a>, <a href="#jobs-webhooks">webhook</a>, <a href="#jobs-files">files</a>, <a href="#jobs-approval">review</a></li>
+          <li><a href="#settings">Settings</a> · <a href="#providers">Providers</a> · <a href="#editions">Editions</a> · <a href="#permissions">Access control</a></li>
+          <li><a href="#data">Data &amp; privacy</a> · <a href="#troubleshooting">Troubleshooting</a> · <a href="#faq">FAQ</a> · <a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>CodeDoc keeps Confluence pages in sync with your code, in two ways:</p>
+        <ul>
+          <li><strong>Sync blocks</strong>: a <dfn class="term" data-tip="A CodeDoc block on a Confluence page. It shows content from a file in your repository and keeps it up to date.">sync block</dfn> puts facts from a file onto a page, for example the version from a Helm chart, settings from YAML, a README section, the latest CHANGELOG entry or a code snippet. No AI and no AI key involved. <a href="#sync">Learn more</a></li>
+          <li><strong>AI pages</strong> (optional): AI writes whole documentation pages from your code, with Atlassian AI (Advanced edition) or your own Anthropic, OpenAI or Google Gemini key. <a href="#jobs">Learn more</a></li>
+        </ul>
+        <p>It reads GitHub, GitLab, Bitbucket Cloud and Azure DevOps, and your own GitHub Enterprise or GitLab server, with several connections at once. Pages update on every push, daily or weekly, with one page version per real change.</p>
+        <img src="imgCodeDoc/screenshot-4-overview.webp" alt="CodeDoc Overview tab: sync blocks, last sync change, AI pages and repositories at a glance, and the recent AI runs" width="1840" height="900" loading="lazy">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url('imgCodeDoc/video-poster.webp')"
+               data-src="https://www.youtube-nocookie.com/embed/fd3xCaSIC9A?autoplay=1" data-title="CodeDoc for Confluence — pages that stay in sync with your code">
+            <button class="yt-play-btn" aria-label="Load and play the video: CodeDoc for Confluence — pages that stay in sync with your code"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <h2>How it works</h2>
+        <ol>
+          <li><strong>Connect Git</strong> with a read-only access token. An AI key is optional and can be added later.</li>
+          <li><strong>Add repositories</strong>: browse your Git account or paste the address of a repository.</li>
+          <li><strong>Add a sync block</strong>: edit a page, type <code>/</code>, choose <strong>CodeDoc Sync Block</strong>, paste the link to a file and pick what to show (<a href="#sync">Sync blocks</a>).</li>
+          <li><strong>Optional: create an AI page</strong>: choose repositories, a writing style, the target space and when to update. CodeDoc publishes the page directly or as a draft for review (<a href="#jobs">AI pages</a>).</li>
+        </ol>
+      </section>
+
+      <section id="examples">
+        <h2>Example output</h2>
+        <p>What an AI page looks like: pages written from a Terraform repository with the <strong>Developer Documentation</strong> style.</p>
+        <details class="more">
+          <summary>Show the example pages</summary>
+          <img src="imgCodeDoc/exampleGenerations/3.png" alt="Example AI page: overview with a tech stack table of versions, roles and descriptions taken from the code" width="1526" height="2200" loading="lazy">
+          <img src="imgCodeDoc/exampleGenerations/1.png" alt="Example AI page: architecture section with core principles, component interaction and key modules" width="2842" height="2400" loading="lazy">
+          <img src="imgCodeDoc/exampleGenerations/2.png" alt="Example AI page: API reference with code examples and the dependency list" width="2824" height="1368" loading="lazy">
+          <p>Other styles give other structures: Developer Documentation has 9 sections including architecture, API reference and troubleshooting; Management Overview is a non-technical summary with risks and strategic recommendations.</p>
+        </details>
+      </section>
+
+      <section id="install">
+        <h2>Installation</h2>
+        <ol>
+          <li>Find <strong>CodeDoc</strong> on the <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Atlassian Marketplace</a>, click <strong>Try it free</strong> (30-day trial) and choose your Confluence Cloud site.</li>
+          <li>In Confluence, open <strong>Apps → CodeDoc</strong>. On first launch you see the setup assistant.</li>
+        </ol>
+      </section>
+
+      <section id="setup">
+        <h2>Initial setup</h2>
+        <p>The setup assistant has three steps: <strong>Connect Git</strong> (required), <strong>AI pages</strong> (optional) and <strong>Ready</strong>. A CodeDoc admin runs it; Confluence administrators are always admins.</p>
+        <img src="imgCodeDoc/screenshot-8-setup-without-ai.webp" alt="Setup assistant: Connect your Git provider first; the AI step can be skipped" width="1840" height="900" loading="lazy">
+
+        <h3 id="setup-git">Connect Git</h3>
+        <p>CodeDoc only reads files, so a token with <strong>read</strong> permission is enough. Which token each provider needs: <a href="#providers">Supported providers</a>.</p>
+        <ol>
+          <li>Select the <strong>Git provider</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps, or your own <strong>GitHub Enterprise</strong> or <strong>GitLab self-managed</strong> server (<a href="#providers-server">details</a>). A note names the token to create, with a direct link.</li>
+          <li>Paste the <dfn class="term" data-tip="A key from your Git provider that lets CodeDoc read repositories. A read-only token is enough.">access token</dfn>. For Azure DevOps, also enter the organization URL (<code>https://dev.azure.com/your-org</code>).</li>
+          <li>Optionally set a <strong>display name</strong>, for example "Work GitHub", and click <strong>Connect and continue</strong>. If the token does not work, the message says why.</li>
+        </ol>
+
+        <h3 id="setup-ai">AI pages (optional)</h3>
+        <p>With the <strong>Advanced edition</strong>, Atlassian AI is included: click <strong>Continue with Atlassian AI</strong>. Otherwise click <strong>Skip, use sync blocks only</strong>, or <strong>Connect an AI provider</strong> to use your own key. You can change this any time in <a href="#settings-ai">Settings → Connections</a>.</p>
+        <details class="more">
+          <summary>Connect your own AI provider</summary>
+          <ol>
+            <li>Select <strong>Anthropic</strong>, <strong>OpenAI</strong> or <strong>Google Gemini</strong> and paste your <strong>API key</strong>: <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">Anthropic</a>, <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI</a>, <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>.</li>
+            <li>Click <strong>Connect</strong>. CodeDoc checks the key and loads the complete list of models from your provider.</li>
+            <li>CodeDoc preselects a balanced, fast model. Pick another one in the searchable <strong>Model</strong> list if you like; recommendations are at the top.</li>
+          </ol>
+          <p>Fast models (Claude Haiku, GPT mini models, Gemini Flash) write a page for a medium repository for a few cents. Set a spending limit in your provider account.</p>
+        </details>
+      </section>
+
+      <section id="repos">
+        <h2>Repositories</h2>
+        <p>The <strong>Repositories</strong> tab lists the repositories CodeDoc may read. Sync blocks and AI pages can use only these. Only CodeDoc admins add or remove them.</p>
+        <img src="imgCodeDoc/v2/repositories.webp" alt="Repositories tab with five connected repositories, their branch and provider" width="1600" height="892" loading="lazy">
+        <ul>
+          <li><strong>Browse repositories</strong>: with several Git connections, choose the connection first. Search, tick the repositories and click <strong>Add N Selected Repository(ies)</strong>. The list shows up to 100 repositories.</li>
+          <li><strong>Add by address</strong>: paste the address, for example <code>https://github.com/org/repo</code>; a link to any file or branch in it works too. Leave <strong>Branch</strong> empty to use the repository's default branch, then click <strong>Add Repository</strong>. CodeDoc checks access first.</li>
+        </ul>
+        <details class="more">
+          <summary>GitLab subgroups, Bitbucket and your own server</summary>
+          <p><strong>Add by address</strong> works for all token types and is the only option for Bitbucket access tokens, which cannot list repositories. GitLab projects in subgroups (<code>group/subgroup/project</code>) are supported. For your own GitHub Enterprise or GitLab server, connect the server in Settings → Connections first, then add its repositories here. If adding fails, the message names the repository and the connection CodeDoc tried.</p>
+        </details>
+      </section>
+
+      <section id="sync">
+        <h2>Sync blocks</h2>
+        <p>A sync block shows a value, a table, a section or code from a file in your repository on a Confluence page and keeps it up to date. CodeDoc copies exactly what is in the file: no AI calls, no AI key, no token costs.</p>
+        <img src="imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" alt="A runbook page with release and configuration tables from Helm chart files and a code snippet, each kept current by a sync block with the status In sync" width="1840" height="900" loading="lazy">
+        <p>The synced text is stored in the page like anything you type, so Confluence search, PDF and Word export and the page history include it. CodeDoc writes to the page only when the content in Git changed. If a file can't be read, the block keeps its last good content and says what went wrong.</p>
+
+        <h3 id="sync-add">Add a sync block</h3>
+        <ol>
+          <li>Edit a page, type <code>/</code> and choose <strong>CodeDoc Sync Block</strong>.</li>
+          <li>Paste the link to the file (copy it from the address bar while the file is open in your Git provider) and click <strong>Use link</strong>. CodeDoc fills in repository, branch and path; the repository must be in the <a href="#repos">Repositories</a> tab. Or choose the repository and pick the file under <strong>Find a file</strong> or <strong>Common files</strong>.</li>
+          <li>Choose <strong>what to show</strong> (<a href="#sync-kinds">table below</a>). Instead of typing a key path, heading or snippet name, click <strong>Show the keys of the file</strong> (or headings, or snippets) and pick from the list.</li>
+          <li>Choose <strong>how often</strong> CodeDoc updates the block.</li>
+          <li>Click <strong>Show preview</strong>, then <strong>Save</strong>: the content appears in the editor right away. Publish the page; from now on CodeDoc keeps the block current.</li>
+        </ol>
+        <img src="imgCodeDoc/highlight-2-paste-link-pick-preview.webp" alt="Sync block settings: a pasted GitHub link filled in repository and path; key paths picked from the file and the preview of the table" width="1840" height="900" loading="lazy">
+        <p>Every field has a <strong>(?)</strong> with a short explanation. To change a block later, edit the page, select the block and click the <strong>pencil icon (Edit)</strong>.</p>
+
+        <h3 id="sync-kinds">What a sync block can show</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>What to show</th><th>You enter</th><th>Example and result</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Value(s) from YAML or JSON</strong></td><td>One <dfn class="term" data-tip="The name of a value in a YAML or JSON file, written with dots, for example image.tag.">key path</dfn> per line, optionally <code>Label = path</code></td><td><code>image.tag</code> or <code>App version = appVersion</code>. One value as text, several as a table.</td></tr>
+              <tr><td><strong>Regular expression</strong></td><td>A <dfn class="term" data-tip="A search pattern for text. CodeDoc checks it line by line and shows the first group in parentheses.">regular expression</dfn>; the first group in parentheses is shown</td><td><code>^FROM\s+(\S+)</code> shows the base images of a Dockerfile.</td></tr>
+              <tr><td><strong>Markdown section</strong></td><td>The heading, without <code>#</code></td><td><code>Installation</code> shows everything below that heading up to the next heading of the same level.</td></tr>
+              <tr><td><strong>Latest CHANGELOG entry</strong></td><td>—</td><td>The newest release entry with its heading; an "Unreleased" entry is skipped.</td></tr>
+              <tr id="sync-snippet"><td><strong>Code snippet between markers</strong></td><td>The snippet name</td><td>Mark the code with two <dfn class="term" data-tip="Two comment lines in your code that mark where a snippet starts and ends, so the block follows the code when lines move.">marker comments</dfn>, e.g. <code># codedoc:start install</code> and <code># codedoc:end install</code>. The block follows the code when lines are added above it.</td></tr>
+              <tr><td><strong>Line range</strong></td><td><code>10-25</code> or <code>42</code></td><td>A code excerpt. If lines are added above the range, the block shows different lines; prefer a snippet.</td></tr>
+              <tr><td><strong>Whole file</strong></td><td>—</td><td>Markdown files formatted, other files as a code block.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="imgCodeDoc/screenshot-2-pick-keys-or-snippets.webp" alt="Picking key paths from a YAML file, and a snippet marked in the code, instead of typing them" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Key path syntax, snippet markers and headings</summary>
+          <p><strong>Key paths:</strong> keys separated by dots (<code>image.tag</code>), list items by index (<code>containers[0].image</code>), all entries with <code>*</code> (<code>services.*.image.tag</code>) and keys that contain dots in quotes (<code>labels["app.kubernetes.io/version"]</code>). Files with several YAML documents, such as Kubernetes manifests, are searched document by document. If a key path doesn't exist, the message lists the keys that do.</p>
+          <p><strong>Snippet markers:</strong> besides <code>codedoc:start</code> / <code>codedoc:end</code>, AsciiDoc tags (<code>tag::install[]</code> … <code>end::install[]</code>) and <code>[START install]</code> … <code>[END install]</code> work too. Snippets are shown as code with syntax highlighting; Markdown files formatted.</p>
+          <p><strong>Headings one level smaller:</strong> for Markdown content you can tick <strong>Make headings one level smaller</strong>, so a <code>#</code> heading from the file becomes a level-2 heading and fits under the page's own headings.</p>
+        </details>
+
+        <h3 id="sync-latest">Compare with the latest release</h3>
+        <p>For a version in a file, such as an image tag or a package version, tick <strong>Compare with the latest release</strong> (kinds "Value(s)" and "Regular expression"). The block then shows the newest published release next to it and a colored status; a table gets the columns <strong>Latest release</strong> and <strong>Status</strong>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Up to date</strong> (green)</td><td>The file uses the newest release.</td></tr>
+              <tr><td><strong>Newer than latest</strong> (blue)</td><td>The file uses a version above the release the registry calls latest, for example a pre-release.</td></tr>
+              <tr><td><strong>Update available</strong> (yellow)</td><td>A newer minor or patch release exists.</td></tr>
+              <tr><td><strong>Major update</strong> (yellow)</td><td>A newer major version exists.</td></tr>
+              <tr><td><strong>End of life</strong> (red)</td><td>The version line gets no updates any more (from <a href="https://endoflife.date" target="_blank" rel="noopener">endoflife.date</a>, for products such as nginx, PostgreSQL, Redis, Node.js, Python, Ubuntu and Alpine). While a line is supported, the block names the end date.</td></tr>
+              <tr><td><strong>Not checked</strong> (grey)</td><td>CodeDoc could not tell what the value names, the value is not a version, or the <dfn class="term" data-tip="A public catalog of software releases, such as Docker Hub, npm or PyPI.">registry</dfn> did not answer. The reason is written next to it.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="imgCodeDoc/screenshot-9-version-check.webp" alt="Version check on a page: the dependencies of a package.json with the columns Latest release and Status" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Where CodeDoc looks, and what is sent</summary>
+          <p><strong>Where to look:</strong> <em>Automatically</em> recognises image references (<code>nginx:1.25.3</code>, or a Helm <code>image.tag</code> next to <code>image.repository</code>), dependencies in <code>package.json</code> and <code>name==version</code> lines of <code>requirements.txt</code>. For any other value, choose the source and enter the name: a Docker Hub image, an npm or PyPI package, the releases of a GitHub project (<code>owner/repository</code>), or a product on endoflife.date.</p>
+          <p>Images are compared with tags of the same form: <code>1.25.3-alpine</code> with the newest <code>x.y.z-alpine</code>, <code>20-alpine</code> with the newest <code>NN-alpine</code>. Pre-releases are left out. Images outside Docker Hub (ghcr.io, quay.io, private registries) are not checked yet.</p>
+          <p><strong>Privacy:</strong> only the public name of the image or package (for example <code>nginx</code> or <code>react</code>) goes to the public registry, never the file or the repository, and only for blocks where the check is switched on. For GitHub releases the request also carries your connected github.com token, which only raises GitHub's rate limit. Don't switch it on for internal package names. Answers are kept for 12 hours and the block shows no "checked on" date, so the page changes only when the answer changes. Blocks set to "On every push" with the check also run once a day, because new releases appear without a push.</p>
+        </details>
+
+        <h3 id="sync-updates">Update rules</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>How often</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Daily</strong> or <strong>Weekly</strong></td><td>CodeDoc checks the file once a day or once a week and changes the page only when the content changed.</td></tr>
+              <tr><td><strong>On every push to the branch</strong></td><td>The block updates right after a push. Needs the CodeDoc <dfn class="term" data-tip="An address your Git provider calls when something happens in the repository, for example a push, so CodeDoc can update right away.">webhook</dfn> in the repository (<a href="#jobs-webhooks">Webhook setup</a>); one webhook URL serves AI pages and sync blocks.</td></tr>
+              <tr><td><strong>Only manually</strong></td><td>The block changes only when someone clicks <strong>Update now</strong>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Whatever the rule, a Job Operator can click <strong>Update now</strong> on the block or in the Sync blocks tab. If nothing changed, the block says so and the page is not touched.</p>
+
+        <h3 id="sync-approval">Who can set up sync blocks</h3>
+        <p>Only users with the <dfn class="term" data-tip="The CodeDoc role for people who set up sync blocks and create and run AI pages. They cannot change settings or permissions.">Job Operator</dfn> or Administrator role (<a href="#permissions-roles">Roles</a>) can choose where a block's content comes from. A page editor without a CodeDoc role cannot pull files from your repositories onto a page.</p>
+        <details class="more">
+          <summary>How approval works</summary>
+          <ul>
+            <li>Settings saved in the block dialog count as approved: after you publish the page, the block starts syncing on the first view.</li>
+            <li>Settings that reach a page another way (copied with a page or template, written through the API, changed later) show <strong>Waiting for approval</strong> until a Job Operator who can edit the page checks the repository, file, branch, content, update rule and version check, and clicks <strong>Approve and sync</strong>.</li>
+            <li>A block reads only files of its own connected repository: paths and branches with <code>../</code> parts (also written as <code>%2e%2e</code>), backslashes or control characters are refused (<strong>Settings incomplete</strong>, with an explanation).</li>
+            <li>Access tokens stay in CodeDoc. The block settings stored on the page contain only the repository, path and options.</li>
+          </ul>
+        </details>
+
+        <h3 id="sync-status">Status and messages</h3>
+        <p>Below every block a status line names the app (<strong>CodeDoc Sync Block</strong>), the state and the last check. Job Operators also see <strong>Update now</strong> and <strong>Manage</strong>, which opens CodeDoc. Hover over the status line for details such as the source file.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>Meaning</th><th>What to do</th></tr></thead>
+            <tbody>
+              <tr><td><strong>In sync</strong></td><td>The block is up to date.</td><td>Nothing.</td></tr>
+              <tr><td><strong>Update failed</strong></td><td>The last update failed, for example because the file was renamed or the token expired. The last good content stays.</td><td>Follow the "What to do" hint, then click <strong>Update now</strong>.</td></tr>
+              <tr><td><strong>Settings incomplete</strong></td><td>Required settings are missing; the message lists them.</td><td>Edit the page, select the block, click the pencil icon.</td></tr>
+              <tr><td><strong>Waiting for approval</strong></td><td>New or changed settings are not approved yet.</td><td>A Job Operator who can edit the page opens it once.</td></tr>
+              <tr><td><strong>Detached</strong></td><td>The block was removed, or its page was deleted or moved to the trash. CodeDoc never writes to a page in the trash.</td><td><strong>Remove detached</strong> in the Sync blocks tab.</td></tr>
+              <tr><td><strong>Not synced (license)</strong></td><td>Without an active license, 3 sync blocks are kept up to date; this block would be one more.</td><td>Remove a block you no longer need, or get CodeDoc in the Atlassian Marketplace.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="imgCodeDoc/sync-blocks/sync-block-incomplete.webp" alt="Message on a sync block: CodeDoc Sync Block settings incomplete, missing file path and key path, with instructions" width="1460" height="296" loading="lazy">
+
+        <h3 id="sync-manage">Manage all sync blocks</h3>
+        <p>The <strong>Sync blocks</strong> tab lists every block with its page, source, kind of content, update rule, status, last check and, for a problem, what to do. Filter by <strong>Needs attention</strong>, run a block with <strong>Update now</strong>, or stop syncing it with <strong>Remove</strong> (its content stays on the page as normal text). <strong>Remove detached</strong> clears entries whose page or block is gone.</p>
+        <img src="imgCodeDoc/screenshot-1-sync-blocks-overview.webp" alt="Sync blocks tab listing all blocks with page, source, kind, update rule, status and last check" width="1840" height="900" loading="lazy">
+
+        <h3 id="sync-limits">Good to know</h3>
+        <details class="more">
+          <summary>Limits and behaviour of sync blocks</summary>
+          <ul>
+            <li>Files up to 1 MB. Snippets, line ranges and whole files are shown up to 20,000 characters; a Markdown section has no such cut, only the 1 MB file limit. Up to 20 key paths or 50 table rows per block; regular expressions up to 200 characters.</li>
+            <li>Edits inside a block are replaced on the next update. Write your own text above or below the block.</li>
+            <li>Every real update creates a page version, and Confluence notifies the page's watchers as for any other edit.</li>
+            <li>Relative links in Markdown point to the file in your Git provider; images are shown as links, because Confluence cannot load images from private repositories. The source line under each block links to the file.</li>
+            <li>Without an active license, 3 sync blocks are kept up to date; blocks approved before keep running (<a href="#editions">Editions</a>).</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="jobs">
+        <h2>AI pages (optional)</h2>
+        <p>An AI page (called a <em>job</em> in earlier versions) defines what to document, how to write it and where to publish it. It needs Atlassian AI (Advanced edition) or a connected AI provider (<a href="#settings-ai">Settings → Connections</a>).</p>
+        <p>The <strong>AI pages</strong> tab has three sub-tabs: <strong>Pages</strong> (Run, Edit, Copy, Delete), <strong>Runs</strong> and <strong>Writing styles</strong>. <strong>New AI page</strong> opens an editor with four steps:</p>
+        <ol>
+          <li><strong>Source</strong>: the page name, up to two repositories with branch and folder, and the files the AI reads (<a href="#jobs-files">File selection</a>).</li>
+          <li><strong>Content</strong>: writing style, language and maximum page length; optionally start from a <a href="#presets">saved style</a>.</li>
+          <li><strong>Target page</strong>: space, parent page and whether each run is reviewed first (<a href="#jobs-approval">Review and undo</a>).</li>
+          <li><strong>Updates</strong>: manually, on every push or on a schedule, with a summary of what CodeDoc will do.</li>
+        </ol>
+        <img src="imgCodeDoc/highlight-3-ai-pages-own-key.webp" alt="New AI page, step Source, with the files the AI reads; next to it the choice between Atlassian AI and your own AI provider" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Editing and copying an AI page</summary>
+          <p><strong>Next</strong> names what is still missing in a step. <strong>Edit</strong> changes an existing AI page: <strong>Go to step</strong> jumps to the part you want to change, and <strong>Save changes</strong> works from any step (the page itself changes with the next run). <strong>Copy</strong> creates a new AI page with the same settings, including the target space.</p>
+        </details>
+
+        <h3 id="jobs-presets">Writing styles</h3>
+        <p>The writing style sets the structure, tone and depth of the page for its audience.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Style</th><th>For</th><th>What you get</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Developer Documentation</strong></td><td>Developers</td><td>Code examples, architecture, API reference, configuration and troubleshooting. 9 sections.</td></tr>
+              <tr><td><strong>Comprehensive Technical</strong></td><td>Developers</td><td>Every module, data model, security, build pipeline, testing strategy and known limitations. 12 sections.</td></tr>
+              <tr><td><strong>Management Overview</strong></td><td>Stakeholders</td><td>Capabilities, risks, scalability and recommendations, without jargon or code.</td></tr>
+              <tr><td><strong>Customer Documentation</strong></td><td>External customers</td><td>Features, getting started and integration, without internal details.</td></tr>
+              <tr><td><strong>Compliance &amp; Audit</strong></td><td>Security, compliance</td><td>Security controls, data classification, access management, GDPR/ISO 27001/SOC2 mappings, risk register.</td></tr>
+              <tr><td><strong>Onboarding Guide</strong></td><td>New team members</td><td>Setup, key concepts, daily workflows and common mistakes.</td></tr>
+              <tr><td><strong>Quick Reference</strong></td><td>Developers</td><td>Tech stack, key commands, project structure and important config values. 5 sections.</td></tr>
+              <tr><td><strong>Custom</strong></td><td>Any</td><td>Your own instructions (up to 2,000 characters).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="imgCodeDoc/screenshot-5-ai-page-style-and-schedule.webp" alt="New AI page: step Content with writing style, language and page length, and step Updates with a daily schedule and the summary" width="1840" height="900" loading="lazy">
+
+        <h3 id="jobs-triggers">When an AI page runs</h3>
+        <p>Step 4 sets when an AI page runs. All three options work in every edition and without an active license.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Update rule</th><th>How it works</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Manually</strong></td><td>Click <strong>Run</strong> on the AI page.</td></tr>
+              <tr><td><strong>On every push</strong></td><td>Runs when code is pushed to the configured branch. Needs the webhook (below).</td></tr>
+              <tr><td><strong>On a schedule</strong></td><td>Runs daily, weekly or monthly. All times are in UTC.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="jobs-webhooks">Webhook setup</h3>
+        <p>One <strong>Webhook URL</strong> serves all AI pages and <a href="#sync-updates">sync blocks set to "On every push"</a>. Copy it from <a href="#settings-webhook">Settings → Webhook</a> and add it as a webhook in each repository. CodeDoc matches each event to AI pages and blocks by repository address and branch, so the same URL works everywhere.</p>
+        <p>Push events are enough everywhere, because a merge into the branch is a push too. CodeDoc also accepts the merge events below; other events (for example GitHub <code>issues</code> or Bitbucket <code>repo:fork</code>) are ignored.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Provider</th><th>Events CodeDoc uses</th><th>Branch that is updated</th></tr></thead>
+            <tbody>
+              <tr><td><strong>GitHub</strong></td><td>Push events only (<code>push</code>). Pull request events are ignored; a merged pull request arrives as a push.</td><td>The branch that was pushed</td></tr>
+              <tr><td><strong>GitLab</strong></td><td>Push events (<code>Push Hook</code>) and merge request events (<code>Merge Request Hook</code>; any merge request event counts, also opening or updating one)</td><td>Push: the pushed branch. Merge request: its target branch</td></tr>
+              <tr><td><strong>Bitbucket</strong></td><td>Push (<code>repo:push</code>) and pull request merged (<code>pullrequest:fulfilled</code>)</td><td>Push: the pushed branch. Merged pull request: its destination branch</td></tr>
+              <tr><td><strong>Azure DevOps</strong></td><td>Code pushed (<code>git.push</code>) and pull request merged (<code>git.pullrequest.merged</code>)</td><td>Push: the pushed branch. Merged pull request: its target branch</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="more">
+          <summary>GitHub: add the webhook</summary>
+          <ol>
+            <li>Repository → <strong>Settings</strong> → <strong>Webhooks</strong> → <strong>Add webhook</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong> into "Payload URL" and set <strong>Content type</strong> to <code>application/json</code>. If you created a webhook secret in CodeDoc, paste it into <strong>Secret</strong>.</li>
+            <li>Choose <strong>Just the push event</strong>, then click <strong>Add webhook</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>GitLab: add the webhook</summary>
+          <ol>
+            <li>Project → <strong>Settings</strong> → <strong>Webhooks</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong>. If you created a webhook secret, paste it into <strong>Secret token</strong>.</li>
+            <li>Under "Trigger", check <strong>Push events</strong>, then click <strong>Add webhook</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: add the webhook</summary>
+          <ol>
+            <li>Repository → <strong>Repository settings</strong> → <strong>Webhooks</strong> → <strong>Add webhook</strong>.</li>
+            <li>Enter a title (e.g. "CodeDoc") and paste the <strong>Webhook URL</strong>. If you created a webhook secret, paste it into <strong>Secret</strong>.</li>
+            <li>Under "Triggers", choose <strong>Repository → Push</strong> (<code>repo:push</code>) and click <strong>Save</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>Azure DevOps: add the service hook</summary>
+          <ol>
+            <li><strong>Project settings</strong> → <strong>Service hooks</strong> → <strong>Create subscription</strong> → <strong>Web Hooks</strong>.</li>
+            <li>Select the trigger event <strong>Code pushed</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong>. If you created a webhook secret, choose <strong>Basic authentication</strong>: any user name, the secret as the password. Click <strong>Finish</strong>.</li>
+          </ol>
+        </details>
+        <p>On your own GitHub Enterprise or GitLab server the steps are the same; the server must be able to reach the webhook address on the internet.</p>
+
+        <h3 id="jobs-schedule">Scheduled updates</h3>
+        <p>A schedule writes the page again on a recurring basis, with no webhook. In step 4 choose <strong>Daily</strong> (earliest hour, 0–23 UTC), <strong>Weekly</strong> (day of week and hour) or <strong>Monthly</strong> (day 1–28 and hour). Tick <strong>Write the page once right after saving</strong> to get the first version at once.</p>
+        <div class="note"><strong>Timing:</strong> Atlassian checks schedules once an hour, so a run starts within about 1 hour after the configured time. "Daily 02:00 UTC" runs between 02:00 and about 03:00 UTC.</div>
+
+        <h3 id="jobs-files">File selection</h3>
+        <p>In step 1, CodeDoc reads the file list of the chosen repositories and folders and shows three numbers: the <strong>code files found</strong>, how many are <strong>read on each run</strong>, and the estimated <strong>input for the AI</strong> in <dfn class="term" data-tip="The units AI models count text in. A token is roughly three to four characters of code.">tokens</dfn>, compared with the limit in Settings → AI limits. With Atlassian AI, it also shows the most credits a run can take.</p>
+        <img src="imgCodeDoc/v2/ai-editor-source.webp" alt="Step Source: the files the AI reads, with the numbers and the choice between automatic and a fixed list" width="1600" height="2332" loading="lazy">
+        <ul>
+          <li><strong>Automatically (recommended)</strong>: up to 30 code files are all read. With more, your AI provider picks the most relevant files (up to the file limit) on each run, so new files are included; that costs one small extra AI call per run.</li>
+          <li><strong>From my file list</strong>: each run reads exactly the files you tick. CodeDoc starts with the most important files (entry points, configuration, READMEs); <strong>Suggest files with AI</strong> lets your AI provider propose a list. New files are not added on their own.</li>
+        </ul>
+        <p>To document one module of a large repository, enter its <strong>Folder</strong> in step 1.</p>
+        <details class="more">
+          <summary>"Too large for one page"</summary>
+          <p>A page is written from at most 50 files (adjustable in Settings) within about 120k tokens. If the scope has more than 1,500 code files, or the repository more than 10,000 files, step 1 says <strong>"Too large for one page"</strong> with the numbers and next steps, and a run started anyway stops right after reading the file list, before any AI call, so no tokens are used. Narrow the scope with the <strong>Folder</strong> field (one module or service per AI page), choose <strong>From my file list</strong> (then only the ticked files are read, whatever the repository size), or keep single facts current with a <a href="#sync">sync block</a>.</p>
+          <p>The file list is read once per editor session: going back to the step or to an earlier folder does not ask Git again. <strong>Show the files</strong> / <strong>Choose files</strong> opens the list with a filter field; long lists show the first 60 files and <strong>Show all</strong>. If you change the folder, files outside it drop out of your list.</p>
+        </details>
+        <details class="more">
+          <summary>File filters (advanced)</summary>
+          <p>Expand <strong>File filters (advanced)</strong> at the bottom of the file panel to fine-tune the list with <dfn class="term" data-tip="A file name pattern: * matches any characters within one folder level, ** matches any depth.">glob patterns</dfn>, one per line:</p>
+          <ul>
+            <li><strong>Leave out</strong>: matching files are removed, for example <code>**/*.test.ts</code>, <code>**/__tests__/**</code>, <code>**/migrations/**</code>.</li>
+            <li><strong>Keep anyway</strong>: rescues files a "Leave out" pattern would remove, for example <code>**/api.test.ts</code>. It is <strong>not a whitelist</strong>: a file that matches neither field is always kept. To read only one directory, use the <strong>Folder</strong> field.</li>
+          </ul>
+          <p><code>**/</code> needs at least one folder in front of the name, so add <code>*.test.ts</code> as well to leave out test files in the repository root. With both fields empty, the defaults apply: build output, lock files, minified and binary files are filtered, and files that usually hold credentials (such as <code>.env</code> files and private keys) are never read.</p>
+        </details>
+        <details class="more">
+          <summary>Maximum page length</summary>
+          <p>In step 2 choose <strong>Short</strong> (about 5–7 pages), <strong>Standard</strong> (about 10–15 pages, recommended) or <strong>Long</strong> (about 20–30 pages). It is an upper limit, not a target: the AI stops when the page is complete. If pages end abruptly, choose a longer option. Options a model cannot write are not offered (for example Long with <code>gpt-4o-mini</code>). Admins can switch on the exact number of output tokens instead: <strong>Settings → AI limits → Advanced: exact page length in tokens</strong>.</p>
+        </details>
+
+        <h3 id="jobs-target">Confluence target</h3>
+        <p>Each AI page publishes to one Confluence space, optionally below a <strong>parent page</strong> ("Root (no parent)" creates a top-level page). Running the AI page again updates the same page in place; no duplicates.</p>
+        <details class="more">
+          <summary>Title conflicts</summary>
+          <p>Confluence page titles are unique per space. When you save an AI page, CodeDoc checks the space; on a conflict, step 3 warns you and you can rename the AI page or click <strong>Save anyway</strong>. The AI page then shows a <strong>⚠ Title conflict</strong> badge, and <strong>Run</strong> asks for confirmation first.</p>
+        </details>
+
+        <h3 id="jobs-approval">Review and undo</h3>
+        <p>Tick <strong>Review each run before it is published</strong> in step 3. Each run then writes a draft page <strong>[DRAFT] &lt;page name&gt;</strong> in the same place, the AI page shows <strong>In review</strong>, and the published page does not change until someone publishes the draft. The draft is a normal page: everyone who can see the space can see it.</p>
+        <ul>
+          <li><strong>Open draft</strong>: read or edit the draft in Confluence.</li>
+          <li><strong>Publish</strong>: the published page gets the draft's content (the first time, the draft becomes the page). The previous version stays in the page history.</li>
+          <li><strong>Discard</strong>: after a confirmation, the draft goes to the space trash and the published page stays as it is.</li>
+        </ul>
+        <h4 id="jobs-undo">Undo the last run</h4>
+        <p>When a run updated a published page, directly or by publishing a draft, the AI page offers <strong>Undo last run</strong>. CodeDoc brings back the version from before that run as a new version; the AI version stays in the page history, and the run shows <strong>Undone</strong>.</p>
+        <details class="more">
+          <summary>Details of review and undo</summary>
+          <ul>
+            <li>If someone changed the page after the run, CodeDoc does not undo, so no edits are lost, and names the version to restore from the page history instead. A run that created the page has no earlier version; delete the page in Confluence to remove it.</li>
+            <li>A discarded draft can be restored from the space trash. If Confluence refuses to delete the draft, the message says why and what to do, and the draft stays linked so you can try again.</li>
+            <li>If you run an AI page again while a draft is waiting, the old draft goes to the trash and a new one is written. Drafts waiting for review also appear under <strong>Needs attention</strong> on the Overview.</li>
+            <li>A run published after review shows <em>Published</em> in the run history; click it to see who published the draft and when.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="presets">
+        <h2>Saved writing styles</h2>
+        <p>A saved style stores the content settings of an AI page as a named template: create it once in <strong>AI pages → Writing styles</strong>, then start new AI pages from it with <strong>Start from a saved style</strong> in step 2.</p>
+        <img src="imgCodeDoc/v2/ai-styles.webp" alt="Writing styles tab with a saved style and its base style, language and creation date" width="1600" height="719" loading="lazy">
+        <details class="more">
+          <summary>What a saved style stores, and who can change it</summary>
+          <ul>
+            <li>The <strong>documentation type</strong> (one of the 8 styles, or <em>Custom</em> with your own instructions; your text is used as the complete instruction), <strong>output language</strong>, <strong>maximum page length</strong> and <strong>exclude patterns</strong>.</li>
+            <li>Only <strong>Admins</strong> create, edit, copy or delete styles (<strong>+ New style</strong>, <strong>Edit</strong>, <strong>Copy</strong>, <strong>Delete</strong>); everyone with access can use them.</li>
+            <li>A saved style fills in all matching fields at once; you can still adjust any of them. Custom instructions typed directly into one AI page apply to that page only.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="dashboard">
+        <h2>Overview tab</h2>
+        <p>The first screen of CodeDoc. Until you have a repository and a sync block, it shows the <strong>first steps</strong>. Then it shows:</p>
+        <ul>
+          <li><strong>At a glance</strong>: sync blocks (and how many need attention), the last time a block changed a page, AI pages and repositories.</li>
+          <li><strong>Needs attention</strong>: failed sync blocks, blocks waiting for approval, AI drafts to review, failed AI pages, an AI allowance that is almost used up and Bitbucket connections to replace, each with a button to the right place.</li>
+          <li><strong>Recent AI runs</strong>: the last five runs with result, model and a link to the page.</li>
+        </ul>
+      </section>
+
+      <section id="queue">
+        <h2>Runs (AI pages)</h2>
+        <p><strong>AI pages → Runs</strong> is the log of all runs: what ran when and what happened to the page. It shows the counts of the last 30 days, <strong>Running now</strong> with progress and <strong>Cancel</strong>, and the <strong>Run history</strong>.</p>
+        <img src="imgCodeDoc/v2/ai-runs.webp" alt="Runs tab: counts of the last 30 days and the run history with time, AI page, result, AI model, files read and tokens" width="1600" height="2509" loading="lazy">
+        <details class="more">
+          <summary>What the run history shows</summary>
+          <ul>
+            <li>Every run, newest first: time, AI page, result (<em>Published</em>, <em>In review</em>, <em>Discarded</em>, <em>Undone</em>, <em>Failed</em>), AI provider and model, the files read (for example "42 of 128", with how they were chosen), tokens and a link to the page. Click <em>Failed</em> to see why and what to do.</li>
+            <li><strong>Next scheduled runs</strong>: for AI pages with a schedule, the next run with a countdown and the last run.</li>
+            <li><strong>Runs per period</strong>: successful runs per day, week or month.</li>
+            <li><strong>Clear history</strong> (admins) removes all run records; the pages in Confluence stay as they are.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="settings">
+        <h2>Settings</h2>
+        <p><strong>Settings</strong> has five tabs: <strong>Connections</strong>, <strong>Webhook</strong>, <strong>AI limits</strong>, <strong>Permissions</strong> (admins) and <strong>Privacy &amp; help</strong>. Only admins can change settings; Job Operators can see them.</p>
+        <img src="imgCodeDoc/screenshot-6-connections.webp" alt="Settings, Connections: a Git connection with a read-only token, and the AI card with Atlassian AI or your own AI provider" width="1840" height="900" loading="lazy">
+
+        <h3 id="settings-git">Git connections</h3>
+        <p>Connect several Git providers or accounts at once, for example a work GitHub, a GitLab group and your own GitLab server. Each connection shows its provider, name, user, date added and how many repositories use it; your own servers are marked <strong>Own server</strong>.</p>
+        <details class="more">
+          <summary>Adding and removing connections</summary>
+          <p><strong>Add connection</strong> opens the same form as the setup. <strong>Remove</strong> deletes the stored token and the repositories of that connection; the last connection cannot be removed. Removing the last connection to an own server also withdraws its approval (Atlassian asks a site admin to confirm).</p>
+        </details>
+
+        <h3 id="settings-ai">AI for AI pages</h3>
+        <p>AI is optional and used only for AI pages. The card shows your edition. With <strong>Advanced</strong>, choose who writes the pages: <dfn class="term" data-tip="Claude models hosted on Atlassian's platform (Forge LLMs). Included in CodeDoc Advanced, no own key needed.">Atlassian AI</dfn> (included, no key; model <em>Balanced</em> or <em>Fast</em>, with the allowance meter) or <strong>your own AI provider</strong> (<a href="#editions-ai">allowance</a>).</p>
+        <p>For your own provider, <strong>Connect AI provider</strong> (or <strong>Change provider or key</strong>) checks a key and loads the models. <strong>Turn AI off</strong> (Standard) or <strong>Remove own key</strong> (Advanced) deletes the stored key: sync blocks keep working, and AI pages stay as they are; with Advanced they continue with Atlassian AI.</p>
+        <details class="more">
+          <summary>The model list</summary>
+          <img src="imgCodeDoc/v2/model-picker.webp" alt="Model list with search: recommended models first, then all text models of the provider" width="1314" height="1476" loading="lazy">
+          <ul>
+            <li>The <strong>Model</strong> list contains every text model your provider offers, newest first, with <strong>Recommended</strong> models at the top (for example the newest Sonnet, Haiku and Opus, GPT and GPT mini, Gemini Pro and Flash). Type to search.</li>
+            <li><strong>Refresh list</strong> loads models released since you connected the provider. Audio, image, embedding and other non-text models are left out.</li>
+            <li>If the selected model is no longer offered, a warning says so; choose another model, otherwise AI pages fail with "model not available".</li>
+          </ul>
+        </details>
+
+        <h3 id="settings-webhook">Webhook</h3>
+        <p>Shows the one <strong>Webhook URL</strong> for all AI pages and sync blocks set to "On every push", with short setup steps per Git provider (<a href="#jobs-webhooks">Webhook setup</a>). Without a webhook, use a daily or weekly update.</p>
+        <img src="imgCodeDoc/v2/settings-webhook-blurred.webp" alt="Settings, Webhook: the webhook address (blurred), setup steps per Git provider and the webhook secret marked Not protected" width="1600" height="1387" loading="lazy">
+        <p><strong>Webhook secret</strong> (admins): <strong>Create secret</strong> makes a random secret. From then on CodeDoc accepts a webhook call only when it carries the secret, so nobody else can start updates or AI page runs (which use your AI budget) by calling the address. Add the secret to every webhook that calls CodeDoc. Until a secret exists, the card shows <strong>Not protected</strong>.</p>
+        <details class="more">
+          <summary>More about the secret</summary>
+          <p><strong>Show secret</strong>, <strong>Replace secret</strong> and <strong>Remove secret</strong> are next to it. The same URL and the same secret work for all Git providers: GitHub and GitHub Enterprise use the webhook's <strong>Secret</strong>, GitLab the <strong>Secret token</strong>, Bitbucket the <strong>Secret</strong>, Azure DevOps <strong>Basic authentication</strong> with the secret as the password. A push that arrives while an AI page still waits in the queue starts no second run: the waiting run reads the newest commit anyway.</p>
+        </details>
+
+        <h3 id="settings-limits">AI limits</h3>
+        <ul>
+          <li><strong>Maximum files per AI page</strong>: default 50 (range 5–200). Larger folders are narrowed to the most relevant files.</li>
+          <li><strong>Input token budget</strong>: total code sent to the AI per run, default 120,000 (range 30,000–500,000). Stay below your model's context window.</li>
+        </ul>
+        <p>Repositories too large for one page (more than 1,500 code files, or more than 10,000 files in total) stop before any AI call, with next steps. Sync blocks are not affected by these limits.</p>
+        <img src="imgCodeDoc/v2/settings-limits.webp" alt="Settings, AI limits: maximum files per AI page and input token budget" width="1600" height="1104" loading="lazy">
+      </section>
+
+      <section id="providers">
+        <h2>Supported providers</h2>
+        <h3>AI providers</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Provider</th><th>Models</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Anthropic</strong></td><td>Claude Opus, Sonnet, Haiku</td><td>Complete model list of your account, recommended first.</td></tr>
+              <tr><td><strong>OpenAI</strong></td><td>GPT and GPT mini</td><td>Only the text models of your account.</td></tr>
+              <tr><td><strong>Google AI</strong></td><td>Gemini Pro and Flash</td><td>Free tier for first tests (Google may use free-tier data to improve its products).</td></tr>
+              <tr><td><strong>Atlassian AI</strong> (Advanced)</td><td>Claude Sonnet (Balanced), newest Claude Haiku (Fast)</td><td>No own key; hosted on Atlassian's platform with a monthly allowance (<a href="#editions-ai">below</a>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Git providers</h3>
+        <p>CodeDoc only reads. The <a href="codedoc-ai-setup.html">Quick start guide</a> has step-by-step token instructions per provider.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Provider</th><th>Token</th></tr></thead>
+            <tbody>
+              <tr><td><strong>GitHub</strong> (github.com)</td><td>Fine-grained token with <strong>Contents: Read</strong>, or a classic token with the <code>repo</code> scope. <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub Docs</a></td></tr>
+              <tr><td><strong>GitHub Enterprise</strong> (your server or <code>NAME.ghe.com</code>)</td><td>The same tokens, created on your server. A site admin approves the address once (<a href="#providers-server">details</a>).</td></tr>
+              <tr><td><strong>GitLab</strong> (gitlab.com)</td><td>Personal, group or project access token with <code>read_api</code> + <code>read_repository</code>. <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">GitLab Docs</a></td></tr>
+              <tr><td><strong>GitLab self-managed</strong> (your server, also under a path)</td><td>The same tokens, created on your server. A site admin approves the address once.</td></tr>
+              <tr><td><strong>Bitbucket Cloud</strong> (bitbucket.org)</td><td>Repository, project or workspace access token with <strong>Repositories: Read</strong>. No personal API tokens (<a href="#providers-bitbucket">why</a>). <a href="https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/" target="_blank" rel="noopener">Bitbucket Docs</a></td></tr>
+              <tr><td><strong>Azure DevOps</strong> (dev.azure.com)</td><td>Personal access token with <code>Code (Read)</code>; the organization URL is required. <a href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate" target="_blank" rel="noopener">Microsoft Docs</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="providers-server">Your own Git server</h3>
+        <p>CodeDoc reads <strong>GitHub Enterprise Server</strong>, <strong>GitHub Enterprise Cloud with data residency</strong> (<code>NAME.ghe.com</code>) and <strong>GitLab self-managed</strong> (also under a path such as <code>https://example.com/gitlab</code>) the same way as github.com and gitlab.com.</p>
+        <ol>
+          <li>Settings → Connections → <strong>Add connection</strong>: choose <strong>GitHub Enterprise</strong> or <strong>GitLab self-managed</strong> and enter the address you open the server with.</li>
+          <li>Click <strong>Allow access to the server</strong>: Atlassian asks a site admin to confirm that CodeDoc may send requests to this address. Without this approval <dfn class="term" data-tip="Atlassian's cloud platform for apps. CodeDoc runs there, not on servers of its own.">Forge</dfn> blocks every request.</li>
+          <li>Enter a read-only token of that server and click <strong>Connect</strong>. Right after a new approval, Atlassian needs a short while; the form tries again by itself.</li>
+        </ol>
+        <img src="imgCodeDoc/screenshot-10-own-server.webp" alt="Settings, Git connections: the form for a GitLab self-managed server with its address and the button Allow access to the server" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Network and approval details</summary>
+          <p>CodeDoc runs on Atlassian's cloud, not inside your network. The server must be reachable from the internet over HTTPS, with a certificate from a public certificate authority. If a firewall protects it, allow Atlassian's outgoing IP addresses (<a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">IP addresses and domains for Atlassian cloud products</a>).</p>
+          <p>The approval is listed in Atlassian Administration → Connected apps → CodeDoc → Data management ("Data storage, sharing, receiving and processing"), where an admin can remove it again. Repositories, file links, sync blocks, AI pages and webhooks then work as on the cloud services.</p>
+        </details>
+
+        <h3 id="providers-bitbucket">Bitbucket tokens</h3>
+        <p>CodeDoc reads Bitbucket Cloud with an <strong>access token</strong>: a <strong>repository access token</strong> (Repository settings → Access tokens, "Repositories: Read", all plans) or, with Bitbucket Premium, a <strong>project</strong> or <strong>workspace access token</strong> for several repositories. With a repository access token, add one connection per repository.</p>
+        <details class="more">
+          <summary>Why personal API tokens and app passwords are not accepted</summary>
+          <p>Atlassian's security requirements for Marketplace apps do not allow apps to collect or store the credentials of Atlassian accounts, and Bitbucket API tokens belong to an Atlassian account. Access tokens belong to a repository, project or workspace instead. A connection made with a personal token before CodeDoc 8 keeps working for now and is marked for replacement: add a connection with an access token, then remove the old one.</p>
+        </details>
+      </section>
+
+      <section id="editions">
+        <h2>Editions, trial and licensing</h2>
+        <p>CodeDoc is a paid app with two editions and a <strong>30-day free trial</strong>. Both editions contain every CodeDoc feature; <strong>Advanced</strong> adds Atlassian-hosted AI, so AI pages need no own AI key.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Feature</th><th>Standard</th><th>Advanced</th></tr></thead>
+            <tbody>
+              <tr><td>Sync blocks: values, sections, changelogs, snippets, files, version check</td><td>✓</td><td>✓</td></tr>
+              <tr><td>GitHub, GitLab, Bitbucket Cloud, Azure DevOps and your own GitHub Enterprise or GitLab server</td><td>✓</td><td>✓</td></tr>
+              <tr><td>AI pages with your own Anthropic, OpenAI or Google Gemini key</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Review before publishing, undo, schedules, webhooks, roles</td><td>✓</td><td>✓</td></tr>
+              <tr><td><strong>Atlassian AI</strong>: AI pages without an own key, Claude models on Atlassian's platform</td><td>—</td><td>✓</td></tr>
+              <tr><td><strong>Monthly AI allowance</strong> with usage meter (100 credits a month)</td><td>—</td><td>✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="editions-ai">Atlassian AI and the monthly allowance</h3>
+        <ul>
+          <li>Atlassian AI writes AI pages with Claude models hosted on Atlassian's platform (Forge LLMs), with the same content moderation as Atlassian's own AI features. In Settings → Connections choose <strong>Balanced</strong> (Claude Sonnet, the most thorough pages) or <strong>Fast</strong> (the newest Claude Haiku Atlassian offers, about a third of the <dfn class="term" data-tip="CodeDoc's unit for Atlassian AI usage. A typical page takes 2–5 credits with Balanced.">credits</dfn>). Choosing the files of a large repository always uses the fast model.</li>
+          <li>Each site gets <strong>100 credits a month</strong>; the trial of Advanced has 30 for the whole trial. A typical page takes 2–5 credits with Balanced, a small one well under one. The editor shows the most a page can take ("up to N credits per run").</li>
+          <li>Before a run starts, CodeDoc checks that its largest possible use still fits. If it doesn't, the run does not start, and the message says when the allowance resets (the first day of the next month, UTC). Until then, AI pages can use your own AI provider.</li>
+          <li>Settings shows the meter: credits used and left, runs and tokens this month; the Overview warns from 80 %. CodeDoc credits are separate from Rovo credits: nothing is taken from your Atlassian AI or Rovo allowance, and there is no extra charge.</li>
+        </ul>
+        <img src="imgCodeDoc/screenshot-11-ai-allowance.webp" alt="CodeDoc Advanced: Atlassian AI with the monthly allowance meter, and the choice to use your own AI provider instead" width="1840" height="900" loading="lazy">
+        <p>If you connected your own AI provider before moving to Advanced, AI pages keep using it until an admin chooses Atlassian AI.</p>
+
+        <h3>Trial</h3>
+        <p>During the 30-day trial, all features of the edition are available, with unlimited sync blocks, repositories, AI pages and runs. The trial of Advanced includes Atlassian AI with <strong>30 credits for the whole trial</strong>; after the trial, Advanced includes 100 credits a month.</p>
+        <h3>Without an active license (after the trial)</h3>
+        <ul>
+          <li><strong>3 sync blocks</strong> are kept up to date. Blocks approved before keep running; a new block beyond the limit shows "Not synced (license)" and keeps its content.</li>
+          <li><strong>1 AI page</strong>: an existing AI page continues to work, with all update rules (manual, webhook, scheduled).</li>
+          <li>Unlimited repositories; all writing styles, AI providers and languages remain available.</li>
+        </ul>
+      </section>
+
+      <section id="permissions">
+        <h2>Access control</h2>
+        <p>Confluence administrators always have full access. Everyone else gets access through Confluence groups that you assign to one of two roles.</p>
+
+        <h3 id="permissions-roles">Roles</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Role</th><th>For</th><th>Can</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Administrator</strong></td><td>App admins, team leads</td><td>Everything: Overview, Sync blocks, AI pages, Repositories, Settings including Permissions.</td></tr>
+              <tr><td><strong>Job Operator</strong></td><td>Developers, documentation owners</td><td>Overview, Sync blocks (set up, approve, update), AI pages (create and run); Repositories and Settings read-only.</td></tr>
+              <tr><td><strong>Confluence Administrator</strong></td><td>Site and product admins</td><td>Always full Administrator access, no configuration needed.</td></tr>
+              <tr><td><em>No role</em></td><td>All other users</td><td>Access denied, with a link to request access from the admin.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="permissions-setup">Configuration</h3>
+        <ol>
+          <li>Open CodeDoc → <strong>Settings → Permissions</strong> (Administrators only).</li>
+          <li>Under <strong>Administrator Groups</strong> and <strong>Job Operator Groups</strong>, search for a Confluence group and click <strong>+ Add</strong>.</li>
+          <li>Manage the members of these groups in <strong>Confluence Settings → Groups</strong>; nothing changes in the app when people join or leave.</li>
+        </ol>
+        <img src="imgCodeDoc/v2/settings-permissions.webp" alt="Settings, Permissions: Administrator groups and Job Operator groups" width="1600" height="1318" loading="lazy">
+        <details class="more">
+          <summary>Tips and timing</summary>
+          <p>Create two dedicated groups, for example <code>codeDocAI-Admins</code> and <code>codeDocAI-JobOperator</code>, to keep CodeDoc access separate and easy to audit. Your own role is shown in the top-right corner of the app.</p>
+          <p>A user added to a group gets access within about 2 minutes; a user removed from a group loses it within about 30 minutes. There is no way to force a refresh; this keeps the number of Confluence API calls low.</p>
+        </details>
+      </section>
+
+      <section id="data">
+        <h2>Data processing and privacy</h2>
+        <p>All processing takes place on Atlassian's Forge infrastructure; there is no CodeDoc server.</p>
+        <ul>
+          <li><strong>Sync blocks:</strong> the Forge runtime reads the chosen file from your Git provider with your access token, and CodeDoc writes the part you chose into the block. Nothing is sent to an AI provider. CodeDoc stores the block settings and a checksum of the content, not the file.</li>
+          <li><strong>Version check (optional):</strong> only for blocks where it is switched on, the public name of the image or package (for example <code>nginx</code>) goes to its public registry: Docker Hub, npm, PyPI, GitHub (releases) or endoflife.date. The answer is kept for 12 hours in the app's storage of your site. No file content or repository is sent; for GitHub releases the request carries your connected github.com token.</li>
+          <li><strong>AI pages (optional):</strong> the Forge runtime fetches the selected files with your access token; files that usually hold credentials (such as <code>.env</code> files and private keys) are never fetched. With your own AI provider, it sends them to that provider with your API key, under your account and its data terms. With <strong>Atlassian AI</strong> (Advanced), it sends them to Claude models hosted on Atlassian's platform; no third-party AI account or key is involved. CodeDoc keeps file names, token counts and, for Atlassian AI, the credits of each run, not the code.</li>
+        </ul>
+        <div class="warning"><strong>Your own AI provider:</strong> for AI pages with your own provider, your source code is also sent to that provider, under its own data handling and retention policies. Review its terms before sending sensitive code. With Atlassian AI, the code stays on Atlassian's platform.</div>
+        <details class="more">
+          <summary>Storage, encryption, page writes and usage statistics</summary>
+          <ul>
+            <li>All data transfers are encrypted with <strong>TLS</strong>.</li>
+            <li>CodeDoc calls only your Git providers (including own servers a site admin approved), for AI pages your AI provider or Atlassian AI, and, for blocks with the version check, the public registries named above.</li>
+            <li>API keys and access tokens are stored in <strong>Forge encrypted storage</strong> within your Confluence site. They are never shown again, never written to pages and never logged.</li>
+            <li>CodeDoc creates and updates pages as the CodeDoc app: AI pages in the spaces you choose, sync blocks only inside their own block. Page restrictions that exclude the app stop these updates.</li>
+            <li><strong>Usage statistics:</strong> CodeDoc counts how often features are used (for example "a sync block was updated"), summed over all sites, and writes technical logs that Atlassian makes available to app vendors. No page, space, repository, file or user information is part of the counts.</li>
+          </ul>
+        </details>
+        <p>Full details: <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a>.</p>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>Troubleshooting</h2>
+        <p>Most messages in CodeDoc name the cause and what to do. If one of these does not help, write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        <h3>Sync blocks</h3>
+        <details class="more">
+          <summary>"the file or the branch does not exist (HTTP 404)"</summary>
+          <p>Check the <strong>file path</strong> and the <strong>branch</strong> in the block settings: paths are case-sensitive and start below the repository root. Copy the path from your Git provider (the part after the branch name). If the file was renamed or moved, update the path. <strong>Show preview</strong> checks the path before you save.</p>
+        </details>
+        <details class="more">
+          <summary>"Key path … was not found in the file"</summary>
+          <p>The message lists the keys that exist at that point of the file, for example <em>Keys under "image": repository, pullPolicy, tag.</em> Key paths are case-sensitive and work only with YAML and JSON files; for other files choose a regular expression, a line range or the whole file.</p>
+        </details>
+        <details class="more">
+          <summary>"Settings incomplete" or "Waiting for approval"</summary>
+          <p><strong>Settings incomplete</strong> lists the missing settings: edit the page, select the block and click the pencil icon. <strong>Waiting for approval</strong> means new or changed settings are not approved yet: a Job Operator or Administrator who can edit the page has to open it once (<a href="#sync-approval">details</a>).</p>
+        </details>
+        <details class="more">
+          <summary>"the Git provider rejected the access token (HTTP 401)"</summary>
+          <p>The token stored in CodeDoc is invalid or expired. An administrator can replace it under <strong>Settings → Connections</strong>. The block keeps its last good content until the next successful update.</p>
+        </details>
+        <details class="more">
+          <summary>"On every push" does not update</summary>
+          <p>Push updates need the CodeDoc webhook in the repository (<a href="#jobs-webhooks">Webhook setup</a>) and a push to the branch the block follows (its <strong>Branch</strong> setting, or the repository's default branch). <strong>Update now</strong> checks the block in the meantime.</p>
+        </details>
+        <h3>AI pages</h3>
+        <details class="more">
+          <summary>"A Confluence page with this title already exists"</summary>
+          <p>Page titles are unique per space. <strong>Rename the AI page</strong>, or rename or move the other page in Confluence. CodeDoc warns about conflicts when you save an AI page (<a href="#jobs-target">Confluence target</a>).</p>
+        </details>
+        <details class="more">
+          <summary>"AI returned empty response"</summary>
+          <ul>
+            <li><strong>Input token budget too low:</strong> raise it in Settings → AI limits.</li>
+            <li><strong>Page length too short:</strong> choose a longer <strong>Maximum page length</strong> in step 2.</li>
+            <li><strong>Model limits:</strong> try a more capable model (for example Haiku → Sonnet, or a GPT mini model → the full GPT model).</li>
+          </ul>
+        </details>
+        <details class="more">
+          <summary>XHTML parsing error</summary>
+          <p>AI output is sometimes not valid Confluence markup. CodeDoc repairs broken tags and macros automatically; if that does not work, it falls back to a simplified format (plain text with headings), so the page is always created. Run the AI page again.</p>
+        </details>
+        <details class="more">
+          <summary>"Rate limit exceeded" (429)</summary>
+          <p>Your AI provider is rate-limiting requests. CodeDoc retries up to 3 times with increasing delays (3 s, 8 s, 15 s). If the error persists, wait a few minutes, check the limits of your provider plan, and reduce the number of files the AI reads.</p>
+        </details>
+        <details class="more">
+          <summary>"Insufficient credits/balance" or a quota message from the provider</summary>
+          <p>Your AI provider account has no credits left. Top up at <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener">Anthropic</a> or <a href="https://platform.openai.com/settings/organization/billing" target="_blank" rel="noopener">OpenAI</a>; for Gemini, check the quota in <a href="https://aistudio.google.com/" target="_blank" rel="noopener">AI Studio</a>.</p>
+        </details>
+        <details class="more">
+          <summary>The provider says the request is too large</summary>
+          <p>The code exceeds the model's maximum input. Let CodeDoc pick the files automatically or tick fewer files, lower the <strong>input token budget</strong>, add <strong>Leave out</strong> patterns or set a <strong>Folder</strong> (<a href="#jobs-files">File selection</a>), or switch to a model with a larger context window.</p>
+        </details>
+        <details class="more">
+          <summary>Atlassian AI: "the included AI allowance for this month is used up"</summary>
+          <p>The run did not start, so nothing was used. The allowance resets on the first day of the next month (UTC). Meanwhile, choose <strong>Your own AI provider</strong> in Settings → Connections, or wait. If only a little is left, fewer files or a shorter page may still fit.</p>
+        </details>
+        <details class="more">
+          <summary>Atlassian AI: "declined this request in its content safety check"</summary>
+          <p>Atlassian checks every request like its own AI features. Leave out files with unusual content (AI page → Source → file filters), or use your own AI provider for this page.</p>
+        </details>
+        <details class="more">
+          <summary>A scheduled AI page didn't run at the expected time</summary>
+          <p>Schedules are checked hourly, so a run starts up to about 1 hour after the configured time. If nothing ran after 2 hours or more, check that the update rule is <strong>On a schedule</strong>, that <strong>Next scheduled runs</strong> under AI pages → Runs is correct, and that your Git token (and AI key, if you use your own) is still valid.</p>
+        </details>
+        <details class="more">
+          <summary>The page is too short or inaccurate</summary>
+          <p>Choose a longer <strong>Maximum page length</strong>, include more relevant files (the AI can only document code it receives, so add config files, the README and <code>package.json</code>), or try a more capable model. AI-written pages can contain errors: review them before sharing, and consider <strong>Review each run before it is published</strong>.</p>
+        </details>
+        <h3>Webhooks, connections and servers</h3>
+        <details class="more">
+          <summary>Webhook: "Event is not supported"</summary>
+          <p>The webhook sends an event CodeDoc does not use. Send push events, or one of the merge events in the <a href="#jobs-webhooks">events table</a>; others such as fork, issue or comment are ignored.</p>
+        </details>
+        <details class="more">
+          <summary>Webhook arrives, but nothing updates</summary>
+          <p>No AI page or block matches. Check that the repository is added in the <strong>Repositories</strong> tab with the same address as in the webhook, that the pushed branch is the branch the AI page or block follows, and that the update rule is <strong>On every push</strong>.</p>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: "personal API tokens and app passwords cannot be used"</summary>
+          <p>CodeDoc accepts only Bitbucket <strong>access tokens</strong> (<a href="#providers-bitbucket">Bitbucket tokens</a>). Create a repository access token with "Repositories: Read" and paste only the token value.</p>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: "Browse" doesn't show my repositories</summary>
+          <p>Bitbucket does not let access tokens list repositories (its account-wide repository list was removed in 2026). Add each repository with <strong>Add by address</strong>; CodeDoc checks there that the token can read it. With Bitbucket Premium, one project or workspace access token covers several repositories.</p>
+        </details>
+        <details class="more">
+          <summary>Own server: "CodeDoc may not connect to … yet" or "could not reach …"</summary>
+          <ul>
+            <li><strong>May not connect yet</strong>: click <strong>Allow access to the server</strong>; a site admin has to confirm Atlassian's dialog. Right after a new approval, wait a minute and click <strong>Connect</strong> again.</li>
+            <li><strong>Could not reach</strong>: Atlassian's cloud cannot open the address. Check HTTPS with a certificate from a public certificate authority, and that a firewall allows <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">Atlassian's outgoing IP addresses</a>.</li>
+            <li><strong>Reached, but the token was not accepted</strong>: the token is wrong, expired or lacks read permission (GitHub: Contents read; GitLab: read_api and read_repository).</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+        <details class="more"><summary>Do sync blocks use AI or cost tokens?</summary><p>No. A sync block copies exactly what is in the file: no AI calls, no token costs, nothing sent to an AI provider.</p></details>
+        <details class="more"><summary>Does Confluence search find the content of a sync block?</summary><p>Yes. The synced content is stored in the page like normal text, so Confluence search, PDF and Word export and the page history include it.</p></details>
+        <details class="more"><summary>Will sync blocks fill up the page history?</summary><p>No. CodeDoc writes to the page only when the content in Git changed, so every page version stands for a real change in the file.</p></details>
+        <details class="more"><summary>Does CodeDoc use our Rovo or Atlassian AI credits?</summary><p>No. Atlassian AI in CodeDoc Advanced has its own monthly allowance, included in the subscription. Nothing is taken from your Rovo or Atlassian AI credits.</p></details>
+        <details class="more"><summary>Can CodeDoc read our GitLab or GitHub Enterprise behind a firewall?</summary><p>Only if the server is reachable from Atlassian's cloud: CodeDoc runs on Forge, not inside your network. Allow Atlassian's outgoing IP addresses or make the server reachable over HTTPS. See <a href="#providers-server">Your own Git server</a>.</p></details>
+        <details class="more"><summary>How much does AI usage cost?</summary><p>With Atlassian AI (Advanced), AI pages are included up to the monthly allowance, with no extra charge. With your own key, CodeDoc adds no per-page fee: your AI provider bills the tokens, and the run history shows the token count of every run. A medium repository typically uses 10,000–50,000 input and 2,000–8,000 output tokens. Rough cost per page with your own key: Google Gemini's free tier costs nothing (Google may use free-tier data to improve its products); Claude Haiku or a GPT mini model usually $0.01–0.05; larger models (Claude Sonnet, the full GPT models) $0.10–0.50, depending on repository size.</p></details>
+        <details class="more"><summary>Can I use different AI models for different AI pages?</summary><p>Not yet: one model is used for all AI pages. Change it any time in Settings → Connections; the next run uses it.</p></details>
+        <details class="more"><summary>Can I document several repositories in one AI page?</summary><p>Yes, up to 2 repositories per AI page. The AI receives the code of both and writes one combined page.</p></details>
+        <details class="more"><summary>What programming languages and file types are supported?</summary><p>All text-based files; there is no language whitelist. How well the AI understands a file type depends on the model. CodeDoc leaves out dependencies and build output, lock files and minified files, binary and media files, and never reads files that usually hold credentials (.env files, private keys and certificates, Terraform state and variable files, credentials files), even if an include pattern names them.</p></details>
+        <details class="more"><summary>What languages can the documentation be written in?</summary><p>English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese and Korean are in the list; <strong>Other language…</strong> accepts any language you type (quality depends on the model).</p></details>
+        <details class="more"><summary>Where is my documentation stored?</summary><p>As a regular Confluence page in the space you selected. Edit, move or delete it like any page. Running the AI page again updates the same page, no duplicate. With review switched on, each run is first saved as a <code>[DRAFT]</code> page.</p></details>
+        <details class="more"><summary>Can I review documentation before it goes live?</summary><p>Yes. Tick <strong>Review each run before it is published</strong> in step 3 of the AI page. The published page changes only when you publish the draft in CodeDoc. <strong>Discard</strong> keeps the published page unchanged; <strong>Undo last run</strong> brings back the version before a run. See <a href="#jobs-approval">Review and undo</a>.</p></details>
+        <details class="more"><summary>Do webhook and schedule updates write the AI page from scratch?</summary><p>Yes. Each update reads the current code from Git, the AI writes the page again and CodeDoc updates the Confluence page in place.</p></details>
+        <details class="more"><summary>Can I use the app with private repositories?</summary><p>Yes. CodeDoc uses your access token; with read access to a repository, public or private, it works.</p></details>
+        <details class="more"><summary>How do I uninstall?</summary><p>Go to <strong>Confluence Settings → Apps → Manage apps</strong>, find CodeDoc and click <strong>Uninstall</strong>. From then on, the app can no longer read its configuration and stored data; Atlassian keeps it for 28 days and then deletes it (within 21 days, you can ask us to have it restored to a new installation). Generated Confluence pages remain in your spaces; delete them manually if needed.</p></details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Need help? Write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>; we aim to answer within 24 hours.</p>
+          <p style="margin-bottom:0">Bug reports: the <strong>Report a bug</strong> button under <strong>Settings → Privacy &amp; help</strong> creates a pre-filled email with diagnostic information. More on the <a href="codedoc-ai-support.html">support page</a>.</p>
+        </div>
+        <p class="legal-note"><a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> · <a href="codedoc-ai-terms-of-service.html">Terms of Service</a> · <a href="codedoc-ai-security.html">Security</a> · <a href="impressum.html">Impressum</a></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="components.js"></script>
+  <script src="docs.js"></script>
+</body>
+</html>

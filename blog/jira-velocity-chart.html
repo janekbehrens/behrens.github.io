@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jira Velocity Chart: How to Read It and Use It for Sprint Planning | Janek Behrens</title>
+  <meta name="description" content="A practical guide to the Jira velocity chart — what the committed and completed bars mean, how to read the average-velocity line, how to use velocity for sprint planning and forecasting, and the mistakes that make velocity misleading.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-velocity-chart.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Jira Velocity Chart: How to Read It and Use It for Sprint Planning",
+    "description": "What the committed and completed bars mean, how to read the average-velocity line, how to use velocity for sprint planning and forecasting, and the mistakes that make velocity misleading.",
+    "url": "https://janekbehrens.de/blog/jira-velocity-chart.html",
+    "datePublished": "2026-06-02T00:00:00+02:00",
+    "dateModified": "2026-06-02T00:00:00+02:00",
+    "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+    "keywords": ["Jira", "velocity chart", "sprint velocity", "sprint planning", "Scrum", "Agile", "story points"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Velocity Chart: How to Read It and Use It for Sprint Planning">
+  <meta property="og:description" content="What the committed and completed bars mean, how to read the average line, and how to use velocity for sprint planning without the common mistakes.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-velocity-chart.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-06-02">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Velocity Chart: How to Read It and Use It for Sprint Planning">
+  <meta name="twitter:description" content="What the committed and completed bars mean, how to read the average line, and how to use velocity for sprint planning.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does a velocity chart show in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Jira velocity chart shows two bars for each completed sprint: commitment (the total estimate of the work in the sprint when it started) and completed (the total estimate finished by the end of the sprint). Velocity is the average of the completed values over the last several sprints, and most charts also draw that average as a line."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good velocity in Jira?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no universally good number. Velocity is measured in a team's own story points, which are relative, so the figure only means something for that team. A healthy velocity is stable and predictable — completed roughly matching commitment, sprint after sprint — rather than high. You should never compare the raw velocity of two different teams."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many sprints should a velocity forecast be based on?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the last three to six completed sprints. Fewer than three is too noisy to trust; going back much further risks including a different team composition or way of working. Treat the result as a range (your lowest to highest recent velocity) rather than a single number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my Jira velocity chart empty or showing zero?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The two usual causes are: the board is a Kanban board (no sprints, so there is no velocity), or the issues are estimated in a different field than the one the chart reads. Velocity needs a Scrum board with at least one completed sprint, and the estimation statistic must match the field your team actually uses (for example Story Points)."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    figure.article-figure { margin: 24px 0; }
+    figure.article-figure img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(23,43,77,0.08); }
+    figure.article-figure figcaption { font-size: 0.8rem; color: var(--text-faint); text-align: center; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">June 2, 2026</span>
+        <span class="article-readtime">· 9 min read</span>
+      </div>
+      <h1>Jira Velocity Chart: How to Read It and Use It for Sprint Planning</h1>
+      <p class="article-intro">
+        The velocity chart is the closest thing Scrum teams have to a speedometer: two bars per sprint, a line through them, and a number you can plan around. It's also one of the most misread charts in Jira. Here's exactly what each part means, how to turn it into a sensible sprint forecast, and the four mistakes that quietly make velocity lie to you.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-shows">What a velocity chart actually shows</h2>
+      <p>
+        A velocity chart plots your recent <strong>completed</strong> sprints. For each sprint it draws two bars side by side, and Atlassian defines them precisely in the <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-velocity-chart/" target="_blank" rel="noopener">velocity chart documentation</a>:
+      </p>
+      <ul>
+        <li><strong>Commitment</strong> (the grey bar) — &ldquo;the total estimate of all work items in the sprint when it begins.&rdquo; This is the scope the team took on at sprint start.</li>
+        <li><strong>Completed</strong> (the green bar) — &ldquo;the total completed estimates when the sprint ends.&rdquo; This is what was actually finished.</li>
+      </ul>
+      <p>
+        <strong>Velocity</strong> itself is the average of those completed values: &ldquo;Velocity is calculated by taking the average of the total completed estimates over the last several sprints.&rdquo; Most velocity charts draw that average as a horizontal line across the bars so you can see, at a glance, the rate the team tends to deliver at.
+      </p>
+
+      <figure class="article-figure">
+        <img src="../imgVelocityChartForJira/screenshot-1-velocity-chart.webp" alt="A velocity chart with grey committed bars and green completed bars over ten sprints, a dashed average-velocity line at 16.1 points, and an 85% say/do ratio" loading="lazy">
+        <figcaption>Committed (grey) vs completed (green) over ten sprints, with the dashed average-velocity line and a say/do ratio.</figcaption>
+      </figure>
+
+      <p>
+        The estimate can be in <strong>story points</strong> (by far the most common), in <strong>issue count</strong>, or in another estimation field, depending on how your board is configured. Whatever the unit, the chart is always comparing the same thing: what you planned versus what you shipped.
+      </p>
+
+      <h2 id="how-to-read">How to read it: four patterns</h2>
+      <p>
+        Don't read a velocity chart sprint by sprint — read the <em>shape</em> across the last several sprints. Four patterns tell you almost everything.</p>
+
+      <h3>1. Completed sits just below commitment, consistently</h3>
+      <p>
+        This is the healthy default. Teams rarely finish 100% of what they pull in, and a small, steady gap (say completed at 85–95% of commitment) means your planning is realistic. The average line is flat and the bars cluster around it. You can forecast confidently.
+      </p>
+
+      <h3>2. Completed is far below commitment, sprint after sprint</h3>
+      <p>
+        Chronic over-commitment. The team consistently plans more than it finishes. The fix is not &ldquo;work harder&rdquo; — it's to <strong>commit to less</strong>, closer to the proven completed average. Over-commitment quietly erodes trust with stakeholders because every sprint looks like a miss.
+      </p>
+
+      <h3>3. The bars swing wildly from sprint to sprint</h3>
+      <p>
+        High variance — 30 points, then 8, then 22 — usually means something other than the team's pace is moving the number: inconsistent estimation, mid-sprint scope changes, holidays, or carrying large unfinished stories between sprints. A jumpy chart is a signal to look at your process, and it makes forecasting from a single average unreliable (use a range instead — see below).
+      </p>
+
+      <h3>4. A slow, steady climb</h3>
+      <p>
+        A gradual upward trend over many sprints is the good kind of improvement: the team is gelling, estimates are stabilising, impediments are being removed. Beware of a <em>sudden</em> jump, though — that's more often re-estimation or scope-counting changes than a real productivity gain.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>The one ratio worth adding:</strong> divide completed by committed for each sprint. That's your <strong>say/do ratio</strong> (sometimes called commitment reliability). A team averaging 60% is over-committing; a team consistently above 100% is sandbagging its commitment. Around 80–100% is the sweet spot. We cover this in depth in <a href="sprint-predictability-say-do-ratio.html">Sprint Predictability and the Say/Do Ratio</a>.</p>
+      </div>
+
+      <h2 id="where-to-find">Where to find the velocity chart in Jira</h2>
+      <p>
+        In a <strong>company-managed</strong> project, open your Scrum board, then <strong>Reports → Velocity Chart</strong>. In a <strong>team-managed</strong> project the equivalent is the <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-team-managed-velocity-report/" target="_blank" rel="noopener">velocity report</a>, which can measure velocity in story points or in number of work items. Both require the Sprints feature and at least one completed sprint.
+      </p>
+      <p>
+        There's one structural limitation worth knowing up front: the native velocity chart lives <em>inside a single board's reports</em>. There is no native Jira <strong>dashboard gadget</strong> for velocity, so you can't put it next to your sprint-health, burndown, and filter gadgets on a shared dashboard — you have to navigate into each board's report separately. That's the gap teams most often fill with a Marketplace app; more on that at the end. We compared the native report and the app option in detail in <a href="velocity-team-managed-jira.html">Velocity for Team-Managed Projects</a>.
+      </p>
+
+      <h2 id="sprint-planning">Using velocity for sprint planning</h2>
+      <p>
+        Velocity's real job is <strong>forecasting</strong> — answering &ldquo;how much can we realistically take into the next sprint?&rdquo; and &ldquo;roughly how many sprints will this epic take?&rdquo; Here's the disciplined way to use it.</p>
+
+      <h3>Plan with a range, not a single number</h3>
+      <p>
+        Take your last three to six completed sprints. Instead of averaging them into one figure and treating it as gospel, note the <strong>low and high</strong>. If recent completed values are 18, 22, 25, 19, 24, your realistic capacity is &ldquo;about 18–25, plan around 21.&rdquo; A range respects the natural variation in real teams and stops planning from becoming false precision.
+      </p>
+
+      <h3>Forecast epics as a range of sprints</h3>
+      <p>
+        If an epic is estimated at 120 points and your velocity range is 18–25, that's roughly <strong>5 to 7 sprints</strong>. Communicating &ldquo;5–7 sprints&rdquo; is far more honest — and more useful — than &ldquo;6 sprints&rdquo; stated with fake confidence.
+      </p>
+
+      <h3>Subtract known interruptions</h3>
+      <p>
+        Velocity assumes a roughly normal sprint. Adjust capacity down for public holidays, people on leave, or a planned support rotation. Don't permanently lower velocity for a one-off; just plan that specific sprint lighter.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Rule of thumb:</strong> a brand-new team has no velocity yet. Run two or three sprints, deliberately under-committing, before you trust the chart to plan with. The Scrum literature and Atlassian's own <a href="https://www.atlassian.com/agile/project-management/velocity-scrum" target="_blank" rel="noopener">guide to velocity</a> both stress that velocity is a tool the team builds up over time, not a number you set on day one.</p>
+      </div>
+
+      <h2 id="mistakes">Four mistakes that make velocity lie</h2>
+
+      <h3>1. Comparing velocity between teams</h3>
+      <p>
+        This is the big one. Story points are <em>relative</em> — each team estimates against its own past work, not an absolute scale. One team's 8 is another team's 3. Comparing two teams' velocities, or worse, ranking teams by velocity, is meaningless and actively harmful: it pushes teams to inflate estimates. Velocity is only ever comparable to the <em>same team's</em> history.
+      </p>
+
+      <h3>2. Treating velocity as a target to maximise</h3>
+      <p>
+        The moment velocity becomes a goal, it stops being a useful measure (a textbook case of Goodhart's law). Teams hit a velocity target by padding estimates, not by delivering more value. The objective is a <strong>stable, sustainable</strong> velocity that supports reliable forecasts — not an ever-rising number.
+      </p>
+
+      <h3>3. Ignoring the &ldquo;Done&rdquo; definition</h3>
+      <p>
+        The completed bar only counts issues the board considers done — by default, just the last column. If your team also has statuses like <em>Released</em>, <em>QA Passed</em>, or <em>Accepted</em> that genuinely mean finished, and they aren't mapped as done, your velocity is silently under-reported every sprint. Get your Definition of Done and your board's status mapping aligned.
+      </p>
+
+      <h3>4. Forgetting that sub-tasks are excluded</h3>
+      <p>
+        Atlassian's native velocity chart explicitly <strong>does not include estimates from sub-tasks</strong>. If your team does a lot of estimating at the sub-task level, the native chart will understate your throughput. You either need to estimate at the story level, or use a tool that can optionally include sub-tasks.
+      </p>
+
+      <h2 id="dashboard">Putting velocity where the team actually looks</h2>
+      <p>
+        The single most common practical complaint about Jira velocity isn't the maths — it's the <em>location</em>. The chart is buried in one board's reports, while the team's shared view of the sprint is the dashboard. Stand-ups happen on the dashboard; reviews happen on the dashboard; velocity does not.
+      </p>
+      <p>
+        That's the gap <a href="/velocity-chart.html">Velocity Chart for Jira</a> fills. It's a Forge-native dashboard gadget that draws the same committed-vs-completed chart, with the average line, on any dashboard — and adds the things the native report can't: a <strong>configurable Definition of Done</strong>, a choice of estimation field, optional sub-task inclusion, the say/do predictability number, and the ability to compare several boards in one gadget. It works on both company-managed and team-managed Scrum boards, and it's read-only — your data never leaves Atlassian.
+      </p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">What does a velocity chart show in Jira?</p>
+        <p class="faq-a">Two bars per completed sprint: commitment (the total estimate at sprint start) and completed (the total estimate finished by sprint end). Velocity is the average of the completed values over the last several sprints, usually drawn as a line.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What is a good velocity in Jira?</p>
+        <p class="faq-a">There's no universal number — velocity is in a team's own relative story points. A good velocity is stable and predictable (completed roughly matching commitment over time), not high. Never compare the raw velocity of two different teams.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How many sprints should a velocity forecast be based on?</p>
+        <p class="faq-a">The last three to six completed sprints. Fewer than three is too noisy; going much further back risks mixing in a different team or way of working. Use the low-to-high range, not just the average.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why is my velocity chart empty or showing zero?</p>
+        <p class="faq-a">Usually one of two reasons: the board is a Kanban board (no sprints, so no velocity), or your issues are estimated in a different field than the chart reads. Velocity needs a Scrum board with at least one completed sprint, and the estimation field must match what your team actually uses.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Jira have a velocity dashboard gadget?</p>
+        <p class="faq-a">Not natively — the velocity chart lives in a single board's Reports section, with no built-in dashboard gadget. To show velocity on a dashboard you use a Marketplace app such as Velocity Chart for Jira.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>See your velocity on any dashboard</h3>
+        <p>Velocity Chart for Jira puts committed-vs-completed, the average line and say/do on any dashboard — with your own Definition of Done, on company- and team-managed boards.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Get it on Marketplace →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-shows">What it shows</a></li>
+          <li><a href="#how-to-read">How to read it</a></li>
+          <li><a href="#where-to-find">Where to find it</a></li>
+          <li><a href="#sprint-planning">Use it for planning</a></li>
+          <li><a href="#mistakes">Four mistakes</a></li>
+          <li><a href="#dashboard">On a dashboard</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free tier</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Get it on Marketplace →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How Sprint Velocity Is Calculated in Jira</a>
+        <a href="/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Sprint Predictability and the Say/Do Ratio</a>
+        <a href="/blog/velocity-team-managed-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Velocity for Team-Managed Projects in Jira</a>
+        <a href="/blog/jira-sprint-health-gadget.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">The Jira Sprint Health Gadget</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

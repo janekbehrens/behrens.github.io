@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Metrics for Jira — Documentation &amp; Setup</title>
+  <meta name="description" content="How to set up and read DevOps Metrics for Jira: deployment frequency, lead time, change failure rate and time to restore, with trends, AI impact and exports.">
+  <link rel="canonical" href="https://janekbehrens.de/dora-metrics-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/dora-metrics-docs.html">
+  <meta property="og:title" content="DevOps Metrics for Jira — Documentation &amp; Setup">
+  <meta property="og:description" content="How DevOps Metrics for Jira calculates deployment frequency, lead time, change failure rate and time to restore from Jira data: setup wizard, definitions, AI impact and exports.">
+  <meta property="og:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DevOps Metrics for Jira — Documentation &amp; Setup">
+  <meta name="twitter:description" content="How DevOps Metrics for Jira calculates deployment frequency, lead time, change failure rate and time to restore from Jira data: setup wizard, definitions, AI impact and exports.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "DevOps Metrics for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows the four DORA™ metrics (deployment frequency, lead time for changes, change failure rate and time to restore) calculated from Jira work items, with benchmark bands, trends, a before/after comparison around an AI rollout and exports.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for up to 10 users, then per-user subscription" },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "DevOps Metrics for Jira — Documentation & Setup",
+        "description": "Setup and user guide for DevOps Metrics for Jira: how each DORA™ metric is calculated from Jira data, the setup wizard, the AI impact comparison, data quality and exports.",
+        "url": "https://janekbehrens.de/dora-metrics-docs.html",
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "The gadget shows “Sample data”.", "acceptedAnswer": { "@type": "Answer", "text": "That is the built-in demo shown before configuration. Open Edit (pencil) and pick your project." } },
+          { "@type": "Question", "name": "The gadget says there is no data.", "acceptedAnswer": { "@type": "Answer", "text": "The analysis found nothing to chart, and the message names the reason and what to change: no completed issues, only sub-tasks, no released versions, releases without a date, or issues that never passed through an in-progress status. See what your project needs. The Metric Card shows the same explanation; change the setting in the Overview gadget for that project." } },
+          { "@type": "Question", "name": "A tile shows “— not enough history for a comparison”.", "acceptedAnswer": { "@type": "Answer", "text": "The arrow compares with the previous period of the same length, and the analysed history doesn’t reach back to the start of that period. This is typical for Last 12 months, because the first analysis reads 12 months. The value itself is correct; pick a shorter period to see a comparison." } },
+          { "@type": "Question", "name": "Deployment frequency is zero.", "acceptedAnswer": { "@type": "Answer", "text": "In Releases mode the app counts versions marked as released with a release date. If your team doesn’t maintain releases, switch the deployment definition to Issues reaching a status in the wizard." } },
+          { "@type": "Question", "name": "“Analyzing your project history…” takes a while.", "acceptedAnswer": { "@type": "Answer", "text": "The first run reads up to 12 months of completed issues (at most the most recent 10,000), usually in about a minute and longer for very large projects. It happens once." } },
+          { "@type": "Question", "name": "The numbers look out of date.", "acceptedAnswer": { "@type": "Answer", "text": "Data is refreshed nightly for projects opened in the last 45 days. Click ↻ for an update now; it is limited to one refresh per project every 10 minutes." } },
+          { "@type": "Question", "name": "Lead time shows “—” or leaves out many issues.", "acceptedAnswer": { "@type": "Answer", "text": "Lead time needs a transition into an in-progress status. Issues created straight into Done can’t be measured; they still count for throughput, and the Details popup lists them." } },
+          { "@type": "Question", "name": "The change failure rate seems too high or too low.", "acceptedAnswer": { "@type": "Answer", "text": "Check the Details popup for how bugs were matched to releases. Setting the affected version on bugs makes it most accurate; with few releases the rate swings widely." } },
+          { "@type": "Question", "name": "Time to restore shows no incidents.", "acceptedAnswer": { "@type": "Answer", "text": "Only incident-type issues resolved in the period count. By default these are types named like bug, incident, outage or defect; Pro lets you pick the types under Advanced." } },
+          { "@type": "Question", "name": "“You don’t have access to this gadget’s project”.", "acceptedAnswer": { "@type": "Answer", "text": "The app checks Jira project permissions for every viewer: you only see metrics for projects you can browse. Ask your Jira admin for access, or pick another project." } },
+          { "@type": "Question", "name": "The AI Impact tab asks for a date even though I saved one.", "acceptedAnswer": { "@type": "Answer", "text": "Make sure the date was set in step 3 of the wizard and saved. The date field on the tab itself is a preview only." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="rd docs" data-app="dora">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="On this page">
+      <div class="sidebar-toc-heading">On this page</div>
+      <div class="sidebar-toc">
+        <a href="#quick-start">Quick start</a>
+        <a href="#overview">Overview</a>
+        <a href="#start">Setup</a>
+        <a href="#config">Configuration</a>
+        <a href="#advanced" class="sub">Advanced (Pro)</a>
+        <a href="#ai-rollout" class="sub">AI rollout (Pro)</a>
+        <a href="#calc">How the metrics are calculated</a>
+        <a href="#trends" class="sub">Trend charts</a>
+        <a href="#quality">Data quality</a>
+        <a href="#ai">AI Impact</a>
+        <a href="#card">Metric Card gadget</a>
+        <a href="#export">Exports</a>
+        <a href="#plans">Free vs Pro</a>
+        <a href="#faq">FAQ &amp; troubleshooting</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>DevOps Metrics for Jira — Documentation</h1>
+      <p class="subtitle">All four DORA™ metrics on any Jira dashboard, calculated from the Jira data you already have. No CI/CD setup.</p>
+
+      <details class="toc">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#quick-start">Quick start</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#start">Setup</a></li>
+          <li><a href="#config">Configuration</a></li>
+          <li><a href="#calc">How the metrics are calculated</a></li>
+          <li><a href="#quality">Data quality</a></li>
+          <li><a href="#ai">AI Impact</a></li>
+          <li><a href="#card">Metric Card gadget</a></li>
+          <li><a href="#export">Exports</a></li>
+          <li><a href="#plans">Free vs Pro</a></li>
+          <li><a href="#faq">FAQ &amp; troubleshooting</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <div class="quickstart" id="quick-start">
+        <h2>Quick start</h2>
+        <ol>
+          <li><strong>Install</strong> the app from the <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>.</li>
+          <li>On a Jira dashboard, choose <strong>Add gadget</strong>, search for “DevOps Metrics” and add <strong>DevOps Metrics — Overview</strong>. It shows sample data first.</li>
+          <li>Open the gadget’s <strong>Edit</strong> (pencil) menu and pick your project.</li>
+          <li>Click <strong>Use recommended settings</strong>. The first analysis usually takes about a minute.</li>
+          <li><strong>Optional (Pro):</strong> enter your AI rollout date in step 3 of the wizard, or add DevOps Metric Card gadgets for a wallboard.</li>
+        </ol>
+      </div>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>The app puts the four delivery metrics of the <dfn class="term" data-tip="DevOps Research and Assessment: the research program behind the four delivery metrics and the yearly State of DevOps reports.">DORA™ research</dfn> on a Jira dashboard <dfn class="term" data-tip="A small app window that you add to a Jira dashboard and configure there.">gadget</dfn>:</p>
+        <ul>
+          <li><strong>Deployment frequency:</strong> how often you ship.</li>
+          <li><strong>Lead time for changes:</strong> how long work takes from start to done.</li>
+          <li><strong>Change failure rate:</strong> the share of releases that caused problems.</li>
+          <li><strong>Time to restore:</strong> how quickly you recover when something breaks. It is a <dfn class="term" data-tip="The middle value: half of the items took less time, half took more. One very slow item hardly moves it.">median</dfn>, even though the common abbreviation is MTTR.</li>
+        </ul>
+        <p>Everything comes from Jira releases, status changes, bugs and incident tickets. Every number has a <dfn class="term" data-tip="A performance level from the DORA™ research (Elite, High, Medium or Low) that puts a number into context.">benchmark band</dfn>, a plain-language sentence and an ⓘ that explains the calculation. The gadget has three tabs: <strong>Overview</strong>, <strong>Trends</strong> and <strong>AI Impact</strong> (Pro).</p>
+        <img src="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps Metrics — Overview gadget with four metric tiles (deployment frequency, lead time, change failure rate, time to restore) and the Trends tab with the weekly lead time, benchmark zones and markers for a new CI pipeline and the AI rollout" loading="lazy" width="1840" height="900">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url('imgDoraMetricsForJira/video-poster.webp')"
+               data-src="https://www.youtube-nocookie.com/embed/gZlSMDVmt68?autoplay=1" data-title="DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: did your AI rollout pay off?">
+            <button class="yt-play-btn" aria-label="Load and play the video: DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: did your AI rollout pay off?"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="start">
+        <h2>Setup</h2>
+        <p>Add the gadget, pick a project and accept the recommendation. You do not need to connect any CI/CD tool.</p>
+        <ol>
+          <li><strong>Add the gadget:</strong> on a Jira dashboard, choose <strong>Add gadget</strong>, search for “DevOps Metrics” and add <strong>DevOps Metrics — Overview</strong>. It starts with built-in sample data, marked SAMPLE, so you can try every tab first.</li>
+          <li><strong>Pick your project:</strong> open the gadget’s <strong>Edit</strong> (pencil) menu. Step 1 of the wizard lists the projects you can browse. Pro: up to 10, combined into one view.</li>
+          <li><strong>Accept the recommendation:</strong> with at least three released versions in the last 90 days, the wizard recommends <strong>Releases</strong> and shows how many it found. Otherwise it recommends <strong>Issues reaching a status</strong>. <strong>Use recommended settings</strong> saves and skips step 3 (AI rollout), which you can add later.</li>
+        </ol>
+        <img src="imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" alt="Setup wizard: step 1 project picker, step 2 deployment definition with Releases recommended after finding 23 releases in the last 90 days, and the finished gadget with real numbers" loading="lazy" width="1840" height="900">
+        <div class="note"><strong>What your project needs:</strong> completed issues. The numbers come from finished work, and the wizard checks the last 90 days and warns you when you pick the project.</div>
+        <details class="more">
+          <summary>When the gadget stays empty</summary>
+          <ul>
+            <li>No issue reached a <em>Done</em> status in the analysed period.</li>
+            <li>All completed work sits on <dfn class="term" data-tip="A small issue below a parent issue, often used for technical steps.">sub-tasks</dfn>. They are excluded unless you tick <em>Include sub-tasks in lead time &amp; throughput</em> (Pro, under Advanced).</li>
+            <li>Releases mode, but no Jira version is marked as released <strong>with a release date</strong>.</li>
+          </ul>
+          <p>The first analysis reads up to 12 months of history once. After that the gadget loads from precomputed weekly numbers, refreshed nightly and with the ↻ button.</p>
+        </details>
+      </section>
+
+      <section id="config">
+        <h2>Configuration</h2>
+        <p>The wizard decides what counts as a deployment, an incident and AI-assisted work. Reopen it via the gadget’s ••• / pencil menu; a changed definition starts a recalculation.</p>
+        <h3>Step 2 — What counts as a deployment?</h3>
+        <ul>
+          <li><strong>Releases:</strong> every Jira version marked as <em>released</em> with a release date counts as one deployment.</li>
+          <li><strong>Issues reaching a status:</strong> every issue that <em>first</em> reaches one of the statuses you pick counts as one deployment. The statuses default to your Done statuses.</li>
+        </ul>
+        <p>Both options are in Free.</p>
+        <h3 id="advanced">Advanced <span class="pro">PRO</span></h3>
+        <ul>
+          <li><strong>Incident types:</strong> which issue types count as incidents for time to restore. Default: types whose name contains bug, incident, outage or defect.</li>
+          <li><strong>Sub-tasks:</strong> include them in lead time and throughput, or leave them out (default).</li>
+        </ul>
+        <h3 id="ai-rollout">Step 3 — AI rollout <span class="pro">PRO</span> (optional)</h3>
+        <p>Feeds the <a href="#ai">AI Impact tab</a>: the rollout date, the labels that mark AI-assisted issues (up to 10), which AI signals to use, optional “AI task” issue types, and up to five extra chart markers (label up to 24 characters). Free sites see this step greyed out.</p>
+      </section>
+
+      <section id="calc">
+        <h2>How the metrics are calculated</h2>
+        <p>What each number means and how it is counted. The app counts per <dfn class="term" data-tip="A calendar week from Monday to Sunday, numbered W01 to W53.">ISO week</dfn>. The period selector (<em>Last 30 days, Last 90 days, Last 6 months, Last 12 months</em>) adds up those weeks. Durations are medians (P50), so a few outliers don’t distort them.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Metric</th><th>Calculation (default definitions)</th></tr>
+            <tr><td><strong>Deployment frequency</strong></td><td>Released Jira versions (or first transitions into your chosen statuses) per week, averaged over the completed weeks of the period; the week in progress is left out. Shown per week or per month, whichever reads better.</td></tr>
+            <tr><td><strong>Lead time for changes</strong></td><td>Median time from the <em>first</em> transition into the <dfn class="term" data-tip="Jira sorts every workflow status into one of three categories: To Do, In Progress or Done. The app uses the categories, not the status names.">status category</dfn> <strong>In Progress</strong> to the <em>last</em> transition into <strong>Done</strong>, for issues completed in the period. Re-opened issues count from their final completion.</td></tr>
+            <tr><td><strong>Change failure rate</strong></td><td>Share of releases with at least one <strong>bug raised within 14 days</strong> after the release, linked via <dfn class="term" data-tip="Jira fields that tie an issue to a release: the version that fixes it, or the version in which the bug was found.">fix or affected version</dfn>. A bug without a version counts for the most recent release before it, if that was within 14 days. In “Issues reaching a status” mode it is the re-open rate (transitions out of Done ÷ into Done).</td></tr>
+            <tr><td><strong>Time to restore</strong></td><td>Median time from an incident-type issue being <strong>created</strong> to it being <strong>resolved</strong>, for incidents resolved in the period.</td></tr>
+          </table>
+        </div>
+        <p>The arrow (▲/▼) compares with the previous period of the same length. Benchmark bands follow the published DORA™ research (the classic Elite/High/Medium/Low model) and can’t be changed.</p>
+        <details class="more">
+          <summary>Band limits, small samples and missing comparisons</summary>
+          <p>With fewer than 5 releases or incidents, the change failure rate and time to restore tiles add “treat as directional”. Bugs are issues of a type named like “Bug”. When the analysed history doesn’t cover the previous period, the tile shows <em>“— not enough history for a comparison”</em> instead of an arrow (see the <a href="#faq">FAQ</a>).</p>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Metric</th><th>Elite</th><th>High</th><th>Medium</th><th>Low</th></tr>
+              <tr><td>Deployment frequency</td><td>7 or more per week</td><td>1 to 7 per week</td><td>about 1 per month to 1 per week</td><td>less than about 1 per month</td></tr>
+              <tr><td>Lead time for changes</td><td>under 1 day</td><td>under 1 week</td><td>under 30 days</td><td>30 days or more</td></tr>
+              <tr><td>Change failure rate</td><td>15% or less</td><td>up to 30%</td><td>up to 45%</td><td>over 45%</td></tr>
+              <tr><td>Time to restore</td><td>under 1 hour</td><td>under 1 day</td><td>under 1 week</td><td>1 week or more</td></tr>
+            </table>
+          </div>
+        </details>
+        <div class="warning"><strong>Honest by design:</strong> these are approximations from Jira work data, measured the same way every time. For pipeline-level precision across CI tools you need a platform product.</div>
+
+        <h3 id="trends">Reading the trend charts</h3>
+        <p>The <strong>Trends</strong> tab plots one metric over the selected period, <strong>Weekly</strong> or <strong>Monthly</strong>. In the weekly view the dashed line is a <dfn class="term" data-tip="For each week, the median of that week and the three weeks before it. It smooths out single outliers.">4-week rolling median</dfn>. Hover a point to see how many items it is based on.</p>
+        <p><em>Benchmarks</em> shades the bands behind the line. Dashed vertical lines mark events: your AI rollout date automatically, plus up to five of your own <span class="pro">PRO</span> from <a href="#ai-rollout">step 3 of the wizard</a>.</p>
+      </section>
+
+      <section id="quality">
+        <h2>Data quality &amp; exclusions</h2>
+        <p>The footnote under every view says what the numbers are based on, for example <em>“Based on 142 completed issues · 12 releases · 8 excluded”</em>. Click <strong>Details</strong> to see what was left out and why.</p>
+        <details class="more">
+          <summary>What Details lists</summary>
+          <ul>
+            <li>issues that never passed through <em>In progress</em> (lead time not measurable),</li>
+            <li>issues with inconsistent dates, and sub-tasks (if excluded),</li>
+            <li>released versions without a release date,</li>
+            <li>how each change-failure bug was matched (version link or time),</li>
+            <li>a warning when a project has more than 10,000 completed issues in 12 months and only the most recent 10,000 were analysed.</li>
+          </ul>
+        </details>
+        <div class="tip"><strong>Tip:</strong> mark Jira versions as <em>released</em> and set the <em>affected version</em> on bugs. That gives the most accurate deployment frequency and change failure rate.</div>
+      </section>
+
+      <section id="ai">
+        <h2>AI Impact <span class="pro">PRO</span></h2>
+        <p>The AI Impact tab shows whether delivery changed after your team started with AI tools (Copilot, <dfn class="term" data-tip="Atlassian’s AI assistant and agents in Jira and Confluence.">Rovo</dfn>, Claude, Cursor …). Set the rollout date in <a href="#ai-rollout">step 3 of the wizard</a>.</p>
+        <ul>
+          <li><strong>Before and after:</strong> two equally long periods around the rollout date, compared on all four metrics, with a rule-based verdict in plain language (no AI model). Both periods are as long as the time since the rollout, at most a year.</li>
+          <li><strong>AI-involved vs other issues:</strong> median lead time and share of the completed work, for the period selected in the gadget.</li>
+        </ul>
+        <img src="imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" alt="AI Impact tab: before-and-after changes for all four metrics over 182 days, a plain-language verdict, and the median lead time of AI-involved versus other issues" loading="lazy" width="1840" height="900">
+        <p>AI involvement is detected by three signals; any one of them is enough, and each can be switched off:</p>
+        <ul>
+          <li><strong><dfn class="term" data-tip="The Jira user an app or automation acts as, for example a Rovo agent or Automation for Jira.">App-account</dfn> activity:</strong> a Rovo agent, Automation for Jira or another app changed the issue’s status.</li>
+          <li><strong>Labels:</strong> defaults <code>ai-assisted</code>, <code>copilot</code>, <code>rovo</code>.</li>
+          <li><strong>Issue types:</strong> if your team has an “AI task” type.</li>
+        </ul>
+        <div class="warning"><strong>Privacy:</strong> detection is a transparent proxy, not telemetry. Results are only shown as team totals, never per person. The app stores no account IDs and no user names.</div>
+        <details class="more">
+          <summary>How long the two periods are</summary>
+          <p>Both periods are as long as the time since the rollout (at most a year) and never longer than the analysed history before it, so the “before” side always lies within your data. The comparison doesn’t depend on the period selector. With less than a week of history on either side, the tab says so instead of comparing.</p>
+        </details>
+      </section>
+
+      <section id="card">
+        <h2>The Metric Card gadget <span class="pro">PRO</span></h2>
+        <p>The <strong>DevOps Metric Card</strong> gadget shows one metric large enough to read across the room: value, band, arrow, sparkline and sentence. Made for a <dfn class="term" data-tip="A dashboard shown on a large screen in the team room.">wallboard</dfn>.</p>
+        <ul>
+          <li><strong>Settings:</strong> one project, one metric, one period (default: Last 30 days). Add one card per metric. Jira reloads each card every 3 hours.</li>
+          <li><strong>Definitions:</strong> the card uses the definitions the project was last set up with in the Overview gadget, or the defaults. Change them in the Overview settings.</li>
+        </ul>
+        <img src="imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" alt="Four DevOps Metric Card gadgets on a Jira dashboard: deployment frequency, lead time, change failure rate and time to restore, each with benchmark band, change versus the previous period and sparkline" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="export">
+        <h2>Exports <span class="pro">PRO</span></h2>
+        <p>Take what the gadget shows into a report. The buttons sit under every tab of the Overview gadget.</p>
+        <ul>
+          <li><strong>PNG:</strong> a report image of the four tiles. On the Trends tab it saves the current chart instead.</li>
+          <li><strong>CSV:</strong> one row per week of the selected period.</li>
+          <li><strong>Copy as text:</strong> a <dfn class="term" data-tip="A plain-text format for tables and headings that Confluence, Slack and many editors understand.">Markdown</dfn> table (value, change vs previous, band) plus the plain-language sentences, ready for Confluence, Slack or e-mail.</li>
+        </ul>
+        <img src="imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" alt="PNG report image of the four metric tiles with the CSV, PNG and Copy as text export buttons, PNG highlighted" loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>CSV columns</summary>
+          <p>Week, deployments, completed issues, lead time P50 and P85 (hours), failed releases, releases, change failure rate, time to restore P50 (hours), incidents, AI-involved issues and excluded issues.</p>
+        </details>
+      </section>
+
+      <section id="plans">
+        <h2>Free vs Pro</h2>
+        <p>Free for Jira sites with up to 10 users; larger sites start with a free trial. <strong>Pro features are on while your site has an active subscription</strong>, the trial included. Without one, for example after the trial, the Overview gadget keeps working in <strong>Free</strong> mode. Pricing is on the <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Free</th><th>Pro</th></tr>
+            <tr><td>Overview gadget (tiles, benchmark bands, trends, plain-language sentences)</td><td>✓ (1 project)</td><td>✓</td></tr>
+            <tr><td>Deployment definition (releases or status)</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Advanced: incident types, sub-tasks</td><td>—</td><td>✓</td></tr>
+            <tr><td>Several projects in one gadget (up to 10)</td><td>—</td><td>✓</td></tr>
+            <tr><td>AI Impact tab and AI rollout settings</td><td>—</td><td>✓</td></tr>
+            <tr><td>Extra event markers on trend charts</td><td>—</td><td>✓</td></tr>
+            <tr><td>DevOps Metric Card gadget</td><td>—</td><td>✓</td></tr>
+            <tr><td>PNG, CSV and Copy as text exports</td><td>—</td><td>✓</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ &amp; troubleshooting</h2>
+        <p>Click a question to see the answer.</p>
+
+        <details class="more">
+          <summary>The gadget shows “Sample data”.</summary>
+          <p>That is the built-in demo shown before configuration. Open <strong>Edit</strong> (pencil) and pick your project.</p>
+        </details>
+
+        <details class="more">
+          <summary>The gadget says there is no data.</summary>
+          <p>The analysis found nothing to chart, and the message names the reason and what to change: no completed issues, only sub-tasks, no released versions, releases without a date, or issues that never passed through an in-progress status. See <a href="#start">what your project needs</a>. The Metric Card shows the same explanation; change the setting in the Overview gadget for that project.</p>
+        </details>
+
+        <details class="more">
+          <summary>A tile shows “— not enough history for a comparison”.</summary>
+          <p>The arrow compares with the previous period of the same length, and the analysed history doesn’t reach back to the start of that period. This is typical for Last 12 months, because the first analysis reads 12 months. The value itself is correct; pick a shorter period to see a comparison.</p>
+        </details>
+
+        <details class="more">
+          <summary>Deployment frequency is zero.</summary>
+          <p>In Releases mode the app counts versions marked as released with a release date. If your team doesn’t maintain releases, switch the deployment definition to <strong>Issues reaching a status</strong> in the wizard.</p>
+        </details>
+
+        <details class="more">
+          <summary>“Analyzing your project history…” takes a while.</summary>
+          <p>The first run reads up to 12 months of completed issues (at most the most recent 10,000), usually in about a minute and longer for very large projects. It happens once.</p>
+          <img src="imgDoraMetricsForJira/screenshot-3-first-analysis-reads-12-months.webp" alt="Progress card reading “Analyzing your project history…”: the first run reads up to 12 months of completed issues once, then the gadget loads from precomputed data" loading="lazy" width="1840" height="900">
+        </details>
+
+        <details class="more">
+          <summary>The numbers look out of date.</summary>
+          <p>Data is refreshed nightly for projects opened in the last 45 days. Click ↻ for an update now; it is limited to one refresh per project every 10 minutes.</p>
+        </details>
+
+        <details class="more">
+          <summary>Lead time shows “—” or leaves out many issues.</summary>
+          <p>Lead time needs a transition into an in-progress status. Issues created straight into Done can’t be measured; they still count for throughput, and the Details popup lists them.</p>
+        </details>
+
+        <details class="more">
+          <summary>The change failure rate seems too high or too low.</summary>
+          <p>Check the <strong>Details</strong> popup for how bugs were matched to releases. Setting the affected version on bugs makes it most accurate; with few releases the rate swings widely.</p>
+        </details>
+
+        <details class="more">
+          <summary>Time to restore shows no incidents.</summary>
+          <p>Only incident-type issues resolved in the period count. By default these are types named like bug, incident, outage or defect; Pro lets you pick the types under Advanced.</p>
+        </details>
+
+        <details class="more">
+          <summary>“You don’t have access to this gadget’s project”.</summary>
+          <p>The app checks Jira project permissions for every viewer: you only see metrics for projects you can browse. Ask your Jira admin for access, or pick another project.</p>
+        </details>
+
+        <details class="more">
+          <summary>The AI Impact tab asks for a date even though I saved one.</summary>
+          <p>Make sure the date was set in step 3 of the wizard and saved. The date field on the tab itself is a preview only.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <ul style="margin-bottom:0">
+            <li><strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a></li>
+            <li><strong>Support page:</strong> <a href="dora-metrics-support.html">DevOps Metrics support</a></li>
+            <li><strong>See also:</strong> <a href="dora-metrics-privacy-policy.html">Privacy Policy</a> · <a href="dora-metrics-security.html">Security Policy</a> · <a href="dora-metrics-terms-of-service.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <p class="legal-note">DORA™ is a trademark of Google LLC. DevOps Metrics for Jira is an independent product by Janek Behrens and is not affiliated with or endorsed by Google. “DORA™ metrics” refers to the four software delivery metrics defined by the DevOps Research and Assessment program.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="components.js"></script>
+  <script src="docs.js"></script>
+</body>
+</html>

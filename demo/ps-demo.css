@@ -1,0 +1,149 @@
+/* ps-demo.css — Priority Scoring demo (loaded after demo.css) */
+/* ============================================================
+   Priority Scoring demo
+   ============================================================ */
+
+/* Lozenges as the app draws them (Forge UI Kit, 2026): thin border in a
+   darker shade, regular weight, dark text */
+[data-demo="ps"] .d-loz { height: 20px; padding: 0 5px; border: 1px solid transparent; font-size: 12px; font-weight: 500; }
+[data-demo="ps"] .d-loz.is-red    { border-color: #FD9891; color: #5D1F1A; }
+[data-demo="ps"] .d-loz.is-yellow { border-color: #F5CD47; color: #533F04; }
+[data-demo="ps"] .d-loz.is-green  { border-color: #B3DF72; color: #37471F; }
+[data-demo="ps"] .d-loz.is-blue   { border-color: #8FB8F6; color: #1C2B41; }
+
+.ps-subtlest { color: var(--d-text-3); }
+.ps-brand { color: var(--d-blue); }
+.ps-warn-text { color: #9E4C00; }
+.ps-up { color: #4C6B1F; }
+.ps-down { color: #AE2E24; }
+.ps-key { color: var(--d-text); white-space: nowrap; }
+
+/* The window clips its content; keep the app area's bottom margin (and its
+   dashed outline) inside it */
+[data-demo="ps"] .demo-panel { display: flow-root; }
+
+/* ── Tab 1: issue view ── */
+.ps-issue { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr); }
+.ps-main { padding: 20px 22px 24px; border-right: 1px solid var(--d-line-2); min-width: 0; }
+.ps-main > .d-sub { margin: 0 0 20px; max-width: 60ch; }
+.ps-side { padding: 18px 18px 26px; background: #FCFCFD; min-width: 0; border-radius: 0 0 14px 0; }
+.ps-fields { grid-template-columns: minmax(96px, 34%) 1fr; padding-top: 6px; }
+.ps-score { display: flex; flex-direction: column; gap: 6px; }
+.ps-score-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.ps-field-btn { display: block; width: 100%; border: 0; background: none; text-align: left; font: inherit; color: inherit; min-height: 28px; }
+.ps-editor { display: grid; gap: 12px; }
+.ps-dim-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; font-weight: 700; }
+.ps-dim-head .ps-subtlest { font-weight: 400; font-variant-numeric: tabular-nums; }
+.ps-editor-actions { display: flex; justify-content: flex-end; gap: 4px; margin-top: 2px; }
+.ps-jira-btn { box-shadow: 0 1px 3px rgba(9,30,66,.18); border-color: var(--d-line-2); }
+.ps-trail-btn { margin-top: 6px; color: var(--d-text-2); }
+.ps-trail { padding: 4px 0 0 8px; display: grid; gap: 2px; }
+.ps-trail-row { display: flex; gap: 12px; align-items: center; }
+.ps-ac { margin: 0 0 20px; padding-left: 18px; color: var(--d-text-2); font-size: 13.5px; display: grid; gap: 3px; }
+
+/* Rovo chat (recreated) */
+.ps-rovo-cta { display: flex; align-items: center; gap: 14px; justify-content: space-between; flex-wrap: wrap; border: 1px solid var(--d-line); border-radius: 10px; padding: 14px; background: linear-gradient(135deg, #F5F9FF 0%, #fff 70%); }
+.ps-rovo-btn { border-color: #85B8FF; color: var(--d-blue-2); font-weight: 600; }
+.ps-rovo { display: grid; gap: 10px; margin-top: 4px; }
+.ps-rovo-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 8px; border-bottom: 1px solid var(--d-line-2); }
+.ps-msgs { display: grid; gap: 10px; max-height: 460px; overflow-y: auto; padding: 2px; }
+.ps-msg { max-width: 92%; font-size: 13.5px; line-height: 1.5; }
+.ps-msg p { margin: 0 0 6px; }
+.ps-msg p:last-child { margin-bottom: 0; }
+.ps-msg ul { margin: 0 0 6px; padding-left: 18px; }
+.ps-msg li { margin: 2px 0; }
+.ps-msg code, .ps-tool code { background: #F0F1F2; border-radius: 3px; padding: 0 4px; font-size: 12.5px; }
+.ps-msg.is-me { justify-self: end; background: var(--d-blue); color: #fff; border-radius: 14px 14px 4px 14px; padding: 8px 12px; }
+.ps-msg.is-bot { justify-self: start; background: #F7F8F9; border: 1px solid var(--d-line-2); border-radius: 14px 14px 14px 4px; padding: 10px 12px; }
+.ps-msg-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.ps-typing { display: flex; gap: 4px; padding: 12px 14px; }
+.ps-typing i { width: 6px; height: 6px; border-radius: 50%; background: #8C8F97; animation: ps-dot 1s infinite ease-in-out; }
+.ps-typing i:nth-child(2) { animation-delay: .15s; }
+.ps-typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes ps-dot { 0%, 80%, 100% { opacity: .3; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .ps-typing i { animation: none; opacity: .7; } }
+.ps-starters { display: flex; flex-wrap: wrap; gap: 6px; }
+.ps-chip { border: 1px solid #85B8FF; background: #fff; color: var(--d-blue-2); border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; text-align: left; }
+.ps-chip:hover { background: var(--d-blue-bg); }
+
+/* Atlassian's own tool confirmation in Rovo (recreated) */
+.ps-tool { justify-self: stretch; border: 1px solid var(--d-line); border-radius: 12px; background: #fff; font-size: 13.5px; overflow: hidden; }
+.ps-tool-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--d-line-2); color: var(--d-text); }
+.ps-tool-icon { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 6px; background: #F0F1F2; color: var(--d-text-2); flex-shrink: 0; }
+.ps-tool-body { margin: 10px 12px; padding: 10px 12px; border: 1px solid var(--d-line); border-radius: 10px; }
+.ps-tool-body ul { margin: 6px 0 0; padding-left: 40px; color: var(--d-text-2); }
+.ps-tool-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.ps-tool-item input { width: 16px; height: 16px; accent-color: var(--d-blue); }
+.ps-tool-foot { display: flex; justify-content: flex-end; gap: 6px; padding: 8px 12px 10px; border-top: 1px solid var(--d-line-2); }
+.ps-tool.is-done { display: flex; align-items: center; gap: 10px; padding: 8px 12px; color: var(--d-text-2); }
+
+/* ── Tabs 2 and 3: the app page ── */
+.ps-dash { margin: 30px 18px 18px; padding: 4px 0 0; }
+.ps-appnav { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 18px; }
+.ps-toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 14px; margin-bottom: 18px; }
+.ps-toolbar .d-select { min-width: 170px; }
+.ps-toolbar-btns { display: flex; flex-wrap: wrap; gap: 2px; }
+.ps-toolbar-btns .d-btn:disabled { color: var(--d-text-3); cursor: default; }
+.ps-card { border-radius: 8px; padding: 14px 16px; background: #fff; box-shadow: 0 1px 1px rgba(9,30,66,.25), 0 0 1px rgba(9,30,66,.31); }
+.ps-health { margin-bottom: 26px; padding: 4px 2px 0; }
+.ps-health-head { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-bottom: 14px; }
+.ps-big { font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+.ps-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 16px 0 2px; }
+.ps-tile { border-radius: 6px; padding: 12px; display: grid; gap: 8px; }
+.ps-tile.is-yellow { background: var(--d-yellow-soft); }
+.ps-tile.is-red { background: var(--d-red-soft); }
+.ps-tile.is-green { background: var(--d-green-soft); }
+.ps-tile-label { font-size: 12px; color: var(--d-text); }
+.ps-tile-num { color: var(--d-text-3); font-size: 12px; }
+.ps-tile-num b { font-size: 20px; color: var(--d-text); font-weight: 650; }
+.ps-tile-foot { display: flex; gap: 8px; font-size: 12px; color: var(--d-text-3); flex-wrap: wrap; }
+.ps-ok-yellow { color: #9E4C00; }
+.ps-ok-red { color: var(--d-red-fg); }
+.ps-ok-green { color: var(--d-green-fg); }
+.ps-rank-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.ps-rank-title { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.ps-rank-ctl { display: flex; gap: 8px; }
+.ps-rank-ctl #ps-who { min-width: 160px; }
+.ps-rank-ctl #ps-size { min-width: 72px; }
+.ps-table td:nth-child(3) { max-width: 300px; }
+.ps-table th:last-child { min-width: 170px; }
+.ps-cell-score { display: flex; align-items: center; gap: 8px; min-width: 140px; }
+.ps-cell-score .d-bar { flex: 1; }
+.ps-cell-loz { min-width: 46px; display: flex; justify-content: flex-end; }
+.ps-pager { display: flex; justify-content: center; gap: 2px; margin: 10px 0 0; }
+.ps-pager .d-btn:disabled { opacity: .4; cursor: default; }
+.ps-csv { margin: 18px 0 2px; }
+.ps-csv textarea { width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; padding: 8px; min-height: 130px; resize: vertical; }
+
+/* Settings */
+.ps-settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.ps-set-col { display: grid; gap: 16px; min-width: 0; }
+.ps-set { padding: 8px 0 0; }
+.ps-set-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 12px; }
+.ps-set-head label { font-weight: 650; color: var(--d-text); }
+.ps-check { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 13.5px; cursor: pointer; }
+.ps-check input { width: 16px; height: 16px; accent-color: var(--d-blue); }
+.ps-hr { border: 0; border-top: 1px solid var(--d-line); margin: 16px 0 12px; }
+.ps-note { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 10px 12px; border-radius: 4px; font-size: 13px; line-height: 1.5; color: var(--d-text); }
+.ps-note svg { flex-shrink: 0; margin-top: 1px; }
+.ps-note.is-info { background: var(--d-blue-bg); }
+.ps-note.is-warn { background: var(--d-yellow-soft); }
+.ps-card [data-wreset] { margin-top: 10px; }
+
+@media (max-width: 860px) {
+  .ps-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ps-settings { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .ps-issue { grid-template-columns: 1fr; }
+  .ps-main { border-right: 0; border-bottom: 1px solid var(--d-line-2); padding: 16px 14px; }
+  .ps-side { padding: 22px 14px 18px; border-radius: 0 0 14px 14px; }
+  .ps-dash { margin: 26px 10px 12px; }
+  .ps-toolbar > div:not(.ps-toolbar-btns) { flex: 1 1 140px; }
+  .ps-toolbar .d-select { min-width: 0; width: 100%; }
+  .ps-rank-ctl { width: 100%; }
+  .ps-rank-ctl #ps-who { flex: 1; min-width: 0; }
+  .ps-table th:last-child { min-width: 0; }
+  .ps-cell-score { min-width: 110px; }
+  .ps-msgs { max-height: none; overflow: visible; }
+}

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeDoc AI for Confluence — Keep Pages in Sync with Your Code</title>
+  <meta name="description" content="Keep Confluence pages in sync with GitHub, GitLab, Bitbucket and Azure DevOps: versions, YAML values, README sections and code snippets. Try the live demo.">
+  <link rel="canonical" href="https://janekbehrens.de/codedoc-ai.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/codedoc-ai.html">
+  <meta property="og:title" content="CodeDoc AI for Confluence — Keep Pages in Sync with Your Code">
+  <meta property="og:description" content="Versions, config values, README sections, changelogs and code snippets from GitHub, GitLab, Bitbucket or Azure DevOps on any Confluence page, kept current. Optional AI pages.">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CodeDoc AI for Confluence — Keep Pages in Sync with Your Code">
+  <meta name="twitter:description" content="Versions, config values, README sections, changelogs and code snippets from GitHub, GitLab, Bitbucket or Azure DevOps on any Confluence page, kept current. Optional AI pages.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is a sync block?", "acceptedAnswer": { "@type": "Answer", "text": "A block you add to any Confluence page with /. It shows a value, a table or a section from a file in your repository, for example the current version from a Helm chart or the Installation section of a README, and CodeDoc keeps it up to date. Sync blocks don't use AI, so they cause no token costs. Read the guide." } },
+      { "@type": "Question", "name": "Do I need an AI key?", "acceptedAnswer": { "@type": "Answer", "text": "Not for sync blocks: they need only a read-only Git access token. AI pages need Atlassian AI, included in CodeDoc Advanced, or your own Anthropic, OpenAI or Google Gemini key. With your own key, your provider bills you directly and CodeDoc adds no markup." } },
+      { "@type": "Question", "name": "Which Git events update a page?", "acceptedAnswer": { "@type": "Answer", "text": "With the CodeDoc webhook in the repository, blocks and AI pages set to On every push update on pushes from GitHub, GitLab, Bitbucket and Azure DevOps. GitLab merge request events and merged pull requests on Bitbucket and Azure DevOps count too; on GitHub a merge arrives as a push. Without a webhook, choose a daily or weekly update. Details: Webhook setup." } },
+      { "@type": "Question", "name": "Which Confluence version do I need?", "acceptedAnswer": { "@type": "Answer", "text": "CodeDoc needs Confluence Cloud. It is a Forge app and runs on Atlassian's infrastructure; there is no Data Center or Server version. It can read your own GitHub Enterprise or GitLab server if that server is reachable from Atlassian's cloud." } },
+      { "@type": "Question", "name": "How long does setup take?", "acceptedAnswer": { "@type": "Answer", "text": "Most teams are connected in about 5 minutes. You need a read-only Git access token. AI pages also need Atlassian AI (Advanced edition) or your own AI provider key. The Quick start walks you through every step." } },
+      { "@type": "Question", "name": "Does my code leave Atlassian's infrastructure?", "acceptedAnswer": { "@type": "Answer", "text": "Sync blocks send nothing to an AI provider. For AI pages, the Forge runtime fetches the selected files and sends them either to Atlassian AI (Advanced edition; the code stays on Atlassian's platform) or directly to your own AI provider. No servers operated by Janek Behrens are involved at any point. Details in the Trust Center." } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "CodeDoc for Confluence — pages that stay in sync with your code",
+    "description": "CodeDoc puts the version, config values, a README section or a code snippet from your repository on a Confluence page and keeps it current.",
+    "thumbnailUrl": "https://janekbehrens.de/imgCodeDoc/video-poster.webp",
+    "uploadDate": "2026-10-07",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/fd3xCaSIC9A",
+    "contentUrl": "https://www.youtube.com/watch?v=fd3xCaSIC9A"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/cd-demo.css">
+</head>
+<body class="rd" data-app="cd">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/codedoc-ai-icon.png" alt="" width="48" height="48">
+            <div><b>CodeDoc AI for Confluence</b><span>Confluence Cloud · Built on Forge</span></div>
+          </div>
+          <h1 class="h-display">Confluence pages that stay in sync with <em>your code</em></h1>
+        </div>
+        <div>
+          <p class="lead">Paste a link to a file in GitHub, GitLab, Bitbucket or Azure DevOps. CodeDoc puts its version, config values, a README section, the latest changelog entry or a code snippet on the page and keeps it current. AI-written pages are optional.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="codedoc-ai-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">30-day free trial. Two editions: Standard, and Advanced with Atlassian AI included. No AI key needed for sync blocks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="cd">
+          <noscript><img src="imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" alt="A Confluence runbook page with release and configuration tables and a code snippet, each kept current by a CodeDoc sync block" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app. No AI is called.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Confluence</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Confluence site with public sample repositories.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-cd-f1" aria-controls="panel-cd-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Facts from Git, always current on the page</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-cd-f2" aria-controls="panel-cd-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Paste a link, pick what to show, preview</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-cd-f3" aria-controls="panel-cd-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">The newest release next to each version</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-cd-f4" aria-controls="panel-cd-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">AI pages: Atlassian AI or your own key</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-cd-f5" aria-controls="panel-cd-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Every block and page at a glance</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-cd-f1" aria-labelledby="tab-cd-f1">
+              <a class="feat-shot" href="imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" alt="A runbook page: release and configuration tables from Helm chart files and the service's entry point as a code snippet, each with the status In sync and an Update now button" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Facts from Git, always current on the page</h3>
+                <p>A sync block shows a value, a table, a section or code from a file in your repository. CodeDoc updates it on every push, daily, weekly or when you click Update now.</p>
+                </div>
+                <div><ul>
+                <li>Values from YAML or JSON, a README section, the latest CHANGELOG entry, a snippet between marker comments, a line range or the whole file.</li>
+                <li>Normal page text: Confluence search, export and page history include it.</li>
+                <li>A new page version only when the file changed. No AI involved.</li>
+              </ul>
+                <a class="text-link feat-more" href="codedoc-ai-docs.html#sync">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-cd-f2" aria-labelledby="tab-cd-f2" hidden>
+              <a class="feat-shot" href="imgCodeDoc/highlight-2-paste-link-pick-preview.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgCodeDoc/highlight-2-paste-link-pick-preview.webp" alt="Sync block settings: a pasted GitHub link filled in repository and path; the key paths were picked from the file and the preview shows the table the block will put on the page" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Paste a link, pick what to show, preview</h3>
+                <p>Type <b>/</b> on a page, choose CodeDoc Sync Block and paste the link to a file. CodeDoc fills in repository, branch and path.</p>
+                </div>
+                <div><ul>
+                <li>Pick keys, headings or snippets from the file instead of typing them.</li>
+                <li>The preview shows the result before you save; problems come with the next step.</li>
+                <li>Only Job Operators and admins choose where content comes from.</li>
+              </ul>
+                <a class="text-link feat-more" href="codedoc-ai-docs.html#sync-add">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-cd-f3" aria-labelledby="tab-cd-f3" hidden>
+              <a class="feat-shot" href="imgCodeDoc/screenshot-9-version-check.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgCodeDoc/screenshot-9-version-check.webp" alt="Version check on a page: the dependencies of a package.json with the columns Latest release and Status" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>The newest release next to each version</h3>
+                <p>Optional for values and regular expressions: CodeDoc looks up the newest release of what the value names and shows a status such as Up to date, Update available or End of life.</p>
+                </div>
+                <div><ul>
+                <li>Docker Hub images, npm and PyPI packages, GitHub releases.</li>
+                <li>Support dates from endoflife.date for products such as nginx, PostgreSQL or Node.js.</li>
+                <li>Only the public name of the image or package goes to the registry.</li>
+              </ul>
+                <a class="text-link feat-more" href="codedoc-ai-docs.html#sync-latest">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-cd-f4" aria-labelledby="tab-cd-f4" hidden>
+              <a class="feat-shot" href="imgCodeDoc/highlight-3-ai-pages-own-key.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgCodeDoc/highlight-3-ai-pages-own-key.webp" alt="A new AI page, step Source: repositories and the files the AI reads with the input size and the most credits per run; next to it the choice between Atlassian AI and your own AI provider with the model list" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>AI pages: Atlassian AI or your own key</h3>
+                <p>Let AI write whole documentation pages from your code: with Atlassian AI, included in CodeDoc Advanced with a monthly allowance, or with your own Anthropic, OpenAI or Google Gemini key.</p>
+                </div>
+                <div><ul>
+                <li>Four guided steps: source, content, target page, updates.</li>
+                <li>8 writing styles, 9 languages or any other you type.</li>
+                <li>Review each run as a draft before it goes live, or undo the last run.</li>
+              </ul>
+                <a class="text-link feat-more" href="codedoc-ai-docs.html#jobs">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-cd-f5" aria-labelledby="tab-cd-f5" hidden>
+              <a class="feat-shot" href="imgCodeDoc/screenshot-4-overview.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgCodeDoc/screenshot-4-overview.webp" alt="CodeDoc Overview tab: sync blocks, last sync change, AI pages with the Atlassian AI credits and repositories at a glance, and the recent AI runs" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Every block and page at a glance</h3>
+                <p>The Overview shows the numbers, what needs attention and the latest AI runs. The Sync blocks tab lists every block with its page, source, update rule and status.</p>
+                </div>
+                <div><ul>
+                <li>Problems in plain language, with what to do.</li>
+                <li>Several Git connections, including your own GitHub Enterprise or GitLab server.</li>
+                <li>Access by Confluence group: Administrator and Job Operator.</li>
+              </ul>
+                <a class="text-link feat-more" href="codedoc-ai-docs.html#dashboard">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of CodeDoc in Confluence.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgCodeDoc/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/fd3xCaSIC9A?autoplay=1" data-title="CodeDoc for Confluence — pages that stay in sync with your code">
+              <button class="yt-play-btn" aria-label="Load and play the video: CodeDoc for Confluence — pages that stay in sync with your code"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Confluence alone vs. with CodeDoc</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Confluence alone</th><th scope="col" class="is-app">With CodeDoc</th></tr></thead>
+            <tbody>
+              <tr><td>A version or config value from Git</td><td class="no">Typed in by hand; it goes stale when the file changes</td><td class="yes">A sync block reads the file and updates the page on every push, daily or weekly</td></tr>
+              <tr><td>README sections, changelogs, code</td><td class="no">Copied in by hand</td><td class="yes">Kept current from the file; a snippet between marker comments follows the code when lines move</td></tr>
+              <tr><td>Is a version still supported?</td><td class="no">You look it up in each registry</td><td class="yes">Optional version check: newest release and end of life next to the version</td></tr>
+              <tr><td>Documentation pages from code</td><td class="no">Written and updated by hand</td><td class="yes">AI pages with Atlassian AI (Advanced) or your own key, with review before publishing</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Confluence Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Editions</span>
+          <h2 class="h-section">Standard and Advanced</h2>
+          <p class="muted">Both start with a 30-day free trial; per-user pricing is on the <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Standard</h3>
+            <p class="plan-sub">Every CodeDoc feature; AI pages with your own AI key.</p>
+            <ul>
+              <li>Sync blocks with the version check</li>
+              <li>GitHub, GitLab, Bitbucket Cloud, Azure DevOps and your own GitHub Enterprise or GitLab server</li>
+              <li>AI pages with your own Anthropic, OpenAI or Google Gemini key</li>
+              <li>Review before publishing, undo, schedules, webhooks, roles</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Advanced</h3>
+            <p class="plan-sub">Standard plus Atlassian AI, so AI pages need no own key.</p>
+            <ul>
+              <li>Everything in Standard</li>
+              <li>Atlassian AI: Claude models on Atlassian's platform, model Balanced or Fast</li>
+              <li>100 credits a month per site, 30 for the whole trial, with a usage meter</li>
+              <li>Your own AI key stays available as an alternative</li>
+            </ul>
+          </div>
+        </div>
+        <p class="compare-note">Without an active subscription, for example after the trial, CodeDoc keeps 3 sync blocks current and runs 1 AI page; blocks set up before keep running.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install and connect Git</h3><p>Get CodeDoc from the Atlassian Marketplace. The setup asks for a read-only access token of your Git provider; an AI key is optional.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add repositories</h3><p>Browse your Git account or paste the address of a repository.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Add a sync block</h3><p>Type / on any page, choose CodeDoc Sync Block and paste the link to a file. The <a href="codedoc-ai-setup.html">Quick start</a> has every step.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="codedoc-ai-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>What is a sync block?</summary><div>A block you add to any Confluence page with <b>/</b>. It shows a value, a table or a section from a file in your repository, for example the current version from a Helm chart or the Installation section of a README, and CodeDoc keeps it up to date. Sync blocks don't use AI, so they cause no token costs. <a href="codedoc-ai-docs.html#sync">Read the guide</a>.</div></details>
+          <details><summary>Do I need an AI key?</summary><div>Not for sync blocks: they need only a read-only Git access token. AI pages need Atlassian AI, included in CodeDoc Advanced, or your own Anthropic, OpenAI or Google Gemini key. With your own key, your provider bills you directly and CodeDoc adds no markup.</div></details>
+          <details><summary>Which Git events update a page?</summary><div>With the CodeDoc webhook in the repository, blocks and AI pages set to On every push update on pushes from GitHub, GitLab, Bitbucket and Azure DevOps. GitLab merge request events and merged pull requests on Bitbucket and Azure DevOps count too; on GitHub a merge arrives as a push. Without a webhook, choose a daily or weekly update. Details: <a href="codedoc-ai-docs.html#jobs-webhooks">Webhook setup</a>.</div></details>
+          <details><summary>Which Confluence version do I need?</summary><div>CodeDoc needs Confluence Cloud. It is a Forge app and runs on Atlassian's infrastructure; there is no Data Center or Server version. It can read your own GitHub Enterprise or GitLab server if that server is reachable from Atlassian's cloud.</div></details>
+          <details><summary>How long does setup take?</summary><div>Most teams are connected in about 5 minutes. You need a read-only Git access token. AI pages also need Atlassian AI (Advanced edition) or your own AI provider key. The <a href="codedoc-ai-setup.html">Quick start</a> walks you through every step.</div></details>
+          <details><summary>Does my code leave Atlassian's infrastructure?</summary><div>Sync blocks send nothing to an AI provider. For AI pages, the Forge runtime fetches the selected files and sends them either to Atlassian AI (Advanced edition; the code stays on Atlassian's platform) or directly to your own AI provider. No servers operated by Janek Behrens are involved at any point. Details in the <a href="trust-center.html">Trust Center</a>.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="visual-progress-tracker.html"><img src="img/progresstracker144logo.png" alt="" width="44" height="44" loading="lazy"><div><b>Visual Progress Tracker for Jira</b><span>Color-coded progress bars on every Jira issue.</span></div></a>
+          <a class="card" href="epic-progress-for-confluence.html"><img src="img/epic-progress-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Epic Progress for Confluence</b><span>Live Jira progress bars on Confluence pages.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Docs that keep up with the code</h2>
+            <p class="muted">30-day free trial. Sync blocks need no AI key.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="codedoc-ai-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/cd-demo.js"></script>
+</body>
+</html>

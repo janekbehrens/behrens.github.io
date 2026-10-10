@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Janek Behrens — Atlassian Productivity Tools</title>
+  <meta name="description" content="Forge apps by Janek Behrens: Team Capacity, DevOps Metrics, Velocity Chart, Priority Scoring and Progress Tracker for Jira, Epic Progress and CodeDoc AI for Confluence.">
+  <link rel="canonical" href="https://janekbehrens.de/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/">
+  <meta property="og:title" content="Janek Behrens — Atlassian Productivity Tools">
+  <meta property="og:description" content="Forge apps by Janek Behrens: Team Capacity, DevOps Metrics, Velocity Chart, Priority Scoring and Progress Tracker for Jira, Epic Progress and CodeDoc AI for Confluence.">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Janek Behrens — Atlassian Productivity Tools">
+  <meta name="twitter:description" content="Forge apps by Janek Behrens: Team Capacity, DevOps Metrics, Velocity Chart, Priority Scoring and Progress Tracker for Jira, Epic Progress and CodeDoc AI for Confluence.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/companyLogo.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/",
+    "description": "Atlassian Forge apps by Janek Behrens — Team Capacity, DevOps Metrics, Velocity Chart, Priority Scoring and Visual Progress Tracker for Jira, and Epic Progress and CodeDoc AI for Confluence."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I try an app before I install it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every app page has a live demo with sample data. It runs in your browser; nothing is saved and nothing is sent anywhere. When you want the app in your own Jira or Confluence, start the free trial on the Atlassian Marketplace."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does my data go?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The apps run on Atlassian Forge, so Atlassian hosts them. I don't operate servers of my own. Only CodeDoc AI talks to services outside Atlassian: the Git provider you connect and, if you choose, your own AI provider. The Trust Center lists the details per app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does it cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You install and pay through the Atlassian Marketplace; Atlassian handles billing and licenses. Every app starts with a free trial. Team Capacity, Visual Progress Tracker, DevOps Metrics and Velocity Chart are free for Jira sites with up to 10 users, and Epic Progress is free for Confluence sites with up to 10 users."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do the apps work with Data Center or Server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. They are Forge apps for Jira Cloud and Confluence Cloud."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get help?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each app has documentation and a support page. Write to support@janekbehrens.de or book a free 30-minute call."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body class="rd" data-appbar>
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="hero-c">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">Forge apps for Jira and Confluence Cloud</span>
+          <h1 class="h-display">Productivity tools built for <em>Jira and Confluence</em> teams</h1>
+        </div>
+        <div>
+          <p class="lead">Lightweight Forge apps with no vendor servers. Your data stays in Atlassian and in the services you connect yourself. Less setup, more done.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn btn-solid">Browse apps on Marketplace →</a>
+            <a href="https://calendly.com/calendly-janekbehrens/30min" target="_blank" rel="noopener" class="btn btn-ghost">Book a 30-min call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="apps" class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card switcher" data-slideshow aria-roledescription="carousel" aria-label="Apps by Janek Behrens">
+          <div class="switcher-head">
+            <h2>Seven apps on the Atlassian Marketplace</h2>
+            <span class="eyebrow">Each with a live demo</span>
+          </div>
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Apps" aria-orientation="vertical">
+              <button class="switcher-tab" role="tab" id="tab-ep" aria-controls="panel-ep" aria-selected="true"><img src="img/epic-progress-icon.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">Epic Progress</span><span class="switcher-tab-sub">Confluence Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-tc" aria-controls="panel-tc" aria-selected="false" tabindex="-1"><img src="img/team-capacity-icon.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">Team Capacity</span><span class="switcher-tab-sub">Jira Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-vpt" aria-controls="panel-vpt" aria-selected="false" tabindex="-1"><img src="img/progresstracker144logo.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">Progress Tracker</span><span class="switcher-tab-sub">Jira Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-dora" aria-controls="panel-dora" aria-selected="false" tabindex="-1"><img src="img/dora-metrics-icon.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">DevOps Metrics</span><span class="switcher-tab-sub">Jira Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-vel" aria-controls="panel-vel" aria-selected="false" tabindex="-1"><img src="img/velocity-chart-icon.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">Velocity Chart</span><span class="switcher-tab-sub">Jira Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-cd" aria-controls="panel-cd" aria-selected="false" tabindex="-1"><img src="img/codedoc-ai-icon.webp" alt="" width="40" height="40"><span><span class="switcher-tab-name">CodeDoc AI</span><span class="switcher-tab-sub">Confluence Cloud</span></span></button>
+              <button class="switcher-tab" role="tab" id="tab-ps" aria-controls="panel-ps" aria-selected="false" tabindex="-1"><img src="img/priority-scoring-icon.png" alt="" width="40" height="40"><span><span class="switcher-tab-name">Priority Scoring</span><span class="switcher-tab-sub">Jira Cloud</span></span></button>
+            </div>
+
+            <div>
+              <div class="switcher-panel" role="tabpanel" id="panel-ep" aria-labelledby="tab-ep">
+                <a class="shot-frame" href="epic-progress-for-confluence.html" aria-label="Epic Progress for Confluence overview">
+                  <img src="imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" alt="Confluence status page with Epic Progress macros: a progress bar, status, due date and counts per Jira epic" width="1840" height="900">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <span class="pill">Newest release</span>
+                    <h3><a href="epic-progress-for-confluence.html">Epic Progress for Confluence</a></h3>
+                    <p>Turn a Confluence page into a live status page: progress bars for Jira epics, releases and saved filters, with counts, due dates and open work items. Dated snapshots for readers without Jira.</p>
+                    <p class="switcher-facts">Confluence Cloud · Five macros · Free for up to 10 users</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="epic-progress-for-confluence.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="epic-progress-docs.html">Docs</a><a class="text-link" href="epic-progress-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-tc" aria-labelledby="tab-tc" hidden>
+                <a class="shot-frame" href="team-capacity-for-jira.html" aria-label="Team Capacity for Jira overview">
+                  <img src="imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team Capacity gadget on a Jira dashboard: a color-coded workload bar per person for the current sprint" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="team-capacity-for-jira.html">Team Capacity — Sprint Workload &amp; Resource Planning for Jira</a></h3>
+                    <p>See who is over- or under-loaded each sprint: a color-coded workload heatmap per assignee on any Jira dashboard. It uses the estimates your board already has and adds per-person capacity, thresholds and CSV export.</p>
+                    <p class="switcher-facts">Jira Cloud · Dashboard gadget · Free for up to 10 users</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="team-capacity-for-jira.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-sprint-workload-resource-planning-for-jira" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="team-capacity-docs.html">Docs</a><a class="text-link" href="team-capacity-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-vpt" aria-labelledby="tab-vpt" hidden>
+                <a class="shot-frame" href="visual-progress-tracker.html" aria-label="Visual Progress Tracker for Jira overview">
+                  <img src="imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira issue with three progress bars: status progress 50%, subtask progress 75% and manual progress 30%, plus the slider with quick buttons" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="visual-progress-tracker.html">Visual Progress Tracker for Jira</a></h3>
+                    <p>Color-coded progress bars on every Jira issue: set by hand, calculated from the status, or from the subtasks. Two dashboard gadgets show a whole project or one bar per epic.</p>
+                    <p class="switcher-facts">Jira Cloud · Issue fields and dashboard gadgets · Free for up to 10 users</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="visual-progress-tracker.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="visual-progress-tracker-docs.html">Docs</a><a class="text-link" href="visual-progress-tracker-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-dora" aria-labelledby="tab-dora" hidden>
+                <a class="shot-frame" href="dora-metrics-for-jira.html" aria-label="DevOps Metrics for Jira overview">
+                  <img src="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps Metrics gadget with deployment frequency, lead time for changes, change failure rate and time to restore, each with a benchmark band" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="dora-metrics-for-jira.html">DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira</a></h3>
+                    <p>Deployment frequency, lead time for changes, change failure rate and time to restore on a Jira dashboard, calculated from the releases and issues you already have in Jira. No CI/CD setup. With benchmark bands and a before/after view of your AI rollout.</p>
+                    <p class="switcher-facts">Jira Cloud · Dashboard gadgets · Free for up to 10 users</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="dora-metrics-for-jira.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="dora-metrics-docs.html">Docs</a><a class="text-link" href="dora-metrics-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-vel" aria-labelledby="tab-vel" hidden>
+                <a class="shot-frame" href="velocity-chart.html" aria-label="Velocity Chart for Jira overview">
+                  <img src="imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity Chart gadget: committed versus completed story points for ten closed sprints, average velocity line and say/do ratio" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="velocity-chart.html">Velocity Chart for Jira</a></h3>
+                    <p>A configurable sprint velocity chart on any Jira dashboard: committed vs completed, an average line and the say/do ratio. Set your own Definition of Done, use story points, issue count or a custom field, and compare up to four boards.</p>
+                    <p class="switcher-facts">Jira Cloud · Dashboard gadget · Free for up to 10 users</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="velocity-chart.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="velocity-chart-docs.html">Docs</a><a class="text-link" href="velocity-chart-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-cd" aria-labelledby="tab-cd" hidden>
+                <a class="shot-frame" href="codedoc-ai.html" aria-label="CodeDoc AI for Confluence overview">
+                  <img src="imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" alt="Confluence page with CodeDoc sync blocks: a release table and a configuration table taken from Git, and a code snippet, each marked In sync" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="codedoc-ai.html">CodeDoc AI for Confluence</a></h3>
+                    <p>Keep Confluence docs in step with your code. Sync versions, config values and README sections from Git onto any page, or let AI write whole documentation pages with Atlassian AI or your own provider key. On every push, on a schedule or on demand.</p>
+                    <p class="switcher-facts">Confluence Cloud · GitHub, GitLab, Bitbucket, Azure DevOps</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="codedoc-ai.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="codedoc-ai-docs.html">Docs</a><a class="text-link" href="codedoc-ai-setup.html">Quick start</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="switcher-panel" role="tabpanel" id="panel-ps" aria-labelledby="tab-ps" hidden>
+                <a class="shot-frame" href="priority-scoring.html" aria-label="Priority Scoring for Jira overview">
+                  <img src="imgPriorityScorer/highlight-1-board-health-priority-ranking.webp" alt="Priority Scoring dashboard: Board Health 72 of 100 with four criteria tiles, and the backlog ranked by RICE score" width="1840" height="900" loading="lazy">
+                </a>
+                <div class="switcher-info">
+                  <div>
+                    <h3><a href="priority-scoring.html">Priority Scoring — RICE, WSJF &amp; ICE for Jira</a></h3>
+                    <p>Score Jira issues with RICE, WSJF or ICE right on the issue, rank the backlog and keep an eye on Board Health from 0 to 100. The Rovo agent suggests scores and explains them.</p>
+                    <p class="switcher-facts">Jira Cloud · Issue fields, app page and dashboard gadgets · Free trial</p>
+                  </div>
+                  <div class="switcher-actions">
+                    <a href="priority-scoring.html#demo" class="btn btn-solid">Open the live demo →</a>
+                    <div class="switcher-links"><a class="text-link" href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener">Marketplace</a><a class="text-link" href="priority-scoring-docs.html">Docs</a><a class="text-link" href="priority-scoring-support.html">Support</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="facts facts-3">
+          <div class="fact"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><b>Built on Forge</b><span>Hosted by Atlassian, no servers of mine</span></div></div>
+          <div class="fact"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div><b>Free trial on every app</b><span>Started from the Marketplace</span></div></div>
+          <div class="fact"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><div><b>Marketplace Partner</b><span>Independent, based in Germany</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-bottom:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2 class="h-section">From demo to your own Jira in three steps</h2>
+        </div>
+        <div class="how">
+          <div class="card"><span class="how-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><h3>Try the live demo</h3><p>Every app page has an interactive demo with sample data, right in your browser. Nothing is saved or sent.</p></div>
+          <div class="card"><span class="how-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span><h3>Start the free trial</h3><p>Install the app from the Atlassian Marketplace. Atlassian handles billing and licenses.</p></div>
+          <div class="card"><span class="how-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><h3>Add it where you work</h3><p>Put a gadget on a dashboard, a field on your issues or a macro on a page. Each app's docs start with a short quick start.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap duo">
+        <div class="card">
+          <h2>About</h2>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+            <img src="img/janek-behrens.webp" alt="Janek Behrens" width="56" height="56" style="border-radius:50%;object-fit:cover" loading="lazy">
+            <div><b style="display:block">Janek Behrens</b><span class="muted" style="font-size:.875rem">Independent Atlassian Marketplace Partner · Germany</span></div>
+          </div>
+          <p class="muted" style="line-height:1.7;margin-bottom:12px">I build small, focused Forge apps for Jira and Confluence. They run on Atlassian's cloud; I don't operate servers of my own.</p>
+          <p class="muted" style="line-height:1.7;margin-bottom:8px">Privacy comes first: no user tracking (only anonymous usage counts), and no data leaves Atlassian unless you connect a service yourself, such as your Git provider or your own AI key in CodeDoc (its optional version check sends only public package names).</p>
+          <a href="trust-center.html" class="text-link" style="padding:0;color:var(--brand);text-decoration:none">Trust Center &amp; Security →</a>
+        </div>
+        <div class="card">
+          <h2 style="margin-bottom:6px">From the blog</h2>
+          <a class="post-link" href="blog/jira-velocity-chart.html"><span class="post-tag">Jira</span><span class="post-title">Jira Velocity Chart: How to Read It and Use It for Sprint Planning</span><span class="post-date">June 2, 2026</span></a>
+          <a class="post-link" href="blog/jira-prioritization-framework-comparison.html"><span class="post-tag">Jira</span><span class="post-title">RICE vs. WSJF vs. ICE: Which Jira Prioritization Framework Is Right for You?</span><span class="post-date">December 11, 2025</span></a>
+          <a class="post-link" href="blog/ai-documentation-confluence.html"><span class="post-tag">Confluence</span><span class="post-title">AI-Powered Documentation for Atlassian Teams: A Practical Guide</span><span class="post-date">February 3, 2026</span></a>
+          <a href="blog/" class="text-link" style="padding:0;margin-top:6px;color:var(--brand);text-decoration:none">All articles →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2 class="h-section">Common questions</h2>
+          </div>
+          <div class="faq-c">
+          <details><summary>Can I try an app before I install it?</summary><div>Yes. Every app page has a live demo with sample data. It runs in your browser; nothing is saved and nothing is sent anywhere. When you want the app in your own Jira or Confluence, start the free trial on the Atlassian Marketplace.</div></details>
+          <details><summary>Where does my data go?</summary><div>The apps run on Atlassian Forge, so Atlassian hosts them. I don't operate servers of my own. Only CodeDoc AI talks to services outside Atlassian: the Git provider you connect and, if you choose, your own AI provider. The <a href="trust-center.html">Trust Center</a> lists the details per app.</div></details>
+          <details><summary>What does it cost?</summary><div>You install and pay through the Atlassian Marketplace; Atlassian handles billing and licenses. Every app starts with a free trial. Team Capacity, Visual Progress Tracker, DevOps Metrics and Velocity Chart are free for Jira sites with up to 10 users, and Epic Progress is free for Confluence sites with up to 10 users.</div></details>
+          <details><summary>Do the apps work with Data Center or Server?</summary><div>No. They are Forge apps for Jira Cloud and Confluence Cloud.</div></details>
+          <details><summary>How do I get help?</summary><div>Each app has documentation and a support page. Write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> or <a href="https://calendly.com/calendly-janekbehrens/30min" target="_blank" rel="noopener">book a free 30-minute call</a>.</div></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Not sure which app fits?</h2>
+            <p class="muted">Tell me what your team needs in a free 30-minute call.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://calendly.com/calendly-janekbehrens/30min" target="_blank" rel="noopener" class="btn btn-solid">Book a call</a>
+            <a href="mailto:support@janekbehrens.de" class="btn btn-ghost">Write an email</a>
+          </div>
+        </div>
+        <p class="legal-note">DORA™ is a trademark of Google LLC. DevOps Metrics for Jira is not affiliated with or endorsed by Google.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>

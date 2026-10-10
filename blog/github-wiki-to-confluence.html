@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>From GitHub Wiki to Confluence: Two Migration Paths Compared | Janek Behrens</title>
+  <meta name="description" content="Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc AI. Honest comparison, when each one wins, and how to avoid migrating dead pages.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/github-wiki-to-confluence.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "From GitHub Wiki to Confluence: Two Migration Paths Compared",
+    "description": "Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc AI. Honest comparison, when each one wins, and how to avoid migrating dead pages.",
+    "url": "https://janekbehrens.de/blog/github-wiki-to-confluence.html",
+    "datePublished": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-05-21T00:00:00+02:00",
+    "image": "https://janekbehrens.de/img/companyLogo.png",
+    "keywords": ["Confluence", "GitHub", "Documentation", "Migration"],
+    "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" },
+    "publisher": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+  }
+  </script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="From GitHub Wiki to Confluence: Two Migration Paths Compared">
+  <meta property="og:description" content="Manual export vs regenerate-from-source: how to move from GitHub Wiki to Confluence without migrating pages that nobody reads anymore.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/github-wiki-to-confluence.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="GitHub">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="From GitHub Wiki to Confluence: Two Migration Paths Compared">
+  <meta name="twitter:description" content="Manual export vs regenerate-from-source: how to move from GitHub Wiki to Confluence without migrating pages that nobody reads anymore.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I migrate a GitHub Wiki to Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There are two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc AI. The first preserves history; the second avoids migrating stale pages."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Atlassian provide a tool to import a GitHub Wiki into Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Confluence has a Markdown import option for individual pages, but no built-in migrator for an entire GitHub Wiki repository. You either import pages one at a time, script the conversion with pandoc and the Confluence REST API, or regenerate the documentation from source code with a Marketplace app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I migrate my entire GitHub Wiki to Confluence?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Usually not. Most GitHub Wikis have a long tail of stale pages — partial drafts, outdated architecture sketches, instructions that no longer apply. Migrating all of it preserves the rot. The better approach is to identify the pages that are still actively referenced, migrate those, and regenerate the rest from current source code."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF991F; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .compare-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .compare-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    pre.code-block { background:#172B4D; color:#fff; padding:14px 16px; border-radius:8px; font-size:0.82rem; line-height:1.55; overflow-x:auto; margin: 16px 0; }
+    pre.code-block code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  </style>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence</span>
+        <span class="article-date">May 21, 2026</span>
+        <span class="article-readtime">· 8 min read</span>
+      </div>
+      <h1>From GitHub Wiki to Confluence: Two Migration Paths Compared</h1>
+      <p class="article-intro">
+        At some point most engineering teams that use GitHub Wikis hit a wall — search is weak, permissions are coarse, and the rest of the company already lives in Confluence. The natural question is "how do we move this over?". The honest answer is that you probably shouldn't move all of it. Here are the two viable paths and when each one wins.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="why-leave">Why teams leave GitHub Wiki</h2>
+      <p>
+        GitHub Wikis are easy to start and surprisingly hard to scale. The most common reasons teams move:
+      </p>
+      <ul>
+        <li><strong>Search is limited</strong> — the wiki search only covers titles and a small portion of body text, and there is no cross-repo search across multiple wikis.</li>
+        <li><strong>Permissions are coarse</strong> — anyone with read access to the repo can read the wiki. There is no way to give finance or legal a single page without exposing the codebase.</li>
+        <li><strong>Discoverability is poor outside engineering</strong> — non-developers rarely browse to <code>github.com/org/repo/wiki</code>.</li>
+        <li><strong>It's not where the rest of the company looks</strong> — if every other team writes in Confluence, two homes for documentation mean readers check neither.</li>
+      </ul>
+
+      <h2 id="two-paths">Two viable paths</h2>
+      <p>
+        There are essentially two ways to make this move, and they answer different questions:
+      </p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Path A: Migrate the content</th>
+            <th>Path B: Regenerate from source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>What moves</strong></td>
+            <td>Existing wiki pages, exactly as written</td>
+            <td>Nothing. Fresh documentation written from current code</td>
+          </tr>
+          <tr>
+            <td><strong>Preserves history?</strong></td>
+            <td>Yes — wording, decisions, screenshots</td>
+            <td>No — only what's still in the code today</td>
+          </tr>
+          <tr>
+            <td><strong>Carries stale pages?</strong></td>
+            <td>Yes, unless you curate first</td>
+            <td>No — the AI only sees current source</td>
+          </tr>
+          <tr>
+            <td><strong>Effort</strong></td>
+            <td>Scripted pandoc + REST API, or paid migration tool</td>
+            <td>Connect the app once, generate per repo</td>
+          </tr>
+          <tr>
+            <td><strong>Stays current?</strong></td>
+            <td>No. Same staleness problem as before</td>
+            <td>Yes — re-run on commit or schedule</td>
+          </tr>
+          <tr>
+            <td><strong>Best for</strong></td>
+            <td>Architecture decisions, RFCs, post-mortems</td>
+            <td>API references, module overviews, onboarding</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>The honest recommendation:</strong> use both. Migrate the small subset of pages that capture decisions and history (Path A). Regenerate the larger volume of "what does this code do" pages from source (Path B). Don't bulk-migrate everything.</p>
+      </div>
+
+      <h2 id="path-a">Path A — migrate wiki content with pandoc</h2>
+      <p>
+        Every GitHub Wiki is itself a Git repository. You can clone it and convert Markdown to Confluence storage format with <a href="https://pandoc.org" target="_blank" rel="noopener">pandoc</a>, then push to Confluence via REST.
+      </p>
+
+      <h3>Step 1: Clone the wiki repo</h3>
+      <pre class="code-block"><code>git clone https://github.com/your-org/your-repo.wiki.git
+cd your-repo.wiki
+ls *.md</code></pre>
+
+      <h3>Step 2: Convert Markdown to Confluence storage format</h3>
+      <pre class="code-block"><code>for f in *.md; do
+  pandoc "$f" -f gfm -t html -o "out/${f%.md}.html"
+done</code></pre>
+      <p>
+        Pandoc emits XHTML close enough to Confluence storage format for most pages. Code blocks, headings, lists, tables, and inline formatting come through cleanly. Things that need a manual pass: relative links between pages, embedded images, and custom GitHub macros (e.g. <code>&lt;details&gt;</code> blocks).
+      </p>
+
+      <h3>Step 3: Create pages via the Confluence REST API</h3>
+      <pre class="code-block"><code>POST /wiki/rest/api/content
+{
+  "type": "page",
+  "title": "Architecture Overview",
+  "space": { "key": "ENG" },
+  "body": {
+    "storage": {
+      "value": "&lt;html content from pandoc&gt;",
+      "representation": "storage"
+    }
+  }
+}</code></pre>
+      <p>
+        Wrap the loop in a script that maps each Markdown file to a page title and a parent page. Run it once into a sandbox space first, review the result, then fix up the script before running it against the real space.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Watch out for:</strong> internal wiki links of the form <code>[[Page Name]]</code>. Pandoc doesn't know they refer to other wiki pages, so they come through as plain text. Run a post-processing pass that rewrites these into Confluence links using the new page IDs.</p>
+      </div>
+
+      <h2 id="path-b">Path B — regenerate from source with CodeDoc AI</h2>
+      <p>
+        The second path skips the migration entirely. Instead of moving the existing wiki, you point an AI documentation tool at the source repository, choose how the output should be structured, and let it write fresh pages directly into Confluence.
+      </p>
+      <p>
+        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> is one such tool, built on Atlassian Forge. The workflow:
+      </p>
+      <ol>
+        <li><strong>Connect an AI provider</strong> — bring your own key for Anthropic Claude, OpenAI, or Google Gemini.</li>
+        <li><strong>Connect GitHub</strong> with a personal access token (read access to the repos you want to document).</li>
+        <li><strong>Add the repository</strong> — browse and select, or paste the URL with a branch.</li>
+        <li><strong>Create a job</strong> — pick a documentation preset (Developer Documentation, Onboarding Guide, Quick Reference, Compliance &amp; Audit, etc.), pick a language, pick a trigger.</li>
+        <li><strong>Pick a target space</strong> — choose which Confluence space the page should be created in.</li>
+        <li><strong>Run it</strong> — the AI reads the code, generates structured documentation, and publishes it as a Confluence page.</li>
+      </ol>
+
+      <h3>What this path is — and isn't</h3>
+      <p>
+        This is not a wiki content migrator. CodeDoc AI does not read your GitHub Wiki pages; it reads the source code in the main repository. The output is documentation that reflects <em>the code as it exists today</em>. If your wiki has an architecture decision log or an onboarding tutorial that doesn't live in code, that part has to be captured separately (Path A is the right tool for it).
+      </p>
+      <p>
+        What you get for free, though, is that the generated documentation stays current. Set the trigger to <strong>on commit</strong> via webhook, or <strong>on a schedule</strong> (daily / weekly / monthly), and the Confluence pages refresh automatically when the code changes. That is the failure mode the original wiki was suffering from — pages that drifted from the code over years — solved by removing the human gap entirely.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Tip:</strong> If you only want to try it, the Quick Reference preset is the cheapest in tokens — five sections, tech stack table, key commands, project structure. A medium repository typically costs a few cents on Gemini's free tier.</p>
+      </div>
+
+      <h2 id="curate-first">Don't migrate dead pages</h2>
+      <p>
+        The biggest mistake in any wiki migration is treating it as a copy operation. Most GitHub Wikis carry a long tail of partial drafts, outdated architecture sketches, and instructions that no longer apply. Migrating that into Confluence preserves the rot — and now your stakeholders, who never had access to the wiki, get to see it too.
+      </p>
+      <p>Before either path:</p>
+      <ul>
+        <li><strong>List every wiki page</strong> — <code>ls *.md</code> in the wiki repo, then dump to a spreadsheet.</li>
+        <li><strong>Tag each one</strong> as <em>keep</em>, <em>regenerate</em>, or <em>archive</em>.</li>
+        <li><strong>Keep</strong> the genuinely irreplaceable pages — decision logs, post-mortems, runbooks tied to humans not code.</li>
+        <li><strong>Regenerate</strong> the "what does this code do" pages from source.</li>
+        <li><strong>Archive</strong> the rest. If nobody has touched it in 12 months it almost certainly isn't load-bearing.</li>
+      </ul>
+
+      <h2 id="combined">A combined timeline</h2>
+      <p>For most teams the cleanest sequence is:</p>
+      <ol>
+        <li>Audit the wiki. Tag keep / regenerate / archive.</li>
+        <li>Migrate the <em>keep</em> pages with pandoc + REST API into a fresh Confluence space.</li>
+        <li>Install CodeDoc AI, point it at the same Confluence space, set up jobs for each repository.</li>
+        <li>Wire the jobs to your CI: webhook trigger on push to <code>main</code>, so the docs refresh whenever the code does.</li>
+        <li>Archive the old GitHub Wiki — keep it read-only as a reference, point the README at Confluence.</li>
+      </ol>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I migrate a GitHub Wiki to Confluence?</p>
+        <p class="faq-a">Two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result via the Confluence REST API. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc AI. The first preserves history; the second avoids migrating stale pages.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Atlassian provide a tool to import a GitHub Wiki into Confluence?</p>
+        <p class="faq-a">Confluence has a Markdown import option for individual pages, but no built-in migrator for an entire GitHub Wiki repository. You either import pages one at a time, script the conversion with pandoc and the Confluence REST API, or regenerate the documentation from source code with a Marketplace app.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Should I migrate my entire GitHub Wiki to Confluence?</p>
+        <p class="faq-a">Usually not. Most GitHub Wikis have a long tail of stale pages — partial drafts, outdated architecture sketches, instructions that no longer apply. Migrating all of it preserves the rot. The better approach is to identify the pages that are still actively referenced, migrate those, and regenerate the rest from current source code.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does CodeDoc AI migrate wiki content?</p>
+        <p class="faq-a">No. CodeDoc AI reads source code from a Git repository and generates documentation from it — it does not read existing wiki pages. Use pandoc + the Confluence REST API for true content migration; use CodeDoc AI to replace the "what does this code do" subset of the wiki with always-current pages generated from source.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can the documentation in Confluence update automatically when code changes?</p>
+        <p class="faq-a">Yes, if you use the regeneration path. CodeDoc AI supports webhook triggers (regenerate on every push or merge to a chosen branch) and scheduled triggers (daily, weekly, monthly). Pages migrated manually via pandoc do not auto-update — they are static copies.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Replace your GitHub Wiki with always-current Confluence docs</h3>
+        <p>CodeDoc AI generates documentation from your source code and publishes it directly to Confluence. Bring your own AI key. Free trial on the Atlassian Marketplace.</p>
+        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc AI →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#why-leave">Why teams leave GitHub Wiki</a></li>
+          <li><a href="#two-paths">Two viable paths</a></li>
+          <li><a href="#path-a">Path A — pandoc migration</a></li>
+          <li><a href="#path-b">Path B — regenerate from source</a></li>
+          <li><a href="#curate-first">Don't migrate dead pages</a></li>
+          <li><a href="#combined">A combined timeline</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="../img/companyLogo.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · Forge · BYOK</div>
+          </div>
+        </a>
+        <a href="/codedoc-ai.html" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Learn more →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Auto-Generate Confluence Documentation from GitHub</a>
+        <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Automating Confluence Documentation</a>
+        <a href="/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">AI-Powered Documentation for Atlassian Teams</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

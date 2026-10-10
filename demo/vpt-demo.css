@@ -1,0 +1,124 @@
+/* vpt-demo.css — Visual Progress Tracker demo (loaded after demo.css) */
+/* ============================================================
+   Visual Progress Tracker demo
+   ============================================================ */
+.vpt-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.vpt-field-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.vpt-info {
+  display: inline-grid; place-items: center;
+  width: 15px; height: 15px; margin-left: 3px;
+  border: 1.5px solid #8C8F97; border-radius: 50%;
+  color: #6B6E76; font-size: 9.5px; font-weight: 800; font-style: normal;
+  cursor: help; vertical-align: 1px;
+}
+
+/* ── Tab 1: issue view ── */
+.vpt-issue { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr); }
+.vpt-main { padding: 20px 22px 24px; border-right: 1px solid var(--d-line-2); min-width: 0; }
+.vpt-side { padding: 16px 18px 26px; background: #FCFCFD; min-width: 0; border-radius: 0 0 14px 0; }
+.vpt-desc { margin: 0 0 22px; max-width: 60ch; }
+.vpt-sub-status { width: 1%; white-space: nowrap; }
+.vpt-status-row { margin-bottom: 14px; }
+.vpt-details { border: 1px solid var(--d-line); border-radius: 8px; padding: 14px; background: #fff; }
+.vpt-appfields { margin-top: 26px; padding: 4px 2px 2px; }
+.vpt-children { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; font-size: 12px; }
+.vpt-children li { display: flex; align-items: center; gap: 8px; }
+.vpt-manual-btn { display: block; width: 100%; border: 0; background: none; text-align: left; font: inherit; color: inherit; }
+.vpt-editor { display: grid; gap: 10px; }
+.vpt-presets { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; }
+.vpt-presets .d-btn { padding: 0 2px; font-size: 12px; }
+.vpt-editor-actions { display: flex; justify-content: flex-end; gap: 6px; }
+
+/* ── Tab 2: dashboard gadgets ── */
+.vpt-dash { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 26px 18px; padding: 26px 18px 20px; align-items: start; }
+.vpt-summary { display: grid; grid-template-columns: auto minmax(60px, 1fr) auto; align-items: center; gap: 4px 10px; padding: 6px 0 10px; font-size: 14px; }
+.vpt-sumline { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; font-size: 12.5px; }
+.vpt-sumline .d-btn { font-size: 12.5px; }
+.vpt-config { margin: 4px 0 14px; display: block; }
+.vpt-config .d-h2 { margin-bottom: 12px; }
+.vpt-config .d-label { margin-top: 12px; }
+.vpt-config .d-h2 + .d-label { margin-top: 0; }
+.vpt-config .d-select { width: 100%; }
+.vpt-jql { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+.vpt-config-actions { display: flex; gap: 6px; margin-top: 16px; }
+.vpt-ov-table td:nth-child(2) { max-width: 260px; }
+.vpt-ep-table td:nth-child(2) { white-space: nowrap; }
+.vpt-col-progress { width: 36%; }
+.vpt-live-row td:first-child { box-shadow: inset 3px 0 0 var(--d-blue); }
+.vpt-pages { display: flex; justify-content: center; gap: 2px; padding: 10px 0 2px; }
+.vpt-pages .d-btn { min-width: 26px; }
+.vpt-pages .d-btn:disabled { color: #B7B9BE; cursor: default; background: transparent; }
+
+/* ── Tab 3: the app's page in the Apps menu ── */
+.vpt-ctx-right { margin-left: auto; }
+.vpt-admin { padding: 30px 18px 22px; }
+.vpt-adminpage { display: grid; gap: 16px; padding: 20px 20px 22px; min-width: 0; }
+.vpt-adminpage > .d-h1 { margin: 0; }
+.vpt-admin-lead { margin: -10px 0 0; max-width: 70ch; }
+.vpt-recalc { display: grid; gap: 4px; }
+.vpt-recalc-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+.vpt-atabs { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.vpt-atabs-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.vpt-atabs a.d-btn, .vpt-atabs a.d-btn:hover { color: var(--d-text); text-decoration: none; }
+.vpt-asection { display: grid; gap: 14px; min-width: 0; }
+.vpt-asection > .d-h2, .vpt-asection > .d-sub { margin: 0; }
+.vpt-asection > .d-h2 + .d-sub { margin-top: -6px; }
+.vpt-demo-note { margin: 14px 4px 0; font-size: 12.5px; color: var(--d-text-3); }
+
+.vpt-msg { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 6px; font-size: 13.5px; line-height: 1.45; }
+.vpt-msg > div { flex: 1; min-width: 0; }
+.vpt-msg .d-btn { margin-left: 6px; vertical-align: middle; }
+.vpt-msg-icon { flex-shrink: 0; display: grid; place-items: center; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 800; }
+.vpt-msg.is-info { background: var(--d-blue-bg); }
+.vpt-msg.is-info .vpt-msg-icon { background: var(--d-blue); }
+.vpt-msg.is-ok { background: var(--d-green-soft); }
+.vpt-msg.is-ok .vpt-msg-icon { background: var(--d-green); }
+.vpt-msg.is-err { background: var(--d-red-soft); }
+.vpt-msg.is-err .vpt-msg-icon { background: var(--d-red); }
+
+.vpt-guide { display: grid; gap: 10px; }
+.vpt-guide p { margin: 2px 0 0; color: var(--d-text-2); max-width: 75ch; }
+.vpt-types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.vpt-type { display: grid; gap: 8px; align-content: start; border: 1px solid var(--d-line-2); border-radius: 8px; padding: 12px; }
+.vpt-type .d-h3, .vpt-type .d-sub { margin: 0; }
+
+.vpt-map { display: grid; gap: 8px; }
+.vpt-map-row { display: grid; grid-template-columns: minmax(0, 1fr) 70px minmax(52px, 1fr) auto; align-items: center; gap: 10px; }
+.vpt-map-name { font-weight: 650; min-width: 0; overflow-wrap: anywhere; }
+.vpt-map-loz { justify-self: center; }
+.vpt-map-row .d-input.is-num, .vpt-add .d-input.is-num { width: 70px; }
+.vpt-add { display: flex; align-items: center; gap: 8px; }
+.vpt-add .d-input:first-child { flex: 1; min-width: 0; }
+.vpt-save { width: 100%; }
+.vpt-thr { display: grid; gap: 10px; }
+.vpt-thr-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.vpt-prev-head { margin: 0; }
+.vpt-preview { display: flex; flex-wrap: wrap; gap: 14px; }
+.vpt-prev { display: grid; gap: 6px; justify-items: start; width: 72px; }
+.vpt-prev .d-bar { width: 100%; }
+
+@media (max-width: 980px) {
+  .vpt-dash { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .vpt-issue { grid-template-columns: 1fr; }
+  .vpt-main { border-right: 0; border-bottom: 1px solid var(--d-line-2); padding: 16px 14px; }
+  .vpt-side { padding: 14px; border-radius: 0 0 14px 14px; }
+  .vpt-admin { padding: 26px 12px 16px; }
+  .vpt-adminpage { padding: 16px 12px 18px; }
+  .vpt-types { grid-template-columns: 1fr; }
+  .vpt-map-row { gap: 8px; grid-template-columns: minmax(0, 1fr) 64px 48px auto; }
+  .vpt-map-row .d-input.is-num, .vpt-add .d-input.is-num { width: 64px; }
+  .vpt-dash { padding: 24px 10px 14px; }
+  .d-gadget-body { padding: 4px 8px 10px; }
+  /* phone: field name above its value, so the bars and the slider get the full width */
+  .vpt-appfields .d-fields { grid-template-columns: 1fr; gap: 4px; }
+  .vpt-appfields .d-field-val { margin-bottom: 12px; }
+}
+/* phone: the finished hint puts the dots and the "Next" button on their own line
+   (scoped override of the shared hint bar, see report) */
+@media (max-width: 720px) {
+  [data-demo="vpt"] .demo-hint { flex-wrap: wrap; }
+  [data-demo="vpt"] .demo-hint-text { flex: 1 1 calc(100% - 40px); }
+  [data-demo="vpt"] .demo-next { margin-left: auto; }
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css">
+  <title>Security Policy — Visual Progress Tracker for Jira</title>
+  <meta name="description" content="Security of Visual Progress Tracker for Jira: runs on Atlassian without external calls; gadgets read Jira with each viewer&#x27;s own permissions.">
+  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker-security.html">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #172B4D; background: #FAFBFC; line-height: 1.7; }
+    .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .updated { color: #505F79; font-size: 0.9rem; margin-bottom: 40px; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin-top: 36px; margin-bottom: 12px; }
+    p { color: #344563; font-size: 0.95rem; margin-bottom: 16px; }
+    ul { color: #344563; font-size: 0.95rem; margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    strong { color: #172B4D; }
+    a { color: #0052CC; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+    th, td { border: 1px solid #DFE1E6; padding: 8px 12px; text-align: left; color: #344563; vertical-align: top; }
+    th { background: #F4F5F7; color: #172B4D; font-weight: 600; }
+    td:first-child { min-width: 140px; }
+    code { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 3px; padding: 1px 5px; font-size: 0.85em; word-break: break-word; }
+    .contact-box { background: #fff; border: 1px solid #DFE1E6; border-radius: 8px; padding: 20px; margin-top: 36px; }
+    .pdf-btn { background: #F4F5F7; border: 1px solid #DFE1E6; border-radius: 4px; padding: 5px 12px; font-size: 0.82rem; color: #505F79; cursor: pointer; font-family: inherit; }
+    .pdf-btn:hover { background: #EBECF0; color: #172B4D; }
+    .tm-note { max-width: 880px; margin: 2.5rem auto 1.5rem; padding: 0 1.25rem; font-size: 0.78rem; line-height: 1.5; color: #6b7280; text-align: center; }
+    @media print { .pdf-btn { display: none !important; } body { background: #fff; } .container { padding: 20px 0; } }
+  </style>
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Security Policy</h1>
+    <p class="updated">Visual Progress Tracker for Jira · Last updated: October 5, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      Visual Progress Tracker for Jira ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and operates entirely within Atlassian's infrastructure under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      trust boundary. Its dashboard gadgets and widgets read Jira <strong>with the permissions of the
+      person viewing them</strong>, its only change to Jira is <strong>writing progress values into the
+      App's own custom fields</strong>, it makes <strong>no outbound network calls to any external
+      server</strong>, and it stores no credentials of any kind. This document describes the App's
+      security architecture and our practices.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is provided by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions run in isolated, sandboxed containers with restricted system access managed by Atlassian.</li>
+      <li><strong>No external network egress:</strong> The App declares no egress domains and makes no outbound requests to any server outside the Atlassian platform. No external API keys or third-party services are involved.</li>
+      <li><strong>No AI services:</strong> The App does not call any AI service. Progress is deterministic arithmetic on statuses, subtasks and story points.</li>
+      <li><strong>Native user interface:</strong> The custom fields, dashboard gadgets, widgets and the admin page are built with Atlassian's UI Kit and rendered by Jira; the App loads no third-party scripts, fonts, frames or images.</li>
+    </ul>
+
+    <h2>3. Access Control</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Control</th><th>Details</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Viewer's own permissions</td>
+          <td>The dashboard gadgets and widgets search work items, subtasks and epics <strong>as the user</strong> (Forge <code>asUser</code>), and the project picker and the progress details on a work item read Jira the same way. Jira applies that person's permissions, so each viewer sees only what Jira allows them to see.</td>
+        </tr>
+        <tr>
+          <td>Cache per viewer</td>
+          <td>Results of the gadgets and widgets are cached under the viewer's account ID, so a cached result is only ever shown to the person whose search produced it. A JQL filter appears in the cache key only as a hash.</td>
+        </tr>
+        <tr>
+          <td>App account for the progress fields</td>
+          <td>The status and subtask progress fields are computed with the App's own account (<code>asApp</code>) when Jira asks for their value, reading only the statuses of that work item and its subtasks. "Recalculate All Fields" runs only after Jira confirms, as the person starting it, that they may browse the project; it writes with the App's account and only into the App's own progress fields, at most once every 7 days.</td>
+        </tr>
+        <tr>
+          <td>Minimal API scopes</td>
+          <td><code>read:jira-work</code> (work items, projects, fields), <code>write:jira-work</code> (only to write progress values into the App's own custom fields), <code>storage:app</code> (settings, the per-viewer cache, technical records and anonymous usage counters). Three scopes, no admin scopes.</td>
+        </tr>
+        <tr>
+          <td>Admin settings for Jira administrators only</td>
+          <td>The status-to-progress mapping and the color thresholds can be changed only after Jira confirms, at that moment and as the person saving, that they are a Jira administrator.</td>
+        </tr>
+        <tr>
+          <td>Input validation</td>
+          <td>Project keys are checked against a strict character set before they are used in a JQL query. JQL filters entered in the gadget settings run with the viewer's own permissions and are never stored by the App or written to its logs, only a hash of them.</td>
+        </tr>
+        <tr>
+          <td>Developer access</td>
+          <td><strong>None.</strong> We cannot read, access, or export any data stored in your Jira instance or in the App's Forge storage. All data resides within Atlassian's infrastructure.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Data Protection</h2>
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All Forge-to-Jira API calls use Atlassian's internal secured transport (TLS 1.2+).</li>
+      <li>The App makes no outbound HTTPS calls to external services.</li>
+    </ul>
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>The App stores the admin settings, a result cache per viewer (work item keys, titles, statuses, types, priorities and progress; in the Epic Progress Tracker grouped by assignee also the assignees' account IDs and display names), the review prompt state per user, field IDs, the time of the last recalculation, the subscription state and anonymous daily usage counters in <strong>Atlassian Forge storage</strong>, hosted by Atlassian with encryption at rest and data residency in the location of your Jira site.</li>
+      <li>A cache entry is used for at most 5 minutes and then replaced by the next load; retention, including the 28 days after an uninstall, is described in the <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>.</li>
+      <li>Gadget and widget settings are stored by Jira as part of the dashboard; progress values are stored by Jira in the App's custom fields.</li>
+      <li>No credentials, tokens, or secrets are stored; there are none to store.</li>
+    </ul>
+    <p><strong>Technical logs:</strong></p>
+    <ul>
+      <li>Log lines contain identifiers such as project keys and, when a recalculation skips or cannot update a work item, its key, plus counts, modes, HTTP statuses and error codes. They never contain titles, names, email addresses, account IDs or JQL text; every value passes a filter before it is written.</li>
+    </ul>
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App reads only the fields it needs: status, title, type, priority, resolution, parent and subtasks, and story points for the Epic Progress Tracker; the assignee only when work is grouped by assignee.</li>
+      <li>Work item descriptions, comments and attachments are never read. No email addresses, avatars or other profile data are stored.</li>
+    </ul>
+
+    <h2>5. No External Credentials or Integrations</h2>
+    <p>
+      The App does not require or accept any API keys, tokens, passwords, or third-party credentials.
+      There is no configuration that could expose user secrets, and there are no integrations beyond
+      the Atlassian platform itself.
+    </p>
+
+    <h2>6. Dependency &amp; Vulnerability Management</h2>
+    <ul>
+      <li>Runtime dependencies are limited to Atlassian's official Forge packages and React, maintained and patched by their publishers.</li>
+      <li>Build and test tooling is not included in the production runtime bundle.</li>
+      <li>We run <code>npm audit</code> before every deploy via an automated pre-deploy gate that blocks a release on high or critical findings, plus a weekly automated audit.</li>
+      <li>Security patches are deployed promptly via Forge; the Node.js runtime is maintained by Atlassian.</li>
+    </ul>
+
+    <h2>7. Incident Response</h2>
+    <p>If a security issue is discovered in the App:</p>
+    <ul>
+      <li>We investigate and begin remediation promptly upon notification or discovery.</li>
+      <li>A fix is deployed as a priority update via the Forge deployment pipeline.</li>
+      <li>Affected customers are notified via the Marketplace listing and, where possible, directly.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — Visual Progress Tracker"</strong>. We aim to acknowledge reports within 2 business days.
+    </p>
+
+    <h2>8. Organizational Security Controls</h2>
+    <ul>
+      <li><strong>Access to production:</strong> Deployments are performed exclusively by the maintainer (Janek Behrens) via the authenticated Forge CLI, behind an automated security gate.</li>
+      <li><strong>Source code:</strong> Maintained in a version-controlled repository under the maintainer's control.</li>
+      <li><strong>No sub-processors:</strong> We engage no sub-processors. All processing occurs within the Atlassian platform.</li>
+    </ul>
+
+    <h2>9. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> The App stores Atlassian account IDs as keys of the per-viewer cache and of the review prompt state, and, in the cache of the Epic Progress Tracker grouped by assignee, the assignees' account IDs and display names; no email addresses or other profile data. See our <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>.</li>
+      <li><strong>Atlassian security requirements:</strong> Built to comply with <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a>, the <a href="https://developer.atlassian.com/platform/forge/shared-responsibility-model/" target="_blank" rel="noopener">Forge shared responsibility model</a> and the Marketplace security review.</li>
+      <li><strong>Runs on Atlassian:</strong> Operates under Atlassian's trust boundary, so Atlassian's infrastructure, security controls, and compliance certifications (SOC 2, ISO 27001, etc.) apply to the underlying platform.</li>
+    </ul>
+
+    <h2>10. What We Cannot Access</h2>
+    <p>For complete transparency, we have no technical means to access:</p>
+    <ul>
+      <li>Any data in your Jira instance (work items, comments, attachments, user data)</li>
+      <li>The settings, cache and other data in the App's Forge storage</li>
+      <li>Your Atlassian account credentials or session tokens</li>
+      <li>Any personal data of your team members</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2 style="margin-top: 0;">11. Contact</h2>
+      <p style="margin-bottom: 0;">
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — Visual Progress Tracker
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">Atlassian and Jira are trademarks of Atlassian. Visual Progress Tracker for Jira is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+  <script src="/components.js"></script>
+</body>
+</html>

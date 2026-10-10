@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Metrics for Jira — DORA™ Metrics Without CI/CD Setup</title>
+  <meta name="description" content="Deployment frequency, lead time, change failure rate and time to restore from your Jira data, on any dashboard. No CI/CD setup. Try the interactive demo.">
+  <link rel="canonical" href="https://janekbehrens.de/dora-metrics-for-jira.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/dora-metrics-for-jira.html">
+  <meta property="og:title" content="DevOps Metrics for Jira — DORA™ Metrics Without CI/CD Setup">
+  <meta property="og:description" content="Deployment frequency, lead time, change failure rate and time to restore from the Jira data you already have. Benchmark bands, trends and a before/after view of your AI rollout.">
+  <meta property="og:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DevOps Metrics for Jira — DORA™ Metrics Without CI/CD Setup">
+  <meta name="twitter:description" content="Deployment frequency, lead time, change failure rate and time to restore from the Jira data you already have. Benchmark bands, trends and a before/after view of your AI rollout.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "DevOps Metrics for Jira",
+        "description": "Atlassian Forge dashboard gadget that shows the four DORA™ metrics (deployment frequency, lead time for changes, change failure rate and time to restore) calculated from Jira work items, with benchmark bands, trends, a before/after comparison around an AI rollout and exports. No CI/CD integration required.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "url": "https://janekbehrens.de/dora-metrics-for-jira.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How can it measure DORA™ metrics without CI/CD data?", "acceptedAnswer": { "@type": "Answer", "text": "From the Jira data you already have: released versions or status changes for deployments, the first “In progress” to the last “Done” for lead time, bugs raised within 14 days of a release (without releases: issues moved back out of Done) for the change failure rate, and incident tickets from created to resolved for time to restore. These are approximations from work items, measured the same way every time. The ⓘ on every tile says how the number is calculated." } },
+          { "@type": "Question", "name": "What counts as a deployment?", "acceptedAnswer": { "@type": "Answer", "text": "You choose in the setup wizard: Jira versions marked as released (with a release date), or issues that first reach statuses you pick. With at least three releases in the last 90 days the wizard recommends releases, otherwise the status option. Both options are in Free." } },
+          { "@type": "Question", "name": "Can it show whether our AI rollout changed delivery?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, with Pro. Enter the rollout date in step 3 of the wizard. The AI Impact tab compares two equally long periods before and after it on all four metrics, with a rule-based verdict, and compares AI-involved issues with the rest. AI involvement comes from labels, issue types and app-account activity. Results are team totals, never per person." } },
+          { "@type": "Question", "name": "How up to date are the numbers?", "acceptedAnswer": { "@type": "Answer", "text": "The first analysis reads up to 12 months of completed issues once. After that the data is refreshed every night for projects opened in the last 45 days, and the refresh button updates a project right away, at most once every 10 minutes. Jira reloads the gadgets every 3 hours." } },
+          { "@type": "Question", "name": "Does the app change my issues or store personal data?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app only reads Jira work data and never writes to your issues. It stores weekly aggregate numbers in Atlassian's Forge storage: no names and no account IDs. Details in the Trust Center." } },
+          { "@type": "Question", "name": "Is it free?", "acceptedAnswer": { "@type": "Answer", "text": "Jira sites with up to 10 users pay nothing. Larger sites start with a free trial. Pro features are on while the site has an active subscription, the trial included. Without one, for example after the trial, the Overview gadget keeps working for one project with all four metrics, bands and trends." } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://janekbehrens.de/" },
+          { "@type": "ListItem", "position": 2, "name": "DevOps Metrics for Jira", "item": "https://janekbehrens.de/dora-metrics-for-jira.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "DevOps Metrics — Deployment Frequency & Lead Time for Jira: did your AI rollout pay off?",
+    "description": "Deployment frequency, lead time for changes, change failure rate and time to restore, calculated from the releases, status changes and incidents already in Jira.",
+    "thumbnailUrl": "https://janekbehrens.de/imgDoraMetricsForJira/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/gZlSMDVmt68",
+    "contentUrl": "https://www.youtube.com/watch?v=gZlSMDVmt68"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/dora-demo.css">
+</head>
+<body class="rd" data-app="dora">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/dora-metrics-icon.png" alt="" width="48" height="48">
+            <div><b>DevOps Metrics for Jira</b><span>Jira Cloud · Built on Forge</span></div>
+          </div>
+          <h1 class="h-display">The four DORA™ metrics on your <em>Jira dashboard</em></h1>
+        </div>
+        <div>
+          <p class="lead">Deployment frequency, lead time for changes, change failure rate and time to restore, calculated from the releases, status changes and incidents already in Jira. No CI/CD setup.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="dora-metrics-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="dora">
+          <noscript><img src="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps Metrics — Overview gadget with the four metric tiles and the lead-time trend chart" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app. Pro features are on, as in the free trial.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f1" aria-controls="panel-dora-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Four metrics in one gadget</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f2" aria-controls="panel-dora-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">No CI/CD setup</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f3" aria-controls="panel-dora-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Before and after your AI rollout</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f4" aria-controls="panel-dora-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">One metric for the wallboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f5" aria-controls="panel-dora-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Reports in one click</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f1" aria-labelledby="tab-dora-f1">
+              <a class="feat-shot" href="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps Metrics — Overview gadget for the last 6 months: deployment frequency 1.7 per week, lead time 3 days, change failure rate 13% and time to restore 10.5 hours, each with band and arrow; next to it the Trends tab with the weekly lead time, benchmark zones and markers for a new CI pipeline and the AI rollout" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Four metrics in one gadget</h3>
+                <p>Deployment frequency, lead time for changes, change failure rate and time to restore for the last 30 days, 90 days, 6 months or 12 months. The Trends tab shows each one week by week or month by month.</p>
+                </div>
+                <div><ul>
+                <li>An Elite, High, Medium or Low band from the published DORA™ research.</li>
+                <li>An arrow against the previous period of the same length, and one sentence in plain language.</li>
+                <li>ⓘ explains how each number is calculated. Details lists what was left out.</li>
+              </ul>
+                <a class="text-link feat-more" href="dora-metrics-docs.html#calc">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f2" aria-labelledby="tab-dora-f2" hidden>
+              <a class="feat-shot" href="imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" alt="Setup wizard: step 1 with the project Storefront, step 2 with Releases recommended after 23 releases were found in the last 90 days, and the finished gadget with the first real numbers" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>No CI/CD setup</h3>
+                <p>The gadget reads what Jira already has: released versions, status changes, bugs and incident tickets. A three-step wizard checks your project and recommends a setting.</p>
+                </div>
+                <div><ul>
+                <li>A deployment is a Jira release, or an issue reaching a status you pick. Releases are recommended when the project had at least three in the last 90 days.</li>
+                <li><b>Use recommended settings</b> saves it in one click.</li>
+                <li>The first analysis reads up to 12 months once, usually in about a minute.</li>
+              </ul>
+                <a class="text-link feat-more" href="dora-metrics-docs.html#start">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f3" aria-labelledby="tab-dora-f3" hidden>
+              <a class="feat-shot" href="imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" alt="AI Impact tab: a plain-language verdict, the change of all four metrics over 182 days before versus after the rollout, and the median lead time of AI-involved versus other issues" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Before and after your AI rollout <span class="pro">PRO</span></h3>
+                <p>Enter the date your team started with Copilot, Rovo, Claude or Cursor. The AI Impact tab compares two equally long periods on all four metrics and says in plain words what changed.</p>
+                </div>
+                <div><ul>
+                <li>Both periods last as long as the time since the rollout, at most a year, and stay within the analysed history.</li>
+                <li>AI-involved vs other issues: share of the completed work and median lead time.</li>
+                <li>AI involvement from labels, issue types and app-account activity. Team totals only, never per person.</li>
+              </ul>
+                <a class="text-link feat-more" href="dora-metrics-docs.html#ai">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f4" aria-labelledby="tab-dora-f4" hidden>
+              <a class="feat-shot" href="imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" alt="Four DevOps Metric Card gadgets on a Jira dashboard: deployment frequency 1.8 per week, lead time 2.9 days, change failure rate 13% and time to restore 10.3 hours, each with band, change against the previous period and sparkline" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>One metric for the wallboard <span class="pro">PRO</span></h3>
+                <p>The DevOps Metric Card gadget shows one metric in large type, with its band, the change against the previous period and a sparkline. Four cards make a team wallboard.</p>
+                </div>
+                <div><ul>
+                <li>One project, one metric and one period per card.</li>
+                <li>Uses the definitions the project was set up with in the Overview gadget.</li>
+                <li>Jira reloads it every 3 hours.</li>
+              </ul>
+                <a class="text-link feat-more" href="dora-metrics-docs.html#card">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f5" aria-labelledby="tab-dora-f5" hidden>
+              <a class="feat-shot" href="imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" alt="PNG report image of the four metric tiles for the last 6 months, with the CSV, PNG and Copy as text buttons" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Reports in one click <span class="pro">PRO</span></h3>
+                <p>Take what the gadget shows into a review deck, a spreadsheet or a Confluence page. One click each, no dialog.</p>
+                </div>
+                <div><ul>
+                <li><b>PNG:</b> a report image of the four tiles, or the current trend chart.</li>
+                <li><b>CSV:</b> one row per week of the selected period.</li>
+                <li><b>Copy as text:</b> a Markdown table with the plain-language sentences.</li>
+              </ul>
+                <a class="text-link feat-more" href="dora-metrics-docs.html#export">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of DevOps Metrics in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgDoraMetricsForJira/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/gZlSMDVmt68?autoplay=1" data-title="DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: did your AI rollout pay off?">
+              <button class="yt-play-btn" aria-label="Load and play the video: DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: did your AI rollout pay off?"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with DevOps Metrics</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With DevOps Metrics</th></tr></thead>
+            <tbody>
+              <tr><td>Deployment frequency</td><td class="no">A report that needs deployment data from a connected CI/CD tool</td><td class="yes">Counted from Jira releases, or from issues reaching a status. Nothing to connect</td></tr>
+              <tr><td>Change failure rate and time to restore</td><td class="no">Not among the built-in reports of Jira Software</td><td class="yes">From bugs raised within 14 days of a release (without releases: reopened issues), and from incident tickets</td></tr>
+              <tr><td>Effect of an AI rollout</td><td class="no">No built-in before/after view</td><td class="yes">Two equally long periods before and after the rollout date, on all four metrics (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud without apps. Jira's own <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-your-deployment-frequency-report/" target="_blank" rel="noopener">deployment frequency report</a> is described on Atlassian Support.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Plans</span>
+          <h2 class="h-section">Free and Pro</h2>
+          <p class="muted">Sites with up to 10 users pay nothing for the app. Larger sites start with a free trial; per-user pricing is on the <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">Without an active subscription, for example after the trial</p>
+            <ul>
+              <li>Overview gadget for one project</li>
+              <li>All four metrics with bands, arrows and sentences</li>
+              <li>Trends, weekly or monthly, with benchmark zones</li>
+              <li>Deployments as releases or as issues reaching a status</li>
+              <li>Data-quality footnote and Details</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">During the free trial and with a subscription</p>
+            <ul>
+              <li>Everything in Free</li>
+              <li>Up to 10 projects combined in one gadget</li>
+              <li>AI Impact tab and the AI rollout step</li>
+              <li>Advanced: incident types and sub-tasks</li>
+              <li>Up to five event markers on the trend chart</li>
+              <li>DevOps Metric Card gadget</li>
+              <li>PNG, CSV and Copy as text exports</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Get the app from the Atlassian Marketplace and confirm the installation on your Jira site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add the gadget</h3><p>On a Jira dashboard, choose Add gadget, search for “DevOps Metrics” and add DevOps Metrics — Overview.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Pick a project</h3><p>Accept the recommended deployment setting. The first analysis fills the tiles, usually in about a minute.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="dora-metrics-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>How can it measure DORA™ metrics without CI/CD data?</summary><div>From the Jira data you already have: released versions or status changes for deployments, the first “In progress” to the last “Done” for lead time, bugs raised within 14 days of a release (without releases: issues moved back out of Done) for the change failure rate, and incident tickets from created to resolved for time to restore. These are approximations from work items, measured the same way every time. The ⓘ on every tile says how the number is calculated.</div></details>
+          <details><summary>What counts as a deployment?</summary><div>You choose in the setup wizard: Jira versions marked as released (with a release date), or issues that first reach statuses you pick. With at least three releases in the last 90 days the wizard recommends releases, otherwise the status option. Both options are in Free.</div></details>
+          <details><summary>Can it show whether our AI rollout changed delivery?</summary><div>Yes, with Pro. Enter the rollout date in step 3 of the wizard. The AI Impact tab compares two equally long periods before and after it on all four metrics, with a rule-based verdict, and compares AI-involved issues with the rest. AI involvement comes from labels, issue types and app-account activity. Results are team totals, never per person.</div></details>
+          <details><summary>How up to date are the numbers?</summary><div>The first analysis reads up to 12 months of completed issues once. After that the data is refreshed every night for projects opened in the last 45 days, and the refresh button updates a project right away, at most once every 10 minutes. Jira reloads the gadgets every 3 hours.</div></details>
+          <details><summary>Does the app change my issues or store personal data?</summary><div>No. The app only reads Jira work data and never writes to your issues. It stores weekly aggregate numbers in Atlassian's Forge storage: no names and no account IDs. Details in the <a href="trust-center.html">Trust Center</a>.</div></details>
+          <details><summary>Is it free?</summary><div>Jira sites with up to 10 users pay nothing. Larger sites start with a free trial. Pro features are on while the site has an active subscription, the trial included. Without one, for example after the trial, the Overview gadget keeps working for one project with all four metrics, bands and trends.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="velocity-chart.html"><img src="img/velocity-chart-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Velocity Chart for Jira</b><span>Sprint velocity on any dashboard, with your own Definition of Done.</span></div></a>
+          <a class="card" href="team-capacity-for-jira.html"><img src="img/team-capacity-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Team Capacity for Jira</b><span>See who is over- or under-loaded each sprint.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Delivery numbers your whole team can read</h2>
+            <p class="muted">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="dora-metrics-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+        <p class="legal-note">DORA™ is a trademark of Google LLC. DevOps Metrics for Jira is an independent product by Janek Behrens and is not affiliated with or endorsed by Google. “DORA™ metrics” refers to the four software delivery metrics defined by the DevOps Research and Assessment program.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/dora-demo.js"></script>
+</body>
+</html>

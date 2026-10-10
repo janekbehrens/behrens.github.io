@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Progress Tracker for Jira — Color-Coded Progress Bars</title>
+  <meta name="description" content="Color-coded progress bars for Jira issues: from the status, from the subtasks, or set by hand, plus two dashboard gadgets. Try the interactive demo.">
+  <link rel="canonical" href="https://janekbehrens.de/visual-progress-tracker.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/visual-progress-tracker.html">
+  <meta property="og:title" content="Visual Progress Tracker for Jira — Color-Coded Progress Bars">
+  <meta property="og:description" content="Color-coded progress bars on every Jira issue: from the status, from the subtasks, or set by hand. Try the interactive demo with sample data.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Visual Progress Tracker for Jira — Color-Coded Progress Bars">
+  <meta name="twitter:description" content="Color-coded progress bars on every Jira issue: from the status, from the subtasks, or set by hand. Try the interactive demo with sample data.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What Jira version do I need?", "acceptedAnswer": { "@type": "Answer", "text": "Visual Progress Tracker needs Jira Cloud. It is a Forge app and runs on Atlassian's infrastructure. There is no Data Center or Server version." } },
+      { "@type": "Question", "name": "Is it free for small teams?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Jira sites with up to 10 users use it for free, with all three field types and both dashboard gadgets. Larger sites start with a free trial." } },
+      { "@type": "Question", "name": "Can I use several field types on the same issue?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All three field types work side by side on the same issue. A common setup is a Manual field for a rough estimate and a Subtask field for the detailed view." } },
+      { "@type": "Question", "name": "Do the list view colors follow my thresholds?", "acceptedAnswer": { "@type": "Answer", "text": "No. In Jira list views the columns use fixed colors: red below 34%, yellow below 67%, green from 67%. The bars on the issue and in both dashboard gadgets follow the thresholds a Jira admin sets." } },
+      { "@type": "Question", "name": "Does any data leave Atlassian's infrastructure?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app runs on Atlassian Forge. No external servers operated by Janek Behrens are involved. Details in the Trust Center." } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Visual Progress Tracker for Jira — progress bars on issues, lists and dashboards",
+    "description": "Color-coded progress bars on Jira issues, calculated from the status, from the subtasks, or set by hand, plus two dashboard gadgets.",
+    "thumbnailUrl": "https://janekbehrens.de/imgVisualProgressTracker/video-poster.webp",
+    "uploadDate": "2026-10-05",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/uQkpO3Fq0EU",
+    "contentUrl": "https://www.youtube.com/watch?v=uQkpO3Fq0EU"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="demo/demo.css">
+  <link rel="stylesheet" href="demo/vpt-demo.css">
+</head>
+<body class="rd" data-app="vpt">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/progresstracker144logo.png" alt="" width="48" height="48">
+            <div><b>Visual Progress Tracker for Jira</b><span>Jira Cloud · Built on Forge</span></div>
+          </div>
+          <h1 class="h-display">Progress bars for every <em>Jira issue</em></h1>
+        </div>
+        <div>
+          <p class="lead">Color-coded progress, calculated from the status, from the subtasks, or set by hand. Two dashboard gadgets show a whole project or one bar per epic.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Try it free on Marketplace →</a>
+            <a href="visual-progress-tracker-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interactive demo">
+      <div class="wrap">
+        <div data-demo="vpt">
+          <noscript><img src="imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira issue with the three progress bars of Visual Progress Tracker" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Sample data in your browser. Nothing is saved and nothing is sent anywhere. Dashed frames mark the parts that come from the app.</span>
+          <a href="#features">Real screenshots below ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f1" aria-controls="panel-vpt-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Three progress bars on every issue</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">A project overview on your dashboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">One bar per epic, or per person</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Progress in Jira list views</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Your statuses, your colors</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f1" aria-labelledby="tab-vpt-f1">
+              <a class="feat-shot" href="imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira issue with Status progress 50%, Subtask progress 75% and Manual progress 30%, plus the manual slider with quick buttons" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Three progress bars on every issue</h3>
+                <p>Three custom field types. Use one, two or all three on the same issue; each has its own red, yellow and green bar.</p>
+                </div>
+                <div><ul>
+                <li><b>Status:</b> follows the workflow status. A Jira admin sets what each status is worth.</li>
+                <li><b>Subtasks:</b> the average of the subtasks' status progress. Without subtasks it uses the child issues, for example the issues of an epic.</li>
+                <li><b>Manual:</b> a slider in 5% steps with quick buttons for 0, 10, 25, 50, 75 and 100%.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#status">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f2" aria-labelledby="tab-vpt-f2" hidden>
+              <a class="feat-shot" href="imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp" alt="Progress Tracker Overview gadget: project average 51% across 36 issues, a sortable table and the settings with a JQL filter for a fix version" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>A project overview on your dashboard</h3>
+                <p>The Progress Tracker Overview gadget lists the issues of a project with their progress and the average on top.</p>
+                </div>
+                <div><ul>
+                <li>Pick how it calculates: from the status, from the subtasks, or the Manual field's values.</li>
+                <li>Narrow it down with your own JQL, for example a fix version.</li>
+                <li>Sort by key, summary, type, status or progress. Up to 500 issues per gadget.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#dashboard">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f3" aria-labelledby="tab-vpt-f3" hidden>
+              <a class="feat-shot" href="imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp" alt="Epic Progress Tracker gadget: one bar per epic with done and total story points, and the settings Group by and Progress metric" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>One bar per epic, or per person</h3>
+                <p>The Epic Progress Tracker gadget rolls a project up into one bar per epic, calculated from its child issues. Switch the grouping to see progress per assignee instead.</p>
+                </div>
+                <div><ul>
+                <li>Group by epic or by assignee.</li>
+                <li>Measure by issue count or by story points.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#epic-gadget">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f4" aria-labelledby="tab-vpt-f4" hidden>
+              <a class="feat-shot" href="imgVisualProgressTracker/highlight-3-progress-in-jira-list-views.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/highlight-3-progress-in-jira-list-views.webp" alt="Jira list view with three progress columns, each with a colored dot and a percentage" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Progress in Jira list views</h3>
+                <p>All three fields work as columns in Jira's list view, each with a colored dot and the percentage. Scan a whole project without opening a single issue.</p>
+                </div>
+                <div><ul>
+                <li>Manual, Status and Subtask progress side by side.</li>
+                <li>List columns use fixed colors: red below 34%, yellow below 67%.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#listview">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f5" aria-labelledby="tab-vpt-f5" hidden>
+              <a class="feat-shot" href="imgVisualProgressTracker/screenshot-1-status-mapping.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/screenshot-1-status-mapping.webp" alt="Admin page Status Mapping: Backlog 0, To Do 0, Selected for Development 25, In Progress 50, In Review 75, Closed 100, Done 100" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Your statuses, your colors</h3>
+                <p>Jira admins decide what each workflow status is worth and where the bars turn from red to yellow to green. The fields and both gadgets use these settings for the whole site.</p>
+                </div>
+                <div><ul>
+                <li>Add your own statuses, for example "In QA".</li>
+                <li>Thresholds between 1 and 99%, with a live preview.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#admin">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Watch the tour</h2><p class="lead">A short walkthrough of Visual Progress Tracker in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url('imgVisualProgressTracker/video-poster.webp')"
+                 data-src="https://www.youtube-nocookie.com/embed/uQkpO3Fq0EU?autoplay=1" data-title="Visual Progress Tracker for Jira — progress bars on issues, lists and dashboards">
+              <button class="yt-play-btn" aria-label="Load and play the video: Visual Progress Tracker for Jira — progress bars on issues, lists and dashboards"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Click to load the video from YouTube (youtube-nocookie.com).<br><a href="privacy-policy.html#youtube">Privacy Policy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with Visual Progress Tracker</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With Visual Progress Tracker</th></tr></thead>
+            <tbody>
+              <tr><td>Progress on an issue</td><td class="no">The status, plus a bar of how many child work items are done</td><td class="yes">Three progress fields: from the status, from the subtasks, or set by hand</td></tr>
+              <tr><td>Partial progress for a status</td><td class="no">A status is either done or not</td><td class="yes">You decide what a status is worth, for example In Review = 75%</td></tr>
+              <tr><td>Progress in list views</td><td class="no">No column for status- or subtask-based progress</td><td class="yes">Columns with a colored dot and the percentage</td></tr>
+              <tr><td>Project overview on a dashboard</td><td class="no">Filter and chart gadgets, but no progress bar per issue and no project average</td><td class="yes">Overview gadget with the project average, and one bar per epic or assignee</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Get the app from the Atlassian Marketplace and confirm the installation on your Jira site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Add the fields</h3><p>Create the progress fields in Jira settings (Work items → Fields) and add them to your project screens.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Done</h3><p>Status and Subtask progress calculate themselves. Manual progress is one click on the field.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="visual-progress-tracker-docs.html#faq">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>What Jira version do I need?</summary><div>Visual Progress Tracker needs Jira Cloud. It is a Forge app and runs on Atlassian's infrastructure. There is no Data Center or Server version.</div></details>
+          <details><summary>Is it free for small teams?</summary><div>Yes. Jira sites with up to 10 users use it for free, with all three field types and both dashboard gadgets. Larger sites start with a free trial.</div></details>
+          <details><summary>Can I use several field types on the same issue?</summary><div>Yes. All three field types work side by side on the same issue. A common setup is a Manual field for a rough estimate and a Subtask field for the detailed view.</div></details>
+          <details><summary>Do the list view colors follow my thresholds?</summary><div>No. In Jira list views the columns use fixed colors: red below 34%, yellow below 67%, green from 67%. The bars on the issue and in both dashboard gadgets follow the thresholds a Jira admin sets.</div></details>
+          <details><summary>Does any data leave Atlassian's infrastructure?</summary><div>No. The app runs on Atlassian Forge. No external servers operated by Janek Behrens are involved. Details in the <a href="trust-center.html">Trust Center</a>.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="priority-scoring.html"><img src="img/priority-scoring-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Priority Scoring for Jira</b><span>Score and rank the backlog with RICE, WSJF or ICE.</span></div></a>
+          <a class="card" href="epic-progress-for-confluence.html"><img src="img/epic-progress-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Epic Progress for Confluence</b><span>Live Jira progress bars on Confluence pages.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>See your backlog in color</h2>
+            <p class="muted">Free for Jira sites with up to 10 users, with all features.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Get it on the Marketplace →</a>
+            <a href="visual-progress-tracker-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js"></script>
+  <script src="redesign.js"></script>
+  <script src="demo/demo-core.js"></script>
+  <script src="demo/vpt-demo.js"></script>
+</body>
+</html>

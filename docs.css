@@ -1,0 +1,265 @@
+/* ============================================================
+   docs.css — shared layout for all documentation pages
+   Load after site.css and redesign.css. Markup:
+
+   <body class="rd docs" data-app="vpt">
+     <div class="docs-layout">
+       <nav class="sidebar" aria-label="On this page">
+         <div class="sidebar-toc-heading">On this page</div>
+         <div class="sidebar-toc"><a href="#overview">Overview</a>…</div>
+       </nav>
+       <main class="container">
+         <h1>…</h1>
+         <p class="subtitle">…</p>
+         <div class="quickstart">…</div>          (optional)
+         <section id="…"><h2>…</h2>…</section>
+       </main>
+     </div>
+
+   Building blocks: .quickstart (ol), .tip, .warning, .note,
+   details.more (collapsed details), .step-box, .feature-table,
+   .pro (badge), dfn.term[data-tip] (hover explanation),
+   img (click to enlarge), .contact-box.
+   docs.js adds the sidebar highlight, the lightbox and the
+   explanations for dfn.term.
+   ============================================================ */
+
+.docs .docs-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 48px) 24px 64px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 780px);
+  gap: 56px;
+  justify-content: center;
+  align-items: start;
+}
+@media (max-width: 1080px) {
+  .docs .docs-layout { grid-template-columns: minmax(0, 780px); }
+  .docs .sidebar { display: none; }
+}
+@media (max-width: 640px) { .docs .docs-layout { padding: 24px 16px 48px; } }
+
+/* Sidebar: sticky table of contents */
+.docs .sidebar {
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+  max-height: calc(100vh - var(--nav-h) - 40px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 4px 0 24px;
+}
+.docs .sidebar::-webkit-scrollbar { display: none; }
+.docs .sidebar-toc-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 10px;
+  padding-left: 12px;
+}
+.docs .sidebar-toc a {
+  display: block;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--ink-3);
+  text-decoration: none;
+  padding: 5px 8px 5px 10px;
+  border-left: 2px solid var(--line);
+  transition: color .15s, border-color .15s, background-color .15s;
+}
+.docs .sidebar-toc a:hover { color: var(--ink); }
+.docs .sidebar-toc a.active { color: var(--brand); border-left-color: var(--brand); font-weight: 600; background: var(--brand-soft); }
+.docs .sidebar-toc a.sub { padding-left: 22px; font-size: 0.8rem; }
+
+/* Inline table of contents on small screens */
+.docs .toc {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin: 0 0 28px;
+}
+.docs .toc > summary { cursor: pointer; font-weight: 700; list-style: none; }
+.docs .toc > summary::-webkit-details-marker { display: none; }
+.docs .toc > summary::after { content: " ▾"; color: var(--ink-4); }
+.docs .toc[open] > summary { margin-bottom: 8px; }
+.docs .toc ol, .docs .toc ul { margin: 0; padding-left: 20px; }
+.docs .toc li { margin: 3px 0; font-size: 0.9rem; }
+@media (min-width: 1081px) { .docs .toc { display: none; } }
+
+/* Typography */
+.docs .container { max-width: 780px; margin: 0; padding: 0; min-width: 0; }
+.docs h1 { font-size: clamp(1.75rem, 3.4vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 10px; }
+.docs .subtitle { color: var(--ink-3); font-size: 1.0625rem; line-height: 1.6; margin-bottom: 28px; max-width: 64ch; }
+.docs h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 56px 0 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+.docs h3 { font-size: 1.0625rem; font-weight: 700; margin: 28px 0 8px; color: var(--ink); }
+.docs h4 { font-size: 0.9375rem; font-weight: 700; margin: 18px 0 6px; color: var(--ink-2); }
+.docs p, .docs li { color: var(--ink-2); font-size: 0.97rem; line-height: 1.7; }
+.docs p { margin-bottom: 14px; }
+.docs ul, .docs ol { margin: 0 0 16px; padding-left: 22px; }
+.docs li { margin-bottom: 6px; }
+.docs strong { color: var(--ink); }
+.docs main a { color: var(--brand); text-decoration: underline; text-decoration-color: rgba(0,82,204,.35); text-underline-offset: 3px; }
+.docs main a:hover { text-decoration-color: var(--brand); }
+.docs code { background: #F2F4F7; padding: 1px 6px; border-radius: 4px; font-size: 0.88em; color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.docs pre { background: #F2F4F7; border-radius: 10px; padding: 12px 14px; overflow-x: auto; margin: 0 0 16px; font-size: 0.85rem; }
+.docs pre code { background: none; padding: 0; }
+
+/* Quick start box at the top */
+.docs .quickstart {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 22px 8px;
+  margin: 0 0 32px;
+}
+.docs .quickstart h2 { margin: 0 0 10px; padding: 0; border: 0; font-size: 1.0625rem; }
+.docs .quickstart ol { counter-reset: qs; list-style: none; padding: 0; }
+.docs .quickstart li { counter-increment: qs; position: relative; padding-left: 38px; margin-bottom: 12px; }
+.docs .quickstart li::before {
+  content: counter(qs);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  display: grid;
+  place-items: center;
+}
+
+/* Callouts */
+.docs .tip, .docs .warning, .docs .note {
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.docs .tip { background: #EFF4FF; border: 1px solid #D1E0FF; }
+.docs .tip strong { color: #0040A6; }
+.docs .warning { background: #FFFAEB; border: 1px solid #FEDF89; }
+.docs .warning strong { color: #93370D; }
+.docs .note { background: #F9FAFB; border: 1px solid var(--line); }
+.docs .tip p:last-child, .docs .warning p:last-child, .docs .note p:last-child { margin-bottom: 0; }
+
+/* Collapsed details ("More details", troubleshooting, reference) */
+.docs details.more {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin: 12px 0;
+}
+.docs details.more > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 44px 12px 16px;
+  font-weight: 650;
+  color: var(--ink);
+  position: relative;
+}
+.docs details.more > summary::-webkit-details-marker { display: none; }
+.docs details.more > summary::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -6px;
+  border-right: 2px solid var(--ink-3);
+  border-bottom: 2px solid var(--ink-3);
+  transform: rotate(45deg);
+  transition: transform .2s;
+}
+.docs details.more[open] > summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.docs details.more > :not(summary) { margin-left: 16px; margin-right: 16px; }
+.docs details.more > :last-child { margin-bottom: 14px; }
+
+/* Steps, tables, badges */
+.docs .step-box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin: 14px 0; }
+.docs .step-box h3 { margin-top: 0; }
+.docs table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 0.9rem; }
+.docs .table-wrap { overflow-x: auto; margin: 14px 0 22px; }
+.docs .table-wrap table { margin: 0; }
+.docs th { background: #F9FAFB; text-align: left; padding: 9px 12px; border: 1px solid var(--line); font-weight: 700; color: var(--ink); }
+.docs td { padding: 9px 12px; border: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
+@media (max-width: 640px) { .docs main table { display: block; overflow-x: auto; } }
+.docs .pro { display: inline-block; background: #6554C0; color: #fff; font-size: 0.68rem; font-weight: 700; letter-spacing: .04em; padding: 1px 7px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; }
+.docs .contact-box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 40px; }
+
+/* Screenshots: click to enlarge */
+.docs main img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin: 16px 0 24px;
+  background: #F4F5F7;
+  cursor: zoom-in;
+}
+.docs main img.icon, .docs main .no-zoom img { border: 0; border-radius: 0; margin: 0; cursor: default; background: none; }
+.docs .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 16px 0 24px; }
+.docs .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+dialog.lightbox {
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 24px;
+  border: 0;
+  background: transparent;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+dialog.lightbox[open] { display: flex; }
+dialog.lightbox::backdrop { background: rgba(16,24,40,.9); }
+dialog.lightbox img { max-width: 100%; max-height: calc(100vh - 48px); object-fit: contain; border-radius: 8px; border: 0; margin: 0; cursor: default; background: #fff; }
+.lightbox-close { position: fixed; top: 14px; right: 18px; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer; border: 0; background: none; padding: 4px 10px; }
+.lightbox-close:focus-visible { outline: 2px solid #fff; border-radius: 6px; }
+
+/* Explanation on hover or focus: <dfn class="term" data-tip="…">JQL</dfn> */
+.term {
+  font-style: normal;
+  border-bottom: 1.5px dotted #98A2B3;
+  cursor: help;
+  position: relative;
+}
+.term:focus-visible { outline: 2px solid #2684FF; outline-offset: 2px; border-radius: 3px; }
+.term-tip {
+  position: absolute;
+  z-index: 500;
+  max-width: 300px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #101828;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 10px 30px rgba(16,24,40,.25);
+  pointer-events: none;
+  animation: term-in .12s ease;
+}
+@keyframes term-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .term-tip { animation: none; } }
