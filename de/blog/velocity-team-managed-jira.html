@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt | Janek Behrens</title>
+  <meta name="description" content="Teamverwaltete Jira-Projekte haben einen Velocity-Bericht — allerdings mit Einschränkungen. Hier erfährst du, wie du ihn aktivierst und liest, wie er sich von der Velocity in unternehmensverwalteten Projekten unterscheidet, warum er häufig leer bleibt und wie du ein konfigurierbares Velocity-Diagramm auf ein Dashboard bekommst.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/velocity-team-managed-jira.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt",
+  "description": "So aktivierst und liest du den Velocity-Bericht teamverwalteter Projekte, verstehst die Unterschiede zu unternehmensverwalteten Projekten und mögliche leere Berichte und erhältst ein konfigurierbares Velocity-Diagramm auf einem Dashboard.",
+  "url": "https://janekbehrens.de/de/blog/velocity-team-managed-jira.html",
+  "datePublished": "2026-06-01T00:00:00+02:00",
+  "dateModified": "2026-06-01T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+  "keywords": [
+    "Jira",
+    "teamverwaltetes Projekt",
+    "Velocity",
+    "Sprint-Velocity",
+    "Scrum",
+    "Agil",
+    "Berichte"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt">
+  <meta property="og:description" content="Teamverwaltete Projekte haben einen Velocity-Bericht — allerdings mit Einschränkungen. So aktivierst und liest du ihn und erhältst ein konfigurierbares Velocity-Diagramm auf einem Dashboard.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/velocity-team-managed-jira.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-06-01">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt">
+  <meta name="twitter:description" content="Teamverwaltete Projekte haben einen Velocity-Bericht — allerdings mit Einschränkungen. So aktivierst, liest und erweiterst du ihn.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Haben teamverwaltete Jira-Projekte einen Velocity-Bericht?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Teamverwaltete Projekte enthalten einen Velocity-Bericht, der die Velocity in Story Points oder anhand der Anzahl von Vorgängen misst. Dafür müssen die Funktion „Sprints“ aktiviert und mindestens ein Sprint abgeschlossen sein. Weitere verfügbare Berichte teamverwalteter Projekte sind das Burnup-Diagramm, das kumulative Flussdiagramm, die Zykluszeit und die Deployment-Häufigkeit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum fehlt der Velocity-Bericht in meinem teamverwalteten Projekt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Am häufigsten ist die Funktion „Sprints“ deaktiviert. Velocity setzt Sprints voraus: Aktiviere „Sprints“ unter Projekteinstellungen → Funktionen, führe mindestens einen Sprint durch und schließe ihn ab. Dann erscheint der Velocity-Bericht unter „Berichte“. Teamverwaltete Kanban-Projekte ohne Sprints haben keine Velocity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich die Velocity teamverwalteter Projekte auf einem Jira-Dashboard anzeigen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nicht mit nativem Jira — der Velocity-Bericht liegt in den Projektberichten, und für keinen der beiden Projekttypen gibt es ein natives Velocity-Dashboard-Gadget. Eine Forge-App wie Velocity Chart for Jira ergänzt ein Dashboard-Gadget, das mit teamverwalteten Scrum-Boards funktioniert und eine konfigurierbare Definition of Done und ein auswählbares Schätzfeld bietet."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/velocity-team-managed-jira.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/velocity-team-managed-jira.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/velocity-team-managed-jira.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">1. Juni 2026</span>
+        <span class="article-readtime">· 6 Min. Lesezeit</span>
+      </div>
+      <h1>Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt</h1>
+      <p class="article-intro">
+        „Teamverwaltete Projekte können keine Velocity anzeigen“ war früher richtig. Heute stimmt das nicht mehr — die verfügbare Velocity ist aber eingeschränkter, als viele Teams erwarten. Hier erfährst du genau, was der Velocity-Bericht teamverwalteter Projekte heute bietet, wie du ihn einschaltest, warum er manchmal leer bleibt und wie du die konfigurierbare Dashboard-Version erhältst, die diesen Projekten nativ weiterhin fehlt.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="yes-it-exists">Ja, teamverwaltete Projekte haben einen Velocity-Bericht</h2>
+      <p>
+        Zunächst die gute Nachricht. Teamverwaltete Scrum-Projekte enthalten <strong>inzwischen</strong> auch einen Velocity-Bericht. Atlassians <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-team-managed-velocity-report/" target="_blank" rel="noopener">Dokumentation zum Velocity-Bericht teamverwalteter Projekte</a> beschreibt es eindeutig: Velocity ist die durchschnittliche Arbeitsmenge, die das Team pro Sprint abschließt. In teamverwalteten Bereichen kann sie in <strong>Story Points oder anhand der Anzahl von Vorgängen</strong> gemessen werden. Wie in unternehmensverwalteten Projekten zeigt der graue Zusagebalken die gesamte Schätzung der Arbeit zu Sprintbeginn, während der grüne Abschlussbalken die gesamte abgeschlossene Schätzung am Sprintende zeigt.
+      </p>
+      <p>
+        Zusammen mit den anderen Berichten teamverwalteter Projekte — Burnup-Diagramm, kumulatives Flussdiagramm, Zykluszeit und Deployment-Häufigkeit — findest du ihn im Projekt unter <strong>Berichte</strong> . Wenn du teamverwaltete Projekte bisher nur wegen der Velocity vermieden hast, entfällt dieser Grund jetzt.
+      </p>
+
+      <h2 id="enable">So aktivierst und findest du ihn</h2>
+      <p>Velocity hängt von Sprints ab. Voraussetzung ist deshalb die Funktion „Sprints“:</p>
+      <ol>
+        <li>Öffne <strong>Projekteinstellungen → Funktionen</strong> und aktiviere <strong>Sprints</strong> (das Board muss außerdem als Scrum-Board eingerichtet sein).</li>
+        <li>Plane, <strong>starte</strong> und <strong>schließe</strong> mindestens einen Sprint ab — Velocity wird nur für <em>abgeschlossene</em> Sprints angezeigt.</li>
+        <li>Öffne <strong>Berichte</strong> in der Projektseitenleiste und wähle den <strong>Velocity-Bericht</strong>.</li>
+      </ol>
+      <p>
+        Wenn Berichte deaktiviert erscheinen, kann ein Administrator sie über die Funktionseinstellungen des Projekts wieder aktivieren — Atlassian beschreibt dies unter <a href="https://support.atlassian.com/jira-software-cloud/docs/enable-reports/" target="_blank" rel="noopener">Berichte aktivieren</a>.
+
+      </p>
+
+      <h2 id="differences">Wie sich die Velocity teamverwalteter und unternehmensverwalteter Projekte unterscheidet</h2>
+      <p>
+        Die Berechnung folgt demselben Modell aus zugesagter und abgeschlossener Arbeit. Die Unterschiede liegen in <em>Konfiguration und Reichweite</em>:
+
+      </p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>&nbsp;</th><th>Teamverwaltet</th><th>Unternehmensverwaltet</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Velocity-Bericht</strong></td><td>Ja (Story Points oder Anzahl der Vorgänge)</td><td>Ja (Schätzstatistik des Boards)</td></tr>
+          <tr><td><strong>Konfiguration</strong></td><td>Innerhalb des Projekts verwaltet — schnell eingerichtet, weniger detailliert</td><td>Schätzungen und Spaltenzuordnung auf Board-Ebene</td></tr>
+          <tr><td><strong>Definition von „Done“</strong></td><td>Die Done-Spalte des Boards</td><td>Die Done-Spalte des Boards</td></tr>
+          <tr><td><strong>Umfang</strong></td><td>Das Board dieses einen Projekts</td><td>Dieses eine Board (Boards können über Filter mehrere Projekte umfassen)</td></tr>
+          <tr><td><strong>Dashboard-Gadget</strong></td><td>Nativ keines</td><td>Nativ keines</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        Der entscheidende Punkt: Unabhängig vom Projekttyp ist der Velocity-Bericht <strong>auf ein Board beschränkt, an dessen Done-Spalte gebunden und nur im Berichtsbereich des Projekts verfügbar</strong>. Keiner der beiden Typen bietet ein Velocity- <em>Dashboard-Gadget</em>, und bei keinem kannst du neu festlegen, welche Status als abgeschlossen zählen.
+      </p>
+
+      <h2 id="empty">Warum der Velocity-Bericht leer oder falsch ist</h2>
+      <p>Diese wenigen Punkte führen speziell bei teamverwalteten Projekten zu Problemen:</p>
+      <ul>
+        <li><strong>Sprints sind nicht aktiviert.</strong> Keine Sprints-Funktion → keine Velocity. Das ist die häufigste Ursache eines fehlenden Berichts.</li>
+        <li><strong>Es wurde noch kein Sprint abgeschlossen.</strong> Velocity basiert auf abgeschlossenen Sprints; ein laufender Sprint wird nicht angezeigt.</li>
+        <li><strong>Abweichendes Schätzfeld.</strong> Wenn das Projekt in Story Points misst, Vorgänge aber in einem anderen Feld oder gar nicht geschätzt werden, bleiben die Balken leer. Stelle den Bericht testweise auf <em>Anzahl der Vorgänge</em> um oder stelle sicher, dass die Punkte in dem Feld stehen, das der Bericht ausliest.</li>
+        <li><strong>Status außerhalb der Done-Spalte.</strong> Tatsächlich erledigte Arbeit, deren Status nicht der Done-Spalte zugeordnet ist, zählt nicht als abgeschlossen.</li>
+      </ul>
+
+      <div class="callout callout-blue">
+        <p><strong>Gut zu wissen:</strong> Die Workflows teamverwalteter Projekte werden je Projekt verwaltet. Das erleichtert zusätzliche Status wie <em>In Review</em> oder <em>Released</em>. Diese Flexibilität ist hilfreich — aber genau dabei weist der native Velocity-Bericht, der nur die eine Done-Spalte zählt, oft weniger abgeschlossene Arbeit aus, als tatsächlich geleistet wurde.</p>
+      </div>
+
+      <h2 id="dashboard">Velocity auf einem Dashboard anzeigen</h2>
+      <p>
+        Die häufigste Einschränkung für Teams mit teamverwalteten Projekten ist die Reichweite. Velocity bleibt in den Berichten eines Projekts, während das Dashboard die gemeinsame, projektübergreifende Sicht des Teams bietet. Für <em>keinen</em> der beiden Projekttypen gibt es ein natives Velocity-Gadget. Eine Marketplace-App ist deshalb die einzige Möglichkeit, Velocity neben Gadgets zur Sprint-Gesundheit und zum Burndown anzuzeigen.
+      </p>
+      <p>
+        <a href="/de/velocity-chart.html">Velocity Chart for Jira</a> ist genau dafür entwickelt. Das auf Forge basierende Dashboard-Gadget behandelt teamverwaltete und unternehmensverwaltete Scrum-Boards gleich — teamverwaltete Boards erhalten in der Auswahl sogar die Kennzeichnung „team-managed“, damit du immer weißt, welches Board du darstellst. Darüber hinaus bietet es Funktionen, die im nativen Bericht fehlen: eine <strong>konfigurierbare Definition of Done</strong> (zähle <em>Released</em> und <em>Accepted</em> statt nur die letzte Spalte), ein auswählbares Schätzfeld, optional berücksichtigte Unteraufgaben, die Say/Do-Kennzahl zur Vorhersagbarkeit und einen Vergleich mehrerer Boards. Da es auf Forge basiert, greift es nur lesend zu, und deine Daten bleiben bei Atlassian.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Für gemischte Projektlandschaften:</strong> Wenn deine Organisation sowohl teamverwaltete als auch unternehmensverwaltete Projekte nutzt, erlaubt ein gemeinsames Dashboard-Gadget für beide — mit derselben Definition of Done — einen vergleichbaren Blick auf ihre Velocity. Das leisten die nativen Berichte der einzelnen Projekte nicht.</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Haben teamverwaltete Jira-Projekte einen Velocity-Bericht?</p>
+        <p class="faq-a">Ja. Teamverwaltete Scrum-Projekte enthalten einen Velocity-Bericht, der in Story Points oder anhand der Anzahl von Vorgängen misst. Dafür müssen „Sprints“ aktiviert und mindestens ein Sprint abgeschlossen sein. Er steht neben den Berichten zu Burnup, kumulativem Fluss, Zykluszeit und Deployment-Häufigkeit.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum fehlt der Velocity-Bericht in meinem teamverwalteten Projekt?</p>
+        <p class="faq-a">Meistens ist die Funktion „Sprints“ deaktiviert. Aktiviere „Sprints“ unter Projekteinstellungen → Funktionen, führe mindestens einen Sprint durch und schließe ihn ab. Dann erscheint der Velocity-Bericht unter „Berichte“. Ein teamverwaltetes Projekt ohne Sprints hat keine Velocity.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wird die Velocity teamverwalteter Projekte anders berechnet als die unternehmensverwalteter Projekte?</p>
+        <p class="faq-a">Nein — beide verwenden dasselbe Modell aus zugesagter und abgeschlossener Arbeit. Die Unterschiede betreffen Konfiguration und Reichweite: Jeder Bericht ist auf ein Board beschränkt, an dessen Done-Spalte gebunden und nur im Berichtsbereich des Projekts verfügbar.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich die Velocity teamverwalteter Projekte auf einem Dashboard anzeigen?</p>
+        <p class="faq-a">Nicht mit nativem Jira — für keinen der beiden Projekttypen gibt es ein Velocity-Dashboard-Gadget. Eine Forge-App wie Velocity Chart for Jira ergänzt ein Dashboard-Gadget, das mit teamverwalteten Boards funktioniert und eine konfigurierbare Definition of Done und ein auswählbares Schätzfeld bietet.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Velocity teamverwalteter Boards auf einem Dashboard</h3>
+        <p>Velocity Chart for Jira behandelt teamverwaltete und unternehmensverwaltete Scrum-Boards gleich — mit deiner eigenen Definition of Done, deinem Schätzfeld und einem Dashboard-Gadget, das der native Bericht nicht bietet.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#yes-it-exists">Es gibt ihn tatsächlich</a></li>
+          <li><a href="#enable">Aktivieren und finden</a></li>
+          <li><a href="#differences">Team- und unternehmensverwaltet</a></li>
+          <li><a href="#empty">Warum er leer bleibt</a></li>
+          <li><a href="#dashboard">Auf das Dashboard</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenloser Tarif</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Im Marketplace ansehen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Velocity-Diagramm: So liest du es</a>
+        <a href="/de/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">So wird die Sprint-Velocity berechnet</a>
+        <a href="/de/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

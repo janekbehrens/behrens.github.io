@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — Team Capacity Planning for Jira</title>
+  <meta name="description" content="Datenschutzerklärung von Team Capacity Planning for Jira: Welche Daten die App liest und speichert, wo sie verarbeitet und wie lange sie aufbewahrt werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/team-capacity-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/team-capacity-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/team-capacity-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/team-capacity-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Team Capacity Planning for Jira · Stand: 11. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch Team Capacity Planning for Jira (ehemals „Team Capacity — Sprint Workload &amp; Resource Planning for Jira“, "die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Jira Cloud-Instanz. Die App ist ein <strong>ausschließlich lesendes Berichtswerkzeug</strong>: Sie liest Sprint-Daten aus Ihren Jira-Boards, um die Auslastung pro Person im Verhältnis zur Kapazität anzuzeigen, und verändert Ihre Vorgänge niemals.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App liest die folgenden Jira-Daten ausschließlich zur Darstellung der Kapazitäts-Heatmap:</p>
+    <ul>
+      <li><strong>Boards und Sprints:</strong> Board-Namen, -Typen und zugehörige Projekte; Sprint-Namen, -Zustände und -Daten — für die Board- und Sprint-Auswahl und zum Ermitteln des aktiven Sprints.</li>
+      <li><strong>Board-Konfiguration:</strong> die Schätzeinstellung des Boards (z. B. Story Points oder Zeitschätzung) — zur Auswahl des passenden Schätzfelds.</li>
+      <li><strong>Vorgänge des ausgewählten Sprints:</strong> Bearbeiter (Konto-ID und Anzeigename), Vorgangstyp, Statuskategorie, Schätzwert und — auf lizenzierten Instanzen (Pro) — die zusammengefasste gebuchte Zeit aus Arbeitsprotokollen für den optionalen CSV-Export zum Vergleich von Schätzung und tatsächlichem Aufwand.</li>
+    </ul>
+    <p>
+      Vorgangstitel, Beschreibungen, Kommentare und Anhänge werden <strong>niemals gelesen</strong>. Anzeigenamen der Bearbeiter werden live gelesen, um das Diagramm zu beschriften, und werden von der App <strong>niemals dauerhaft gespeichert</strong> .
+    </p>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert nur die folgenden Daten in <strong>Atlassian Forge Storage</strong>, das von Atlassian innerhalb Ihrer Cloud-Instanz gehostet und verwaltet wird:
+    </p>
+    <ul>
+      <li><strong>Nicht personenbezogene Zwischenspeicher:</strong> eine Zuordnung von Boards zu Projekt-IDs (10 Minuten gültig) und die ID des Story-Points-Felds der Instanz (24 Stunden gültig). Sie dienen ausschließlich der schnellen Anzeige des Gadgets und enthalten keine Nutzerdaten.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> wie oft Funktionen pro Tag genutzt wurden (z. B. "ein Sprint wurde geladen"). Keine IDs, Namen oder Inhalte.</li>
+    </ul>
+    <p>
+      Die Gadget-Konfiguration (ausgewähltes Board und Sprint, Kapazitätswerte, Schwellenwerte und — bei Pro — personenspezifische Kapazitätsanpassungen mit Atlassian-Konto-ID als Schlüssel) speichert <strong>Jira selbst</strong>
+      als normale Dashboard-Gadget-Konfiguration, nicht die App. Sie enthält ausschließlich Zahlen und IDs — keine Namen, E-Mail-Adressen oder Freitexte.
+    </p>
+
+    <h2>4. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> eigene Server betreiben. Es gibt weder ein vom Entwickler betriebenes Backend noch eine solche Datenbank.</li>
+      <li>Wir werden <strong>nicht</strong> Namen, E-Mail-Adressen, Avatare oder Freitextinhalte speichern.</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an externe Dienste senden. Die App führt keine Netzwerkaufrufe außerhalb der Atlassian-Plattform aus.</li>
+      <li>Wir werden <strong>nicht</strong> Arbeitsbeschreibungen oder Kommentare lesen — die Auslastung wird ausschließlich aus Schätzungen und Statuskategorien berechnet.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "ein Sprint wurde geladen" oder "Jira hat nicht geantwortet") und einmal täglich die anonymen Nutzungszähler in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können numerische Board- und Sprint-IDs Ihrer Site sowie Zähler, Modi, HTTP-Statuswerte und Fehlercodes enthalten, jedoch niemals Personennamen, Konto-IDs, Board-, Sprint- oder Projektnamen oder JQL. Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>5. Hinweis zu personenspezifischen Kennzahlen</h2>
+    <p>
+      Die App visualisiert <strong>geplante Auslastung im Verhältnis zur konfigurierten Kapazität</strong> pro Bearbeiter für einen Sprint — Daten, die Ihr Team bereits auf seinem Board sieht. Sie misst weder individuelle Leistung noch Velocity pro Person oder Arbeitszeit und speichert keine historischen Datensätze zu einzelnen Personen. Der optionale CSV-Export wird vom Nutzer ausgelöst, gibt genau das wieder, was das Gadget anzeigt, und enthält nur Daten, für die der Betrachter berechtigt ist.
+    </p>
+
+    <h2>6. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Verarbeitung erfolgt innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong> im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alle von der App gespeicherten Daten (Abschnitt 3) werden im gehosteten Forge-Speicher abgelegt. Dieser unterstützt Atlassians
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>: Die Daten liegen am selben Ort wie Ihre Jira-Site und werden mit ihr verschoben, wenn ein Administrator die Daten der Site an einen anderen Ort verlagert. Ausgenommen sind Jira-Daten, die die App live liest, ohne sie zu speichern, Gadget- und Widget-Einstellungen (von Jira gemäß dessen eigener Datenresidenz gespeichert) und die technischen Logs aus Abschnitt 4, die über die App-Protokollierung von Atlassian verarbeitet werden.
+    </p>
+
+    <h2>7. Speicherdauer</h2>
+    <ul>
+      <li>Zwischengespeicherte IDs werden nach 10 Minuten bzw. 24 Stunden aktualisiert und am selben Speicherort überschrieben.</li>
+      <li>Nutzungszähler werden aufbewahrt, solange die App installiert ist.</li>
+      <li>Die Gadget-Konfiguration wird entfernt, wenn das Gadget entfernt oder die App deinstalliert wird.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/#data-recovery" target="_blank" rel="noopener">Forge-Dokumentation: Datenwiederherstellung für Apps mit gehostetem Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>8. Einhaltung der DSGVO</h2>
+    <p>
+      Die App selbst speichert keine personenbezogenen Daten; die einzigen verwendeten personenbezogenen Kennungen sind Atlassian-Konto-IDs in der eigenen Gadget-Konfiguration von Jira (für personenspezifische Kapazitätsanpassungen in Pro) und live aus Jira angezeigte Namen. Beides verbleibt vollständig in Ihrer Atlassian-Instanz und unter der Kontrolle von Atlassian. DSGVO-Anfragen betroffener Personen zu Daten, die Jira selbst speichert, sollten an Atlassian gerichtet werden. Bei Anliegen zur App kontaktieren Sie uns unter der unten angegebenen Adresse. Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus Forge Storage (Abschnitt 7).
+    </p>
+
+    <h2>9. Sicherheit</h2>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung ohne ausgehende Verbindungen zu externen Netzwerken außerhalb der Atlassian-Plattform.</li>
+      <li>Verwendet minimale, <strong>ausschließlich lesende</strong> Jira-API-Berechtigungen sowie App-Speicher.</li>
+      <li>Prüft vor der Rückgabe von Daten die eigenen Jira-Projektberechtigungen jedes Betrachters.</li>
+      <li>Speichert keine Zugangsdaten, Token oder Geheimnisse — solche gibt es nicht.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/team-capacity-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>10. Datenschutz bei Kindern</h2>
+    <p>Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.</p>
+
+    <h2>11. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>12. Kontakt</h2>
+      <p>
+        Bei Fragen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

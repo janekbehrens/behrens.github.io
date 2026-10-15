@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://janekbehrens.de/sitemap.xml

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt | Janek Behrens</title>
+  <meta name="description" content="Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-sprint-health-dashboard.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt",
+  "description": "Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.",
+  "url": "https://janekbehrens.de/de/blog/jira-sprint-health-dashboard.html",
+  "datePublished": "2025-11-03T00:00:00+02:00",
+  "dateModified": "2026-10-15T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp",
+  "keywords": [
+    "Jira",
+    "Atlassian",
+    "Sprint",
+    "Dashboard"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/jira-sprint-health-dashboard.html",
+    "inLanguage": "de"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann ich das Fortschritts-Gadget auf einen Sprint begrenzen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Wähle das Projekt und ergänze sprint = 123 mit eurer Sprint-ID im Feld Additional JQL Filter. sprint in openSprints() schließt aktive Sprints ein und kann mehr als einen treffen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist durchschnittlicher Fortschritt dasselbe wie die Sprint-Abschlussquote?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Ein statusbasierter Mittelwert enthält anteilige Fortschrittswerte noch offener Vorgänge. Eine Abschlussquote zählt nur erledigte Arbeit. Ordne beide ein und behalte das Sprint-Ziel im Blick."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich für das gesamte Dashboard einen Jira-Administrator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Jira-Administrator muss die App installieren, Felder erstellen und Zuordnungen speichern. Um ein Dashboard-Gadget einzurichten, brauchst du die Berechtigung, dieses Dashboard zu bearbeiten."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt">
+  <meta property="og:description" content="Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-sprint-health-dashboard.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2025-11-03">
+  <meta property="article:modified_time" content="2026-10-15">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Sprint">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt">
+  <meta name="twitter:description" content="Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp">
+
+  <!-- ── Schema.org Article ── -->
+
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+.article-body { min-width: 0; }
+.article-date, .article-readtime { color: var(--text-2); }
+.article-body pre { overflow-x: auto; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: .85rem; line-height: 1.6; }
+.article-table { overflow-x: auto; margin: 24px 0; }
+.article-table table { border-collapse: collapse; width: 100%; min-width: 400px; font-size: .88rem; line-height: 1.6; }
+.article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-3); }
+.article-table th { color: var(--text); background: var(--bg); }
+.article-body .article-cta a { color: #fff; text-decoration: underline; }
+</style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-sprint-health-dashboard.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-sprint-health-dashboard.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-sprint-health-dashboard.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">Veröffentlicht  <time datetime="2025-11-03">3. November 2025</time></span><span class="article-date">Aktualisiert  <time datetime="2026-10-15">15. Oktober 2026</time></span>
+        <span class="article-readtime">· 4 Min. Lesezeit</span>
+      </div>
+      <h1>Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt</h1>
+      <p class="article-intro">Kombiniere eine Sprint-Zusammenfassung mit einer Tabelle, die dir beim nächsten Gespräch hilft. Hier findest du die Einrichtung, einen Sprint-Filter und eine klare Erklärung, was der Mittelwert aussagt und was nicht.</p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+<h2 id="problem">Beginne mit den Fragen, die dein Dashboard beantworten soll</h2>
+
+<p>Ein nützliches Sprint-Dashboard trennt Lieferung, Umfang und einzelne Vorgänge. Kommt der Sprint seinem Ziel näher? Hat sich sein Umfang verändert? Welche Vorgänge brauchen heute eine Entscheidung? Ein einzelner durchschnittlicher Fortschrittsbalken beantwortet nicht alle drei Fragen. Kombiniere eine Sprint-Zusammenfassung mit einer Tabelle auf Vorgangsebene.</p>
+
+<h2 id="what-is-sprint-health">Nutze die native Sprint-Auswertung für den Gesamtüberblick</h2>
+
+<p>Jira bietet die Gadgets Sprint Health und Sprint Burndown. Beginne damit, wenn du den Zustand des Sprints oder die verbleibende Arbeit sehen möchtest. Die  <a href="https://support.atlassian.com/jira-cloud-administration/docs/use-dashboard-gadgets/">Gadget-Übersicht von Atlassian</a>  beschreibt die nativen Möglichkeiten. Ergänze eine Fortschrittstabelle, wenn nach dem Überblick offenbleibt, welche Tickets du prüfen solltest.</p>
+
+<p>Die folgende Anleitung nutzt Visual Progress Tracker für die Vorgangstabelle. Sie ergänzt die Sprint-Auswertung. Sie berechnet keine Lieferprognose und ersetzt euer Sprint-Ziel nicht.</p>
+
+<h2 id="progress-bars">Wähle eine Fortschrittskennzahl für die Vorgangstabelle</h2>
+
+<p>Nutze Status für Workflow-Zwischenstände, Subtasks für den durchschnittlichen Fortschritt der Kinder eines Vorgangs oder Manual für gepflegte Schätzungen. Der  <a href="/de/blog/jira-progress-bar.html">Leitfaden zu Fortschrittsfeldern</a>  erklärt Berechnung und Einrichtung. Wähle für dieses Beispiel Status mit To Do = 0 %, In Progress = 50 %, In Review = 75 % und Done = 100 %.</p>
+
+<h2 id="dashboard">Richte Progress Tracker Overview für deinen Sprint ein</h2>
+
+<ol><li>Öffne ein Jira-Dashboard, das du bearbeiten darfst, und wähle Add gadget.</li><li>Füge Progress Tracker Overview hinzu und wähle dein Projekt.</li><li>Wähle für dieses Beispiel unter Progress Calculation die Option Status.</li><li>Trage den zusätzlichen JQL-Filter unten ein und wähle 10, 25 oder 50 Zeilen pro Seite.</li><li>Klicke auf Save Configuration. Klicke auf den Spaltenkopf Progress, um kleinere Werte zuerst zu prüfen.</li></ol>
+
+<pre><code>sprint in openSprints() AND issuetype in (Story, Task, Bug)</code></pre>
+
+<p>Das Projekt wird separat gewählt. Der Filter braucht deshalb nur die zusätzlichen Bedingungen. Dieses Beispiel lässt Untervorgänge und Epics weg, damit Elternzusammenfassungen nicht mit ihren Kindern vermischt werden. Passe die Vorgangstypen an euer Projekt an. Sind mehrere Sprints aktiv, kann openSprints() mehr als einen einschließen. Nutze bei Bedarf eine bestimmte Sprint-ID, etwa sprint = 123.</p>
+
+<figure class="diagram"><a href="/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp"><img src="/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp" alt="Progress Tracker Overview mit Vorgangszeilen, Durchschnittsbalken und der Einstellung Additional JQL Filter." width="1840" height="900" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border)"></a><figcaption class="diagram-caption">Aktueller App-Screenshot mit Beispieldaten. Der abgebildete Filter wählt eine Version. Ersetze ihn für diese Anleitung durch den Sprint-Filter oben.</figcaption></figure>
+
+<h2 id="list-view">Nutze die Zahlen für das Gespräch im Daily</h2>
+
+<div class="article-table"><table><thead><tr><th scope="col">Beispielvorgang</th><th scope="col">Zugeordneter Status</th><th scope="col">Fortschritt</th></tr></thead><tbody><tr><td>Checkout-Tests</td><td>Done</td><td>100%</td></tr><tr><td>Zahlungsprüfung</td><td>In Review</td><td>75%</td></tr><tr><td>Adressformular</td><td>In Progress</td><td>50%</td></tr><tr><td>Versionshinweise</td><td>To Do</td><td>0%</td></tr></tbody></table></div>
+
+<p>Der beispielhafte Mittelwert beträgt gerundet 56 %. Nur einer der vier Vorgänge ist erledigt: Die Abschlussquote liegt bei 25 %. Keine der beiden Zahlen misst verbleibende Stunden. Klärt, warum Versionshinweise noch nicht begonnen hat, ob Zahlungsprüfung auf jemanden wartet und ob das Adressformular blockiert ist. Eine grüne Prozentzahl allein sagt nicht, ob das Sprint-Ziel sicher ist.</p>
+
+<p>Für die Arbeit außerhalb des Dashboards kannst du das Fortschrittsfeld zusätzlich in der Projekt-Listenansicht anzeigen. Die farbigen Punkte nutzen feste Grenzen von 34 % und 67 %. Die Schwellen der Dashboard-Balken kann ein Jira-Administrator ändern.</p>
+
+<h2 id="setup">Prüfe diese Einstellungen vor einer Auswertung</h2>
+
+<ul><li>Ordne jeden verwendeten Workflow-Status zu. Nicht zugeordnete Status zählen mit 0 %.</li><li>Halte den Filter gezielt. Das Gadget lädt bis zu 500 Vorgänge. Grenze ihn ein, wenn der Hinweis auf das Limit erscheint.</li><li>Sortiere über die Spaltenköpfe. Eine ORDER-BY-Klausel im Gadget-Filter wird ignoriert.</li><li>Prüfe das Alter der Daten. Ergebnisse können pro Betrachter bis zu fünf Minuten zwischengespeichert sein. Refresh lädt aktuelle Daten.</li><li>Prüfe fehlende Werte: Vorgänge mit einem Strich gehen nicht in den Mittelwert ein. Die Zahl mittelt verfügbare Werte und erfasst nicht automatisch jeden Vorgang im Sprint.</li></ul>
+
+<p>Wenn du für die Planung mehrere Sprints vergleichen möchtest, nutze den  <a href="/de/blog/jira-velocity-chart.html">Leitfaden zum Velocity-Diagramm</a>. Für länger laufende Arbeit nutze die  <a href="/de/blog/jira-epic-progress-tracking.html">Anleitung zum Epic-Dashboard</a>.</p>
+
+<div class="callout callout-blue"><p>Probiere dieselben Bedienelemente mit Beispieldaten aus:  <a href="/de/visual-progress-tracker.html#demo">interaktive Demo von Visual Progress Tracker öffnen</a>. Zum Ausprobieren brauchst du keine Jira-Installation.</p></div>
+
+<h2 id="faq">Häufige Fragen</h2>
+
+<div class="faq-item"><p class="faq-q">Kann ich das Fortschritts-Gadget auf einen Sprint begrenzen?</p><p class="faq-a">Ja. Wähle das Projekt und ergänze sprint = 123 mit eurer Sprint-ID im Feld Additional JQL Filter. sprint in openSprints() schließt aktive Sprints ein und kann mehr als einen treffen.</p></div>
+
+<div class="faq-item"><p class="faq-q">Ist durchschnittlicher Fortschritt dasselbe wie die Sprint-Abschlussquote?</p><p class="faq-a">Nein. Ein statusbasierter Mittelwert enthält anteilige Fortschrittswerte noch offener Vorgänge. Eine Abschlussquote zählt nur erledigte Arbeit. Ordne beide ein und behalte das Sprint-Ziel im Blick.</p></div>
+
+<div class="faq-item"><p class="faq-q">Brauche ich für das gesamte Dashboard einen Jira-Administrator?</p><p class="faq-a">Ein Jira-Administrator muss die App installieren, Felder erstellen und Zuordnungen speichern. Um ein Dashboard-Gadget einzurichten, brauchst du die Berechtigung, dieses Dashboard zu bearbeiten.</p></div>
+
+<div class="article-cta"><h3>Sieh dir das Dashboard vor der Einrichtung an</h3><p>App, Screenshots und interaktive Demo findest du auf der  <a href="/de/visual-progress-tracker.html">Produktseite von Visual Progress Tracker</a>.</p></div>
+</article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+<li><a href="#problem">Beginne mit den Fragen, die dein Dashboard beantworten soll</a></li>
+<li><a href="#what-is-sprint-health">Nutze die native Sprint-Auswertung für den Gesamtüberblick</a></li>
+<li><a href="#progress-bars">Wähle eine Fortschrittskennzahl für die Vorgangstabelle</a></li>
+<li><a href="#dashboard">Richte Progress Tracker Overview für deinen Sprint ein</a></li>
+<li><a href="#list-view">Nutze die Zahlen für das Gespräch im Daily</a></li>
+<li><a href="#setup">Prüfe diese Einstellungen vor einer Auswertung</a></li>
+<li><a href="#faq">Häufige Fragen</a></li>
+</ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Fortschrittsbalken: Einrichtung, Beispiele und Dashboards</a>
+        <a href="/de/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira-Epic-Fortschritt: Vorgangsanzahl, Story Points und Dashboards</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

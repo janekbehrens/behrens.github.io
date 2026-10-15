@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Support — Priority Scoring for Jira</title>
+  <meta name="description" content="Hilfe zu Priority Scoring for Jira — häufige Fragen, Fehlerbehebung und direkter Supportkontakt für die Atlassian Forge-App.">
+  <link rel="canonical" href="https://janekbehrens.de/de/priority-scoring-support.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/priority-scoring-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/priority-scoring-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/priority-scoring-support.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">Priority Scoring for Jira</p>
+
+    <h2>Hilfe erhalten</h2>
+    <p>
+      Du hast eine Frage, einen Fehler gefunden oder einen Funktionswunsch? Wir helfen dir gerne. Schreib uns eine E-Mail; wir antworten in der Regel innerhalb von <strong>1–2 Werktagen</strong>. Alternativ kannst du ein öffentliches Issue auf GitHub eröffnen. Schau zuerst in die vorhandenen Issues: Vielleicht gibt es bereits eine Antwort auf deine Frage.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Priority%20Scoring%20Support">support@janekbehrens.de</a><br>
+        <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/priority-scoring-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/priority-scoring-issues</a><br>
+        <strong>Dokumentation:</strong> <a href="/de/priority-scoring-docs.html">Dokumentation zu Priority Scoring for Jira</a><br>
+        <strong>Antwortzeit:</strong> 1–2 Werktage (Montag bis Freitag)
+      </p>
+    </div>
+
+    <h2>Bevor du uns kontaktierst</h2>
+    <p>Die meisten Fragen beantwortet die <a href="/de/priority-scoring-docs.html">Dokumentation</a>  (<a href="/de/priority-scoring-docs.html#faq">Häufige Fragen und Fehlerbehebung</a>). Häufige Fragen:</p>
+    <ul>
+      <li><strong>Die Schieberegler für Bewertungen erscheinen nicht in meinen Vorgängen</strong>: Fast immer fehlt das Feld auf der Maske des Projekts. Füge es unter „Jira Settings → Work items → Screens“ hinzu; in einem teamverwalteten Projekt unter „Project settings → Issue types“ (<a href="/de/priority-scoring-docs.html#add-to-screens">Details</a>).</li>
+      <li><strong>Rovo hat Bewertungen übernommen, aber „Board Health“ zeigt die Vorgänge noch als „Unscored“ (unbewertet)</strong>: Das Feld von Priority Scoring fehlt vermutlich auf der Maske des Projekts. Korrigiere die Maskenkonfiguration und klicke anschließend auf „Refresh“ auf der Seite der App.</li>
+      <li><strong>Rovo meldet, dass eine Bewertung nicht übernommen werden konnte</strong>: Nenne RICE, WSJF oder ICE und gib jede Dimension dieses Verfahrens an. Solange die Werte unvollständig sind, wird nichts geschrieben und die vorhandene Bewertung bleibt unverändert.</li>
+      <li><strong>Ein Gadget meldet zu einem Projekt „Priority Scoring cannot show“ (Anzeige nicht möglich)</strong>: Du hast in Jira keine Berechtigung, dieses Projekt anzuzeigen, oder das Projekt existiert nicht mehr. Bitte einen Jira-Administrator um die Berechtigung „Browse Projects“ oder bearbeite das Gadget und wähle ein Projekt, das du öffnen darfst.</li>
+      <li><strong>Ich kann die Einstellungen nicht ändern</strong>: Nur Jira-Administratoren können die Einstellungen von Priority Scoring ändern, da sie für alle Personen auf der Site gelten. Die „Health Criteria“ eines Projekts können auch dessen Projektadministratoren ändern.</li>
+      <li><strong>Der Portfolio-Vergleich von Rovo lässt ein Projekt aus</strong>: Er fasst bis zu 5 Projekte anhand ihrer „Board Health“ aus der letzten Stunde zusammen. Andere Projekte benötigen zunächst eine Prüfung mit <em>„Check“</em> auf der Registerkarte „Portfolio“ (<a href="/de/priority-scoring-docs.html#portfolio">Details</a>).</li>
+    </ul>
+
+    <h2>Was in eine Fehlermeldung gehört</h2>
+    <ul>
+      <li>Die URL deiner Jira-Site und ob es um die RICE-, WSJF- oder ICE-Felder, das Dashboard oder den Rovo-KI-Agenten geht</li>
+      <li><strong>Benutzerdefinierte Felder:</strong> Welches Bewertungsverfahren (RICE / WSJF / ICE) betroffen ist und ob das Feld in der Vorgangsansicht fehlt oder falsche Werte anzeigt</li>
+      <li><strong>Rovo-KI-Agent:</strong> Welche Aktion ausgelöst wurde (suggest / apply / bulk), der konfigurierte Anwendungsmodus und die genaue Antwort oder Fehlermeldung im Rovo-Chat</li>
+      <li><strong>Dashboard / Gadget:</strong> Der Projektschlüssel, das ausgewählte Bewertungsverfahren und die genaue Meldung oder Zahl, die du siehst. Für den Portfolio-Vergleich von Rovo: ob die „Board Health“ des Projekts in der letzten Stunde berechnet wurde (z. B. mit „Check“ auf der Registerkarte „Portfolio“)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Rechtliches:</strong> <a href="/de/priority-scoring-privacy-policy.html">Datenschutzerklärung</a>  ·
+
+      <a href="/priority-scoring-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·
+
+      <a href="/priority-scoring-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+    </p>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

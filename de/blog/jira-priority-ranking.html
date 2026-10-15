@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026) | Janek Behrens</title>
+  <meta name="description" content="Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-priority-ranking.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)",
+  "description": "Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.",
+  "url": "https://janekbehrens.de/de/blog/jira-priority-ranking.html",
+  "datePublished": "2026-03-26T00:00:00+02:00",
+  "dateModified": "2026-03-26T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+  "keywords": [
+    "Jira-Prioritätsrangfolge",
+    "Jira-Backlog nach Bewertung sortieren",
+    "Jira-Backlog-Priorisierung",
+    "Prioritätswert",
+    "Produktmanagement"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)",
+  "description": "Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.",
+  "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+  "datePublished": "2026-03-26T00:00:00+02:00",
+  "dateModified": "2026-03-26T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/jira-priority-ranking.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie ordne ich Vorgänge in Jira nach ihrem Prioritätswert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jiras natives Backlog sortiert nach „Rank“ (manuelle Reihenfolge per Ziehen und Ablegen), nicht automatisch nach einem numerischen Prioritätswert. Für eine echte Rangfolge nach Bewertung brauchst du eine Marketplace-App wie Priority Scoring for Jira. Sie berechnet je Vorgang RICE-, WSJF- oder ICE-Werte und zeigt eine Ranglistentabelle — nach Wert sortierbar und nach Sprint, zuständiger Person und Fälligkeitsdatum filterbar — außerhalb der nativen Backlog-Ansicht."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was unterscheidet Rang und Priorität in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Jira-Rang ist die manuelle Reihenfolge von Vorgängen im Backlog, festgelegt per Ziehen und Ablegen. Die Jira-Priorität ist ein kategorisches Feld mit Werten wie Höchste, Hoch, Mittel und Niedrig. Beides sind keine numerischen Bewertungen. Eine echte Prioritätsrangfolge auf Basis von RICE, WSJF oder ICE erfordert eine zusätzliche App, die Zahlenwerte im gesamten Backlog berechnet und anzeigt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann Jira das Backlog automatisch nach Priorität sortieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nativ nicht. Jiras Backlog nutzt ein Rangfeld für die Reihenfolge; ein Wechsel der Sortierung von Rang auf Priorität deaktiviert das Ziehen und Ablegen. Für automatische numerische Sortierung bieten Apps wie Priority Scoring for Jira eine separate Tabelle „Priority Ranking“, die alle Vorgänge absteigend nach RICE-, WSJF- oder ICE-Wert anzeigt, ohne die native Rangfolge des Backlogs zu ändern."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie löse ich das Problem „Alles hat hohe Priorität“ in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ersetze das kategorische Prioritätsfeld (Hoch/Mittel/Niedrig) durch ein numerisches Bewertungsverfahren wie RICE. RICE berechnet Werte aus vier objektiven Dimensionen — Reichweite, Wirkung, Sicherheit und Aufwand — und schafft damit eine natürliche Rangfolge im Backlog. Zwei Vorgänge können beide wichtig sein, aber RICE erzwingt einen quantitativen Vergleich und zeigt, welcher zuerst ausgeliefert werden sollte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was zeigt die Tabelle „Priority Ranking“ in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Tabelle „Priority Ranking“ in Priority Scoring for Jira zeigt alle bewerteten Vorgänge in absteigender Reihenfolge. Die Spalten umfassen Rangposition, Wert (mit farbcodierter Kennzeichnung), Vorgangsschlüssel und Zusammenfassung, aktuellen Sprint, Fälligkeitsdatum und zuständige Person. Unterhalb der konfigurierten niedrigen Schwelle erscheint eine rote Kennzeichnung, oberhalb der hohen eine grüne. Die Tabelle ist filterbar und aktualisiert sich bei neuen Bewertungen."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)">
+  <meta property="og:description" content="Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-priority-ranking.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-03-26">
+  <meta property="article:modified_time" content="2026-03-26">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Priority Ranking">
+  <meta property="article:tag" content="Backlog Prioritization">
+  <meta property="article:tag" content="Product Management">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)">
+  <meta name="twitter:description" content="Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar. Ohne Skripte.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .dimension-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .dimension-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .dimension-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+    }
+    .dimension-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .dimension-table strong { color: var(--text); }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem; color: var(--text-2); text-decoration: none;
+      line-height: 1.4; display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center; font-size: 0.8rem;
+      color: var(--text-faint); margin-top: 8px; font-style: italic;
+    }
+    .rank-mockup {
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; margin: 20px 0; box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .rank-mockup-header {
+      background: #F4F5F7; padding: 10px 16px;
+      display: grid; grid-template-columns: 36px 80px 1fr 100px 90px 90px;
+      gap: 12px; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint);
+      border-bottom: 1px solid var(--border);
+    }
+    .rank-mockup-row {
+      padding: 10px 16px;
+      display: grid; grid-template-columns: 36px 80px 1fr 100px 90px 90px;
+      gap: 12px; font-size: 0.87rem;
+      border-bottom: 1px solid var(--border-2); align-items: center;
+    }
+    .rank-mockup-row:last-child { border-bottom: none; }
+    .rank-num { font-weight: 700; color: var(--text-faint); }
+    .score-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 3px 9px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;
+    }
+    .score-green { background: #E3FCEF; color: #006644; }
+    .score-yellow { background: #FFFAE6; color: #974F00; }
+    .score-red { background: #FFEBE6; color: #BF2600; }
+    .issue-key { font-size: 0.8rem; color: var(--blue); font-weight: 600; }
+    .issue-summary { color: var(--text-3); line-height: 1.4; }
+    .sprint-tag {
+      font-size: 0.75rem; background: #EAE6FF; color: #403294;
+      padding: 2px 7px; border-radius: 3px; font-weight: 600;
+    }
+    @media (max-width: 600px) {
+      .rank-mockup-header, .rank-mockup-row {
+        grid-template-columns: 36px 70px 1fr;
+      }
+      .rank-mockup-header > *:nth-child(n+4),
+      .rank-mockup-row > *:nth-child(n+4) { display: none; }
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-priority-ranking.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-priority-ranking.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-priority-ranking.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">26. März 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren</h1>
+      <p class="article-intro">
+        Wenn 80 % deines Backlogs „Hohe Priorität“ tragen, bedeutet das Label nichts mehr. Numerische Bewertung ersetzt Labels durch Zahlen — und Zahlen erzeugen eine echte Rangfolge. Dieser Artikel erklärt die Gründe für Bewertung. Wenn du bereits wechseln möchtest und nur die Umsetzungsschritte brauchst (Spaltenauswahl, JQL <code>ORDER BY</code>, REST-API), springe direkt zu <a href="/de/blog/sort-jira-backlog-by-priority.html">Dein Jira-Backlog automatisch nach Priorität sortieren</a>.
+
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="problem">Das Problem „Alles ist P1“</h2>
+      <p>
+        Jira enthält ein Prioritätsfeld mit fünf Stufen: Höchste, Hoch, Mittel, Niedrig, Niedrigste. In den meisten Teams sammeln sich Vorgänge binnen Monaten oben. Stakeholder markieren Wünsche standardmäßig als „Hoch“. Produktmanager markieren Entwicklungsaufgaben als „Hoch“, um Sprintplätze zu erhalten. Die Stufen steigen, bis sie bedeutungslos werden.
+      </p>
+      <p>
+        Das Ergebnis: Sprint-Planung wird zur Verhandlung, in der die lauteste Stimme gewinnt. Entwickler wissen bei zwei wartenden „Hoch“-Vorgängen nicht, welchen sie wählen sollen. Die Führung erkennt im Backlog keine Begründung der Reihenfolge. Rutscht etwas, kann niemand erklären, warum Vorgang A vor B priorisiert wurde — weil keine echte Begründung existierte, nur Meinungen.
+      </p>
+      <p>
+        Die Lösung ist kein neuer Prozess und kein neues Meeting, sondern eine Zahl. Ein einzelner numerischer Wert aus objektiven Dimensionen erzeugt eine natürliche Rangfolge, die alle sehen und ohne Besprechung verstehen können.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Kurzantwort:</strong> Jira sortiert das Backlog nativ nicht nach einem numerischen Prioritätswert. Priority Scoring for Jira ergänzt jeden Vorgang um RICE-, WSJF- und ICE-Bewertungen und zeigt eine Tabelle „Priority Ranking“ — absteigend nach Wert sortiert, mit Sprint, Fälligkeitsdatum und zuständiger Person —, die dein priorisiertes Backlog auf einen Blick sichtbar macht.</p>
+      </div>
+
+      <h2 id="categorical-vs-numeric">Kategorische Priorität und numerische Rangfolge</h2>
+      <p>
+        Das grundlegende Problem von Hoch/Mittel/Niedrig ist die Kategorisierung. Zwei Vorgänge können beide „Hoch“ sein, ohne dass das Label einen Vergleich ermöglicht. Kategorische Felder beantworten „Ist das wichtig?“, aber nicht „Ist das wichtiger als jenes?“.
+      </p>
+      <p>
+        Numerische Bewertung beantwortet die Vergleichsfrage. Ein RICE-Wert von 240 liegt vor 180 — ohne Diskussion. Er entsteht aus konkreten Eingaben (Reichweite, Wirkung, Sicherheit, Aufwand), wodurch die Rangfolge überprüfbar wird. Du kannst zu Vorgang A sagen: „Er liegt höher, weil er dreimal so viele Nutzer bei halbem Aufwand erreicht.“ Das ist eine nachvollziehbare Begründung, kein Bauchgefühl.
+      </p>
+
+      <table class="dimension-table">
+        <thead>
+          <tr>
+            <th>Ansatz</th>
+            <th>Beantwortet „Wichtig?“</th>
+            <th>Beantwortet „Wichtiger als?“</th>
+            <th>Überprüfbar</th>
+            <th>Skaliert für große Backlogs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hoch/Mittel/Niedrig</strong></td>
+            <td>Ja</td>
+            <td>Nein</td>
+            <td>Nein</td>
+            <td>Nein — steigt mit der Zeit</td>
+          </tr>
+          <tr>
+            <td><strong>Manueller Rang (Ziehen und Ablegen)</strong></td>
+            <td>Ja</td>
+            <td>Ja — aber subjektiv</td>
+            <td>Nein</td>
+            <td>Nein — ständige Pflege nötig</td>
+          </tr>
+          <tr>
+            <td><strong>Numerische Bewertung (RICE/WSJF/ICE)</strong></td>
+            <td>Ja</td>
+            <td>Ja — objektiv</td>
+            <td>Ja</td>
+            <td>Ja — Werte aktualisieren sich mit dem wachsenden Backlog</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="ranking-table">Die Prioritätsranglistentabelle</h2>
+      <p>
+        In <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> zeigt der Tab „Ranking“ des Dashboards alle bewerteten Vorgänge absteigend nach Wert. Jede Zeile enthält Rangposition, Wert mit Farbkennzeichnung, Vorgangsschlüssel, Zusammenfassung, Sprint, Fälligkeitsdatum und zuständige Person. Filter nach Sprint, zuständiger Person oder Label begrenzen die Ansicht auf die relevante Teilmenge.
+      </p>
+
+      <div class="rank-mockup">
+        <div class="rank-mockup-header">
+          <span>#</span>
+          <span>Bewertung</span>
+          <span>Vorgang</span>
+          <span>Sprint</span>
+          <span>Fällig</span>
+          <span>Zuständige Person</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">1</span>
+          <span><span class="score-badge score-green">312</span></span>
+          <div><div class="issue-key">PROJ-47</div><div class="issue-summary">Massenimport für CSV-Dateien</div></div>
+          <span><span class="sprint-tag">Sprint 18</span></span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">A. Müller</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">2</span>
+          <span><span class="score-badge score-green">275</span></span>
+          <div><div class="issue-key">PROJ-31</div><div class="issue-summary">Integration für Slack-Benachrichtigungen</div></div>
+          <span><span class="sprint-tag">Sprint 18</span></span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">30. April</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">T. Nguyen</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">3</span>
+          <span><span class="score-badge score-yellow">148</span></span>
+          <div><div class="issue-key">PROJ-62</div><div class="issue-summary">Erweiterter Filter im Einstellungsbereich</div></div>
+          <span style="font-size:0.82rem;color:var(--text-faint);">Backlog</span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">Nicht zugewiesen</span>
+        </div>
+        <div class="rank-mockup-row">
+          <span class="rank-num">4</span>
+          <span><span class="score-badge score-red">38</span></span>
+          <div><div class="issue-key">PROJ-19</div><div class="issue-summary">Export alter Berichte (PDF v1)</div></div>
+          <span style="font-size:0.82rem;color:var(--text-faint);">Backlog</span>
+          <span style="font-size:0.82rem;color:var(--text-faint);">—</span>
+          <span style="font-size:0.82rem;color:var(--text-3);">Nicht zugewiesen</span>
+        </div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-faint);text-align:center;margin-top:-10px;margin-bottom:20px;font-style:italic;">Beispiel einer Prioritätsranglistentabelle — Werte absteigend sortiert, Farbkennzeichnungen entsprechend den konfigurierten Schwellen</p>
+
+      <p>
+        Vorgänge am unteren Ende der Rangliste — besonders mit 🔴 — solltest du hinterfragen. Gehören sie überhaupt ins Backlog? Die Rangfolge macht dieses Gespräch möglich, anders als ein Backlog voller „Hoch“-Tickets.
+      </p>
+
+      <h2 id="due-date">Fälligkeitsmarkierungen und Erkennung überfälliger Vorgänge</h2>
+      <p>
+        Die Bewertung allein erfasst nicht immer die Dringlichkeit. Ein niedrig bewerteter Vorgang mit einer festen Frist nächste Woche braucht trotzdem Aufmerksamkeit. Die Ranglistentabelle zeigt Fälligkeitsdaten und hebt überfällige Vorgänge hervor — zeitkritische Arbeit verschwindet so nicht unter hoch bewerteten, aber weniger dringenden Einträgen.
+      </p>
+      <p>
+        Bewertung und Fälligkeitsdatum ergeben zusammen eine Sicht auf zwei Achsen: Was ist am wertvollsten und was am dringendsten? Die Tabelle zeigt beides gleichzeitig, statt zwischen einer nach Wert sortierten Ansicht und einem Kalender zu wechseln.
+      </p>
+
+      <h2 id="rovo-bulk">Dein Backlog mit Rovo in wenigen Minuten gesammelt bewerten</h2>
+      <p>
+        Die größte Hürde eines geordneten Backlogs ist die Bewertung jedes bestehenden Vorgangs. Bei 150 unbewerteten Vorgängen bleibt die Ranglistentabelle leer. Der <a href="/de/blog/ai-backlog-prioritization-jira-rovo.html">Rovo-KI-Agent</a> in Priority Scoring liest Zusammenfassung, Beschreibung und Akzeptanzkriterien jedes Vorgangs und schlägt Dimensionswerte vor — so befüllst du das gesamte Backlog, ohne 600 einzelne Schieberegler einzustellen.
+      </p>
+      <p>
+        Im automatischen Modus: <em>„Bewerte alle unbewerteten Vorgänge im Projekt PROJ mit RICE.“</em> Rovo arbeitet die Liste durch, begründet die Bewertung jedes Vorgangs und schreibt die Werte. Die resultierende Rangfolge ist ein Ausgangspunkt — prüfe vor der nächsten Sprint-Planung das obere und untere Ende und passe unpassend wirkende Werte an.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProject.png" alt="Rovo-KI-Agent bewertet unbewertete Jira-Vorgänge gesammelt mit RICE und erzeugt eine erste Prioritätsrangfolge im gesamten Backlog" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo-KI-Agent bei der Massenbewertung unbewerteter Vorgänge eines Projekts — der schnellste Weg zu einer Rangfolge von Grund auf</p>
+      </div>
+
+      <h2 id="dashboard-gadget">Prioritätsrangfolge zu deinem Jira-Dashboard hinzufügen</h2>
+      <p>
+        Die Ranglistentabelle von Priority Scoring ist auch als Jira-Dashboard-Gadget verfügbar. Ergänze sie im Projekt-Dashboard, damit das ganze Team das priorisierte Backlog sieht, ohne eine separate App-Seite zu öffnen.
+      </p>
+      <p>
+        Für Entwicklungsleiter mit mehreren Projekten zeigt die Portfolioansicht Rangfolge und Gesundheit aller Projekte gleichzeitig — siehe den <a href="/de/blog/jira-portfolio-backlog-health.html">Leitfaden zur Portfolio-Backlog-Gesundheit</a> für Details zur Einrichtung.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/AppStartpage_Dashboard.png" alt="Priority-Scoring-Dashboard mit vollständiger Prioritätsranglistentabelle, RICE-Werten, Farbkennzeichnungen, Sprint- und Fälligkeitsspalten und Bereich zur Backlog-Gesundheit" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Priority-Scoring-Dashboard — vollständige Ranglistentabelle mit Bewertungen, Sprintzuordnung, Fälligkeiten und Backlog-Gesundheit</p>
+      </div>
+
+      <h2 id="setup">In fünf Minuten zu deinem priorisierten Backlog</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Installiere Priority Scoring aus dem Atlassian Marketplace.</strong> Suche nach „Priority Scoring“ und installiere die App auf deiner Jira-Cloud-Site. Die kostenlose Testversion enthält alle Funktionen.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Bewerte deine ersten zehn Vorgänge.</strong> Öffne Vorgänge einzeln und setze die RICE-Werte mit den Schiebereglern — Reach, Impact, Confidence, Effort. Der Gesamtwert erscheint sofort. Alternativ bewertet der Rovo-Agent alle unbewerteten Vorgänge gesammelt, wenn du KI-Vorschläge als Ausgangspunkt bevorzugst.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Öffne das Priority-Scoring-Dashboard.</strong> Öffne die globale Seite von Priority Scoring, wähle dein Projekt und klicke auf „Ranking“. Deine bewerteten Vorgänge erscheinen absteigend nach Wert.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Konfiguriere die Bewertungsschwellen.</strong> Setze in den Einstellungen eine niedrige und hohe Schwelle für dein Verfahren. Unterhalb der niedrigen Schwelle erscheint 🔴, oberhalb der hohen 🟢. So ist die Rangfolge sofort verständlich, ohne einzelne Zahlen studieren zu müssen.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Nutze die Rangfolge in der Sprint-Planung.</strong> Öffne vor der Planung den Tab „Ranking“ und arbeite von oben nach unten. Vorgänge am Listenende sind Kandidaten zur Entfernung aus dem Backlog. Prüfe die <a href="/de/blog/jira-backlog-grooming-checklist.html">Checkliste zur Backlog-Pflege</a> für die vollständige Prüfung mit zwölf Punkten.</div>
+        </li>
+      </ol>
+
+      <div class="callout callout-green">
+        <p><strong>Tipp:</strong> Strebe vor der ersten Planung mit Rangfolge keine 100-prozentige Bewertungsabdeckung an. Bewerte die wichtigsten 30–40 Vorgänge, führe ein Planungsmeeting mit sichtbarer Rangfolge durch und lass das Team den Unterschied erleben. Die Abdeckung steigt von selbst, sobald die Rangfolge hilfreich wird.</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie ordne ich Vorgänge in Jira nach ihrem Prioritätswert?</p>
+        <p class="faq-a">Jiras natives Backlog sortiert nach dem Rang per Ziehen und Ablegen, nicht nach einem Zahlenwert. <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> ergänzt eine separate Tabelle „Priority Ranking“ — absteigend nach RICE-, WSJF- oder ICE-Wert sortiert — außerhalb des nativen Backlogs. Beide Ansichten bestehen nebeneinander; die Ranglistentabelle ändert das native Rank-Feld nicht.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was unterscheidet Rang und Priorität in Jira?</p>
+        <p class="faq-a">Der Jira-Rang ist eine manuelle Reihenfolge (Ziehen und Ablegen) im Backlog. Die Jira-Priorität ist ein kategorisches Label (Hoch/Mittel/Niedrig). Beides sind keine Zahlenwerte. Eine echte Prioritätsrangfolge auf Basis von <a href="/de/blog/rice-scoring-jira.html">RICE</a>,  <a href="/de/blog/wsjf-jira.html">WSJF</a> oder <a href="/de/blog/ice-scoring-jira.html">ICE</a> erfordert eine App, die numerische Bewertungen pro Vorgang berechnet und anzeigt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann Jira das Backlog automatisch nach Priorität sortieren?</p>
+        <p class="faq-a">Nativ nicht. Eine Backlog-Sortierung nach Priorität (Höchste/Hoch/Mittel) deaktiviert das Ziehen und Ablegen. Priority Scoring for Jira bietet eine separate Ranglistentabelle nach numerischem Wert, ohne die native Reihenfolge des Backlogs zu verändern.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie löse ich das Problem „Alles hat hohe Priorität“ in Jira?</p>
+        <p class="faq-a">Ersetze subjektive „Hoch“-Labels durch ein numerisches Bewertungsverfahren. <a href="/de/blog/rice-scoring-jira.html">RICE</a> erzwingt anhand von Reichweite, Wirkung, Sicherheit und Aufwand einen quantitativen Vergleich. Zwei Vorgänge können beide wichtig sein — RICE zeigt als Zahl, welcher pro Arbeitseinheit mehr Wert liefert. Siehe <a href="/de/blog/jira-prioritization-framework-comparison.html">RICE, WSJF und ICE</a> , um das passende Verfahren für dein Team zu wählen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was zeigt die Tabelle „Priority Ranking“?</p>
+        <p class="faq-a">Die Tabelle „Priority Ranking“ in Priority Scoring for Jira zeigt alle bewerteten Vorgänge absteigend nach Wert. Spalten: Rang, Bewertung (farbcodiert), Vorgangsschlüssel, Zusammenfassung, aktueller Sprint, Fälligkeitsdatum und zuständige Person. Unterhalb der niedrigen Schwelle erscheint 🔴, oberhalb der hohen 🟢. Die Tabelle lässt sich nach Sprint, zuständiger Person und Label filtern.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Dein priorisiertes Backlog in fünf Minuten sehen</h3>
+        <p>Priority Scoring for Jira — RICE-, WSJF- und ICE-Bewertung, Prioritätsranglistentabelle, Rovo-KI-Agent, Kennzahl zur Backlog-Gesundheit und Portfolioansicht. Kostenlose Testversion enthalten.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Das Problem „Alles ist P1“</a></li>
+          <li><a href="#categorical-vs-numeric">Kategorische und numerische Rangfolge</a></li>
+          <li><a href="#ranking-table">Die Prioritätsranglistentabelle</a></li>
+          <li><a href="#due-date">Fälligkeitsmarkierungen</a></li>
+          <li><a href="#rovo-bulk">Massenbewertung mit Rovo-KI</a></li>
+          <li><a href="#dashboard-gadget">Zum Dashboard hinzufügen</a></li>
+          <li><a href="#setup">Einstieg in fünf Minuten</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rangfolgen · Forge</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Verwandte Artikel</h3>
+        <a href="/de/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>
+        <a href="/de/blog/jira-backlog-grooming-checklist.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Checkliste zur Jira-Backlog-Pflege für Product Owner</a>
+        <a href="/de/blog/ai-backlog-prioritization-jira-rovo.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">KI-Backlog-Priorisierung in Jira mit Rovo</a>
+        <a href="/de/blog/jira-custom-priority-scoring-weights.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Eigene Prioritätsbewertung: Dimensionsgewichte anpassen</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

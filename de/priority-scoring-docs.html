@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Priority Scoring for Jira — Dokumentation zu RICE, WSJF und ICE</title>
+  <meta name="description" content="Richte Priority Scoring for Jira ein und nutze RICE-, WSJF- und ICE-Felder, priorisiertes Backlog, Board Health, Rovo-Agent, Einstellungen, Import und Gadgets.">
+  <link rel="canonical" href="https://janekbehrens.de/de/priority-scoring-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/de/priority-scoring-docs.html">
+  <meta property="og:title" content="Priority Scoring for Jira — Dokumentation zu RICE, WSJF und ICE">
+  <meta property="og:description" content="Richte Priority Scoring for Jira ein und nutze RICE-, WSJF- und ICE-Felder, priorisiertes Backlog, Board Health, Rovo-Agent, Einstellungen, Import und Gadgets.">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/highlight-1-board-health-priority-ranking.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Priority Scoring for Jira — Dokumentation zu RICE, WSJF und ICE">
+  <meta name="twitter:description" content="Richte Priority Scoring for Jira ein und nutze RICE-, WSJF- und ICE-Felder, priorisiertes Backlog, Board Health, Rovo-Agent, Einstellungen, Import und Gadgets.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/highlight-1-board-health-priority-ranking.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Priority Scoring — RICE, WSJF & ICE for Jira",
+      "description": "App auf Atlassian Forge, die Jira-Vorgängen RICE-, WSJF- und ICE-Bewertungen hinzufügt, das Backlog priorisiert, Board Health pro Projekt bewertet und einen Rovo-Agenten zum Vorschlagen, Erklären und Anwenden von Bewertungen mitbringt.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "url": "https://janekbehrens.de/de/priority-scoring.html",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://marketplace.atlassian.com/apps/966645375",
+        "description": "Kostenlose Testphase, danach monatliches oder jährliches Abonnement im Atlassian Marketplace"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Priority Scoring for Jira — Dokumentation zu RICE, WSJF und ICE",
+      "description": "Richte Priority Scoring for Jira ein und nutze RICE-, WSJF- und ICE-Felder, priorisiertes Backlog, Board Health, Rovo-Agent, Einstellungen, Import und Gadgets.",
+      "url": "https://janekbehrens.de/de/priority-scoring-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Warum erscheinen die Schieberegler zur Prioritätsbewertung nicht in meinen Jira-Vorgängen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Meist fehlt das Feld auf der Vorgangsmaske des Projekts. Gehe zu Jira Settings → Work items → Screens, öffne die Projektmaske und füge das Priority-Scoring-Feld hinzu; bei vom Team verwalteten Projekten unter Project settings → Issue types. Siehe Felder zu Masken hinzufügen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Rovo hat Bewertungen angewendet, aber Board Health zeigt die Vorgänge weiter als „Unscored“.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wahrscheinlich fehlt das Priority-Scoring-Feld auf der Projektmaske. Rovo speichert die Werte in der App, aber Jira zeigt erst nach Hinzufügen des Felds zur Maske einen Wert. Korrigiere die Maskeneinrichtung und klicke auf der App-Seite auf Refresh."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Rovo meldet, dass eine Bewertung nicht angewendet werden konnte.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vor dem Schreiben prüft der Agent das Framework und die Dimensionswerte. Nenne RICE, WSJF oder ICE und gib jede Dimension an — RICE: Reach, Impact, Confidence, Effort; WSJF: Business Value, Time Criticality, Risk Reduction, Job Size; ICE: Impact, Confidence, Ease. Solange Werte fehlen, wird nichts geschrieben und die bestehende Bewertung bleibt erhalten. Bei Sammelläufen werden nur betroffene Vorgänge übersprungen; die übrigen werden normal bewertet. Auch ohne Jira-Bearbeitungsberechtigung lässt der Agent den Vorgang unverändert und nennt ihn in seiner Antwort."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ein Gadget meldet für ein Projekt „Priority Scoring cannot show“.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Du darfst das Projekt in Jira nicht ansehen oder es existiert nicht mehr. Priority Scoring prüft dies vor der Anzeige von Vorgängen oder Bewertungen, da die App mit eigenen Berechtigungen liest (siehe Nur zugängliche Projekte). Bitte einen Jira-Administrator um Browse Projects für das Projekt oder wähle in den Gadget-Einstellungen ein zugängliches Projekt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum kann ich die Priority-Scoring-Einstellungen nicht ändern?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nur Jira-Administratoren dürfen diese Einstellungen ändern, da sie für alle Nutzer der Website gelten. Alle anderen sehen die aktuellen Werte schreibgeschützt. Bitte einen Jira-Administrator um Änderungen; die Health Criteria eines Projekts dürfen auch dessen Projektadministratoren ändern."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Explain Priority Score meldet, dass keine Bewertung gespeichert wurde, obwohl der Vorgang einen Wert zeigt.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Explain Priority Score nutzt die Dimensionswerte, die die App beim Bewerten per Schieberegler oder Rovo gespeichert hat. Extern gesetzte Werte (REST-API, Skript) und als Gesamtwert importierte Bewertungen haben keine Dimensionswerte. Bewerte den Vorgang erneut per Schieberegler oder Rovo, um Erklärungen zu ermöglichen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ich habe Apply Mode geändert, aber Rovo verwendet den alten Modus.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der Agent liest den Anwendungsmodus beim Chatbeginn. Öffne nach der Änderung einen neuen Rovo-Chat. Jeder Schreibvorgang wird dennoch gegen den aktuellen Modus geprüft: Bei Suggest only wird auch aus älteren Chats nichts geschrieben."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Im Auto-Modus zeigt Rovo trotzdem einen Bestätigungsdialog. Ist das ein Fehler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Im Auto-Modus überspringt der Agent seine eigene Chatfrage, aber Atlassian zeigt vor Schreibaktionen immer einen Sicherheitsdialog. Die App kann ihn nicht abschalten. Bestätige ihn."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Board Health wirkt falsch oder hat sich nach Refresh nicht geändert.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Refresh berechnet sofort neu. Board Health betrachtet bis zu 100 offene Vorgänge, beginnend mit den am längsten nicht aktualisierten. In großen Projekten kann ein gerade bearbeiteter Vorgang außerhalb der Stichprobe liegen. Prüfe auch, ob Bewertungsfelder auf der Projektmaske und die erwarteten Health Criteria aktiviert sind."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Rovos Liste unbewerteter Vorgänge enthält nicht alle meine Vorgänge.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der Agent prüft die 50 ältesten offenen Projektvorgänge auf fehlende Bewertungen, da Jira diese Bewertungsfelder nicht durchsuchen kann. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Das Kriterium „Missing Story Points“ erkennt die Story Points nicht.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die App erkennt ohne Einrichtung die beiden häufigsten Story-Point-Felder in Jira Cloud. Werden deine Punkte trotzdem nicht erkannt, kontaktiere den Support mit der URL deiner Jira-Website."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werden bestehende Bewertungen nach Änderungen an Dimension Weights automatisch aktualisiert?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Bestehende Bewertungen werden nicht neu berechnet. Sie ändern sich beim nächsten Speichern pro Vorgang per Schieberegler oder Rovo. Nach größeren Gewichtsänderungen kannst du Rovo im Auto-Modus um eine Sammelbewertung bitten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was unterscheidet RICE, WSJF und ICE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RICE (Reach, Impact, Confidence, Effort) ist bei Produkt- und Roadmapplanung verbreitet. WSJF (Weighted Shortest Job First) stammt aus SAFe und priorisiert nach Verzögerungskosten je Aufgabengröße. ICE (Impact, Confidence, Ease) ist ein einfaches Framework für schnelle Bewertungen. Priority Scoring bietet für jedes ein eigenes Feld."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wo werden meine Priority-Scoring-Daten gespeichert?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bewertungen liegen als Werte der Priority-Scoring-Felder auf deiner Jira-Website. App-eigene Daten (Dimensionswerte, Einstellungen, Bewertungsverlauf) liegen in Atlassian Forge Storage für deine Website. Die App läuft auf Atlassian-Infrastruktur und sendet keine Daten an externe Server. Details in der Datenschutzerklärung."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie deinstalliere ich die App?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gehe zu Jira Settings → Apps → Manage apps, suche Priority Scoring und klicke auf Uninstall. Atlassian hält gespeicherte App-Daten (Bewertungen, Einstellungen, Verlauf) 28 Tage nach der Deinstallation vor und löscht sie dann; siehe Datenschutzerklärung. Benutzerdefinierte Felder bleiben in Jira, bis du sie unter Settings → Work items → Fields löschst."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/priority-scoring-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/priority-scoring-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/priority-scoring-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="ps">
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#overview">Übersicht</a>
+        <a href="#install">Installiere</a>
+        <a href="#create-fields">Felder erstellen</a>
+        <a href="#add-to-screens">Felder zu Masken hinzufügen</a>
+        <a href="#score-issue">Vorgang bewerten</a>
+        <a href="#dashboard">Die App-Seite</a>
+        <a href="#project-access" class="sub">Nur zugängliche Projekte</a>
+        <a href="#board-health">Board Health (Backlogzustand)</a>
+        <a href="#rovo">Rovo-Agent</a>
+        <a href="#settings">Einstellungen</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#activity">Aktivitätsprotokoll</a>
+        <a href="#import">Import aus einer anderen App</a>
+        <a href="#gadget">Dashboard-Gadgets</a>
+        <a href="#faq">Häufige Fragen und Fehlerbehebung</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Priority Scoring for Jira — Dokumentation</h1>
+      <p class="subtitle">RICE-, WSJF- und ICE-Bewertungen in deinen Jira-Vorgängen, ein priorisiertes Backlog, Board Health pro Projekt und ein Rovo-Agent mit Bewertungsvorschlägen.</p>
+
+      <div class="quickstart">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li><a href="#install">Installiere</a> Priority Scoring aus dem Atlassian Marketplace (kostenlose Testphase).</li>
+          <li><a href="#create-fields">Erstelle ein Feld</a>: Jira Settings → Work items → Fields → <strong>Create new field (Neues Feld erstellen)</strong>, suche nach <em>priority scoring</em> und wähle RICE, WSJF oder ICE.</li>
+          <li><a href="#add-to-screens">Füge das Feld</a> der Projektmaske hinzu oder den Vorgangstypen eines vom Team verwalteten Projekts.</li>
+          <li><a href="#score-issue">Öffne einen Vorgang</a>, klicke auf das Feld, bewege die Schieberegler und speichere über das Häkchen.</li>
+          <li>Öffne <strong>Apps → Priority Scoring for Jira</strong> für die <a href="#dashboard">Rangfolge</a> und <a href="#board-health">Board Health (Backlogzustand)</a>. Ist Rovo auf deiner Website verfügbar, bitte den <a href="#rovo">Agenten</a> um Vorschläge.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#overview">Übersicht</a></li>
+          <li><a href="#install">Installiere</a></li>
+          <li><a href="#create-fields">Felder erstellen</a></li>
+          <li><a href="#add-to-screens">Felder zu Masken hinzufügen</a></li>
+          <li><a href="#score-issue">Vorgang bewerten</a></li>
+          <li><a href="#dashboard">Die App-Seite</a></li>
+          <li><a href="#board-health">Board Health (Backlogzustand)</a></li>
+          <li><a href="#rovo">Rovo-Agent</a></li>
+          <li><a href="#settings">Einstellungen</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#activity">Aktivitätsprotokoll</a></li>
+          <li><a href="#import">Import aus einer anderen App</a></li>
+          <li><a href="#gadget">Dashboard-Gadgets</a></li>
+          <li><a href="#faq">Häufige Fragen und Fehlerbehebung</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <!-- Overview -->
+      <section id="overview">
+        <h2>Übersicht</h2>
+        <p>Dein Team wählt ein Framework und gibt einige Werte pro Vorgang ein. Die App berechnet daraus eine im Backlog vergleichbare Bewertung. Jedes Framework hat ein eigenes Feld; du kannst eines oder alle drei verwenden.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Framework</th><th>Formel</th><th>Geeignet für</th></tr></thead>
+            <tbody>
+              <tr><td><strong>RICE</strong></td><td><code>(Reach × Impact × Confidence) ÷ Effort</code></td><td>Produktteams, Funktionen für Endnutzer, Roadmapplanung</td></tr>
+              <tr><td><strong>WSJF</strong></td><td><code>(Business Value + Time Criticality + Risk Reduction) ÷ Job Size</code></td><td><dfn class="term" data-tip="Scaled Agile Framework: eine Methode zur Planung agiler Arbeit über viele Teams hinweg. WSJF stammt daraus.">SAFe-Teams</dfn> , unternehmensweite Umsetzung, regulatorisch geprägte Arbeit</td></tr>
+              <tr><td><strong>ICE</strong></td><td><code>Impact × Confidence × Ease</code></td><td>Wachstumsteams, Experimente, schnelle Iteration</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgPriorityScorer/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/5Wmd8jZTKww?autoplay=1" data-title="Priority Scoring for Jira — RICE-, WSJF- und ICE-Bewertungen, Rovo-KI und Board Health">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: Priority Scoring for Jira — RICE-, WSJF- und ICE-Bewertungen, Rovo-KI und Board Health"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+        <div class="tip">
+          <strong>Runs on Atlassian:</strong> Die App läuft auf Atlassians <dfn class="term" data-tip="Atlassians Plattform für Apps innerhalb von Atlassian Cloud, ohne Server des App-Anbieters.">Forge-</dfn> Plattform ohne externe Server. <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Über Runs on Atlassian</a>
+        </div>
+      </section>
+
+      <!-- Install -->
+      <section id="install">
+        <h2>Installiere</h2>
+        <p>Ein Jira-Administrator installiert die App einmal pro Jira-Cloud-Website.</p>
+        <ol>
+          <li>Öffne den <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener">Priority-Scoring-Eintrag</a> im Atlassian Marketplace und klicke auf <strong>Try it free (Kostenlos testen)</strong>.</li>
+          <li>Wähle deine Jira-Cloud-Website und bestätige.</li>
+          <li>Öffne in Jira <strong>Apps</strong> in der oberen Navigation. <strong>Priority Scoring for Jira</strong> ist dort aufgeführt.</li>
+        </ol>
+        <p>Bewertungen erscheinen erst nach den nächsten zwei Schritten in Vorgängen: Felder erstellen und zu den Masken hinzufügen.</p>
+      </section>
+
+      <!-- Create fields -->
+      <section id="create-fields">
+        <h2>Felder erstellen</h2>
+        <p>Die App bietet drei <dfn class="term" data-tip="Ein zusätzliches Feld neben Jiras integrierten Feldern. Priority Scoring bietet einen Feldtyp pro Framework.">benutzerdefinierte Feldtypen</dfn> . Erstelle für jedes gewünschte Framework ein Feld.</p>
+        <ol>
+          <li>Klicke auf das <strong>Zahnradsymbol</strong>  →  <strong>Work items (Vorgänge)</strong> (in älterem Jira: Issues) → <strong>Fields (Felder)</strong>  →  <strong>Create new field (Neues Feld erstellen)</strong>.</li>
+          <li>Suche nach <code>priority scoring</code> und wähle <strong>Priority Scoring — RICE</strong>,  <strong>— WSJF</strong> oder <strong>— ICE</strong>.</li>
+          <li>Behalte den Standardnamen bei, damit dein Team das Feld erkennt, und klicke auf <strong>Create (Erstellen)</strong>.</li>
+          <li>Wiederhole das für jedes weitere gewünschte Framework.</li>
+        </ol>
+        <details class="more">
+          <summary>Screenshots der Feldseite und des Dialogs zur Felderstellung</summary>
+          <img width="2296" height="1348" src="/imgPriorityScorer/AddCustomField-Step1.png" alt="Jira-Einstellungen, Seite Fields mit Liste benutzerdefinierter Felder und Schaltfläche Create new field" loading="lazy">
+          <img width="804" height="856" src="/imgPriorityScorer/AddCustomField-Step2.png" alt="Jira-Dialog Create field: Die Suche nach prio zeigt die Priority-Scoring-Feldtypen ICE, RICE und WSJF" style="width:min(100%, 420px)" loading="lazy">
+          <p>Im zweiten Screenshot erscheint jeder Feldtyp zweimal; auf deiner Website siehst du jeden einmal.</p>
+        </details>
+      </section>
+
+      <!-- Add to screens -->
+      <section id="add-to-screens">
+        <h2>Felder zu Masken hinzufügen</h2>
+        <p>Jira zeigt ein Feld nur, wenn es auf der <dfn class="term" data-tip="Die Felder, die Jira beim Erstellen, Bearbeiten oder Ansehen eines Vorgangs in einem vom Unternehmen verwalteten Projekt zeigt.">Vorgangsmaske</dfn> des Projekts liegt. Führe dies einmal je Projekt und Feld durch.</p>
+        <ol>
+          <li><strong>Vom Unternehmen verwaltetes Projekt:</strong> Jira Settings → Work items → <strong>Screens (Masken)</strong>. Öffne die Projektmaske, beispielsweise <em>„[Project] Scrum Default Issue Screen“</em>, wähle das Feld unter <strong>Select Field… (Feld auswählen)</strong> und klicke auf <strong>Add (Hinzufügen)</strong>.</li>
+          <li><strong><dfn class="term" data-tip="Ein Jira-Projekt, dessen eigene Administratoren Felder und Vorgangstypen ohne websiteweite Masken einrichten.">Vom Team verwaltetes</dfn> Projekt:</strong> Project settings (Projekteinstellungen) → <strong>Issue types (Vorgangstypen)</strong>; füge dann das Feld jedem Vorgangstyp hinzu.</li>
+        </ol>
+        <div class="warning">
+          <strong>Diesen Schritt übersprungen?</strong> Dann fehlen die Schieberegler und Board Health zählt Vorgänge als unbewertet, selbst wenn Rovo Werte gespeichert hat.
+        </div>
+        <details class="more">
+          <summary>Mehrere Masken</summary>
+          <p>Verwendet dein Projekt getrennte Masken zum Erstellen, Bearbeiten und Ansehen, füge die Felder allen hinzu, mindestens aber der Ansichtsmaske, damit Bewertungen beim Öffnen immer sichtbar sind.</p>
+          <img width="1902" height="2370" src="/imgPriorityScorer/AddCustomField-Step3.png" style="width:min(100%, 520px)" alt="Seite Configure Screen mit den Feldern Priority Scoring ICE, RICE und WSJF auf einer Kanban Default Issue Screen" loading="lazy">
+        </details>
+      </section>
+
+      <!-- Score an issue -->
+      <section id="score-issue">
+        <h2>Vorgang bewerten</h2>
+        <p>Jedes Feld zeigt einen farbigen Balken mit Bewertung oder <em>Not scored (Nicht bewertet)</em>. Klicke darauf, um Werte festzulegen.</p>
+        <ol>
+          <li>Öffne einen Vorgang und klicke auf <strong>Priority Scoring — RICE</strong> (oder WSJF, ICE).</li>
+          <li>Bewege die Schieberegler. Die Bewertung aktualisiert sich dabei.</li>
+          <li>Klicke auf das <strong>Häkchen ✓</strong> zum Speichern oder auf <strong>×</strong> zum Abbrechen.</li>
+        </ol>
+        <img src="/imgPriorityScorer/highlight-2-score-with-sliders-or-rovo.webp" alt="Geöffnetes RICE-Feld in einem Jira-Vorgang mit Schiebereglern für Reach, Impact, Confidence und Effort und Bewertung 84; daneben ein Rovo-Chat mit RICE-Vorschlag und Begründung je Dimension. Der Rovo-Bereich wurde für dieses Bild nachgebaut." width="1840" height="900" loading="lazy">
+        <p>Vor dem Bewegen eines Schiebereglers wird nichts gespeichert. Zum Speichern brauchst du die Berechtigung <dfn class="term" data-tip="Die Jira-Berechtigung zum Ändern der Felder eines Vorgangs.">Edit Issues (Vorgänge bearbeiten)</dfn> ; ohne sie wird nichts gespeichert und das Feld erklärt den Grund. Farben: Rot unter Low, Gelb ab Low, Grün ab High. Ein Jira-Administrator setzt beide Schwellen <a href="#settings">pro Framework</a>.</p>
+        <details class="more">
+          <summary>Schiebereglerbereiche, Startwerte und Standardfarben</summary>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Framework</th><th>Schieberegler (Bereich, Startwert)</th><th>Standardfarben</th></tr></thead>
+              <tbody>
+                <tr><td><strong>RICE</strong></td><td>Reach 1–100 (10) · Impact 1–10 (5) · Confidence 10–100 % in 10er-Schritten (80) · Effort 1–20 (5)</td><td>Rot unter 3, Grün ab 10</td></tr>
+                <tr><td><strong>WSJF</strong></td><td>Business Value, Time Criticality, Risk Reduction, Job Size: jeweils 1–10 (5, 5, 3, 5)</td><td>Rot unter 2, Grün ab 5</td></tr>
+                <tr><td><strong>ICE</strong></td><td>Impact, Confidence, Ease: jeweils 1–10 (5)</td><td>Rot unter 20, Grün ab 50</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Bewertungen werden auf eine Dezimalstelle gerundet. Bei Jiras Klartextanzeige, etwa in Vorgangslisten, ergänzt ein farbiger Punkt den Wert. Seine festen Grenzen (RICE 3/10, WSJF 2/5, ICE 20/50) folgen nicht deinen Schwellen.</p>
+        </details>
+        <p>Unsicher bei den Werten? Öffne Rovo im Vorgang, wähle den Agenten <strong>Priority Scoring</strong> und frage beispielsweise: <em>„Schlage eine RICE-Bewertung für diesen Vorgang vor“</em>. Siehe <a href="#rovo">Rovo-Agent</a>.</p>
+      </section>
+
+      <!-- Dashboard -->
+      <section id="dashboard">
+        <h2>Die App-Seite</h2>
+        <p>Die App-Seite zeigt Board Health und die Rangfolge eines Projekts. Öffne sie über <strong>Apps → Priority Scoring for Jira</strong>. Sie hat fünf Registerkarten: Dashboard, Activity, Portfolio, Settings und Import.</p>
+        <p>Ein <strong>Blick auf Dashboard:</strong> Wähle ein <strong>Project (Projekt)</strong> und ein <strong>Scoring Framework (Bewertungsframework)</strong>; die App merkt sich dein letztes Projekt. Die Werkzeugleiste enthält <strong>Refresh (Aktualisieren)</strong>,  <strong>Export CSV (CSV exportieren)</strong> und <strong>Health Criteria… (Zustandskriterien)</strong>.</p>
+        <img src="/imgPriorityScorer/highlight-1-board-health-priority-ranking.webp" alt="Priority-Scoring-Dashboard: Projekt- und Frameworkauswahl mit Refresh, Export CSV und Health Criteria, Board Health 72 von 100 (Good) mit vier Kriterienkacheln und Priority Ranking nach RICE-Bewertung" width="1840" height="900" loading="lazy">
+
+        <h3>Priority Ranking (Prioritätsrangfolge)</h3>
+        <p>Alle offenen Projektvorgänge, die du in Jira öffnen darfst (siehe <a href="#project-access">Nur in Jira zugängliche Projekte</a>), höchste Bewertung zuerst; Vorgänge ohne Bewertung stehen am Ende als <em>Not scored (Nicht bewertet)</em>. Die Zeile über der Tabelle zählt bewertete und unbewertete Vorgänge und zeigt den Durchschnitt.</p>
+        <ul>
+          <li>Klicke zum Sortieren auf eine Spaltenüberschrift. Filtere mit <strong>All assignees (Alle zugewiesenen Personen)</strong> (einschließlich <em>Unassigned (Nicht zugewiesen)</em>) und bei Vorgängen in <dfn class="term" data-tip="Ein fester Zeitraum, oft zwei Wochen, in dem ein Scrum-Team eine Auswahl von Vorgängen bearbeitet.">Sprints</dfn>,  <strong>All Sprints (Alle Sprints)</strong>. Zeige 10, 25 (Standard), 50 oder 100 Zeilen.</li>
+          <li><strong>Due (Fällig)</strong> ist rot bei überfälligen Vorgängen (und bei <em>Today (Heute)</em>), gelb für die nächsten 7 Tage, sonst wird das Datum angezeigt.</li>
+          <li><strong>Export CSV (CSV exportieren)</strong> zeigt die Rangfolge als <dfn class="term" data-tip="Klartext mit kommagetrennten Werten. Tabellenprogramme öffnen ihn als Tabelle.">CSV</dfn> mit Schlüssel, Zusammenfassung, Typ, Status und Bewertung aller offenen Vorgänge, nicht nur der aktuellen Seite oder Filterung. Kopiere den Text in ein Tabellenprogramm; <strong>Close CSV (CSV schließen)</strong> blendet ihn aus.</li>
+        </ul>
+        <img src="/imgPriorityScorer/screenshot-2-rank-by-wsjf-filter-by-assignee.webp" alt="Priority Ranking auf WSJF Score mit geöffnetem Personenfilter, zwei Personen und Unassigned; überfällige Vorgänge sind rot markiert" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Wann aktualisiert sich Board Health?</summary>
+          <p>Board Health wird bis zu 1 Stunde vorgehalten. Per Schieberegler oder Rovo gesetzte Bewertungen und Änderungen der Health Criteria aktualisieren es sofort. <strong>Refresh (Aktualisieren)</strong> berechnet auf Wunsch neu. Außerhalb der App geänderte Bewertungen, etwa per Skript oder Jira-REST-API, erscheinen nach einer Stunde oder nach Refresh.</p>
+        </details>
+
+        <h3 id="project-access">Nur in Jira zugängliche Projekte</h3>
+        <p>Die App liest Vorgänge mit eigenen Berechtigungen und prüft deshalb zuerst deine Berechtigung <dfn class="term" data-tip="Die Jira-Berechtigung zum Ansehen eines Projekts und seiner Vorgänge.">Browse Projects (Projekte ansehen)</dfn>. Projektlisten und Portfolio enthalten nur zugängliche Projekte. Eine Seite oder ein Gadget mit anderem Projekt, etwa auf einem geteilten Dashboard, zeigt <em>„Priority Scoring cannot show &lt;project&gt;“ (Projekt kann nicht angezeigt werden)</em> mit Begründung und ohne Vorgänge.</p>
+        <p>Vorgangslisten beachten auch Jiras Vorgangsberechtigungen einschließlich <dfn class="term" data-tip="Eine Jira-Einstellung, die einzelne Vorgänge vor Personen außerhalb einer vorgegebenen Gruppe oder Rolle verbirgt.">Vorgangssicherheitsstufen</dfn>: Rangfolgen in App und Gadgets, CSV-Export, Beispielliste der Importvorschau und Rovo-Listen enthalten nur zugängliche Vorgänge. Zwei Personen können daher für dasselbe Projekt unterschiedliche Rangfolgen sehen. Board Health und Portfolio zählen offene Projektvorgänge, ohne Schlüssel oder Titel anzuzeigen.</p>
+        <details class="more">
+          <summary>Weitere Ladefehler</summary>
+          <p>Lehnt Jira kurzzeitig eine Suche ab, nennen Rangfolge und Board Health den Fehler samt HTTP-Status, statt ein leeres Projekt zu zeigen. Kann die App Vorgangsberechtigungen kurzzeitig nicht prüfen, zeigt sie keine Liste und nennt den Grund samt HTTP-Status. Klicke auf <strong>Refresh (Aktualisieren)</strong> nach einem Moment. Bei fehlendem Projektzugriff bitte einen Jira-Administrator um Browse Projects oder wähle ein anderes Projekt.</p>
+        </details>
+      </section>
+
+      <!-- Board Health -->
+      <section id="board-health">
+        <h2>Board Health (Backlogzustand)</h2>
+        <p>Board Health bewertet anhand aktivierter Kriterien von 0 bis 100, wie vollständig die offenen Vorgänge eines Projekts sind. Offen bedeutet nicht Done, umfasst also auch In Progress.</p>
+        <ul>
+          <li><strong>Bewertungsstufen:</strong> Excellent (Ausgezeichnet) 80–100 · Good (Gut) 60–79 · Fair (Mittelmäßig) 40–59 · Poor (Schlecht) unter 40.</li>
+          <li><strong>Kacheln:</strong> Jedes Kriterium zeigt betroffene Vorgänge (<em>4 / 19</em>), den einwandfreien Anteil (<em>79 % in Ordnung</em>) und den Punktabzug (<em>−3 Bewertungspunkte</em>). Grün bei 100 % einwandfrei, Gelb ab 70 %, sonst Rot. Behebe zuerst den größten Punktabzug.</li>
+        </ul>
+
+        <h3>Kriterien pro Projekt auswählen</h3>
+        <p>Klicke auf <strong>Health Criteria… (Zustandskriterien)</strong>, wähle ein Projekt und aktiviere oder deaktiviere Kriterien oder beginne mit <strong>SCRUM Defaults (Scrum-Standardwerte)</strong> oder <strong>KANBAN Defaults (Kanban-Standardwerte)</strong>. Klicke auf <strong>Save &amp; Refresh (Speichern und aktualisieren)</strong>. Jira-Administratoren und die Administratoren des Projekts dürfen sie ändern; alle anderen sehen sie schreibgeschützt.</p>
+        <details class="more">
+          <summary>Die acht Kriterien und ihre Standardwerte</summary>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Kriterium</th><th>Prüfung</th><th>Standard</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stale Issues (Veraltete Vorgänge)</strong></td><td>Nicht innerhalb der Veraltungsgrenze aktualisiert (7–180 Tage, Standard 60)</td><td>Ein</td></tr>
+                <tr><td><strong>Missing Description (Fehlende Beschreibung)</strong></td><td>Kein Beschreibungstext</td><td>Ein</td></tr>
+                <tr><td><strong>Missing Story Points (Fehlende Story Points)</strong></td><td>Keine <dfn class="term" data-tip="Eine relative Aufwandsschätzung, die Scrum-Teams in Vorgängen hinterlegen.">Story Points</dfn> gesetzt</td><td>Ein</td></tr>
+                <tr><td><strong>Unscored (Unbewertet)</strong></td><td>Noch keine RICE-, WSJF- oder ICE-Bewertung</td><td>Ein</td></tr>
+                <tr><td><strong>Missing Assignee (Fehlende zugewiesene Person)</strong></td><td>Keine zugewiesene Person</td><td>Aus</td></tr>
+                <tr><td><strong>Overdue (Überfällig)</strong></td><td>Fälligkeitsdatum liegt in der Vergangenheit</td><td>Aus</td></tr>
+                <tr><td><strong>Missing Priority (Fehlende Priorität)</strong></td><td>Jiras Priority-Feld ist leer oder „None“</td><td>Aus</td></tr>
+                <tr><td><strong>Missing Labels / Components (Fehlende Labels / Komponenten)</strong></td><td>Weder Labels noch Komponenten gesetzt</td><td>Aus</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>SCRUM Defaults (Scrum-Standardwerte)</strong> aktiviert Stale, Missing Description, Missing Story Points, Unscored und Overdue. <strong>KANBAN Defaults (Kanban-Standardwerte)</strong> aktiviert Stale, Missing Description, Unscored, Missing Assignee, Missing Priority und Missing Labels. Bei aktivem Stale setzt ein Schieberegler darunter (7–180 Tage in 7er-Schritten) die Projektgrenze; sie überschreibt den websiteweiten Wert aus Settings.</p>
+          <img width="1170" height="2410" src="/imgPriorityScorer/BoardHealthConfig-Step2-configureActiveCriterias.png" style="width:min(100%, 440px)" alt="Dialog Configure Board Health Criteria mit allen acht Kriterienschaltern, SCRUM- und KANBAN-Markierungen und Schaltflächen für Schnellvorlagen" loading="lazy">
+        </details>
+        <details class="more">
+          <summary>So wird die Bewertung berechnet</summary>
+          <p>Jedes aktive Kriterium zählt gleich viel: Bei 4 Kriterien kann jedes bis zu 25 Punkte abziehen, bei 5 bis zu 20 und so weiter. Die Bewertung bleibt zwischen 0 und 100. Board Health betrachtet bis zu <strong>100 offene Vorgänge</strong>, beginnend mit den am längsten nicht aktualisierten. Projekte mit weniger offenen Vorgängen werden vollständig analysiert.</p>
+        </details>
+      </section>
+
+      <!-- Rovo -->
+      <section id="rovo">
+        <h2>Rovo-Agent</h2>
+        <p>Unter <strong>Priority Scoring</strong> arbeitet als Agent im Chat von <dfn class="term" data-tip="Atlassians KI-Assistent in Jira und Confluence. Er muss auf deiner Website verfügbar sein.">Rovo</dfn> . Er schlägt Bewertungen vor, erklärt und wendet sie an und meldet Board Health. Er benötigt Rovo auf deiner Website.</p>
+        <p>Öffne Rovo über die Atlassian-Navigationsleiste (<strong>Ask Rovo (Rovo fragen)</strong>), klicke auf die Agentenauswahl und suche nach <strong>Priority Scoring</strong>. Frage dann beispielsweise:</p>
+        <ul>
+          <li><em>„Schlage eine RICE-Bewertung für PROJ-123 vor“</em> — Werte mit Einzelbegründung, ohne Änderungen.</li>
+          <li><em>„Wie gesund ist mein Backlog im Projekt SP?“</em> — Board Health samt Anzahlen deiner aktivierten Kriterien.</li>
+          <li><em>„Bewerte alle unbewerteten Vorgänge im Projekt SP mit WSJF“</em> — Sammelbewertung im Auto-Modus.</li>
+        </ul>
+        <img width="872" height="926" src="/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png" style="width:min(100%, 380px)" alt="Rovo-Agentenauswahl mit Priority Scoring als Favorit unter den verfügbaren Agenten" loading="lazy">
+
+        <h3>Anwendungsmodi</h3>
+        <p>Ein Jira-Administrator bestimmt in <a href="#settings">Einstellungen</a> , was der Agent schreiben darf:</p>
+        <ul>
+          <li><strong>Suggest only (Nur vorschlagen)</strong> — Textvorschläge; du stellst die Schieberegler selbst ein. Es wird nichts geschrieben.</li>
+          <li><strong>Confirm (Bestätigen)</strong> (Standard) — der Agent fragt im Chat: <em>„Soll ich diese Bewertung anwenden?“</em> Jeweils ein Vorgang.</li>
+          <li><strong>Auto</strong> — keine Chatfrage, mehrere Vorgänge pro Anfrage bis zur Sammelgrenze.</li>
+        </ul>
+        <p>Vor jedem Schreiben zeigt Atlassian seinen Sicherheitsdialog; bestätige ihn. Die App kann ihn nicht abschalten. Öffne nach einem Moduswechsel einen neuen Rovo-Chat.</p>
+
+        <details class="more">
+          <summary>Alle möglichen Fragen</summary>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Beispielanfrage</th><th>Aktion des Agenten</th><th>Modus</th></tr></thead>
+              <tbody>
+                <tr><td>„Schlage eine RICE-Bewertung für PROJ-123 vor“</td><td>Liest den Vorgang und schlägt Werte mit Einzelbegründungen vor. Schreibt <em>nichts</em> in Jira.</td><td>Beliebig</td></tr>
+                <tr><td>„Wende eine WSJF-Bewertung auf PROJ-42 an“</td><td>Speichert die Bewertung im Priority-Scoring-Feld des Vorgangs</td><td>Confirm oder Auto</td></tr>
+                <tr><td>„Bewerte alle unbewerteten Aufgaben im Projekt SP“</td><td>Findet unbewertete Vorgänge, schlägt Werte vor und wendet sie in einem Durchlauf bis zur Sammelgrenze an</td><td>Auto</td></tr>
+                <tr><td>„Erkläre die Bewertung für PROJ-55“</td><td>Zeigt gespeicherte Dimensionswerte und ihre Bedeutung</td><td>Beliebig</td></tr>
+                <tr><td>„Wie ist Board Health für Projekt SP?“</td><td>Liefert Board-Health-Wert, Stufe und Anzahlen deiner aktivierten Kriterien</td><td>Beliebig</td></tr>
+                <tr><td>„Finde unbewertete Vorgänge im Projekt PROJ“</td><td>Listet veraltete Vorgänge sowie Vorgänge ohne Beschreibung, Story Points oder Bewertung auf (für ein genanntes Framework nur dessen Bewertungen). Prüft die 50 ältesten offenen Vorgänge auf fehlende Bewertung, 25 für die übrigen Kategorien.</td><td>Beliebig</td></tr>
+                <tr><td>„Welche Vorgänge im aktuellen Sprint brauchen eine WSJF-Bewertung?“</td><td>Listet offene Vorgänge des aktiven oder eines benannten Sprints und fehlende Bewertungen. Benötigt einen offenen Sprint.</td><td>Beliebig</td></tr>
+                <tr><td>„Vergleiche den Zustand von PROJ, CORE und INFRA“</td><td>Fasst bis zu 5 Projekte anhand ihres Board Health der letzten Stunde zusammen. Andere Projekte benötigen zuerst <strong>Check (Prüfen)</strong> auf der Registerkarte Portfolio.</td><td>Beliebig</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <details class="more">
+          <summary>Prüfungen vor dem Schreiben</summary>
+          <p>Frameworknamen funktionieren unabhängig von Groß- und Kleinschreibung (<em>WSJF</em>,  <em>wsjf</em>). Nur vollständige Dimensionsangaben führen zum Speichern. Unbekanntes Framework, fehlende Dimensionen oder Werte eines anderen Frameworks werden mit Meldung abgelehnt; es wird nichts geschrieben. Lehnt Jira eine Suche ab, etwa bei falsch geschriebenem Projektschlüssel, meldet der Agent dies statt eines leeren Ergebnisses.</p>
+          <p>Deine Jira-Berechtigungen gelten: Der Agent liest nur zugängliche Projekte und Vorgänge und bewertet nur bearbeitbare Vorgänge. Andere bleiben unverändert und werden in der Antwort genannt. Jeder Schreibvorgang prüft den Modus erneut: Suggest only schreibt nichts; Sammelbewertung läuft nur in Auto, auch aus älteren Chats.</p>
+        </details>
+
+        <h3>Sammelbewertung</h3>
+        <p>Im Auto-Modus bewertet der Agent mehrere Vorgänge pro Anfrage bis zur Sammelgrenze. Bei weiteren unbewerteten Vorgängen frage nach dem nächsten Paket. In Suggest only und Confirm erklärt er die Einschränkung und ändert nichts.</p>
+        <img src="/imgPriorityScorer/screenshot-3-rovo-scores-many-issues-at-once.webp" alt="Rovo-Chat im Auto-Modus: Anfrage zur RICE-Bewertung aller unbewerteten Vorgänge in CHK, Werkzeug Bulk Apply Priority Scores mit Confirm und Ergebnis Applied 9 RICE scores in CHK. Der Chatbereich wurde für dieses Bild nachgebaut." width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Mehrere Bestätigungsdialoge?</summary>
+          <p>Rovo kann große Durchläufe aufteilen. Atlassian zeigt für jedes Paket von Schreibaktionen einen Sicherheitsdialog. Das ist normal; bestätige jeden.</p>
+        </details>
+
+        <h3>Vorgangskommentare</h3>
+        <p>Bei aktivierter Option <strong>„Write Rovo reasoning to issue comments (opt-in)“ (Rovo-Begründungen als Vorgangskommentare schreiben)</strong> unter Settings (standardmäßig aus) ergänzt der Agent bei jeder Bewertung einen Kommentar mit Begründung. Dafür benötigt er <strong>Add Comments (Kommentare hinzufügen)</strong> am Vorgang; fehlt die Berechtigung, wird die Bewertung trotzdem gespeichert und der Agent meldet den fehlenden Kommentar.</p>
+        <details class="more">
+          <summary>Beispielkommentar</summary>
+          <img width="1506" height="508" src="/imgPriorityScorer/RovoCommentDescisionOnTicket.png" alt="Jira-Vorgangskommentar des Priority-Scoring-Agenten mit WSJF-Wert 6,7 und Begründungen für Business Value, Time Criticality, Risk Reduction und Job Size" loading="lazy">
+        </details>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings">
+        <h2>Einstellungen</h2>
+        <p>Unter <strong>Einstellungen</strong> findest du die websiteweiten Einstellungen. Sie speichern nach kurzer Verzögerung automatisch. Nur Jira-Administratoren dürfen ändern; alle anderen sehen schreibgeschützte Werte mit Hinweis auf die zuständige Rolle.</p>
+        <img src="/imgPriorityScorer/screenshot-4-bulk-limit-comments-audit-trail.webp" alt="Registerkarte Settings: Rovo Agent Apply Mode auf Auto mit Sammelgrenzregler und Auto-Hinweis, aktivierte Optionen für Vorgangskommentare und Score Audit Trail" width="1840" height="900" loading="lazy">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Einstellung</th><th>Werte</th><th>Standard</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Rovo Agent — Apply Mode (Anwendungsmodus)</strong></td><td>Suggest only, Confirm, Auto (siehe <a href="#rovo">Rovo-Agent</a>)</td><td>Confirm (Bestätigen)</td></tr>
+              <tr><td><strong>Bulk Limit (Sammelgrenze)</strong> (im Auto-Modus sichtbar)</td><td>1–50 Vorgänge pro Durchlauf</td><td>10</td></tr>
+              <tr><td><strong>Issue Comments (Vorgangskommentare)</strong></td><td>Rovo schreibt seine Begründung als Kommentar</td><td>Aus</td></tr>
+              <tr><td><strong>Stale threshold (Veraltungsgrenze)</strong> (Board-Health-Einstellungen)</td><td>7–180 Tage in 7er-Schritten; ein Projekt kann dies über Health Criteria überschreiben</td><td>60 Tage</td></tr>
+              <tr><td><strong>Score Audit Trail (Bewertungsverlauf)</strong></td><td>Ein Eintrag pro Vorgang, Framework und Tag</td><td>Aus</td></tr>
+              <tr><td><strong>Dimension Weights (Dimensionsgewichte)</strong></td><td>×1 bis ×5 je Dimension, außer Effort und Job Size</td><td>×1</td></tr>
+              <tr><td><strong>Score Thresholds (Bewertungsschwellen)</strong></td><td>Low und High je Framework</td><td>RICE 3/10, WSJF 2/5, ICE 20/50</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Gewichte und Schwellen werden für das auf Dashboard gewählte Framework angezeigt</strong>; wechsle daher zuerst dort das Framework.</p>
+
+        <h3>Score Audit Trail (Bewertungsverlauf)</h3>
+        <p>Bei Aktivierung protokolliert die App pro Vorgang und Framework täglich einen Eintrag: Wert, Änderung seit dem letzten Eintrag und manuelle oder Rovo-Bewertung. Klicke im Vorgang auf <strong>▸ Audit trail (Bewertungsverlauf)</strong> unter der Bewertung für die 10 neuesten Einträge.</p>
+        <details class="more">
+          <summary>Aufbewahrung der Einträge</summary>
+          <p>Einträge eines Vorgangs werden 90 Tage nach dem letzten Speichern seiner Bewertung gelöscht. Abschalten stoppt neue Einträge, löscht aber keine alten.</p>
+          <img width="760" height="288" src="/imgPriorityScorer/AuditTrailUnderFields-DailyBasisLogs.png" alt="Vorgangsfeld mit geöffnetem Bewertungsverlauf: am 4. April Wert 7 mit Anstieg um 0,3; am 31. März Wert 6,7, über Rovo gesetzt" loading="lazy">
+        </details>
+
+        <h3>Dimension Weights (Dimensionsgewichte)</h3>
+        <p>Gib einer Dimension mehr Einfluss, von ×1 (Standard) bis ×5, etwa Reach ×3 für ein RICE-Wachstumsteam oder Business Value ×2 für umsatzkritische WSJF-Arbeit. <strong>Reset all weights to ×1 (Alle Gewichte auf ×1 zurücksetzen)</strong> stellt die Standardwerte wieder her.</p>
+        <div class="warning">
+          <strong>Bestehende Bewertungen werden nicht neu berechnet.</strong> Neue Gewichte gelten beim nächsten Speichern der Vorgangsbewertung per Schieberegler oder Rovo. Prüfe auch die Schwellen, da sich der Wertebereich verschiebt.
+        </div>
+        <details class="more">
+          <summary>Warum Effort und Job Size kein Gewicht haben</summary>
+          <p>Sie bilden den <dfn class="term" data-tip="Die Zahl, durch die geteilt wird: Effort bei RICE, Job Size bei WSJF.">Nenner</dfn>. Ein Gewicht ×2 würde dort den Wert <em>halbieren</em> — entgegen der Erwartung. Um Aufwand weniger zu betonen, erhöhe stattdessen die anderen Gewichte. Bei ICE lassen sich alle drei Dimensionen gewichten.</p>
+        </details>
+
+        <h3>Score Thresholds (Bewertungsschwellen)</h3>
+        <p>Werte unter <strong>Low (Niedrig)</strong> sind rot, ab Low gelb und ab <strong>High (Hoch)</strong> grün. Low muss kleiner als High sein. Die Schwellen gelten für Vorgangsfeld, Rangfolge und Rangfolge-Gadget.</p>
+        <details class="more">
+          <summary>Schiebereglerbereiche</summary>
+          <p>Low 0–20 / 0–5 / 0–100 und High 1–50 / 1–15 / 1–500 für RICE / WSJF / ICE.</p>
+          <img src="/imgPriorityScorer/highlight-3-weights-thresholds-rovo-criteria.webp" alt="Einstellungen für Rovo-Anwendungsmodus, RICE-Dimensionsgewichte und Bewertungsschwellen (Low 3, High 10) neben dem Dialog Configure Board Health Criteria" width="1840" height="900" loading="lazy">
+        </details>
+      </section>
+
+      <!-- Portfolio -->
+      <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p>Unter <strong>Portfolio</strong> vergleicht als Registerkarte Board Health zugänglicher Projekte (bis zu den ersten 100), schlechteste Bewertung zuerst.</p>
+        <img src="/imgPriorityScorer/screenshot-1-portfolio-board-health-by-project.webp" alt="Registerkarte Portfolio: sechs Projekte aufsteigend nach Board Health mit Wert und Stufe, Vorgangsanzahl, veralteten und unbewerteten Vorgängen, Prüfzeitpunkt und Check-Schaltfläche; ein Hinweis nennt drei Projekte mit Poor-Zustand" width="1840" height="900" loading="lazy">
+        <p>Die Ergebnisse stammen aus der letzten Stunde; andere Projekte zeigen <em>Not checked (Nicht geprüft)</em>. Klicke auf <strong>Check (Prüfen)</strong> in einer Zeile oder auf <strong>Check Unchecked (Ungeprüfte prüfen)</strong> , um alle nacheinander zu prüfen.</p>
+        <details class="more">
+          <summary>Spalten, Filter und Analyse mit Rovo</summary>
+          <ul>
+            <li>Spalten: <strong>Project (Projekt)</strong> Schlüssel und Name, <strong>Health (Zustand)</strong> mit Stufe, <strong>Issues (Vorgänge)</strong> analysiert, <strong>Stale (Veraltet)</strong>,  <strong>Unscored (Unbewertet)</strong> und <strong>Last Checked (Zuletzt geprüft)</strong> (vor wie vielen Minuten).</li>
+            <li>Suche nach Projektschlüssel oder Name und filtere nach <strong>Grade (Bewertungsstufe)</strong> (All, Poor, Fair, Good+). Ein Hinweis zählt Projekte mit Poor (unter 40).</li>
+            <li>Wähle bis zu 5 Projekte, um Durchschnitt und Gesamtwerte zu sehen. <strong>Analyse with Rovo (Mit Rovo analysieren)</strong> zeigt dann eine Nachricht zum Einfügen in einen Rovo-Chat.</li>
+          </ul>
+        </details>
+      </section>
+
+      <!-- Activity -->
+      <section id="activity">
+        <h2>Aktivitätsprotokoll</h2>
+        <p>Unter <strong>Activity (Aktivität)</strong> listet als Registerkarte die letzten 50 Rovo-Bewertungen aller Frameworks und Modi für zugängliche Vorgänge auf. Prüfe damit Rovos Aktionen und den Abschluss eines Sammellaufs.</p>
+        <details class="more">
+          <summary>Spalten</summary>
+          <p>Spalten: <strong>Zeit</strong>,  <strong>Issue (Vorgang)</strong> (als Link), <strong>Framework</strong>,  <strong>Score (Bewertung)</strong> und <strong>Modus</strong>  (<em>confirm</em> oder <em>auto</em>); standardmäßig 25 Zeilen pro Seite (10, 25, 50 oder 100). Für den Verlauf eines Vorgangs nutze den <a href="#settings">Bewertungsverlauf</a>.</p>
+          <img width="2412" height="2110" src="/imgPriorityScorer/RovoActivity.png" style="width:min(100%, 640px)" alt="Registerkarte Activity mit 33 Rovo-Anwendungen in einer Tabelle mit Time, Issue, Framework, Score und Mode über mehrere Projekte" loading="lazy">
+        </details>
+      </section>
+
+      <!-- Import -->
+      <section id="import">
+        <h2>Import aus einer anderen App</h2>
+        <p>Hast du zuvor eine andere RICE-, WSJF- oder ICE-App verwendet? Die Registerkarte <strong>Import</strong> kopiert deren Bewertungen projektweise zu Priority Scoring. Du benötigst Projektzugriff und Bearbeitungsrechte für die Vorgänge.</p>
+        <div class="warning">
+          <strong>Vorschaufunktion:</strong> Am besten funktioniert sie bei Zahlenfeldern mit „RICE“, „WSJF“ oder „ICE“ im Namen. Prüfe nach dem Import einige Vorgänge.
+        </div>
+        <ol>
+          <li>Aktiviere <strong>Enable Import Feature (Importfunktion aktivieren)</strong> und bestätige mit <strong>I understand — enable import (Verstanden — Import aktivieren)</strong> (der Import überschreibt Werte und kann nicht rückgängig gemacht werden; die Auswahl wird pro Nutzer gespeichert).</li>
+          <li>Wähle das <strong>Target Project (Zielprojekt)</strong> und klicke auf <strong>Scan for Existing Score Fields (Vorhandene Bewertungsfelder suchen)</strong>. Jeder Treffer nennt Framework, Feld und <em>Score only (Nur Gesamtwert)</em> oder <em>With dimensions (Mit Dimensionen)</em>.</li>
+          <li>Klicke auf <strong>Preview &amp; Import [Framework] Scores (Bewertungen ansehen und importieren)</strong>. Es wird noch nichts geschrieben: Der Dialog nennt die Anzahl offener Vorgänge für Import oder Überspringen und zeigt 10 Beispiele.</li>
+          <li>Klicke auf <strong>Overwrite N issues — import now (N Vorgänge überschreiben — jetzt importieren)</strong>.</li>
+        </ol>
+        <img width="1112" height="452" src="/imgPriorityScorer/ImportFieldDataWithRovo.png" alt="Registerkarte Import mit Überschrift Import Scores from Another App und Schaltfläche Scan for Existing Score Fields" loading="lazy">
+        <details class="more">
+          <summary>Grenzen und überschriebene Daten</summary>
+          <ul>
+            <li>Nur offene Vorgänge (nicht Done) werden importiert.</li>
+            <li>Ein Durchlauf umfasst die <strong>ersten 500</strong> offenen Projektvorgänge, älteste zuerst. Bei mehr Vorgängen nennt der Dialog die nicht erfasste Anzahl und die Schaltfläche lautet <strong>Import first 500 of N issues — import now (Erste 500 von N Vorgängen importieren — jetzt starten)</strong>. Brauchst du mehr? <a href="mailto:support@janekbehrens.de?subject=Priority%20Scoring%20%E2%80%93%20Large%20Import%20Request&amp;body=Hi%2C%0A%0AI%20need%20to%20import%20more%20than%20500%20issues%20into%20Priority%20Scoring.%0A%0AProject%3A%20%5Byour%20project%20name%20and%20key%5D%0AFramework%3A%20%5BRICE%20%2F%20WSJF%20%2F%20ICE%5D%0AOpen%20issues%20in%20project%3A%20%5Bnumber%5D%0A">Support kontaktieren</a> (vorausgefüllte E-Mail).</li>
+            <li>Ein Durchlauf dauert einige Sekunden, höchstens etwa 20.</li>
+            <li>Der Import schreibt ausschließlich Priority-Scoring-Felder. Ein vorhandener Priority-Scoring-Wert des importierten Frameworks <em>wird</em> überschrieben, auch bei manueller Bewertung. Felder anderer Apps und integrierte Jira-Felder bleiben unverändert.</li>
+            <li>Der Import ist nur auf der Registerkarte Import verfügbar, nicht über Rovo, sodass die Vorschau immer angezeigt wird.</li>
+          </ul>
+        </details>
+        <details class="more">
+          <summary>So werden Felder erkannt</summary>
+          <p>Die Suche ist eine Vermutung anhand des Namens. Angeboten werden Zahlenfelder außerhalb von Priority Scoring mit dem vollständigen Wort <strong>RICE</strong>,  <strong>WSJF</strong> (oder „weighted shortest“) oder <strong>ICE</strong> im Namen. Felder können fehlen oder unpassende erscheinen („ICE Cream Count“ passt), deshalb zeigt die Vorschau zuerst den Feldnamen.</p>
+          <ul>
+            <li><strong>Erkannt:</strong> „RICE Score“, „RICE Priority“, „WSJF“, „WSJF Score“, „ICE Score“ und Dimensionsfelder wie „RICE Reach“ oder „RICE Effort“.</li>
+            <li><strong>Nicht erkannt:</strong> „Priority Score“, „Scoring Value“, „Custom Prioritization“ (kein Frameworkwort).</li>
+          </ul>
+          <p><strong>Nur Gesamtwert oder mit Dimensionen:</strong> Hat die andere App nur einen Gesamtwert gespeichert, wird nur dieser importiert und <em>Explain Priority Score (Prioritätsbewertung erklären)</em> kann bis zur erneuten Bewertung nichts erklären. Bei getrennten Dimensionsfeldern übernimmt die App die Werte und berechnet mit eigener Formel und deinen Gewichten. Das Ergebnis kann daher von der alten App abweichen.</p>
+        </details>
+      </section>
+
+      <!-- Gadgets -->
+      <section id="gadget">
+        <h2>Dashboard-Gadgets</h2>
+        <p>Zwei <dfn class="term" data-tip="Ein kleiner Bereich, den du einem Jira-Dashboard hinzufügst.">Gadgets</dfn> bringen die Daten auf jedes Jira-Dashboard:</p>
+        <ul>
+          <li><strong>Priority Scoring — Board Health:</strong> Wert, Stufe und Kriterienkacheln eines Projekts mit Refresh-Schaltfläche. Verwendet dessen Health Criteria.</li>
+          <li><strong>Priority Scoring — Priority Ranking:</strong> Rangfolge eines Projekts mit Schlüssel, Zusammenfassung, Typ, Status und Wert. Du wählst Projekt, Framework und Zeilen je Seite (10, 25, 50, 100).</li>
+        </ul>
+        <ol>
+          <li>Öffne ein Jira-Dashboard, klicke auf <strong>Edit (Bearbeiten)</strong>, dann auf <strong>Add gadget (Gadget hinzufügen)</strong>.</li>
+          <li>Suche nach <strong>Priority Scoring</strong> und füge eines der beiden hinzu.</li>
+          <li>Wähle in den Einstellungen das Projekt (für die Rangfolge auch das Framework) und speichere.</li>
+        </ol>
+        <img width="3680" height="1802" src="/imgPriorityScorer/AppDashboardFeature.png" alt="Jira-Dashboard mit Board-Health-Gadget (84 von 100 samt Kriterienkacheln) neben Priority-Ranking-Gadget, sortiert nach RICE-Bewertung" loading="lazy">
+        <p>Betrachter benötigen Browse Projects für das Projekt (siehe <a href="#project-access">Nur zugängliche Projekte</a>).</p>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <h2>Häufige Fragen und Fehlerbehebung</h2>
+        <details class="more"><summary>Warum erscheinen die Schieberegler zur Prioritätsbewertung nicht in meinen Jira-Vorgängen?</summary><p>Meist fehlt das Feld auf der Projektmaske. Gehe zu Jira Settings → Work items → Screens, öffne die Projektmaske und füge das Priority-Scoring-Feld hinzu; bei vom Team verwalteten Projekten unter Project settings → Issue types. Siehe <a href="#add-to-screens">Felder zu Masken hinzufügen</a>.</p></details>
+        <details class="more"><summary>Rovo hat Bewertungen angewendet, aber Board Health zeigt die Vorgänge weiter als „Unscored“.</summary><p>Wahrscheinlich fehlt das Priority-Scoring-Feld auf der Projektmaske. Rovo speichert die Werte in der App, aber Jira zeigt erst nach Hinzufügen des Felds zur Maske einen Wert. Korrigiere die Maskeneinrichtung und klicke auf der App-Seite auf Refresh.</p></details>
+        <details class="more"><summary>Rovo meldet, dass eine Bewertung nicht angewendet werden konnte.</summary><p>Vor dem Schreiben prüft der Agent das Framework und die Dimensionswerte. Nenne RICE, WSJF oder ICE und gib jede Dimension an — RICE: Reach, Impact, Confidence, Effort; WSJF: Business Value, Time Criticality, Risk Reduction, Job Size; ICE: Impact, Confidence, Ease. Solange Werte fehlen, wird nichts geschrieben und die bestehende Bewertung bleibt erhalten. Bei Sammelläufen werden nur betroffene Vorgänge übersprungen; die übrigen werden normal bewertet. Auch ohne Jira-Bearbeitungsberechtigung lässt der Agent den Vorgang unverändert und nennt ihn in seiner Antwort.</p></details>
+        <details class="more"><summary>Ein Gadget meldet für ein Projekt „Priority Scoring cannot show“.</summary><p>Du darfst das Projekt in Jira nicht ansehen oder es existiert nicht mehr. Priority Scoring prüft dies vor der Anzeige von Vorgängen oder Bewertungen, da die App mit eigenen Berechtigungen liest (siehe <a href="#project-access">Nur zugängliche Projekte</a>). Bitte einen Jira-Administrator um Browse Projects für das Projekt oder wähle in den Gadget-Einstellungen ein zugängliches Projekt.</p></details>
+        <details class="more"><summary>Warum kann ich die Priority-Scoring-Einstellungen nicht ändern?</summary><p>Nur Jira-Administratoren dürfen diese Einstellungen ändern, da sie für alle Nutzer der Website gelten. Alle anderen sehen die aktuellen Werte schreibgeschützt. Bitte einen Jira-Administrator um Änderungen; die Health Criteria eines Projekts dürfen auch dessen Projektadministratoren ändern.</p></details>
+        <details class="more"><summary>Explain Priority Score meldet, dass keine Bewertung gespeichert wurde, obwohl der Vorgang einen Wert zeigt.</summary><p>Explain Priority Score nutzt die Dimensionswerte, die die App beim Bewerten per Schieberegler oder Rovo gespeichert hat. Extern gesetzte Werte (REST-API, Skript) und als Gesamtwert importierte Bewertungen haben keine Dimensionswerte. Bewerte den Vorgang erneut per Schieberegler oder Rovo, um Erklärungen zu ermöglichen.</p></details>
+        <details class="more"><summary>Ich habe Apply Mode geändert, aber Rovo verwendet den alten Modus.</summary><p>Der Agent liest den Anwendungsmodus beim Chatbeginn. Öffne nach der Änderung einen neuen Rovo-Chat. Jeder Schreibvorgang wird dennoch gegen den aktuellen Modus geprüft: Bei Suggest only wird auch aus älteren Chats nichts geschrieben.</p></details>
+        <details class="more"><summary>Im Auto-Modus zeigt Rovo trotzdem einen Bestätigungsdialog. Ist das ein Fehler?</summary><p>Nein. Im Auto-Modus überspringt der Agent seine eigene Chatfrage, aber Atlassian zeigt vor Schreibaktionen immer einen Sicherheitsdialog. Die App kann ihn nicht abschalten. Bestätige ihn.</p></details>
+        <details class="more"><summary>Board Health wirkt falsch oder hat sich nach Refresh nicht geändert.</summary><p>Refresh berechnet sofort neu. Board Health betrachtet bis zu 100 offene Vorgänge, beginnend mit den am längsten nicht aktualisierten. In großen Projekten kann ein gerade bearbeiteter Vorgang außerhalb der Stichprobe liegen. Prüfe auch, ob Bewertungsfelder auf der Projektmaske und die erwarteten Health Criteria aktiviert sind.</p></details>
+        <details class="more"><summary>Rovos Liste unbewerteter Vorgänge enthält nicht alle meine Vorgänge.</summary><p>Der Agent prüft die 50 ältesten offenen Projektvorgänge auf fehlende Bewertungen, da Jira diese Bewertungsfelder nicht durchsuchen kann. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored.</p></details>
+        <details class="more"><summary>Das Kriterium „Missing Story Points“ erkennt die Story Points nicht.</summary><p>Die App erkennt ohne Einrichtung die beiden häufigsten Story-Point-Felder in Jira Cloud. Werden deine Punkte trotzdem nicht erkannt, kontaktiere den Support mit der URL deiner Jira-Website.</p></details>
+        <details class="more"><summary>Werden bestehende Bewertungen nach Änderungen an Dimension Weights automatisch aktualisiert?</summary><p>Nein. Bestehende Bewertungen werden nicht neu berechnet. Sie ändern sich beim nächsten Speichern pro Vorgang per Schieberegler oder Rovo. Nach größeren Gewichtsänderungen kannst du Rovo im Auto-Modus um eine Sammelbewertung bitten.</p></details>
+        <details class="more"><summary>Was unterscheidet RICE, WSJF und ICE?</summary><p>RICE (Reach, Impact, Confidence, Effort) ist bei Produkt- und Roadmapplanung verbreitet. WSJF (Weighted Shortest Job First) stammt aus SAFe und priorisiert nach Verzögerungskosten je Aufgabengröße. ICE (Impact, Confidence, Ease) ist ein einfaches Framework für schnelle Bewertungen. Priority Scoring bietet für jedes ein eigenes Feld.</p></details>
+        <details class="more"><summary>Wo werden meine Priority-Scoring-Daten gespeichert?</summary><p>Bewertungen liegen als Werte der Priority-Scoring-Felder auf deiner Jira-Website. App-eigene Daten (Dimensionswerte, Einstellungen, Bewertungsverlauf) liegen in Atlassian Forge Storage für deine Website. Die App läuft auf Atlassian-Infrastruktur und sendet keine Daten an externe Server. Details in der <a href="/de/priority-scoring-privacy-policy.html">Datenschutzerklärung</a>.</p></details>
+        <details class="more"><summary>Wie deinstalliere ich die App?</summary><p>Gehe zu Jira Settings → Apps → Manage apps, suche Priority Scoring und klicke auf Uninstall. Atlassian hält gespeicherte App-Daten (Bewertungen, Einstellungen, Verlauf) 28 Tage nach der Deinstallation vor und löscht sie dann; siehe <a href="/de/priority-scoring-privacy-policy.html">Datenschutzerklärung</a>. Benutzerdefinierte Felder bleiben in Jira, bis du sie unter Settings → Work items → Fields löschst.</p></details>
+      </section>
+
+      <!-- Support -->
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Priority%20Scoring%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/priority-scoring-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/priority-scoring-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/priority-scoring-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/priority-scoring-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/priority-scoring-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/priority-scoring-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

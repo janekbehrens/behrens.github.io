@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Support — Priority Scoring for Jira</title>
+  <meta name="description" content="Get help with Priority Scoring for Jira — FAQs, troubleshooting and direct support contact for the Atlassian Forge app.">
+  <link rel="canonical" href="https://janekbehrens.de/priority-scoring-support.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/priority-scoring-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/priority-scoring-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/priority-scoring-support.html">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">Priority Scoring for Jira</p>
+
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>, or open a public
+      issue on GitHub. Check the existing issues first: your question may already have an answer.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Priority%20Scoring%20Support">support@janekbehrens.de</a><br>
+        <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/priority-scoring-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/priority-scoring-issues</a><br>
+        <strong>Documentation:</strong> <a href="priority-scoring-docs.html">Priority Scoring for Jira documentation</a><br>
+        <strong>Response time:</strong> 1–2 business days (Monday to Friday)
+      </p>
+    </div>
+
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="priority-scoring-docs.html">documentation</a> (<a href="priority-scoring-docs.html#faq">FAQ &amp; troubleshooting</a>). Common ones:</p>
+    <ul>
+      <li><strong>The score sliders don't appear on my issues</strong>: the field is almost always missing from the project's screen. Add it under Jira Settings → Work items → Screens; in a team-managed project under Project settings → Issue types (<a href="priority-scoring-docs.html#add-to-screens">details</a>).</li>
+      <li><strong>Rovo applied scores but Board Health still shows the issues as "Unscored"</strong>: the Priority Scoring field is probably not on the project's screen. Fix the screen setup, then click Refresh on the app page.</li>
+      <li><strong>Rovo says a score could not be applied</strong>: name one of RICE, WSJF or ICE and give every dimension of that framework. Until the values are complete, nothing is written and the existing score stays as it is.</li>
+      <li><strong>A gadget says "Priority Scoring cannot show" a project</strong>: you don't have permission to browse that project in Jira, or the project no longer exists. Ask a Jira administrator for the Browse Projects permission, or edit the gadget and choose a project you can open.</li>
+      <li><strong>I can't change the settings</strong>: only Jira administrators can change Priority Scoring settings, because they apply to everyone on the site. The Health Criteria of a project can also be changed by that project's administrators.</li>
+      <li><strong>The Rovo portfolio comparison leaves out a project</strong>: it summarises up to 5 projects from their Board Health of the last hour. Other projects need a <em>Check</em> in the Portfolio tab first (<a href="priority-scoring-docs.html#portfolio">details</a>).</li>
+    </ul>
+
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Your Jira site URL, and whether it relates to the RICE, WSJF or ICE fields, the dashboard or the Rovo AI agent</li>
+      <li><strong>Custom fields:</strong> which framework (RICE / WSJF / ICE) is affected, and whether the field is missing from the issue view or shows incorrect values</li>
+      <li><strong>Rovo AI agent:</strong> which action was triggered (suggest / apply / bulk), the configured apply mode, and the exact response or error message shown in Rovo chat</li>
+      <li><strong>Dashboard / gadget:</strong> the project key, the selected framework, and the exact message or number you see. For the Rovo portfolio comparison: whether the project's Board Health was calculated in the last hour (for example with Check in the Portfolio tab)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Legal:</strong> <a href="priority-scoring-privacy-policy.html">Privacy Policy</a> ·
+      <a href="priority-scoring-terms-of-service.html">Terms of Service</a> ·
+      <a href="priority-scoring-security.html">Security Policy</a>
+    </p>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

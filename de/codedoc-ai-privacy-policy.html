@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Datenschutzerklärung von CodeDoc AI for Confluence: Welche Daten die App liest und speichert, wo sie verarbeitet und wie lange sie aufbewahrt werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/codedoc-ai-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/codedoc-ai-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/codedoc-ai-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">CodeDoc AI for Confluence · Stand: 12. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch CodeDoc for Confluence (ehemals CodeDoc AI; "die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Confluence Cloud-Instanz. Wir verpflichten uns zum Schutz Ihrer Privatsphäre und zur Transparenz unserer Datenverarbeitung.
+    </p>
+
+    <h2>2. Ihre eigenen Schlüssel und Atlassian AI</h2>
+    <p>
+      Die App arbeitet mit Zugangsdaten, die Sie bereitstellen: Zugriffstoken für Git-Hosting-Anbieter (GitHub, GitLab, Bitbucket Cloud, Azure DevOps oder Ihren eigenen GitHub Enterprise- bzw. GitLab-Server) und — wenn Sie KI-Seiten mit Ihrem eigenen Anbieter nutzen — API-Schlüssel für KI-Dienste (Anthropic, OpenAI oder Google AI). Die App verwendet diese Zugangsdaten ausschließlich für die von Ihnen ausgelösten Funktionen.
+      <strong>Wir haben keinen Zugriff auf Ihre API-Schlüssel oder Token</strong> — sie liegen im verschlüsselten Forge-Speicher Ihrer Confluence-Instanz und werden niemals an uns übertragen.
+    </p>
+    <p>
+      Für Bitbucket akzeptiert die App Zugriffstoken für Repositories, Projekte und Workspaces. Eine vor Version 8 mit einem persönlichen API-Token oder App-Passwort angelegte Bitbucket-Verbindung wurde als <em>email:token</em> oder <em>username:password</em> eingegeben; ihr gespeichertes Token enthält daher auch die E-Mail-Adresse oder den Nutzernamen dieses Kontos. CodeDoc kennzeichnet solche Verbindungen, bis ein Administrator sie durch ein Zugriffstoken ersetzt.
+    </p>
+    <p>
+      In der <strong>Advanced-Edition</strong> nutzen KI-Seiten <strong>Atlassian AI</strong> — sofern kein eigener KI-Schlüssel verbunden und in den Einstellungen gewählt wurde: KI-Modelle, die auf der Plattform von Atlassian gehostet werden (Forge LLMs). Dafür ist kein KI-Schlüssel erforderlich und kein KI-Konto bei einem Drittanbieter beteiligt. Ihr eigener Schlüssel bleibt optional. In der Standard-Edition benötigen KI-Seiten Ihren eigenen Schlüssel.
+    </p>
+    <p>
+      Atlassian AI ist ein Dienst von Atlassian, nicht von uns. Für eine KI-Seite sendet die App die ausgewählten Dateien und Schreibanweisungen an diesen Dienst und erhält die erzeugte Seite zurück. Wie Atlassian diese Daten verarbeitet, schützt und aufbewahrt und welche Modellanbieter es verwendet, bestimmt Atlassian: siehe die <a href="https://www.atlassian.com/legal/privacy-policy" target="_blank" rel="noopener">Datenschutzerklärung von Atlassian</a>,
+
+      <a href="https://www.atlassian.com/trust/ai" target="_blank" rel="noopener">die Informationen von Atlassian zur Vertrauenswürdigkeit seiner KI</a> und die
+      <a href="https://www.atlassian.com/legal/atlassian-customer-agreement" target="_blank" rel="noopener">Atlassian-Kundenvereinbarung</a>.
+
+    </p>
+
+    <h2>3. Daten, auf die wir zugreifen</h2>
+    <p>Die App greift ausschließlich zur Bereitstellung ihrer Funktionen auf die folgenden Daten zu:</p>
+    <ul>
+      <li><strong>Quellcode (KI-Seiten):</strong> Wird mit Ihrem Zugriffstoken aus Ihren Git-Repositories abgerufen durch die <strong>Atlassian Forge-Laufzeitumgebung</strong> (auf der Infrastruktur von Atlassian). Der Code wird in den Arbeitsspeicher der Forge-Laufzeitumgebung geladen, dort verarbeitet und an Ihren KI-Anbieter weitergeleitet. Nach Abschluss des Jobs wird Code weder zwischengespeichert noch aufbewahrt.</li>
+      <li><strong>Dateien für Synchronisierungsblöcke:</strong> Die in einem Synchronisierungsblock angezeigte Datei wird auf dieselbe Weise aus Ihrem Git-Repository gelesen. Die App schreibt den von Ihnen gewählten Teil in diesen Block auf der Confluence-Seite. Inhalte von Synchronisierungsblöcken werden niemals an einen KI-Anbieter gesendet.</li>
+      <li><strong>Confluence-Daten:</strong> Bereichsnamen und Seiten-IDs — zum Erstellen oder Aktualisieren von Dokumentationsseiten in den von Ihnen gewählten Bereichen. Gruppennamen für die Gruppenauswahl in den Einstellungen.</li>
+      <li><strong>Ihre Atlassian-Konto-ID</strong>, die Confluence bei jeder Anfrage übergibt, sowie Confluence-Gruppen und Berechtigungen dieses Kontos — zur Prüfung Ihrer CodeDoc-Rolle und der auf einer Seite erlaubten Aktionen. Gruppenmitgliedschaften und Berechtigungen werden nicht gespeichert.</li>
+      <li><strong>KI-API:</strong> Ihr Quellcode wird zusammen mit den Schreibanweisungen und Seiteneinstellungen der KI-Seite zur Dokumentationserstellung mit Ihrem API-Schlüssel an den gewählten KI-Anbieter gesendet oder — bei Atlassian AI (Advanced-Edition) — an die auf der Plattform von Atlassian gehosteten KI-Modelle. Die Antwort (erzeugte Dokumentation) wird in Confluence veröffentlicht.</li>
+      <li><strong>Versionsprüfung (optional):</strong> Bei einem Synchronisierungsblock mit aktivierter Option „Compare with the latest release“ sendet die App den öffentlichen Namen des in der Datei genannten Images oder Pakets (z. B. "nginx") an dessen öffentliche Registry, um die neueste Version abzufragen. Es werden keine Dateiinhalte oder Repository-, Seiten- oder Nutzerinformationen gesendet. Abfragen von GitHub Releases verwenden das Zugriffstoken Ihrer github.com-Verbindung, sofern vorhanden, damit das GitHub-Limit für anonyme Anfragen nicht greift.</li>
+    </ul>
+
+    <h2>4. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert die folgenden Daten in <strong>Atlassian Forge Storage</strong>
+      (von Atlassian innerhalb Ihrer Confluence Cloud-Instanz gehostet und verwaltet):
+    </p>
+    <ul>
+      <li>KI-Anbieterkonfiguration (Anbietertyp, verschlüsselter API-Schlüssel, gewähltes Modell)</li>
+      <li>Git-Anbieterkonfiguration (Anbietertyp, verschlüsseltes Zugriffstoken, Basis-URL, Bezeichnung sowie Nutzername und Anzeigename des Git-Kontos, zu dem das Token gehört, wie vom Git-Anbieter gemeldet)</li>
+      <li>Repository-Liste (Repository-URLs, Branches, Anbieterreferenzen)</li>
+      <li>Job-Konfiguration der KI-Seiten (Name, gewählte Repositories, Schreibstil und Schreibanweisungen mit bis zu 2.000 Zeichen, Einschluss- und Ausschlussmuster, Auslösereinstellungen, Zielbereich und Zielseite)</li>
+      <li>Schreibstile, die Administratoren als Vorlagen für KI-Seiten speichern (Name und Einstellungen)</li>
+      <li>Erstellungsverlauf der letzten 100 Läufe (Job-Name, Status, Zeitstempel, Token-Nutzung, Repository-Namen, Pfade von bis zu 50 gelesenen Dateien, Zielbereich und Zielseite, Fehlermeldung — kein Quellcode oder erzeugter Inhalt)</li>
+      <li>Dateilisten der KI-Dateiauswahl (Dateipfade, Größen und Typen — keine Dateiinhalte)</li>
+      <li>Job-Ausführungsstatus (vorübergehender Fortschrittszustand während aktiver Job-Läufe)</li>
+      <li>Daten zur Webhook-Deduplizierung (SHA-256-Hashes von Webhook-Zustellungs-IDs und Anfrageinhalten, bis zu 7 Tage aufbewahrt, um doppelte Verarbeitung zu verhindern — keine Nutzlastinhalte)</li>
+      <li>Webhook-Geheimnis (seit Version 8.5 für durch Push ausgelöste Jobs erforderlich; zur Prüfung jedes eingehenden Webhooks)</li>
+      <li>Datensätze der Synchronisierungsblöcke (Seiten- und Block-ID, Blockeinstellungen, Prüfsumme des zuletzt synchronisierten Inhalts, Status und letzter Fehler — keine Dateiinhalte)</li>
+      <li>Atlassian-Konto-IDs von Personen, die einen Lauf einer KI-Seite freigegeben, verworfen oder rückgängig gemacht, einen Synchronisierungsblock freigegeben oder die Bewertungsaufforderung geschlossen haben (nur die ID, kein Name oder E-Mail-Adresse)</li>
+      <li>Namen der Confluence-Gruppen mit den CodeDoc-Rollen Admin und Job Operator</li>
+      <li>Anonyme tägliche Nutzungszähler pro Funktion (z. B. "ein Synchronisierungsblock wurde aktualisiert"), ohne Seiten-, Bereichs-, Repository-, Datei- oder Nutzerinformationen</li>
+      <li>Atlassian-AI-Nutzung pro Monat (Advanced-Edition): Credits, Token-Zähler, Anzahl der Läufe und Modellname — kein Quellcode oder erzeugter Inhalt</li>
+      <li>Antworten der Versionsprüfung: öffentliche Versionsnummern und Supportdaten pro Image- oder Paketname, Aktualisierung nach 12 Stunden</li>
+      <li>App-weite Einstellungen (allgemeine Präferenzen und Konfigurationsschalter)</li>
+    </ul>
+    <p><strong>Wir speichern weder Ihren Quellcode noch den Inhalt der erzeugten Dokumentation.</strong> Quellcode wird innerhalb einer einzelnen Job-Ausführung gelesen, verarbeitet und verworfen. Die erzeugte Dokumentation wird direkt in Confluence geschrieben.</p>
+
+    <h2>5. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> personenbezogene Daten erhalten. Die App speichert Atlassian-Konto-IDs (siehe Abschnitt 4), jedoch keine Namen, E-Mail-Adressen oder anderen persönlichen Profildaten von Atlassian-Nutzern; die einzigen Ausnahmen sind der Name des Git-Kontos hinter jeder Git-Verbindung und die E-Mail-Adresse bzw. der Nutzername in einem älteren persönlichen Bitbucket-Token (siehe Abschnitte 2 und 4). Quellcode wird niemals gespeichert.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an eigene Server oder Analyse-, Tracking- oder Werbeplattformen Dritter senden.</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel oder irgendeine Form von Nutzertracking verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Zugriff auf Ihre API-Schlüssel, Zugriffstoken oder Ihren Quellcode haben.</li>
+      <li>Wir werden <strong>nicht</strong> Inhalte Ihres Quellcodes oder der erzeugten Dokumentation aufbewahren oder protokollieren.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "ein Synchronisierungslauf endete mit einem Fehler") und einmal täglich anonyme Nutzungszähler in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können IDs von KI-Seiten, Jobs, verbundenen Repositories, Confluence-Seiten und Bereichen Ihrer Site sowie Zähler, Statuswerte, Anbieter- und Modellnamen und Zeitdauern enthalten, jedoch niemals Namen, Titel, Repository- oder Serveradressen, Branch-Namen, Dateiinhalte, Konto-IDs, E-Mail-Adressen oder Freitext (Freitext wird nur durch einen kurzen Hash und seine Länge beschrieben). Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>6. Datenübermittlung an Dritte</h2>
+    <p>
+      Wenn Sie einen Dokumentationsjob ausführen, übermittelt die App Daten an die folgenden Dienste Dritter
+      <strong>mit Ihren eigenen Zugangsdaten</strong>:
+
+    </p>
+    <ul>
+      <li><strong>Ihr Git-Anbieter</strong> (GitHub, GitLab, Bitbucket, Azure DevOps oder Ihr eigener GitHub Enterprise- bzw. GitLab-Server) — zum Lesen von Quellcodedateien aus Ihren Repositories.</li>
+      <li><strong>Ihr KI-Anbieter</strong> (Anthropic, OpenAI oder Google AI) — zur Erstellung von Dokumentation aus dem Quellcode, wenn Sie Ihren eigenen Schlüssel verwenden. Bei Atlassian AI (Advanced-Edition) wird der Code stattdessen auf der Plattform von Atlassian verarbeitet.</li>
+      <li><strong>Öffentliche Registries</strong> (Docker Hub, npm, PyPI, GitHub Releases, endoflife.date) — nur für Synchronisierungsblöcke mit Versionsprüfung und nur der öffentliche Name eines Images oder Pakets.</li>
+    </ul>
+    <p>
+      Ihre eigenen Git-Server werden erst kontaktiert, nachdem ein Site-Administrator Ihrer Atlassian-Site ihre Adresse freigegeben hat; Atlassian bewahrt diese Freigabe auf und zeigt sie in Atlassian Administration („Connected apps“) an.
+    </p>
+    <div class="hub-wrap">
+      <div class="hub-center">
+        <div class="flow-box forge">
+          Atlassian Forge-Laufzeitumgebung
+          <span class="flow-sub">Zentrale — isoliert, auf der Infrastruktur von Atlassian</span>
+        </div>
+      </div>
+      <div class="hub-spokes">
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">↕ Code abrufen (HTTPS)</div>
+          <div class="flow-box byok">
+            Dein Git-Anbieter
+            <span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps / eigener Server<br>Deine Zugangsdaten (BYOK)</span>
+          </div>
+          <div class="hub-spoke-note">Webhook-Auslöser: Git → Forge (eingehend)</div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">↕ Code senden · Dokumentation empfangen</div>
+          <div class="flow-box byok">
+            Dein KI-Anbieter
+            <span class="flow-sub">Anthropic / OpenAI / Google AI<br>Deine Zugangsdaten (BYOK) — oder Atlassian AI (Advanced)</span>
+          </div>
+        </div>
+        <div class="hub-spoke">
+          <div class="hub-spoke-label">↕ Seiten lesen/schreiben</div>
+          <div class="flow-box forge">
+            Confluence Cloud
+            <span class="flow-sub">Hier wird die Dokumentation veröffentlicht</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="flow-label">Blau = Atlassian-Infrastruktur | Orange = Dienste, die du mit eigenen Zugangsdaten konfigurierst</p>
+    <p>
+      <strong>Wichtig:</strong> Jeder Drittanbieter hat eigene Richtlinien zur Datenverarbeitung und Aufbewahrung. Wir haben keine Kontrolle darüber, wie Ihr Git- oder KI-Anbieter die übermittelten Daten verarbeitet, speichert oder aufbewahrt. Sie sind dafür verantwortlich, die Bedingungen und Datenschutzerklärungen der von Ihnen verbundenen Dienste zu prüfen und zu akzeptieren.
+    </p>
+    <p>
+      Wir werden <strong>nicht</strong> Daten an andere Dienste senden als die von Ihnen ausdrücklich konfigurierten sowie — bei Synchronisierungsblöcken mit Versionsprüfung — die oben genannten öffentlichen Registries. Es werden keine Daten an eigene Server oder sonstige Dritte übertragen.
+    </p>
+
+    <h2>7. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die Backend-Logik der App läuft vollständig innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong>
+      als Teil der
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge-Plattform</a>. Daten werden auf der Infrastruktur von Atlassian verarbeitet. Ausgehende Verbindungen erfolgen nur zu den von Ihnen konfigurierten Git- und KI-Anbietern (einschließlich eigener Git-Server, die ein Site-Administrator freigegeben hat) und — bei Synchronisierungsblöcken mit Versionsprüfung — zu den oben genannten öffentlichen Registries über den Forge-Mechanismus für externen Abruf mit freigegebenen Zielen. Atlassian AI läuft auf der Plattform von Atlassian.
+    </p>
+    <p>
+      Die App bietet keine Optionen zur Datenresidenz. Alle in Abschnitt 4 aufgeführten Daten liegen im gehosteten Forge-Speicher auf der Infrastruktur von Atlassian; die App hat keine eigenen Server. Da sie Verbindungen zu den von Ihnen gewählten Git- und KI-Diensten herstellt, trägt sie nicht Atlassians Status <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>
+      (PINNED). Quellcode und andere Dateien, die die App von Ihrem Git-Anbieter liest, werden im Arbeitsspeicher verarbeitet und verworfen; der an Ihren KI-Anbieter oder Atlassian AI gesendete Text wird von diesem Dienst verarbeitet, der Ort und Aufbewahrung bestimmt. Technische Logs werden über die App-Protokollierung von Atlassian verarbeitet.
+    </p>
+
+    <h2>8. Speicherdauer</h2>
+    <ul>
+      <li><strong>Konfigurationsdaten</strong> (Anbieter, Jobs, Repositories, Schreibstile, Rollengruppen) werden in Forge Storage aufbewahrt, solange die App installiert ist. Das Löschen einer Git- oder KI-Verbindung löscht ihr Token bzw. ihren Schlüssel sofort.</li>
+      <li><strong>Der Erstellungsverlauf</strong> (nur Metadaten — kein Quellcode oder Inhalt) bewahrt die letzten 100 Läufe auf; ältere Läufe fallen heraus, und Administratoren können ihn mit „Clear history“ vollständig löschen. Die Konto-IDs eines Laufs werden mit ihm entfernt.</li>
+      <li><strong>Datensätze der Synchronisierungsblöcke</strong> und ihre Freigaben mit der Konto-ID des freigebenden Job Operators werden aufbewahrt, bis ein Job Operator den Block unter „CodeDoc → Sync Blocks“ entfernt („Remove“ bzw. „Remove detached“, wenn die Seite nicht mehr vorhanden ist). Vermerke über das Schließen der Bewertungsaufforderung, Dateilisten der KI-Dateiauswahl und anonyme tägliche Nutzungszähler werden aufbewahrt, solange die App installiert ist.</li>
+      <li>Wenn die App Daten löscht, werden sie sofort aus dem Forge-Speicher entfernt und die App kann sie nicht mehr lesen. Atlassian bewahrt bis zum Ende seiner Aufbewahrungsfrist eine als gelöscht markierte Kopie zur Wiederherstellung nach versehentlicher Löschung auf.</li>
+      <li><strong>Quellcode</strong> wird niemals gespeichert. Er wird aus Git in die Atlassian Forge-Laufzeitumgebung abgerufen, im Arbeitsspeicher verarbeitet, an den KI-Anbieter oder Atlassian AI weitergeleitet und innerhalb derselben Job-Ausführung verworfen.</li>
+      <li><strong>Antworten der Versionsprüfung</strong> werden 12 Stunden lang aufbewahrt; monatliche Atlassian-AI-Nutzungszähler, solange die App installiert ist.</li>
+      <li><strong>Erzeugte Dokumentation</strong> wird als normale Confluence-Seiten gespeichert. Diese Seiten bestehen unabhängig von der App weiter und werden bei einer Deinstallation nicht gelöscht.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Datenlebenszyklus für von Forge gehosteten Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>9. Einhaltung der DSGVO</h2>
+    <p>
+      An personenbezogenen Daten speichert die App selbst Atlassian-Konto-IDs (Abschnitt 4), den Namen des Git-Kontos hinter jeder Git-Verbindung und — bei einer vor Version 8 mit einem persönlichen Token angelegten Bitbucket-Verbindung — die E-Mail-Adresse bzw. den Nutzernamen in diesem Token (Abschnitt 2); alle anderen gespeicherten Daten sind Konfigurations- und Laufmetadaten. Alles verbleibt in Forge Storage für Ihre Site. Wenn Ihr Quellcode oder die erzeugte Dokumentation personenbezogene Daten enthält, werden diese gelesen durch die <strong>Atlassian Forge-Laufzeitumgebung</strong> und bei KI-Seiten an den mit Ihrem eigenen Schlüssel verbundenen KI-Anbieter gesendet oder von Atlassian AI (Advanced-Edition) verarbeitet. Übermittlungen an einen KI-Anbieter außerhalb des EWR erfolgen auf Ihre Weisung und unter der Vereinbarung, die Sie mit diesem Anbieter haben; für Atlassian AI gilt die Vereinbarung mit Atlassian (siehe Abschnitt 2). Wir haben keine eigenen Server; unser einziger Unterauftragsverarbeiter ist Atlassian, das die App auf Forge gemäß folgendem Dokument hostet: <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum (Zusatz zur Datenverarbeitung)</a> (mit Standardvertragsklauseln für Übermittlungen außerhalb des EWR). Prüfen Sie die Datenverarbeitungsbedingungen Ihres Anbieters, bevor Sie Code mit personenbezogenen Daten verarbeiten.
+    </p>
+    <p>
+      Bei einer Anfrage zu gespeicherten Konto-IDs kann ein Administrator den Laufverlauf löschen, Synchronisierungsblöcke entfernen oder uns kontaktieren; nach einer Deinstallation löscht Atlassian alle App-Daten 28 Tage später (Abschnitt 8).
+    </p>
+    <p>Bei Anliegen zur DSGVO kontaktieren Sie uns bitte über die unten angegebene E-Mail-Adresse.</p>
+
+    <h2>10. Sicherheit</h2>
+    <p>Die App folgt den bewährten Sicherheitsverfahren von Atlassian Forge:</p>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung mit eingeschränktem Netzwerkzugriff (nur die im Manifest der App aufgeführten Domains und eigene Git-Server, die ein Site-Administrator freigegeben hat).</li>
+      <li>API-Schlüssel und Zugriffstoken werden im verschlüsselten Atlassian Forge-Speicher gespeichert.</li>
+      <li>Alle externen Datenübermittlungen verwenden TLS-Verschlüsselung.</li>
+      <li>Zugangsdaten werden niemals protokolliert, in Fehlermeldungen offengelegt oder an uns übertragen.</li>
+      <li>Die App verwendet nur die benötigten Confluence-Berechtigungen: <code>storage:app</code>,  <code>read:space:confluence</code>,  <code>search:confluence</code>,  <code>read:page:confluence</code>,  <code>write:page:confluence</code>,  <code>delete:page:confluence</code>,  <code>read:confluence-user</code> und <code>read:confluence-groups</code>.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/codedoc-ai-security.html" hreflang="en">Sicherheitserklärung (EN)</a>.</p>
+
+    <h2>11. Datenschutz bei Kindern</h2>
+    <p>
+      Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.
+    </p>
+
+    <h2>12. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>13. Kontakt</h2>
+      <p>
+        Bei Fragen oder Anliegen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

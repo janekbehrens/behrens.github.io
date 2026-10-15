@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — DevOps Metrics for Jira</title>
+  <meta name="description" content="Datenschutzerklärung von DevOps Metrics for Jira: Welche Daten die App liest und speichert, wo sie verarbeitet und wie lange sie aufbewahrt werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/dora-metrics-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/dora-metrics-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/dora-metrics-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/dora-metrics-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">DevOps Metrics for Jira · Stand: 5. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch DevOps Metrics for Jira ("die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Jira Cloud-Instanz. Die App ist ein <strong>ausschließlich lesendes Berichtswerkzeug</strong>: Sie liest Jira-Arbeitsdaten, um die vier DORA™-Kennzahlen zur Softwarebereitstellung zu berechnen, und verändert Ihre Vorgänge niemals.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App liest die folgenden Jira-Daten ausschließlich zur Berechnung der Kennzahlen:</p>
+    <ul>
+      <li><strong>Abgeschlossene Vorgänge der konfigurierten Projekte:</strong> Vorgangstyp, Labels, Erstellungs- und Erledigungsdatum sowie aktueller Status — für Durchsatz, Durchlaufzeit, MTTR und den Anteil der KI-Beteiligung.</li>
+      <li><strong>Verlauf der Statusänderungen:</strong> die Zeitstempel von Workflow-Übergängen (von welchem in welchen Status ein Vorgang wann wechselte) — für Durchlaufzeit und Wiederöffnungsrate. Für das optionale KI-Signal prüft die App außerdem, <em>ob</em> der Urheber einer Änderung ein App-Konto ist (z. B. eine Automatisierung oder ein Agent) — ausschließlich im Arbeitsspeicher; Identitäten der Urheber werden niemals dauerhaft gespeichert.</li>
+      <li><strong>Projektversionen (Releases):</strong> Namen und Veröffentlichungsdaten veröffentlichter Versionen — für Deployment-Häufigkeit und Änderungsfehlerrate.</li>
+      <li><strong>Vorgänge vom Typ Fehler:</strong> Erstellungsdatum und Referenzen auf behobene bzw. betroffene Versionen — für die Änderungsfehlerrate.</li>
+      <li><strong>Projektmetadaten:</strong> Projektnamen und -schlüssel, Vorgangstypen und Statuswerte — für den Einrichtungsassistenten und die Auswahllisten.</li>
+    </ul>
+    <p>
+      Die App wird <strong>nicht</strong> Bearbeiter-, Melder- oder andere Nutzer- bzw. personenbezogene Felder lesen oder verwenden. Kennzahlen werden ausschließlich auf Projekt- bzw. Teamebene ausgewiesen — niemals für einzelne Personen.
+    </p>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert nur die folgenden Daten in <strong>Atlassian Forge Storage</strong>, das von Atlassian innerhalb Ihrer Cloud-Instanz gehostet und verwaltet wird:
+    </p>
+    <ul>
+      <li><strong>Wöchentliche Zusammenfassungen pro Projekt:</strong> Anzahl der Deployments, abgeschlossenen und ausgeschlossenen Vorgänge, Zähler und Nenner für Änderungsfehler, Anzahl der Vorfälle und der KI-Beteiligungen sowie kompakte statistische Zusammenfassungen von Zeitdauern (z. B. mediane Durchlaufzeit in Stunden). Sie werden dauerhaft gespeichert, damit das Gadget sofort lädt, und nachts sowie auf Abruf neu berechnet.</li>
+      <li><strong>Betriebliche Datensätze:</strong> Status von Hintergrundjobs, Aktualisierungsmarken (Zeitstempel), Datenqualitätszähler der letzten Analyse, Reparaturmarkierungen, zuletzt verwendete Kennzahldefinitionen (Status- und Vorgangstyp-IDs, Labels zur Kennzeichnung KI-unterstützter Arbeit, Optionen) und eine Liste kürzlich angesehener Projekte (nur IDs und Zeitstempel), die die nächtliche Aktualisierung steuert.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> wie oft Funktionen pro Tag genutzt wurden (z. B. "ein Gadget wurde geladen"). Keine IDs, Namen oder Inhalte.</li>
+    </ul>
+    <p>
+      <strong>Wir speichern keine Vorgangstitel, Beschreibungen, Kommentare, Anhänge, Nutzernamen, E-Mail-Adressen, Konto-IDs oder Freitextinhalte.</strong> Gespeicherte Daten bestehen aus numerischen Zusammenfassungen, Projekt- und Wochenkennungen sowie den oben aufgeführten betrieblichen Datensätzen.
+    </p>
+    <p>
+      Die Gadget-Konfiguration (ausgewählte Projekte, Definitionen, Datum der KI-Einführung, Labels, Markierungen und Zeitraum) speichert Jira als normale Dashboard-Gadget-Konfiguration.
+    </p>
+
+    <h2>4. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> eigene Server betreiben. Es gibt weder ein vom Entwickler betriebenes Backend noch eine solche Datenbank.</li>
+      <li>Wir werden <strong>nicht</strong> personenbezogene Informationen (PII) erheben. Die App liest keine Bearbeiter- oder Nutzerfelder und speichert keine Kontokennungen.</li>
+      <li>Wir werden <strong>nicht</strong> personenspezifische Kennzahlen berechnen oder anzeigen — die App kann konstruktionsbedingt keine Rangfolge einzelner Personen erstellen.</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an externe Dienste senden. Die App führt keine Netzwerkaufrufe außerhalb der Atlassian-Plattform aus.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "die Wochenwerte wurden aktualisiert" oder "Jira hat nicht geantwortet") und einmal täglich die anonymen Nutzungszähler in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können Projekt-IDs und Projektschlüssel Ihrer Site sowie Zähler, Modi, HTTP-Statuswerte und Fehlercodes enthalten, jedoch niemals Vorgangsinhalte, Personennamen, E-Mail-Adressen, Konto-IDs oder JQL-Text (eine fehlgeschlagene Suche wird nur durch einen Hash beschrieben). Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>5. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Verarbeitung erfolgt innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong> im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alle in Abschnitt 3 aufgeführten Daten liegen im gehosteten Forge-Speicher (Schlüssel-Wert-Speicher und benutzerdefinierte Entitäten). Dieser unterstützt Atlassians
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>: Die Daten liegen am selben Ort wie Ihre Jira-Site und werden mit ihr verschoben, wenn ein Administrator die Daten der Site an einen anderen Ort verlagert. Ausgenommen sind Jira-Daten, die die App liest, ohne sie zu speichern, Gadget- und Widget-Einstellungen (von Jira gemäß dessen eigener Datenresidenz gespeichert) und die technischen Logs aus Abschnitt 4, die über die App-Protokollierung von Atlassian verarbeitet werden.
+    </p>
+
+    <h2>6. Speicherdauer</h2>
+    <ul>
+      <li>Die wöchentlichen Zusammenfassungen decken ein gleitendes Zeitfenster von 12 Monaten ab und werden bei der Neuberechnung überschrieben; Projekte, die nicht mehr angesehen werden, fallen aus der automatischen Aktualisierung heraus.</li>
+      <li>Betriebliche Datensätze und Nutzungszähler werden aufbewahrt, solange die App installiert ist.</li>
+      <li>Die Gadget-Konfiguration wird entfernt, wenn das Gadget entfernt oder die App deinstalliert wird.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/#data-recovery" target="_blank" rel="noopener">Forge-Dokumentation: Datenwiederherstellung für Apps mit gehostetem Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>7. Einhaltung der DSGVO</h2>
+    <p>
+      Die App erhebt und speichert keine personenbezogenen Daten. Sie liest keine Bearbeiter- oder Nutzerinformationen; gespeicherte Daten sind auf numerische Zusammenfassungen sowie Projekt- und Wochenkennungen beschränkt. Das Signal zur KI-Beteiligung wird pro Vorgang als Ja/Nein im Arbeitsspeicher abgeleitet und ausschließlich als wöchentliche Anzahl gespeichert — konstruktionsbedingt betriebsrats- und datenschutzfreundlich. DSGVO-Anfragen betroffener Personen zu Daten, die Jira selbst speichert, sollten an Atlassian gerichtet werden. Bei Anliegen zur App kontaktieren Sie uns unter der unten angegebenen Adresse. Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus Forge Storage (Abschnitt 6).
+    </p>
+
+    <h2>8. Sicherheit</h2>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung ohne ausgehende Verbindungen zu externen Netzwerken außerhalb der Atlassian-Plattform.</li>
+      <li>Verwendet minimale, <strong>ausschließlich lesende</strong> Jira-API-Berechtigungen sowie App-Speicher.</li>
+      <li>Prüft vor der Rückgabe von Daten die eigenen Jira-Projektberechtigungen jedes Betrachters.</li>
+      <li>Speichert keine Zugangsdaten, Token oder Geheimnisse — solche gibt es nicht.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/dora-metrics-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>9. Datenschutz bei Kindern</h2>
+    <p>Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.</p>
+
+    <h2>10. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>11. Kontakt</h2>
+      <p>
+        Bei Fragen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">DORA™ ist eine Marke von Google LLC. DevOps Metrics for Jira ist ein unabhängiges Produkt von Janek Behrens und steht weder mit Google in Verbindung noch wird es von Google unterstützt. „DORA™-Kennzahlen“ bezeichnet die vier Kennzahlen zur Softwarebereitstellung, die im Programm DevOps Research and Assessment definiert wurden.</p>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Jira Epic Progress: Issue Count, Story Points and Dashboards | Janek Behrens</title>
+  <meta name="description" content="Track Jira epic progress with native views, a custom field or a dashboard gadget. Compare issue-count and story-point calculations with a worked example.">
+  <link rel="canonical" href="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+  <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira Epic Progress: Issue Count, Story Points and Dashboards",
+  "description": "Track Jira epic progress with native views, a custom field or a dashboard gadget. Compare issue-count and story-point calculations with a worked example.",
+  "url": "https://janekbehrens.de/blog/jira-epic-progress-tracking.html",
+  "datePublished": "2025-11-18T00:00:00+02:00",
+  "dateModified": "2026-10-15T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp",
+  "keywords": [
+    "Jira",
+    "Atlassian",
+    "Epic",
+    "Progress Tracking"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de"
+  },
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/blog/jira-epic-progress-tracking.html"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does Jira already show epic progress?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The timeline shows parent progress from child status categories, and company-managed Scrum boards have an Epic Report. An app is useful when you need a progress custom field or a dedicated dashboard view."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Subtasks field weight stories by points?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It averages child progress equally. Choose Story points in the Epic Progress Tracker gadget when you want a weighted dashboard metric."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can the bar be higher than the Done figure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The bar includes mapped partial progress for unfinished issues. Done counts only completed issues or their points. A 65% progress bar can therefore coexist with 50% of story points done."
+      }
+    }
+  ]
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira Epic Progress: Issue Count, Story Points and Dashboards">
+  <meta property="og:description" content="Track Jira epic progress with native views, a custom field or a dashboard gadget. Compare issue-count and story-point calculations with a worked example.">
+  <meta property="og:url" content="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2025-11-18">
+  <meta property="article:modified_time" content="2026-10-15">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Epic">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira Epic Progress: Issue Count, Story Points and Dashboards">
+  <meta name="twitter:description" content="Track Jira epic progress with native views, a custom field or a dashboard gadget. Compare issue-count and story-point calculations with a worked example.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp">
+
+  <!-- ── Schema.org Article ── -->
+
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* ── Child issue breakdown mock ── */
+    .child-breakdown {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      max-width: 480px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+      font-size: 0.85rem;
+    }
+    .child-breakdown-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .child-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-top: 1px solid var(--border-2);
+    }
+    .child-row:first-of-type { border-top: none; }
+    .child-key { font-size: 0.75rem; font-weight: 600; color: var(--blue); min-width: 70px; }
+    .child-status { font-size: 0.75rem; color: var(--text-2); flex: 1; }
+    .child-pct-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      min-width: 42px;
+      text-align: center;
+    }
+    .badge-red    { background: #FFEBE6; color: #BF2600; }
+    .badge-yellow { background: #FFF4E5; color: #974F0C; }
+    .badge-green  { background: #E3FCEF; color: #006644; }
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+    .summary-label { font-size: 0.8rem; font-weight: 600; color: var(--text-2); }
+    .summary-count { font-size: 0.8rem; color: var(--text-faint); }
+
+.article-body { min-width: 0; }
+.article-date, .article-readtime { color: var(--text-2); }
+.article-body pre { overflow-x: auto; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: .85rem; line-height: 1.6; }
+.article-table { overflow-x: auto; margin: 24px 0; }
+.article-table table { border-collapse: collapse; width: 100%; min-width: 400px; font-size: .88rem; line-height: 1.6; }
+.article-table th, .article-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-3); }
+.article-table th { color: var(--text); background: var(--bg); }
+.article-body .article-cta a { color: #fff; text-decoration: underline; }
+</style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-epic-progress-tracking.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-epic-progress-tracking.html">
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">Published <time datetime="2025-11-18">November 18, 2025</time></span><span class="article-date">Updated <time datetime="2026-10-15">October 15, 2026</time></span>
+        <span class="article-readtime">· 4 min read</span>
+      </div>
+      <h1>Jira Epic Progress: Issue Count, Story Points and Dashboards</h1>
+      <p class="article-intro">An epic can be 65% progressed while only 50% of its story points are done. Learn why those numbers differ, which view to use and how to give stakeholders a dashboard they can interpret.</p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+<h2 id="problem">Choose between a timeline, a field and a dashboard</h2>
+
+<p>Jira already shows parent progress in its <a href="https://support.atlassian.com/jira-software-cloud/docs/see-the-progress-of-an-epic-on-the-timeline/">timeline</a>, with segments for child status categories. For a company-managed Scrum board, the Epic Report provides another native view. Start there if those views answer your question.</p>
+
+<p>Use a progress field when people need the percentage on the epic itself or in a list column. Use the Epic Progress Tracker gadget from Visual Progress Tracker when stakeholders need one bar per epic on a shared dashboard, with a choice of issue-count or story-point weighting.</p>
+
+<h2 id="subtask-approach">What the Subtasks field actually counts</h2>
+
+<p>The Progress Bar (Subtasks) field first uses subtasks; if there are none, it uses child issues such as stories under the epic. It averages those children’s progress. Done children count 100%; unfinished children use the site-wide status mapping. It does not recursively sum every level of the hierarchy or weight the field value by story points.</p>
+
+<p>For field creation and the three field types, follow the <a href="/blog/jira-progress-bar.html">Jira progress bar guide</a>. The rest of this article focuses on choosing and interpreting an epic-level view.</p>
+
+<h2 id="how-it-works">Worked example: progress and done count differ</h2>
+
+<div class="article-table"><table><thead><tr><th scope="col">Child story</th><th scope="col">Status progress</th><th scope="col">Story points</th></tr></thead><tbody><tr><td>Login</td><td>100%</td><td>5</td></tr><tr><td>Profile</td><td>50%</td><td>3</td></tr><tr><td>Export</td><td>0%</td><td>2</td></tr></tbody></table></div>
+
+<p>In this illustrative epic, one of three stories is done: 33% by done count. The equal-weight progress average is (100 + 50 + 0) ÷ 3 = 50%. With story-point weighting in the Epic Progress Tracker gadget, the average is (5 × 100 + 3 × 50 + 2 × 0) ÷ 10 = 65%. Only 5 of 10 story points are done. The partial credit for Profile explains the difference.</p>
+
+<p>Choose the metric with your audience before comparing epics. Issue count treats a small task and a large story equally. Story-point weighting depends on estimates; unestimated issues have no weight. Neither measure is a delivery date or a comparison of productivity between teams.</p>
+
+<h2 id="details">Use Details to understand a field value</h2>
+
+<p>On the epic, open Details next to the Subtasks field to inspect each child’s status and percentage. If the result looks too low, check unmapped statuses before assuming work has stalled. A parent without children shows a dash. Status and Subtask field values refresh when the issue is opened; changed mappings may also require an admin recalculation.</p>
+
+<h2 id="list-view">Compare epics on a shared dashboard</h2>
+
+<figure class="diagram"><a href="/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp"><img src="/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp" alt="Epic Progress Tracker gadget with one bar per epic, Done story points and the Story points metric selected." width="1800" height="880" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border)"></a><figcaption class="diagram-caption">Current app screenshot with sample data: Done shows completed points; the bar also includes mapped partial progress.</figcaption></figure>
+
+<p>The dedicated gadget shows each epic as a row. Its top bar is the average of the epic rows, not a single story-point-weighted roll-up across all epics. Use the row values for the comparison and read the Done column alongside the percentage.</p>
+
+<h2 id="setup">Set up Epic Progress Tracker</h2>
+
+<ol><li>Install Visual Progress Tracker for Jira, then open a dashboard you can edit.</li><li>Choose Add gadget and add Epic Progress Tracker.</li><li>Select the project and set Group by to Epic.</li><li>Choose Issue count or Story points under Progress metric.</li><li>Optionally add a JQL condition to select the epics, choose rows per page and save the configuration.</li></ol>
+
+<pre><code>labels = "customer-portal"</code></pre>
+
+<p>In Epic mode, Additional JQL Filter selects the epics, not their child stories. For the example above, put the customer-portal label on the epics you want to include. Do not use a sprint filter here expecting it to select stories inside otherwise unmatched epics. For an issue table limited to sprint work, use Progress Tracker Overview instead.</p>
+
+<p>Results can be cached for up to five minutes per viewer; Refresh loads current data. For configuration details and limits, read the <a href="/visual-progress-tracker-docs.html#epic-gadget">Epic Progress Tracker documentation</a>.</p>
+
+<div class="callout callout-blue"><p>Try the same controls with sample data: <a href="/visual-progress-tracker.html#demo">open the interactive Visual Progress Tracker demo</a>. No Jira installation is needed to explore it.</p></div>
+
+<h2 id="faq">Frequently asked questions</h2>
+
+<div class="faq-item"><p class="faq-q">Does Jira already show epic progress?</p><p class="faq-a">Yes. The timeline shows parent progress from child status categories, and company-managed Scrum boards have an Epic Report. An app is useful when you need a progress custom field or a dedicated dashboard view.</p></div>
+
+<div class="faq-item"><p class="faq-q">Does the Subtasks field weight stories by points?</p><p class="faq-a">No. It averages child progress equally. Choose Story points in the Epic Progress Tracker gadget when you want a weighted dashboard metric.</p></div>
+
+<div class="faq-item"><p class="faq-q">Why can the bar be higher than the Done figure?</p><p class="faq-a">The bar includes mapped partial progress for unfinished issues. Done counts only completed issues or their points. A 65% progress bar can therefore coexist with 50% of story points done.</p></div>
+
+<div class="article-cta"><h3>Explore epic progress with sample data</h3><p>Explore the app, screenshots and interactive demo on the <a href="/visual-progress-tracker.html">Visual Progress Tracker product page</a>.</p></div>
+</article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In this article</h3>
+        <ul class="toc-list" id="toc">
+<li><a href="#problem">Choose between a timeline, a field and a dashboard</a></li>
+<li><a href="#subtask-approach">What the Subtasks field actually counts</a></li>
+<li><a href="#how-it-works">Worked example: progress and done count differ</a></li>
+<li><a href="#details">Use Details to understand a field value</a></li>
+<li><a href="#list-view">Compare epics on a shared dashboard</a></li>
+<li><a href="#setup">Set up Epic Progress Tracker</a></li>
+<li><a href="#faq">Frequently asked questions</a></li>
+</ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>The app</h3>
+        <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>More from the blog</h3>
+        <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: Setup, Examples and Dashboard Views</a>
+        <a href="/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira Sprint Health Dashboard: A Practical Setup Guide</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

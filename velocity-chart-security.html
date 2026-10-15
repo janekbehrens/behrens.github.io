@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Security Policy — Velocity Chart for Jira</title>
+  <meta name="description" content="Security of Velocity Chart for Jira: hosting on Atlassian Forge, permissions, data storage and how to report a vulnerability.">
+  <link rel="canonical" href="https://janekbehrens.de/velocity-chart-security.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Security Policy</h1>
+    <p class="updated">Velocity Chart for Jira · Last updated: October 12, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      Velocity Chart for Jira ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and operates entirely within Atlassian's infrastructure under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      trust boundary. The App is <strong>read-only</strong>, makes <strong>no outbound network calls to
+      any external server</strong>, and stores no credentials of any kind. This document describes the
+      App's security architecture and our practices.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is provided by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions run in isolated, sandboxed containers with restricted system access managed by Atlassian.</li>
+      <li><strong>No external network egress:</strong> The App declares no egress domains and makes no outbound requests to any server outside the Atlassian platform. No external API keys or third-party services are involved.</li>
+      <li><strong>No AI:</strong> The App does not use any AI service. It performs deterministic arithmetic on sprint data only.</li>
+    </ul>
+
+    <h2>3. Access Control</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Control</th><th>Details</th></tr>
+        <tr>
+          <td>Read-only by design</td>
+          <td>The App requests <strong>no write scopes</strong>. It cannot create, edit, transition, or delete any Jira issue, sprint, board, or field.</td>
+        </tr>
+        <tr>
+          <td>App-context reads, viewer-checked results</td>
+          <td>Boards, sprints, issues and their change history are read with <code>api.asApp()</code> and the app-level scopes declared in the manifest. Before any data of a board is returned, the viewer's own Browse Projects permission for the board's project is checked via Atlassian's Authorize API. A sprint can also hold issues of other projects or with an issue security level: on every load, Jira's bulk permission check is asked, as the viewer, which of the sprint's issues the viewer may browse, and only those are counted and listed. The issue titles in the sprint details are read as the viewer (<code>api.asUser()</code>). Permission results are never cached, and if a check cannot complete, no data is shown (fail-closed). To report issues hidden from the app by an issue security level, one Jira search over the sprints shown runs as the viewer and, only if it finds issues the app lacks, the same search as the app; both return issue IDs and issue types only, and just the resulting number is shown for that load, never stored.</td>
+        </tr>
+        <tr>
+          <td>Minimal API scopes</td>
+          <td>Only the read scopes required to draw the chart: <code>read:jira-work</code>, <code>read:project:jira</code>, <code>read:board-scope:jira-software</code>, <code>read:board-scope.admin:jira-software</code>, <code>read:sprint:jira-software</code>, and <code>storage:app</code>. No admin or write permissions are requested.</td>
+        </tr>
+        <tr>
+          <td>Developer access</td>
+          <td><strong>None.</strong> We cannot read, access, or export any data stored in your Jira instance or Forge storage. All data resides within Atlassian's infrastructure.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>4. Data Protection</h2>
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All Forge-to-Jira API calls use Atlassian's internal secured transport (TLS 1.2+).</li>
+      <li>The App makes no outbound HTTPS calls to external services.</li>
+    </ul>
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>Only a short-lived cache of the sprint data per board (sprint names and dates; issue IDs, keys, estimates and statuses; expires after one hour), a board-to-project ID map and field discovery data (numeric field IDs and names), the date of the first chart and anonymous daily usage counters are stored in <strong>Atlassian Forge Storage (KVS)</strong>, hosted by Atlassian with encryption at rest and data residency in the location of your Jira site. The sprint data cache is shared by everyone on the site and filtered by each viewer's permissions before it is shown.</li>
+      <li>No credentials, tokens, or secrets are stored — there are none to store.</li>
+      <li>Issue content (titles, descriptions, comments) and any personal/user data are never stored.</li>
+      <li>After an uninstall, Atlassian keeps the App's storage for 28 days and then deletes it; retention is described in the <a href="velocity-chart-privacy-policy.html">Privacy Policy</a>.</li>
+    </ul>
+    <p><strong>Technical logs:</strong></p>
+    <ul>
+      <li>Log lines contain only numeric board IDs, counts, modes, cache hits, durations, HTTP statuses and error codes. They never contain board, sprint or issue names, names of people, email addresses, account IDs or JQL; every value passes a filter before it is written.</li>
+    </ul>
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App reads no assignee, reporter, or user fields. Velocity is computed at team/board level only — never per individual.</li>
+      <li>Stored data is limited to numbers, sprint names and dates, the names of statuses and numeric fields, issue IDs and keys, and sprint, board, project, field and status identifiers. Issue titles are read only for the sprint details, as the viewer, and never stored.</li>
+    </ul>
+
+    <h2>5. No External Credentials or Integrations</h2>
+    <p>
+      The App does not require or accept any API keys, tokens, passwords, or third-party credentials.
+      There is no configuration that could expose user secrets, and there are no integrations beyond
+      the Atlassian platform itself. The gadget's user interface is a Forge Custom UI served from the
+      App's own static resources; it contains only inline styles for its own chart and loads no
+      third-party scripts.
+    </p>
+
+    <h2>6. Dependency &amp; Vulnerability Management</h2>
+    <ul>
+      <li>Runtime dependencies are limited to Atlassian's official Forge packages (<code>@forge/api</code>, <code>@forge/resolver</code>, <code>@forge/kvs</code>, <code>@forge/bridge</code>), maintained and patched by Atlassian.</li>
+      <li>Build/test tooling is not included in the production runtime bundle.</li>
+      <li>We run <code>npm audit</code> before every Marketplace release and resolve identified vulnerabilities, including dev-only dependencies.</li>
+      <li>Security patches are deployed promptly via Forge; the Node.js runtime is maintained by Atlassian.</li>
+    </ul>
+
+    <h2>7. Incident Response</h2>
+    <p>If a security issue is discovered in the App:</p>
+    <ul>
+      <li>We investigate and begin remediation promptly upon notification or discovery.</li>
+      <li>A fix is deployed as a priority update via the Forge deployment pipeline.</li>
+      <li>Affected customers are notified via the Marketplace listing and, where possible, directly.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — Velocity Chart"</strong>. We aim to acknowledge reports within 2 business days.
+    </p>
+
+    <h2>8. Organizational Security Controls</h2>
+    <ul>
+      <li><strong>Access to production:</strong> Deployments are performed exclusively by the maintainer (Janek Behrens) via the authenticated Forge CLI.</li>
+      <li><strong>Source code:</strong> Maintained in a version-controlled repository under the maintainer's control.</li>
+      <li><strong>Sub-processors:</strong> Atlassian only — it hosts the App on Forge (runtime and storage) under Atlassian's <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum</a>, which includes Standard Contractual Clauses for transfers outside the EEA. All processing occurs within the Atlassian platform.</li>
+    </ul>
+
+    <h2>9. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> The App does not collect or store personal data and does not read user fields. See our <a href="velocity-chart-privacy-policy.html">Privacy Policy</a>.</li>
+      <li><strong>Atlassian security requirements:</strong> Built to comply with <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a> and the Marketplace security review.</li>
+      <li><strong>Runs on Atlassian:</strong> Operates under Atlassian's trust boundary, so Atlassian's infrastructure, security controls, and compliance certifications (SOC 2, ISO 27001, etc.) apply to the underlying platform.</li>
+    </ul>
+
+    <h2>10. What We Cannot Access</h2>
+    <p>For complete transparency, we have no technical means to access:</p>
+    <ul>
+      <li>Any data in your Jira instance (issues, comments, attachments, user data)</li>
+      <li>The cached data in Forge Storage within your instance</li>
+      <li>Your Atlassian account credentials or session tokens</li>
+      <li>Any personal data of your team members</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2>11. Contact</h2>
+      <p>
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — Velocity Chart
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

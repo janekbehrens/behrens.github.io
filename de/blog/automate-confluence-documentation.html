@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD | Janek Behrens</title>
+  <meta name="description" content="So automatisierst du Confluence-Dokumentation vollständig mit Webhooks, Zeitplänen und KI — vom ersten manuellen Durchlauf bis zur durch Commits ausgelösten CI/CD-Dokumentationspipeline.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/automate-confluence-documentation.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD",
+  "description": "So automatisierst du Confluence-Dokumentation vollständig mit Webhooks, Zeitplänen und KI — vom ersten manuellen Durchlauf bis zur durch Commits ausgelösten CI/CD-Dokumentationspipeline.",
+  "url": "https://janekbehrens.de/de/blog/automate-confluence-documentation.html",
+  "datePublished": "2026-01-27T00:00:00+02:00",
+  "dateModified": "2026-01-27T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png",
+  "keywords": [
+    "Confluence",
+    "Dokumentation",
+    "Automatisierung",
+    "CI/CD",
+    "Atlassian"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD">
+  <meta property="og:description" content="Webhooks, geplante Auslöser, KI-Dateiauswahl und Freigabeprozesse — so baust du eine vollständige Automatisierungspipeline für Confluence-Dokumentation.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/automate-confluence-documentation.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-01-27">
+  <meta property="article:modified_time" content="2026-01-27">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Automation">
+  <meta property="article:tag" content="CI/CD">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD">
+  <meta name="twitter:description" content="Durch Commits ausgelöste, geplante und freigabepflichtige Dokumentationspipelines für Confluence — ein Entwicklerleitfaden zur vollständigen Automatisierung.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD",
+  "description": "So automatisierst du Confluence-Dokumentation vollständig mit Webhooks, Zeitplänen und KI — vom ersten manuellen Durchlauf bis zur durch Commits ausgelösten CI/CD-Dokumentationspipeline.",
+  "image": "https://janekbehrens.de/imgCodeDoc/UpcomingJobSchedule.png",
+  "datePublished": "2026-01-27T00:00:00+02:00",
+  "dateModified": "2026-01-27T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/automate-confluence-documentation.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Lässt sich Confluence-Dokumentation automatisieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Mit CodeDoc AI for Confluence kannst du die Dokumentationserzeugung automatisch bei jedem Git-Commit oder Pull-Request-Merge per Webhook auslösen oder regelmäßig planen (täglich, wöchentlich oder monatlich). Die erzeugte Dokumentation wird ohne manuellen Eingriff direkt auf einer Confluence-Seite veröffentlicht."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was unterscheidet die Dokumentationsauslöser „On Commit“ und „On Merge“?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "„On Commit“ startet eine neue Dokumentationserzeugung bei jedem Push auf den konfigurierten Branch. „On Merge“ startet sie nur, wenn ein Pull oder Merge Request in den Branch zusammengeführt wird. „On Commit“ hält die Dokumentation so aktuell wie möglich; „On Merge“ beschränkt Durchläufe auf geprüften, freigegebenen Code und reduziert unnötige Aktualisierungen bei Teams mit vielen Zwischenständen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie richte ich automatische Confluence-Dokumentation aus einem GitHub-Repository ein?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Installiere CodeDoc AI aus dem Atlassian Marketplace, verbinde dein persönliches GitHub-Zugriffstoken und den API-Schlüssel deines KI-Anbieters, füge dein Repository hinzu und erstelle einen Dokumentationsauftrag mit „On Commit“ oder „On Merge“ als Auslöser. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Beim nächsten passenden Ereignis wird die Dokumentation automatisch neu erzeugt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie verhindere ich, dass minderwertige KI-Dokumentation automatisch veröffentlicht wird?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aktiviere am Auftrag „Require approval before publishing“ (Freigabe vor Veröffentlichung erforderlich). Die erzeugte Dokumentation wird als Confluence-Entwurf mit dem Präfix [DRAFT] gespeichert. Du prüfst sie im Dashboard und veröffentlichst oder verwirfst sie manuell. Das empfiehlt sich für Kunden- oder Compliance-Dokumentation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert die Confluence-Dokumentationsautomatisierung mit GitLab, Bitbucket und Azure DevOps?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. CodeDoc AI unterstützt Webhook-Auslöser von GitHub, GitLab, Bitbucket und Azure DevOps. Die Webhook-URL ist für alle Anbieter gleich — die App erkennt den richtigen Auftrag anhand von Repository-URL und Branchname. Geplante Auslöser funktionieren unabhängig vom Git-Anbieter."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: #E3FCEF; color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(23,43,77,0.07); }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* Trigger comparison table */
+    .trigger-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.88rem; }
+    .trigger-table th {
+      background: #F4F5F7; text-align: left; padding: 10px 12px;
+      border: 1px solid var(--border); font-weight: 700; font-size: 0.8rem;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .trigger-table td { padding: 10px 12px; border: 1px solid var(--border-2); color: var(--text-3); vertical-align: top; }
+    .trigger-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .trigger-table tr:hover td { background: #FAFBFC; }
+
+    /* Pipeline illustration */
+    .pipeline-vertical { margin: 20px 0; background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .pv-step { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border-2); }
+    .pv-step:last-child { border-bottom: none; }
+    .pv-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pv-content { flex: 1; }
+    .pv-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .pv-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.5; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/automate-confluence-documentation.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/automate-confluence-documentation.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/automate-confluence-documentation.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence · Automatisierung</span>
+        <span class="article-date">27. Januar 2026</span>
+        <span class="article-readtime">· 8 Min. Lesezeit</span>
+      </div>
+      <h1>Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD</h1>
+      <p class="article-intro">
+        Die meisten Teams beginnen mit „Wir aktualisieren die Confluence-Seite, wenn wir ausliefern“. Das funktioniert nicht — Dokumentation verliert immer gegen die nächste Funktion. So baust du eine Dokumentationspipeline, bei der die Aktualisierung automatisch durch den Commit selbst ausgelöst wird.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Das Problem der Dokumentationsschulden</h2>
+      <p>
+        Dokumentationsschulden sammeln sich leise an. Eine Funktion wird ausgeliefert, die Confluence-Seite kurz aktualisiert und alle machen weiter. Einen Monat später ist die Seite leicht falsch. Sechs Monate später beschreibt sie ein System, das nicht mehr existiert. Ein Jahr später führt sie neue Entwickler bei der Einarbeitung aktiv in die Irre.
+      </p>
+      <p>
+        Das Problem ist nicht, dass Entwickler Dokumentation nicht schätzen. Die meisten tun das. Das Problem ist, dass Dokumentation außerhalb der Rückkopplung der Softwareauslieferung liegt. Sie blockiert keinen CI-Build. Sie lässt keinen Test fehlschlagen. Sie kann unbegrenzt verschoben werden, ohne dass sofort etwas kaputtgeht.
+      </p>
+      <p>
+        Die Lösung entspricht der anderer manueller Prozesse: automatisieren. Mache die Neuerzeugung der Dokumentation zum Teil des Auslieferungsereignisses — zur Folge eines Code-Merges statt zu einer separaten Aufgabe im Backlog.
+      </p>
+
+      <h2 id="the-pipeline">Die Pipeline zur Dokumentationsautomatisierung</h2>
+      <p>
+        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> unterstützt vier Auslösertypen. Zusammen decken sie das gesamte Spektrum von manuellen Testläufen bis zu vollständig automatisierten Pipelines nach dem CI/CD-Prinzip ab:
+      </p>
+
+      <div class="pipeline-vertical">
+        <div class="pv-step">
+          <div class="pv-num">1</div>
+          <div class="pv-content">
+            <div class="pv-title">Manueller Auslöser</div>
+            <div class="pv-desc">Klicke bei einem beliebigen Auftrag auf „Run“. Beginne hier — prüfe zunächst, ob Auftrag, Dateiauswahl und Voreinstellung die gewünschte Ausgabe liefern, bevor du Automatisierung anschließt.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">2</div>
+          <div class="pv-content">
+            <div class="pv-title">Geplanter Auslöser (täglich / wöchentlich / monatlich)</div>
+            <div class="pv-desc">Die Dokumentation wird regelmäßig neu erzeugt, ohne einen Webhook einzurichten. Geeignet für langsam veränderliche Systeme, Compliance-Dokumentation oder Teams, die regelmäßige Aktualisierungen ohne jeden einzelnen Commit möchten.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">3</div>
+          <div class="pv-content">
+            <div class="pv-title">Auslöser bei Merge (Webhook)</div>
+            <div class="pv-desc">Die Dokumentation wird neu erzeugt, wenn ein Pull oder Merge Request in den konfigurierten Branch zusammengeführt wird. Sie bildet stabilen, geprüften Code ab, nicht jeden Push laufender Arbeit. Die häufigste Wahl aktiver Entwicklungsteams.</div>
+          </div>
+        </div>
+        <div class="pv-step">
+          <div class="pv-num">4</div>
+          <div class="pv-content">
+            <div class="pv-title">Auslöser bei Commit (Webhook)</div>
+            <div class="pv-desc">Die Dokumentation wird bei jedem Push auf den Branch neu erzeugt. Maximale Aktualität. Ideal für Teams, die selten pushen oder unabhängig vom PR-Ablauf Genauigkeit in Echtzeit möchten.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="trigger-comparison">Den passenden Auslöser wählen</h2>
+      <p>
+        Dein Auslöser bestimmt, wie häufig die Dokumentation neu erzeugt wird — und damit deinen KI-Tokenverbrauch. Hier ein praktischer Vergleich:
+      </p>
+
+      <table class="trigger-table">
+        <thead>
+          <tr>
+            <th>Auslöser</th>
+            <th>Wird ausgeführt, wenn</th>
+            <th>Am besten geeignet für</th>
+            <th>Tarif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manuell</td>
+            <td>Du auf „Run“ klickst</td>
+            <td>Erste Einrichtung und Tests, einmalige Erzeugung</td>
+            <td>Alle Tarife</td>
+          </tr>
+          <tr>
+            <td>Nach Zeitplan</td>
+            <td>Täglich, wöchentlich oder monatlich zu einer festgelegten Zeit</td>
+            <td>Infrastruktur, langsam veränderliche Systeme, Compliance-Dokumentation</td>
+            <td>Abonnement</td>
+          </tr>
+          <tr>
+            <td>Bei Merge (On Merge)</td>
+            <td>Ein Pull/Merge Request in den Branch zusammengeführt wird</td>
+            <td>Aktive Entwicklung — Dokumentation folgt geprüftem, stabilem Code</td>
+            <td>Abonnement</td>
+          </tr>
+          <tr>
+            <td>Bei Commit (On Commit)</td>
+            <td>Ein beliebiger Push auf den konfigurierten Branch erfolgt</td>
+            <td>Wichtige Repositories, bei denen maximale Aktualität entscheidend ist</td>
+            <td>Abonnement</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>Praktische Empfehlung:</strong> Beginne manuell, um deine Konfiguration zu prüfen. Wechsle zu einem Zeitplan, sobald die Ausgabequalität bestätigt ist. Nutze „On Merge“, wenn das Team bereit ist, Dokumentation in den Pull-Request-Ablauf zu integrieren.</p>
+      </div>
+
+      <h2 id="webhooks">Webhook-Auslöser einrichten</h2>
+      <p>
+        Webhook-basierte Auslöser („On Commit“ und „On Merge“) funktionieren, indem du die Webhook-URL von CodeDoc AI bei deinem Git-Anbieter registrierst. Die App liefert eine einzige URL für alle Aufträge und Anbieter — anhand der eingehenden Repository-URL und des Branchs erkennt sie den auszuführenden Auftrag.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc AI für Auslöser bei Commit und Merge" loading="lazy">
+        <p class="diagram-caption">Die Webhook-URL erscheint bei Auswahl von „On Commit“ oder „On Merge“ — kopiere sie in die Webhook-Einstellungen deines Git-Anbieters</p>
+      </div>
+
+      <p>
+        Schnelle Einrichtung je Anbieter:
+      </p>
+      <ul>
+        <li><strong>GitHub:</strong> Repository → Settings → Webhooks → Add webhook. Setze „Content-type“ auf <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">application/json</code>. Wähle „Just the push event“ für „On Commit“ oder „Pull requests“ für „On Merge“. Die vollständige Anleitung findest du unter <a href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks" target="_blank" rel="noopener">docs.github.com</a>.</li>
+        <li><strong>GitLab:</strong> Project → Settings → Webhooks. Aktiviere „Push events“ für „On Commit“ oder „Merge request events“ für „On Merge“.</li>
+        <li><strong>Bitbucket:</strong> Repository → Repository settings → Webhooks. Auslöser: „Repository Push“ für „On Commit“ oder „Pull Request Fulfilled“ für „On Merge“.</li>
+        <li><strong>Azure DevOps:</strong> Project settings → Service hooks → Create subscription → Web Hooks. Ereignis: „Code pushed“ oder „Pull request merged“.</li>
+      </ul>
+      <p>
+        Du musst den Webhook je Repository nur einmal registrieren — dieselbe URL verarbeitet alle Aufträge, die dieses Repository verwenden.
+      </p>
+
+      <h2 id="schedules">Geplante Dokumentation</h2>
+      <p>
+        Geplante Auslöser benötigen keine Webhook-Konfiguration. Drei Zeitplantypen sind verfügbar:
+      </p>
+      <ul>
+        <li><strong>Täglich</strong> — wähle die früheste UTC-Stunde. Die Ausführung erfolgt ungefähr innerhalb einer Stunde nach der konfigurierten Zeit.</li>
+        <li><strong>Wöchentlich</strong> — wähle Wochentag und früheste UTC-Stunde.</li>
+        <li><strong>Monatlich</strong> — wähle Monatstag (1–28) und früheste UTC-Stunde.</li>
+      </ul>
+      <p>
+        Geplante Auslöser sind der unkomplizierteste Weg zur Automatisierung. Kein Webhook und keine Git-Anbieter-Konfiguration erforderlich. Sie eignen sich gut für:
+      </p>
+      <ul>
+        <li>Infrastruktur-Repositories (Terraform, Kubernetes, CloudFormation), die sich langsam ändern, aber für Audits aktuelle Dokumentation benötigen.</li>
+        <li>Compliance-Dokumentation, die den Produktionsstand nach einem festen Zeitplan abbilden muss.</li>
+        <li>Teams mit Monorepositories, bei denen Webhook-Ereignisse zu häufig sind, um bei jedem Push einen vollständigen Dokumentationsauftrag auszulösen.</li>
+      </ul>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/UpcomingJobSchedule.png" alt="Bevorstehende geplante Dokumentationsaufträge in CodeDoc AI mit Countdowns und Informationen zum letzten Durchlauf" loading="lazy">
+        <p class="diagram-caption">Bevorstehende geplante Aufträge — nächste Ausführung und Countdown im Dashboard sichtbar</p>
+      </div>
+
+      <h2 id="file-selection">KI-Dateiauswahl: Dokumentation relevant halten</h2>
+      <p>
+        Eine der größten Einflussgrößen auf Qualität und Kosten der Dokumentation ist die Auswahl der Dateien für die KI. Ein ganzes Repository einschließlich Testdaten, erzeugter Dateien, Migrationsskripte und Lock-Dateien zu senden, vergräbt wichtige Inhalte in Nebensächlichem und verbraucht mehr Tokens als nötig.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/Fileselection.png" alt="Dateianalyse-Vorschau in CodeDoc AI mit Dateianzahl, Tokenschätzung und KI-ausgewählten Dateien" loading="lazy">
+        <p class="diagram-caption">Dateianalyse-Vorschau — geschätzter Tokenverbrauch und KI-ausgewählte Dateien vor der Ausführung</p>
+      </div>
+
+      <p>
+        CodeDoc AI bietet mehrere Ansätze zur Dateiauswahl:
+      </p>
+      <ul>
+        <li><strong>Alle Dateien</strong> — jede Codedatei im Repository. Für kleine, gut strukturierte Repositories.</li>
+        <li><strong>KI-Auswahl (dynamisch)</strong> — die KI wählt bei jedem Durchlauf die relevantesten Dateien neu aus. Passt sich der Entwicklung der Codebasis an.</li>
+        <li><strong>KI-Auswahl (festgelegt)</strong> — die KI wählt einmal; du prüfst und fixierst die Liste. Vorhersagbare Tokenkosten bei späteren Durchläufen.</li>
+        <li><strong>Manuelle Auswahl</strong> — du wählst in der Analysevorschau die einzubeziehenden Dateien.</li>
+        <li><strong>Pfadfilter</strong> — beschränke die Analyse auf ein Unterverzeichnis (zum Beispiel <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/src</code> oder <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/backend</code>).</li>
+        <li><strong>Glob-Muster</strong> — schließe Dateien per Glob-Syntax ein oder aus. Schließe zum Beispiel <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">**/*.test.ts</code>  aus, um Testdateien zu überspringen.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Tipp zu Tokenkosten:</strong> Eine dynamische KI-Auswahl mit festem Pfadfilter ist ein guter Standard für automatisierte Aufträge. Die KI wählt fortlaufend die relevantesten Dateien aus deinem Quellverzeichnis aus und passt sich neuen Modulen an, ohne Testdateien oder erzeugten Code einzubeziehen.</p>
+      </div>
+
+      <h2 id="approval">Der Freigabeprozess als Qualitätsprüfung</h2>
+      <p>
+        Vollautomatische Dokumentation funktioniert gut, wenn du der Ausgabe vertraust — das ist bei interner Entwicklerreferenzdokumentation vertretbar, die im Laufe der Zeit genutzt und korrigiert wird. Bei Dokumentation für einen größeren Leserkreis oder mit höheren Anforderungen solltest du vor der Veröffentlichung eine Prüfung einbauen.
+      </p>
+      <p>
+        Der Freigabeprozess in CodeDoc AI ergänzt einen menschlichen Prüfschritt, ohne die Automatisierung zu unterbrechen. Bei Aktivierung wird die erzeugte Dokumentation als Confluence-Entwurf mit dem Präfix <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code>  gespeichert. Der Auftrag läuft weiterhin nach Zeitplan oder Webhook-Auslösung — du veröffentlichst lediglich erst nach der Prüfung.
+      </p>
+      <p>
+        Praktische Aufteilung:
+      </p>
+      <ul>
+        <li><strong>Ohne Freigabe (vollautomatisch):</strong> Entwicklerdokumentation, Kurzreferenzen, Einarbeitungsanleitungen. Häufige Aktualisierung; gelegentliche Unvollkommenheiten sind vertretbar.</li>
+        <li><strong>Mit Freigabe:</strong> Kundendokumentation, Compliance- und Audit-Seiten, Managementübersichten. Seltener aktualisiert, vor Veröffentlichung geprüft.</li>
+      </ul>
+      <p>
+        Du legst das pro Auftrag statt global fest. In einem Confluence-Bereich können vollständig automatisierte und freigabepflichtige Aufträge gleichzeitig laufen.
+      </p>
+
+      <h2 id="history">Erzeugungsverlauf und Überwachung</h2>
+      <p>
+        Jede Dokumentationserzeugung wird in der Ansicht <strong>Erzeugungsverlauf (Generation History)</strong> protokolliert. Jeder Eintrag zeigt:
+      </p>
+      <ul>
+        <li>Zeitstempel des Durchlaufs</li>
+        <li>Verwendetes KI-Modell</li>
+        <li>Anzahl analysierter Dateien</li>
+        <li>Anzahl verbrauchter Tokens</li>
+        <li>Status (erfolgreich / Entwurf wartet auf Freigabe / fehlgeschlagen)</li>
+        <li>Direkter Link zur erzeugten Confluence-Seite</li>
+      </ul>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc AI mit Diagrammen und Details einzelner Durchläufe einschließlich Tokenanzahlen" loading="lazy">
+        <p class="diagram-caption">Erzeugungsverlauf — Aktivitätsdiagramme (7 Tage, 4 Wochen, 12 Monate) und Details einzelner Durchläufe</p>
+      </div>
+
+      <p>
+        Die Verlaufsansicht enthält außerdem Aktivitätsdiagramme für 7 Tage, 4 Wochen und 12 Monate. Damit kannst du die Erzeugungshäufigkeit überwachen, unerwartete Spitzen erkennen (zum Beispiel einen falsch konfigurierten Webhook, der bei jedem Push auslöst) und den kumulierten Tokenverbrauch im Zeitverlauf verfolgen.
+      </p>
+
+      <h2 id="example-pipeline">Ein vollständiges Automatisierungsbeispiel</h2>
+      <p>
+        So könnte ein mittelgroßes Entwicklungsteam eine vollständige Dokumentationspipeline für das Hauptrepository seiner Anwendung konfigurieren:
+      </p>
+      <ol>
+        <li><strong>Auftrag für Entwicklerdokumentation</strong> — Auslöser: On Merge. Voreinstellung: Developer Documentation. Dateiauswahl: dynamische KI-Auswahl, mit Ausschluss von <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">**/*.test.*</code>. Freigabe: aus. Ziel: Confluence-Bereich Entwicklung → Seite „Service: [Repository-Name]“.</li>
+        <li><strong>Auftrag für die Managementübersicht</strong> — Auslöser: wöchentlich geplant (Montag 09:00 UTC). Voreinstellung: Management Overview. Dateiauswahl: wie oben. Freigabe: an. Ziel: Confluence-Bereich Produkt → Seite „Systemübersicht: [Repository-Name]“.</li>
+        <li><strong>Auftrag für die Einarbeitungsanleitung</strong> — Auslöser: monatlich geplant. Voreinstellung: Onboarding Guide. Dateiauswahl: Pfadfilter <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">/src</code>. Freigabe: an. Ziel: Confluence-Bereich Entwicklung → Seite „Einarbeitung: [Repository-Name]“.</li>
+      </ol>
+      <p>
+        Ein Repository, drei Aufträge und drei Confluence-Seiten für drei unterschiedliche Zielgruppen — alle automatisch gepflegt, ohne dass jemand Dokumentation von Hand schreibt.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Lässt sich Confluence-Dokumentation automatisieren?</p>
+        <p class="faq-a">Ja. Mit CodeDoc AI for Confluence wird Dokumentation bei Git-Commits, PR-Merges oder nach einem regelmäßigen Zeitplan automatisch neu erzeugt. Das Ergebnis ist eine native Confluence-Seite, die sich ohne manuellen Eingriff aktualisiert.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was unterscheidet die Auslöser „On Commit“ und „On Merge“?</p>
+        <p class="faq-a">„On Commit“ erzeugt Dokumentation bei jedem Push auf den Branch neu. „On Merge“ nur beim Zusammenführen eines Pull oder Merge Requests. „On Merge“ ist üblicher bei Teams, deren Dokumentation geprüften, stabilen Code statt jeden Zwischenstand abbilden soll.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie richte ich automatische Confluence-Dokumentation aus GitHub ein?</p>
+        <p class="faq-a">Installiere CodeDoc AI, verbinde dein GitHub-Token und den Schlüssel des KI-Anbieters, füge dein Repository hinzu und erstelle einen Auftrag mit „On Commit“ oder „On Merge“. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Eine vollständige schrittweise Anleitung steht in <a href="/de/blog/confluence-documentation-github.html">diesem Artikel</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie verhindere ich die automatische Veröffentlichung minderwertiger Dokumentation?</p>
+        <p class="faq-a">Aktiviere am Auftrag „Require approval before publishing“ (Freigabe vor Veröffentlichung erforderlich). Die Dokumentation wird als Entwurf mit dem Präfix [DRAFT] gespeichert und erst veröffentlicht, nachdem du sie im Dashboard geprüft und freigegeben hast.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Funktioniert die Confluence-Dokumentationsautomatisierung mit GitLab, Bitbucket und Azure DevOps?</p>
+        <p class="faq-a">Ja. Dieselbe einzige Webhook-URL funktioniert für alle vier Anbieter. Geplante Auslöser sind vollständig unabhängig vom Git-Anbieter.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Erzeugt die Dokumentationserstellung doppelte Confluence-Seiten?</p>
+        <p class="faq-a">Nein. Der Auftrag aktualisiert die vorhandene Seite bei jedem Durchlauf. Falls sie noch nicht existiert, wird sie erstellt. Spätere Durchläufe aktualisieren dieselbe Seite — ohne Duplikate.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Mache deinen nächsten Merge zur Dokumentationsaktualisierung</h3>
+        <p>CodeDoc AI lässt sich kostenlos testen — alle Auslöser, die KI-Dateiauswahl und der Freigabeprozess sind von Anfang an enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Das Problem der Dokumentationsschulden</a></li>
+          <li><a href="#the-pipeline">Die Automatisierungspipeline</a></li>
+          <li><a href="#trigger-comparison">Den passenden Auslöser wählen</a></li>
+          <li><a href="#webhooks">Webhooks einrichten</a></li>
+          <li><a href="#schedules">Geplante Dokumentation</a></li>
+          <li><a href="#file-selection">KI-Dateiauswahl</a></li>
+          <li><a href="#approval">Der Freigabeprozess</a></li>
+          <li><a href="#history">Erzeugungsverlauf</a></li>
+          <li><a href="#example-pipeline">Vollständiges Beispiel</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Confluence-Dokumentation automatisch aus GitHub erzeugen</a>
+        <a href="/de/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">KI-Dokumentation für Atlassian-Teams</a>
+        <a href="/de/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">BYOK-KI für Atlassian: Was sie bedeutet</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

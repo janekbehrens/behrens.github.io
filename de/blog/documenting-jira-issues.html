@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten | Janek Behrens</title>
+  <meta name="description" content="Die meisten Teams dokumentieren Jira-Vorgänge auf drei Ebenen — im Beschreibungsfeld, in Dateianhängen und auf verknüpften Confluence-Seiten. Hier erfährst du, welchen Zweck jede Ebene erfüllt, welche Inhalte wohin gehören und wie die verknüpften Confluence-Seiten aktuell bleiben.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/documenting-jira-issues.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten",
+  "description": "Die meisten Teams dokumentieren Jira-Vorgänge auf drei Ebenen — im Beschreibungsfeld, in Dateianhängen und auf verknüpften Confluence-Seiten. Hier erfährst du, welchen Zweck jede Ebene erfüllt, welche Inhalte wohin gehören und wie die verknüpften Confluence-Seiten aktuell bleiben.",
+  "url": "https://janekbehrens.de/de/blog/documenting-jira-issues.html",
+  "datePublished": "2026-05-21T00:00:00+02:00",
+  "dateModified": "2026-05-21T00:00:00+02:00",
+  "image": "https://janekbehrens.de/img/companyLogo.png",
+  "keywords": [
+    "Jira",
+    "Dokumentation",
+    "Confluence",
+    "Vorgang"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten">
+  <meta property="og:description" content="Drei Ebenen der Vorgangsdokumentation in Jira — Beschreibung, Anhänge und verknüpfte Confluence-Seiten — und welche Inhalte auf jede Ebene gehören.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/documenting-jira-issues.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Documentation">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten">
+  <meta name="twitter:description" content="Drei Ebenen der Vorgangsdokumentation in Jira — Beschreibung, Anhänge und verknüpfte Confluence-Seiten — und welche Inhalte auf jede Ebene gehören.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie dokumentiere ich einen Jira-Vorgang?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jira bietet drei native Orte zur Dokumentation eines Vorgangs: das Beschreibungsfeld (formatierter Text direkt im Vorgang), Anhänge (Dateien) und Verknüpfungen zu anderen Inhalten, einschließlich Confluence-Seiten. Die Beschreibung enthält den unmittelbaren Kontext — was, warum, Akzeptanzkriterien. Verknüpfe Confluence für alles, worauf auch andere Vorgänge zugreifen müssen (Architektur, Spezifikationen, Entscheidungen)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie verknüpfe ich eine Confluence-Seite mit einem Jira-Vorgang?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Klicke im Jira-Vorgang auf Verknüpfen → Confluence-Seite und füge die URL ein oder suche nach dem Titel. Die Seite erscheint im Abschnitt „Verknüpfte Inhalte“ des Vorgangs. Auf der Confluence-Seite erscheint automatisch die Rückverknüpfung, sofern die Seite zur selben Site gehört. Diese native Integration ist kostenlos und funktioniert sowohl in Jira Cloud als auch in Confluence Cloud."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sollte ich Dokumentation in der Jira-Beschreibung oder in Confluence schreiben?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dokumentation, die nur für diesen einen Vorgang relevant ist, gehört ins Beschreibungsfeld — Akzeptanzkriterien, Schritte zur Reproduktion, Hinweise zum Umfang. Dokumentation für andere Vorgänge, Teams oder zukünftige Leser gehört nach Confluence, verknüpft aus dem Vorgang. Faustregel: Würdest du denselben Text in einen zweiten Vorgang kopieren, gehört er nach Confluence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie halte ich Confluence-Seiten aktuell, die mit Jira-Vorgängen verknüpft sind?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zwei verbreitete Ansätze: (1) Die Confluence-Seite an einen regelmäßigen Prüfzyklus binden, etwa eine Aktualisierung im Sprint, in dem das zugehörige Epic abgeschlossen wird; (2) die Seite automatisch aus einer maßgeblichen Quelle neu erzeugen, zum Beispiel bei technischen Seiten aus dem zugrunde liegenden Code-Repository. CodeDoc AI for Confluence erzeugt Seiten per Webhook oder Zeitplan aus dem Quellcode neu und beseitigt damit die Abhängigkeit von manuellen Aktualisierungen vollständig."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .layer-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .layer-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .layer-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/documenting-jira-issues.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/documenting-jira-issues.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/documenting-jira-issues.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">21. Mai 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten</h1>
+      <p class="article-intro">
+        Die meisten Jira-Vorgänge sind an manchen Stellen überdokumentiert und an anderen gar nicht — eine Textwand in der Beschreibung, die niemand liest, aber keine Links zum Architekturkontext, den die Arbeit voraussetzt. Die Lösung ist nicht mehr Text. Teile die Dokumentation auf die drei Ebenen auf, die Jira bereits bietet, und nutze jede für ihre eigentlichen Stärken.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="three-layers">Drei Ebenen der Vorgangsdokumentation</h2>
+      <p>Jeder Jira-Vorgang hat drei native Orte zur Dokumentation. Jeder eignet sich für etwas anderes:</p>
+
+      <table class="layer-table">
+        <thead>
+          <tr>
+            <th>Ebene</th>
+            <th>Ort</th>
+            <th>Welche Inhalte dort hingehören</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Vorgangsbeschreibung</strong></td>
+            <td>Das Beschreibungsfeld im Vorgang selbst</td>
+            <td>Was dieser konkrete Vorgang ist, warum es ihn gibt, Akzeptanzkriterien und Schritte zur Reproduktion</td>
+          </tr>
+          <tr>
+            <td><strong>Anhänge</strong></td>
+            <td>An den Vorgang angehängte Dateien</td>
+            <td>Screenshots, Log-Auszüge, Designentwürfe, einmalig benötigte PDFs</td>
+          </tr>
+          <tr>
+            <td><strong>Verknüpfte Confluence-Seiten</strong></td>
+            <td>Verknüpfte Inhalte im Vorgang und auf der Confluence-Seite</td>
+            <td>Alles, worauf auch andere Vorgänge zugreifen — Architektur, Spezifikationen, Entscheidungen, RFCs</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>Die entscheidende Frage:</strong> „Würde ich diesen Text in einen zweiten Vorgang kopieren?“ Wenn ja, gehört er nach Confluence, und beide Vorgänge verknüpfen darauf. Wenn nein, gehört er in die Beschreibung.</p>
+      </div>
+
+      <h2 id="description-field">Ebene 1 — das Beschreibungsfeld</h2>
+      <p>
+        Die Beschreibung ist die einzige Dokumentation, die <em>direkt im Vorgang</em> erscheint. Alles darin wird angezeigt, wenn jemand das Ticket öffnet. Sie sollte deshalb die Frage beantworten: „Was muss ein Entwickler in den ersten 30 Sekunden wissen, wenn er diesen Vorgang ohne Vorwissen öffnet?“.
+      </p>
+      <p>Für eine Story oder Aufgabe reicht eine kurze Vorlage:</p>
+      <ul>
+        <li><strong>Kontext</strong> — ein oder zwei Sätze dazu, warum der Vorgang im Backlog liegt.</li>
+        <li><strong>Ziel</strong> — wie das gewünschte Ergebnis nach Abschluss aussieht.</li>
+        <li><strong>Akzeptanzkriterien</strong> — eine Liste überprüfbarer Bedingungen.</li>
+        <li><strong>Notizen</strong> — Verknüpfungen zu passenden Confluence-Seiten, früheren Tickets und Designentwürfen.</li>
+      </ul>
+      <p>Bei einem Bug konzentriert sich die Vorlage auf die Reproduktion:</p>
+      <ul>
+        <li>Umgebung, Browser/Version, Konto oder Mandant.</li>
+        <li>Schritte zur Reproduktion.</li>
+        <li>Erwartetes und tatsächliches Verhalten.</li>
+        <li>Logs oder Screenshots (als Anhänge).</li>
+      </ul>
+
+      <p>
+        Was <em>nicht</em> in die Beschreibung gehört: Architekturerklärungen, Systemübersichten und Projekthintergrund. Diese Inhalte sind bei jedem Ticket zum selben Modul gleich — das ist dein Signal, sie nach Confluence zu verschieben und stattdessen aus jedem Ticket darauf zu verlinken.
+      </p>
+
+      <h2 id="attachments">Ebene 2 — Anhänge</h2>
+      <p>
+        Anhänge werden schnell zu häufig genutzt. Sie eignen sich gut für einmalige Belege (ein Screenshot des aufgetretenen Fehlers, ein Log-Auszug, ein Designentwurf). Für mehrfach benötigte Inhalte sind sie ungeeignet, weil man sie nur beim Öffnen des Vorgangs findet.
+      </p>
+      <p>Praktische Regel: Wenn ein Anhang für jemanden relevant ist, der diesen Vorgang noch nicht betrachtet, sollte er stattdessen eine Confluence-Seite sein.</p>
+
+      <h2 id="confluence-links">Ebene 3 — verknüpfte Confluence-Seiten</h2>
+      <p>
+        Confluence ist der richtige Ort für Dokumentation, auf die mehr als ein Vorgang zugreift. Die native Jira-Confluence-Integration stellt die Verknüpfung in beide Richtungen her: Verknüpfe die Seite im Vorgang, und der Vorgang erscheint auf der Confluence-Seite unter „Jira-Vorgänge“.
+      </p>
+
+      <h3 id="how-to-link">So verknüpfst du eine Confluence-Seite mit einem Jira-Vorgang</h3>
+      <ol>
+        <li>Öffne den Jira-Vorgang.</li>
+        <li>Klicke auf <strong>Verknüpfen</strong> (das Kettensymbol) → <strong>Confluence-Seite</strong>.</li>
+        <li>Füge die Seiten-URL ein oder suche nach dem Titel.</li>
+        <li>Speichere. Die Seite erscheint jetzt unter <em>Verknüpfte Inhalte</em> im Vorgang.</li>
+        <li>Öffne die Confluence-Seite — der Vorgang erscheint automatisch im Makroabschnitt „Jira-Vorgänge“, sofern die Seite zur selben Atlassian-Site gehört.</li>
+      </ol>
+
+      <h3 id="patterns">Häufige Verknüpfungsmuster</h3>
+      <ul>
+        <li><strong>Epic → Spezifikationsseite.</strong> Jedes Epic verknüpft seine Confluence-Seite mit Umfang und Spezifikation. Die untergeordneten Stories müssen den Link nicht wiederholen — er ist über das Epic erreichbar.</li>
+        <li><strong>Sprint → Seite zu Scrum-Terminen.</strong> Der erste Vorgang des Sprints verknüpft die Planungsnotizen, der letzte die Retrospektivenseite.</li>
+        <li><strong>Bug → Architekturkontext.</strong> Ein Bug zu einem bestimmten Modul verknüpft dessen Confluence-Übersicht, damit der Entwickler bei der Behebung den Kontext erhält, ohne die gesamte Codebasis durchsuchen zu müssen.</li>
+        <li><strong>Entscheidung → Entscheidungsprotokoll.</strong> Wenn ein Ticket eine nicht offensichtliche Entscheidung erfordert (welche Bibliothek, welche API-Version, warum eine Umgehungslösung), halte sie auf einer Confluence-Seite fest und verknüpfe die Seite aus dem Vorgang.</li>
+      </ul>
+
+      <h2 id="stale-pages">Verknüpfte Confluence-Seiten aktuell halten</h2>
+      <p>
+        Der schwierigste Teil dieses Modells sind nicht die Verknüpfungen, sondern die Aktualität der Confluence-Seiten. Sobald 20 Vorgänge eine Seite verknüpfen, wird sie zur tragenden Grundlage. Falsche Inhalte führen dann nicht mehr nur zur Verwirrung eines einzelnen Teams.
+      </p>
+      <p>Zwei Muster funktionieren:</p>
+
+      <h3>1. Die Seite an einen Prüfzyklus binden</h3>
+      <p>
+        Für Entscheidungsprotokolle, RFCs und Spezifikationen — Inhalte von Menschen für Menschen — legst du eine verantwortliche Person und ein Prüfintervall fest (typischerweise den Sprint oder das Quartal, in dem das verknüpfte Epic abgeschlossen wird). Confluence zeigt das Datum der letzten Seitenaktualisierung deutlich an. Teams setzen durch, dass keine Seite jenseits der festgelegten Altersgrenze als maßgebliche Quelle dient.
+      </p>
+
+      <h3>2. Technische Seiten aus dem Quellcode neu erzeugen</h3>
+      <p>
+        Bei technischem Kontext — Modulübersichten, API-Referenzen, Architekturzusammenfassungen — sollen die verknüpften Seiten den Code selbst beschreiben, und das Repository ist die maßgebliche Quelle. Eine Confluence-Seite manuell mit einer sich verändernden Codebasis synchron zu halten, ist ein aussichtsloses Unterfangen.
+      </p>
+      <p>
+        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> erzeugt diese Seiten automatisch aus dem Quellcode neu. Verbinde das Repository, wähle eine Voreinstellung (Developer Documentation für Entwicklerdokumentation, Onboarding Guide für Einarbeitung, Quick Reference als Kurzreferenz usw.), verbinde einen Webhook mit einem Branch — und die Confluence-Seite wird bei jedem Push neu geschrieben. Jeder damit verknüpfte Jira-Vorgang verweist plötzlich auf stets aktuelle Dokumentation, ohne dass das Team an die Aktualisierung denken muss.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Die passende Kombination:</strong> Von Menschen geschriebene Entscheidungsprotokolle werden regelmäßig geprüft, technische Seiten von der KI bei jedem Commit neu erzeugt. Jeder Jira-Vorgang verknüpft die passende Seite. Veraltete Inhalte werden für den technischen Teil ausgeschlossen, und der manuelle Teil bleibt klein genug, um tatsächlich gepflegt zu werden.</p>
+      </div>
+
+      <h2 id="dont-do">Was du vermeiden solltest</h2>
+      <ul>
+        <li><strong>Füge keine Architekturdiagramme in das Beschreibungsfeld ein.</strong> Sie veralten innerhalb eines Sprints, und niemand aktualisiert Vorgangsbeschreibungen rückwirkend.</li>
+        <li><strong>Hänge dasselbe PDF nicht an 20 Vorgänge an.</strong> Lade es einmal in Confluence hoch und verknüpfe die Confluence-Seite aus jedem Vorgang.</li>
+        <li><strong>Schreibe die Spezifikation nicht in die Epic-Beschreibung.</strong> Epics bestehen über Wochen; Spezifikationen entwickeln sich in Iterationen. Eine Spezifikation gehört auf eine Confluence-Seite, die das Epic verknüpft.</li>
+        <li><strong>Verlasse dich zur Kontextvermittlung nicht auf Verknüpfungen zwischen Jira-Tickets.</strong> Drei verknüpfte Tickets nacheinander lesen zu müssen, um den Zusammenhang zu verstehen, ist schlechter als eine einzige Confluence-Seite zu lesen.</li>
+      </ul>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie dokumentiere ich einen Jira-Vorgang?</p>
+        <p class="faq-a">Nutze das Beschreibungsfeld für Kontext, Ziel und Akzeptanzkriterien dieses konkreten Vorgangs. Nutze Anhänge für einmalige Belege wie Screenshots oder Logs. Verknüpfe Confluence-Seiten für alles, worauf auch andere Vorgänge zugreifen — Architektur, Spezifikationen und Entscheidungen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie verknüpfe ich eine Confluence-Seite mit einem Jira-Vorgang?</p>
+        <p class="faq-a">Klicke im Jira-Vorgang auf Verknüpfen → Confluence-Seite und füge die URL ein oder suche nach dem Titel. Die Seite erscheint unter „Verknüpfte Inhalte“, und die Rückverknüpfung erscheint automatisch auf der Confluence-Seite, sofern sie zur selben Atlassian-Site gehört.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Sollte ich Dokumentation in der Jira-Beschreibung oder in Confluence schreiben?</p>
+        <p class="faq-a">Die Beschreibung ist für Inhalte, die nur für diesen einen Vorgang relevant sind. Confluence ist für Inhalte, die andere Vorgänge, Teams oder zukünftige Leser ebenfalls benötigen. Faustregel: Würdest du denselben Text in einen zweiten Vorgang kopieren, gehört er nach Confluence.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie halte ich Confluence-Seiten aktuell, die mit Jira-Vorgängen verknüpft sind?</p>
+        <p class="faq-a">Zwei Ansätze. Für von Menschen verfasste Seiten (Entscheidungsprotokolle, RFCs, Spezifikationen) legst du eine verantwortliche Person und einen Prüfzyklus fest — Confluence zeigt das letzte Aktualisierungsdatum deutlich an. Für technische Seiten, deren maßgebliche Quelle die Codebasis ist, nutzt du automatische Neuerzeugung: CodeDoc AI schreibt die Seite per Webhook oder Zeitplan aus dem Quellcode neu. So bleibt verknüpfte Dokumentation bei Codeänderungen aktuell.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich mehrere Jira-Vorgänge auf einer Confluence-Seite dokumentieren?</p>
+        <p class="faq-a">Ja — das ist bei Epics und Projektseiten üblich. Erstelle die Confluence-Seite mit dem übergreifenden Kontext (Umfang, Architektur, Entscheidungen) und verknüpfe sie aus jedem zugehörigen Jira-Vorgang. Unten kann die Seite außerdem das Jira-Vorgangsmakro einbetten, um eine aktuelle Liste aller verknüpften Tickets abzurufen.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Technische Dokumentation nicht länger von Hand pflegen</h3>
+        <p>CodeDoc AI erzeugt Confluence-Seiten bei jedem Commit aus deinem Quellcode neu. Verknüpfe die Seiten einmal aus deinen Jira-Vorgängen — sie bleiben automatisch aktuell.</p>
+        <a href="/de/codedoc-ai.html" class="btn-white">CodeDoc AI ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#three-layers">Drei Dokumentationsebenen</a></li>
+          <li><a href="#description-field">Das Beschreibungsfeld</a></li>
+          <li><a href="#attachments">Anhänge</a></li>
+          <li><a href="#confluence-links">Verknüpfte Confluence-Seiten</a></li>
+          <li><a href="#how-to-link">So verknüpfst du sie</a></li>
+          <li><a href="#patterns">Häufige Verknüpfungsmuster</a></li>
+          <li><a href="#stale-pages">Seiten aktuell halten</a></li>
+          <li><a href="#dont-do">Was du vermeiden solltest</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Verwandte Apps</h3>
+        <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/companyLogo.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · BYOK</div>
+          </div>
+        </a>
+        <a href="/de/codedoc-ai.html" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Mehr erfahren →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Ein Jira-Projekt automatisch dokumentieren</a>
+        <a href="/de/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">KI-gestützte Dokumentation für Atlassian-Teams</a>
+        <a href="/de/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Confluence-Dokumentation automatisieren</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

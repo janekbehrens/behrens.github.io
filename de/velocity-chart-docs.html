@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <title>Velocity Chart for Jira — Dokumentation und Einrichtung</title>
+  <meta name="description" content="Richte Velocity Chart for Jira ein: Füge das Gadget hinzu, lege fest, was als erledigt zählt und wie geschätzt wird, und erfahre, wie geplante und abgeschlossene Arbeit berechnet werden und welche Vorgänge zu jedem Sprint gehören.">
+  <link rel="canonical" href="https://janekbehrens.de/de/velocity-chart-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Velocity Chart for Jira — Dokumentation und Einrichtung">
+  <meta property="og:description" content="Füge das Gadget hinzu, lege fest, was als erledigt zählt und wie geschätzt wird, und erfahre, wie geplante und abgeschlossene Arbeit berechnet werden.">
+  <meta property="og:url" content="https://janekbehrens.de/de/velocity-chart-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Velocity Chart for Jira",
+      "description": "Dashboard-Gadget auf Atlassian Forge, das geplante und abgeschlossene Sprint-Velocity für Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten zeigt: mit Durchschnittslinie, konfigurierbarer Definition of Done, Schätzmodi, Verhältnis von erledigter zu geplanter Arbeit, Sprintdetails mit den Vorgängen hinter jedem Balken, bis zu vier Boards pro Gadget und CSV-/SVG-Export. Jeder sieht nur Vorgänge, die er in Jira öffnen darf.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Velocity Chart for Jira — Dokumentation und Einrichtung",
+      "description": "Einrichtung und Benutzeranleitung für Velocity Chart for Jira: Gadget, Einstellungen, Berechnung geplanter und abgeschlossener Arbeit, Sprintdetails, Sichtbarkeit der Zahlen, mehrere Boards, Export sowie kostenlose und Pro-Funktionen.",
+      "url": "https://janekbehrens.de/de/velocity-chart-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „No closed sprints on this board yet“ (Noch keine abgeschlossenen Sprints auf diesem Board).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Board hat noch keinen abgeschlossenen Sprint. Starte und beende einen Sprint oder wähle ein Board mit abgeschlossenen Sprints. Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Balken sind leer oder zeigen null.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Deine Vorgänge werden in einem anderen Feld als dem Standardfeld des Boards geschätzt. Öffne die Edit-Ansicht des Gadgets, gehe zu Estimation und wähle das tatsächlich verwendete Feld (zum Beispiel Story point estimate) oder wechsle zu Issue count. Estimation, Done-Status und der Umgang mit Unteraufgaben sind Pro-Einstellungen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ein Board fehlt in der Auswahl.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus den ersten 200 Boards der Website. Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „You do not have permission to view this board“ (Du darfst dieses Board nicht ansehen).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Gadget zeigt nur Boards, deren Projekt du in Jira ansehen darfst. Bitte deinen Jira-Administrator um Zugriff auf das Projekt des Boards. Die Meldung kann auch bei einem zugänglichen Board erscheinen, wenn Jira die Prüfung nicht beantwortet hat, etwa bei einer kurzen Störung. Lade das Dashboard nach einigen Minuten neu; die App prüft dann erneut."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ein Kollege sieht auf demselben Dashboard andere Zahlen.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jeder sieht nur Vorgänge, die er in Jira öffnen darf. Enthält ein Sprint Vorgänge eines Projekts oder mit einer Sicherheitsstufe, die einer von euch nicht öffnen darf, fehlen sie bei dieser Person — wie in Jiras eigenem Velocity-Diagramm. Die Zeile „N issues hidden“ unter dem Diagramm weist darauf hin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „Velocity Chart could not check issue permissions; numbers may be incomplete“ (Vorgangsberechtigungen konnten nicht geprüft werden; Zahlen können unvollständig sein).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira hat die Berechtigungsprüfung nicht rechtzeitig beantwortet, meist wegen einer kurzen Anfragebegrenzung oder Störung. Das Diagramm zählt dann nur erfolgreich geprüfte Vorgänge; nicht erlaubte Daten werden nicht angezeigt, und die Zahlen können niedriger sein. Klicke nach einem Moment auf Refresh. Falls das wiederholt passiert, bitte deinen Jira-Administrator zu prüfen, ob Velocity Chart installiert ist und Jira-Zugriff hat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ein Hinweis unter dem Diagramm sagt, dass Schätzungen aus einem anderen Feld stammen.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Schätzfeld des Boards ist bei einigen Vorgängen der angezeigten Sprints leer. Velocity Chart verwendet dafür das Standardfeld Story Points. Jiras eigener Velocity-Bericht zählt diese Vorgänge mit 0, daher können deine Balken höher sein. Der Hinweis nennt beide Felder und die betroffenen Sprints. Um Jira zu entsprechen, fülle das Boardfeld oder stelle das Board auf das Schätzfeld deines Teams um. Der Hinweis erscheint nur, wenn eine solche Schätzung tatsächlich mitgezählt wird."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „N issues in these sprints are hidden from Velocity Chart by an issue security level“ (N Vorgänge dieser Sprints sind durch eine Sicherheitsstufe vor Velocity Chart verborgen).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Velocity Chart liest die Sprints als App. Jira verbirgt einen Vorgang, wenn dessen Sicherheitsstufe die Projektrolle atlassian-addons-project-access nicht einschließt, die Jira für installierte Apps verwendet. Diese Vorgänge zählen für niemanden; die Balken können niedriger als in Jiras Velocity-Bericht sein. Nur Personen mit Zugriff sehen den Hinweis mit der Anzahl, jedoch nie die Vorgänge selbst. Ein Jira-Administrator kann diese Projektrolle zur Sicherheitsstufe hinzufügen (Project settings → Issue security). Darf die App nicht das ganze Projekt ansehen, benötigt die Rolle auch Browse Projects. Jira braucht zum Übernehmen der Änderung manchmal einige Minuten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „Velocity Chart could not read the configuration of this board“ (Boardkonfiguration konnte nicht gelesen werden).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira hat die Boardkonfiguration nicht geliefert (die Meldung nennt den HTTP-Status), meist wegen einer kurzen Anfragebegrenzung oder Störung. Die App benötigt sie für den gespeicherten Boardfilter und zeigt deshalb einen Fehler statt eines Diagramms, das fremde Boardvorgänge enthalten könnte. Sie hat bereits einmal erneut versucht. Klicke nach einer Minute auf Refresh und prüfe, ob das Board in Jira geöffnet werden kann. Eine ähnliche Meldung betrifft einen fehlenden gespeicherten Boardfilter: Prüfe in den Boardeinstellungen, ob er noch existiert."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Meldung lautet „Could not read sprints“ oder „Could not read the issues of … sprints“ (Sprints beziehungsweise deren Vorgänge konnten nicht gelesen werden).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira hat die Anfrage nicht beantwortet, meist wegen einer kurzen Anfragebegrenzung oder Störung. Solche Ergebnisse werden nicht zwischengespeichert. Klicke nach einer Minute auf Refresh oder lade das Dashboard neu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Zahlen wirken veraltet.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ergebnisse werden bis zu fünf Minuten zwischengespeichert. Klicke im Gadget auf Refresh, um sofort neu zu berechnen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Zählt ein übernommener Vorgang in beiden Sprints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nur als geplante Arbeit. Als abgeschlossen zählen Vorgänge, die beim Sprintabschluss erledigt waren, wie in Jiras Velocity-Bericht. Ein unerledigter übernommener Vorgang zählt nur im Sprint seiner Fertigstellung als abgeschlossen. Ein schon beim Hinzufügen erledigter Vorgang zählt in keinem Balken."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Zahlen unterscheiden sich von Jiras Velocity-Bericht.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Velocity Chart verwendet dieselben Zählregeln: Geplant ist die zu Sprintbeginn vorhandene, damals unerledigte Arbeit; abgeschlossen ist die beim Sprintabschluss erledigte Arbeit, mit den Schätzungen zu diesen beiden Zeitpunkten. Unterschiede bleiben bei eigenen Done-Status oder Schätzfeldern (Pro), vor Abschluss entfernten Vorgängen (Jira zählt sie als geplant, die App sieht sie nicht), leeren Schätzfeldern des Boards (Jira zählt 0, die App verwendet Story Points) sowie Sicherheitsstufen, die Vorgänge vor der App verbergen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was ist der Unterschied zu Jiras integriertem Velocity-Bericht?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jiras Bericht liegt unter Reports im Board und verwendet dessen Done-Spalte und Schätzeinstellung. Velocity Chart ist ein Dashboard-Gadget: Du wählst Done-Status und Schätzmethode, kannst bis zu vier Boards darstellen, über einen Sprint die Vorgänge hinter den Balken öffnen und erhältst das durchschnittliche Verhältnis erledigter zu geplanter Arbeit sowie CSV-/SVG-Export (Pro)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Unterstützt Velocity Chart vom Team verwaltete Projekte?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Vom Team verwaltete Scrum-Boards erscheinen mit „team-managed“ in der Boardauswahl und verwenden dieselbe Berechnung wie vom Unternehmen verwaltete Boards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ändert die App meine Jira-Vorgänge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Velocity Chart hat ausschließlich Lesezugriff und fordert keine Schreibberechtigungen an. Die App liest Sprintdaten für das Diagramm und hält sie kurzzeitig in Atlassian Forge Storage vor (Vorgangs-IDs, Schlüssel, Schätzungen und Status; keine Titel oder Personen). Siehe Datenschutzerklärung und Sicherheitsrichtlinie."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/velocity-chart-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/velocity-chart-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/velocity-chart-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="vel">
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#overview">Übersicht</a>
+        <a href="#start">Gadget hinzufügen</a>
+        <a href="#config">Einstellungen</a>
+        <a href="#calc">So wird Velocity berechnet</a>
+        <a href="#details">Sprintdetails</a>
+        <a href="#permissions">Wer welche Zahlen sieht</a>
+        <a href="#multi">Mehrere Boards</a>
+        <a href="#export">Export</a>
+        <a href="#plans">Kostenlos und Pro im Vergleich</a>
+        <a href="#faq">Häufige Fragen und Fehlerbehebung</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Velocity Chart for Jira — Dokumentation</h1>
+      <p class="subtitle">Sprint-Velocity auf jedem Jira-Dashboard, mit deiner eigenen Definition of Done.</p>
+
+      <div class="quickstart">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li>Installiere <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Velocity Chart aus dem Atlassian Marketplace</a>.</li>
+          <li>Öffne ein Jira-Dashboard → <strong>Add gadget (Gadget hinzufügen)</strong> → suche nach <em>Velocity Chart</em>  →  <strong>Add (Hinzufügen)</strong>.</li>
+          <li>Klicke beim Gadget auf <strong>Stiftsymbol / Edit</strong>, wähle ein Scrum-Board mit mindestens einem abgeschlossenen Sprint und klicke auf <strong>Save (Speichern)</strong>.</li>
+          <li>Optional (Pro): Wähle die als erledigt zählenden Status, die Schätzmethode und bis zu vier Boards. Klicke auf die Balken eines Sprints, um dessen Vorgänge zu sehen.</li>
+        </ol>
+      </div>
+
+      <details class="toc"><summary>Auf dieser Seite</summary><ol>
+        <li><a href="#overview">Übersicht</a></li>
+        <li><a href="#start">Gadget hinzufügen</a></li>
+        <li><a href="#config">Einstellungen</a></li>
+        <li><a href="#calc">So wird Velocity berechnet</a></li>
+        <li><a href="#details">Sprintdetails</a></li>
+        <li><a href="#permissions">Wer welche Zahlen sieht</a></li>
+        <li><a href="#multi">Mehrere Boards</a></li>
+        <li><a href="#export">Export</a></li>
+        <li><a href="#plans">Kostenlos und Pro im Vergleich</a></li>
+        <li><a href="#faq">Häufige Fragen und Fehlerbehebung</a></li>
+        <li><a href="#support">Support</a></li>
+      </ol></details>
+
+      <section id="overview">
+        <h2>Übersicht</h2>
+        <p>Velocity Chart ergänzt ein Jira-Dashboard um ein Sprint-Velocity-Diagramm als <dfn class="term" data-tip="Ein Inhaltsfenster, das du neben anderen Gadgets einem Jira-Dashboard hinzufügst.">Gadget</dfn>. Für jeden abgeschlossenen Sprint eines <dfn class="term" data-tip="Ein Jira-Board, das Arbeit in Sprints plant. Kanban-Boards haben keine Sprints.">Scrum-Boards</dfn> zeigt es geplante (grau) und abgeschlossene (grün) Arbeit, eine gestrichelte Durchschnittslinie und in Pro das <dfn class="term" data-tip="Abgeschlossene Arbeit geteilt durch geplante Arbeit: Wie viel von der übernommenen Arbeit das Team erledigt hat.">Say/Do-Verhältnis</dfn>.</p>
+        <ul>
+          <li>Funktioniert mit Scrum-Boards in vom Unternehmen und <dfn class="term" data-tip="Ein Jira-Projekt, dessen Einstellungen das Team selbst ohne Jira-Administrator verwaltet.">vom Team</dfn> verwalteten Projekten.</li>
+          <li>Du bestimmst, welche Status als erledigt zählen (Pro).</li>
+          <li>Schätze anhand von Story Points, Vorgangsanzahl oder einem eigenen Zahlenfeld (Pro).</li>
+          <li>Klicke auf einen Sprint, um die Vorgänge hinter seinen Balken zu sehen (Pro).</li>
+          <li>Bis zu vier Boards in einem Gadget sowie CSV- und SVG-Export (Pro).</li>
+          <li>Jeder sieht nur Vorgänge, die er in Jira öffnen darf.</li>
+        </ul>
+        <img src="/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity-Chart-Gadget auf einem Jira-Dashboard: zehn abgeschlossene Sprints mit Balken für geplante und abgeschlossene Arbeit, einer gestrichelten Durchschnittslinie bei 26,3 Punkten und einem Say/Do-Verhältnis von 81 %" width="1840" height="900">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgVelocityChartForJira/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/C6TRGm7qtg0?autoplay=1" data-title="Velocity Chart for Jira — geplante und abgeschlossene Arbeit, Say/Do-Verhältnis und deine eigene Definition of Done">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: Velocity Chart for Jira — geplante und abgeschlossene Arbeit, Say/Do-Verhältnis und deine eigene Definition of Done"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="start">
+        <h2>Gadget hinzufügen</h2>
+        <p>Das Gadget benötigt ein Scrum-Board mit mindestens einem <dfn class="term" data-tip="Ein Sprint, der auf dem Board mit Complete sprint beendet wurde.">abgeschlossenen Sprint</dfn>.</p>
+        <ol>
+          <li>Installiere <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Velocity Chart for Jira</a> aus dem Marketplace (<strong>Get it now (Jetzt installieren)</strong> → deine Jira-Website).</li>
+          <li>Öffne ein Jira <strong>Dashboard</strong>  →  <strong>Add gadget (Gadget hinzufügen)</strong> → suche nach <em>Velocity Chart</em>  →  <strong>Add (Hinzufügen)</strong>.</li>
+          <li>Klicke beim Gadget auf <strong>Stiftsymbol / Edit</strong> , wähle ein Scrum-Board und klicke auf <strong>Save (Speichern)</strong>.</li>
+        </ol>
+        <p>Bedeutung der beiden Balken: <a href="#calc">So wird Velocity berechnet</a>.</p>
+        <details class="more">
+          <summary>Welche Boards werden aufgelistet?</summary>
+          <ul>
+            <li>Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten, die du in Jira ansehen darfst; die Auswahl liest die ersten 200 Boards der Website. Vom Team verwaltete Boards tragen die Kennzeichnung „team-managed“.</li>
+            <li>Bei mehr als 7 Boards filtert ein Suchfeld nach Boardname, Projektname oder Projektschlüssel. Ausgewählte Boards bleiben während der Suche sichtbar.</li>
+            <li>Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet. Ein vom Team verwaltetes Kanban-Board kann erscheinen, zeigt aber keine abgeschlossenen Sprints.</li>
+            <li>Neue Boards erscheinen sofort; die Auswahl wird nicht zwischengespeichert.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="config">
+        <h2>Einstellungen</h2>
+        <p>Alle Einstellungen liegen in der Edit-Ansicht des Gadgets. Ohne Pro übernimmt das Gadget die Einstellungen des Boards.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+            <tr><td><strong>Boards</strong></td><td>Das darzustellende Scrum-Board. <span class="pro">PRO</span> Wähle bis zu 4 Boards zum Vergleich.</td></tr>
+            <tr><td><strong>Sprints to show (Anzuzeigende Sprints)</strong></td><td>Anzahl der jüngsten abgeschlossenen Sprints (Standard 7). Kostenlos: 1–7, Pro: 1–20.</td></tr>
+            <tr><td><strong>Sprint labels (Sprintbeschriftung)</strong></td><td><em>Full name (Vollständiger Name)</em> oder <em>Numbers only (Nur Zahlen)</em> (die erste Zahl im Sprintnamen). Lange Namen werden an der Achse gekürzt; mit der Maus über der Beschriftung siehst du den vollständigen Namen.</td></tr>
+            <tr><td><strong>Estimation (Schätzmethode)</strong> <span class="pro">PRO</span></td><td><em>Story Points (board default) (Standard des Boards)</em>,  <em>Issue count (Vorgangsanzahl)</em> oder <em>Custom numeric field (Eigenes Zahlenfeld)</em>.</td></tr>
+            <tr><td><strong>Count as „Done“ (Als erledigt zählen)</strong> <span class="pro">PRO</span></td><td>Die Status, die als abgeschlossen zählen.</td></tr>
+            <tr><td><strong>Include sub-tasks (Unteraufgaben einbeziehen)</strong> <span class="pro">PRO</span></td><td>Standardmäßig aus. Aktiviere diese Option, um auch Unteraufgaben zu zählen.</td></tr>
+          </table>
+        </div>
+
+        <h3>Deine Definition of Done <span class="pro">PRO</span></h3>
+        <p>Deine <dfn class="term" data-tip="Die Regel deines Teams, ab wann Arbeit als abgeschlossen gilt.">Definition of Done</dfn> legt fest, was als abgeschlossen zählt. Wähle die Status, die dein Team als erledigt betrachtet, zum Beispiel <em>Ready for release (Bereit zur Veröffentlichung)</em> neben <em>Done (Erledigt)</em>. Jeder Status zeigt seine <dfn class="term" data-tip="Jira ordnet jeden Status einer von drei Gruppen zu: To Do (new), In Progress (indeterminate) oder Done (done).">Statuskategorie</dfn> in Klammern.</p>
+        <ul>
+          <li>Vorab ausgewählt sind die Status der Done-Spalte deines Boards. Solange du die Auswahl beibehältst, zählen genau diese Status, wie in Jiras Velocity-Bericht.</li>
+          <li>Nach einer Änderung zählen genau die ausgewählten Status.</li>
+        </ul>
+        <img src="/imgVelocityChartForJira/highlight-2-your-own-definition-of-done.webp" alt="Liste Count as Done mit Ready for release zusätzlich zum Status Done und das resultierende Diagramm mit höherer durchschnittlicher Velocity und höherem Say/Do-Verhältnis" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Vorher und nachher: dasselbe Board mit zwei Definitionen</summary>
+          <p>Nur Done (oben: 26,3 Punkte, 81 % Say/Do) und Done plus <em>Ready for release (Bereit zur Veröffentlichung)</em> (unten: 29,4 Punkte, 90 % Say/Do).</p>
+          <img src="/imgVelocityChartForJira/screenshot-1-done-before-and-after.webp" alt="Dasselbe Board zweimal dargestellt: nur Done (Durchschnitt 26,3 Punkte, 81 % Say/Do) sowie Done und Ready for release (Durchschnitt 29,4 Punkte, 90 % Say/Do)" width="1840" height="900" loading="lazy">
+        </details>
+
+        <h3>Estimation (Schätzmethode) <span class="pro">PRO</span></h3>
+        <p><em>Story Points</em> verwendet das Schätzfeld des Boards und weicht bei leerem Wert auf das Standardfeld <dfn class="term" data-tip="Eine relative Aufwandsschätzung des Teams pro Vorgang, zum Beispiel 1, 2, 3, 5 oder 8.">Story Points</dfn> aus. Fließt eine solche Ersatzschätzung in die Zählung ein, nennt ein Hinweis unter dem Diagramm beide Felder und die Sprints, da Jiras Velocity-Bericht diese Vorgänge mit 0 zählt. <em>Issue count (Vorgangsanzahl)</em> zählt jeden Vorgang als 1. <em>Custom numeric field (Eigenes Zahlenfeld)</em> lässt dich ein anderes <dfn class="term" data-tip="Ein Zahlenfeld, das ein Jira-Administrator zur Website hinzugefügt hat, beispielsweise für Aufwandsschätzungen.">benutzerdefiniertes Zahlenfeld wählen</dfn>.</p>
+        <details class="more">
+          <summary>Weitere Informationen zu Schätzungen und Unteraufgaben</summary>
+          <ul>
+            <li>Vorgänge ohne Wert zählen als 0, außer bei <em>Issue count (Vorgangsanzahl)</em>.</li>
+            <li>Ohne Pro verwendet das Gadget die Boardeinstellung: dessen Schätzfeld oder die Vorgangsanzahl, falls das Board danach schätzt.</li>
+            <li><dfn class="term" data-tip="Ein kleiner Arbeitsumfang, der zu einem Vorgang gehört.">Unteraufgaben</dfn> werden ausgelassen, sofern du nicht folgende Option aktivierst: <em>Include sub-tasks (Unteraufgaben einbeziehen)</em>.</li>
+          </ul>
+          <img src="/imgVelocityChartForJira/screenshot-2-estimation-and-sprint-count.webp" alt="Gadget-Einstellungen: Sprints to show auf 10, Sprint labels auf Full name und die Estimation-Optionen Story Points (board default), Issue count und Custom numeric field" width="1840" height="900" loading="lazy">
+        </details>
+      </section>
+
+      <section id="calc">
+        <h2>So wird Velocity berechnet</h2>
+        <p>Jeder abgeschlossene Sprint hat zwei Balken. Grau zeigt die zu Beginn übernommene Arbeit, Grün die beim Sprintabschluss erledigte Arbeit.</p>
+        <ul>
+          <li><strong>Committed (Geplant)</strong> (grau): Schätzwerte der Vorgänge, die beim Start im Sprint waren und noch nicht erledigt waren, mit der damaligen Schätzung. Die App liest dies aus Sprint-, Status- und Schätzverlauf jedes Vorgangs. Später hinzugefügte Vorgänge zählen hier nicht.</li>
+          <li><strong>Completed (Abgeschlossen)</strong> (grün): Schätzwerte der Sprintvorgänge, die einen Done-Status hatten, <em>als der Sprint abgeschlossen wurde</em>, gemäß deiner Auswahl Count as „Done“ und mit der Schätzung beim Abschluss. Die App liest den Statusverlauf jedes Vorgangs, wie Jiras eigener Velocity-Bericht.</li>
+          <li><strong>Avg velocity (Durchschnittliche Velocity)</strong> (gestrichelte Linie): die durchschnittliche <dfn class="term" data-tip="Wie viel Arbeit ein Team in einem Sprint abschließt.">Velocity</dfn>, also der Mittelwert der grünen Balken aller angezeigten Sprints.</li>
+          <li><strong>Say/Do</strong> (Pro): abgeschlossen ÷ geplant pro Sprint. Neben dem Boardnamen steht der Durchschnitt aller Sprints mit geplanter Arbeit; Einzelwerte je Sprint stehen im CSV-Export.</li>
+        </ul>
+        <div class="note">
+          <p><strong>Übernommene Vorgänge zählen einmal als abgeschlossen.</strong> Ein unerledigter Vorgang, der in den nächsten Sprint übernommen und dort abgeschlossen wird, zählt in beiden Sprints als geplant, aber nur im Sprint seiner Fertigstellung als abgeschlossen. Jira behält abgeschlossene Sprints im <dfn class="term" data-tip="Das Vorgangsfeld, das alle zugehörigen Sprints einschließlich abgeschlossener Sprints auflistet.">Sprint-Feld</dfn>; die App prüft den Status zum jeweiligen Sprintabschluss. Auch ein danach wieder geöffneter Vorgang zählt im Sprint, in dem er erledigt war.</p>
+        </div>
+        <div class="note">
+          <p><strong>Beim Hinzufügen bereits erledigte Vorgänge zählen nirgends.</strong> War ein Vorgang beim Sprintstart oder späteren Hinzufügen erledigt und wurde bis zum Sprintabschluss nicht erneut abgeschlossen, zählt er in keinem Balken, wie in Jiras Velocity-Bericht. Die <a href="#details">Sprintdetails</a> führen ihn unter „Completed outside of this sprint“ (Außerhalb dieses Sprints abgeschlossen) auf. Wird ein beim Hinzufügen erledigter Vorgang wieder geöffnet und vor dem Abschluss erneut erledigt, zählt er nur als abgeschlossen.</p>
+        </div>
+        <p>Die Zahlen können dennoch von Jiras Velocity-Bericht abweichen, etwa bei vor Abschluss entfernten Vorgängen (Jira zählt sie als geplant, die App sieht sie nicht), anderen Done-Status, leeren Schätzfeldern des Boards oder Sicherheitsstufen, die Vorgänge vor der App verbergen (Details unten).</p>
+        <details class="more">
+          <summary>Weitere Details und Grenzen</summary>
+          <ul>
+            <li>Nach dem Start hinzugefügte Vorgänge zählen als Completed, wenn sie erledigt sind, aber nicht als Committed. Say/Do kann daher über 100 % liegen. Das gilt auch für direkt im laufenden Sprint erstellte Vorgänge und für vor Beginn entfernte, später erneut hinzugefügte Vorgänge. Innerhalb einer Sekunde nach dem Start hinzugefügte Vorgänge zählen noch als geplant.</li>
+            <li>Vor dem Abschluss aus dem Sprint entfernte Vorgänge zählen überhaupt nicht. Committed fällt daher niedriger aus, wenn der Umfang während des Sprints reduziert wurde. Jiras Bericht zählt sie als geplant; darin besteht ein Unterschied.</li>
+            <li>„Done“ bedeutet beim Start, Hinzufügen und Abschluss dasselbe: deine ausgewählten Count as „Done“-Status (Pro), andernfalls die Done-Spalte des Boards.</li>
+            <li>Spätere Schätzänderungen schreiben vergangene Sprints nicht um: Committed nutzt den Wert vom Sprintbeginn, Completed den vom Abschluss. Liefert Jira den vollständigen Verlauf nicht rechtzeitig, verwendet das Diagramm aktuelle Werte und meldet „could not read the full sprint history“ (vollständiger Sprintverlauf konnte nicht gelesen werden); klicke auf <strong>Refresh (Aktualisieren)</strong>.</li>
+            <li>Bei Sprints mehrerer Boards zählt jedes Board nur die Vorgänge seines eigenen <dfn class="term" data-tip="Die Suche, auf der ein Board basiert. Sie bestimmt, welche Vorgänge das Board zeigt.">gespeicherten Filters</dfn>. Liefert Jira nach einem erneuten Versuch keine Boardkonfiguration, zeigt das Diagramm einen Fehler samt Ursache statt eines ungefilterten Diagramms.</li>
+            <li>Die jüngsten Sprints werden nach Abschlussdatum aus allen abgeschlossenen Sprints des Boards gewählt. Kann die Liste nicht vollständig gelesen werden, zeigt das Diagramm einen Fehler statt älterer Sprints.</li>
+            <li>Pro Sprint werden bis zu 200 Vorgänge gelesen.</li>
+            <li>Ergebnisse werden bis zu 5 Minuten zwischengespeichert; <strong>Refresh (Aktualisieren)</strong> berechnet sofort neu. Deine Berechtigungen werden bei jedem Laden geprüft, auch bei Zahlen aus dem Zwischenspeicher (<a href="#permissions">wer welche Zahlen sieht</a>).</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="details">
+        <h2>Sprintdetails <span class="pro">PRO</span></h2>
+        <p>Klicke auf die Balken eines Sprints, um dessen Vorgänge zu sehen. Unter dem Diagramm öffnet sich eine Liste; schließe sie durch erneutes Klicken, über ✕ oder mit <kbd>Esc</kbd> .</p>
+        <img src="/imgVelocityChartForJira/feature-sprint-details.webp" alt="Sprint 51 im Diagramm ausgewählt, samt Details: 33 geplante und 26 abgeschlossene Punkte, neun Vorgänge. Sechs waren beim Sprintabschluss erledigt, einer davon erst nach dem Start hinzugefügt; drei waren nicht erledigt, einer davon ist inzwischen abgeschlossen." width="1840" height="900" loading="lazy">
+        <p>Für jeden gezählten Vorgang zeigt die Liste:</p>
+        <ul>
+          <li><strong>Schlüssel und Titel</strong>, zum Vorgang verlinkt (öffnet einen neuen Tab).</li>
+          <li> <strong>Schätzwerte</strong> für die Balken: „At start“ zählt zu Committed, „At close“ zu Completed, zum Beispiel „At start: 1 pt · At close: 3 pts“ bei einer Änderung im Sprint („–“ bedeutet keine Schätzung und zählt als 0). Bei <em>Issue count (Vorgangsanzahl)</em> zählt jeder Vorgang 1.</li>
+          <li><strong>Committed (Geplant)</strong> , wenn er zu Beginn im Sprint und noch nicht erledigt war, oder <strong>Added later (Später hinzugefügt)</strong> , wenn er nach Beginn hinzukam (auch bei Erstellung im laufenden Sprint): Dann gehört er nicht zum grauen Balken.</li>
+          <li>Ein Hinweis, wenn der Vorgang beim Hinzufügen bereits erledigt war: „Completed before it was in the sprint — not counted, same as Jira“ (vor Sprintzugehörigkeit erledigt, zählt wie in Jira nicht), „Done again during the sprint (was done at start)“ (im Sprint erneut erledigt, zählt nur zu Completed) oder „Was done when the sprint started, reopened later“ (bei Beginn erledigt, später wieder geöffnet; zählt in keinem Balken, da beim Abschluss offen).</li>
+          <li> <strong>Status beim Sprintabschluss</strong>. Ein ✓ markiert die als erledigt zählenden Status; diese Vorgänge bilden den grünen Balken. Bei späterer Statusänderung, etwa nach Übernahme und Fertigstellung im nächsten Sprint, erscheint der aktuelle Status als „now …“ (jetzt …).</li>
+          <li><strong>Sub-task (Unteraufgabe)</strong>, wenn <em>Include sub-tasks (Unteraufgaben einbeziehen)</em> aktiviert ist.</li>
+        </ul>
+        <p>Die Vorgänge sind nach „Done when the sprint closed“ (bei Sprintabschluss erledigt), „Not done when the sprint closed“ (bei Sprintabschluss unerledigt) und „Completed outside of this sprint“ (vor Zugehörigkeit erledigt, in keinem Balken) gruppiert. Die Gesamtwerte oben entsprechen den Balken. <strong>Issues CSV (Vorgänge als CSV)</strong> lädt die Liste dieses Sprints herunter.</p>
+        <details class="more">
+          <summary>Tastatur, kleine Gadgets und kostenlose Nutzung</summary>
+          <ul>
+            <li>Tastatur: Wechsle mit Tab zum Diagramm, mit Pfeiltasten zwischen Sprints, öffne mit <kbd>Enter</kbd> oder <kbd>Space</kbd> und schließe mit <kbd>Esc</kbd>. Bewege die Maus über einen Balken oder eine Listenbeschriftung für eine Erklärung.</li>
+            <li>In schmalen Gadgets und Widgets stehen die Details jedes Vorgangs unter dessen Titel; lange Listen scrollen innerhalb des Bereichs.</li>
+            <li>Die Liste öffnet sich ohne erneute Jira-Anfrage; nur die Titel werden beim Öffnen geladen. Falls das fehlschlägt, bleibt die Liste vollständig und <strong>Retry (Erneut versuchen)</strong> lädt die Titel erneut.</li>
+            <li>Ohne aktives Abonnement zeigt ein Klick auf einen Sprint dessen Gesamtwerte und den Hinweis, dass die Details zu Pro gehören.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="permissions">
+        <h2>Wer welche Zahlen sieht</h2>
+        <p>Velocity Chart zeigt jedem nur die in Jira erlaubten Daten, wie Jiras eigenes Velocity-Diagramm.</p>
+        <ul>
+          <li><strong>Das Board:</strong> Du benötigst die Berechtigung zum Ansehen des Boardprojekts. Andernfalls meldet das Gadget „You do not have permission to view this board“.</li>
+          <li><strong>Die Vorgänge:</strong> Ein Sprint kann Vorgänge anderer Projekte enthalten (gemäß Boardfilter) und Vorgänge mit einer <dfn class="term" data-tip="Eine Jira-Einstellung, die einzelne Vorgänge vor allen außerhalb einer ausgewählten Gruppe, Rolle oder Person verbirgt.">Sicherheitsstufe</dfn>. Nur in Jira zugängliche Vorgänge zählen zu den Balken und erscheinen in den Sprintdetails. Fehlen welche, nennt eine dezente Zeile die Anzahl, etwa „2 issues hidden — you don't have permission to view them; their points are not counted.“ (2 Vorgänge verborgen; fehlende Berechtigung; Punkte nicht gezählt). Die Maus über der Zeile zeigt Ursache und Abhilfe. Vorgänge und Punktwerte werden nie genannt. Die Sprintdetails zeigen denselben Hinweis für ihren Sprint.</li>
+          <li><strong>Für die App unzugängliche Vorgänge:</strong> Ein Vorgang, dessen Sicherheitsstufe die <dfn class="term" data-tip="Eine Jira-Gruppe von Personen oder Apps in einem Projekt, etwa Administrators. Installierte Apps stehen unter atlassian-addons-project-access.">Projektrolle</dfn> <code>atlassian-addons-project-access</code> nicht einschließt, ist vor Velocity Chart selbst verborgen und zählt für niemanden. Eine zweite dezente Zeile nennt zugriffsberechtigten Personen die Anzahl, etwa „3 issues in these sprints are hidden from Velocity Chart by an issue security level, so they are not counted.“ (3 Vorgänge durch Sicherheitsstufe vor Velocity Chart verborgen und nicht gezählt). Mit der Maus darüber siehst du die Abhilfe (siehe Funktionsweise unten).</li>
+          <li><strong>Geteilte Dashboards:</strong> Zwei Personen können deshalb auf demselben Dashboard andere Zahlen sehen, etwa wenn ein Beteiligter nur eines der Boardprojekte ansehen darf.</li>
+        </ul>
+        <details class="more">
+          <summary>Funktionsweise</summary>
+          <ul>
+            <li>Die App liest den Sprint als App, fragt dann bei jedem Laden Jira nach deinen Vorgangsberechtigungen (Projektberechtigung und Sicherheitsstufe) und addiert nur erlaubte Vorgänge. Die Antwort wird nie zwischengespeichert.</li>
+            <li>Der 5-Minuten-Zwischenspeicher enthält Board-Sprintdaten für alle (Vorgangs-IDs, Schlüssel, Schätzungen, Status, keine Titel oder Personen); vor der Anzeige werden sie für jeden Betrachter gefiltert.</li>
+            <li>Der Hinweis zu verborgenen Vorgängen zählt jeden Vorgang einmal, auch bei Übernahme in den nächsten Sprint; die Sprintdetails zählen ihn in jedem zugehörigen Sprint.</li>
+            <li>Ein Vorgang, dessen Sicherheitsstufe Velocity Chart nicht einschließt (Jira führt installierte Apps unter der Projektrolle <code>atlassian-addons-project-access</code>), kann von der App überhaupt nicht gelesen werden und zählt für niemanden, auch nicht für zugriffsberechtigte Personen. Die Balken können daher niedriger als in Jiras Velocity-Bericht sein. Der Hinweis nennt nur die Anzahl in den angezeigten Sprints, nie die Vorgänge. Ein Jira-Administrator kann die Rolle zur Sicherheitsstufe hinzufügen (Project settings → Issue security); benötigt die App Projektzugriff, muss die Rolle auch Browse Projects erhalten.</li>
+            <li>Die Zählung erfolgt bei jedem Laden unter deinem Konto: eine Jira-Suche über die angezeigten Sprints (nur Vorgangs-IDs und Typen) und nur bei Vorgängen, die im Zwischenspeicher fehlen, dieselbe Suche als App. Sie gehört allein dir, wird nie zwischengespeichert oder dauerhaft gespeichert und verändert keine Zahlen. Antwortet Jira nicht rechtzeitig, entfällt die Zeile ohne Fehler.</li>
+            <li>Nach Berechtigungs- oder Sicherheitsänderungen durch einen Jira-Administrator benötigt Jira manchmal einige Minuten zur Übernahme überall, auch im eigenen Velocity-Bericht. Lade das Dashboard danach neu.</li>
+            <li>Antwortet Jira auf die Berechtigungsprüfung nicht rechtzeitig, zählt das Diagramm nur geprüfte Vorgänge und meldet „Velocity Chart could not check issue permissions; numbers may be incomplete“. Klicke auf <strong>Refresh (Aktualisieren)</strong> nach einem Moment.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="multi">
+        <h2>Mehrere Boards <span class="pro">PRO</span></h2>
+        <p>Wähle bis zu vier Scrum-Boards, um Teams in einem Dashboardbereich zu vergleichen. Jedes Board erhält sein eigenes Diagramm, seinen Durchschnitt und Say/Do-Wert, bei gleicher Schätzmethode und Definition of Done.</p>
+        <img src="/imgVelocityChartForJira/highlight-3-compare-up-to-four-boards.webp" alt="Konfigurationsformular mit drei ausgewählten Boards, darunter ein vom Team verwaltetes Board, und das Gadget mit einem Diagramm samt eigener durchschnittlicher Velocity und Say/Do pro Board" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Gut zu wissen</summary>
+          <ul>
+            <li><em>Count as „Done“ (Als erledigt zählen)</em> listet die Status des zuerst gewählten Boards auf; die gewählten Namen gelten für alle Boards.</li>
+            <li>Bei Wahl eines fünften Boards wird das zuerst ausgewählte Board in der Liste abgewählt.</li>
+            <li>Velocity hängt von der Schätzskala jedes Teams ab. Verwende sie zum Beobachten von Trends, nicht zur Rangfolge von Teams.</li>
+            <li>Ohne aktives Abonnement zeigt ein Gadget mit mehreren Boards nur das erste.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="export">
+        <h2>Export <span class="pro">PRO</span></h2>
+        <p>Zwei Schaltflächen unter dem Diagramm speichern die Zahlen und Bilder.</p>
+        <ul>
+          <li><strong>Export CSV (CSV exportieren)</strong> lädt <code>velocity.csv</code> herunter, eine <dfn class="term" data-tip="Eine Klartexttabelle, die Excel, Google Sheets und andere Tabellenprogramme öffnen können.">CSV-Datei</dfn> mit Board, Sprint, geplanter Arbeit, abgeschlossener Arbeit und Say/Do in % für jeden angezeigten Sprint aller Gadget-Boards (UTF-8).</li>
+          <li><strong>Download SVG (SVG herunterladen)</strong> speichert jedes Boarddiagramm als <dfn class="term" data-tip="Ein Bildformat, das in jeder Größe scharf bleibt, gut für Präsentationen.">SVG-Bild</dfn> mit weißem Hintergrund für Präsentationen und Berichte.</li>
+          <li><strong>Issues CSV (Vorgänge als CSV)</strong> in den <a href="#details">Sprintdetails</a> lädt die Vorgangsliste eines Sprints herunter: Vorgang, Titel, Schätzung bei Beginn und Abschluss, geplant, bei Abschluss erledigt, damaliger und aktueller Status, Unteraufgabe und Zählhinweis. „Committed“ und „Done when the sprint closed“ beschreiben die Balkenzählung; der Zählhinweis erklärt ausgelassene oder nur als abgeschlossen zählende Vorgänge. Bei <em>Issue count (Vorgangsanzahl)</em> werden die Schätzspalten durch eine einzige Spalte „Counts“ ersetzt. Wenn du Spaltenpositionen oder -namen zum Einlesen nutzt, prüfe deinen Import: Ältere Exporte hatten nur eine Spalte „Estimate“ und keinen Zählhinweis.</li>
+        </ul>
+        <img src="/imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" alt="Schaltflächen Export CSV und Download SVG unter einem Diagramm sowie die exportierte velocity.csv mit Spalten für Board, Sprint, geplante und abgeschlossene Arbeit und Say/Do" width="1840" height="900" loading="lazy">
+      </section>
+
+      <section id="plans">
+        <h2>Kostenlos und Pro im Vergleich</h2>
+        <p>Es gibt einen Tarif: Die App ist <strong>kostenlos für bis zu 10 Nutzer</strong>, größere Teams erhalten eine <strong>kostenlose Testphase</strong>. Pro-Funktionen sind während eines aktiven Abonnements einschließlich Testphase verfügbar. Preise pro Nutzer stehen im <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+        <p>Ohne aktives Abonnement, etwa nach der Testphase, läuft das Gadget im reduzierten kostenlosen Modus weiter: ein Board, bis zu 7 Sprints, Schätzmethode und Done-Spalte des Boards. Pro-Funktionen kehren mit einem aktiven Abonnement zurück.</p>
+        <details class="more">
+          <summary>Kostenlose und Pro-Funktionen im Vergleich</summary>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Funktion</th><th>Kostenlos</th><th>Pro</th></tr>
+            <tr><td>Velocity-Diagramm für ein Board mit Durchschnittslinie</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Sprintbeschriftung (vollständiger Name / Zahlen)</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Angezeigte Sprints</td><td>bis zu 7</td><td>bis zu 20</td></tr>
+            <tr><td>Konfigurierbare Definition of Done</td><td>Done-Spalte des Boards</td><td>✓</td></tr>
+            <tr><td>Schätzmodus (Vorgangsanzahl / eigenes Feld)</td><td>Boardstandard</td><td>✓</td></tr>
+            <tr><td>Include sub-tasks (Unteraufgaben einbeziehen)</td><td>—</td><td>✓</td></tr>
+            <tr><td>Say/Do-Verhältnis</td><td>—</td><td>✓</td></tr>
+            <tr><td>Sprintdetails (Vorgänge hinter jedem Balken)</td><td>—</td><td>✓</td></tr>
+            <tr><td>Bis zu 4 Boards in einem Gadget</td><td>—</td><td>✓</td></tr>
+            <tr><td>CSV- und SVG-Export, Vorgangsliste pro Sprint</td><td>—</td><td>✓</td></tr>
+            <tr><td>Nur Vorgänge mit deinem Jira-Zugriff werden gezählt</td><td>✓</td><td>✓</td></tr>
+          </table>
+        </div>
+        </details>
+      </section>
+
+      <section id="faq">
+        <h2>Häufige Fragen und Fehlerbehebung</h2>
+        <p>Öffne eine Frage, um die Antwort zu sehen.</p>
+        <details class="more"><summary>Die Meldung lautet „No closed sprints on this board yet“ (Noch keine abgeschlossenen Sprints auf diesem Board).</summary><p>Das Board hat noch keinen abgeschlossenen Sprint. Starte und beende einen Sprint oder wähle ein Board mit abgeschlossenen Sprints. Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet.</p></details>
+        <details class="more"><summary>Die Balken sind leer oder zeigen null.</summary><p>Deine Vorgänge werden in einem anderen Feld als dem Boardstandard geschätzt. Öffne die Edit-Ansicht des Gadgets, gehe zu Estimation und wähle das tatsächlich verwendete Feld (zum Beispiel <code>Story point estimate</code>) oder wechsle zu <em>Issue count (Vorgangsanzahl)</em>. Estimation, Done-Status und der Umgang mit Unteraufgaben sind Pro-Einstellungen.</p></details>
+        <details class="more"><summary>Ein Board fehlt in der Auswahl.</summary><p>Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus den ersten 200 Boards der Website. Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort.</p></details>
+        <details class="more"><summary>Die Meldung lautet „You do not have permission to view this board“ (Du darfst dieses Board nicht ansehen).</summary><p>Das Gadget zeigt nur Boards, deren Projekt du in Jira ansehen darfst. Bitte deinen Jira-Administrator um Zugriff auf das Projekt des Boards. Die Meldung kann auch bei einem zugänglichen Board erscheinen, wenn Jira die Prüfung nicht beantwortet hat, etwa bei einer kurzen Störung. Lade das Dashboard nach einigen Minuten neu; die App prüft dann erneut.</p></details>
+        <details class="more"><summary>Ein Kollege sieht auf demselben Dashboard andere Zahlen.</summary><p>Jeder sieht nur in Jira zugängliche Vorgänge. Enthält ein Sprint Projektvorgänge oder Vorgänge mit Sicherheitsstufe, die einer von euch nicht öffnen darf, fehlen sie für diese Person, wie in Jiras Velocity-Diagramm. Die Zeile „N issues hidden“ unter dem Diagramm zeigt das an. Siehe <a href="#permissions">wer welche Zahlen sieht</a>.</p></details>
+        <details class="more"><summary>Die Meldung lautet „Velocity Chart could not check issue permissions; numbers may be incomplete“ (Vorgangsberechtigungen konnten nicht geprüft werden; Zahlen können unvollständig sein).</summary><p>Jira hat die Berechtigungsprüfung nicht rechtzeitig beantwortet, meist wegen einer kurzen Anfragebegrenzung oder Störung. Das Diagramm zählt nur erfolgreich geprüfte Vorgänge und zeigt keine unerlaubten Daten; die Zahlen können niedriger sein. Klicke auf <strong>Refresh (Aktualisieren)</strong> nach einem Moment. Falls das wiederholt passiert, bitte deinen Jira-Administrator zu prüfen, ob Velocity Chart installiert ist und Jira-Zugriff hat.</p></details>
+        <details class="more"><summary>Ein Hinweis unter dem Diagramm sagt, dass Schätzungen aus einem anderen Feld stammen.</summary><p>Das Schätzfeld des Boards ist bei einigen Vorgängen der angezeigten Sprints leer. Velocity Chart verwendet dafür das Standardfeld Story Points. Jiras eigener Velocity-Bericht zählt diese Vorgänge mit 0, daher können deine Balken höher sein. Der Hinweis nennt beide Felder und die betroffenen Sprints. Um Jira zu entsprechen, fülle das Boardfeld oder stelle das Board auf das Schätzfeld deines Teams um. Der Hinweis erscheint nur, wenn eine solche Schätzung tatsächlich mitgezählt wird.</p></details>
+        <details class="more"><summary>Die Meldung lautet „N issues in these sprints are hidden from Velocity Chart by an issue security level“ (N Vorgänge dieser Sprints sind durch eine Sicherheitsstufe vor Velocity Chart verborgen).</summary><p>Velocity Chart liest Sprints als App. Jira verbirgt Vorgänge, deren Sicherheitsstufe die Projektrolle <code>atlassian-addons-project-access</code> nicht einschließt, die Jira für installierte Apps verwendet. Diese Vorgänge zählen für niemanden, sodass die Balken niedriger als in Jiras Velocity-Bericht sein können. Nur zugriffsberechtigte Personen sehen den Hinweis mit der Anzahl, nie die Vorgänge selbst. Ein Jira-Administrator kann die Rolle zur Sicherheitsstufe hinzufügen (Project settings → Issue security). Braucht die App Projektzugriff, benötigt die Rolle auch Browse Projects. Jira braucht zum Übernehmen der Änderung manchmal einige Minuten.</p></details>
+        <details class="more"><summary>Die Meldung lautet „Velocity Chart could not read the configuration of this board“ (Boardkonfiguration konnte nicht gelesen werden).</summary><p>Jira hat die Boardkonfiguration nicht geliefert (die Meldung nennt den HTTP-Status), meist wegen einer kurzen Anfragebegrenzung oder Störung. Die App benötigt sie für den gespeicherten Boardfilter und zeigt einen Fehler statt eines Diagramms, das fremde Boardvorgänge enthalten könnte. Ein erneuter Versuch ist bereits erfolgt. Klicke auf <strong>Refresh (Aktualisieren)</strong> nach einer Minute und prüfe, ob das Board in Jira geöffnet werden kann. Eine ähnliche Meldung betrifft einen fehlenden gespeicherten Boardfilter: Prüfe in den Boardeinstellungen, ob er noch existiert.</p></details>
+        <details class="more"><summary>Die Meldung lautet „Could not read sprints“ oder „Could not read the issues of … sprints“ (Sprints beziehungsweise deren Vorgänge konnten nicht gelesen werden).</summary><p>Jira hat die Anfrage nicht beantwortet, meist wegen einer kurzen Anfragebegrenzung oder Störung. Solche Ergebnisse werden nicht zwischengespeichert. Klicke auf <strong>Refresh (Aktualisieren)</strong> oder lade das Dashboard nach einer Minute neu.</p></details>
+        <details class="more"><summary>Die Zahlen wirken veraltet.</summary><p>Ergebnisse werden bis zu fünf Minuten zwischengespeichert. Klicke auf <strong>Refresh (Aktualisieren)</strong> im Gadget, um sofort neu zu berechnen.</p></details>
+        <details class="more"><summary>Zählt ein übernommener Vorgang in beiden Sprints?</summary><p>Nur als geplante Arbeit. Als abgeschlossen zählen Vorgänge, die beim Sprintabschluss erledigt waren, wie in Jiras Velocity-Bericht. Ein unerledigter übernommener Vorgang zählt nur im Sprint seiner Fertigstellung als abgeschlossen. Ein schon beim Hinzufügen erledigter Vorgang zählt in keinem Balken.</p></details>
+        <details class="more"><summary>Die Zahlen unterscheiden sich von Jiras Velocity-Bericht.</summary><p>Velocity Chart verwendet dieselben Zählregeln: Geplant ist die beim Start vorhandene, damals unerledigte Arbeit; abgeschlossen ist die beim Sprintabschluss erledigte Arbeit, mit den Schätzungen beider Zeitpunkte. Unterschiede bleiben bei eigenen Done-Status oder Schätzfeldern (Pro), vor Abschluss entfernten Vorgängen (Jira zählt sie als geplant, die App sieht sie nicht), leeren Board-Schätzfeldern (Jira zählt 0, die App nutzt Story Points) sowie Sicherheitsstufen, die Vorgänge vor der App verbergen (siehe oben).</p></details>
+        <details class="more"><summary>Was ist der Unterschied zu Jiras integriertem Velocity-Bericht?</summary><p>Jiras Bericht liegt unter Reports im Board und verwendet dessen Done-Spalte und Schätzeinstellung. Velocity Chart ist ein Dashboard-Gadget: Du wählst Done-Status und Schätzmethode, kannst bis zu vier Boards darstellen, über einen Sprint die Vorgänge hinter den Balken öffnen und erhältst das durchschnittliche Verhältnis erledigter zu geplanter Arbeit sowie CSV-/SVG-Export (Pro).</p></details>
+        <details class="more"><summary>Unterstützt Velocity Chart vom Team verwaltete Projekte?</summary><p>Ja. Vom Team verwaltete Scrum-Boards erscheinen mit „team-managed“ in der Boardauswahl und verwenden dieselbe Berechnung wie vom Unternehmen verwaltete Boards.</p></details>
+        <details class="more"><summary>Ändert die App meine Jira-Vorgänge?</summary><p>Nein. Velocity Chart hat ausschließlich Lesezugriff und fordert keine Schreibberechtigungen an. Es liest nur Sprintdaten für das Diagramm und hält sie kurzzeitig in Atlassian Forge Storage vor (Vorgangs-IDs, Schlüssel, Schätzungen und Status; keine Titel oder Personen). Siehe die <a href="/de/velocity-chart-privacy-policy.html">Datenschutzerklärung</a> und die <a href="/velocity-chart-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p></details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Velocity%20Chart%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/velocity-chart-for-jira-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/velocity-chart-for-jira-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/velocity-chart-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/velocity-chart-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/velocity-chart-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/velocity-chart-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

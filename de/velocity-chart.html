@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Chart für Jira — Sprint-Velocity auf jedem Dashboard</title>
+  <meta name="description" content="Sprint-Velocity auf jedem Jira-Dashboard: zugesagte und erledigte Arbeit, Durchschnittslinie und Zusage-Erfüllungs-Verhältnis, mit deiner eigenen Definition of Done und den Vorgängen jedes Sprints. Probiere die interaktive Demo.">
+  <link rel="canonical" href="https://janekbehrens.de/de/velocity-chart.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/de/velocity-chart.html">
+  <meta property="og:title" content="Velocity Chart für Jira — Sprint-Velocity auf jedem Dashboard">
+  <meta property="og:description" content="Zugesagte und erledigte Arbeit deiner letzten abgeschlossenen Sprints, mit Durchschnittslinie und Zusage-Erfüllungs-Verhältnis. Du entscheidest, welche Status als erledigt zählen. Probiere die interaktive Demo.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Velocity Chart für Jira — Sprint-Velocity auf jedem Dashboard">
+  <meta name="twitter:description" content="Zugesagte und erledigte Arbeit deiner letzten abgeschlossenen Sprints, mit Durchschnittslinie und Zusage-Erfüllungs-Verhältnis. Du entscheidest, welche Status als erledigt zählen. Probiere die interaktive Demo.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Velocity Chart for Jira",
+      "description": "Atlassian-Forge-Dashboard-Gadget für zugesagte und erledigte Sprint-Velocity auf unternehmensverwalteten und teamverwalteten Scrum-Boards: mit Durchschnittslinie, konfigurierbarer Definition of Done, Schätzmethoden, Zusage-Erfüllungs-Verhältnis, Sprint-Details zu den Vorgängen hinter jedem Balken, bis zu vier Boards pro Gadget und CSV-/SVG-Export. Jeder sieht nur Vorgänge, die er in Jira öffnen darf.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "url": "https://janekbehrens.de/de/velocity-chart.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wie unterscheidet sich die App vom integrierten Velocity-Bericht in Jira?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jiras Bericht liegt auf der Berichtsseite des Boards und verwendet dessen Erledigt-Spalte und Schätzeinstellung. Velocity Chart ist ein Dashboard-Gadget: Du wählst die als erledigt geltenden Status und die Schätzmethode, zeigst bis zu vier Boards in einem Gadget an, klickst auf einen Sprint für die Vorgänge hinter den Balken und erhältst ein durchschnittliches Zusage-Erfüllungs-Verhältnis sowie CSV-/SVG-Export (Pro)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Zählt ein übernommener Vorgang in beiden Sprints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nur als zugesagte Arbeit. Die erledigte Arbeit summiert die Vorgänge, die beim Abschluss des Sprints erledigt waren, wie in Jiras eigenem Velocity-Bericht. Ein unerledigt übernommener Vorgang zählt nur in dem Sprint als erledigt, in dem er fertiggestellt wurde. Zugesagt ist die Arbeit, die beim Start im Sprint lag und noch nicht erledigt war."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Funktioniert die App mit teamverwalteten Projekten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Teamverwaltete Scrum-Boards erscheinen in der Board-Auswahl mit der Kennzeichnung „team-managed“ und verwenden dieselbe Berechnung wie unternehmensverwaltete Boards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welche Jira-Version brauche ich?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira Cloud und ein Scrum-Board mit mindestens einem abgeschlossenen Sprint. Velocity Chart ist eine Forge-App und läuft auf der Atlassian-Infrastruktur; es gibt keine Data-Center- oder Server-Version. Klassische Kanban-Boards haben keine Sprints und werden nicht aufgeführt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ändert die App meine Jira-Vorgänge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Velocity Chart liest ausschließlich Sprint-Daten und fordert keine Schreibberechtigungen an. Ein kurzlebiger Zwischenspeicher hält Sprint-Daten (Vorgangs-IDs, Schlüssel, Schätzungen und Status; keine Titel oder Personen) im Forge-Speicher von Atlassian. Es sind keine externen Server von Janek Behrens beteiligt. Einzelheiten stehen im Vertrauensportal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Sieht jeder dieselben Zahlen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jeder sieht nur die Vorgänge, die er in Jira öffnen darf, wie in Jiras eigenem Velocity-Diagramm. Enthält ein Sprint Vorgänge eines Projekts oder mit einer Sicherheitsstufe, die jemand nicht öffnen darf, werden diese für die Person weder gezählt noch aufgelistet. Deshalb können die Zahlen auf einem gemeinsamen Dashboard unterschiedlich sein. Ein kurzer Hinweis unter dem Diagramm nennt die Anzahl der für dich verborgenen Vorgänge, niemals deren Inhalt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist die App kostenlos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira-Instanzen mit bis zu 10 Nutzern verwenden die App kostenlos; größere beginnen mit einer kostenlosen Testphase. Ohne aktives Abonnement, etwa nach der Testphase, läuft das Gadget im Free-Modus weiter: ein Board, bis zu 7 Sprints, die Schätzmethode des Boards und dessen Erledigt-Spalte."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://janekbehrens.de/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Velocity Chart for Jira",
+          "item": "https://janekbehrens.de/velocity-chart.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Velocity Chart für Jira — zugesagte und erledigte Arbeit, Zusage-Erfüllungs-Verhältnis und eigene Definition of Done",
+  "description": "Zugesagte und erledigte Arbeit deiner letzten abgeschlossenen Sprints, mit Durchschnittslinie, Zusage-Erfüllungs-Verhältnis und deiner eigenen Definition of Done.",
+  "thumbnailUrl": "https://janekbehrens.de/imgVelocityChartForJira/video-poster.webp",
+  "uploadDate": "2026-10-05",
+  "embedUrl": "https://www.youtube-nocookie.com/embed/C6TRGm7qtg0",
+  "contentUrl": "https://www.youtube.com/watch?v=C6TRGm7qtg0"
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <link rel="stylesheet" href="/demo/vel-demo.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/velocity-chart.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/velocity-chart.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/velocity-chart.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd" data-app="vel">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="/img/velocity-chart-icon.png" alt="" width="48" height="48">
+            <div><b>Velocity Chart for Jira</b><span>Jira Cloud · Auf Forge entwickelt</span></div>
+          </div>
+          <h1 class="h-display">Sprint-Velocity auf <em>jedem Dashboard</em></h1>
+        </div>
+        <div>
+          <p class="lead">Zugesagte und erledigte Arbeit deiner letzten abgeschlossenen Sprints, mit Durchschnittslinie und Zusage-Erfüllungs-Verhältnis. Du entscheidest, welche Status als erledigt zählen.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Kostenlos im Marketplace testen →</a>
+            <a href="/de/velocity-chart-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+          <p class="product-note">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interaktive Demo">
+      <div class="wrap">
+        <div data-demo="vel">
+          <noscript><img src="/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity-Chart-Gadget auf einem Jira-Dashboard: zehn abgeschlossene Sprints mit Balken für zugesagte und erledigte Arbeit, gestrichelter Durchschnittslinie bei 26,3 Punkten und einem Zusage-Erfüllungs-Verhältnis von 81 %" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Beispieldaten in deinem Browser. Nichts wird gespeichert oder irgendwohin gesendet. Gestrichelte Rahmen markieren die Bereiche der App. Pro-Funktionen sind aktiviert, wie in der kostenlosen Testphase.</span>
+          <a href="#features">Echte Bildschirmaufnahmen weiter unten ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In deinem Jira</span>
+          <h2 class="h-section">Das bietet die App</h2>
+          <p class="lead">Bildschirmaufnahmen aus einer echten Jira-Instanz mit Beispieldaten.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Funktionen" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f1" aria-controls="panel-vel-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Velocity auf jedem Dashboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f6" aria-controls="panel-vel-f6" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Die Vorgänge hinter jedem Sprint</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f2" aria-controls="panel-vel-f2" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Deine eigene Definition of Done</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f3" aria-controls="panel-vel-f3" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Schätzmethode und Sprint-Anzahl</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f4" aria-controls="panel-vel-f4" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Bis zu vier Boards in einem Gadget</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vel-f5" aria-controls="panel-vel-f5" aria-selected="false" tabindex="-1"><span class="feat-num">6</span><span class="switcher-tab-name">CSV- und SVG-Export</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f1" aria-labelledby="tab-vel-f1">
+              <a class="feat-shot" href="/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/highlight-1-sprint-velocity-on-your-dashboard.webp" alt="Velocity-Chart-Gadget auf einem Jira-Dashboard: zehn abgeschlossene Sprints mit Balken für zugesagte und erledigte Arbeit, gestrichelter Durchschnittslinie, durchschnittlicher Velocity von 26,3 Punkten und Zusage-Erfüllungs-Verhältnis von 81 %" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Velocity auf jedem Dashboard</h3>
+                <p>Zugesagte Arbeit (grau) und erledigte Arbeit (grün) der letzten abgeschlossenen Sprints eines Scrum-Boards, mit einer gestrichelten Durchschnittslinie.</p>
+                </div>
+                <div><ul>
+                <li>Durchschnittliche Velocity neben dem Board-Namen, mit Zusage-Erfüllungs-Verhältnis in Pro.</li>
+                <li>Bewege den Mauszeiger über einen Balken für den Wert und klicke für die zugehörigen Vorgänge (Pro).</li>
+                <li>Unternehmensverwaltete und teamverwaltete Scrum-Boards.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#calc">So wird Velocity berechnet →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f6" aria-labelledby="tab-vel-f6" hidden>
+              <a class="feat-shot" href="/imgVelocityChartForJira/feature-sprint-details.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/feature-sprint-details.webp" alt="Sprint 51 im Diagramm ausgewählt: 33 zugesagte und 26 erledigte Punkte mit den neun Vorgängen hinter den Balken, gruppiert nach erledigt und unerledigt beim Sprint-Abschluss, mit Schätzung, Zusage oder späterem Hinzufügen, Status beim Abschluss und aktuellem Status" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Die Vorgänge hinter jedem Sprint <span class="pro">PRO</span></h3>
+                <p>Klicke auf die Balken eines Sprints, um die zugehörigen Vorgänge zu sehen: was beim Start geplant war und was später hinzukam, was beim Abschluss erledigt war und was übernommen wurde.</p>
+                </div>
+                <div><ul>
+                <li>Jeder Vorgang mit Schätzung, Status beim Abschluss und aktuellem Status.</li>
+                <li>Jeder sieht nur Vorgänge, die er in Jira öffnen darf.</li>
+                <li>Lade die Vorgangsliste eines Sprints als CSV-Datei herunter.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#details">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f2" aria-labelledby="tab-vel-f2" hidden>
+              <a class="feat-shot" href="/imgVelocityChartForJira/highlight-2-your-own-definition-of-done.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/highlight-2-your-own-definition-of-done.webp" alt="Die Liste „Count as Done“ mit „Ready for release“ zusätzlich zu „Done“ aktiviert, dazu das Diagramm mit durchschnittlicher Velocity von 29,4 Punkten und Zusage-Erfüllungs-Verhältnis von 90 %" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Deine eigene Definition of Done <span class="pro">PRO</span></h3>
+                <p>Wähle die Status, die als erledigt zählen, beispielsweise „Ready for release“ zusätzlich zu „Done“. Bis du die Liste änderst, zählen die Status der Erledigt-Spalte deines Boards.</p>
+                </div>
+                <div><ul>
+                <li>Wähle aus den Status deines Boards.</li>
+                <li>Lasse Unteraufgaben weg (Standard) oder beziehe sie ein.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#config">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f3" aria-labelledby="tab-vel-f3" hidden>
+              <a class="feat-shot" href="/imgVelocityChartForJira/screenshot-2-estimation-and-sprint-count.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/screenshot-2-estimation-and-sprint-count.webp" alt="Gadget-Einstellungen: 10 anzuzeigende Sprints, vollständige Sprint-Namen und Schätzoptionen für Story Points (Board-Standard), Vorgangsanzahl und eigenes numerisches Feld" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Schätzmethode und Sprint-Anzahl</h3>
+                <p>Schätze mit Story Points, Vorgangsanzahl oder einem eigenen numerischen Feld (Pro). Zeige die letzten 1 bis 20 abgeschlossenen Sprints an (Free: bis zu 7).</p>
+                </div>
+                <div><ul>
+                <li>Story Points verwendet das Schätzfeld des Boards.</li>
+                <li>Sprint-Beschriftung: vollständiger Name oder nur die Nummern.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#config">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f4" aria-labelledby="tab-vel-f4" hidden>
+              <a class="feat-shot" href="/imgVelocityChartForJira/highlight-3-compare-up-to-four-boards.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/highlight-3-compare-up-to-four-boards.webp" alt="Einstellungen mit drei ausgewählten Boards, davon eines teamverwaltet, und Gadget mit einem Diagramm pro Board, jeweils mit eigener durchschnittlicher Velocity und eigenem Zusage-Erfüllungs-Verhältnis" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Bis zu vier Boards in einem Gadget <span class="pro">PRO</span></h3>
+                <p>Jedes Board erhält ein eigenes Diagramm, einen Durchschnitt und ein Zusage-Erfüllungs-Verhältnis. Alle verwenden dieselbe Schätzmethode und Definition of Done, damit du Gleiches mit Gleichem vergleichst.</p>
+                </div>
+                <div><ul>
+                <li>Teamverwaltete Boards sind in der Auswahl gekennzeichnet.</li>
+                <li>Bei mehr als 7 auswählbaren Boards erscheint ein Suchfeld.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#multi">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vel-f5" aria-labelledby="tab-vel-f5" hidden>
+              <a class="feat-shot" href="/imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" alt="Schaltflächen für CSV-Export und SVG-Download unter einem Diagramm sowie exportierte Datei velocity.csv mit den Spalten Board, Sprint, zugesagte Arbeit, erledigte Arbeit und Zusage-Erfüllungs-Verhältnis in Prozent" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>CSV- und SVG-Export <span class="pro">PRO</span></h3>
+                <p>„Export CSV“ fasst alle Boards des Gadgets in einer Datei zusammen: mit zugesagter und erledigter Arbeit sowie Zusage-Erfüllungs-Verhältnis pro Sprint. „Download SVG“ speichert jedes Diagramm als Bild.</p>
+                </div>
+                <div><ul>
+                <li>Die CSV-Datei lässt sich in Excel und Google Sheets öffnen.</li>
+                <li>SVG-Dateien mit weißem Hintergrund für Präsentationen und Berichte.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/velocity-chart-docs.html#export">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Rundgang ansehen</h2><p class="lead">Ein kurzer Rundgang durch Velocity Chart in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url(&#x27;/imgVelocityChartForJira/video-poster.webp&#x27;)"
+                 data-src="https://www.youtube-nocookie.com/embed/C6TRGm7qtg0?autoplay=1" data-title="Velocity Chart für Jira — zugesagte und erledigte Arbeit, Zusage-Erfüllungs-Verhältnis und eigene Definition of Done">
+              <button class="yt-play-btn" aria-label="Video laden und abspielen: Velocity Chart für Jira — zugesagte und erledigte Arbeit, Zusage-Erfüllungs-Verhältnis und eigene Definition of Done"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Warum diese App?</span>
+          <h2 class="h-section">Jira allein und mit Velocity Chart im Vergleich</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira allein</th><th scope="col" class="is-app">Mit Velocity Chart</th></tr></thead>
+            <tbody>
+              <tr><td>Wo du Velocity siehst</td><td class="no">Velocity-Bericht auf der Berichtsseite des Boards</td><td class="yes">Ein Gadget auf jedem Jira-Dashboard neben deinen anderen Gadgets</td></tr>
+              <tr><td>Was als erledigt zählt</td><td class="no">Die Erledigt-Spalte des Boards</td><td class="yes">Die von dir ausgewählten Status, etwa „Done“ und „Ready for release“ (Pro)</td></tr>
+              <tr><td>Wie Arbeit gemessen wird</td><td class="no">Schätzeinstellung des Boards</td><td class="yes">Story Points, Vorgangsanzahl oder ein eigenes numerisches Feld, pro Gadget eingestellt (Pro)</td></tr>
+              <tr><td>Mehrere Teams</td><td class="no">Ein Bericht pro Board</td><td class="yes">Bis zu vier Boards in einem Gadget mit denselben Einstellungen (Pro)</td></tr>
+              <tr><td>Welche Vorgänge einen Sprint ausmachen</td><td class="no">Sprint-Bericht auf der Berichtsseite des Boards</td><td class="yes">Klicke auf den Sprint im Dashboard: zugesagt oder später hinzugefügt, beim Abschluss erledigt oder übernommen (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Verglichen mit Jira Cloud ohne Apps. Mit der Erledigt-Spalte des Boards zählt die App wie Jiras Bericht. Unterschiede entstehen durch eigene Einstellungen oder während eines Sprints entfernte Vorgänge: <a href="/de/velocity-chart-docs.html#calc">So wird Velocity berechnet</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Tarife</span>
+          <h2 class="h-section">Free und Pro</h2>
+          <p class="muted">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase; Preise pro Nutzer findest du im <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">Wenn die Instanz kein aktives Abonnement hat, zum Beispiel nach der Testphase.</p>
+            <ul>
+              <li>Ein Board pro Gadget</li>
+              <li>Velocity-Diagramm mit Durchschnittslinie</li>
+              <li>Die letzten 1 bis 7 abgeschlossenen Sprints</li>
+              <li>Schätzmethode des Boards und dessen Erledigt-Spalte</li>
+              <li>Unternehmensverwaltete und teamverwaltete Scrum-Boards</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">Während eines aktiven Abonnements, einschließlich kostenloser Testphase.</p>
+            <ul>
+              <li>Bis zu 4 Boards in einem Gadget</li>
+              <li>Die letzten 1 bis 20 abgeschlossenen Sprints</li>
+              <li>Als erledigt zählen: die von dir ausgewählten Status</li>
+              <li>Story Points, Vorgangsanzahl oder eigenes numerisches Feld</li>
+              <li>Unteraufgaben einbeziehen</li>
+              <li>Zusage-Erfüllungs-Verhältnis</li>
+              <li>Sprint-Details: die Vorgänge hinter jedem Balken</li>
+              <li>CSV- und SVG-Export</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Einrichtung</span>
+          <h2 class="h-section">In drei Schritten startklar</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Installieren</h3><p>Hole dir die App aus dem Atlassian Marketplace und bestätige die Installation in deiner Jira-Instanz.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Gadget hinzufügen</h3><p>Öffne ein Jira-Dashboard, klicke auf „Add gadget“ und suche nach Velocity Chart.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Board auswählen</h3><p>Klicke auf den Stift, wähle ein Scrum-Board mit mindestens einem abgeschlossenen Sprint und klicke auf „Save“.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Häufige Fragen</h2>
+          <p class="muted" style="margin-top:10px">Weitere Antworten findest du in der <a href="/de/velocity-chart-docs.html#faq">Dokumentation</a>, oder schreibe an <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>Wie unterscheidet sich die App vom integrierten Velocity-Bericht in Jira?</summary><div>Jiras Bericht liegt auf der Berichtsseite des Boards und verwendet dessen Erledigt-Spalte und Schätzeinstellung. Velocity Chart ist ein Dashboard-Gadget: Du wählst die als erledigt geltenden Status und die Schätzmethode, zeigst bis zu vier Boards in einem Gadget an, klickst auf einen Sprint für die Vorgänge hinter den Balken und erhältst ein durchschnittliches Zusage-Erfüllungs-Verhältnis sowie CSV-/SVG-Export (Pro).</div></details>
+          <details><summary>Zählt ein übernommener Vorgang in beiden Sprints?</summary><div>Nur als zugesagte Arbeit. Die erledigte Arbeit summiert die Vorgänge, die beim Abschluss des Sprints erledigt waren, wie in Jiras eigenem Velocity-Bericht. Ein unerledigt übernommener Vorgang zählt nur in dem Sprint als erledigt, in dem er fertiggestellt wurde. Zugesagt ist die Arbeit, die beim Start im Sprint lag und noch nicht erledigt war.</div></details>
+          <details><summary>Funktioniert die App mit teamverwalteten Projekten?</summary><div>Ja. Teamverwaltete Scrum-Boards erscheinen in der Board-Auswahl mit der Kennzeichnung „team-managed“ und verwenden dieselbe Berechnung wie unternehmensverwaltete Boards.</div></details>
+          <details><summary>Welche Jira-Version brauche ich?</summary><div>Jira Cloud und ein Scrum-Board mit mindestens einem abgeschlossenen Sprint. Velocity Chart ist eine Forge-App und läuft auf der Atlassian-Infrastruktur; es gibt keine Data-Center- oder Server-Version. Klassische Kanban-Boards haben keine Sprints und werden nicht aufgeführt.</div></details>
+          <details><summary>Ändert die App meine Jira-Vorgänge?</summary><div>Nein. Velocity Chart liest ausschließlich Sprint-Daten und fordert keine Schreibberechtigungen an. Ein kurzlebiger Zwischenspeicher hält Sprint-Daten (Vorgangs-IDs, Schlüssel, Schätzungen und Status; keine Titel oder Personen) im Forge-Speicher von Atlassian. Es sind keine externen Server von Janek Behrens beteiligt. Einzelheiten stehen im <a href="/trust-center.html" hreflang="en">Vertrauensportal (EN)</a>.</div></details>
+          <details><summary>Sieht jeder dieselben Zahlen?</summary><div>Jeder sieht nur die Vorgänge, die er in Jira öffnen darf, wie in Jiras eigenem Velocity-Diagramm. Enthält ein Sprint Vorgänge eines Projekts oder mit einer Sicherheitsstufe, die jemand nicht öffnen darf, werden diese für die Person weder gezählt noch aufgelistet. Deshalb können die Zahlen auf einem gemeinsamen Dashboard unterschiedlich sein. Ein kurzer Hinweis unter dem Diagramm nennt die Anzahl der für dich verborgenen Vorgänge, niemals deren Inhalt. <a href="/de/velocity-chart-docs.html#permissions">Wer welche Zahlen sieht</a>.</div></details>
+          <details><summary>Ist die App kostenlos?</summary><div>Jira-Instanzen mit bis zu 10 Nutzern verwenden die App kostenlos; größere beginnen mit einer kostenlosen Testphase. Ohne aktives Abonnement, etwa nach der Testphase, läuft das Gadget im Free-Modus weiter: ein Board, bis zu 7 Sprints, die Schätzmethode des Boards und dessen Erledigt-Spalte.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Weitere Apps von Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="/de/team-capacity-for-jira.html"><img src="/img/team-capacity-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Team Capacity Planning for Jira</b><span>Erkenne in jedem Sprint, wer zu viel oder zu wenig Arbeit hat.</span></div></a>
+          <a class="card" href="/de/dora-metrics-for-jira.html"><img src="/img/dora-metrics-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>DevOps Metrics for Jira</b><span>Die vier DORA™-Kennzahlen aus deinen Jira-Daten, ohne CI/CD-Einrichtung.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Zeige die Velocity deines Teams auf dem Dashboard</h2>
+            <p class="muted">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Im Marketplace installieren →</a>
+            <a href="/de/velocity-chart-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/redesign.js"></script>
+  <script src="/demo/demo-core.js?v=cac30b1d1459"></script>
+  <script src="/demo/vel-demo.js"></script>
+</body>
+</html>

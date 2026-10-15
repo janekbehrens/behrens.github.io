@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Support — Epic Progress for Confluence</title>
+  <meta name="description" content="Support for Epic Progress for Confluence: contact, common questions and what to include in a bug report.">
+  <link rel="canonical" href="https://janekbehrens.de/epic-progress-support.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/epic-progress-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/epic-progress-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/epic-progress-support.html">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">Epic Progress for Confluence</p>
+
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>, or open a public
+      issue on GitHub. Check the existing issues first: your question may already have an answer.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Epic%20Progress%20Support">support@janekbehrens.de</a><br>
+        <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/epic-progress-for-confluence-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/epic-progress-for-confluence-issues</a><br>
+        <strong>Documentation:</strong> <a href="epic-progress-docs.html">Epic Progress for Confluence documentation</a><br>
+        <strong>Response time:</strong> 1–2 business days (Monday to Friday)
+      </p>
+    </div>
+
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="epic-progress-docs.html">documentation</a>. Common ones:</p>
+    <ul>
+      <li><strong>Who can add the macros?</strong> Anyone who can edit the page: type <em>/progress</em> while editing. Only the installation needs a Confluence admin; connecting Jira needs a site admin (<a href="epic-progress-docs.html#setup">setup</a>).</li>
+      <li><strong>Confluence asks me to "Allow access"</strong>: Atlassian's one-time consent for apps that read data with your own permissions. Each person answers it once, readers of a snapshot too (<a href="epic-progress-docs.html#allow-access">details</a>).</li>
+      <li><strong>"This progress comes from Jira, which you cannot open"</strong>: your account has no Jira access on this site. Ask your Jira admin for access, or ask an editor of the page to <a href="epic-progress-docs.html#snapshots">publish a snapshot</a>.</li>
+      <li><strong>"Epic Progress for Confluence is not connected to Jira yet"</strong>: a site admin connects it in Atlassian Administration: Apps → Epic Progress for Confluence → connect to Jira. Progress Bar and Page Progress already work.</li>
+      <li><strong>"… cannot find the work item …"</strong>: it does not exist, or you may not see it in Jira. Check the macro settings (pencil icon while editing the page) or ask your Jira admin for access.</li>
+      <li><strong>The number differs from Jira</strong>: Epic Progress counts the work items directly under the epic, and Jira Progress leaves out sub-tasks for projects and releases unless you untick that option. Every reader sees only what Jira lets them see.</li>
+      <li><strong>A snapshot is not shown</strong>: the macro settings changed after publishing (publish it again), a Confluence admin turned off published snapshots for the site, or the trial or subscription has ended.</li>
+      <li><strong>"Epic Progress for Confluence: the subscription is not active"</strong>: the trial or subscription has ended; a Confluence admin can start or renew it under Settings → Apps → Manage apps.</li>
+    </ul>
+
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Which macro, and what it counts (epic, project, release, saved filter or JQL; work items or story points)</li>
+      <li>What the macro shows: the title of the message, or a screenshot (it helps a lot)</li>
+      <li>Whether the reader can open Jira, and whether a published snapshot is involved</li>
+      <li>Company-managed or team-managed Jira project</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Legal:</strong> <a href="epic-progress-privacy-policy.html">Privacy Policy</a> ·
+      <a href="epic-progress-terms-of-service.html">Terms of Service</a> ·
+      <a href="epic-progress-security.html">Security Policy</a>
+    </p>
+  </main>
+  <p class="tm-note">Atlassian, Confluence and Jira are trademarks of Atlassian. Epic Progress for Confluence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

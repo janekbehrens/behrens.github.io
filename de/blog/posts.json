@@ -1,0 +1,411 @@
+[
+  {
+    "file": "jira-epic-progress-tracking.html",
+    "title": "Jira-Epic-Fortschritt: Vorgangsanzahl, Story Points und Dashboards",
+    "description": "Verfolge Jira-Epic-Fortschritt mit nativen Ansichten, einem Feld oder einem Dashboard-Gadget. Vergleiche Vorgangsanzahl und Story Points mit einem Rechenbeispiel.",
+    "date": "2025-11-18",
+    "dateStr": "18. November 2025",
+    "updated": "2026-10-15",
+    "updatedStr": "15. Oktober 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 4
+  },
+  {
+    "file": "jira-sprint-health-dashboard.html",
+    "title": "Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt",
+    "description": "Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.",
+    "date": "2025-11-03",
+    "dateStr": "3. November 2025",
+    "updated": "2026-10-15",
+    "updatedStr": "15. Oktober 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 4
+  },
+  {
+    "file": "jira-progress-bar.html",
+    "title": "Jira-Fortschrittsbalken: Einrichtung, Beispiele und Dashboards",
+    "description": "Ergänze Jira-Fortschrittsfelder für Status, Untervorgänge oder manuelle Schätzungen. Mit Rechenbeispiel, aktuellen Screenshots, JQL und interaktiver Demo.",
+    "date": "2025-10-27",
+    "dateStr": "27. Oktober 2025",
+    "updated": "2026-10-15",
+    "updatedStr": "15. Oktober 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 5
+  },
+  {
+    "file": "jira-velocity-chart.html",
+    "title": "Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung",
+    "description": "Ein Praxisleitfaden zum Jira-Velocity-Diagramm — was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Linie der durchschnittlichen Velocity liest, wie du Velocity für Sprint-Planung und Prognosen nutzt und welche Fehler sie irreführend machen.",
+    "date": "2026-06-02",
+    "dateStr": "2. Juni 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 9
+  },
+  {
+    "file": "velocity-team-managed-jira.html",
+    "title": "Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt",
+    "description": "Teamverwaltete Jira-Projekte haben einen Velocity-Bericht — allerdings mit Einschränkungen. Hier erfährst du, wie du ihn aktivierst und liest, wie er sich von der Velocity in unternehmensverwalteten Projekten unterscheidet, warum er häufig leer bleibt und wie du ein konfigurierbares Velocity-Diagramm auf ein Dashboard bekommst.",
+    "date": "2026-06-01",
+    "dateStr": "1. Juni 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 6
+  },
+  {
+    "file": "how-sprint-velocity-is-calculated.html",
+    "title": "So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)",
+    "description": "Eine genaue Erklärung, wie Jira die Sprint-Velocity berechnet: Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzfeld und Done-Zuordnung die Zahlen beeinflussen, warum Unteraufgaben ausgeschlossen sind und warum Velocity- und Sprint-Bericht manchmal voneinander abweichen.",
+    "date": "2026-05-30",
+    "dateStr": "30. Mai 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 7
+  },
+  {
+    "file": "sprint-predictability-say-do-ratio.html",
+    "title": "Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen",
+    "description": "Die reine Velocity zeigt dir, wie viel ein Team liefert; das Say/Do-Verhältnis zeigt, wie zuverlässig. Hier erfährst du, wie du die Sprint-Vorhersagbarkeit berechnest (abgeschlossen ÷ zugesagt), welcher Bereich gesund ist, warum sehr niedrige und sehr hohe Werte Warnzeichen sind und wie du sie verbesserst.",
+    "date": "2026-05-29",
+    "dateStr": "29. Mai 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 6
+  },
+  {
+    "file": "confluence-progress-bar.html",
+    "title": "Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen",
+    "description": "Confluence enthält kein eigenes Fortschrittsbalkenfeld. Hier findest du die nativen Möglichkeiten — Statusmakros, manuelle Tabellen und Diagrammmakros — und erfährst, wie Teams sie mit Jira-Fortschrittsfeldern kombinieren, um Projekte in Echtzeit sichtbar zu machen.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 7
+  },
+  {
+    "file": "documenting-jira-issues.html",
+    "title": "Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten",
+    "description": "Die meisten Teams dokumentieren Jira-Vorgänge auf drei Ebenen — im Beschreibungsfeld, in Dateianhängen und auf verknüpften Confluence-Seiten. Hier erfährst du, welchen Zweck jede Ebene erfüllt, welche Inhalte wohin gehören und wie die verknüpften Confluence-Seiten aktuell bleiben.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "tags": [
+      "confluence",
+      "jira"
+    ],
+    "label": "Confluence · Jira",
+    "readTime": 7
+  },
+  {
+    "file": "github-wiki-to-confluence.html",
+    "title": "Von GitHub Wiki zu Confluence: Zwei Migrationswege im Vergleich",
+    "description": "Von GitHub Wiki zu Confluence wechseln: manueller Export mit pandoc oder Neuerzeugung aus dem Quellcode mit CodeDoc AI. Ein ehrlicher Vergleich, wann welcher Weg besser passt und wie du die Migration ungenutzter Seiten vermeidest.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 8
+  },
+  {
+    "file": "jira-sprint-health-gadget.html",
+    "title": "Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt",
+    "description": "Das Jira-Sprint-Health-Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. Hier erfährst du, wie es funktioniert, was ihm fehlt und wie du es mit einem Fortschritts-Gadget kombinierst, um einzelne Vorgänge sichtbar zu machen.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 8
+  },
+  {
+    "file": "sort-jira-backlog-by-priority.html",
+    "title": "Dein Jira-Backlog automatisch nach Priorität sortieren",
+    "description": "Jiras natives Prioritätsfeld ist ein Label mit fünf Stufen, keine Zahl — deshalb sind in vielen Backlogs irgendwann 80 % der Vorgänge „Hoch“. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert und verstehst die Grenzen der nativen Sortierung.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 7
+  },
+  {
+    "file": "best-jira-backlog-prioritization-apps.html",
+    "title": "Die besten Apps zur Jira-Backlog-Priorisierung 2026: Ein ehrlicher Vergleich",
+    "description": "Ein Vergleich der wichtigsten Apps zur Jira-Backlog-Priorisierung 2026 — Foxly, Priority Scoring Calculator, Dynamic Scoring, Issue Score und Priority Scoring. Mit ehrlichen Angaben zu Installationen, Hosting und Abwägungen.",
+    "date": "2026-04-22",
+    "dateStr": "22. April 2026",
+    "tags": [
+      "priorityscoring",
+      "jira",
+      "forge"
+    ],
+    "label": "Priority Scoring · Jira · Forge",
+    "readTime": 11
+  },
+  {
+    "file": "atlassian-forge-vs-connect.html",
+    "title": "Atlassian-Forge- und Connect-Apps: Was ist sicherer? (2026)",
+    "description": "Forge-Apps laufen in Atlassians Infrastruktur. Connect-Apps laufen auf externen Servern. Für Atlassian-Administratoren in Unternehmen ist dieser Sicherheitsunterschied entscheidend — hier erfährst du, was du wissen solltest.",
+    "date": "2026-04-15",
+    "dateStr": "15. April 2026",
+    "tags": [
+      "enterprise",
+      "forge"
+    ],
+    "label": "Unternehmen · Forge",
+    "readTime": 7
+  },
+  {
+    "file": "best-jira-progress-tracking-apps.html",
+    "title": "Die besten Apps zur Jira-Fortschrittsverfolgung 2026: Ein ehrlicher Vergleich",
+    "description": "Ein Vergleich der wichtigsten Apps zur Jira-Fortschrittsverfolgung 2026 — von nativen Feldern bis zu visuellen Trackern auf Forge. Mit einer ehrlichen Einschätzung der Vor- und Nachteile, einschließlich der Schwächen jeder Option.",
+    "date": "2026-04-09",
+    "dateStr": "9. April 2026",
+    "tags": [
+      "jira",
+      "forge"
+    ],
+    "label": "Jira · Forge",
+    "readTime": 9
+  },
+  {
+    "file": "jira-custom-priority-scoring-weights.html",
+    "title": "Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)",
+    "description": "Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE (×1–×5) in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.",
+    "date": "2026-04-02",
+    "dateStr": "2. April 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 8
+  },
+  {
+    "file": "jira-priority-ranking.html",
+    "title": "Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)",
+    "description": "Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.",
+    "date": "2026-03-26",
+    "dateStr": "26. März 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 7
+  },
+  {
+    "file": "jira-progress-no-code.html",
+    "title": "Fortschrittsverfolgung ohne Code für Jira: Jeden Vorgang ohne ein einziges Skript verfolgen (2026)",
+    "description": "Du brauchst weder JQL noch ScriptRunner oder einen Jira-Administrator, um den Fortschritt deiner Vorgänge zu verfolgen. So richtest du automatische, visuelle Fortschrittsverfolgung in Jira in weniger als zwei Minuten ein — ganz ohne Code.",
+    "date": "2026-03-17",
+    "dateStr": "17. März 2026",
+    "tags": [
+      "jira"
+    ],
+    "label": "Jira",
+    "readTime": 6
+  },
+  {
+    "file": "jira-project-documentation.html",
+    "title": "Ein Jira-Projekt automatisch dokumentieren: Von manuellen Updates zu lebendiger Dokumentation (2026)",
+    "description": "Den meisten Jira-Projekten fehlt Dokumentation — und die meisten Confluence-Seiten veralten. So verbindest du beides, damit sich deine Projektdokumentation selbst schreibt und automatisch aktuell bleibt.",
+    "date": "2026-03-12",
+    "dateStr": "12. März 2026",
+    "tags": [
+      "confluence",
+      "jira"
+    ],
+    "label": "Confluence · Jira",
+    "readTime": 7
+  },
+  {
+    "file": "jira-backlog-grooming-checklist.html",
+    "title": "Checkliste zur Jira-Backlog-Pflege für Product Owner (2026)",
+    "description": "Eine Checkliste mit zwölf Punkten zur Jira-Backlog-Pflege für Product Owner und Scrum Master — Story Points, Akzeptanzkriterien, Prioritätswerte, veraltete Vorgänge und mehr. Direkt kopieren und nutzen.",
+    "date": "2026-03-03",
+    "dateStr": "3. März 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 8
+  },
+  {
+    "file": "jira-portfolio-backlog-health.html",
+    "title": "Portfolio-Backlog-Gesundheit in Jira: Mehrere Projekte gleichzeitig verfolgen (2026)",
+    "description": "Wie Entwicklungsleiter und Vizepräsidenten die Backlog-Gesundheit mehrerer Jira-Projekte in einer Ansicht überwachen — ohne jedes Projekt einzeln zu öffnen. Mit Einrichtung des Board Health Score und Anleitung zum Portfolio-Dashboard.",
+    "date": "2026-02-24",
+    "dateStr": "24. Februar 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 8
+  },
+  {
+    "file": "wsjf-safe-pi-planning-jira.html",
+    "title": "WSJF für SAFe PI Planning in Jira: Schrittweise Einrichtung (2026)",
+    "description": "So ordnest du mit WSJF (Weighted Shortest Job First) dein ART-Backlog für SAFe PI Planning — Formel, Fibonacci-Bewertung, Jira-Einrichtung und die Sicht des RTE im Dashboard.",
+    "date": "2026-02-16",
+    "dateStr": "16. Februar 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 10
+  },
+  {
+    "file": "ai-backlog-prioritization-jira-rovo.html",
+    "title": "KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet",
+    "description": "Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Lerne die drei Modi, ihre Einsatzfälle und die Bewertung eines gesamten Backlogs in wenigen Minuten kennen.",
+    "date": "2026-02-10",
+    "dateStr": "10. Februar 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 9
+  },
+  {
+    "file": "ai-documentation-confluence.html",
+    "title": "KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden",
+    "description": "Wie KI-Dokumentation für Confluence in der Praxis funktioniert — von Dokumentationsvoreinstellungen und Sprachunterstützung bis zu Freigabeprozessen und Kostenkontrolle mit BYOK.",
+    "date": "2026-02-03",
+    "dateStr": "3. Februar 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 7
+  },
+  {
+    "file": "automate-confluence-documentation.html",
+    "title": "Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD",
+    "description": "So automatisierst du Confluence-Dokumentation vollständig mit Webhooks, Zeitplänen und KI — vom ersten manuellen Durchlauf bis zur durch Commits ausgelösten CI/CD-Dokumentationspipeline.",
+    "date": "2026-01-27",
+    "dateStr": "27. Januar 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 8
+  },
+  {
+    "file": "byok-ai-atlassian.html",
+    "title": "BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist",
+    "description": "Bring Your Own Key (BYOK) für KI in Atlassian erklärt: Datenschutz, DSGVO-Konformität, Kostenkontrolle und die Bedeutung für Unternehmen mit Confluence und Jira.",
+    "date": "2026-01-19",
+    "dateStr": "19. Januar 2026",
+    "tags": [
+      "confluence",
+      "enterprise"
+    ],
+    "label": "Confluence · Unternehmen",
+    "readTime": 8
+  },
+  {
+    "file": "confluence-documentation-github.html",
+    "title": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
+    "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+    "date": "2026-01-12",
+    "dateStr": "12. Januar 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 7
+  },
+  {
+    "file": "ice-scoring-jira.html",
+    "title": "ICE-Bewertung in Jira: Schnelle Priorisierung für Growth-Teams (2026)",
+    "description": "ICE-Bewertung (Wirkung × Sicherheit × Einfachheit) ist der schnellste Weg zur Rangfolge deines Backlogs — ohne Nutzerdaten. Lerne die Formel, bewerte zehn Ideen in zwanzig Minuten und richte es heute in Jira ein.",
+    "date": "2026-01-06",
+    "dateStr": "6. Januar 2026",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 7
+  },
+  {
+    "file": "jira-backlog-health.html",
+    "title": "Jira-Backlog-Gesundheit: Deine Projektqualitätskennzahl messen und verbessern",
+    "description": "Erfahre, was ein Jira-Backlog ungesund macht, welche acht Qualitätssignale du verfolgen solltest und wie daraus eine einzige, automatisch aktualisierte Gesundheitskennzahl von 0–100 wird.",
+    "date": "2025-12-18",
+    "dateStr": "18. Dezember 2025",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 9
+  },
+  {
+    "file": "jira-prioritization-framework-comparison.html",
+    "title": "RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?",
+    "description": "Ein ehrlicher Vergleich der RICE-, WSJF- und ICE-Verfahren für Jira. Sieh die Formeln und Einsatzfälle und wähle mit dem Entscheidungsbaum das passende Verfahren für dein Team.",
+    "date": "2025-12-11",
+    "dateStr": "11. Dezember 2025",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 10
+  },
+  {
+    "file": "rice-scoring-jira.html",
+    "title": "RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung (2026)",
+    "description": "So setzt du RICE-Bewertung in Jira um — verstehe die Formel, bewerte dein Backlog richtig und richte native benutzerdefinierte Felder in weniger als zehn Minuten ein. Ohne Skripte.",
+    "date": "2025-12-04",
+    "dateStr": "4. Dezember 2025",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 9
+  },
+  {
+    "file": "wsjf-jira.html",
+    "title": "WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)",
+    "description": "Verstehe Weighted Shortest Job First (WSJF), berechne Verzögerungskosten richtig und richte native benutzerdefinierte WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte.",
+    "date": "2025-11-26",
+    "dateStr": "26. November 2025",
+    "tags": [
+      "priorityscoring",
+      "jira"
+    ],
+    "label": "Priority Scoring · Jira",
+    "readTime": 10
+  }
+]

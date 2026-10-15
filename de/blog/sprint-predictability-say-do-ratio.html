@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen | Janek Behrens</title>
+  <meta name="description" content="Die reine Velocity zeigt dir, wie viel ein Team liefert; das Say/Do-Verhältnis zeigt, wie zuverlässig. Hier erfährst du, wie du die Sprint-Vorhersagbarkeit berechnest (abgeschlossen ÷ zugesagt), welcher Bereich gesund ist, warum sehr niedrige und sehr hohe Werte Warnzeichen sind und wie du sie verbesserst.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/sprint-predictability-say-do-ratio.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen",
+  "description": "So berechnest du die Sprint-Vorhersagbarkeit (abgeschlossen ÷ zugesagt), erkennst einen gesunden Bereich, verstehst sehr niedrige und sehr hohe Werte als Warnzeichen und verbesserst die Zuverlässigkeit.",
+  "url": "https://janekbehrens.de/de/blog/sprint-predictability-say-do-ratio.html",
+  "datePublished": "2026-05-29T00:00:00+02:00",
+  "dateModified": "2026-05-29T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+  "keywords": [
+    "Jira",
+    "Sprint-Vorhersagbarkeit",
+    "Say/Do-Verhältnis",
+    "Zuverlässigkeit von Zusagen",
+    "Sprint-Velocity",
+    "Scrum",
+    "Agil"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen">
+  <meta property="og:description" content="Die reine Velocity zeigt dir, wie viel ein Team liefert; das Say/Do-Verhältnis zeigt, wie zuverlässig. So berechnest du es, erkennst gesunde Werte und verbesserst es.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/sprint-predictability-say-do-ratio.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-29">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen">
+  <meta name="twitter:description" content="Die reine Velocity zeigt dir, wie viel ein Team liefert; das Say/Do-Verhältnis zeigt, wie zuverlässig. So berechnest du es und erkennst gesunde Werte.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist das Say/Do-Verhältnis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Say/Do-Verhältnis, auch Zuverlässigkeit von Zusagen oder Sprint-Vorhersagbarkeit genannt, ist die abgeschlossene Arbeit eines Sprints geteilt durch die zugesagte Arbeit, ausgedrückt in Prozent. Ein Team, das 30 Punkte zugesagt und 24 abgeschlossen hat, erreicht ein Say/Do-Verhältnis von 80 %. Über mehrere Sprints gemittelt zeigt es, wie zuverlässig ein Team das liefert, was es sich vornimmt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist ein gutes Say/Do-Verhältnis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Etwa 80–100 % sind gesund. Dauerhafte Werte unter ungefähr 70 % deuten darauf hin, dass das Team regelmäßig zu viel zusagt; dauerhafte Werte über 100 % weisen auf zu geringe Zusagen oder aufgeblähte Schätzungen hin. Das Ziel ist ein stabiles Verhältnis, mit dem du planen kannst, nicht die höchstmögliche Zahl."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist Vorhersagbarkeit besser als Velocity?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die beiden Kennzahlen beantworten unterschiedliche Fragen. Velocity zeigt, wie viel ein Team üblicherweise liefert; Vorhersagbarkeit (Say/Do) zeigt, wie zuverlässig es seinen Plan erfüllt. Für Prognosen und das Vertrauen der Stakeholder ist ein stabiles, berechenbares Team wertvoller als ein schnelles, aber schwankendes — deshalb solltest du beide Kennzahlen gemeinsam betrachten."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-amber { background: #FFFAE6; border-left: 3px solid #FF991F; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .dim-table td.num { text-align:right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/sprint-predictability-say-do-ratio.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/sprint-predictability-say-do-ratio.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/sprint-predictability-say-do-ratio.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">29. Mai 2026</span>
+        <span class="article-readtime">· 6 Min. Lesezeit</span>
+      </div>
+      <h1>Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen</h1>
+      <p class="article-intro">
+        Zwei Teams liefern im Durchschnitt jeweils 25 Punkte pro Sprint. Das eine schafft jedes Mal 24–26; beim anderen schwankt der Wert zwischen 12 und 38. Ihre Velocity ist identisch — aber nur eines ist berechenbar, und genau diese Berechenbarkeit erleben Stakeholder im Alltag. Das Say/Do-Verhältnis erfasst sie: Es ist die Kennzahl, die in der reinen Velocity verborgen bleibt.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-is">Was das Say/Do-Verhältnis bedeutet</h2>
+      <p>
+        Das <strong>Say/Do-Verhältnis</strong> — auch als <em>Zuverlässigkeit von Zusagen</em> oder <em>Sprint-Vorhersagbarkeit</em> bezeichnet — ist einfach die abgeschlossene Arbeit geteilt durch die zugesagte Arbeit:
+      </p>
+      <p style="text-align:center;font-size:1.05rem;"><code>say/do = completed ÷ committed</code></p>
+      <p>
+        Ein Team, das 30 Punkte zugesagt und 24 abgeschlossen hat, erreicht ein Say/Do-Verhältnis von <strong>80%</strong>. Beide Zahlen liegen bereits vor — es sind die grauen und grünen Balken in jedem <a href="/de/blog/jira-velocity-chart.html">Velocity-Diagramm</a>. Das Verhältnis macht aus diesem Zahlenpaar einen einzigen, vergleichbaren Prozentwert. Der Durchschnitt über mehrere Sprints zeigt, wie zuverlässig das Team seine Zusagen erfüllt.
+      </p>
+
+      <h2 id="why-it-matters">Warum es wichtiger ist als die reine Velocity</h2>
+      <p>
+        Velocity beantwortet die Frage „Wie viel?“. Vorhersagbarkeit beantwortet „Können wir uns darauf verlassen?“ — und für fast alle, deren Arbeit vom Team abhängt, ist die zweite Frage entscheidend. Eine Roadmap auf Basis eines berechenbaren Teams trägt; eine Roadmap auf Basis eines unberechenbaren Teams ist Fiktion, egal wie hoch der Durchschnitt ist.
+      </p>
+      <p>
+        Atlassians eigener <a href="https://www.atlassian.com/agile/project-management/velocity-scrum" target="_blank" rel="noopener">Leitfaden zu Velocity in Scrum</a> beschreibt Velocity als Planungshilfe, die mit zunehmender Stabilität nützlicher wird. Das Say/Do-Verhältnis ist der direkteste Weg, diese Stabilität zu messen: Ein gleichmäßiges, gesundes Verhältnis signalisiert, dass deine Velocity zuverlässig genug für Prognosen ist.
+      </p>
+
+      <h2 id="healthy-range">Wie ein gesundes Verhältnis aussieht</h2>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Say/Do (Durchschnitt)</th><th>Was es normalerweise bedeutet</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">80–100%</td><td>Gesund. Das Team plant realistisch und liefert, was es zusagt.</td></tr>
+          <tr><td class="num">unter ~70 %</td><td>Regelmäßig zu hohe Zusagen. Die Pläne sind zu ehrgeizig; Stakeholder erleben wiederholt verfehlte Ziele.</td></tr>
+          <tr><td class="num">dauerhaft &gt;100 %</td><td>Zu geringe Zusagen oder aufgeblähte Schätzungen. Das Team könnte mehr Arbeit aufnehmen oder setzt die Erwartungen bewusst niedrig an.</td></tr>
+          <tr><td class="num">starke Schwankungen</td><td>Instabiler Prozess — Schätzungen, Umfangsänderungen oder Unterbrechungen bestimmen das Ergebnis, nicht das Arbeitstempo.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        Das Ziel ist ein <strong>stabiles</strong> Verhältnis im gesunden Bereich — nicht 100 % in jedem Sprint und ganz sicher nicht „so hoch wie möglich“. Ein Team, das in jedem einzelnen Sprint genau 100 % erreicht, steuert meistens die Zahl und nicht die Arbeit.
+      </p>
+
+      <div class="callout callout-amber">
+        <p><strong>Setze es nicht als Druckmittel ein.</strong> Sobald Say/Do zum vorgegebenen Ziel eines Teams wird, wird die Kennzahl manipuliert — Teams sagen stillschweigend weniger zu, damit das Verhältnis immer gut aussieht. Nutze sie als Gesprächseinstieg in der Retrospektive („Warum haben wir unser Ziel verfehlt?“), niemals als Druckmittel. Wie Velocity dient sie der Diagnose und ist kein KPI, den es zu maximieren gilt.</p>
+      </div>
+
+      <h2 id="example">Ein kurzes Rechenbeispiel</h2>
+      <p>Hier sind fünf Sprints eines Teams:</p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Sprint</th><th>Zugesagt</th><th>Abgeschlossen</th><th>Say/Do</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>21</td><td class="num">28</td><td class="num">24</td><td class="num">86%</td></tr>
+          <tr><td>22</td><td class="num">30</td><td class="num">18</td><td class="num">60%</td></tr>
+          <tr><td>23</td><td class="num">26</td><td class="num">25</td><td class="num">96%</td></tr>
+          <tr><td>24</td><td class="num">32</td><td class="num">20</td><td class="num">63%</td></tr>
+          <tr><td>25</td><td class="num">27</td><td class="num">24</td><td class="num">89%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        Die durchschnittliche Velocity liegt bei ordentlichen ~22 — aber das Say/Do-Verhältnis schwankt zwischen 60 % und 96 %. Das Muster zeigt, dass dieses Team in manchen Sprints (22, 24) zu viel zusagt und in anderen (21, 23, 25) gut plant. Die Lösung ist nicht mehr Tempo, sondern eine engere und verlässlichere Planung der Zusagen. Diese Erkenntnis bleibt unsichtbar, wenn du nur den Durchschnitt der abgeschlossenen Arbeit betrachtest.
+      </p>
+
+      <h2 id="improve">So verbesserst du die Vorhersagbarkeit</h2>
+      <ul>
+        <li><strong>Plane mit deinem bewährten Durchschnitt, nicht mit deinem besten Sprint.</strong> Wenn du im Durchschnitt 22 Punkte abschließt, plane keine 30. Plane ~22 und schütze diesen Umfang.</li>
+        <li><strong>Begrenze gleichzeitig laufende Arbeit.</strong> Begonnene Arbeit abzuschließen ist besser, als alles gleichzeitig zu starten; halbfertige Stories am Sprintende belasten das Say/Do-Verhältnis am stärksten.</li>
+        <li><strong>Mache Umfangsänderungen sichtbar.</strong> Wenn mitten im Sprint regelmäßig neue Arbeit aufgenommen wird, ist das ein Planungs- oder Priorisierungsproblem, das du sichtbar machen solltest — es drückt das Say/Do-Verhältnis, selbst wenn das Team viel liefert.</li>
+        <li><strong>Teile große Stories auf.</strong> Eine verspätete Story mit 13 Punkten kann das Verhältnis eines ganzen Sprints ruinieren; fünf Stories mit 2 oder 3 Punkten verursachen bei Verzögerungen kleinere Einbußen.</li>
+        <li><strong>Besprich das Verhältnis in der Retrospektive.</strong> Eine einzige Kennzahl, die das gesamte Team sehen kann, macht die Frage „Warum haben wir unser Ziel verfehlt?“ konkret.</li>
+      </ul>
+
+      <h2 id="tracking">Nachverfolgung ohne Tabellenkalkulation</h2>
+      <p>
+        Jiras nativer Velocity-Bericht zeigt die beiden Balken, berechnet das Verhältnis aber nicht für dich — deshalb schätzen es die meisten Teams nach Augenmaß oder kopieren die Zahlen in jedem Sprint in eine Tabelle. <a href="/de/velocity-chart.html">Velocity Chart for Jira</a> berechnet Say/Do automatisch, pro Sprint und als Durchschnitt, direkt auf dem Dashboard neben den Balken für zugesagte und abgeschlossene Arbeit und der Linie für die durchschnittliche Velocity. Weil du außerdem deine eigene Definition of Done und dein Schätzfeld festlegen kannst, spiegelt das Verhältnis wider, wie dein Team Arbeit tatsächlich abschließt — und für eine genauere Analyse kannst du die gesamte Zeitreihe als CSV exportieren.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist das Say/Do-Verhältnis?</p>
+        <p class="faq-a">Abgeschlossene Arbeit geteilt durch zugesagte Arbeit eines Sprints, ausgedrückt in Prozent — auch Zuverlässigkeit von Zusagen oder Sprint-Vorhersagbarkeit genannt. 30 zugesagt, 24 abgeschlossen → 80 %. Über mehrere Sprints gemittelt zeigt der Wert, wie zuverlässig ein Team seine Zusagen erfüllt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist ein gutes Say/Do-Verhältnis?</p>
+        <p class="faq-a">Etwa 80–100 % sind gesund. Unter ungefähr 70 % deutet auf regelmäßig zu hohe Zusagen hin; dauerhafte Werte über 100 % weisen auf zu geringe Zusagen oder aufgeblähte Schätzungen hin. Strebe ein stabiles Verhältnis an, mit dem du planen kannst, nicht die höchstmögliche Zahl.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Ist Vorhersagbarkeit besser als Velocity?</p>
+        <p class="faq-a">Sie beantworten unterschiedliche Fragen — Velocity zeigt, wie viel ein Team liefert, Vorhersagbarkeit, wie zuverlässig. Für Prognosen und Vertrauen ist ein stabiles, berechenbares Team wertvoller als ein schnelles, aber schwankendes. Betrachte deshalb beide Kennzahlen gemeinsam.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Berechnet Jira das Say/Do-Verhältnis?</p>
+        <p class="faq-a">Der native Velocity-Bericht zeigt zugesagte und abgeschlossene Arbeit, berechnet aber nicht das Verhältnis. Werkzeuge wie Velocity Chart for Jira berechnen Say/Do automatisch, pro Sprint und als Durchschnitt, auf einem Dashboard.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Erkenne deine Vorhersagbarkeit, nicht nur dein Tempo</h3>
+        <p>Velocity Chart for Jira zeigt das Say/Do-Verhältnis pro Sprint und als Durchschnitt — neben zugesagter und abgeschlossener Arbeit und der Durchschnittslinie — auf jedem Dashboard.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-is">Was es bedeutet</a></li>
+          <li><a href="#why-it-matters">Warum es wichtig ist</a></li>
+          <li><a href="#healthy-range">Ein gesunder Bereich</a></li>
+          <li><a href="#example">Ein Rechenbeispiel</a></li>
+          <li><a href="#improve">So verbesserst du es</a></li>
+          <li><a href="#tracking">Nachverfolgung</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenloser Tarif</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Im Marketplace ansehen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Velocity-Diagramm: So liest du es</a>
+        <a href="/de/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">So wird die Sprint-Velocity berechnet</a>
+        <a href="/de/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Ein Dashboard zur Sprint-Gesundheit in Jira erstellen</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

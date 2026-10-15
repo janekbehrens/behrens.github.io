@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dein Jira-Backlog automatisch nach Priorität sortieren | Janek Behrens</title>
+  <meta name="description" content="Jiras natives Prioritätsfeld ist ein Label mit fünf Stufen, keine Zahl — deshalb sind in vielen Backlogs irgendwann 80 % der Vorgänge „Hoch“. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert und verstehst die Grenzen der nativen Sortierung.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/sort-jira-backlog-by-priority.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Dein Jira-Backlog automatisch nach Priorität sortieren",
+  "description": "Jiras natives Prioritätsfeld ist ein Label mit fünf Stufen, keine Zahl — deshalb sind in vielen Backlogs irgendwann 80 % der Vorgänge „Hoch“. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert.",
+  "url": "https://janekbehrens.de/de/blog/sort-jira-backlog-by-priority.html",
+  "datePublished": "2026-05-21T00:00:00+02:00",
+  "dateModified": "2026-05-21T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+  "keywords": [
+    "Jira",
+    "Backlog",
+    "Priorität",
+    "RICE",
+    "WSJF",
+    "ICE"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Dein Jira-Backlog automatisch nach Priorität sortieren">
+  <meta property="og:description" content="Jiras natives Prioritätsfeld ist ein Label, keine Zahl. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/sort-jira-backlog-by-priority.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Priority Scoring">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dein Jira-Backlog automatisch nach Priorität sortieren">
+  <meta name="twitter:description" content="Jiras natives Prioritätsfeld ist ein Label, keine Zahl. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie sortiere ich ein Jira-Backlog nach Priorität?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Klicke in der Jira-Backlog-Ansicht auf den Spaltenkopf „Priorität“, um nach dem nativen Prioritätsfeld zu sortieren (Höchste, Hoch, Mittel, Niedrig, Niedrigste). Für eine Sortierung nach numerischen Prioritätswerten ergänzt du ein benutzerdefiniertes Zahlenfeld — zum Beispiel für RICE-, WSJF- oder ICE-Werte — und sortierst danach. Benutzerdefinierte Zahlenfelder erscheinen in Listenansicht und Backlog als sortierbare Spalten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum funktioniert die Sortierung nach Jiras nativem Prioritätsfeld nicht gut?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das native Prioritätsfeld hat nur fünf Werte (Höchste, Hoch, Mittel, Niedrig, Niedrigste). In den meisten Projekten werden 70–80 % der Vorgänge als „Hoch“ markiert. Damit ist es für eine Reihenfolge nutzlos. Die Sortierung teilt Vorgänge in fünf Gruppen, erzeugt aber keine echte Rangfolge. Dafür brauchst du einen numerischen Wert."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie bringe ich Jira-Vorgänge anhand von RICE-, WSJF- oder ICE-Werten in eine Rangfolge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Installiere eine Bewertungs-App aus dem Atlassian Marketplace, die ein numerisches benutzerdefiniertes Feld für das Verfahren (RICE, WSJF oder ICE) erstellt. Setze die Dimensionswerte jedes Vorgangs mit Schiebereglern oder einem Rovo-KI-Agenten. Die App berechnet je Vorgang einen Wert. Füge das Bewertungsfeld als Spalte zum Backlog hinzu und sortiere absteigend, um die Rangfolge zu sehen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann JQL ein Jira-Backlog nach einem benutzerdefinierten Bewertungsfeld sortieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Sobald ein benutzerdefiniertes Zahlenfeld existiert, unterstützt JQL dafür ORDER BY. Zum Beispiel: project = ABC AND statusCategory != Done ORDER BY \"Priority Scoring — RICE\" DESC. Die Abfrage liefert alle offenen Vorgänge nach ihrem numerischen Wert sortiert."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    pre.code-block { background:#172B4D; color:#fff; padding:14px 16px; border-radius:8px; font-size:0.82rem; line-height:1.55; overflow-x:auto; margin: 16px 0; }
+    pre.code-block code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/sort-jira-backlog-by-priority.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/sort-jira-backlog-by-priority.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/sort-jira-backlog-by-priority.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">21. Mai 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>Dein Jira-Backlog automatisch nach Priorität sortieren</h1>
+      <p class="article-intro">
+        Dieser Artikel erklärt die technischen Schritte — Spaltenauswahl, JQL <code>ORDER BY</code>, REST-API und die Einrichtung, damit die Sortierung tatsächlich funktioniert. Wenn du zuerst die Gründe für Bewertungsverfahren verstehen möchtest (warum Zahlen besser sind als Labels und welches Verfahren zu deinem Team passt), beginne mit <a href="/de/blog/jira-priority-ranking.html">Jira-Prioritätsrangfolge</a> und kehre für die Umsetzung hierher zurück.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Warum die Sortierung nach nativer Priorität nicht funktioniert</h2>
+      <p>
+        Jiras integriertes Prioritätsfeld ist eine Einfachauswahlliste mit fünf Werten. Eine Sortierung danach gruppiert Vorgänge genau in diese fünf Gruppen. Innerhalb einer Gruppe bestimmt Jira die Reihenfolge (normalerweise Rang oder Erstellungsdatum). Das Feld hat zwei strukturelle Probleme, die keine Sortierung behebt:
+      </p>
+      <ul>
+        <li><strong>Grobe Abstufung.</strong> Fünf Werte können die zehn wichtigsten Vorgänge nicht unterscheiden. Bei 30 Einträgen mit „Hoch“ musst du weiterhin entscheiden, welcher zuerst dran ist.</li>
+        <li><strong>Inflation der Labels.</strong> Sobald einige Einträge „Höchste“ sind, möchte jeder neue Eintrag ebenfalls „Höchste“ sein — sonst befürchtet der Antragsteller, dass er nicht umgesetzt wird. Die Werte steigen, bis das Feld keine Information mehr vermittelt.</li>
+      </ul>
+      <p>
+        Ein echtes priorisiertes Backlog benötigt je Vorgang einen kontinuierlichen numerischen Wert. So lassen sich zwei Einträge anhand einer Zahl vergleichen, statt über ein Label zu streiten. Klassische Verfahren dafür sind RICE, WSJF und ICE.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Kurzantwort:</strong> Ergänze ein numerisches benutzerdefiniertes Feld mit einem berechneten Prioritätswert. Sortiere das Backlog absteigend danach. Das native Prioritätsfeld bleibt für einen Zweck nützlich — die Kennzeichnung des Schweregrads von Störungen —, dient aber nicht mehr zur Backlog-Sortierung.</p>
+      </div>
+
+      <h2 id="three-frameworks">Drei Verfahren, die eine Zahl liefern</h2>
+
+      <h3 id="rice">RICE</h3>
+      <p>
+        <strong>RICE</strong> = (Reach × Impact × Confidence) ÷ Effort, also (Reichweite × Wirkung × Sicherheit) ÷ Aufwand. Bei Intercom für Produktteams zur Priorisierung nutzerbezogener Funktionen entwickelt. Reach zählt Nutzer in einem Zeitraum, Impact nutzt eine Skala von 0,25–3, Confidence einen Prozentwert und Effort Personenmonate. Das Ergebnis ist eine Zahl — typischerweise 1 bis über 1.000 —, die sich im gesamten Backlog vergleichen lässt.
+      </p>
+      <p>Siehe: <a href="/de/blog/rice-scoring-jira.html">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>.</p>
+
+      <h3 id="wsjf">WSJF</h3>
+      <p>
+        <strong>WSJF</strong> = (Business Value + Time Criticality + Risk Reduction) ÷ Job Size, also (Geschäftswert + Zeitkritikalität + Risikoreduktion) ÷ Umfang. Der SAFe-Standard für die Reihenfolge des ART-Backlogs, bewertet auf einer Fibonacci-Skala. Typische Ergebnisse liegen bei 0,1 bis über 10. Hilfreich, wenn „Wert“ aufgeteilt werden muss, weil das Team wirtschaftlichen Nutzen gegen Zeitdruck abwägt.
+      </p>
+      <p>Siehe: <a href="/de/blog/wsjf-jira.html">WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation</a>.</p>
+
+      <h3 id="ice">ICE</h3>
+      <p>
+        <strong>ICE</strong> = Impact × Confidence × Ease, also Wirkung × Sicherheit × Einfachheit. Das schnellste der drei Verfahren — drei Dimensionen, keine Division. Das Ergebnis liegt typischerweise zwischen 1 und 1.000. Passend für Growth-Teams mit Experimenten, bei denen schnelle Entscheidungen wichtiger sind als große Detailtiefe.
+      </p>
+      <p>Siehe: <a href="/de/blog/ice-scoring-jira.html">ICE-Bewertung in Jira: Schnelle Priorisierung für Growth-Teams</a>.</p>
+
+      <p>
+        Unsicher bei der Auswahl? Der <a href="/de/blog/jira-prioritization-framework-comparison.html">Vergleich von RICE, WSJF und ICE</a> führt dich durch den Entscheidungsbaum.
+      </p>
+
+      <h2 id="how-to">In Jira nach einem echten Prioritätswert sortieren</h2>
+      <p>
+        Die technischen Schritte sind bei jedem Verfahren gleich. Du brauchst ein numerisches benutzerdefiniertes Feld in jedem Vorgang, eine konsistente Befüllung und eine Backlog- oder Listenansicht, die danach sortiert ist.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Füge deinem Projekt ein numerisches Bewertungsfeld hinzu.</strong> Entweder ein normales benutzerdefiniertes Jira-Zahlenfeld (Wert anderswo berechnen und einfügen) oder einen Feldtyp einer Bewertungs-App, die aus Dimensionsschiebereglern den Wert berechnet.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Füge das Feld zu deinen Vorgangsmasken hinzu.</strong> Jira-Einstellungen → Vorgänge → Masken. Ergänze das Bewertungsfeld in den Erstellungs-, Bearbeitungs- und Ansichtsmasken aller relevanten Maskenschemata.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Befülle den Wert jedes Vorgangs.</strong> Entweder manuell, mit Vorschlägen eines Rovo-KI-Agenten oder gesammelt über den Import.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Füge das Bewertungsfeld als Spalte zum Backlog oder zur Listenansicht hinzu.</strong> Klicke auf die Spaltenauswahl, suche den Feldnamen und aktiviere ihn.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Klicke auf den Spaltenkopf, um absteigend zu sortieren.</strong> Der Vorgang mit dem höchsten Wert steht jetzt oben.</div>
+        </li>
+      </ol>
+
+      <h2 id="with-priority-scoring">Umsetzung mit Priority Scoring</h2>
+      <p>
+        <a href="/de/priority-scoring.html">Priority Scoring for Jira</a> ist eine Marketplace-App, die die Schritte 1 und 3 für dich abdeckt. Sie registriert drei benutzerdefinierte Feldtypen — <em>Priority Scoring — RICE</em>,  <em>Priority Scoring — WSJF</em> und <em>Priority Scoring — ICE</em> —, die jeweils Dimensionswerte speichern, den Wert unmittelbar berechnen und das Ergebnis als sortierbaren Zahlenwert im Vorgang ablegen.
+      </p>
+      <p>Einrichtung nach der Installation:</p>
+      <ol>
+        <li><strong>Das Feld erstellen</strong> — Jira-Einstellungen → Vorgänge → Felder → Neues Feld erstellen. Suche nach <code>priority scoring</code>, wähle das Verfahren und vergib einen Namen.</li>
+        <li><strong>Zu Masken hinzufügen</strong> — Jira-Einstellungen → Vorgänge → Masken. Füge das Feld zur Projektmaske hinzu.</li>
+        <li><strong>Vorgänge bewerten</strong> — öffne einen Vorgang, klicke auf das Bewertungsfeld und ziehe die Dimensionsschieberegler. Der Wert aktualisiert sich sofort. Speichere mit dem Häkchen.</li>
+        <li><strong>Öffne den Tab „Priority Ranking“</strong> in der App — alle bewerteten Vorgänge des Projekts, absteigend nach Wert sortiert, mit Vorgangsschlüssel, Zusammenfassung, Typ, Status, Sprint, Fälligkeitsdatum und Bewertungsbalken. Von dort kannst du bei Bedarf CSV für eine Präsentation im Lenkungsausschuss exportieren.</li>
+      </ol>
+
+      <div class="callout callout-green">
+        <p><strong>Massenbewertung:</strong> Bei Backlogs mit Dutzenden oder Hunderten unbewerteter Vorgänge kann der enthaltene Rovo-KI-Agent Werte für alle Dimensionen im gesamten Backlog vorschlagen und entweder automatisch speichern oder pro Vorgang eine Bestätigung öffnen. So gelangst du praktisch in einer Sitzung von null Bewertungen zu einem geordneten Backlog.</p>
+      </div>
+
+      <h2 id="jql">Sortierung mit JQL</h2>
+      <p>
+        Sobald ein numerisches benutzerdefiniertes Feld existiert — aus einer App oder als normales Jira-Zahlenfeld —, unterstützt JQL ORDER BY. Das ist der übersichtlichste Weg für Filter, Gadgets und Exporte:
+      </p>
+      <pre class="code-block"><code>project = "MYPROJ"
+  AND statusCategory != Done
+  ORDER BY "Priority Scoring — RICE" DESC</code></pre>
+      <p>
+        Speichere die Abfrage als Filter. Dann kannst du:
+      </p>
+      <ul>
+        <li>Ihn abonnieren, um eine wöchentliche E-Mail-Zusammenfassung der wichtigsten N Einträge zu erhalten.</li>
+        <li>Ihn als Quelle für ein Dashboard-Gadget „Filter Results“ verwenden.</li>
+        <li>Ihn im Jira-Vorgangsmakro von Confluence verwenden, um die Rangliste auf einer Projektseite einzubetten.</li>
+      </ul>
+
+      <h2 id="keep-jira-priority">Das native Prioritätsfeld für einen Zweck behalten</h2>
+      <p>
+        Das native Jira-Prioritätsfeld muss nicht verschwinden. Eine Aufgabe erfüllt es weiterhin gut: <em>Schweregrad</em>. Nutze es für den Schweregrad von Störungen oder Dringlichkeit mit Produktionsauswirkungen (Höchste = jemanden alarmieren, Niedrigste = Feinschliff im nächsten Quartal). Für alles Weitere — Roadmap-Entscheidungen, Sprint-Planung und Backlog-Pflege — nutzt du den numerischen Wert.
+      </p>
+      <p>
+        Das sind zwei unterschiedliche Fragen. Schweregrad bedeutet „Wie schlimm ist es, wenn wir es nicht tun?“, Prioritätswert bedeutet „Wie wertvoll ist es pro Aufwandseinheit?“. Beide sollen bewusst unterschiedliche Reihenfolgen erzeugen.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie sortiere ich ein Jira-Backlog nach Priorität?</p>
+        <p class="faq-a">Klicke in einem Jira-Backlog oder einer Listenansicht auf den Spaltenkopf „Priorität“, um nach dem nativen Prioritätsfeld zu sortieren. Für eine echte Rangfolge ergänzt du ein numerisches benutzerdefiniertes Feld mit einem berechneten Wert (RICE, WSJF oder ICE), fügst es als Spalte hinzu und klickst dessen Spaltenkopf für absteigende Sortierung.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum funktioniert die Sortierung nach Jiras nativem Prioritätsfeld nicht gut?</p>
+        <p class="faq-a">Das native Feld hat nur fünf Werte. Die Sortierung gruppiert Vorgänge, erzeugt aber innerhalb der Gruppen keine Reihenfolge. In den meisten Projekten steigen außerdem die Labels, bis 70–80 % der Vorgänge „Hoch“ sind. Die Sortierung nach Priorität ergibt deshalb keine aussagekräftige Rangfolge.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie bringe ich Jira-Vorgänge anhand von RICE-, WSJF- oder ICE-Werten in eine Rangfolge?</p>
+        <p class="faq-a">Installiere eine Marketplace-App, die ein numerisches benutzerdefiniertes Feld für das Verfahren erstellt. Setze je Vorgang die Dimensionswerte; die App berechnet den Gesamtwert. Füge das Feld als Backlog-Spalte hinzu und sortiere absteigend. Alternativ öffnest du die Ansicht „Priority Ranking“ der App, die das gesamte bewertete Backlog bereits nach Wert sortiert zeigt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann JQL ein Jira-Backlog nach einem benutzerdefinierten Bewertungsfeld sortieren?</p>
+        <p class="faq-a">Ja. JQL unterstützt ORDER BY für jedes numerische benutzerdefinierte Feld. Beispiel: <code>project = ABC AND statusCategory != Done ORDER BY "Priority Scoring — RICE" DESC</code>. Speichere die JQL-Abfrage als Filter und nutze sie als Gadget-Quelle oder im Jira-Makro von Confluence.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Sollte ich das native Prioritätsfeld entfernen?</p>
+        <p class="faq-a">Nein. Das native Prioritätsfeld eignet sich weiterhin für den Schweregrad (Höchste bei Produktionsstörungen, Niedrigste bei kosmetischen Problemen). Sortiere lediglich das Planungsbacklog nicht mehr danach. Nutze den Zahlenwert für Reihenfolgeentscheidungen und das Prioritätsfeld für die Kennzeichnung des Schweregrads.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Ein Jira-Backlog mit fertiger Rangfolge</h3>
+        <p>Priority Scoring erstellt benutzerdefinierte RICE-, WSJF- und ICE-Felder, bewertet Vorgänge unmittelbar über Schieberegler oder Rovo-KI und zeigt die vollständige sortierte Rangfolge in einer Dashboard-Ansicht.</p>
+        <a href="/de/priority-scoring.html" class="btn-white">Priority Scoring ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Warum native Prioritätssortierung scheitert</a></li>
+          <li><a href="#three-frameworks">Drei Verfahren</a></li>
+          <li><a href="#how-to">Nach einem echten Wert sortieren</a></li>
+          <li><a href="#with-priority-scoring">Umsetzung mit der App</a></li>
+          <li><a href="#jql">Sortierung mit JQL</a></li>
+          <li><a href="#keep-jira-priority">Native Priorität für den Schweregrad behalten</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/imgPriorityScorer/priorityScorer-banner.webp" alt="Priority Scoring" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Forge</div>
+          </div>
+        </a>
+        <a href="/de/priority-scoring.html" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Mehr erfahren →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-priority-ranking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Prioritätsrangfolge: Automatisch nach Bewertung sortieren</a>
+        <a href="/de/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE, WSJF oder ICE: Welches Verfahren?</a>
+        <a href="/de/blog/ai-backlog-prioritization-jira-rovo.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">KI-Backlog-Priorisierung mit Rovo</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt | Janek Behrens</title>
+  <meta name="description" content="Das Jira-Sprint-Health-Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. Hier erfährst du, wie es funktioniert, was ihm fehlt und wie du es mit einem Fortschritts-Gadget kombinierst, um einzelne Vorgänge sichtbar zu machen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-sprint-health-gadget.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt",
+  "description": "Das Jira-Sprint-Health-Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. Hier erfährst du, wie es funktioniert, was ihm fehlt und wie du es mit einem Fortschritts-Gadget kombinierst, um einzelne Vorgänge sichtbar zu machen.",
+  "url": "https://janekbehrens.de/de/blog/jira-sprint-health-gadget.html",
+  "datePublished": "2026-05-21T00:00:00+02:00",
+  "dateModified": "2026-05-21T00:00:00+02:00",
+  "image": "https://janekbehrens.de/img/dashboard.webp",
+  "keywords": [
+    "Jira",
+    "Sprint-Gesundheit",
+    "Dashboard",
+    "Gadget",
+    "Agil"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt">
+  <meta property="og:description" content="Das native Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. So nutzt du es sinnvoll und kombinierst es mit einem Fortschritts-Gadget für den Blick auf einzelne Vorgänge.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-sprint-health-gadget.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/dashboard.webp">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-21">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt">
+  <meta name="twitter:description" content="Das native Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. So nutzt du es sinnvoll.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist das Jira-Sprint-Health-Gadget?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Sprint-Health-Gadget ist ein natives Jira-Dashboard-Gadget, das einen einzelnen Sprint anhand von vier Dimensionen zusammenfasst: abgeschlossene Arbeit (erledigte gegenüber zugesagten Story Points), Blockaden (Anzahl markierter oder blockierter Vorgänge), Umfangsänderungen (nach Sprintbeginn hinzugefügte oder entfernte Vorgänge) und vergangene Zeit. Zur Konfiguration wählst du ein Board und einen Sprint."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum zeigt mein Jira-Sprint-Health-Gadget keine Umfangsänderungen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Umfangsänderungen erscheinen erst, nachdem der Sprint aus Sicht von Jira tatsächlich gestartet wurde — zuvor hinzugefügte Vorgänge gehören zur ursprünglichen Zusage und sind keine Umfangsänderung. Wenn das Dashboard nach Sprintbeginn weiterhin null Umfangsänderung zeigt, prüfe, ob der Gadget-Filter (falls verwendet) die hinzugefügten Vorgänge ausschließt, und aktualisiere das Dashboard."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich das Jira-Sprint-Health-Gadget filtern?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das native Sprint-Health-Gadget wird über Board und Sprint konfiguriert; beliebige JQL-Filter sind nicht möglich. Um innerhalb eines Sprints nach zuständiger Person, Label oder Komponente zu filtern, nutze ein anderes Gadget, etwa „Filter Results“, oder ein eigenes Fortschritts-Gadget mit JQL-Unterstützung."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie unterscheidet sich Sprint-Gesundheit vom Fortschritt einzelner Vorgänge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sprint-Gesundheit ist eine einzige Zusammenfassung auf Sprint-Ebene — vier Zahlen beschreiben den Sprint als Ganzes. Fortschritt pro Vorgang zeigt, wo jeder einzelne Vorgang steht. Sprint-Gesundheit verrät, ob der Sprint im Plan liegt; Vorgangsfortschritt zeigt, welche konkreten Tickets feststecken. Die meisten Teams brauchen beides."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-sprint-health-gadget.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-sprint-health-gadget.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-sprint-health-gadget.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">21. Mai 2026</span>
+        <span class="article-readtime">· 8 Min. Lesezeit</span>
+      </div>
+      <h1>Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt</h1>
+      <p class="article-intro">
+        Das Sprint-Health-Gadget gehört zu den wenigen Jira-Gadgets, die Menschen im Stand-up tatsächlich öffnen. Es bündelt vier Signale in einer Kachel: abgeschlossene Arbeit, Blockaden, Umfangsänderungen und vergangene Zeit. Das ist hilfreich, beschreibt aber nur den Sprint als Ganzes — nicht die enthaltenen Vorgänge. So holst du das Beste heraus und ergänzt die nötigen Informationen für einzelne Vorgänge.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-is">Was das Sprint-Health-Gadget tatsächlich zeigt</h2>
+      <p>
+        Das native Sprint-Health-Gadget fasst einen aktiven Sprint anhand von vier Dimensionen zusammen. Du konfigurierst es durch die Auswahl eines Boards und eines Sprints; alles Weitere berechnet Jira.
+      </p>
+
+      <table class="dim-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Was sie misst</th>
+            <th>Woher die Daten stammen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Abgeschlossene Arbeit</strong></td>
+            <td>Story Points (oder Anzahl) abgeschlossener Vorgänge im Verhältnis zur gesamten Zusage</td>
+            <td>Vorgangsstatus und Done-Zuordnung des Sprints</td>
+          </tr>
+          <tr>
+            <td><strong>Blockaden</strong></td>
+            <td>Anzahl der Vorgänge, die als „Impediment“ markiert oder über eine „is blocked by“-Verknüpfung blockiert sind</td>
+            <td>Das Feld „Flagged“ und Jira-Vorgangsverknüpfungstypen</td>
+          </tr>
+          <tr>
+            <td><strong>Umfangsänderung</strong></td>
+            <td>Nach Sprintbeginn hinzugefügte oder entfernte Vorgänge</td>
+            <td>Sprint-Verlauf (Änderungen des Sprintfelds nach Sprintbeginn)</td>
+          </tr>
+          <tr>
+            <td><strong>Vergangene Zeit</strong></td>
+            <td>Vergangene Kalendertage im Verhältnis zur gesamten Sprintdauer</td>
+            <td>Start- und Enddatum des Sprints</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <p><strong>Schnelle Einschätzung:</strong> Wenn die abgeschlossene Arbeit deutlich hinter der vergangenen Zeit liegt, bist du im Rückstand. Bei vielen Umfangsänderungen mitten im Sprint hat das Team etwas anderes zugesagt, als es jetzt liefert. Wenn die Blockaden zunehmen, wird das Team an Stellen aufgehalten, die es selbst nicht lösen kann.</p>
+      </div>
+
+      <h2 id="how-to-add">So fügst du das Gadget zu einem Dashboard hinzu</h2>
+      <ol>
+        <li>Öffne das Dashboard, auf dem das Gadget erscheinen soll (oder erstelle ein neues über <strong>Dashboards → Dashboard erstellen</strong>).</li>
+        <li>Klicke auf <strong>Gadget hinzufügen</strong> oben rechts.</li>
+        <li>Suche nach <code>Sprint Health</code> und klicke auf <strong>Hinzufügen</strong>.</li>
+        <li>Wähle das <strong>Board</strong> (ein Scrum-Board, kein Kanban-Board — das Gadget funktioniert nur auf Boards mit aktiven Sprints).</li>
+        <li>Wähle das <strong>Sprint</strong> — normalerweise den aktuell aktiven.</li>
+        <li>Klicke auf <strong>Speichern</strong>.</li>
+      </ol>
+      <p>Das Gadget aktualisiert sich, wenn sich die zugrunde liegenden Jira-Daten ändern; nach Sprint-Ereignissen musst du es nicht selbst aktualisieren.</p>
+
+      <h2 id="filters">Filter und Einschränkungen</h2>
+      <p>Diese Einschränkung bemerken die meisten erst, wenn sie darauf stoßen. Das Sprint-Health-Gadget bietet eine festgelegte Zusammenfassung auf Sprint-Ebene. Es akzeptiert <em>keine</em> JQL-Filter zur Einschränkung nach zuständiger Person, Label oder Komponente. Direkt im Gadget kannst du nicht anfordern: „Zeige mir die Sprint-Gesundheit nur für das Backend-Team.“</p>
+      <p>Alternativen:</p>
+      <ul>
+        <li><strong>Mehrere Boards, eines pro Team</strong> — wenn deine Teilteams bereits eigene Boards haben, füge dem Dashboard pro Board ein Sprint-Health-Gadget hinzu. Umständlich, aber es funktioniert.</li>
+        <li><strong>Gadget „Filter Results“</strong> — um zu sehen, <em>welche</em> Vorgänge von Umfangsänderungen betroffen oder blockiert sind, füge ein Gadget „Filter Results“ mit einer JQL-Abfrage wie der folgenden hinzu: <code>sprint in openSprints() AND flagged is not EMPTY</code> neben der Sprint-Health-Kachel.</li>
+        <li><strong>Eigene Dashboard-Zusammenstellung</strong> — kombiniere das Sprint-Health-Gadget mit einem Fortschritts-Gadget, das <em>auch</em> JQL akzeptiert, um einzelne Vorgänge genauer zu betrachten.</li>
+      </ul>
+
+      <h2 id="not-showing-scope-change">„Es zeigt keine Umfangsänderung“ — und weitere Stolpersteine</h2>
+      <p>Die häufigste Beschwerde lautet: „Die Umfangsänderung steht auf null, obwohl wir definitiv Arbeit hinzugefügt haben.“ Prüfe diese Punkte:</p>
+      <ul>
+        <li><strong>Der Sprint muss aktiv sein</strong>. Vorgänge, die <em>vor</em> Sprintbeginn hinzugefügt wurden, gehören zur ursprünglichen Zusage — das ist beabsichtigt. Nur Vorgänge, die nach dem Klick auf „Sprint starten“ in den Sprint verschoben wurden, zählen als Umfangsänderung.</li>
+        <li><strong>Auch das Entfernen eines Vorgangs zählt.</strong> Etwas während des Sprints herauszunehmen ist eine Umfangsänderung, auch wenn es sich wie eine Entlastung anfühlt.</li>
+        <li><strong>Die Sprint-Zuordnung des Boards ist wichtig.</strong> Das Gadget liest die Done-Spalte des Boards aus, um fertige Arbeit zu bestimmen. Enthält sie nicht alle Abschlussstatus (zum Beispiel nur „Done“, obwohl du auch „Released“ verwendest), wird zu wenig abgeschlossene Arbeit gezählt.</li>
+        <li><strong>Story-Point-Felder.</strong> Nutzt dein Team „Time Estimate“ oder ein eigenes Schätzfeld statt „Story Points“, fällt die Kennzahl für abgeschlossene Arbeit auf die Vorgangsanzahl zurück. Das kann irreführend sein.</li>
+      </ul>
+
+      <h2 id="per-issue-gap">Die fehlende Sicht auf einzelne Vorgänge</h2>
+      <p>
+        Sprint Health sagt dir, ob der Sprint im Plan liegt. Es zeigt nicht, welche einzelnen Vorgänge feststecken. Mitten im Sprint lautet die entscheidende Frage: „Welche drei Tickets brauchen heute ein Gespräch?“ Das Sprint-Health-Gadget kann sie nicht beantworten, weil es nur die Gesamtheit darstellt.
+      </p>
+      <p>
+        Dafür muss der Fortschritt einzelner Vorgänge über den gesamten Sprint sichtbar sein. Nativ bietet das Board selbst diese Sicht (Karten zwischen Spalten verschieben und ihre Position abschätzen). Für Status ist das Board gut, für zwei andere Dinge schwach: Es zeigt nicht, <em>wie weit</em> jede laufende Karte fortgeschritten ist, und bei mehr als 30 Vorgängen wird es zur unübersichtlichen Wand.
+      </p>
+
+      <h3 id="progress-overview-gadget">Ein Fortschritts-Gadget neben Sprint Health ergänzen</h3>
+      <p>
+        Ein zweites Gadget, das Vorgangsfortschritt in einer Tabelle zeigt, ergänzt Sprint Health gut. Die App <a href="/de/visual-progress-tracker.html">Visual Progress Tracker</a> stellt ein <strong>Progress Tracker Overview</strong> Dashboard-Gadget bereit, das genau das leistet:
+      </p>
+      <ul>
+        <li>Sortierbare Tabelle aller Vorgänge mit einem farbcodierten Fortschrittsbalken je Zeile.</li>
+        <li>Drei Berechnungsmodi — Unteraufgaben (abgeschlossen / gesamt), Status (Workflow-Zuordnung) oder manuell (vom Nutzer gesetzter Schieberegler).</li>
+        <li>JQL-Filterunterstützung — beschränke auf <code>sprint in openSprints()</code> oder weiter über den folgenden Filter auf ein Team: <code>assignee in membersOf("backend-team")</code>.</li>
+        <li>Begrenzte Ergebnismenge bei sehr großen Projekten, damit das Gadget schnell bleibt; ein Hinweis erscheint, wenn mehr Vorgänge vorhanden sind als geladen wurden, damit du den Filter weiter eingrenzen kannst.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Eine sinnvolle Dashboard-Anordnung:</strong> Sprint-Health-Gadget oben (Zusammenfassung des Sprints), darunter „Progress Tracker Overview“ mit dem Filter <code>sprint in openSprints()</code> (Tabelle der einzelnen Vorgänge). Die obere Hälfte beantwortet „Wie läuft der Sprint?“, die untere „Welche Tickets brauchen Aufmerksamkeit?“.</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist das Jira-Sprint-Health-Gadget?</p>
+        <p class="faq-a">Ein natives Jira-Dashboard-Gadget, das einen Sprint anhand von vier Dimensionen zusammenfasst: abgeschlossene Arbeit, Blockaden, Umfangsänderungen und vergangene Zeit. Die Konfiguration erfolgt über Board und Sprint.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum zeigt mein Jira-Sprint-Health-Gadget keine Umfangsänderungen?</p>
+        <p class="faq-a">Umfangsänderung zählt nur Vorgänge, die nach Sprintbeginn in den Sprint hinein- oder herausverschoben wurden. Zuvor hinzugefügte Vorgänge gehören zur ursprünglichen Zusage und werden nicht als Umfangsänderung markiert. Prüfe außerdem die Sprint-Zuordnung des Boards und ob das Gadget auf den aktuell aktiven Sprint verweist.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich das Jira-Sprint-Health-Gadget nach Team oder Label filtern?</p>
+        <p class="faq-a">Nein — das native Sprint-Health-Gadget akzeptiert keinen JQL-Filter. Es berichtet immer über den ganzen Sprint. Für eine Aufteilung nach Team, Label oder zuständiger Person kombinierst du es mit einem JQL-basierten Gadget wie „Filter Results“ oder „Progress Tracker Overview“ von Visual Progress Tracker. Beide akzeptieren beliebige JQL-Abfragen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum erscheinen blockierte Vorgänge nicht im Gadget?</p>
+        <p class="faq-a">Blockaden werden über das Feld „Flagged“ und Vorgangsverknüpfungen vom Typ „is blocked by“ gezählt. Markiert dein Team Blockaden stattdessen mit einem Label oder benutzerdefinierten Feld, erkennt das Gadget sie nicht. Nutze entweder einheitlich das Feld „Flagged“ oder ergänze ein Gadget „Filter Results“, das deine eigene Konvention berücksichtigt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie unterscheidet sich Sprint-Gesundheit vom Fortschritt einzelner Vorgänge?</p>
+        <p class="faq-a">Sprint-Gesundheit ist eine einzige Zusammenfassung auf Sprint-Ebene — vier Zahlen beschreiben den Sprint als Ganzes. Fortschritt pro Vorgang zeigt, wo jeder einzelne Vorgang steht. Sprint-Gesundheit verrät, ob der Sprint im Plan liegt; Vorgangsfortschritt zeigt, welche konkreten Tickets feststecken. Die meisten Teams brauchen beides.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Ergänze dein Sprint-Health-Dashboard um Fortschritt pro Vorgang</h3>
+        <p>Visual Progress Tracker ergänzt Jira um ein per JQL filterbares Dashboard-Gadget und drei Fortschrittsfeldtypen — kombiniere es mit Sprint Health, um beide Ebenen sichtbar zu machen.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-is">Was es zeigt</a></li>
+          <li><a href="#how-to-add">So fügst du es hinzu</a></li>
+          <li><a href="#filters">Filter und Einschränkungen</a></li>
+          <li><a href="#not-showing-scope-change">Stolpersteine</a></li>
+          <li><a href="#per-issue-gap">Fehlende Sicht auf einzelne Vorgänge</a></li>
+          <li><a href="#progress-overview-gadget">Ein Fortschritts-Gadget ergänzen</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-sprint-health-dashboard.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">So erstellst du ein Dashboard zur Sprint-Gesundheit in Jira</a>
+        <a href="/de/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Fortschrittsbalken: Fortschritt visuell verfolgen</a>
+        <a href="/de/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Epic-Fortschritt in Jira verfolgen</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

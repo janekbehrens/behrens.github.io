@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026) | Janek Behrens</title>
+  <meta name="description" content="Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE (×1–×5) in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-custom-priority-scoring-weights.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)",
+  "description": "Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.",
+  "url": "https://janekbehrens.de/de/blog/jira-custom-priority-scoring-weights.html",
+  "datePublished": "2026-04-02T00:00:00+02:00",
+  "dateModified": "2026-04-02T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/ConfigureFieldValues.png",
+  "keywords": [
+    "Eigene Jira-Bewertungsformel",
+    "Jira-Prioritätsgewichte",
+    "RICE-Dimensionsgewichte",
+    "Eigene Prioritätsbewertung",
+    "Jira-Backlog-Priorisierung"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)",
+  "description": "Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.",
+  "image": "https://janekbehrens.de/imgPriorityScorer/ConfigureFieldValues.png",
+  "datePublished": "2026-04-02T00:00:00+02:00",
+  "dateModified": "2026-04-02T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/jira-custom-priority-scoring-weights.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann ich die RICE-Bewertungsgewichte in Jira anpassen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Apps wie Priority Scoring for Jira erlauben einen Gewichtsmultiplikator (×1–×5) für jede RICE-Dimension — Reichweite, Wirkung, Sicherheit und Aufwand. Ein höheres Gewicht vergrößert den Einfluss dieser Dimension auf den Gesamtwert. Der gewichtete Wert wird automatisch berechnet; Skripte oder eigene Formeln sind nicht nötig."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist ein gewichteter RICE-Wert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein gewichteter RICE-Wert wendet vor der Berechnung einen eigenen Multiplikator auf jede Dimension an. Statt Reichweite, Wirkung, Sicherheit und Aufwand als gleich wichtig zu behandeln, legst du fest, welche Dimensionen für dein Team mehr zählen. Ein B2B-Unternehmensteam könnte beispielsweise Wirkung mit ×3 und Reichweite mit ×1 gewichten, weil ihm hoher Nutzen pro Kunde wichtiger ist als viele erreichte Nutzer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was unterscheidet RICE von gewichteter Bewertung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Standard-RICE bewertet jede Dimension und kombiniert sie mit gleicher Gewichtung. Gewichtete Bewertung ergänzt je Dimension einen Multiplikator (zum Beispiel ×1 bis ×5), damit strategisch wichtigere Faktoren mehr Einfluss auf das Ergebnis haben. Beide Ansätze nutzen dieselben vier Dimensionen; die Gewichtung drückt die Prioritäten deines Teams ausdrücklich in der Formel aus."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie setze ich Dimensionsgewichte in Jira ohne Skripte?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Öffne in Priority Scoring for Jira die App-Einstellungen und die Verfahrenskonfiguration für RICE, WSJF oder ICE. Für jede Dimension siehst du einen Gewichtsschieberegler (×1–×5). Passe die Regler an und speichere. Alle vorhandenen und künftigen Werte des Projekts werden automatisch mit den neuen Gewichten berechnet — ohne ScriptRunner oder Automatisierungsregeln."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sollte ich für alle Jira-Projekte dieselben Dimensionsgewichte nutzen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nicht unbedingt. Ein Growth-Team mit nutzerbezogenen Funktionen könnte Reichweite stark gewichten, während ein Plattformteam für Infrastrukturzuverlässigkeit Sicherheit und Aufwand anders gewichtet. Priority Scoring for Jira lässt Gewichte pro Projekt konfigurieren, sodass jedes Team mit einer Formel für seinen eigenen strategischen Kontext arbeitet."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)">
+  <meta property="og:description" content="Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-custom-priority-scoring-weights.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/ConfigureFieldValues.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-04-02">
+  <meta property="article:modified_time" content="2026-04-02">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="RICE Scoring">
+  <meta property="article:tag" content="Custom Scoring">
+  <meta property="article:tag" content="Backlog Prioritization">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)">
+  <meta name="twitter:description" content="Standard-RICE-Gewichte passen nicht zu jedem Team. Passe die Dimensionsgewichte von RICE, WSJF und ICE in Jira an — ohne Skripte.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/ConfigureFieldValues.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .dimension-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .dimension-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .dimension-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+    }
+    .dimension-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .dimension-table strong { color: var(--text); }
+    .example-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .example-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .example-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-top: 1px solid var(--border-2);
+      gap: 10px;
+    }
+    .example-row:first-of-type { border-top: none; }
+    .example-dim { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .example-val { font-size: 0.88rem; color: var(--text-2); }
+    .example-result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--blue-lite);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 12px;
+    }
+    .example-result-label { font-size: 0.88rem; font-weight: 700; color: var(--blue); }
+    .example-result-score { font-size: 1.3rem; font-weight: 800; color: var(--blue); }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .weight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .weight-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .weight-card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 6px;
+    }
+    .weight-card-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .weight-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-custom-priority-scoring-weights.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-custom-priority-scoring-weights.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-custom-priority-scoring-weights.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">2. April 2026</span>
+        <span class="article-readtime">· 8 Min. Lesezeit</span>
+      </div>
+      <h1>Eigene Prioritätsbewertung in Jira: So passt du Dimensionsgewichte für dein Team an</h1>
+      <p class="article-intro">
+        Standard-RICE nimmt an, dass Wirkung genauso wichtig ist wie Reichweite. Für die meisten Teams stimmt das nicht. Ein B2B-SaaS-Unternehmen mit 20 Unternehmenskonten benötigt eine andere Formel als eine Verbraucher-App mit 500.000 Nutzern. Dimensionsgewichte zeigen dem Bewertungssystem, welche Faktoren tatsächlich am wichtigsten sind — ohne eine einzige Formel oder ein Skript anzufassen.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="problem">Das Problem mit einer Bewertung für alle</h2>
+      <p>
+        <a href="/de/blog/rice-scoring-jira.html">RICE-Bewertung</a> wurde bei Intercom für einen bestimmten Produktteamtyp entwickelt: nutzerbezogen, mit hoher Reichweite und vielen Daten. In diesem Kontext funktioniert die Formel hervorragend. Die meisten Teams sind aber nicht Intercom.
+      </p>
+      <p>
+        Ein B2B-Produktteam könnte 30 Kunden mit jeweils 50.000 Euro Jahresumsatz haben. Für sie sagt Reichweite (Nutzeranzahl) fast nichts aus. Eine Funktion mit großem Nutzen für alle 30 Kunden ist wertvoller als eine Funktion mit kaum spürbarem Nutzen für 5.000 Endnutzer. Standard-RICE würde trotzdem jedes Mal die Funktion mit hoher Reichweite zuerst einordnen.
+      </p>
+      <p>
+        Ein Plattformentwicklungsteam hat das entgegengesetzte Problem. Es arbeitet an Zuverlässigkeit, Leistung und Werkzeugen — mit fast keiner direkten Nutzerreichweite, aber enormer nachgelagerter Wirkung. Die Einfachheitsdimension von Standard-ICE bildet möglicherweise nicht ab, was „einfach“ beim Infrastruktur-Refactoring bedeutet.
+      </p>
+      <p>
+        Dimensionsgewichte lösen das. Du sagst dem Bewertungssystem: „Für unser Team ist Wirkung dreimal wichtiger als Reichweite.“ Die Formel bleibt gleich; die relative Bedeutung jedes Faktors ändert sich.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Kurzantwort:</strong> In Priority Scoring for Jira setzt du in den Einstellungen einen Gewichtsmultiplikator (×1–×5) für jede RICE-, WSJF- oder ICE-Dimension. Alle Werte aktualisieren sich automatisch. Ohne Skripte, eigene Automatisierungsregeln oder Tabellenkalkulation.</p>
+      </div>
+
+      <h2 id="what-are-weights">Was Dimensionsgewichte tatsächlich tun</h2>
+      <p>
+        Ein Gewichtsmultiplikator verstärkt den Einfluss einer Dimension auf den Gesamtwert. ×1 ist neutral — die Dimension fließt mit ihrem ursprünglichen Wert ein. ×3 verdreifacht ihren Beitrag gegenüber einer ×1-Dimension. ×5 macht sie zum dominierenden Faktor der Formel.
+      </p>
+      <p>
+        Die zugrunde liegende RICE-Formel bleibt unverändert — weiterhin <em>(Reichweite × Wirkung × Sicherheit) ÷ Aufwand</em>. Bevor die Werte multipliziert werden, wird aber jeder rohe Dimensionswert mit seinem Gewicht skaliert. Trägt Wirkung ×3 und Reichweite ×1, liegt eine Funktion mit hoher Wirkung deutlich vor einer Funktion mit gleicher Reichweite, aber geringerer Wirkung.
+      </p>
+      <p>
+        Das ist besonders beim Vergleich von Vorgängen wichtig. Die absolute Zahl verschiebt sich — die relative Rangfolge bestimmt aber dein Handeln.
+      </p>
+
+      <h2 id="examples">Zwei Gewichtsprofile für zwei sehr unterschiedliche Teams</h2>
+
+      <h3 id="b2b-team">Profil 1 — B2B-Unternehmensteam</h3>
+      <p>
+        Ein Team verkauft Workflow-Software an Unternehmenskunden. Die Verträge sind groß, Nutzer sind Vielnutzer, und Kundenzufriedenheit entscheidet vor allem über Verlängerungen.
+      </p>
+
+      <div class="weight-grid">
+        <div class="weight-card">
+          <div class="weight-card-label">Reichweite (Reach)</div>
+          <div class="weight-card-value">×1</div>
+          <div class="weight-card-desc">Niedriges Gewicht — wenige Konten, Zahlen allein sagen wenig</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Wirkung (Impact)</div>
+          <div class="weight-card-value">×4</div>
+          <div class="weight-card-desc">Dominierender Faktor — großer Nutzen pro Kunde zählt am meisten</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Sicherheit (Confidence)</div>
+          <div class="weight-card-value">×2</div>
+          <div class="weight-card-desc">Mittel — Kundeninterviews liefern brauchbare Signale</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Aufwand</div>
+          <div class="weight-card-value">×2</div>
+          <div class="weight-card-desc">Mittel — große Funktionen sind vertretbar, wenn die Wirkung es rechtfertigt</div>
+        </div>
+      </div>
+
+      <p>
+        Mit diesem Profil erhält eine Funktion, die einen zentralen Unternehmensablauf tiefgreifend verändert, einen deutlich höheren Wert als eine kleine UX-Anpassung mit oberflächlichem Nutzen für viele Menschen — selbst wenn die UX-Anpassung absolut mehr Nutzer erreicht.
+      </p>
+
+      <h3 id="growth-team">Profil 2 — Schnelles Growth-Team</h3>
+      <p>
+        Ein Start-up führt wöchentlich Produktexperimente durch. Das Team schätzt Tempo und Lernen. Sicherheit wird bewusst geringer gewichtet, weil es zum Lernen und nicht zur Gewissheit ausliefert. Einfachheit (entsprechend niedrigem Aufwand) wird belohnt.
+      </p>
+
+      <div class="weight-grid">
+        <div class="weight-card">
+          <div class="weight-card-label">Reichweite (Reach)</div>
+          <div class="weight-card-value">×3</div>
+          <div class="weight-card-desc">Hohes Gewicht — möglichst breite Lernerfahrung</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Wirkung (Impact)</div>
+          <div class="weight-card-value">×2</div>
+          <div class="weight-card-desc">Mittel — Nutzen pro Nutzer bleibt wichtig</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Sicherheit (Confidence)</div>
+          <div class="weight-card-value">×1</div>
+          <div class="weight-card-desc">Niedriges Gewicht — Unsicherheit ist erwartet und wird nicht bestraft</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-card-label">Aufwand</div>
+          <div class="weight-card-value">×3</div>
+          <div class="weight-card-desc">Hohes Gewicht — schnelle Auslieferung ist ein zentraler Teamwert</div>
+        </div>
+      </div>
+
+      <p>
+        Derselbe Vorgang unter beiden Profilen erzeugt stark unterschiedliche Rangfolgen — genau darum geht es. Bewertung soll deine Teamstrategie abbilden, kein allgemeines Verfahren für ein Unternehmen mit anderem Kontext.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Häufiger Fehler:</strong> Alle Gewichte auf ×5 setzen. Das entspricht keiner Gewichtung — jede Dimension wird gleich verstärkt, deshalb ändert sich die Rangfolge nicht. Gewichte sind nur im Verhältnis zueinander sinnvoll. Wenn eine Dimension ×4 hat, sollte mindestens eine andere ×1 oder ×2 haben.</p>
+      </div>
+
+      <h2 id="wsjf-weights">Eigene Gewichte für WSJF und ICE</h2>
+      <p>
+        Dasselbe Gewichtssystem gilt für <a href="/de/blog/wsjf-jira.html">WSJF</a> und <a href="/de/blog/ice-scoring-jira.html">ICE</a>. Bei WSJF erhalten die drei Teilkomponenten der Verzögerungskosten — Geschäftswert, Zeitkritikalität und Risikoreduktion — jeweils ein Gewicht. Eine Organisation mit dominierenden regulatorischen Fristen im PI Planning könnte Zeitkritikalität mit ×4 gewichten. Ein Plattformteam mit Fokus auf technische Risiken könnte Risikoreduktion mit ×3 gewichten.
+      </p>
+      <p>
+        Bei ICE ändern Teams manchmal die Standardannahme zur Einfachheit. Standard-ICE gewichtet Wirkung, Sicherheit und Einfachheit gleich. Ein Team mit bewusst schwierigen technischen Problemen — und deshalb fast immer niedriger Einfachheit — könnte deren Gewicht reduzieren, damit schwierige, aber wirkungsvolle Arbeit nicht unfair benachteiligt wird.
+      </p>
+
+      <h2 id="setup">Dimensionsgewichte in Jira konfigurieren</h2>
+      <p>
+        In <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> werden Gewichte je Projekt und Verfahren konfiguriert. Du kannst RICE im Produktbacklog mit einem Profil und im Infrastrukturprojekt mit einem anderen nutzen — innerhalb jedes Projekts bleiben die Werte vergleichbar.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Öffne die Priority-Scoring-Einstellungen.</strong> Öffne die globale Konfigurationsseite von Priority Scoring und wähle dein Projekt aus der Liste.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Wähle dein Verfahren.</strong> Wähle RICE, WSJF oder ICE über die Verfahrenstabs. Jedes hat eine unabhängige Gewichtskonfiguration.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Setze Gewichtsmultiplikatoren für jede Dimension.</strong> Passe über die Gewichtsauswahl (×1–×5) den Einfluss jeder Dimension an. Die Vorschau zeigt eine Beispielberechnung mit deinen aktuellen Gewichten.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Speichere die Konfiguration.</strong> Alle vorhandenen Werte deines Projekts werden automatisch neu berechnet. Öffne das Priority-Scoring-Dashboard, um die veränderte Rangfolge zu sehen.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Informiere dein Team über die Änderung.</strong> Nach einer Gewichtsänderung kann ein vorher führender Vorgang deutlich abrutschen. Informiere das Team, damit die Neuberechnung in der Sprint-Planung keine Verwirrung erzeugt.</div>
+        </li>
+      </ol>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/ConfigureFieldValues.png" alt="Priority Scoring for Jira — Konfiguration der Dimensionsgewichte mit Multiplikatoren für RICE-Reichweite, Wirkung, Sicherheit und Aufwand" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Dimensionsgewichte in Priority Scoring for Jira — Multiplikatoren je Verfahren, sofortige Neuberechnung aller Werte</p>
+      </div>
+
+      <h2 id="live-preview">Der Wert mit Live-Vorschau in jedem Vorgang</h2>
+      <p>
+        Wenn ein Teammitglied Dimensionswerte in einem Jira-Vorgang setzt oder ändert, wird der Gesamtwert bereits vor dem Speichern unmittelbar berechnet. Dadurch wird das Gewichtssystem transparent. Die bewertende Person sieht: „Wenn ich Wirkung auf Hoch setze, steigt der Wert von 42 auf 85. Das liegt am Gewicht ×4 für Wirkung in unserem Verfahren.“
+      </p>
+      <p>
+        Die Live-Vorschau hat einen zweiten Vorteil: Sie erschwert überhöhte Bewertungen. Wer die unmittelbare Wirkung jeder Reglerposition sieht, schätzt bewusster. Alles mit „Hoher Wirkung“ zu versehen wird offensichtlich wenig hilfreich, wenn der Live-Wert bei Vorgängen mit geringer Wirkung fast null beträgt.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/PriorityScoresOnTicket.png" alt="RICE-, WSJF- und ICE-Felder in einem Jira-Vorgang mit unmittelbarer Berechnung anhand eigener Dimensionsgewichte" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Eigene Gewichtsprofile werden in der Live-Bewertungsanzeige jedes Jira-Vorgangs berücksichtigt</p>
+      </div>
+
+      <h2 id="audit">Gewichtsänderungen im Zeitverlauf verfolgen</h2>
+      <p>
+        Dimensionsgewichte nach mehreren Monaten Bewertung zu ändern, ist ein wichtiges Ereignis. Die gesamte Backlog-Rangfolge verschiebt sich. Priority Scoring for Jira protokolliert Gewichtsänderungen im „Score Audit Trail“ neben einzelnen Bewertungsänderungen. Du siehst Zeitpunkt, Werte vorher und nachher und die am stärksten betroffenen Vorgänge.
+      </p>
+      <p>
+        Das hilft besonders in Retrospektiven. Wenn das Team vermutet, dass das aktuelle Profil keine hilfreichen Rangfolgen erzeugt — etwa weil hoch bewertete Einträge regelmäßig in der Planung zurückgestellt werden —, zeigt das Protokoll die letzte Gewichtsprüfung und tatsächliche Veränderungen im Bewertungsverhalten.
+      </p>
+      <p>
+        Einen umfassenderen Blick auf den Beitrag deiner Bewertungen zur Backlog-Qualität gibt die <a href="/de/blog/jira-backlog-health.html">Kennzahl zur Jira-Backlog-Gesundheit</a> — sie kombiniert Bewertungsabdeckung, veraltete Vorgänge und fehlende Felder zu einem einzigen Projektqualitätswert von 0–100.
+      </p>
+
+      <h2 id="when-to-adjust">Wann du dein Gewichtsprofil überprüfen solltest</h2>
+      <p>
+        Gewichtsprofile sind keine einmalige Einstellung. Diese Signale deuten auf unpassende Gewichte hin:
+      </p>
+      <ul>
+        <li><strong>Hoch bewertete Vorgänge werden in der Sprint-Planung regelmäßig zurückgestellt.</strong> Wenn das Team die Rangfolge immer wieder übergeht, bilden die Gewichte möglicherweise seine tatsächlichen Entscheidungen nicht ab.</li>
+        <li><strong>Werte liegen zu dicht beieinander.</strong> Wenn 80 % deines Backlogs in einem engen Wertebereich liegen, erhöhe das Gewicht der Dimension mit der größten tatsächlichen Streuung.</li>
+        <li><strong>Die Teamstrategie hat sich verändert.</strong> Beim Wechsel von Wachstum zu Zuverlässigkeit sollte Reichweite wahrscheinlich weniger zählen als Sicherheit. Passe das Profil an die neue Richtung an.</li>
+        <li><strong>Neue Teammitglieder einarbeiten.</strong> Eine gemeinsame Gewichtungsabstimmung bei der Einarbeitung hilft neuen Produktmanagern, Teamprioritäten ausdrücklich zu verstehen, statt sie nur indirekt aus dem Backlog zu erschließen.</li>
+      </ul>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich die RICE-Bewertungsgewichte in Jira anpassen?</p>
+        <p class="faq-a">Ja. <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> erlaubt einen Gewichtsmultiplikator (×1–×5) je RICE-Dimension. Die Gewichte werden in den Einstellungen je Projekt und Verfahren festgelegt. Beim Speichern werden alle vorhandenen Werte automatisch neu berechnet.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist ein gewichteter RICE-Wert?</p>
+        <p class="faq-a">Ein gewichteter RICE-Wert wendet vor der Gesamtberechnung einen eigenen Multiplikator auf jede Dimension an. Statt Reichweite, Wirkung, Sicherheit und Aufwand gleich zu behandeln, bestimmst du ihre Bedeutung für deinen Teamkontext. Die Formelstruktur bleibt gleich — nur der relative Einfluss jeder Dimension ändert sich.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was unterscheidet RICE von gewichteter Bewertung?</p>
+        <p class="faq-a">Standard- <a href="/de/blog/rice-scoring-jira.html">RICE</a> gewichtet alle vier Dimensionen gleich. Gewichtete Bewertung ergänzt einen Multiplikator (×1–×5), damit strategisch wichtige Faktoren mehr Einfluss haben. Beide nutzen dieselben vier Dimensionen; Gewichtung macht Teamprioritäten ausdrücklich statt vorausgesetzt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie setze ich Dimensionsgewichte in Jira ohne Skripte?</p>
+        <p class="faq-a">Öffne in Priority Scoring for Jira Settings → Framework Configuration, wähle RICE, WSJF oder ICE und nutze die Gewichtsauswahl je Dimension. Ohne ScriptRunner, Automatisierungsregeln oder Formelpflege.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Sollte ich für alle Jira-Projekte dieselben Dimensionsgewichte nutzen?</p>
+        <p class="faq-a">Nicht unbedingt. Priority Scoring for Jira erlaubt Gewichte je Projekt. Ein wachstumsorientiertes Produktprojekt und ein Infrastrukturzuverlässigkeitsprojekt haben sehr unterschiedliche strategische Prioritäten. Dieselben Gewichte würden irreführende projektübergreifende Vergleiche erzeugen. Siehe den <a href="/de/blog/jira-portfolio-backlog-health.html">Leitfaden zur Portfolio-Backlog-Gesundheit</a> für den Vergleich von Projekten mit unterschiedlichen Bewertungsprofilen.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Passe deine Bewertungsformel an — ohne Tabellenkalkulation oder Skripte</h3>
+        <p>Priority Scoring for Jira — RICE, WSJF und ICE mit eigenen Dimensionsgewichten, Rovo-KI-Agent, Kennzahl zur Backlog-Gesundheit und Portfolioansicht. Kostenlose Testversion enthalten.</p>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Warum Standardgewichte nicht zu jedem Team passen</a></li>
+          <li><a href="#what-are-weights">Was Dimensionsgewichte tatsächlich tun</a></li>
+          <li><a href="#examples">Zwei Gewichtsprofile, zwei Teams</a></li>
+          <li><a href="#b2b-team">B2B-Unternehmensprofil</a></li>
+          <li><a href="#growth-team">Profil für ein schnelles Growth-Team</a></li>
+          <li><a href="#wsjf-weights">Eigene Gewichte für WSJF und ICE</a></li>
+          <li><a href="#setup">Gewichte in Jira konfigurieren</a></li>
+          <li><a href="#live-preview">Live-Bewertungsvorschau in Vorgängen</a></li>
+          <li><a href="#audit">Gewichtsänderungen verfolgen</a></li>
+          <li><a href="#when-to-adjust">Wann du deine Gewichte prüfen solltest</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Eigene Gewichte · Forge</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Verwandte Artikel</h3>
+        <a href="/de/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>
+        <a href="/de/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE, WSJF oder ICE: Welches Verfahren passt zu dir?</a>
+        <a href="/de/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Backlog-Gesundheit: Deine Projektqualitätskennzahl messen</a>
+        <a href="/de/blog/jira-priority-ranking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — Visual Progress Tracker for Jira</title>
+  <meta name="description" content="Datenschutzerklärung von Visual Progress Tracker for Jira: Welche Daten die App liest und speichert, wo sie verarbeitet und wie lange sie aufbewahrt werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/visual-progress-tracker-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/visual-progress-tracker-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/visual-progress-tracker-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/visual-progress-tracker-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Visual Progress Tracker for Jira · Stand: 12. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch Visual Progress Tracker ("die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Jira Cloud-Instanz. Wir verpflichten uns zum Schutz Ihrer Privatsphäre und zur Transparenz unserer Datenverarbeitung.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App liest die folgenden Jira-Daten ausschließlich zur Berechnung und Anzeige des Fortschritts:</p>
+    <ul>
+      <li><strong>Vorgänge:</strong> Schlüssel, Titel (Zusammenfassungen), Statuswerte und Statuskategorien, Vorgangstypen, Prioritäten, Lösung, Verknüpfungen zu übergeordneten Vorgängen und Unteraufgaben sowie — wenn der Epic Progress Tracker Story Points misst — die Story-Point-Schätzung.</li>
+      <li><strong>Bearbeiter:</strong> Konto-ID und Anzeigename des Bearbeiters, ausschließlich wenn der Epic Progress Tracker die Arbeit nach Bearbeitern gruppiert.</li>
+      <li><strong>Projekte und Felder:</strong> Projektschlüssel und -namen (Projektauswahl) sowie die Liste der Jira-Felder (zum Ermitteln der eigenen Felder der App und des Story-Point-Felds).</li>
+      <li><strong>Werte benutzerdefinierter Felder:</strong> die Fortschrittswerte in den eigenen benutzerdefinierten Feldern der App.</li>
+    </ul>
+    <p>
+      Die Dashboard-Gadgets und Widgets, die Projektauswahl und die Fortschrittsdetails eines Vorgangs lesen Jira <strong>mit den Berechtigungen der betrachtenden Person</strong>. Die benutzerdefinierten Felder der App (Status- und Unteraufgabenfortschritt) und „Recalculate All Fields“ lesen Statuswerte und Unteraufgaben mit dem eigenen Konto der App und schreiben Fortschrittswerte in deren eigene benutzerdefinierte Felder; in Jira wird nichts anderes verändert. Vorgangsbeschreibungen, Kommentare und Anhänge werden <strong>niemals gelesen</strong>.
+
+    </p>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert nur die folgenden Daten in <strong>Atlassian Forge-Speicher</strong>, der von Atlassian für Ihre Site gehostet und verwaltet wird:
+    </p>
+    <ul>
+      <li><strong>Ergebnis-Zwischenspeicher der Dashboard-Gadgets und Widgets pro Betrachter:</strong> für den Progress Tracker Overview die angezeigten Vorgänge (Schlüssel, Titel, Statuswerte, Statuskategorien, Typen, Prioritäten und Fortschrittswerte) und der Durchschnitt; für den Epic Progress Tracker die Epics (Schlüssel und Titel) oder bei Gruppierung nach Bearbeitern die Konto-IDs und Anzeigenamen der Bearbeiter, jeweils mit ihrem Fortschritt. Jeder Eintrag wird unter der Atlassian-Konto-ID des Betrachters, dem Projektschlüssel, den Ansichtseinstellungen und einem Hash des JQL-Filters gespeichert (niemals dem Filtertext). Die Suche jedes Betrachters läuft mit dessen eigenen Berechtigungen, sodass ein zwischengespeichertes Ergebnis niemand anderem angezeigt wird. Ein Eintrag wird höchstens 5 Minuten lang verwendet (siehe Abschnitt 7).</li>
+      <li><strong>Bewertungsaufforderung pro Nutzer:</strong> ob der Nutzer die Aufforderung zur Bewertung der App geschlossen hat (und wann) oder ihr nachgekommen ist, gespeichert unter seiner Konto-ID; außerdem das Installationsdatum der App.</li>
+      <li><strong>Administratoreinstellungen:</strong> die Zuordnung von Statuswerten zu Fortschritt (Jira-Statusnamen mit einem Prozentwert) und die Farbschwellen.</li>
+      <li><strong>Technische Datensätze:</strong> die IDs der benutzerdefinierten Felder der App und des Story-Point-Felds, der Zeitpunkt des letzten Laufs von „Recalculate All Fields“ und eine zufällige ID des laufenden Durchlaufs sowie der Abonnementstatus (lizenziert oder nicht, Testzeitraum oder nicht, Lizenztyp und Abrechnungszeitraum; keine Lizenz-IDs oder Ablaufdaten).</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> wie oft Funktionen pro Tag genutzt wurden (z. B. "ein Gadget wurde geladen" oder "ein Fortschrittsfeld wurde angezeigt"). Keine IDs, Namen oder Inhalte.</li>
+    </ul>
+    <p>
+      Die App speichert <strong>keine E-Mail-Adressen, Avatare oder sonstigen Profildaten</strong>. Atlassian-Konto-IDs werden nur als Schlüssel der Ergebnis-Zwischenspeicher pro Betrachter und des Zustands der Bewertungsaufforderung verwendet; der Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker enthält außerdem Konto-IDs und Anzeigenamen der Bearbeiter, wie Jira sie anzeigt. Titel sind von Ihrem Team verfasster Freitext: Wenn Ihr Team personenbezogene Daten in den Titel eines Vorgangs oder Epics schreibt, enthält der Zwischenspeicher diese unverändert.
+    </p>
+    <p>
+      Die <strong>Gadget- und Widget-Einstellungen</strong> (z. B. Projekt, Ansicht und JQL-Filter) speichert <strong>Jira selbst</strong> als Teil des Dashboards, nicht die App. Die <strong>Fortschrittswerte</strong> in den eigenen benutzerdefinierten Feldern der App speichert Jira als Daten benutzerdefinierter Felder.
+    </p>
+
+    <h2>4. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> eigene Server betreiben. Es gibt weder ein vom Entwickler betriebenes Backend noch eine solche Datenbank.</li>
+      <li>Wir werden <strong>nicht</strong> E-Mail-Adressen, Avatare oder sonstige Profildaten speichern (Konto-IDs und Anzeigenamen ausschließlich wie in Abschnitt 3 beschrieben).</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an externe Dienste senden. Die App führt keine Netzwerkaufrufe außerhalb der Atlassian-Plattform aus.</li>
+      <li>Wir werden <strong>nicht</strong> Vorgangsbeschreibungen, Kommentare oder Anhänge lesen.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "ein Gadget wurde geladen" oder "Jira hat nicht geantwortet") und einmal täglich die anonymen Nutzungszähler und den oben genannten Abonnementstatus in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können Kennungen Ihrer Site enthalten, nämlich Projektschlüssel und — wenn „Recalculate All Fields“ einen Vorgang überspringt oder nicht aktualisieren kann — dessen Schlüssel, sowie Zähler, Fortschrittsdurchschnitte, Modi, HTTP-Statuswerte und Fehlercodes, jedoch niemals Titel, Namen, E-Mail-Adressen, Konto-IDs oder JQL-Text (ein JQL-Filter wird nur durch einen Hash, seine Länge und die Anzahl seiner Klauseln beschrieben). Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>5. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Datenverarbeitung erfolgt vollständig innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong>. Die App läuft auf der Infrastruktur von Atlassian im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alle in Abschnitt 3 aufgeführten Daten liegen im gehosteten Forge-Speicher. Dieser unterstützt Atlassians
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>: Die Daten liegen am selben Ort wie Ihre Jira-Site und werden mit ihr verschoben, wenn ein Administrator die Daten der Site an einen anderen Ort verlagert. Ausgenommen sind Jira-Daten, die die App liest, ohne sie zu speichern, Fortschrittswerte in den benutzerdefinierten Feldern der App sowie Gadget- und Widget-Einstellungen (beides von Jira gemäß dessen eigener Datenresidenz gespeichert) und die technischen Logs aus Abschnitt 4, die über die App-Protokollierung von Atlassian verarbeitet werden.
+    </p>
+
+    <h2>6. Dienste Dritter</h2>
+    <p>
+      Die App wird <strong>nicht</strong> Dienste Dritter einbinden oder Daten an sie senden. Es gibt keine externen API-Aufrufe, KI-Dienste, Analysedienste oder Werbenetzwerke.
+    </p>
+
+    <h2>7. Speicherdauer und Löschung</h2>
+    <ul>
+      <li><strong>Ergebnis-Zwischenspeicher:</strong> ein Eintrag wird höchstens 5 Minuten lang verwendet. Danach liest der nächste Aufruf durch denselben Betrachter mit denselben Einstellungen Jira erneut und ersetzt ihn; ein Klick auf „Refresh“ in einem Gadget oder Widget tut dies sofort. Jeder Eintrag läuft einen Tag nach dem Schreiben ab und wird anschließend vom Forge-Speicher gelöscht (Forge entfernt abgelaufene Einträge innerhalb von 48 Stunden); eine wöchentliche Bereinigung löscht ältere Einträge aus Versionen vor 4.65 (Oktober 2026).</li>
+      <li><strong>Zustand der Bewertungsaufforderung, Administratoreinstellungen, technische Datensätze und Nutzungszähler</strong> werden aufbewahrt, solange die App installiert ist.</li>
+      <li><strong>Werte benutzerdefinierter Felder</strong> speichert Jira als normale Daten benutzerdefinierter Felder. Mit dem Entfernen der benutzerdefinierten Felder aus Jira werden diese Werte gelöscht.</li>
+      <li><strong>Gadget- und Widget-Einstellungen</strong> speichert Jira zusammen mit dem Dashboard; sie werden mit dem Gadget oder Widget entfernt.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App einschließlich des Ergebnis-Zwischenspeichers <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/#data-recovery" target="_blank" rel="noopener">Forge-Dokumentation: Datenwiederherstellung für Apps mit gehostetem Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>8. Personenbezogene Daten und DSGVO</h2>
+    <p>
+      Die App speichert personenbezogene Daten ausschließlich wie in Abschnitt 3 beschrieben: Atlassian-Konto-IDs als Schlüssel der Ergebnis-Zwischenspeicher pro Betrachter und des Zustands der Bewertungsaufforderung sowie im Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker Konto-IDs und Anzeigenamen der Bearbeiter. Sie speichert keine E-Mail-Adressen, Avatare oder sonstigen Profildaten; sämtliche Daten bleiben im Forge-Speicher auf der Plattform von Atlassian (Abschnitt 5). Titel im Zwischenspeicher werden so aufbewahrt, wie Ihr Team sie in Jira geschrieben hat.
+    </p>
+    <p>
+      Die von Jira selbst gespeicherten Daten bleiben vollständig in Ihrer Atlassian-Site und unter der Kontrolle von Atlassian; entsprechende DSGVO-Anfragen betroffener Personen sollten an Ihren Administrator oder Atlassian gerichtet werden. Bei Anliegen zur App kontaktieren Sie uns über die unten angegebene E-Mail-Adresse. Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus dem Forge-Speicher (Abschnitt 7).
+    </p>
+
+    <h2>9. Sicherheit</h2>
+    <p>Die App folgt den bewährten Sicherheitsverfahren von Atlassian Forge:</p>
+    <ul>
+      <li>Läuft in einer isolierten Umgebung ohne ausgehende Verbindungen zu externen Netzwerken.</li>
+      <li>Die Dashboard-Gadgets und Widgets lesen Jira mit den Berechtigungen der betrachtenden Person; zwischengespeicherte Ergebnisse werden pro Betrachter getrennt gespeichert.</li>
+      <li>Verwendet eingeschränkte Jira-API-Berechtigungen: Sie liest Vorgänge und schreibt ausschließlich Fortschrittswerte in die eigenen benutzerdefinierten Felder der App.</li>
+      <li>Speichert keine Zugangsdaten, Token oder Geheimnisse.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/visual-progress-tracker-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>10. Datenschutz bei Kindern</h2>
+    <p>
+      Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.
+    </p>
+
+    <h2>11. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>12. Kontakt</h2>
+      <p>
+        Bei Fragen oder Anliegen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Confluence-Dokumentation automatisch aus GitHub erzeugen | Janek Behrens</title>
+  <meta name="description" content="Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/confluence-documentation-github.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
+  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+  "url": "https://janekbehrens.de/de/blog/confluence-documentation-github.html",
+  "datePublished": "2026-01-12T00:00:00+02:00",
+  "dateModified": "2026-01-12T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgCodeDoc/GenerationHistory.png",
+  "keywords": [
+    "Confluence",
+    "GitHub",
+    "Dokumentation",
+    "Atlassian",
+    "Automatisierung"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Confluence-Dokumentation automatisch aus GitHub erzeugen">
+  <meta property="og:description" content="Verbinde dein GitHub-Repository mit Confluence und erzeuge bei jedem Push automatisch Dokumentation — ohne manuelles Schreiben.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/confluence-documentation-github.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/GenerationHistory.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-01-12">
+  <meta property="article:modified_time" content="2026-01-12">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="GitHub">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Atlassian">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Confluence-Dokumentation automatisch aus GitHub erzeugen">
+  <meta name="twitter:description" content="Verbinde GitHub mit Confluence und erzeuge bei jedem Push automatisch Dokumentation — schrittweise Anleitung zur Einrichtung.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/GenerationHistory.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
+  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+  "image": "https://janekbehrens.de/imgCodeDoc/GenerationHistory.png",
+  "datePublished": "2026-01-12T00:00:00+02:00",
+  "dateModified": "2026-01-12T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/confluence-documentation-github.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann Confluence Dokumentation automatisch aus GitHub übernehmen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Confluence hat keine integrierte GitHub-Synchronisierung. Du benötigst eine App wie CodeDoc AI, die dein GitHub-Repository liest, mithilfe eines KI-Modells strukturierte Dokumentation erzeugt und als Confluence-Seite veröffentlicht — manuell ausgelöst, bei jedem Push, bei PR-Merges oder nach Zeitplan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie verbinde ich GitHub mit Confluence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mit CodeDoc AI: Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen der App hinzu, suche dein Repository und füge es hinzu. Erstelle anschließend einen Dokumentationsauftrag. Für automatische Aktualisierungen trägst du die Webhook-URL der App in die Webhook-Einstellungen deines GitHub-Repositories ein und wählst das Ereignis push oder pull_request."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert die GitHub-Dokumentationsautomatisierung mit privaten Repositories?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die App authentifiziert sich mit deinem persönlichen Zugriffstoken. Solange das Token Lesezugriff auf das Repository besitzt, funktioniert es mit öffentlichen und privaten GitHub-Repositories."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie häufig wird die Confluence-Dokumentation aus GitHub aktualisiert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das hängt vom konfigurierten Auslöser ab: „On Commit“ erzeugt Dokumentation bei jedem Push auf den Branch neu; „On Merge“ beim Zusammenführen eines Pull Requests; „Scheduled“ täglich, wöchentlich oder monatlich; bei „Manual“ klickst du selbst auf „Run“. Teams, die aktuelle Dokumentation ohne unnötig viele Aktualisierungen möchten, nutzen typischerweise „On Merge“."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Überschreibt ein erneuter Durchlauf die bestehende Confluence-Seite?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja — der Auftrag aktualisiert die bestehende Confluence-Seite, statt eine neue zu erstellen. Es entstehen keine Duplikate. Aktivierst du den Freigabeprozess, erscheint die aktualisierte Version zunächst als Entwurf mit dem Präfix [DRAFT], bis du sie veröffentlichst."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: #E3FCEF;
+      color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img {
+      width: 100%; height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      font-size: 0.85rem;
+    }
+    .pipeline-step {
+      flex: 1;
+      padding: 14px 12px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-2);
+      border-right: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    .pipeline-step:last-child { border-right: none; }
+    .pipeline-step .ps-icon { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+    .pipeline-step.ps-active { background: var(--blue-lite); color: var(--blue); }
+    @media (max-width: 600px) {
+      .pipeline { flex-direction: column; }
+      .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .pipeline-step:last-child { border-bottom: none; }
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/confluence-documentation-github.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/confluence-documentation-github.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/confluence-documentation-github.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence</span>
+        <span class="article-date">12. Januar 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>Confluence-Dokumentation automatisch aus GitHub erzeugen</h1>
+      <p class="article-intro">
+        GitHub enthält deine maßgebliche Quelle. Confluence enthält deine Dokumentation. In der Lücke dazwischen lebt veraltete Dokumentation. So schließt du sie automatisch — vom Erstellen des Tokens bis zur ersten KI-generierten Confluence-Seite.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Die Lücke zwischen Code und Dokumentation</h2>
+      <p>
+        Die meisten Entwicklungsteams kennen eine Variante desselben Problems: Der Code entwickelt sich weiter, aber die Confluence-Seite aus der letzten Sprint-Planung bleibt unverändert. Dokumentationspflege konkurriert mit der Auslieferung neuer Funktionen, und die Dokumentation verliert — jedes Mal.
+      </p>
+      <p>
+        Die Ursache ist nicht Faulheit, sondern Reibung. Die Dokumentation liegt in einem anderen Werkzeug und Kontext und verlangt einen manuellen Wechsel genau dann, wenn Entwickler sich am stärksten auf den Code konzentrieren. Die Lösung sind nicht mehr Dokumentationserinnerungen im Ticket-Workflow, sondern Dokumentation, die sich selbst aktualisiert.
+      </p>
+      <p>
+        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> verbindet dein GitHub-Repository über einen Webhook-Auslöser mit Confluence. Bei einem Push oder dem Zusammenführen eines Pull Requests liest die App das Repository, sendet die relevanten Dateien an deinen KI-Anbieter und veröffentlicht aktualisierte Dokumentation auf der Zielseite in Confluence — automatisch.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Was du brauchst:</strong> Eine Confluence-Cloud-Instanz mit installiertem CodeDoc AI, ein GitHub-Konto und einen API-Schlüssel eines unterstützten KI-Anbieters (Anthropic, OpenAI oder Google Gemini). Der KI-Schlüssel ist dein eigener — die App nutzt BYOK (Bring Your Own Key). Dein Code läuft also nie über eigene Server der App.</p>
+      </div>
+
+      <h2 id="pipeline">So funktioniert die Pipeline</h2>
+      <p>
+        Vor der Einrichtung hilft ein Überblick über den vollständigen Ablauf:
+      </p>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <span class="ps-icon">⬆️</span>
+          Git-Push / PR-Merge
+        </div>
+        <div class="pipeline-step ps-active">
+          <span class="ps-icon">🔗</span>
+          GitHub-Webhook
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">🤖</span>
+          CodeDoc AI liest das Repository
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">✨</span>
+          KI erzeugt Dokumentation
+        </div>
+        <div class="pipeline-step">
+          <span class="ps-icon">📄</span>
+          Confluence-Seite aktualisiert
+        </div>
+      </div>
+
+      <p>
+        Die App basiert auf <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a> und läuft deshalb vollständig in Atlassians eigener Infrastruktur. Zwischen GitHub und Confluence sind keine externen Server beteiligt — nur dein ausgewählter KI-Anbieter erhält deinen Code, mit dem von dir bereitgestellten API-Schlüssel.
+      </p>
+
+      <h2 id="step1">Schritt 1 — Ein GitHub Personal Access Token erstellen</h2>
+      <p>
+        CodeDoc AI benötigt Lesezugriff auf dein Repository. Empfohlen wird ein <strong>persönliches Zugriffstoken (Personal Access Token, PAT)</strong> mit dem Berechtigungsumfang <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> (Lesezugriff genügt — die App schreibt nie in dein Repository).
+      </p>
+      <p>
+        Erstelle es unter <strong>GitHub → Settings → Developer settings → Personal access tokens</strong>. Wähle bei fein abgestuften Tokens „Repository contents: Read-only“. Aktiviere bei klassischen Tokens den <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> Berechtigungsumfang. Die vollständige Token-Dokumentation von GitHub findest du unter <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">docs.github.com</a>.
+
+      </p>
+      <p>
+        Kopiere das Token sofort — GitHub zeigt es nicht erneut an.
+      </p>
+
+      <h2 id="step2">Schritt 2 — GitHub in CodeDoc AI verbinden</h2>
+      <p>
+        Öffne CodeDoc AI aus dem Confluence-App-Menü und gehe zu <strong>Einstellungen → Git-Anbieter</strong>. Wähle GitHub, füge dein Zugriffstoken ein und klicke auf <strong>Verbinden und prüfen (Connect &amp; Validate)</strong>. Die App prüft das Token und bestätigt den Zugriff.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/SettingsGitProvider.png" alt="Git-Anbieter-Einstellungen in CodeDoc AI — GitHub-Token-Konfiguration" loading="lazy">
+        <p class="diagram-caption">Git-Anbieter-Einstellungen — GitHub mit deinem persönlichen Zugriffstoken verbinden</p>
+      </div>
+
+      <p>
+        Wenn du mehrere Git-Anbieter nutzt (zum Beispiel GitHub und GitLab), kannst du sie alle hier hinzufügen. Du kannst jeder Verbindung außerdem einen Anzeigenamen geben, um sie später bei der Repository-Auswahl leichter zu erkennen.
+      </p>
+
+      <h2 id="step3">Schritt 3 — Dein Repository hinzufügen</h2>
+      <p>
+        Öffne den Tab <strong>Repositories</strong> . Klicke auf <strong>Repositories durchsuchen (Browse Repos)</strong> , um alle für das Token zugänglichen Repositories zu sehen. Grenze sie über das Suchfeld ein und klicke auf <strong>Auswahl hinzufügen (Add Selected)</strong>. Alternativ klickst du auf <strong>URL hinzufügen (Add URL)</strong> und fügst die Repository-URL direkt ein — das funktioniert mit jedem Token-Typ und jeder Sichtbarkeitseinstellung.
+      </p>
+      <p>
+        Beim Hinzufügen per URL legst du außerdem den <strong>Branch</strong> fest, der dokumentiert werden soll (Standard: <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">main</code>). Hat dein Hauptbranch einen anderen Namen, ändere ihn hier.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/RepoSelection.png" alt="Repository-Auswahl in CodeDoc AI mit GitHub-Repositories" loading="lazy">
+        <p class="diagram-caption">GitHub-Repositories durchsuchen und hinzufügen — oder eine URL direkt einfügen, unabhängig von der Sichtbarkeit</p>
+      </div>
+
+      <h2 id="step4">Schritt 4 — Einen Dokumentationsauftrag erstellen</h2>
+      <p>
+        Ein <strong>Auftrag</strong> verbindet alles: Repository, Dokumentationsstil (Voreinstellung), Sprache und Ziel in Confluence. Öffne den Tab <strong>Aufträge (Jobs)</strong> und klicke auf <strong>Auftrag erstellen (Create Job)</strong>.
+
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/CreateJobMiddle.png" alt="Formular zur Erstellung eines Dokumentationsauftrags in CodeDoc AI — Auswahl von Voreinstellung, Sprache und Auslöser" loading="lazy">
+        <p class="diagram-caption">Auftragserstellung — Repository, Voreinstellung, Sprache und Auslösertyp auswählen</p>
+      </div>
+
+      <p>
+        Die wichtigsten Einstellungen für einen mit GitHub verbundenen Auftrag:
+      </p>
+      <ul>
+        <li><strong>Repository:</strong> Wähle das gerade hinzugefügte Repository.</li>
+        <li><strong>Voreinstellung:</strong> Wähle einen Dokumentationsstil. <em>Entwicklerdokumentation (Developer Documentation)</em> ist ein guter Ausgangspunkt — sie erzeugt neun strukturierte Abschnitte, darunter Architektur, API-Referenz und Fehlerbehebung. Siehe die <a href="/de/codedoc-ai-docs.html#jobs-presets">vollständige Liste der Voreinstellungen</a> für alle acht Optionen.</li>
+        <li><strong>Sprache:</strong> Die Sprache, in der die Seite geschrieben wird. Zehn Sprachen sind verfügbar, darunter Englisch, Deutsch, Französisch und Japanisch.</li>
+        <li><strong>Auslöser:</strong> Wähle <em>Bei Commit (On Commit)</em> (jeder Push) oder <em>Bei Merge (On Merge)</em> (nur zusammengeführte Pull Requests). Für die meisten Teams vermeidet „On Merge“ eine Dokumentationserzeugung bei jedem Push laufender Arbeit.</li>
+        <li><strong>Confluence-Bereich:</strong> Der Bereich, in dem die Seite erstellt oder aktualisiert wird.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Tipp: KI-Dateiauswahl.</strong> Aktiviere bei großen Repositories vor dem Speichern die KI-gestützte Dateiauswahl. Die KI analysiert Dateinamen und Struktur, wählt die relevantesten Quelldateien und erzeugt Dokumentation nur daraus — mit geringeren Tokenkosten und besser fokussierter Ausgabe.</p>
+      </div>
+
+      <h2 id="step5">Schritt 5 — Den GitHub-Webhook einrichten</h2>
+      <p>
+        Wenn du „On Commit“ oder „On Merge“ wählst, zeigt die Auftragserstellung eine <strong>Webhook-URL</strong>. Kopiere sie — im nächsten Schritt fügst du sie in GitHub ein.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc AI" loading="lazy">
+        <p class="diagram-caption">Die Webhook-URL erscheint automatisch bei Auswahl eines automatischen Auslösers</p>
+      </div>
+
+      <p>
+        Öffne in GitHub dein Repository → <strong>Settings → Webhooks → Add webhook</strong>:
+
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">Füge die <strong>Webhook-URL</strong> von CodeDoc AI in das Feld „Payload URL“ ein.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">Setze <strong>Inhaltstyp (Content type)</strong> auf <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">application/json</code>.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">Unter „Which events would you like to trigger this webhook?“ (Welche Ereignisse sollen auslösen?) wählst du <strong>Nur das Push-Ereignis (Just the push event)</strong> für „On Commit“ oder <strong>Einzelne Ereignisse wählen → Pull Requests (Let me select individual events → Pull requests)</strong> für „On Merge“.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">Klicke auf <strong>Webhook hinzufügen (Add webhook)</strong>. GitHub sendet ein Ping-Ereignis — die App nimmt es ohne weitere Meldung an.</div>
+        </li>
+      </ol>
+
+      <p>
+        Du benötigst nur eine Webhook-URL für alle Aufträge. Die App ordnet eingehende GitHub-Ereignisse anhand von Repository-URL und Branchname den richtigen Aufträgen zu. Die vollständige GitHub-Webhook-Dokumentation findest du unter <a href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks" target="_blank" rel="noopener">docs.github.com</a>.
+
+      </p>
+
+      <h2 id="step6">Schritt 6 — Erzeugen und prüfen</h2>
+      <p>
+        Nachdem der Webhook registriert ist, pushe einen Commit auf den Branch (oder starte den Auftrag zum sofortigen Test manuell im Tab „Jobs“). Die App liest dein Repository, übergibt die ausgewählten Dateien an die KI und veröffentlicht das Ergebnis als Confluence-Seite.
+      </p>
+      <p>
+        Jede Erzeugung wird in der Ansicht <strong>Erzeugungsverlauf (Generation History)</strong> mit Tokenanzahl, Dateianzahl, verwendetem KI-Modell, Zeitstempel und direktem Link zur Confluence-Seite protokolliert.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc AI mit abgeschlossenen Dokumentationsdurchläufen, Tokenanzahlen und Links" loading="lazy">
+        <p class="diagram-caption">Erzeugungsverlauf — jeder Durchlauf mit Tokennutzung, Dateianzahl und direktem Link zur Confluence-Seite</p>
+      </div>
+
+      <h2 id="approval">Optional: Vor der Veröffentlichung prüfen</h2>
+      <p>
+        Wenn du vor der Veröffentlichung eine Qualitätsprüfung möchtest — zum Beispiel in regulierten Umgebungen oder für Kundendokumentation — aktiviere <strong>Freigabe vor Veröffentlichung erforderlich (Require approval before publishing)</strong> in den Auftragseinstellungen. Die erzeugte Seite wird als Confluence-Entwurf mit dem Präfix <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code>  gespeichert. Du prüfst sie im Dashboard und veröffentlichst oder verwirfst sie manuell.
+      </p>
+      <p>
+        Bei häufig aktualisierter interner Entwicklerdokumentation erzeugt die Freigabe zusätzliche Reibung. Für Compliance-Dokumentation oder Einarbeitungsanleitungen für einen größeren Leserkreis ist sie eine sinnvolle Absicherung.
+      </p>
+
+      <h2 id="example">So sieht die Ausgabe aus</h2>
+      <p>
+        Hier siehst du ein Beispiel erzeugter Dokumentation in Confluence — automatisch aus einem Terraform-Infrastruktur-Repository mit der Voreinstellung „Developer Documentation“ erstellt. Die KI hat die eingesetzten Technologien erfasst, die Architektur beschrieben, die API-Oberfläche dokumentiert und Abhängigkeiten aufgelistet — alles als strukturierte Confluence-Seite formatiert.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/exampleGenerations/3.png" alt="Beispiel einer automatisch erzeugten Confluence-Seite mit Übersicht, Technologietabelle und Architekturdokumentation" loading="lazy">
+        <p class="diagram-caption">Automatisch erzeugte Confluence-Seite — strukturierte Übersicht mit Technologien, Architektur und API-Referenz</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann Confluence Dokumentation automatisch aus GitHub übernehmen?</p>
+        <p class="faq-a">Confluence hat keine integrierte GitHub-Synchronisierung. CodeDoc AI schließt die Lücke: Es liest dein Repository per Webhook, erzeugt Dokumentation mit deinem KI-Anbieter und veröffentlicht sie als native Confluence-Seite — ausgelöst durch Commits, PR-Merges oder einen Zeitplan.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie verbinde ich GitHub mit Confluence?</p>
+        <p class="faq-a">Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen von CodeDoc AI hinzu, ergänze dein Repository und erstelle einen Dokumentationsauftrag mit automatischem Auslöser. Registriere anschließend die Webhook-URL der App in den GitHub-Repository-Einstellungen. Die vollständige Anleitung steht in diesem Artikel.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Funktioniert die GitHub-Dokumentationsautomatisierung mit privaten Repositories?</p>
+        <p class="faq-a">Ja. Die App authentifiziert sich bei GitHub mit deinem persönlichen Zugriffstoken. Öffentliche und private Repositories funktionieren, solange das Token Lesezugriff besitzt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie häufig wird die Dokumentation aktualisiert?</p>
+        <p class="faq-a">„On Commit“ erzeugt Dokumentation bei jedem Push neu. „On Merge“ erzeugt sie nur nach dem Zusammenführen eines Pull Requests neu. Geplante Auslöser laufen täglich, wöchentlich oder monatlich. Jeden Auftrag kannst du außerdem jederzeit manuell starten.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Erstellt ein erneuter Durchlauf eine doppelte Confluence-Seite?</p>
+        <p class="faq-a">Nein. Der Auftrag aktualisiert die bestehende Confluence-Seite. Bei aktiviertem Freigabeprozess erscheint die Aktualisierung zunächst als Entwurf — in beiden Fällen entstehen keine Duplikate.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Welche KI-Anbieter kann ich mit CodeDoc AI nutzen?</p>
+        <p class="faq-a">Anthropic (Claude), OpenAI (GPT-Modelle) und Google (Gemini). Du nutzt deinen eigenen API-Schlüssel — die App berechnet keine Gebühr pro Erzeugung. Google Gemini bietet ein kostenloses Kontingent, sodass du beim Testen der App Dokumentation ohne KI-Kosten erzeugen kannst.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Verbinde dein GitHub-Repository mit Confluence</h3>
+        <p>CodeDoc AI lässt sich kostenlos testen — alle Auslöser, Voreinstellungen und die KI-Dateiauswahl sind von Anfang an enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Die Dokumentationslücke</a></li>
+          <li><a href="#pipeline">So funktioniert die Pipeline</a></li>
+          <li><a href="#step1">Schritt 1 — GitHub-Zugriffstoken</a></li>
+          <li><a href="#step2">Schritt 2 — GitHub verbinden</a></li>
+          <li><a href="#step3">Schritt 3 — Repository hinzufügen</a></li>
+          <li><a href="#step4">Schritt 4 — Auftrag erstellen</a></li>
+          <li><a href="#step5">Schritt 5 — Webhook einrichten</a></li>
+          <li><a href="#step6">Schritt 6 — Erzeugen und prüfen</a></li>
+          <li><a href="#approval">Freigabeprozess</a></li>
+          <li><a href="#example">Beispielausgabe</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">KI-gestützte Dokumentation für Atlassian-Teams</a>
+        <a href="/de/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Confluence-Dokumentation automatisieren: Von manuell zu CI/CD</a>
+        <a href="/de/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">BYOK-KI für Atlassian: Was sie bedeutet</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

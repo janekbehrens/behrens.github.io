@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder | Janek Behrens</title>
+  <meta name="description" content="Ein benutzerdefiniertes Fortschrittsfeld in Jira erfordert weder Skripte noch JQL oder Administrationswissen. So richtest du die automatische Fortschrittsverfolgung in weniger als zwei Minuten über eine Benutzeroberfläche ein — ohne Code.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-progress-no-code.html">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder",
+  "description": "Ein benutzerdefiniertes Fortschrittsfeld in Jira erfordert weder Skripte noch JQL oder Administrationswissen. So richtest du die automatische Fortschrittsverfolgung in weniger als zwei Minuten über eine Benutzeroberfläche ein — ohne Code.",
+  "url": "https://janekbehrens.de/de/blog/jira-progress-no-scripting.html",
+  "datePublished": "2025-11-11T00:00:00+02:00",
+  "dateModified": "2025-11-11T00:00:00+02:00",
+  "image": "https://janekbehrens.de/img/ticket.webp",
+  "keywords": [
+    "Jira",
+    "Atlassian",
+    "Benutzerdefinierte Felder",
+    "Ohne Code"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder">
+  <meta property="og:description" content="Fortschrittsverfolgung in Jira braucht weder Skripte noch JQL oder eine aufwendige Administration. So richtest du automatische Fortschrittsbalken in zwei Minuten über eine Benutzeroberfläche ein — ohne Code.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-progress-no-scripting.html">
+  <meta property="og:image" content="https://janekbehrens.de/img/ticket.webp">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2025-11-11">
+  <meta property="article:modified_time" content="2025-11-11">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="Custom Fields">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder">
+  <meta name="twitter:description" content="Fortschrittsverfolgung in Jira braucht weder Skripte noch JQL. So erhältst du in zwei Minuten automatische Fortschrittsbalken.">
+  <meta name="twitter:image" content="https://janekbehrens.de/img/ticket.webp">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder",
+  "description": "Ein benutzerdefiniertes Fortschrittsfeld in Jira erfordert weder Skripte noch JQL oder Administrationswissen. So richtest du die automatische Fortschrittsverfolgung in weniger als zwei Minuten über eine Benutzeroberfläche ein — ohne Code.",
+  "image": "https://janekbehrens.de/img/ticket.webp",
+  "datePublished": "2025-11-11T00:00:00+02:00",
+  "dateModified": "2025-11-11T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/jira-progress-no-scripting.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema (for featured snippets) ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie füge ich in Jira ohne Skripte ein benutzerdefiniertes Fortschrittsfeld hinzu?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Installiere eine Marketplace-App wie Visual Progress Tracker for Jira. Sie ergänzt drei fertige Fortschrittsfeldtypen: einen, der den Fortschritt aus abgeschlossenen Unteraufgaben berechnet, einen, der Workflow-Status Prozentwerten zuordnet, und einen, den Teammitglieder manuell setzen. Die gesamte Konfiguration erfolgt über eine Administrationsoberfläche — ohne JQL, Skripte oder Formeln."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie lässt sich Fortschritt in Jira am einfachsten verfolgen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Am einfachsten ist das statusbasierte Fortschrittsfeld: Installiere die App und erstelle das Feld. Der Balken bewegt sich automatisch weiter, wenn Vorgänge deinen Workflow durchlaufen. Bei Standardstatus (To Do, In Progress, In Review, Done) funktioniert die voreingestellte Zuordnung ohne Konfigurationsänderungen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hat Jira ein integriertes benutzerdefiniertes Fortschrittsfeld?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jira Cloud enthält kein natives benutzerdefiniertes Fortschrittsbalkenfeld. Die integrierten Feldtypen umfassen Text, Zahl, Datum und Auswahlfelder, aber keinen visuellen Fortschrittsbalken, der aus dem Workflow-Status oder abgeschlossenen Unteraufgaben berechnet wird. Dafür benötigst du eine App für benutzerdefinierte Felder aus dem Atlassian Marketplace."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich Fortschritt in Jira ohne JQL verfolgen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Statusbasierte und unteraufgabenbasierte Fortschrittsfelder aktualisieren sich automatisch aus Jiras eigenen Daten — ohne JQL-Abfragen. Die einzige erforderliche Konfiguration ist die Zuordnung von Prozentwerten zu deinen Workflow-Status über die Oberfläche in den Administrationseinstellungen der App. Manuelle Fortschrittsfelder benötigen überhaupt keine Konfiguration."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* ── Status mapping mock ── */
+    .status-mapping-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 440px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .sm-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .sm-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 0;
+      border-top: 1px solid var(--border-2);
+      font-size: 0.85rem;
+    }
+    .sm-row:first-of-type { border-top: none; }
+    .sm-status { font-weight: 600; color: var(--text); flex: 1; }
+    .sm-pct-field {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.82rem;
+      color: var(--text-2);
+      width: 54px;
+      text-align: right;
+    }
+    .sm-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      min-width: 42px;
+      text-align: center;
+    }
+    .badge-red    { background: #FFEBE6; color: #BF2600; }
+    .badge-yellow { background: #FFF4E5; color: #974F0C; }
+    .badge-green  { background: #E3FCEF; color: #006644; }
+
+    /* ── Slider mock ── */
+    .slider-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 360px;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.07);
+    }
+    .slider-bar-wrap { background: #F4F5F7; border-radius: 4px; height: 8px; margin: 12px 0 10px; position: relative; }
+    .slider-bar-fill { height: 100%; border-radius: 4px; background: #FF8B00; width: 50%; }
+    .slider-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .preset-btn {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-2);
+      cursor: default;
+    }
+    .preset-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-progress-no-scripting.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-progress-no-scripting.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-progress-no-scripting.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">11. November 2025</span>
+        <span class="article-readtime">· 6 Min. Lesezeit</span>
+      </div>
+      <h1>Fortschritt in Jira verfolgen — ohne Skripte oder komplexe benutzerdefinierte Felder</h1>
+      <p class="article-intro">
+        Um Fortschritt in Jira sichtbar zu machen, brauchst du weder ein Skriptwerkzeug noch JQL-Kenntnisse oder einen Administrator, der Post-Funktionen schreibt. Ein benutzerdefiniertes Fortschrittsbalkenfeld, das sich automatisch aktualisiert, lässt sich über eine Benutzeroberfläche in etwa zwei Minuten konfigurieren.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">Warum Teams Fortschrittsverfolgung in Jira vermeiden</h2>
+      <p>
+        Teams, die Fortschritt in Jira sichtbar machen wollen, stoßen oft auf dasselbe Hindernis: Jeder Weg zur Automatisierung bringt Komplexität mit sich. Ein berechnetes benutzerdefiniertes Feld braucht eine Formel. Für ein Skriptfeld muss jemand Groovy-Code schreiben und pflegen. Ein JQL-basiertes Gadget erfordert die richtige Abfragesyntax. Workflow-Post-Funktionen benötigen einen Administrator, der die Funktionsweise der Übergangslogik versteht.
+      </p>
+      <p>
+        Deshalb verzichten die meisten Teams ganz darauf. Sie verlassen sich auf Statusspalten und Kopfrechnen im Stand-up. Ihnen ist klar, dass das nicht ideal ist. Sie wollen nur keine Skriptlösung betreuen, die bei jeder Workflow-Änderung kaputtgeht.
+      </p>
+      <p>
+        Es gibt einen einfacheren Weg: ein eigens dafür entwickeltes Fortschrittsbalkenfeld, das Jiras eigene Daten — abgeschlossene Unteraufgaben und Workflow-Status — ausliest und als visuellen Prozentwert darstellt. Keine Skripte. Keine Formeln. Kein zusätzlicher Wartungsaufwand.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Kurzantwort:</strong> Eine auf Forge basierende App für benutzerdefinierte Felder ergänzt Fortschrittsbalken für Jira-Vorgänge und wird vollständig über eine Benutzeroberfläche eingerichtet. Statusbasierte und unteraufgabenbasierte Felder aktualisieren sich automatisch. Das manuelle Feld benötigt überhaupt keine Konfiguration.</p>
+      </div>
+
+      <h2 id="three-approaches">Drei Ansätze, ganz ohne Skripte</h2>
+      <p>
+        Visual Progress Tracker bietet drei Feldtypen. Jeder beantwortet die Frage „Wie weit ist dieser Vorgang abgeschlossen?“ auf eine andere Weise — keiner erfordert Code:
+      </p>
+
+      <h3 id="manual-field">Fortschrittsbalken (Manuell)</h3>
+      <p>
+        Die einfachste Option. Ein Teammitglied öffnet einen Vorgang und setzt den Prozentwert selbst über einen Schieberegler oder Schnellwahl-Schaltflächen: 0 %, 10 %, 25 %, 50 %, 75 % oder 100 %. Keine Konfiguration erforderlich — das Feld funktioniert sofort, nachdem es zur Projektmaske hinzugefügt wurde.
+      </p>
+      <p>
+        Der Wert bleibt erhalten, bis ihn jemand ändert. Ideal für Aufgaben, deren Fertigstellungsgrad subjektiv ist oder Meilensteinen folgt, die sich nicht eindeutig über die Anzahl von Unteraufgaben oder Workflow-Status abbilden lassen.
+      </p>
+
+      <div class="diagram">
+        <div class="slider-mock">
+          <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px;">Fortschritt</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="flex:1;">
+              <div class="slider-bar-wrap">
+                <div class="slider-bar-fill"></div>
+              </div>
+            </div>
+            <span style="font-size:0.82rem;font-weight:700;color:#974F0C;background:#FFF4E5;padding:3px 8px;border-radius:3px;">50%</span>
+          </div>
+          <div class="slider-presets">
+            <span class="preset-btn">0%</span>
+            <span class="preset-btn">10%</span>
+            <span class="preset-btn">25%</span>
+            <span class="preset-btn active">50%</span>
+            <span class="preset-btn">75%</span>
+            <span class="preset-btn">100%</span>
+          </div>
+        </div>
+        <p class="diagram-caption">Das manuelle Feld im Bearbeitungsmodus — Schieberegler und Schnellwahl-Schaltflächen, ohne Einrichtung</p>
+      </div>
+
+      <h3 id="status-field">Fortschrittsbalken (Status)</h3>
+      <p>
+        Ordnet jedem Jira-Workflow-Status einen Prozentwert zu. Wechselt ein Vorgang von „In Progress“ zu „In Review“, bewegt sich der Balken automatisch weiter — ohne zusätzliche Klicks für das Team. Die Konfiguration ist eine einmalige Administrationsaufgabe: Öffne den Tab „Status Mapping“, weise jedem Statusnamen eine Zahl zu und speichere.
+      </p>
+      <p>
+        Die App enthält eine sinnvolle voreingestellte Zuordnung, die für die meisten Scrum- und Kanban-Workflows sofort funktioniert:
+      </p>
+      <ul>
+        <li><strong>To Do / Backlog (Offen / Backlog)</strong>  → 0%</li>
+        <li><strong>Selected for Development (Zur Entwicklung ausgewählt)</strong>  → 25%</li>
+        <li><strong>In Progress (In Bearbeitung)</strong>  → 50%</li>
+        <li><strong>In Review</strong>  → 75%</li>
+        <li><strong>Done / Closed (Erledigt / Geschlossen)</strong>  → 100%</li>
+      </ul>
+      <p>
+        Du kannst jeden Status hinzufügen, bearbeiten oder entfernen. Die Zuordnung unterscheidet nicht zwischen Groß- und Kleinschreibung: „in progress“, „In Progress“ und „IN PROGRESS“ ergeben denselben Wert.
+      </p>
+
+      <h3 id="subtask-field">Fortschrittsbalken (Unteraufgaben)</h3>
+      <p>
+        Berechnet automatisch abgeschlossene untergeordnete Vorgänge ÷ alle untergeordneten Vorgänge. Keine Konfiguration erforderlich — das Feld liest Jiras eigene Daten zu Unteraufgaben und untergeordneten Vorgängen aus. Ideal für Epics mit Stories oder Stories mit Unteraufgaben. Neben dem Balken zeigt es die tatsächliche Anzahl (zum Beispiel „3/5 erledigt“). Eine Schaltfläche „Details“ öffnet die Aufschlüsselung nach einzelnen untergeordneten Vorgängen.
+      </p>
+
+      <h2 id="status-mapping">Statuszuordnungen konfigurieren — über die Benutzeroberfläche</h2>
+      <p>
+        Wenn du das statusbasierte Feld nutzt, besteht die einzige Konfigurationsaufgabe darin, deine Zuordnung von Status zu Prozentwerten einzurichten. Das erfolgt vollständig über eine visuelle Administrationsoberfläche — ohne Code, Post-Funktionen oder Groovy.
+      </p>
+      <p>
+        Der Tab „Status Mapping“ zeigt alle aktuellen Zuordnungen nach Prozentwert sortiert. Du kannst jeden Prozentwert direkt bearbeiten, unnötige Status entfernen und über ein Textfeld und ein Zahlenfeld neue hinzufügen. Änderungen wirken sofort nach dem Speichern.
+      </p>
+
+      <div class="diagram">
+        <div class="status-mapping-mock">
+          <div class="sm-title">Zuordnung von Status zu Fortschritt</div>
+          <div class="sm-row">
+            <span class="sm-status">Offen</span>
+            <span class="sm-pct-field">0</span>
+            <span class="sm-badge badge-red">0%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">In Progress (In Bearbeitung)</span>
+            <span class="sm-pct-field">50</span>
+            <span class="sm-badge badge-yellow">50%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">In Review</span>
+            <span class="sm-pct-field">75</span>
+            <span class="sm-badge badge-yellow">75%</span>
+          </div>
+          <div class="sm-row">
+            <span class="sm-status">Erledigt</span>
+            <span class="sm-pct-field">100</span>
+            <span class="sm-badge badge-green">100%</span>
+          </div>
+        </div>
+        <p class="diagram-caption">Die Administrationsoberfläche zur Statuszuordnung — für jeden Workflow-Status einen Prozentwert eingeben, einmal speichern und anschließend dauerhaft automatisch aktualisieren</p>
+      </div>
+
+      <div class="callout callout-green">
+        <p><strong>Eigene Workflows:</strong> Wenn dein Projekt eigene Status wie „Awaiting Deployment“ oder „UAT“ verwendet, füge sie einfach zur Zuordnung hinzu. Die Zuordnung unterscheidet nicht zwischen Groß- und Kleinschreibung, sodass abweichende Schreibweisen bei Statusnamen keine unbemerkten Fehler verursachen.</p>
+      </div>
+
+      <h2 id="color-settings">Farbschwellen — eine Oberfläche mit Live-Vorschau</h2>
+      <p>
+        Standardmäßig folgt die Balkenfarbe einem Ampelmuster: rot unter 34 %, gelb bis 67 %, darüber grün. Diese Schwellen lassen sich im Tab „Color Settings“ konfigurieren — ebenfalls vollständig über eine Benutzeroberfläche.
+      </p>
+      <p>
+        Du setzt zwei Zahlen: die Grenze von rot zu gelb und die Grenze von gelb zu grün. Eine Live-Vorschau zeigt vor dem Speichern genau, wie die Balkenfarben aussehen werden. Wenn dein Team alles unter 50 % als „gefährdet“ einstuft, änderst du eine Zahl. Die neuen Schwellen gelten dann überall — in der Vorgangsansicht, der Spalte der Listenansicht und im Dashboard-Gadget.
+      </p>
+
+      <div class="diagram">
+        <img src="/img/admin-colors.webp" alt="Farbschwelleneinstellungen von Visual Progress Tracker mit konfigurierbaren Grenzen für rot, gelb und grün sowie einer Live-Vorschau in der Administrationsoberfläche" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Tab „Color Settings“ — rote und gelbe Schwellen festlegen und vor dem Speichern die Live-Vorschau ansehen</p>
+      </div>
+
+      <h2 id="setup">Einrichtung in zwei Minuten</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Installiere Visual Progress Tracker</strong> aus dem <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>. Eine kostenlose Testversion ist verfügbar.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Erstelle das Feld.</strong> Öffne Jira-Einstellungen → Vorgänge → Felder → Feld erstellen. Suche nach „Progress Bar“ und wähle den passenden Typ: Manual, Status oder Subtasks. Vergib einen Namen und klicke auf „Erstellen“.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Füge es zu deiner Projektmaske hinzu.</strong> Öffne Projekteinstellungen → Masken → Maske bearbeiten und ziehe das Feld an die gewünschte Position. Es erscheint nun in jedem Vorgang dieses Projekts.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>(Nur Statusfeld) Prüfe die Statuszuordnung.</strong> Öffne die App-Einstellungen → Status Mapping. Die voreingestellte Zuordnung deckt die häufigsten Workflow-Status ab. Bearbeite bei Bedarf Werte oder ergänze deine eigenen Status.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Fertig.</strong> Öffne einen beliebigen Vorgang, um den Fortschrittsbalken zu sehen. Füge das Feld als Spalte der Listenansicht hinzu, um den Fortschritt aller Vorgänge auf einen Blick zu erkennen.</div>
+        </li>
+      </ol>
+
+      <p>
+        Das ist die vollständige Einrichtung für den häufigsten Anwendungsfall. Es gibt keine Post-Funktion zu konfigurieren, keinen Groovy-Code zu schreiben und kein JQL zu pflegen.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie füge ich in Jira ohne Skripte ein benutzerdefiniertes Fortschrittsfeld hinzu?</p>
+        <p class="faq-a">Installiere eine App wie <a href="/de/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> aus dem Atlassian Marketplace. Sie bietet drei fertige Fortschrittsbalkenfeldtypen, die du über eine Administrationsoberfläche konfigurierst — ohne JQL, Skripte oder Post-Funktionen. Das statusbasierte Feld aktualisiert sich automatisch, wenn Vorgänge deinen Workflow durchlaufen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie lässt sich Fortschritt in Jira am einfachsten verfolgen?</p>
+        <p class="faq-a">Das statusbasierte Fortschrittsfeld ist die unkomplizierteste Option: Installiere die App und erstelle das Feld. Es aktualisiert sich bei jedem Statuswechsel automatisch. Verwendet dein Workflow Standardstatus (To Do, In Progress, In Review, Done), funktioniert die voreingestellte Zuordnung ohne Änderungen. Das manuelle Feld ist noch einfacher — keine Konfiguration, nur einen Vorgang öffnen und den Schieberegler setzen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Hat Jira ein integriertes benutzerdefiniertes Fortschrittsfeld?</p>
+        <p class="faq-a">Jira Cloud enthält kein natives benutzerdefiniertes Fortschrittsbalkenfeld. Die integrierten Feldtypen umfassen Text, Zahl, Datum und Auswahl, aber keinen visuellen Fortschrittsbalken, der aus dem Workflow-Status oder abgeschlossenen Unteraufgaben berechnet wird. Dafür brauchst du eine Marketplace-App.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich Fortschritt in Jira verfolgen, ohne JQL zu schreiben?</p>
+        <p class="faq-a">Ja. Statusbasierte und unteraufgabenbasierte Felder lesen Jiras eigene Daten automatisch aus — ohne Abfragesprache. Die einzige Administrationsaufgabe ist die Zuordnung von Statusnamen zu Prozentwerten über eine visuelle Oberfläche. Manuelle Felder brauchen überhaupt keine Einrichtung. JQL ist optional — du kannst es im Filter des Dashboard-Gadgets nutzen, aber für die Funktion der Felder ist es nicht erforderlich.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was unterscheidet das von einem skriptbasierten Fortschrittsfeld?</p>
+        <p class="faq-a">Ein Skriptfeld (zum Beispiel über eine Groovy-basierte Skript-App) wird als Code in einem separaten Werkzeug gepflegt. Es kann bei Workflow-Änderungen kaputtgehen, benötigt für Anpassungen einen Entwickler und verursacht Wartungsaufwand. Eine auf Forge basierende App für benutzerdefinierte Felder läuft in Atlassians Infrastruktur, aktualisiert sich automatisch aus Jiras eigenen Daten und wird vollständig über eine Oberfläche konfiguriert, ohne Code zu pflegen.</p>
+      </div>
+
+      <!-- Article CTA -->
+      <div class="article-cta">
+        <h3>In zwei Minuten zu Fortschrittsbalken in Jira</h3>
+        <p>Visual Progress Tracker ergänzt automatische, farbcodierte Fortschrittsbalken für deine Jira-Vorgänge — ohne Skripte, JQL oder Post-Funktionen. Eine kostenlose Testversion ist verfügbar, alle drei Feldtypen sind von Anfang an enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Warum Teams Fortschrittsverfolgung vermeiden</a></li>
+          <li><a href="#three-approaches">Drei Ansätze ohne Skripte</a></li>
+          <li><a href="#manual-field">Manueller Fortschrittsbalken</a></li>
+          <li><a href="#status-field">Statusbasierter Fortschrittsbalken</a></li>
+          <li><a href="#subtask-field">Unteraufgabenbasierter Fortschrittsbalken</a></li>
+          <li><a href="#status-mapping">Statuszuordnungen konfigurieren</a></li>
+          <li><a href="#color-settings">Farbschwellen</a></li>
+          <li><a href="#setup">Einrichtung in zwei Minuten</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Visual Progress Tracker for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Fortschrittsbalken: Vorgangsfortschritt visuell verfolgen</a>
+        <a href="/de/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Epic-Fortschritt in Jira verfolgen: Der Ansatz über Unteraufgaben</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

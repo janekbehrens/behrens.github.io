@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026) | Janek Behrens</title>
+  <meta name="description" content="Verstehe Weighted Shortest Job First (WSJF), berechne Verzögerungskosten richtig und richte native benutzerdefinierte WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/wsjf-jira.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)",
+  "description": "Verstehe Weighted Shortest Job First (WSJF), berechne Verzögerungskosten richtig und richte native benutzerdefinierte WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte.",
+  "url": "https://janekbehrens.de/de/blog/wsjf-jira.html",
+  "datePublished": "2025-11-26T00:00:00+02:00",
+  "dateModified": "2025-11-26T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png",
+  "keywords": [
+    "WSJF Jira",
+    "Weighted Shortest Job First",
+    "SAFe Jira",
+    "PI Planning Jira",
+    "Backlog-Priorisierung",
+    "Atlassian"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)",
+  "description": "Verstehe Weighted Shortest Job First (WSJF), berechne Verzögerungskosten richtig und richte native benutzerdefinierte WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte.",
+  "image": "https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png",
+  "datePublished": "2025-11-26T00:00:00+02:00",
+  "dateModified": "2025-11-26T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/wsjf-jira.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist WSJF in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "WSJF (Weighted Shortest Job First) ist eine Priorisierungsmethode des Scaled Agile Framework (SAFe). In Jira wird sie als benutzerdefiniertes Feld ergänzt, das Backlog-Einträge nach dieser Formel bewertet: WSJF = (Geschäftswert + Zeitkritikalität + Risikoreduktion) ÷ Umfang. Alle Dimensionen werden auf einer relativen Fibonacci-Skala bewertet (1, 2, 3, 5, 8, 13, 20). Höhere Werte sollten zuerst umgesetzt werden. Jira enthält WSJF nicht nativ — du ergänzt es mit einer App wie Priority Scoring for Jira."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie lautet die WSJF-Formel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "WSJF = Verzögerungskosten ÷ Umfang. Verzögerungskosten = Geschäftswert + Zeitkritikalität + Risikoreduktion/Ermöglichung von Chancen. Alle vier Dimensionen verwenden eine relative Fibonacci-Skala: 1, 2, 3, 5, 8, 13, 20. Eine Funktion mit Verzögerungskosten = 13+8+5 = 26 und Umfang = 8 erhält WSJF = 26 ÷ 8 = 3,25. Typische WSJF-Werte liegen zwischen 0,3 und 10."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was sind Verzögerungskosten bei WSJF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Verzögerungskosten (Cost of Delay, CoD) sind die wirtschaftlichen Folgen, wenn eine Funktion um eine Zeiteinheit verschoben wird. In SAFe-WSJF bestehen sie aus drei Komponenten: Geschäftswert (relativer Nutzen bei sofortiger Lieferung), Zeitkritikalität (Wie schadet Verzögerung — gibt es Fristen, Marktfenster oder Abhängigkeiten?) und Risikoreduktion/Ermöglichung von Chancen (Wird ein Risiko gesenkt oder zukünftige Arbeit ermöglicht?). Jede Komponente wird im Vergleich zu anderen Einträgen desselben Backlogs mit 1–20 auf einer Fibonacci-Skala bewertet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum nutzt WSJF die Fibonacci-Skala?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Fibonacci-Skala (1, 2, 3, 5, 8, 13, 20) erzwingt relative Schätzungen. Wachsende Abstände spiegeln die natürliche Unsicherheit großer Einträge wider — der Unterschied zwischen 13 und 20 ist sinnvoll, zwischen 13 und 14 wäre er Scheingenauigkeit. Teams vergleichen Einträge miteinander („Ist diese Funktion doppelt so wertvoll wie der Referenzeintrag?“) statt auf einer absoluten Skala. Das liefert konsistentere, nachvollziehbarere Werte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist WSJF oder RICE besser für Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sie optimieren unterschiedliche Dinge. WSJF optimiert wirtschaftlichen Wert pro Zeiteinheit und gehört zu SAFe — ideal für Unternehmen mit PI Planning, Fristen und teamübergreifender Reihenfolgeplanung. RICE optimiert Nutzerwert pro Aufwandseinheit — ideal für Produktteams, die nach der Breite der Nutzerwirkung priorisieren. Viele große Organisationen nutzen beides: WSJF auf Initiativebene, RICE auf Funktionsebene. Siehe den vollständigen Vergleich: RICE, WSJF und ICE."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)">
+  <meta property="og:description" content="Verstehe die WSJF-Formel, berechne Verzögerungskosten richtig und richte native WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte oder Tabellenkalkulation.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/wsjf-jira.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2025-11-26">
+  <meta property="article:modified_time" content="2025-11-26">
+  <meta property="article:tag" content="WSJF">
+  <meta property="article:tag" content="SAFe">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="PI Planning">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)">
+  <meta name="twitter:description" content="WSJF-Formel, Erklärung der Verzögerungskosten und schrittweise Jira-Einrichtung für SAFe PI Planning — ohne Skripte.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/PriorityScoresOnTicket.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px;
+      gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: var(--blue-lite); color: var(--blue);
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue   { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green  { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-yellow { background: #FFFAE6; border-left: 3px solid #FF8B00; color: #974F00; }
+    .callout-purple { background: #EAE6FF; border-left: 3px solid #403294; color: #403294; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Formula box ── */
+    .formula-box {
+      background: #F4F5F7; border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px 28px; margin: 20px 0; text-align: center;
+    }
+    .formula-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 14px; }
+    .formula-main { font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 14px; }
+    .formula-fraction { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; }
+    .formula-numerator { border-bottom: 2px solid var(--text); padding-bottom: 3px; margin-bottom: 3px; font-size: 1rem; }
+    .formula-denominator { font-size: 1rem; }
+    .formula-expand { font-size: 0.88rem; color: var(--text-2); margin-top: 6px; }
+
+    .formula-parts { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    .formula-part {
+      background: #fff; border: 1px solid var(--border); border-radius: 7px;
+      padding: 10px 14px; text-align: center; min-width: 90px;
+    }
+    .formula-part-letter { font-size: 1.2rem; font-weight: 800; color: #403294; line-height: 1; }
+    .formula-part-name   { font-size: 0.7rem; color: var(--text-faint); margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .formula-part-desc   { font-size: 0.78rem; color: var(--text-2); margin-top: 4px; line-height: 1.4; }
+    .formula-part-denom  { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 8px; }
+    .formula-part-letter-denom { font-size: 1.2rem; font-weight: 800; color: #DE350B; line-height: 1; }
+
+    /* ── Fibonacci scale ── */
+    .fib-scale {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin: 16px 0 20px; align-items: center;
+    }
+    .fib-chip {
+      width: 44px; height: 44px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .fib-low    { background: #F4F5F7; color: var(--text-faint); }
+    .fib-mid    { background: #DEEBFF; color: #0052CC; }
+    .fib-high   { background: #EAE6FF; color: #403294; }
+    .fib-arrow  { font-size: 1.1rem; color: var(--text-faint); }
+
+    /* ── Worked example ── */
+    .example-compare {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
+    }
+    @media (max-width: 560px) { .example-compare { grid-template-columns: 1fr; } }
+    .example-box {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(23,43,77,0.05);
+    }
+    .example-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 12px; }
+    .example-name  { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .example-row   { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-top: 1px solid var(--border-2); gap: 8px; }
+    .example-dim   { font-size: 0.82rem; font-weight: 600; color: var(--text-2); }
+    .example-val   { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .example-cod   {
+      background: #EAE6FF; border-radius: 6px;
+      padding: 8px 12px; margin-top: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .example-cod-label { font-size: 0.78rem; font-weight: 700; color: #403294; }
+    .example-cod-val   { font-size: 1rem; font-weight: 800; color: #403294; }
+    .example-result {
+      background: var(--blue-lite); border-radius: 6px;
+      padding: 8px 12px; margin-top: 6px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .example-result-label { font-size: 0.78rem; font-weight: 700; color: var(--blue); }
+    .example-result-score { font-size: 1.3rem; font-weight: 800; color: var(--blue); }
+
+    /* ── Dimension guide table ── */
+    .dim-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.86rem; }
+    .dim-table thead th {
+      background: #F4F5F7; color: var(--text-faint); font-weight: 700;
+      font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 9px 12px; text-align: left; border: 1px solid var(--border);
+    }
+    .dim-table tbody td { padding: 9px 12px; border: 1px solid var(--border-2); color: var(--text-3); vertical-align: top; line-height: 1.5; }
+    .dim-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .dim-table strong { color: var(--text); }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px; background: var(--blue); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── PI Planning flow ── */
+    .pi-flow { display: flex; gap: 0; margin: 20px 0 24px; flex-wrap: wrap; }
+    .pi-step {
+      flex: 1; min-width: 120px;
+      background: #fff; border: 1px solid var(--border);
+      padding: 14px 14px 14px;
+      position: relative;
+    }
+    .pi-step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; color: var(--text-faint);
+      z-index: 1;
+    }
+    .pi-step:first-child { border-radius: 8px 0 0 8px; }
+    .pi-step:last-child  { border-radius: 0 8px 8px 0; }
+    .pi-step-num { font-size: 0.68rem; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+    .pi-step-text { font-size: 0.82rem; color: var(--text-2); line-height: 1.4; font-weight: 600; }
+    @media (max-width: 600px) {
+      .pi-flow { flex-direction: column; }
+      .pi-step { border-radius: 8px !important; margin-bottom: 4px; }
+      .pi-step::after { display: none; }
+    }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #403294 0%, #0052CC 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p  { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/wsjf-jira.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/wsjf-jira.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/wsjf-jira.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#EAE6FF;color:#403294;">SAFe · WSJF</span>
+        <span class="article-date">26. November 2025</span>
+        <span class="article-readtime">· 10 Min. Lesezeit</span>
+      </div>
+      <h1>WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)</h1>
+      <p class="article-intro">
+        Die meisten SAFe-Teams berechnen WSJF in einer gemeinsamen Tabelle, kopieren die Ergebnisse irgendwohin und wundern sich in Woche drei, warum sie niemand mehr ansieht. Das Problem ist nicht das Verfahren — die Werte liegen außerhalb von Jira, wo die Arbeit stattfindet. So bringst du WSJF nativ in Vorgänge, Backlogs und PI-Planning-Termine.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <article class="article-body">
+
+      <h2 id="what-is-wsjf">Was ist WSJF — und warum nutzt SAFe es?</h2>
+      <p>
+        Weighted Shortest Job First (WSJF) ist die zentrale Priorisierungsmethode des <a href="https://framework.scaledagile.com/wsjf" target="_blank" rel="noopener">Scaled Agile Framework (SAFe)</a>. Sie wurde von Dean Leffingwell entwickelt und beantwortet eine Frage, die Bauchgefühl nicht zuverlässig beantworten kann: <em>Welche Funktion sollten wir bei begrenzter Teamkapazität zuerst bauen, um den gelieferten wirtschaftlichen Wert pro Zeiteinheit zu maximieren?</em>
+      </p>
+      <p>
+        Die Antwort lautet nicht „die wertvollste Funktion“, sondern die Funktion mit dem höchsten Verhältnis von <strong>Verzögerungskosten (Cost of Delay)</strong> zu <strong>Umfang (Job Size)</strong>. Eine kleinere, mäßig wertvolle Funktion kann vor einer riesigen, wertvollen Funktion liegen, weil sie früher ausgeliefert werden kann und Verzögerung teuer ist.
+      </p>
+      <p>
+        Diese Reihenfolgelogik ist beim PI Planning besonders wirksam: Mehrere Agile Release Trains (ARTs) konkurrieren über ein 10–12-wöchiges Program Increment um dieselbe Kapazität. WSJF gibt dem Release Train Engineer (RTE) und Produktmanagern eine nachvollziehbare quantitative Backlog-Reihenfolge statt eines Raums voller konkurrierender Prioritäten.
+      </p>
+
+      <div class="callout callout-purple">
+        <p><strong>Kurzantwort:</strong> Jira enthält WSJF-Bewertung nicht nativ. Eine Marketplace-App ergänzt benutzerdefinierte Felder. Priority Scoring for Jira bietet ein natives WSJF-Feld mit Fibonacci-Schiebereglern je Dimension, automatischer Berechnung und einem Ranglisten-Dashboard — ohne Tabelle oder ScriptRunner.</p>
+      </div>
+
+      <h2 id="formula">Die WSJF-Formel</h2>
+      <p>
+        Die Formel hat zwei Teile: einen Zähler (Verzögerungskosten) aus drei Komponenten und einen einzelnen Nenner (Umfang). Alle vier Werte werden auf derselben relativen Fibonacci-Skala bewertet.
+      </p>
+
+      <div class="formula-box">
+        <div class="formula-label">WSJF-Formel — Scaled Agile Framework</div>
+        <div class="formula-main">
+          WSJF =
+          <span class="formula-fraction">
+            <span class="formula-numerator">Geschäftswert + Zeitkritikalität + Risikoreduktion</span>
+            <span class="formula-denominator">Umfang (Job Size)</span>
+          </span>
+        </div>
+        <div class="formula-expand">Verzögerungskosten = Geschäftswert + Zeitkritikalität + Risikoreduktion/Ermöglichung von Chancen</div>
+        <div class="formula-parts">
+          <div class="formula-part">
+            <div class="formula-part-letter">BV</div>
+            <div class="formula-part-name">Geschäftswert (Business Value)</div>
+            <div class="formula-part-desc">Relativer Nutzen für Nutzer oder Unternehmen bei sofortiger Lieferung</div>
+          </div>
+          <div class="formula-part">
+            <div class="formula-part-letter">TC</div>
+            <div class="formula-part-name">Zeitkritikalität (Time Criticality)</div>
+            <div class="formula-part-desc">Wie schadet Verzögerung? Fristen, Abhängigkeiten, Marktfenster</div>
+          </div>
+          <div class="formula-part">
+            <div class="formula-part-letter">RR</div>
+            <div class="formula-part-name">Risikoreduktion (Risk Reduction)</div>
+            <div class="formula-part-desc">Senkt bei früher Umsetzung ein Risiko oder ermöglicht zukünftige Arbeit</div>
+          </div>
+          <div class="formula-part formula-part-denom">
+            <div class="formula-part-letter-denom">JS</div>
+            <div class="formula-part-name">Umfang (Job Size)</div>
+            <div class="formula-part-desc">Relative Dauer — keine Story Points, sondern benötigte Teamzeit bis zum Abschluss</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="fibonacci">Warum Fibonacci — und wie du richtig bewertest</h2>
+      <p>
+        Alle vier WSJF-Dimensionen verwenden eine relative Fibonacci-Skala: <strong>1, 2, 3, 5, 8, 13, 20</strong>. Fibonacci ist bewusst gewählt: Größere Abstände zwingen Teams, bedeutende Unterschiede auszudrücken, statt sich Punkt für Punkt nach oben zu bewegen.
+      </p>
+
+      <div class="fib-scale">
+        <div class="fib-chip fib-low">1</div>
+        <div class="fib-chip fib-low">2</div>
+        <div class="fib-chip fib-low">3</div>
+        <div class="fib-chip fib-mid">5</div>
+        <div class="fib-chip fib-mid">8</div>
+        <div class="fib-chip fib-high">13</div>
+        <div class="fib-chip fib-high">20</div>
+        <span class="fib-arrow">← relative Skala, keine absolute</span>
+      </div>
+
+      <p>
+        Die entscheidende Regel: <strong>Bewerte im Vergleich zu einem Referenzeintrag, nicht auf einer absoluten Skala.</strong> Zu Beginn jedes PI-Planning-Termins wählt das Team eine gut bekannte Funktion als Referenz. Alles Weitere wird damit verglichen: „Doppelt so wertvoll? Halb so groß?“ Die klar wertvollste Funktion des gesamten Backlogs erhält 20. Der Rest verteilt sich davon ausgehend.
+      </p>
+      <p>
+        Deshalb solltest du WSJF nicht allein bewerten. RTEs, Produktmanager und Systemarchitekten bewerten gemeinsam und diskutieren Ausreißer. Der Wert liegt im Gespräch, nicht nur in der Zahl.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Häufiger Fehler:</strong> Fibonacci-Werte als absolute Werte behandeln (zum Beispiel „Geschäftswert = 8, weil es 80.000 US-Dollar wert ist“). WSJF-Dimensionen sind <em>relativ</em> — ein Wert bedeutet nur im Vergleich zu anderen Einträgen desselben Backlogs etwas. Backlogs mit unterschiedlichen Referenzskalen zu vermischen macht Werte unvergleichbar.</p>
+      </div>
+
+      <h2 id="dimensions">Die vier Dimensionen erklärt</h2>
+
+      <h3 id="business-value">Geschäftswert (Business Value)</h3>
+      <p>
+        Geschäftswert erfasst den relativen Nutzen für Kunden, Nutzer oder Unternehmen, wenn die Funktion <em>jetzt</em> geliefert wird. Umsatzpotenzial, Kundenzufriedenheit und strategische Passung fließen in eine einzige relative Zahl ein.
+      </p>
+      <p>
+        Bewerte Funktionen hoch (13–20), wenn sie neue Einnahmen ermöglichen, ein zentrales Kundenproblem lösen oder ausdrücklich Teil der Jahresstrategie sind. Bewerte Pflegeaufgaben, kleine Verbesserungen und Wünsche weniger Nutzer ohne strategische Relevanz niedrig (1–2).
+      </p>
+
+      <h3 id="time-criticality">Zeitkritikalität (Time Criticality)</h3>
+      <p>
+        Zeitkritikalität unterscheidet WSJF am stärksten von RICE. Sie fragt: <em>Wie schadet eine Verzögerung?</em> Eine Funktion ist zeitkritisch bei einer festen externen Frist (regulatorisches Datum, Vertragsmeilenstein, Partnerstart), einem schließenden Marktfenster (Wettbewerber liefert zuerst, saisonale Nachfrage) oder einer Abhängigkeit auf dem kritischen Pfad, die andere Teams blockiert.
+      </p>
+      <p>
+        Bewerte hoch (13–20), wenn Verzögerungskosten konkret und kurzfristig sind. Vergib 1, wenn die Funktion keine Frist und keinen Wertverlust hat — also in diesem und im nächsten PI gleich wertvoll wäre.
+      </p>
+
+      <h3 id="risk-reduction">Risikoreduktion / Ermöglichung von Chancen</h3>
+      <p>
+        Diese Dimension erfasst architektonische Grundlagen, Plattforminvestitionen und Risikoverringerung, die nicht sofort direkten Nutzerwert liefern, aber zukünftige Arbeit ermöglichen oder spätere Probleme reduzieren. Ein Refactoring, das eine Klasse von Produktionsstörungen verhindert. Eine API für drei künftige Integrationen. Ein Sicherheitsaudit, das eine Compliance-Lücke schließt.
+      </p>
+      <p>
+        Ohne diese Dimension verdrängen Funktionen mit direktem Nutzerwert dauerhaft die Grundlagenarbeit, und technische Schulden wachsen. Risikoreduktion hält bei WSJF das Fundament gesund.
+      </p>
+
+      <h3 id="job-size">Umfang (Job Size)</h3>
+      <p>
+        Umfang ist der Nenner — eine relative Schätzung der <em> gesamten Teamzeit</em> bis zum Abschluss der Funktion, nicht nur der Entwicklung. Berücksichtige Design, QA, Dokumentation und teamübergreifende Abstimmung. Umfang entspricht nicht Story Points: Er umfasst die ganze Funktion vom Start bis zur Auslieferung, unabhängig von der Anzahl der Sprints.
+      </p>
+      <p>
+        Ein größerer Umfang senkt den WSJF-Wert und schiebt kürzere, wertvolle Arbeit nach oben — das „Shortest Job First“ im Namen.
+      </p>
+
+      <h2 id="example">Ein Rechenbeispiel</h2>
+      <p>
+        Zwei Funktionen konkurrieren um denselben PI-Platz. In einem 30-minütigen Workshop bewertet das Team sie im Vergleich zueinander:
+      </p>
+
+      <div class="example-compare">
+        <div class="example-box">
+          <div class="example-title">Funktion A</div>
+          <div class="example-name">SSO-Integration für Unternehmenskunden</div>
+          <div class="example-row"><span class="example-dim">Geschäftswert (Business Value)</span><span class="example-val">13</span></div>
+          <div class="example-row"><span class="example-dim">Zeitkritikalität (Time Criticality)</span><span class="example-val">8</span></div>
+          <div class="example-row"><span class="example-dim">Risikoreduktion (Risk Reduction)</span><span class="example-val">5</span></div>
+          <div class="example-cod">
+            <span class="example-cod-label">Verzögerungskosten (Cost of Delay)</span>
+            <span class="example-cod-val">26</span>
+          </div>
+          <div class="example-row" style="border-top:none;padding-top:8px;"><span class="example-dim">Umfang (Job Size)</span><span class="example-val">8</span></div>
+          <div class="example-result">
+            <span class="example-result-label">WSJF = 26 ÷ 8</span>
+            <span class="example-result-score">3.25</span>
+          </div>
+        </div>
+        <div class="example-box">
+          <div class="example-title">Funktion B</div>
+          <div class="example-name">CSV-Export</div>
+          <div class="example-row"><span class="example-dim">Geschäftswert (Business Value)</span><span class="example-val">5</span></div>
+          <div class="example-row"><span class="example-dim">Zeitkritikalität (Time Criticality)</span><span class="example-val">13</span></div>
+          <div class="example-row"><span class="example-dim">Risikoreduktion (Risk Reduction)</span><span class="example-val">1</span></div>
+          <div class="example-cod">
+            <span class="example-cod-label">Verzögerungskosten (Cost of Delay)</span>
+            <span class="example-cod-val">19</span>
+          </div>
+          <div class="example-row" style="border-top:none;padding-top:8px;"><span class="example-dim">Umfang (Job Size)</span><span class="example-val">2</span></div>
+          <div class="example-result">
+            <span class="example-result-label">WSJF = 19 ÷ 2</span>
+            <span class="example-result-score">9.50</span>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Funktion B kommt zuerst — nicht wegen höherer strategischer Bedeutung, sondern wegen einer festen Kundenvertragsfrist (Zeitkritikalität 13) und eines Umfangs von zwei Punkten. WSJF macht diese Reihenfolgelogik klar sichtbar. Die SSO-Integration wird später wertvoller sein, aber die Verzögerung des CSV-Exports ist konkret teurer <em> genau jetzt</em>. Baue B zuerst.
+      </p>
+
+      <h2 id="setup">WSJF in Jira einrichten</h2>
+      <p>
+        Die folgenden Schritte nutzen <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> — eine auf Forge basierende App („Runs on Atlassian“, keine externen Server), die WSJF, RICE und ICE als native benutzerdefinierte Felder ergänzt.
+      </p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Installiere Priority Scoring aus dem Atlassian Marketplace.</strong> Suche nach „Priority Scoring“ und installiere die App auf deiner Jira-Cloud-Site. Alle Verfahren einschließlich WSJF sind in der kostenlosen Testversion verfügbar.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Füge das WSJF-Bewertungsfeld zu deiner Projektmaske hinzu.</strong> Öffne <em>Jira-Einstellungen → Vorgänge → Masken</em>: Finde die Maske deines Projekts und ergänze „Priority Scoring — WSJF“. Erst danach erscheinen die Schieberegler in Vorgängen.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Bewerte deine erste Funktion.</strong> Öffne einen Jira-Vorgang. Du siehst Schieberegler für Business Value, Time Criticality, Risk Reduction und Job Size — jeweils mit Fibonacci-Werten (1, 2, 3, 5, 8, 13, 20). Passe jeden Regler an; der WSJF-Wert darüber aktualisiert sich sofort.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Sieh das priorisierte Backlog.</strong> Öffne das Priority-Scoring-Dashboard, wechsle zu WSJF und wähle dein Projekt. Alle bewerteten Vorgänge erscheinen vom höchsten zum niedrigsten WSJF-Wert — mit 🟢🟡🔴 entsprechend deinen konfigurierten Schwellen.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>(Optional) Passe die Bewertungsschwellen an.</strong> Konfiguriere unter Settings → Score Thresholds die niedrige und hohe WSJF-Grenze. Bei den meisten Teams gelten unter 2 als niedrig (🔴) und über 5 als hoch (🟢). Passe das aber an die Verteilung deines Backlogs an.</div>
+        </li>
+      </ol>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/PriorityScoresOnTicket.png" alt="Jira-Vorgangsansicht mit benutzerdefinierten Priority-Scoring-Feldern — RICE-, WSJF- und ICE-Schieberegler mit unmittelbarer Berechnung für jedes Verfahren" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">WSJF-Schieberegler in einem Jira-Vorgang — Geschäftswert, Zeitkritikalität, Risikoreduktion und Umfang über Fibonacci-Regler, Gesamtwert sofort berechnet</p>
+      </div>
+
+      <h2 id="pi-planning">WSJF im PI Planning: Ein praktischer Ablauf</h2>
+      <p>
+        Der wertvollste Zeitpunkt für WSJF in Jira liegt 48–72 Stunden vor einem PI-Planning-Ereignis. Dieser Ablauf holt am meisten heraus:
+      </p>
+
+      <div class="pi-flow">
+        <div class="pi-step">
+          <div class="pi-step-num">1 — Vor dem PI</div>
+          <div class="pi-step-text">Der Produktmanager bewertet Funktionen asynchron. Zuerst Geschäftswert und Risikoreduktion — hier ist weniger Gruppendiskussion erforderlich.</div>
+        </div>
+        <div class="pi-step">
+          <div class="pi-step-num">2 — Workshop</div>
+          <div class="pi-step-text">Das Team bewertet Zeitkritikalität und Umfang gemeinsam. Fibonacci-Abstimmung klärt Meinungsunterschiede schnell.</div>
+        </div>
+        <div class="pi-step">
+          <div class="pi-step-num">3 — Dashboard</div>
+          <div class="pi-step-text">Öffne die WSJF-Rangfolge. Die obersten Einträge bilden Kandidaten für PI-Ziele — kein „Ich dachte, wir hätten uns auf X geeinigt“ mehr.</div>
+        </div>
+        <div class="pi-step">
+          <div class="pi-step-num">4 — Zusage</div>
+          <div class="pi-step-text">Teams sagen Einträge von oben nach unten zu. Der WSJF-Wert erklärt jedem nachfragenden Stakeholder die Reihenfolge.</div>
+        </div>
+      </div>
+
+      <p>
+        Der Rovo-KI-Agent in Priority Scoring beschleunigt Schritt 1. Frage: <em>„Schlage einen WSJF-Wert für EPIC-42 vor.“</em> Er liest die Vorgangsinhalte, schlägt Fibonacci-Werte mit schriftlicher Begründung vor und übernimmt sie im Bestätigungsmodus nach deiner Freigabe ins Feld.
+      </p>
+      <p>
+        Zur gesammelten Vorbewertung aller untergeordneten Funktionen eines Epics vor einem PI-Ereignis: <em>„Bewerte alle unbewerteten Vorgänge im Projekt CORE mit WSJF.“</em> Rovo arbeitet bis zum konfigurierten Massenlimit durch die Liste. Zeitkritikalität und Umfang bleiben dem menschlichen Workshop vorbehalten, in dem gemeinsame Maßstäbe am wichtigsten sind.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>WSJF und Dimensionsgewichte:</strong> Priority Scoring erlaubt unabhängige Gewichte (×1–×5) für Geschäftswert, Zeitkritikalität und Risikoreduktion. Wenn deine Organisation gerade viele Compliance-Anforderungen erfüllt und Risikoreduktion wichtiger als üblich ist, kannst du sie mit ×3 gewichten, ohne WSJF aufzugeben. Umfang (der Nenner) ist bewusst nicht gewichtbar — ein Nennergewicht hätte einen unerwartet umgekehrten Effekt.</p>
+      </div>
+
+      <h2 id="wsjf-vs-rice">WSJF und RICE — wann du welches nutzt</h2>
+      <p>
+        WSJF und RICE sehen ähnlich aus, beantworten aber grundlegend unterschiedliche Fragen. Die richtige Wahl hängt vom Kontext ab:
+      </p>
+
+      <table class="dim-table">
+        <thead>
+          <tr><th>Anwendungsfall</th><th>WSJF</th><th>RICE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SAFe / PI Planning</strong></td><td>✅ Nativ, genau dafür entwickelt</td><td>⚠️ Möglich, aber nicht Standard</td></tr>
+          <tr><td><strong>Reihenfolge nach Fristen</strong></td><td>✅ Dimension Zeitkritikalität</td><td>❌ Keine Fristendimension</td></tr>
+          <tr><td><strong>Nutzerreichweite als wichtigste Kennzahl</strong></td><td>❌ Keine Reichweitendimension</td><td>✅ Reichweite als erster Faktor</td></tr>
+          <tr><td><strong>Grundlagenarbeit / technische Schulden</strong></td><td>✅ Durch Risikoreduktion abgedeckt</td><td>⚠️ Wirkung muss weiter ausgelegt werden</td></tr>
+          <tr><td><strong>Teamgröße</strong></td><td>50+ (Unternehmen, mehrere Teams)</td><td>10–50 (Produktteam)</td></tr>
+          <tr><td><strong>Bewertungssitzung</strong></td><td>Gruppe (relative Fibonacci-Bewertung)</td><td>Einzeln oder asynchron</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        Viele große Organisationen nutzen beides: WSJF für die PI-Reihenfolge von Epics über ARTs hinweg, RICE für Funktionsentscheidungen innerhalb eines Produktteams. Priority Scoring for Jira unterstützt beides im selben Vorgang — ein Klick wechselt die Rangansicht. Vollständiger Vergleich: <a href="/de/blog/jira-prioritization-framework-comparison.html">RICE, WSJF und ICE</a>.
+
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist WSJF in Jira?</p>
+        <p class="faq-a">WSJF (Weighted Shortest Job First) ist eine SAFe-Methode zur Backlog-Bewertung: WSJF = (Geschäftswert + Zeitkritikalität + Risikoreduktion) ÷ Umfang. Sie ordnet Arbeit nach wirtschaftlichem Wert pro Zeiteinheit — wertvolle Arbeit mit kurzer Dauer zuerst. Jira enthält WSJF nicht nativ; <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> ergänzt es als natives benutzerdefiniertes Feld mit Fibonacci-Schiebereglern und unmittelbarer Berechnung.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie lautet die WSJF-Formel?</p>
+        <p class="faq-a">WSJF = Verzögerungskosten ÷ Umfang. Verzögerungskosten = Geschäftswert + Zeitkritikalität + Risikoreduktion/Ermöglichung von Chancen. Alle Dimensionen nutzen eine relative Fibonacci-Skala (1, 2, 3, 5, 8, 13, 20). Bei CoD = 26 und Umfang = 8 ergibt sich WSJF = 3,25. Typische Werte liegen zwischen 0,3 und 10. Höhere Werte kommen zuerst.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was sind Verzögerungskosten bei WSJF?</p>
+        <p class="faq-a">Verzögerungskosten sind die wirtschaftlichen Folgen, wenn eine Funktion nicht jetzt geliefert wird. In SAFe-WSJF verbinden sie Geschäftswert (Nutzen bei sofortiger Lieferung), Zeitkritikalität (Schadet Verzögerung — Fristen, Marktfenster, Abhängigkeiten?) und Risikoreduktion/Ermöglichung von Chancen (Risiko senken oder künftige Arbeit ermöglichen). Jede wird relativ zu anderen Backlog-Einträgen mit 1–20 auf einer Fibonacci-Skala bewertet.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum nutzt WSJF die Fibonacci-Skala?</p>
+        <p class="faq-a">Die Fibonacci-Folge (1, 2, 3, 5, 8, 13, 20) erzwingt aussagekräftige relative Schätzungen. Größere Abstände spiegeln natürliche Unsicherheit — 13 und 20 zu unterscheiden ist sinnvoll, 13 und 14 wäre Scheingenauigkeit. Teams bewerten relativ zu einer Referenz („Doppelt so wertvoll?“) statt absolut. Das liefert konsistentere, gemeinsam abgestimmte Werte.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich WSJF in Jira ohne ScriptRunner nutzen?</p>
+        <p class="faq-a">Ja. Priority Scoring for Jira ergänzt WSJF als natives benutzerdefiniertes Feld — ohne ScriptRunner, Automatisierungsregeln oder eigene Formeln. Installiere die App und füge das WSJF-Feld zur Projektmaske hinzu. Fibonacci-Schieberegler stehen sofort in jedem Vorgang bereit; der Gesamtwert wird automatisch berechnet.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Ist WSJF oder RICE besser für Jira?</p>
+        <p class="faq-a">Keines ist allgemein besser — sie beantworten unterschiedliche Fragen. WSJF gehört zu SAFe, berücksichtigt Fristen und passt am besten zu Unternehmen mit PI Planning. RICE fokussiert Nutzerwirkung pro Aufwandseinheit und passt zu Produktteams mit Nutzeranalysen. Viele große Organisationen nutzen beides. Vollständiger Vergleich: <a href="/de/blog/jira-prioritization-framework-comparison.html">RICE, WSJF und ICE</a>.</p>
+      </div>
+
+      <!-- Article CTA -->
+            <div class="article-cta">
+        <h3>WSJF nativ in dein Jira-Backlog integrieren</h3>
+        <p>Priority Scoring for Jira ergänzt WSJF, RICE und ICE als native benutzerdefinierte Felder — Fibonacci-Schieberegler, unmittelbare Berechnung, Ranglisten-Dashboard und Rovo-KI-Agent für automatische Bewertung. Kostenlose Testversion enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-is-wsjf">Was ist WSJF?</a></li>
+          <li><a href="#formula">Die WSJF-Formel</a></li>
+          <li><a href="#fibonacci">Warum Fibonacci?</a></li>
+          <li><a href="#dimensions">Die vier Dimensionen</a></li>
+          <li><a href="#business-value">Geschäftswert (Business Value)</a></li>
+          <li><a href="#time-criticality">Zeitkritikalität (Time Criticality)</a></li>
+          <li><a href="#risk-reduction">Risikoreduktion (Risk Reduction)</a></li>
+          <li><a href="#job-size">Umfang (Job Size)</a></li>
+          <li><a href="#example">Rechenbeispiel</a></li>
+          <li><a href="#setup">Einrichtung in Jira</a></li>
+          <li><a href="#pi-planning">WSJF im PI Planning</a></li>
+          <li><a href="#wsjf-vs-rice">WSJF und RICE</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">WSJF · RICE · ICE · SAFe · Forge</div>
+          </div>
+        </a>
+                <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-prioritization-framework-comparison.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE, WSJF oder ICE: Welches Verfahren passt zu dir?</a>
+        <a href="/de/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>
+        <a href="/de/blog/wsjf-safe-pi-planning-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">WSJF für SAFe PI Planning: Schritt für Schritt</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

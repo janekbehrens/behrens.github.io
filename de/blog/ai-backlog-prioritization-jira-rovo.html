@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet | Janek Behrens</title>
+  <meta name="description" content="Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Lerne die drei Modi, ihre Einsatzfälle und die Bewertung eines gesamten Backlogs in wenigen Minuten kennen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet",
+  "description": "Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Lerne die drei Modi, ihre Einsatzfälle und die Bewertung eines gesamten Backlogs in wenigen Minuten kennen.",
+  "url": "https://janekbehrens.de/de/blog/ai-backlog-prioritization-jira-rovo.html",
+  "datePublished": "2026-02-10T00:00:00+02:00",
+  "dateModified": "2026-02-10T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png",
+  "keywords": [
+    "KI-Backlog-Priorisierung",
+    "Jira-KI",
+    "Rovo",
+    "RICE-Bewertung",
+    "WSJF",
+    "ICE-Bewertung",
+    "Atlassian Intelligence"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet",
+  "description": "Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Lerne die drei Modi, ihre Einsatzfälle und die Bewertung eines gesamten Backlogs in wenigen Minuten kennen.",
+  "image": "https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png",
+  "datePublished": "2026-02-10T00:00:00+02:00",
+  "dateModified": "2026-02-10T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/ai-backlog-prioritization-jira-rovo.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann Jira mein Backlog mit KI automatisch priorisieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, mit der passenden Marketplace-App. Priority Scoring for Jira integriert Rovo, Atlassians KI-Agentenplattform, um RICE-, WSJF- und ICE-Werte vorzuschlagen oder automatisch zu setzen. Rovo liest Titel, Beschreibung und Akzeptanzkriterien, leitet die Dimensionswerte her und schreibt das Ergebnis in native benutzerdefinierte Jira-Felder. Drei Modi sind verfügbar: Suggest (nur beratend), Confirm (wartet auf deine Freigabe) und Auto (schreibt direkt)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist Rovo in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rovo ist Atlassians KI-Agentenplattform und Teil von Atlassian Intelligence. Sie ermöglicht spezialisierte KI-Agenten, die Jira, Confluence und verbundene Werkzeuge durchsuchen, lesen und darin handeln. Marketplace-Apps von Drittanbietern können eigene Agenten und Aktionen ergänzen — Priority Scoring for Jira bietet beispielsweise einen Rovo-Agenten zur bedarfsgerechten Bewertung von Backlog-Vorgängen mit RICE, WSJF oder ICE."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist KI-generierte Bewertung in Jira sicher nutzbar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mit passenden Moduseinstellungen ja. Im Vorschlagsmodus empfiehlt Rovo nur Werte — ohne menschliche Handlung wird nichts geschrieben. Im Bestätigungsmodus fordert es vor jeder Bewertung ausdrücklich Freigabe an. Der automatische Modus setzt Werte direkt, aber Atlassians nativer Berechtigungsdialog bleibt als Plattformabsicherung erhalten. Beginne bei sensiblen Backlogs mit Vorschlags- oder Bestätigungsmodus, bis du das KI-Urteil auf deinen Teamkontext abgestimmt hast."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie bewerte ich mit Rovo mein gesamtes Jira-Backlog?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Schreibe in einem Rovo-Chat: „Bewerte alle unbewerteten Vorgänge im Projekt PROJ mit RICE“ und ersetze PROJ durch deinen Projektschlüssel. Rovo arbeitet die unbewerteten Vorgänge durch, setzt Dimensionswerte und berechnet Bewertungen. Dafür muss in den Priority-Scoring-Einstellungen der automatische Modus aktiviert sein. Ein Massenlimit pro Aufruf (Standard: zehn Vorgänge) verhindert unkontrollierte Massenänderungen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sendet Rovo meine Jira-Daten an externe Server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Priority Scoring for Jira basiert auf Forge und läuft vollständig in Atlassians eigener Cloud-Infrastruktur. Deine Jira-Daten verlassen Atlassians Systeme nicht. Auch Rovo selbst ist ein natives Atlassian-Produkt. An diesem Bewertungsablauf sind keine Server Dritter beteiligt."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet">
+  <meta property="og:description" content="Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Drei Modi, echte Beispiele und Massenbewertung in wenigen Minuten.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-02-10">
+  <meta property="article:modified_time" content="2026-02-10">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Rovo">
+  <meta property="article:tag" content="Backlog Prioritization">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet">
+  <meta name="twitter:description" content="Rovo-KI: RICE-/WSJF-/ICE-Werte für dein Jira-Backlog vorschlagen, bestätigen oder automatisch setzen. Drei Modi und echte Beispiele.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Mode comparison table ── */
+    .mode-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    .mode-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .mode-table tbody td {
+      padding: 9px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .mode-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .mode-table strong { color: var(--text); }
+    .mode-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-suggest { background: var(--blue-lite); color: var(--blue); }
+    .badge-confirm { background: #FFFAE6; color: #974F00; }
+    .badge-auto    { background: #E3FCEF; color: #006644; }
+
+    /* ── Chat simulation ── */
+    .chat-box {
+      background: #F4F5F7;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-size: 0.88rem;
+    }
+    .chat-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 16px;
+    }
+    .chat-msg {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .chat-msg:last-child { margin-bottom: 0; }
+    .chat-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .avatar-user { background: #DFE1E6; color: var(--text); }
+    .avatar-rovo { background: var(--blue); color: #fff; }
+    .chat-bubble {
+      background: #fff;
+      border: 1px solid var(--border-2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      color: var(--text-3);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .chat-bubble strong { color: var(--text); }
+    .chat-bubble .score-line {
+      margin: 6px 0 2px;
+      font-size: 0.82rem;
+    }
+    .chat-bubble .score-line span {
+      display: inline-block;
+      background: var(--blue-lite);
+      color: var(--blue);
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      margin-left: 4px;
+    }
+
+    /* ── Step list ── */
+    .step-list { list-style: none; padding: 0; margin: 0 0 20px; }
+    .step-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; }
+    .step-text strong { color: var(--text); }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/ai-backlog-prioritization-jira-rovo.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-tag" style="background:#EAE6FF;color:#403294;">KI · Rovo</span>
+        <span class="article-date">10. Februar 2026</span>
+        <span class="article-readtime">· 9 Min. Lesezeit</span>
+      </div>
+      <h1>KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet</h1>
+      <p class="article-intro">
+        80 Backlog-Vorgänge manuell zu bewerten dauert Stunden. Rovo, Atlassians KI-Agent, schafft es in Minuten. Es liest deine Vorgangsinhalte, begründet die RICE-, WSJF- oder ICE-Dimensionen und schreibt die Werte direkt nach Jira. Du bestimmst seine Selbstständigkeit. Diese Anleitung erklärt die drei Betriebsmodi und zeigt genau, wie eine Rovo-Bewertungssitzung aussieht.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="problem">Der Engpass manueller Bewertung</h2>
+      <p>
+        Verfahren wie <a href="/de/blog/rice-scoring-jira.html">RICE</a>,  <a href="/de/blog/wsjf-jira.html">WSJF</a> und <a href="/de/blog/ice-scoring-jira.html">ICE</a> lösen das Problem „Alles hat hohe Priorität“, schaffen aber ein neues: Jemand muss die Bewertungen eintragen. Bei 60 Backlog-Vorgängen sind das 60 × drei bis vier Dimensionen × die Denkzeit pro Dimension. Die meisten Teams beginnen mit guten Vorsätzen und verlieren etwa bei Ticket 15 den Schwung.
+      </p>
+      <p>
+        Das Ergebnis ist ein teilweise bewertetes Backlog — fast schlechter als ein unbewertetes, weil es falsche Sicherheit vermittelt: Oben wirkt die Liste datenbasiert, unten bleibt sie geraten.
+      </p>
+      <p>
+        KI-gestützte Bewertung setzt genau dort an. Sie übernimmt die erste Schätzung, statt menschliches Urteil zu ersetzen, und gibt jedem Ticket einen plausiblen Ausgangswert, den das Team prüfen, anpassen und verantworten kann. Die KI macht den ersten Durchgang; Menschen treffen das abschließende Urteil.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Kurzantwort:</strong> Priority Scoring for Jira integriert Rovo, Atlassians eingebaute KI-Agentenplattform, um RICE-, WSJF- und ICE-Werte vorzuschlagen oder automatisch zu setzen. Drei Modi: Vorschlag (beratend), Bestätigung (menschliche Freigabe erforderlich) und automatisch (direktes Schreiben). Alle Daten bleiben in Atlassians Infrastruktur.</p>
+      </div>
+
+      <h2 id="what-is-rovo">Was Rovo ist — und was nicht</h2>
+      <p>
+        <a href="https://www.atlassian.com/software/rovo" target="_blank" rel="noopener">Rovo</a> ist Atlassians KI-Agentenplattform, eingeführt als Teil von Atlassian Intelligence. Über eine Chat-Oberfläche in Jira und Confluence arbeitest du mit spezialisierten Agenten, die nicht nur Fragen beantworten, sondern handeln: Inhalte durchsuchen, Vorgänge lesen, Seiten erstellen und Felder aktualisieren.
+      </p>
+      <p>
+        Rovo ist kein allgemeiner Chatbot, mit dem du deinen eigenen API-Schlüssel verbindest. Es ist eine Plattform mit festem Berechtigungsmodell, die Marketplace-Apps um eigene Agenten und Aktionen erweitern. Der Rovo-Agent von Priority Scoring for Jira hat genau einen Zweck: Jira-Vorgänge lesen und Prioritätswerte vorschlagen oder schreiben.
+      </p>
+      <p>
+        Rovo setzt aktiviertes Atlassian Intelligence auf deiner Instanz voraus. Falls deine Organisation es noch nicht aktiviert hat, kann dein Jira-Administrator das über Atlassian Administration tun. Rovo ist in Atlassians Premium- und Enterprise-Cloud-Tarifen verfügbar.
+      </p>
+
+      <h2 id="how-it-works">So funktioniert der Rovo-Agent von Priority Scoring</h2>
+      <p>
+        Rufst du den Priority-Scoring-Agenten im Rovo-Chat auf, liest er den angegebenen Jira-Vorgang — Titel, Beschreibung, Akzeptanzkriterien, Labels und vorhandene Feldwerte. Anschließend leitet er jede Bewertungsdimension her:
+      </p>
+      <ul>
+        <li><strong>Für RICE:</strong> Er schätzt die Anzahl betroffener Nutzer (Reichweite), den Effekt auf eine zentrale Kennzahl (Wirkung), die Beleglage der Schätzung (Sicherheit) und die erforderliche Arbeit (Aufwand).</li>
+        <li><strong>Für WSJF:</strong> Er schätzt Geschäftswert, Zeitkritikalität und Risikoreduktion relativ zu anderen Backlog-Einträgen sowie den Umfang in Fibonacci-Einheiten.</li>
+        <li><strong>Für ICE:</strong> Er schätzt Wirkung auf die aktuelle wichtigste Teamkennzahl, Sicherheit anhand der Belege im Vorgang und Einfachheit anhand des erkennbaren Umsetzungsumfangs.</li>
+      </ul>
+      <p>
+        Entscheidend: Rovo liefert seine Begründung mit, nicht nur Zahlen. Es erklärt jede Dimensionswahl. Das macht KI-Bewertung praktisch nutzbar: Du liest die Begründung, kannst widersprechen und den Reglerwert in Sekunden korrigieren. Das ist deutlich schneller, als bei null zu beginnen.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/SelectPriorityScoringAgentInRovo.png" alt="Auswahl des Priority-Scoring-Agenten in der Rovo-Chat-Oberfläche von Jira" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Priority-Scoring-Agenten in Rovo auswählen — aus dem Rovo-Chat in jedem Jira-Kontext erreichbar</p>
+      </div>
+
+      <h2 id="three-modes">Die drei Betriebsmodi</h2>
+      <p>
+        Die Rovo-Integration von Priority Scoring bietet drei Modi in den App-Einstellungen. Der Modus bestimmt, wie selbstständig Rovo arbeitet — wie weit es ohne zusätzliche menschliche Eingabe vom Vorschlag zum geschriebenen Wert geht.
+      </p>
+
+      <table class="mode-table">
+        <thead>
+          <tr>
+            <th>Modus</th>
+            <th>Was Rovo tut</th>
+            <th>Erforderlicher menschlicher Schritt</th>
+            <th>Am besten geeignet für</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mode-badge badge-suggest">Vorschlag (Suggest)</span></td>
+            <td>Liefert empfohlene Dimensionswerte und Begründung im Chat. Keine Schreibzugriffe auf Jira.</td>
+            <td>Du übernimmst Werte manuell über die Schieberegler im Vorgang.</td>
+            <td>Teams mit neuer KI-Bewertung, sensible Backlogs, Abstimmungsphase</td>
+          </tr>
+          <tr>
+            <td><span class="mode-badge badge-confirm">Bestätigung (Confirm)</span></td>
+            <td>Schlägt im Chat einen Wert vor und fragt dann: <em>„Soll ich das auf PROJ-123 anwenden?“</em> Wartet auf deine Antwort.</td>
+            <td>Du antwortest je Vorgang mit „ja“ oder „nein“.</td>
+            <td>Die meisten Teams: gutes Verhältnis von Tempo und Kontrolle</td>
+          </tr>
+          <tr>
+            <td><span class="mode-badge badge-auto">Automatisch (Auto)</span></td>
+            <td>Setzt Werte direkt in Jira-Felder. Atlassians nativer Berechtigungsdialog erscheint als Plattformabsicherung.</td>
+            <td>Du bestätigst Atlassians Berechtigungsabfrage einmalig.</td>
+            <td>Massenbewertung, große Backlogs, Teams mit Vertrauen ins KI-Urteil</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Die App erzwingt den Modus serverseitig — es ist keine vom Nutzer umgehbare Clienteinstellung. Hat der Administrator den Bestätigungsmodus gesetzt, fragt der Agent immer vor dem Schreiben nach, unabhängig von der Formulierung der Chat-Anfrage.
+      </p>
+
+      <div class="callout callout-yellow">
+        <p><strong>Modi wechseln:</strong> Änderungen in den Einstellungen wirken in neuen Rovo-Chat-Sitzungen. Ein aktiver Chat behält seinen Startmodus. Öffne nach einer Modusänderung einen neuen Rovo-Chat, um das neue Verhalten zu nutzen.</p>
+      </div>
+
+      <h2 id="example">So sieht eine Bewertungssitzung aus</h2>
+      <p>
+        Hier ein typischer Austausch im Bestätigungsmodus. Der Produktmanager stellt eine Anfrage; der Rovo-Agent von Priority Scoring begründet die RICE-Dimensionen und fragt vor dem Schreiben nach:
+      </p>
+
+      <div class="chat-box">
+        <div class="chat-box-title">Rovo-Chat — Bestätigungsmodus, RICE-Bewertung</div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-user">Produktmanager</div>
+          <div class="chat-bubble">Schlage einen RICE-Wert für PROJ-47 vor.</div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-rovo">R</div>
+          <div class="chat-bubble">
+            <strong>PROJ-47: „CSV-Massenexport für gefilterte Ansichten hinzufügen“</strong><br><br>
+            Auf Grundlage der Vorgangsbeschreibung und ähnlicher Exportwünsche in deinem Backlog schätze ich Folgendes:
+            <div class="score-line">Reichweite (Reach) <span>200</span> — Vielnutzer mit großen Datenmengen; etwa 15 % der aktiven Nutzer pro Quartal anhand der in PROJ-31 gemeldeten Nutzung.</div>
+            <div class="score-line">Wirkung (Impact) <span>2 (hoch)</span> — Beseitigt eine manuelle Umgehungslösung, die Nutzer derzeit als wichtigste Reibung ihres Ablaufs melden.</div>
+            <div class="score-line">Sicherheit (Confidence) <span>80%</span> — Gute qualitative Belege, keine quantitativen Daten zur genauen Nutzeranzahl.</div>
+            <div class="score-line">Aufwand <span>1 Personenmonat</span> — Frontend-Oberfläche und Backend-Exportendpunkt; keine neue Infrastruktur.</div>
+            <div class="score-line" style="margin-top:10px;">RICE-Wert = (200 × 2 × 0,8) ÷ 1 = <strong>320</strong></div>
+            <br>Soll ich diesen Wert auf PROJ-47 anwenden?
+          </div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-user">Produktmanager</div>
+          <div class="chat-bubble">Ja, aber ändere die Reichweite auf 150 — die Exportfunktion wird nur Premium-Nutzern zur Verfügung stehen.</div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-avatar avatar-rovo">R</div>
+          <div class="chat-bubble">
+            Verstanden — Reichweite auf 150 geändert. Neuer RICE-Wert = (150 × 2 × 0,8) ÷ 1 = <strong>240</strong>. Auf PROJ-47 angewendet.
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Dieser Austausch dauert 30–60 Sekunden pro Vorgang. Der Produktmanager korrigiert eine Dimension, und dabei wird Kontext sichtbar, den die KI nicht kennen kann: Die Funktion liegt hinter einer Bezahlschranke, deshalb ist die tatsächliche Reichweite kleiner. Genau so sollte menschliche Mitwirkung funktionieren.
+      </p>
+
+      <h2 id="bulk-scoring">Dein Backlog gesammelt bewerten</h2>
+      <p>
+        Der zeitsparendste Einsatz des automatischen Modus ist die Massenbewertung — eine Liste unbewerteter Vorgänge mit einem Befehl durcharbeiten. In einem Rovo-Chat mit aktiviertem automatischem Modus:
+      </p>
+
+      <div class="callout callout-blue">
+        <p><em>„Bewerte alle unbewerteten Vorgänge im Projekt PROJ mit RICE.“</em></p>
+      </div>
+
+      <p>
+        Rovo lädt die unbewerteten Vorgänge, setzt jeweils anhand der Inhalte RICE-Dimensionswerte und schreibt die Bewertungen in die benutzerdefinierten Felder. Ein Limit pro Aufruf (Standard: zehn Vorgänge) verhindert unkontrollierte Massenänderungen. Nach der ersten Gruppe kannst du den Befehl für die nächste wiederholen.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/RovoAction-BulkScore-UnscoredTasksInAProject.png" alt="Rovo bewertet unbewertete Jira-Vorgänge gesammelt mit dem Priority-Scoring-Agenten" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo-Massenbewertung unbewerteter Vorgänge eines Projekts — angewendete Werte im Rovo-Aktivitätsverlauf sichtbar</p>
+      </div>
+
+      <p>
+        Prüfe nach der Massenbewertung die Rangfolge im Priority-Scoring-Dashboard. Filtere Werte außerhalb des erwarteten Bereichs — Ausreißer zeigen oft entweder ungewöhnlich gut beschriebene Tickets (hoher Wert) oder vage, unzureichende Angaben (niedriger Wert). Beides liefert konkrete Ansatzpunkte fürs nächste Refinement.
+      </p>
+
+      <h2 id="rovo-on-ticket">Rovo-Begründungen an Vorgängen</h2>
+      <p>
+        Im Bestätigungs- und automatischen Modus kann der Priority-Scoring-Agent optional eine kurze Begründung am Jira-Vorgang hinterlassen — mit der Erklärung jeder Dimensionsbewertung. So entsteht ein Protokoll für alle Teammitglieder, die den Vorgang später öffnen, nicht nur für den Produktmanager der Bewertungssitzung.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/RovoCommentDescisionOnTicket.png" alt="Kommentar mit Rovo-KI-Begründung an einem Jira-Vorgang nach der Bewertung" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Rovo hinterlegt die Bewertungsbegründung im Jira-Vorgang — neben den Feldwerten sichtbar</p>
+      </div>
+
+      <h2 id="accuracy">Wie genau ist KI-Bewertung?</h2>
+      <p>
+        Die Genauigkeit hängt stark von der Vorgangsqualität ab. Gut geschriebene Vorgänge mit klarer Beschreibung, Akzeptanzkriterien und Kontext zu betroffenen Nutzern erhalten verlässlich vernünftige erste Werte. Knappe Einträge („Dunkelmodus hinzufügen“) erhalten allgemeine Werte, die nur wenig besser als ein zufälliger Ausgangspunkt sind.
+      </p>
+      <p>
+        Die häufigsten Teamkorrekturen nach Prüfung der KI-Vorschläge:
+      </p>
+      <ul>
+        <li><strong>Reichweite:</strong> Die KI schätzt anhand sichtbaren Texts; Teams wissen oft, dass das tatsächliche Nutzersegment enger oder breiter ist.</li>
+        <li><strong>Sicherheit:</strong> Bei den meisten Vorgängen mit irgendeiner Beschreibung tendiert die KI zu 80 %. Teams mit belastbaren Daten (Analysen, Interviews) sollten erhöhen, bei reinen Hypothesen reduzieren.</li>
+        <li><strong>Aufwand:</strong> Die KI unterschätzt Aufwand bei teamübergreifenden Abhängigkeiten und überschätzt ihn bei gut verstandenen Oberflächenänderungen. Entwickler sollten Aufwandswerte vor der Übernahme prüfen.</li>
+      </ul>
+      <p>
+        Eine praktische Abstimmung: Nutze den Vorschlagsmodus zwei Wochen, notiere übernommene und korrigierte Empfehlungen und suche Muster. Sobald du dem Urteil in bestimmten Bereichen vertraust (zum Beispiel Wirkung und Sicherheit bei deinem Produkttyp), wechsle dafür zum Bestätigungs- oder automatischen Modus.
+      </p>
+
+      <h2 id="security">Datensicherheit</h2>
+      <p>
+        Priority Scoring for Jira basiert auf Forge und läuft ohne externe Server vollständig in Atlassians eigener Cloud-Infrastruktur. Wenn Rovo eine Bewertung verarbeitet, bleiben die Vorgangsinhalte innerhalb der Atlassian-Plattform. Priority Scoring selbst sendet keine Vorgangsdaten an externe KI-Anbieter. Rovos zugrunde liegende KI-Funktionen stammen von Atlassian Intelligence und unterliegen <a href="https://www.atlassian.com/trust/security/security-practices" target="_blank" rel="noopener">Atlassians Sicherheitspraktiken</a>.
+
+      </p>
+      <p>
+        Das ist der Vorteil von „Runs on Atlassian“ — für Unternehmen mit Datenresidenzanforderungen oder strengen Datenverarbeitungsverträgen entfällt die Risikokategorie externer KI-Integrationen vollständig.
+      </p>
+
+      <h2 id="setup">Mit KI-Bewertung beginnen</h2>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Installiere Priority Scoring for Jira aus dem Atlassian Marketplace.</strong> Die Rovo-Integration ist enthalten — keine separate Installation oder API-Schlüssel erforderlich.</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Prüfe, ob Atlassian Intelligence auf deiner Site aktiviert ist.</strong> Rovo benötigt Atlassian Intelligence. Wende dich bei fehlender Aktivierung an deinen Atlassian-Administrator. Es ist in Jira Cloud Premium und Enterprise verfügbar.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Setze deinen Rovo-Modus in den Priority-Scoring-Einstellungen.</strong> Öffne die globalen Einstellungen von Priority Scoring und wähle im Rovo-Bereich Suggest, Confirm oder Auto. Beginne mit Suggest, wenn du KI-Bewertung neu nutzt.</div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Öffne einen Rovo-Chat und wähle den Priority-Scoring-Agenten.</strong> Gib eine Bewertungsanfrage ein: <em>„Schlage einen RICE-Wert für PROJ-123 vor.“</em> Prüfe die Begründung und übernimm, ändere oder verwerfe den Vorschlag.</div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Prüfe nach der Bewertung das priorisierte Backlog.</strong> Öffne das Priority-Scoring-Dashboard für die Rangfolgeansicht. Suche unerwartet hohe oder niedrige Werte und nutze diese Ausreißer als Ausgangspunkte für das nächste Refinement.</div>
+        </li>
+      </ol>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann Jira mein Backlog mit KI automatisch priorisieren?</p>
+        <p class="faq-a">Ja, mit der passenden Marketplace-App. <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> integriert Rovo, um RICE-, WSJF- und ICE-Werte vorzuschlagen oder automatisch zu setzen. Rovo liest Vorgangsinhalte, begründet die Dimensionen und schreibt Ergebnisse in native benutzerdefinierte Jira-Felder. Drei Modi steuern die Automatisierung: Vorschlag, Bestätigung und automatisch.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist Rovo in Jira?</p>
+        <p class="faq-a">Rovo ist <a href="https://www.atlassian.com/software/rovo" target="_blank" rel="noopener">Atlassians KI-Agentenplattform</a> und Teil von Atlassian Intelligence. Spezialisierte KI-Agenten können Jira, Confluence und verbundene Werkzeuge durchsuchen, lesen und darin handeln. Marketplace-Apps wie Priority Scoring for Jira erweitern Rovo um eigene Agenten für konkrete Aufgaben wie die Bewertung von Backlog-Vorgängen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Ist KI-generierte Bewertung in Jira sicher nutzbar?</p>
+        <p class="faq-a">Mit passenden Moduseinstellungen ja. Im Vorschlagsmodus empfiehlt Rovo nur Werte — ohne menschliche Handlung wird nichts nach Jira geschrieben. Im Bestätigungsmodus fragt es ausdrücklich vor jeder Bewertung. Automatisch setzt es Werte direkt, aber Atlassians nativer Berechtigungsdialog bleibt als Plattformabsicherung. Beginne bei sensiblen Backlogs mit Vorschlag oder Bestätigung, bis du das KI-Urteil abgestimmt hast.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie bewerte ich mein gesamtes Jira-Backlog mit Rovo gesammelt?</p>
+        <p class="faq-a">Schreibe in einem Rovo-Chat mit aktiviertem automatischem Modus: <em>„Bewerte alle unbewerteten Vorgänge im Projekt PROJ mit RICE“</em> (verwende deinen Projektschlüssel). Rovo verarbeitet Gruppen von bis zu zehn Vorgängen pro Aufruf. Nach jeder Gruppe kannst du den Befehl für die nächste wiederholen. Prüfe die Ergebnisse im Priority-Scoring-Dashboard.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Sendet Rovo meine Jira-Daten an externe Server?</p>
+        <p class="faq-a">Nein. Priority Scoring for Jira läuft vollständig in Atlassians Cloud-Infrastruktur (auf Forge, mit „Runs on Atlassian“). Rovo selbst ist ein Atlassian-Produkt. Deine Vorgangsdaten werden in Atlassians Systemen verarbeitet und von dieser App nicht an Server Dritter übertragen.</p>
+      </div>
+
+      <!-- Article CTA -->
+            <div class="article-cta">
+        <h3>Dein Backlog mit Rovo-KI bewerten — in Minuten statt Stunden</h3>
+        <p>Priority Scoring for Jira enthält den Rovo-KI-Agenten, drei Bewertungsverfahren, Gesundheitskennzahl und Portfolioansicht. Kostenlose Testversion im Marketplace.</p>
+        <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Der Engpass manueller Bewertung</a></li>
+          <li><a href="#what-is-rovo">Was Rovo ist</a></li>
+          <li><a href="#how-it-works">So funktioniert der Rovo-Agent</a></li>
+          <li><a href="#three-modes">Die drei Betriebsmodi</a></li>
+          <li><a href="#example">So sieht eine Bewertungssitzung aus</a></li>
+          <li><a href="#bulk-scoring">Dein Backlog gesammelt bewerten</a></li>
+          <li><a href="#rovo-on-ticket">Begründungen an Vorgängen</a></li>
+          <li><a href="#accuracy">Wie genau ist KI-Bewertung?</a></li>
+          <li><a href="#security">Datensicherheit</a></li>
+          <li><a href="#setup">Einstieg</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rovo-KI · Forge</div>
+          </div>
+        </a>
+                <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>
+        <a href="/de/blog/wsjf-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation</a>
+        <a href="/de/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Jira-Backlog-Gesundheit: Deine Projektqualitätskennzahl messen</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

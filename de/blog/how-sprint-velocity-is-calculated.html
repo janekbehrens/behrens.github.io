@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen) | Janek Behrens</title>
+  <meta name="description" content="Eine genaue Erklärung, wie Jira die Sprint-Velocity berechnet: Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzfeld und Done-Zuordnung die Zahlen beeinflussen, warum Unteraufgaben ausgeschlossen sind und warum Velocity- und Sprint-Bericht manchmal voneinander abweichen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/how-sprint-velocity-is-calculated.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)",
+  "description": "Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzfeld und Done-Zuordnung die Zahlen beeinflussen, warum Unteraufgaben ausgeschlossen sind und warum Velocity- und Sprint-Bericht manchmal voneinander abweichen.",
+  "url": "https://janekbehrens.de/de/blog/how-sprint-velocity-is-calculated.html",
+  "datePublished": "2026-05-30T00:00:00+02:00",
+  "dateModified": "2026-05-30T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+  "keywords": [
+    "Jira",
+    "Sprint-Velocity",
+    "Story Points",
+    "zugesagt vs. abgeschlossen",
+    "Scrum",
+    "Agil",
+    "Velocity-Diagramm"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)">
+  <meta property="og:description" content="Eine genaue Erklärung: Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzfeld und Done-Zuordnung die Zahlen beeinflussen und warum Berichte manchmal voneinander abweichen.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/how-sprint-velocity-is-calculated.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-05-30">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)">
+  <meta name="twitter:description" content="Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzungen und Done-Zuordnung die Zahlen beeinflussen und warum Berichte voneinander abweichen.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie wird die Sprint-Velocity in Jira berechnet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jira summiert für jeden Sprint zwei Schätzwerte: „Zugesagt“ ist die gesamte Schätzung aller Vorgänge im Sprint zu dessen Beginn; „Abgeschlossen“ ist die gesamte Schätzung der Arbeit, die bis zum Sprintende fertiggestellt wurde. Velocity ist der Durchschnitt der abgeschlossenen Werte über die letzten Sprints."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Zählt Arbeit, die mitten im Sprint hinzukommt, zur Zusage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Die Zusage wird zu Sprintbeginn festgehalten. Ein nach Sprintbeginn hinzugefügter Vorgang erhöht die Zusage nicht. Wenn er abgeschlossen wird, erhöht er aber den Abschlusswert. Deshalb kann der abgeschlossene Umfang gelegentlich größer sein als der zugesagte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sind Unteraufgaben im Jira-Velocity-Diagramm enthalten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Atlassians natives Velocity-Diagramm berücksichtigt keine Schätzungen von Unteraufgaben; es zählt nur Schätzungen der Standard-Vorgangstypen. Teams, die auf Ebene der Unteraufgaben schätzen, sehen eine zu niedrige Velocity, sofern sie kein Werkzeug verwenden, das Unteraufgaben optional einbeziehen kann."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum zeigen mein Velocity-Diagramm und mein Sprint-Bericht nicht dieselbe Zahl?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die häufigsten Ursachen sind nach Sprintbeginn neu geschätzte Vorgänge, Status ohne Zuordnung zu den Board-Spalten und Umfangsänderungen während des Sprints. Die Zusage im Velocity-Diagramm ist eine Momentaufnahme zu Sprintbeginn. Spätere Neuschätzungen können deshalb zu Abweichungen von einer aktuellen Summe der Story Points führen."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-amber { background: #FFFAE6; border-left: 3px solid #FF991F; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .dim-table td.num { text-align:right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/how-sprint-velocity-is-calculated.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/how-sprint-velocity-is-calculated.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/how-sprint-velocity-is-calculated.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">30. Mai 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)</h1>
+      <p class="article-intro">
+        „Velocity“ klingt einfach — abgeschlossene Punkte pro Sprint — aber die genauen Regeln hinter den beiden Balken bringen viele Teams ins Stolpern. Was zählt zur Zusage? Was passiert mit Arbeit, die mitten im Sprint hinzukommt? Warum verschwinden Unteraufgaben, und warum weicht das Velocity-Diagramm vom Sprint-Bericht ab? Hier erfährst du anhand eines Rechenbeispiels genau, wie Jira rechnet.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="two-numbers">Velocity basiert auf zwei Zahlen pro Sprint</h2>
+      <p>
+        Jede Velocity-Berechnung beruht auf zwei Summen, die Jira für jeden abgeschlossenen Sprint bildet. Atlassians <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-velocity-chart/" target="_blank" rel="noopener">Dokumentation zum Velocity-Diagramm</a> definiert sie so:
+      </p>
+      <ul>
+        <li><strong>Zugesagte Arbeit</strong> — „die gesamte Schätzung aller Vorgänge im Sprint zu dessen Beginn“.</li>
+        <li><strong>Abgeschlossen</strong> — „die gesamte abgeschlossene Schätzung am Sprintende“.</li>
+      </ul>
+      <p>
+        <strong>Velocity</strong> ist dann „der Durchschnitt der gesamten abgeschlossenen Schätzungen über die letzten Sprints“. Velocity ist also im Grunde nur <em>der gleitende Durchschnitt des grünen Balkens</em>. Alles Weitere betrifft die Berechnung dieser beiden Summen — und genau dort stecken die Details.
+      </p>
+
+      <h2 id="commitment">Wie die zugesagte Arbeit gezählt wird</h2>
+      <p>
+        Die Zusage ist eine <strong>Momentaufnahme zu Sprintbeginn</strong>. Wenn du auf <em>Sprint starten</em> klickst, erfasst Jira die Schätzungen aller Vorgänge, die sich zu diesem Zeitpunkt im Sprint befinden, und addiert sie. Daraus folgen einige Regeln:
+      </p>
+      <ul>
+        <li>Vorgänge, die <strong>vor</strong> Sprintbeginn hinzugefügt werden, zählen zur Zusage.</li>
+        <li>Vorgänge, die <strong>nach</strong> Sprintbeginn hinzugefügt werden, zählen <em>nicht</em> zur Zusage — sie sind eine Umfangsänderung und keine ursprüngliche Zusage.</li>
+        <li>Vorgänge ohne Schätzung tragen null zur Zusage bei (genau deshalb verzerrt ungeschätzte Arbeit das Bild unbemerkt).</li>
+      </ul>
+      <p>
+        Diese Momentaufnahme führt später oft zu Verwirrung: Wird ein Vorgang <em>nach</em> Sprintbeginn neu geschätzt, ändert das die Zusage dieses Sprints nicht mehr — die Momentaufnahme wurde bereits erstellt.
+      </p>
+
+      <h2 id="completed">Wie die abgeschlossene Arbeit gezählt wird</h2>
+      <p>
+        Die abgeschlossene Arbeit wird <strong>am Sprintende</strong> gemessen: als Summe der Schätzungen aller Vorgänge, die <em>fertig</em> sind. „Fertig“ bedeutet hier, dass sich der Vorgang in einem Status befindet, der der letzten Spalte deines Boards (der Done-Spalte) zugeordnet ist. Zwei Folgen sind besonders wichtig:
+      </p>
+      <ul>
+        <li>Arbeit, die <strong>mitten im Sprint hinzugefügt und abgeschlossen wird,</strong> zählt zur abgeschlossenen Arbeit, obwohl sie nie zur Zusage gezählt hat. Deshalb kann der grüne Balken gelegentlich höher sein als der graue.</li>
+        <li>Arbeit, die „im Grunde fertig“ ist, aber in einem Status außerhalb der Done-Spalte liegt, zählt <strong>nicht</strong> zur abgeschlossenen Arbeit. Verwendest du einen Status wie <em>Released</em> oder <em>Accepted</em> außerhalb der Done-Spalte, bleibt diese Arbeit für die Velocity unsichtbar.</li>
+      </ul>
+
+      <div class="callout callout-amber">
+        <p><strong>Die Falle bei der Done-Zuordnung:</strong> Das native Diagramm zählt nur, was in der Done-Spalte des Boards liegt. Viele Teams haben mehr als einen Status für fertige Arbeit. Ihr tatsächlich abgeschlossener Umfang ist deshalb höher, als das Diagramm zeigt. Die Spaltenzuordnung deines Boards an deine tatsächliche Definition of Done anzupassen, ist die wirkungsvollste Korrektur für eine Velocity, die zu niedrig erscheint.</p>
+      </div>
+
+      <h2 id="estimation">Das Schätzfeld bestimmt die Einheit</h2>
+      <p>
+        Velocity wird nicht immer in Story Points gemessen. Das Diagramm verwendet die <strong>Schätzstatistik</strong> deines Boards. Üblicherweise ist das eine dieser Optionen:
+      </p>
+      <ul>
+        <li><strong>Story Points</strong> — der Standard auf den meisten Scrum-Boards.</li>
+        <li><strong>Anzahl der Vorgänge</strong> — jeder Vorgang zählt als 1; hilfreich für Teams, die nicht in Punkten schätzen.</li>
+        <li><strong>Ursprüngliche Zeitschätzung</strong> oder ein benutzerdefiniertes Zahlenfeld — abhängig von der Board-Konfiguration.</li>
+      </ul>
+      <p>
+        Der klassische Stolperstein: Ein Board ist für „Story Points“ konfiguriert, während das Team tatsächlich im Feld <em>Story point estimate</em> schätzt (oder umgekehrt). Das Diagramm liest dann ein leeres Feld, und die Balken liegen nahe null. Laut Atlassians <a href="https://support.atlassian.com/jira/kb/story-points-calculation-in-sprint-velocity-report/" target="_blank" rel="noopener">Hinweisen zur Berechnung von Story Points</a> summiert der Bericht das Feld, das für das Board festgelegt wurde — wenn die Balken falsch aussehen, prüfe deshalb zuerst dieses Feld.
+      </p>
+
+      <h2 id="excluded">Was fehlt: Unteraufgaben</h2>
+      <p>
+        Eine Regel überrascht fast alle: <strong>Schätzungen von Unteraufgaben werden nicht berücksichtigt</strong> im nativen Velocity-Diagramm. Es zählen nur Standard-Vorgangstypen. Wenn dein Team seine Schätzungen in Unteraufgaben statt in der übergeordneten Story einträgt, weist das native Diagramm systematisch eine zu niedrige Velocity aus. Du kannst entweder auf Story-Ebene schätzen oder ein Gadget nutzen, mit dem du Unteraufgaben ausdrücklich <em>aufnehmen kannst</em>.
+
+      </p>
+
+      <h2 id="worked-example">Ein Rechenbeispiel</h2>
+      <p>Betrachte einen Sprint. Zu Beginn enthält er vier Stories:</p>
+      <div style="overflow-x:auto;">
+      <table class="dim-table">
+        <thead>
+          <tr><th>Vorgang</th><th>Schätzung</th><th>Zu Sprintbeginn enthalten?</th><th>Am Ende fertig?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>STORY-1</td><td class="num">5</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>STORY-2</td><td class="num">8</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>STORY-3</td><td class="num">3</td><td>Ja</td><td>Nein</td></tr>
+          <tr><td>STORY-4</td><td class="num">5</td><td>Ja</td><td>Nein</td></tr>
+          <tr><td>STORY-5 (mitten im Sprint aufgenommen)</td><td class="num">2</td><td>Nein</td><td>Ja</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul>
+        <li><strong>Zugesagte Arbeit</strong>  = 5 + 8 + 3 + 5 =  <strong>21</strong> (die vier Vorgänge zu Sprintbeginn; STORY-5 ist ausgeschlossen).</li>
+        <li><strong>Abgeschlossen</strong>  = 5 + 8 + 2 =  <strong>15</strong> (alles, was am Ende fertig ist, einschließlich der mitten im Sprint aufgenommenen STORY-5).</li>
+      </ul>
+      <p>
+        Dieser Sprint zeigt also einen grauen Balken mit 21 Punkten und einen grünen mit 15 Punkten — ein Say/Do-Verhältnis von etwa 71 %. Beachte, wie die nachträglich aufgenommene STORY-5 die <em>abgeschlossene Arbeit</em> erhöht, ohne jemals die <em>zugesagte Arbeit</em> zu verändern: Diese Asymmetrie ist beabsichtigt.
+      </p>
+
+      <h2 id="discrepancies">Warum deine Berichte manchmal voneinander abweichen</h2>
+      <p>
+        Eine häufige Supportfrage lautet: „Warum stimmt mein Velocity-Diagramm nicht mit dem Sprint-Bericht (oder einer JQL-Summe der Story Points) überein?“ Die üblichen Ursachen:
+      </p>
+      <ul>
+        <li><strong>Neuschätzung nach Sprintbeginn.</strong> Die Zusage im Velocity-Diagramm bleibt auf dem Stand zu Sprintbeginn; eine aktuelle JQL-Summe berücksichtigt die heutigen Schätzungen. Wenn jemand einen Vorgang mitten im Sprint neu bewertet hat, unterscheiden sich die Zahlen.</li>
+        <li><strong>Status ohne Spaltenzuordnung.</strong> Ein Vorgang in einem Status, der keiner Board-Spalte zugeordnet ist, kann vollständig aus der Berechnung herausfallen.</li>
+        <li><strong>Umfangsänderungen.</strong> Während des Sprints hinzugefügte oder entfernte Vorgänge verändern die abgeschlossene Arbeit, aber nicht die Zusage.</li>
+        <li><strong>Unteraufgaben.</strong> Eine JQL-Summe, die Punkte von Unteraufgaben einschließt, stimmt nicht mit dem Diagramm überein, das sie ignoriert.</li>
+      </ul>
+      <p>
+        Das sind keine Fehler — sie ergeben sich direkt aus den oben beschriebenen Regeln zur Momentaufnahme und Statuszuordnung. Sie erklären aber, warum eine einzige „wahre“ Velocity schwieriger festzulegen ist, als es zunächst aussieht.
+      </p>
+
+      <h2 id="reconstructing">Velocity auf deine eigene Weise messen</h2>
+      <p>
+        Die nativen Regeln sind fest vorgegeben. Teams, deren Prozess davon abweicht — mehrere Done-Status, Schätzungen in Unteraufgaben, ein anderes Schätzfeld — erhalten deshalb eine Velocity, die ihre tatsächliche Arbeit nicht abbildet. <a href="/de/velocity-chart.html">Velocity Chart for Jira</a> berechnet dasselbe Modell aus zugesagter und abgeschlossener Arbeit neu, erlaubt dir aber, die im nativen Bericht festgelegten Komponenten selbst zu bestimmen: Es rekonstruiert die Zusage anhand des tatsächlichen Sprintumfangs zu Beginn (aus dem Änderungsverlauf des Sprintfelds), lässt dich festlegen, <strong>welche Status genau als Done zählen</strong>, das Schätzfeld auswählen und Unteraufgaben optional einbeziehen. Anschließend wird alles auf einem Dashboard angezeigt, sowohl für unternehmensverwaltete als auch für teamverwaltete Boards. Die Berechnung bleibt gleich; du bestimmst lediglich die Eingaben.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie wird die Sprint-Velocity in Jira berechnet?</p>
+        <p class="faq-a">Für jeden Sprint ist die Zusage die gesamte Schätzung der Arbeit zu Sprintbeginn; die abgeschlossene Arbeit ist die gesamte Schätzung der bis zum Sprintende erledigten Arbeit. Velocity ist der Durchschnitt der abgeschlossenen Werte über die letzten Sprints.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Zählt Arbeit, die mitten im Sprint hinzukommt, zur Zusage?</p>
+        <p class="faq-a">Nein. Die Zusage wird zu Sprintbeginn festgehalten. Später hinzugefügte Arbeit erhöht sie nicht, erhöht bei Abschluss aber den abgeschlossenen Wert — deshalb kann die abgeschlossene Arbeit manchmal größer sein als die zugesagte.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Sind Unteraufgaben im Velocity-Diagramm enthalten?</p>
+        <p class="faq-a">Nein — das native Velocity-Diagramm schließt Schätzungen von Unteraufgaben aus und zählt nur Standard-Vorgangstypen. Teams, die in Unteraufgaben schätzen, sehen eine zu niedrige Velocity, sofern sie kein Werkzeug verwenden, das diese optional einbezieht.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum stimmen mein Velocity-Diagramm und mein Sprint-Bericht nicht überein?</p>
+        <p class="faq-a">Meistens liegt es an Vorgängen, die nach Sprintbeginn neu geschätzt wurden (die Zusage ist eine Momentaufnahme zu Sprintbeginn), an Status ohne Spaltenzuordnung, Umfangsänderungen während des Sprints oder einer JQL-Summe, die vom Diagramm ignorierte Punkte von Unteraufgaben berücksichtigt.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Velocity so messen, wie dein Team arbeitet</h3>
+        <p>Wähle deine Definition of Done, dein Schätzfeld und den Umgang mit Unteraufgaben — und sieh zugesagte und abgeschlossene Arbeit mit Velocity Chart for Jira auf jedem Dashboard.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#two-numbers">Zwei Zahlen pro Sprint</a></li>
+          <li><a href="#commitment">Wie die zugesagte Arbeit gezählt wird</a></li>
+          <li><a href="#completed">Wie die abgeschlossene Arbeit gezählt wird</a></li>
+          <li><a href="#estimation">Das Schätzfeld</a></li>
+          <li><a href="#excluded">Was ausgeschlossen wird</a></li>
+          <li><a href="#worked-example">Ein Rechenbeispiel</a></li>
+          <li><a href="#discrepancies">Warum Berichte abweichen</a></li>
+          <li><a href="#reconstructing">Dein eigener Ansatz</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenloser Tarif</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Im Marketplace ansehen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/jira-velocity-chart.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Velocity-Diagramm: So liest du es</a>
+        <a href="/de/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis</a>
+        <a href="/de/blog/velocity-team-managed-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Velocity für teamverwaltete Projekte</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <title>Team Capacity Planning for Jira — Dokumentation und Einrichtung</title>
+  <meta name="description" content="Anleitung für Team Capacity Planning for Jira: eine Heatmap zur Sprintauslastung für jedes Jira-Dashboard. Erkenne Überlastungen, lege Kapazitäten pro Person fest und exportiere Daten als CSV.">
+  <link rel="canonical" href="https://janekbehrens.de/de/team-capacity-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Team Capacity Planning for Jira — Dokumentation und Einrichtung">
+  <meta property="og:description" content="So erstellt Team Capacity Planning for Jira aus deinen Sprintschätzungen eine farbige Heatmap der Teamauslastung — Einrichtung, Kapazitätsplanung pro Person, Schwellenwerte und CSV-Export.">
+  <meta property="og:url" content="https://janekbehrens.de/de/team-capacity-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Team Capacity Planning for Jira",
+      "description": "Dashboard-Gadget auf Atlassian Forge, das Teamkapazität und Sprintauslastung pro Person zeigt — eine farbige Heatmap macht sichtbar, wer überlastet ist, fast ausgelastet ist oder noch Kapazität hat. Grundlage sind die Schätzungen, die dein Jira-Board bereits verwendet.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Team Capacity Planning for Jira — Dokumentation und Einrichtung",
+      "description": "Einrichtung und Benutzeranleitung für Team Capacity Planning for Jira — wie die Sprintauslastung gemessen wird, wie Kapazitäten und Schwellenwerte funktionieren und wie du Schätzung und tatsächlichen Aufwand pro Person exportierst.",
+      "url": "https://janekbehrens.de/de/team-capacity-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "„No estimates on these issues“ (Keine Schätzungen für diese Vorgänge)",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Board schätzt in Punkten oder Zeit, aber die Vorgänge im Sprint haben noch keine Schätzung. Ergänze Schätzungen oder ändere unter Edit die Einstellung Measure workload by auf Issue count."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "„No active or recent sprint found on this board“ (Kein aktiver oder kürzlich abgeschlossener Sprint auf diesem Board gefunden)",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Board hat noch keine Sprints. Erstelle einen oder wähle unter Edit ein anderes Board. Wenn Sprints vorhanden sind, aber keiner aktiv ist, zeigt das Gadget den nächsten geplanten oder den zuletzt abgeschlossenen Sprint."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "„You do not have permission to view this board“ (Du hast keine Berechtigung, dieses Board anzusehen)",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die App zeigt ein Board nur Personen, die dessen Projekt ansehen dürfen. Bitte deinen Jira-Administrator um die Berechtigung Browse Projects für das Projekt des Boards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mein Board fehlt in der Liste",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aufgelistet werden Scrum-Boards und vom Team verwaltete Boards in Projekten, die du ansehen darfst. Ein vom Team verwaltetes Board ohne Sprints zeigt „No active or recent sprint found“. Klassische Kanban-Boards fehlen, da sie keine Sprints haben."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich für Teilzeitmitglieder eine andere Kapazität festlegen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, mit Pro: Du kannst die Standardkapazität pro Person überschreiben, etwa für Teilzeitkräfte oder neue Teammitglieder. Die App erfasst keine Abwesenheiten, deshalb trägst du den niedrigeren Wert selbst ein. Ohne Pro gilt eine Standardkapazität für alle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum gibt es eine Zeile „Unassigned“?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Arbeit ohne zugewiesene Person ist echte Auslastung. Würde sie ausgeblendet, sähe das Team weniger beschäftigt aus, als es ist."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Sehr große Sprints",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Gadget liest bis zu 500 Vorgänge pro Sprint. Bei größeren Sprints erscheint ein Hinweis, und die Auslastungswerte sind Teilsummen."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/team-capacity-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/team-capacity-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/team-capacity-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="tc">
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#what">Funktionsweise</a>
+        <a href="#setup">Einrichtung</a>
+        <a href="#sprints" class="sub">Sprints und Aktualisierung</a>
+        <a href="#measure">So wird die Auslastung gemessen</a>
+        <a href="#capacity">Kapazität, Schwellenwerte und Farben</a>
+        <a href="#csv">CSV-Export</a>
+        <a href="#sharing">Freigabe und Berechtigungen</a>
+        <a href="#privacy">Datenschutz</a>
+        <a href="#faq">Häufige Fragen</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Team Capacity Planning for Jira — Dokumentation</h1>
+      <p class="subtitle">Eine Heatmap der Sprintauslastung für dein Jira-Dashboard: Erkenne, wer überlastet ist, fast ausgelastet ist oder noch Kapazität hat.</p>
+
+      <div class="quickstart">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li>Öffne ein Jira-Dashboard → <strong>Add gadget (Gadget hinzufügen)</strong> → suche nach <strong>„Team Capacity“</strong>.</li>
+          <li>Öffne beim Gadget das Menü <strong>Edit (Bearbeiten)</strong> (Stiftsymbol) und wähle ein <strong>Board</strong>.</li>
+          <li>Wähle, wie die <strong>Auslastung gemessen wird,</strong> und eine einheitliche <strong>Kapazität pro Person</strong>.</li>
+          <li><strong>Speichere mit Save.</strong> Die Heatmap erscheint sofort; <strong>Refresh (Aktualisieren)</strong> liest die aktuellen Werte.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#what">Funktionsweise</a></li>
+          <li><a href="#setup">Einrichtung</a>  ·  <a href="#sprints">Sprints und Aktualisierung</a></li>
+          <li><a href="#measure">So wird die Auslastung gemessen</a></li>
+          <li><a href="#capacity">Kapazität, Schwellenwerte und Farben</a></li>
+          <li><a href="#csv">CSV-Export</a></li>
+          <li><a href="#sharing">Freigabe und Berechtigungen</a></li>
+          <li><a href="#privacy">Datenschutz</a></li>
+          <li><a href="#faq">Häufige Fragen</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section id="what">
+        <h2>Funktionsweise</h2>
+        <p>
+          <strong>Team Capacity Planning for Jira</strong> ist ein <dfn class="term" data-tip="Ein kleines Fenster auf einem Jira-Dashboard. Jedes Gadget hat eigene Einstellungen.">Dashboard-Gadget</dfn>. Es liest den Sprint eines Scrum-Boards, addiert die geschätzte Arbeit pro Person, vergleicht sie mit deren
+          <dfn class="term" data-tip="Wie viel Arbeit eine Person in einem Sprint übernehmen kann, in derselben Einheit wie die Auslastung: Punkte, Stunden oder Vorgänge.">Kapazität</dfn>
+          und zeigt einen farbigen Balken pro zugewiesener Person, beginnend mit dem höchsten Kapazitätsanteil. In der Kopfzeile stehen der Sprint und die Teamgesamtwerte (Personen, Auslastung/Kapazität, Anzahl überlasteter Personen).
+        </p>
+        <ul>
+          <li><span class="dot" style="background:#DE350B" aria-hidden="true"></span><strong>Überlastet</strong> (rot) — Auslastung über der Kapazität (standardmäßig über 100 %)</li>
+          <li><span class="dot" style="background:#FF8B00" aria-hidden="true"></span><strong>Fast ausgelastet</strong> (orange) — standardmäßig 85–100 %</li>
+          <li><span class="dot" style="background:#36B37E" aria-hidden="true"></span><strong>Im Plan</strong> (grün) — zwischen den beiden Grenzen (standardmäßig 50–85 %)</li>
+          <li><span class="dot" style="background:#4C9AFF" aria-hidden="true"></span><strong>Hat freie Kapazität</strong> (blau) — standardmäßig unter 50 %</li>
+          <li><span class="dot" style="background:#A5ADBA" aria-hidden="true"></span><strong>Unassigned (Nicht zugewiesen)</strong> (grau) — Sprintarbeit ohne zugewiesene Person bekommt eine eigene Zeile am Listenende und gehört nicht zum Teamgesamtwert</li>
+        </ul>
+        <p>Ein Balken wächst nie über 100 % hinaus; die Zahl daneben zeigt den tatsächlichen Wert (zum Beispiel 130 %).</p>
+        <img src="/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team-Capacity-Gadget auf einem Jira-Dashboard: ein farbiger Balken pro Person für den aktiven Sprint, zwei überlastete Personen in Rot, eine Zeile für nicht zugewiesene Arbeit, Teamgesamtwerte, der Aktualisierungszeitpunkt und die Schaltflächen Refresh und Export CSV" loading="lazy" width="1840" height="900">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgTeamCapacityForJira/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/klrrET1nWeQ?autoplay=1" data-title="Team Capacity Planning for Jira: Erkenne, wer überlastet ist">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: Team Capacity Planning for Jira: Erkenne, wer überlastet ist"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="setup">
+        <h2>Einrichtung</h2>
+        <p>Jeder Nutzer kann das Gadget zu einem Dashboard hinzufügen, das er bearbeiten darf. Das Menü <strong>Edit (Bearbeiten)</strong> (Stiftsymbol) enthält diese Einstellungen:</p>
+        <ul>
+          <li><strong>Board</strong> — ein <dfn class="term" data-tip="Ein Jira-Board, das Arbeit in Sprints plant: feste Zeiträume, meist eine bis vier Wochen.">Scrum-Board</dfn>,  <dfn class="term" data-tip="Projekte, deren Einrichtung Jira-Administratoren für die gesamte Website verwalten (früher „classic“).">vom Unternehmen verwaltet</dfn> oder <dfn class="term" data-tip="Projekte, die das Team selbst ohne Jira-Administrator einrichtet (früher „next-gen“).">vom Team verwaltet</dfn>. Die Liste enthält Scrum-Boards in Projekten, die du ansehen darfst.</li>
+          <li><strong>Sprint</strong> — belasse die Einstellung bei <em>Active sprint (auto) (Aktiver Sprint, automatisch)</em> oder wähle einen festen Sprint. Die Automatik zeigt den aktiven Sprint; wenn es keinen gibt, einen geplanten Sprint, sonst den zuletzt abgeschlossenen.</li>
+          <li><strong>Measure workload by (Auslastung messen nach)</strong> — die Schätzung des Boards (Story Points oder Zeit) oder die Anzahl der Vorgänge. Siehe <a href="#measure">So wird die Auslastung gemessen</a>.</li>
+          <li><strong>Capacity per person (Kapazität pro Person)</strong> — ein Standardwert für alle in dieser Einheit (Punkte, Stunden oder Vorgänge pro Sprint). Das Formular beginnt bei 20. Pro-Einstellungen: siehe <a href="#capacity">Kapazität</a>.</li>
+        </ul>
+        <img src="/imgTeamCapacityForJira/screenshot-2-board-estimate-or-issue-count.webp" alt="Bearbeitungsformular des Team-Capacity-Gadgets: Boardauswahl, Sprint auf Active sprint (auto), das geöffnete Menü Measure workload by mit Board estimate (story points / time) und Issue count sowie die Standardkapazität pro Person" loading="lazy" width="1840" height="900">
+
+        <h3 id="sprints">Sprints und Aktualisierung</h3>
+        <p>
+          Das Sprintmenü in der Kopfzeile der Heatmap enthält den aktiven Sprint, geplante Sprints und bis zu acht kürzlich abgeschlossene Sprints. Ein Wechsel wird nicht gespeichert: Nach dem Neuladen zeigt das Gadget wieder den unter Edit eingestellten Sprint.
+        </p>
+        <p>
+          <strong>Das Gadget aktualisiert sich nicht selbst.</strong> In der Fußzeile steht, wann die Werte gelesen wurden („Updated 09:30“). Klicke auf <strong>Refresh (Aktualisieren)</strong> oder auf die Aktualisierungsschaltfläche des Gadgets oder Dashboards, um Jira erneut auszulesen. Der ausgewählte Sprint bleibt erhalten.
+        </p>
+        <img src="/imgTeamCapacityForJira/screenshot-4-switch-sprints-in-the-heatmap.webp" alt="Geöffnetes Sprintmenü in der Kopfzeile der Team-Capacity-Heatmap mit dem aktiven Sprint, einem zukünftigen Sprint und acht abgeschlossenen Sprints" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="measure">
+        <h2>So wird die Auslastung gemessen</h2>
+        <p>Die Auslastung beruht auf den Schätzungen, die dein Board bereits verwendet. Du musst nichts erneut eingeben oder synchronisieren.</p>
+        <h3>Board estimate (Boardschätzung, Standard)</h3>
+        <ul>
+          <li><strong>Story Points</strong> — „Story Points“ in vom Unternehmen verwalteten Projekten und „Story point estimate“ in vom Team verwalteten Projekten (<dfn class="term" data-tip="Eine relative Aufwandsschätzung für einen Vorgang, die das Team festlegt. Je größer die Zahl, desto größer der Arbeitsumfang.">Story Points</dfn>).</li>
+          <li><strong>Zeit</strong> — Boards, die mit <dfn class="term" data-tip="Jiras Zeiterfassungsfeld für die voraussichtliche Dauer eines Vorgangs.">Original estimate (Ursprüngliche Schätzung)</dfn> schätzen, werden umgerechnet in <strong>Stunden</strong>.</li>
+          <li>Ein Vorgang ohne Schätzung trägt 0 bei, zählt aber weiterhin zur Vorgangsanzahl der Person.</li>
+        </ul>
+        <details class="more">
+          <summary>Leere Schätzfelder</summary>
+          <p>Wenn das Story-Point-Feld des Boards bei einem Vorgang leer ist, wird stattdessen das Standardfeld Story Points verwendet. Hat keiner der Sprintvorgänge eine Schätzung, zeigt das Gadget „No estimates on these issues“: Ergänze Schätzungen oder wechsle zu Issue count.</p>
+        </details>
+        <h3>Issue count (Vorgangsanzahl)</h3>
+        <p>Für Teams ohne Aufwandsschätzungen: Jeder Vorgang zählt als 1, und die Kapazität entspricht „Vorgängen pro Sprint“.</p>
+      </section>
+
+      <section id="capacity">
+        <h2>Kapazität, Schwellenwerte und Farben</h2>
+        <p>Die Standardkapazität ist kostenlos. Die drei folgenden Einstellungen benötigen Pro; ohne Pro sind sie mit einem PRO-Hinweis ausgegraut und es gelten die Standardwerte.</p>
+        <ul>
+          <li><strong>Kapazität pro Person</strong> <span class="pro">PRO</span> — für Teilzeitkräfte, neue Teammitglieder oder alle mit weniger Zeit. Klicke unter Edit auf <strong>Load team members… (Teammitglieder laden)</strong> und trage neben einer Person einen Wert ein; leer bedeutet Standardwert. Der Wert einer Person gilt für jeden Sprint, den das Gadget anzeigt, bis du ihn änderst.</li>
+          <li><strong>Count only unfinished work (Nur unerledigte Arbeit zählen)</strong> <span class="pro">PRO</span> — lässt Vorgänge aus der <dfn class="term" data-tip="Jira ordnet jeden Status einer von drei Gruppen zu: To Do, In Progress oder Done. Die App verwendet die Gruppe Done.">Statuskategorie</dfn> Done weg, sodass jeder Balken während des Sprints die noch offene Arbeit zeigt.</li>
+          <li><strong>Schwellenwerte</strong> <span class="pro">PRO</span> — in Prozent der Kapazität: <em>Over &gt; (Überlastet &gt;)</em>  100,  <em>Near ≥ (Fast ausgelastet ≥)</em>  85,  <em>Free &lt; (Freie Kapazität &lt;)</em> standardmäßig 50.</li>
+        </ul>
+        <p>Die App liest keine Urlaubs- oder Feiertagsdaten: Wenn jemand abwesend ist, trägst du den niedrigeren Wert selbst ein.</p>
+        <details class="more">
+          <summary>Teammitglieder, Kapazität 0, Reihenfolge der Schwellenwerte</summary>
+          <ul>
+            <li><strong>Load team members… (Teammitglieder laden)</strong> listet die Personen mit Vorgängen im ausgewählten Sprint auf. Wähle deshalb zuerst den Sprint.</li>
+            <li>Bei einer Kapazität von 0 erscheint die Auslastung als grauer Balken ohne Statusfarbe.</li>
+            <li>Auch die individuellen Kapazitäten verwenden die Einheit von <em>Measure workload by (Auslastung messen nach)</em> : Nach einem Wechsel zu Issue count musst du sie erneut festlegen.</li>
+            <li>Halte die Reihenfolge der Schwellenwerte ein (Free ≤ Near ≤ Over), andernfalls gelten die Standardwerte.</li>
+            <li>Ohne aktive Lizenz verwendet die Heatmap die Standardwerte. Individuelle Kapazitäten, Schwellenwerte und „Count only unfinished work“ bleiben auch beim Speichern der Einstellungen erhalten und gelten wieder, sobald die Lizenz aktiv ist.</li>
+          </ul>
+        </details>
+        <img src="/imgTeamCapacityForJira/highlight-2-per-person-capacity.webp" alt="Links: Team-Capacity-Bearbeitungsformular mit individuellen Kapazitäten von 10 und 12 für zwei Personen und den drei rot markierten Schwellenwertfeldern. Rechts: die resultierende Heatmap, in der diese Personen nun 12/10 bei 120 Prozent und 11/12 bei 92 Prozent zeigen" loading="lazy" width="1840" height="900">
+        <img src="/imgTeamCapacityForJira/screenshot-3-count-only-unfinished-work.webp" alt="Im Bearbeitungsformular ist Count only unfinished work aktiviert. Darunter die Heatmap: Done-Vorgänge werden ausgelassen, sodass nur noch eine Person überlastet ist und die Teamgesamtlast auf 64 von 102 Punkten sinkt" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="csv">
+        <h2>CSV-Export — Schätzung und tatsächlicher Aufwand <span class="pro">PRO</span></h2>
+        <p>
+          <strong>Export CSV (CSV exportieren)</strong> in der Fußzeile der Heatmap lädt für den angezeigten Sprint eine Zeile pro Person herunter, als
+          <dfn class="term" data-tip="Eine Tabelle als Klartextdatei. Excel, Google Sheets und Numbers öffnen sie direkt.">CSV-Datei</dfn>
+          mit dem Namen <code>team-capacity-&lt;sprint&gt;.csv</code>. Sie lässt sich direkt in Excel oder Google Sheets öffnen.
+        </p>
+        <p>
+          Spalten: Person, Load (Auslastung), Capacity (Kapazität), <dfn class="term" data-tip="Auslastung geteilt durch Kapazität, in Prozent.">Utilization % (Auslastung %)</dfn>, Status, Issues (Vorgänge), Done (Erledigt),
+          <strong>Time spent (h) (Erfasste Zeit in Stunden)</strong>, Sprint, Sprint state (Sprintstatus). Time spent ist die gesamte in Jira erfasste Zeit für die Sprintvorgänge dieser Person.
+        </p>
+        <details class="more">
+          <summary>Weitere Informationen zur Datei</summary>
+          <ul>
+            <li>Die Auslastung folgt den Einstellungen des Gadgets, beispielsweise nur unerledigte Arbeit.</li>
+            <li>Die Zeile für nicht zugewiesene Arbeit ist enthalten, ohne Kapazität.</li>
+            <li>Bei mehr als 500 Vorgängen im Sprint endet die Datei mit einem Hinweis, dass die Zahlen unvollständig sind.</li>
+            <li>Ohne Pro ist die Schaltfläche ausgegraut.</li>
+          </ul>
+        </details>
+        <img src="/imgTeamCapacityForJira/highlight-3-csv-estimate-vs-actual.webp" alt="Ein abgeschlossener Sprint in der Team-Capacity-Heatmap mit rot markierter Schaltfläche Export CSV. Darunter die exportierte Datei team-capacity-sprint-23.csv in einer Tabelle mit Auslastung, Kapazität, Auslastungsgrad, Status, Vorgängen, erledigten Vorgängen, erfasster Zeit, Sprint und Sprintstatus pro Person" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="sharing">
+        <h2>Freigabe und Berechtigungen — wer darf was?</h2>
+        <p>Jedes Gadget hat ein eigenes Board, einen eigenen Sprint und eigene Einstellungen. Um Teams zu vergleichen, füge das Gadget einmal pro Board hinzu.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aktion</th><th>Wer</th></tr>
+            <tr><td>App installieren</td><td>Ein Jira-Administrator mit der Rolle <strong>Website-Administrator</strong>, einmal über den Atlassian Marketplace.</td></tr>
+            <tr><td>Gadget hinzufügen und konfigurieren</td><td><strong>Jeder Nutzer</strong> — keine Administratorrechte erforderlich. Verwende dein eigenes Dashboard oder eines, das du bearbeiten darfst.</td></tr>
+            <tr><td>Ansicht teilen</td><td>Übliche <strong>Freigabe von Jira-Dashboards</strong> (Projekt, Gruppe oder alle). Betrachter müssen nichts einrichten.</td></tr>
+            <tr><td>Boarddaten sehen</td><td>Nur Personen, die das <strong>Projekt des Boards ansehen dürfen</strong>. Alle anderen erhalten eine Berechtigungsmeldung und sehen keine Daten.</td></tr>
+          </table>
+        </div>
+        <img src="/imgTeamCapacityForJira/screenshot-1-two-teams-one-dashboard.webp" alt="Zwei Team-Capacity-Gadgets nebeneinander auf einem Jira-Dashboard, jeweils mit eigenem Board, Sprint, Personen und Kapazität" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="privacy">
+        <h2>Berechtigungen und Datenschutz</h2>
+        <p>Welche Daten die App sehen kann und wo deine Daten bleiben.</p>
+        <ul>
+          <li>Die App hat <strong>nur Lesezugriff</strong>: Sie kann keine Jira-Daten ändern.</li>
+          <li>Deine Jira-Projektberechtigungen (<dfn class="term" data-tip="Die Jira-Berechtigung zum Ansehen eines Projekts und seiner Vorgänge.">Browse Projects (Projekte ansehen)</dfn>) werden bei jeder Anfrage auf dem Server geprüft.</li>
+          <li>Basiert auf <dfn class="term" data-tip="Atlassians App-Plattform. Forge-Apps laufen in Atlassians eigener Cloud.">Atlassian Forge</dfn> ohne <strong>externe Datenübertragung</strong> — deine Daten bleiben bei Atlassian („Runs on Atlassian“).</li>
+          <li>Details: <a href="/de/team-capacity-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/team-capacity-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</li>
+        </ul>
+      </section>
+
+      <section id="faq">
+        <h2>Häufige Fragen</h2>
+        <p>Meldungen, die das Gadget anzeigen kann, und häufige Fragen.</p>
+        <details class="more">
+          <summary>„No estimates on these issues“ (Keine Schätzungen für diese Vorgänge)</summary>
+          <p>Das Board schätzt in Punkten oder Zeit, aber die Vorgänge im Sprint haben noch keine Schätzung. Ergänze Schätzungen oder ändere <em>Measure workload by (Auslastung messen nach)</em> auf <strong>Issue count (Vorgangsanzahl)</strong> unter Edit.</p>
+        </details>
+        <details class="more">
+          <summary>„No active or recent sprint found on this board“ (Kein aktiver oder kürzlich abgeschlossener Sprint auf diesem Board gefunden)</summary>
+          <p>Das Board hat noch keine Sprints. Erstelle einen oder wähle unter Edit ein anderes Board. Wenn Sprints vorhanden sind, aber keiner aktiv ist, zeigt das Gadget den nächsten geplanten oder den zuletzt abgeschlossenen Sprint.</p>
+        </details>
+        <details class="more">
+          <summary>„You do not have permission to view this board“ (Du hast keine Berechtigung, dieses Board anzusehen)</summary>
+          <p>Die App zeigt ein Board nur Personen, die dessen Projekt ansehen dürfen. Bitte deinen Jira-Administrator um <em>Browse Projects (Projekte ansehen)</em> für das Projekt des Boards.</p>
+        </details>
+        <details class="more">
+          <summary>Mein Board fehlt in der Liste</summary>
+          <p>Aufgelistet werden Scrum-Boards und vom Team verwaltete Boards in Projekten, die du ansehen darfst. Ein vom Team verwaltetes Board ohne Sprints zeigt „No active or recent sprint found“. Klassische Kanban-Boards fehlen, da sie keine Sprints haben.</p>
+        </details>
+        <details class="more">
+          <summary>Kann ich für Teilzeitmitglieder eine andere Kapazität festlegen?</summary>
+          <p>Ja, mit Pro: Du kannst die Standardkapazität pro Person überschreiben, etwa für Teilzeitkräfte oder neue Teammitglieder. Die App erfasst keine Abwesenheiten, deshalb trägst du den niedrigeren Wert selbst ein. Ohne Pro gilt eine Standardkapazität für alle.</p>
+        </details>
+        <details class="more">
+          <summary>Warum gibt es eine Zeile „Unassigned“?</summary>
+          <p>Arbeit ohne zugewiesene Person ist echte Auslastung. Würde sie ausgeblendet, sähe das Team weniger beschäftigt aus, als es ist.</p>
+        </details>
+        <details class="more">
+          <summary>Sehr große Sprints</summary>
+          <p>Das Gadget liest bis zu 500 Vorgänge pro Sprint. Bei größeren Sprints erscheint ein Hinweis, und die Auslastungswerte sind Teilsummen.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Team%20Capacity%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/team-capacity-for-jira-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/team-capacity-for-jira-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/team-capacity-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/team-capacity-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/team-capacity-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/team-capacity-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

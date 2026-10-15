@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist | Janek Behrens</title>
+  <meta name="description" content="Bring Your Own Key (BYOK) für KI in Atlassian erklärt: Datenschutz, DSGVO-Konformität, Kostenkontrolle und die Bedeutung für Unternehmen mit Confluence und Jira.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/byok-ai-atlassian.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist",
+  "description": "Bring Your Own Key (BYOK) für KI in Atlassian erklärt: Datenschutz, DSGVO-Konformität, Kostenkontrolle und die Bedeutung für Unternehmen mit Confluence und Jira.",
+  "url": "https://janekbehrens.de/de/blog/byok-ai-atlassian.html",
+  "datePublished": "2026-01-19T00:00:00+02:00",
+  "dateModified": "2026-01-19T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgCodeDoc/SettingAIProvider.png",
+  "keywords": [
+    "Atlassian",
+    "KI",
+    "Sicherheit",
+    "Enterprise",
+    "Confluence",
+    "BYOK",
+    "DSGVO"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist">
+  <meta property="og:description" content="Was BYOK (Bring Your Own Key) bei KI-Apps in Atlassian bedeutet — Datenschutz, DSGVO, Kostenkontrolle und Sicherheit für Confluence-Teams in Unternehmen.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/byok-ai-atlassian.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/SettingAIProvider.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-01-19">
+  <meta property="article:modified_time" content="2026-01-19">
+  <meta property="article:tag" content="Atlassian">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Security">
+  <meta property="article:tag" content="Enterprise">
+  <meta property="article:tag" content="Confluence">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist">
+  <meta name="twitter:description" content="BYOK-KI für Atlassian: Datenschutz, DSGVO, Kostenkontrolle und Sicherheit für Confluence- und Jira-Administratoren in Unternehmen erklärt.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/SettingAIProvider.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist",
+  "description": "Bring Your Own Key (BYOK) für KI in Atlassian erklärt: Datenschutz, DSGVO-Konformität, Kostenkontrolle und die Bedeutung für Unternehmen mit Confluence und Jira.",
+  "image": "https://janekbehrens.de/imgCodeDoc/SettingAIProvider.png",
+  "datePublished": "2026-01-19T00:00:00+02:00",
+  "dateModified": "2026-01-19T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/byok-ai-atlassian.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was bedeutet BYOK bei KI-Apps in Atlassian?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BYOK steht für Bring Your Own Key. Statt eines gemeinsamen API-Schlüssels des App-Anbieters stellst du deinen eigenen Schlüssel deines bevorzugten KI-Anbieters bereit (Anthropic, OpenAI oder Google). Deine Daten werden mit deinem Schlüssel direkt von der App an deinen KI-Anbieter gesendet — sie laufen nie über die Infrastruktur des App-Anbieters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum ist BYOK für die DSGVO-Konformität wichtig?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nach der DSGVO bist du dafür verantwortlich zu wissen, wohin deine Daten gelangen und auf welcher Rechtsgrundlage sie verarbeitet werden. Bei einer KI-App mit gemeinsamem Schlüssel laufen deine Daten über die Infrastruktur des Anbieters und können ohne deine direkte Zustimmung den Datenverarbeitungsbedingungen seines KI-Anbieters unterliegen. BYOK entfernt diese Zwischenebene — du hast einen direkten Auftragsverarbeitungsvertrag mit deinem KI-Anbieter und volle Transparenz über den Weg deiner Daten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich mit BYOK auswählen, welches KI-Modell verwendet wird?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. BYOK gibt dir volle Kontrolle über das Modell. CodeDoc AI unterstützt Anthropic (alle Claude-Modelle), OpenAI (GPT-4o, gpt-4o-mini und weitere) und Google (Gemini-Modelle). Neue Modelle eines Anbieters erscheinen automatisch in der Auswahlliste — du bist nicht an die vom App-Anbieter gewählte Version gebunden."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie hilft BYOK bei der Kontrolle von KI-Kosten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mit BYOK rechnet dein KI-Anbieter die Nutzung direkt zu seinen Preisen ab — ohne Aufschlag des App-Anbieters. Du kannst beim KI-Anbieter Ausgabenlimits setzen, für Routineaufgaben günstige Modelle nutzen (zum Beispiel Geminis kostenloses Kontingent oder Claude Haiku) und nur bei Bedarf zu einem leistungsfähigeren Modell wechseln."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist Atlassian Forge und warum ist es für KI-Sicherheit wichtig?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Atlassian Forge ist eine Plattform für Confluence- und Jira-Apps, die vollständig in Atlassians eigener Infrastruktur laufen. Forge-Apps können keine beliebigen ausgehenden Anfragen senden — ausgehender Netzwerkverkehr ist auf ausdrücklich deklarierte externe Dienste beschränkt. Bei KI-Apps bedeutet das, dass nur der von dir selbst deklarierte und verbundene KI-Anbieter deine Daten als externes System erhält."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px;
+      display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: #FFF7E6; color: #974F0C;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout-orange { background: #FFF7E6; border-left: 3px solid #FF8B00; color: #6B3D00; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(23,43,77,0.07); }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+    /* comparison boxes */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 24px; }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-box { border-radius: 8px; padding: 18px 20px; }
+    .compare-box h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; }
+    .compare-box ul { padding-left: 18px; margin: 0; }
+    .compare-box li { font-size: 0.88rem; line-height: 1.65; margin-bottom: 6px; color: inherit; }
+    .compare-bad { background: #FFEBE6; color: #172B4D; border: 1px solid #FFBDAD; }
+    .compare-bad h3 { color: #DE350B; }
+    .compare-good { background: #E3FCEF; color: #172B4D; border: 1px solid #ABF5D1; }
+    .compare-good h3 { color: #006644; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/byok-ai-atlassian.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/byok-ai-atlassian.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/byok-ai-atlassian.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Enterprise · Sicherheit</span>
+        <span class="article-date">19. Januar 2026</span>
+        <span class="article-readtime">· 8 Min. Lesezeit</span>
+      </div>
+      <h1>BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist</h1>
+      <p class="article-intro">
+        Wenn eine KI-App einen gemeinsamen API-Schlüssel verwendet, laufen deine Daten durch Infrastruktur, die du nicht kontrollierst. Bring Your Own Key (BYOK) verändert den Datenfluss — dein Code und deine Inhalte gehen direkt an deinen KI-Anbieter, über dein Konto und unter deinen Vereinbarungen. Deshalb ist dieser Unterschied für Atlassian-Teams in Unternehmen wichtig.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-is-byok">Was BYOK bedeutet</h2>
+      <p>
+        BYOK — Bring Your Own Key — beschreibt, wie sich KI-Apps bei KI-Anbietern wie Anthropic, OpenAI oder Google authentifizieren. In einer BYOK-App stellst du deinen eigenen API-Schlüssel des gewählten Anbieters bereit. Die App sendet damit Anfragen in deinem Namen. Bei einer App mit gemeinsamem Schlüssel gehört der Schlüssel dem App-Anbieter, und die Daten aller Kunden laufen über dessen KI-Konto.
+      </p>
+      <p>
+        Der praktische Unterschied:
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-box compare-bad">
+          <h3>Modell mit gemeinsamem Schlüssel</h3>
+          <ul>
+            <li>Der App-Anbieter besitzt den KI-API-Schlüssel</li>
+            <li>Deine Daten laufen durch die Infrastruktur des App-Anbieters</li>
+            <li>Für dich gilt dessen Vereinbarung mit dem KI-Anbieter</li>
+            <li>Keine Transparenz über die verwendete Modellversion</li>
+            <li>KI-Kosten sind im Abonnement enthalten, häufig mit Aufschlag</li>
+            <li>Kein Wechsel von KI-Anbieter oder Modell möglich</li>
+          </ul>
+        </div>
+        <div class="compare-box compare-good">
+          <h3>BYOK-Modell</h3>
+          <ul>
+            <li>Du besitzt den KI-API-Schlüssel</li>
+            <li>Daten gehen direkt von der App an deinen KI-Anbieter</li>
+            <li>Du hast eine direkte Vereinbarung mit deinem KI-Anbieter</li>
+            <li>Du wählst das Modell und den Zeitpunkt eines Upgrades</li>
+            <li>Der KI-Anbieter rechnet zu seinen eigenen Preisen ab</li>
+            <li>Anbieter oder Modelle jederzeit wechseln</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>
+        Das BYOK-Modell bedeutet keine aufwendigere Einrichtung. In <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> verbindest du deinen KI-Anbieter in zwei Schritten: API-Schlüssel einfügen, auf „Connect &amp; Validate“ klicken. Die App lädt verfügbare Modelle automatisch, und du wählst eines aus der Liste.
+      </p>
+
+      <h2 id="gdpr">Warum BYOK für die DSGVO wichtig ist</h2>
+      <p>
+        Nach der <a href="https://gdpr-info.eu/" target="_blank" rel="noopener">Datenschutz-Grundverordnung</a> ist deine Organisation dafür verantwortlich zu wissen, wohin personenbezogene Daten gelangen und auf welcher Rechtsgrundlage sie verarbeitet werden. Das gilt auch für Quellcode, wenn er Namen, E-Mail-Adressen, Kommentare oder andere Informationen enthält, die Personen identifizieren können — was häufiger vorkommt, als Teams üblicherweise annehmen.
+      </p>
+      <p>
+        Bei einer KI-App mit gemeinsamem Schlüssel laufen Daten über das eigene KI-Konto des App-Anbieters. Es gilt dessen Auftragsverarbeitungsvertrag mit dem KI-Anbieter, nicht deiner. Du kennst möglicherweise weder die Aufbewahrungsregeln noch die Nutzung für Modelltraining oder die Frage, ob der KI-Anbieter in der benötigten Datenresidenzregion arbeitet.
+      </p>
+      <p>
+        Mit BYOK entfällt diese Zwischenebene. Deine Daten gehen von der Atlassian-App direkt an dein KI-Anbieterkonto. Du kontrollierst:
+      </p>
+      <ul>
+        <li><strong>Den Auftragsverarbeitungsvertrag</strong> — du hast ihn direkt mit deinem KI-Anbieter abgeschlossen.</li>
+        <li><strong>Datenaufbewahrung</strong> — bestimmt durch deine Anbieterkontoeinstellungen, nicht die des App-Anbieters.</li>
+        <li><strong>Ausschluss von Modelltraining</strong> — alle drei von CodeDoc AI unterstützten Anbieter (Anthropic, OpenAI, Google) bieten den Ausschluss von API-Daten vom Modelltraining. Aktivierst du ihn in deinem Anbieterkonto, gilt er sofort.</li>
+        <li><strong>Regionale Datenverarbeitung</strong> — du kannst verfügbare Anbieterregionen wählen (zum Beispiel EU-Endpunkte bei Google oder Azure OpenAI für europäische Datenresidenzanforderungen).</li>
+      </ul>
+
+      <div class="callout callout-orange">
+        <p><strong>Hinweis für regulierte Branchen:</strong> DSGVO-Konformität bei KI-Werkzeugen entwickelt sich weiter. Die Informationen oben beschreiben die Architektur des Datenflusses — prüfe deine konkreten Verpflichtungen immer mit Rechts- und Compliance-Teams. Dieser Artikel informiert und ist keine Rechtsberatung.</p>
+      </div>
+
+      <h2 id="forge">Die Forge-Sicherheitsebene</h2>
+      <p>
+        CodeDoc AI basiert auf <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a>, der Plattform für Confluence- und Jira-Apps, die vollständig in Atlassians eigener Infrastruktur laufen. Das ergänzt einen zweiten Sicherheitsaspekt unabhängig vom BYOK-Modell.
+      </p>
+      <p>
+        Forge-Apps laufen in einer abgeschirmten Laufzeitumgebung. Sie können keine ausgehenden Netzwerkanfragen an beliebige URLs senden — alle externen Dienste müssen ausdrücklich im App-Manifest deklariert sein. Atlassian prüft diese Angaben bei der App-Zulassung im Marketplace. Bei CodeDoc AI sind die deklarierten externen Dienste:
+      </p>
+      <ul>
+        <li>Dein Git-Anbieter (GitHub, GitLab, Bitbucket oder Azure DevOps)</li>
+        <li>Dein KI-Anbieter (Anthropic, OpenAI oder Google AI)</li>
+      </ul>
+      <p>
+        Damit ist es technisch unmöglich, dass die App deine Daten an andere Endpunkte abführt. Keine verborgenen Kopien, keine Telemetrie an unangekündigte Dritte, kein nicht deklarierter ausgehender Verkehr.
+      </p>
+      <p>
+        Dafür steht die Kennzeichnung „Runs on Atlassian“ bei Forge-Apps im Marketplace. Sie signalisiert nicht nur die Integration mit Atlassian-Produkten, sondern die Ausführung in Atlassians Infrastruktur unter dessen Sicherheitskontrollen.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/SettingAIProvider.png" alt="KI-Anbieter-Konfiguration in CodeDoc AI — BYOK-Schlüssel für Anthropic, OpenAI und Google einrichten" loading="lazy">
+        <p class="diagram-caption">KI-Anbieter-Einstellungen — deinen eigenen API-Schlüssel von Anthropic, OpenAI oder Google verbinden</p>
+      </div>
+
+      <h2 id="cost">Kostenkontrolle mit BYOK</h2>
+      <p>
+        Für Einkaufsteams ist das Preismodell einer BYOK-App leichter nachvollziehbar als das einer App mit gemeinsamem Schlüssel. Der KI-Anbieter rechnet die Nutzung direkt zu seinen veröffentlichten Preisen ab. Es gibt keinen Aufschlag des App-Anbieters, kein undurchsichtiges „KI-Credits“-System und keine überraschende Überschreitungsgebühr aus einem unbekannten Tarif.
+      </p>
+      <p>
+        Du kannst im Anbieterkonto feste Ausgabenlimits setzen — Anthropic und OpenAI unterstützen beide Limits pro Schlüssel. Wenn ein Dokumentationsauftrag mehr Tokens als erwartet benötigt, schlägt die Erzeugung sauber fehl, statt eine unbegrenzte Rechnung zu verursachen.
+      </p>
+      <p>
+        BYOK erlaubt auch die Modellwahl, was für Kostenoptimierung wichtig ist:
+      </p>
+      <ul>
+        <li><strong>Google Gemini</strong> — kostenloses Kontingent mit großzügigen Grenzen, geeignet zum Testen und für geringe Nutzung.</li>
+        <li><strong>Anthropic Claude Haiku / OpenAI gpt-4o-mini</strong> — günstige kostenpflichtige Modelle mit ungefähr 0,01–0,05 US-Dollar pro Erzeugung für ein mittelgroßes Repository. Gut für häufig ausgeführte automatische Aufträge.</li>
+        <li><strong>Anthropic Claude Sonnet / OpenAI GPT-4o</strong> — höhere Leistungsfähigkeit zu höheren Kosten. Geeignet für komplexe Codebasen oder Kundendokumentation, bei der Qualität entscheidend ist.</li>
+      </ul>
+      <p>
+        CodeDoc AI enthält eine KI-Dateiauswahl (die KI identifiziert zunächst die relevantesten Dateien und erzeugt Dokumentation nur daraus). Typische Erzeugungskosten sind deshalb deutlich niedriger, als ein ganzes Repository an das Modell zu senden. Bei großen Repositories kann das den Tokenverbrauch um 60–80 % senken.
+      </p>
+
+      <h2 id="model-choice">Modellwahl und Zukunftssicherheit</h2>
+      <p>
+        Die KI-Modelllandschaft verändert sich schnell. Ein heute führendes Modell kann innerhalb weniger Monate überholt sein. In einer App mit gemeinsamem Schlüssel nutzt du das vom Anbieter ausgewählte Modell — Upgrades erfolgen nach dessen Zeitplan, nicht deinem.
+      </p>
+      <p>
+        Mit BYOK werden verfügbare Modelle beim Verbinden dynamisch aus deinem Anbieterkonto geladen. Neue Modelle von Anthropic, OpenAI oder Google erscheinen sofort in der Modellauswahl von CodeDoc AI — ohne Anbieterupdate, ohne neue App-Version und ohne Support-Ticket.
+      </p>
+      <p>
+        Du kannst auch den Anbieter vollständig wechseln. Entscheidet sich deine Organisation aus Einkaufs- oder Compliance-Gründen für einen anderen KI-Anbieter, aktualisierst du den API-Schlüssel und wählst dessen Modell. Alles Weitere — Aufträge, Auslöserkonfiguration, Dateiauswahl und Confluence-Zielseiten — bleibt gleich.
+      </p>
+
+      <h2 id="use-cases">Wer am meisten von BYOK-KI in Atlassian profitiert</h2>
+      <p>
+        BYOK ist besonders relevant für:
+      </p>
+      <ul>
+        <li><strong>Regulierte Branchen (Gesundheitswesen, Finanzdienstleistungen, öffentlicher Sektor)</strong> — in denen transparente Datenverarbeitung und Prüfprotokolle eine Compliance-Anforderung und keine bloße Präferenz sind.</li>
+        <li><strong>Organisationen mit bestehenden KI-Anbieterverträgen</strong> — Unternehmen mit bestehenden Unternehmensverträgen mit Anthropic, OpenAI oder Google profitieren, weil sich CodeDoc AI direkt in vorhandene Einkaufs- und Rechtsrahmen einfügt.</li>
+        <li><strong>Teams mit DSGVO- oder Datenresidenzanforderungen</strong> — BYOK zusammen mit Forges abgeschirmter Architektur schafft einen klaren, überprüfbaren Datenfluss, der sich leichter für die Prüfung durch Datenschutzbeauftragte dokumentieren lässt.</li>
+        <li><strong>Sicherheitsbewusste Entwicklungsteams</strong> — die genau wissen wollen, wohin ihr Quellcode gelangt, und ihn nicht durch ungeprüfte Zwischeninfrastruktur leiten möchten.</li>
+      </ul>
+
+      <div class="callout callout-green">
+        <p><strong>Für Atlassian-Administratoren:</strong> Die vollständige Datenverarbeitungsarchitektur von CodeDoc AI findest du auf der <a href="/codedoc-ai-security.html" hreflang="en">Sicherheitsseite (EN)</a> und im <a href="/trust-center.html" hreflang="en">Vertrauensportal (EN)</a>. Beide Dokumente werden versioniert und bei Architekturänderungen aktualisiert.</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was bedeutet BYOK bei KI-Apps in Atlassian?</p>
+        <p class="faq-a">BYOK (Bring Your Own Key) bedeutet, dass du deinen eigenen API-Schlüssel des ausgewählten KI-Anbieters bereitstellst. Deine Daten gehen direkt von der Atlassian-App über dein Konto an deinen KI-Anbieter — sie laufen nie über die Infrastruktur des App-Anbieters.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum ist BYOK für die DSGVO wichtig?</p>
+        <p class="faq-a">Nach der DSGVO musst du wissen, wohin deine Daten gelangen und unter welcher Vereinbarung sie verarbeitet werden. BYOK entfernt den App-Anbieter als zwischengeschalteten Datenverarbeiter — du hast eine direkte Vereinbarung mit deinem KI-Anbieter, kannst die Datenaufbewahrung konfigurieren und Modelltraining in deinen Anbieterkontoeinstellungen ausschließen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich mit BYOK auswählen, welches KI-Modell verwendet wird?</p>
+        <p class="faq-a">Ja. Mit CodeDoc AI kannst du jedes in deinem Anthropic-, OpenAI- oder Google-Konto verfügbare Modell nutzen. Neue Modelle erscheinen automatisch in der Auswahlliste, sobald Anbieter sie veröffentlichen — ohne auf ein App-Anbieterupdate zu warten.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie hilft BYOK, KI-Kosten zu kontrollieren?</p>
+        <p class="faq-a">KI-Nutzung wird zu Anbieterpreisen ohne Aufschlag des App-Anbieters abgerechnet. Du kannst im Anbieterkonto Ausgabenlimits setzen und günstige Modelle für Routineaufgaben wählen. Die KI-Dateiauswahl in CodeDoc AI senkt den Tokenverbrauch zusätzlich, indem sie nur die relevantesten Dateien statt eines ganzen Repositories sendet.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist Atlassian Forge und warum ist es für KI-Sicherheit wichtig?</p>
+        <p class="faq-a">Forge-Apps laufen vollständig auf Atlassians Infrastruktur in einer abgeschirmten Laufzeitumgebung. Sie können nur ausdrücklich deklarierte externe Dienste erreichen — bei CodeDoc AI deinen Git- und deinen KI-Anbieter. Andere ausgehende Verbindungen sind nicht möglich.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Welche KI-Anbieter unterstützt CodeDoc AI?</p>
+        <p class="faq-a">Anthropic (Claude-Modelle), OpenAI (GPT-Modelle) und Google AI (Gemini-Modelle). Du kannst einen Anbieter verbinden und jederzeit durch Aktualisierung des API-Schlüssels in den Einstellungen wechseln.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Volle Datenkontrolle auf Atlassians Infrastruktur</h3>
+        <p>CodeDoc AI nutzt BYOK und basiert auf Forge — dein Code bleibt zwischen deinem Git-Anbieter, KI-Anbieter und deiner Confluence-Instanz.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-is-byok">Was BYOK bedeutet</a></li>
+          <li><a href="#gdpr">BYOK und DSGVO</a></li>
+          <li><a href="#forge">Die Forge-Sicherheitsebene</a></li>
+          <li><a href="#cost">Kostenkontrolle mit BYOK</a></li>
+          <li><a href="#model-choice">Modellwahl</a></li>
+          <li><a href="#use-cases">Wer am meisten profitiert</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · BYOK · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Sicherheitsdokumentation</h3>
+        <a href="/codedoc-ai-security.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:8px;" hreflang="en">Sicherheitsübersicht → (EN)</a>
+        <a href="/trust-center.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;" hreflang="en">Vertrauensportal → (EN)</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/ai-documentation-confluence.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">KI-Dokumentation für Atlassian-Teams</a>
+        <a href="/de/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Confluence-Dokumentation automatisch aus GitHub erzeugen</a>
+        <a href="/de/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Confluence-Dokumentation automatisieren: Von manuell zu CI/CD</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Privacy Policy — Epic Progress for Confluence</title>
+  <meta name="description" content="Privacy policy of Epic Progress for Confluence: what the app reads, what it keeps in Forge storage, for how long, and why it stores no account IDs.">
+  <link rel="canonical" href="https://janekbehrens.de/epic-progress-privacy-policy.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/epic-progress-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/epic-progress-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/epic-progress-privacy-policy.html">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p class="updated">Epic Progress for Confluence · Last updated: October 11, 2026</p>
+
+    <h2>1. Introduction</h2>
+    <p>
+      This Privacy Policy explains how Epic Progress for Confluence ("the App"), developed by
+      Janek Behrens ("we", "us", "our"), handles data when installed on your Atlassian Confluence
+      Cloud site and, optionally, connected to Jira on the same site. The App shows progress bars on
+      Confluence pages. It reads Jira and Confluence data <strong>with the permissions of the person
+      viewing or editing the page</strong> and never creates, changes or deletes Jira work items or
+      Confluence pages.
+    </p>
+
+    <h2>2. Data We Access</h2>
+    <p>The App reads the following data live, only to show its macros, and does not keep it unless stated in section 3:</p>
+    <ul>
+      <li><strong>Jira work items:</strong> keys, titles (summaries), status and status category, work item type, parent, due date, story point estimates and whether a work item is flagged. For the optional list of open work items, also the assignee's display name.</li>
+      <li><strong>Jira structure:</strong> projects (keys and names), releases (names, dates, released or not), saved filters (names), fields and work item types (to find the story point fields and the epic level), and Jira's check of a JQL search entered in the macro settings.</li>
+      <li><strong>Confluence:</strong> titles and labels of the pages in the chosen scope (Page Progress), space names (space picker), whether the current user may view the page (checked before a snapshot is shown) and whether they may edit it (to publish or remove a snapshot), and, when someone changes the admin switch, whether that person is a Confluence administrator (the operations Confluence allows them; nothing of it is stored). Once a day, the App itself checks whether a page with a published snapshot still exists (see section 7).</li>
+    </ul>
+    <p>
+      Work item descriptions, comments and attachments, and the content of Confluence pages, are
+      <strong>never read</strong>. Assignee display names are shown live in the list of open work
+      items and are <strong>never stored</strong> by the App.
+    </p>
+
+    <h2>3. Data We Store</h2>
+    <p>
+      The App stores only the following, using <strong>Atlassian Forge storage</strong>, which is hosted
+      and managed by Atlassian for your site:
+    </p>
+    <ul>
+      <li><strong>Published snapshots</strong>, when an editor of a page clicks "Publish snapshot" and, unless the macro settings turn it off, again when an editor opens the page and the snapshot is older than 15 minutes (read with that editor's own Jira permissions; reading a snapshot never causes a Jira request, and "View live" reads Jira with the reader's own permissions). Automatic updates refresh the numbers of what an editor published; new epics, work items or names appear only when an editor updates the snapshot by hand. A snapshot holds the counts behind the bar (done, in progress, to do, flagged, without estimate), the keys and the name of what the macro measures (the epic, the project, release or saved filter, or the epics of a list), with the date and time of publishing. If the editor chose <em>Progress and work items</em>, also statuses, due and release dates, and up to 25 open work items (key, title, status). Each snapshot is stored under the ID of its page and macro, together with a fingerprint of the macro settings it was published for.</li>
+      <li><strong>Notes of the automatic update:</strong> per snapshot, when it was last checked without changes, and a claim of one minute while an update runs (a random ID, a time and, after a removal, a removal mark), so that only one runs at a time and a removal always wins (no person).</li>
+      <li><strong>"Last opened" note:</strong> for each macro with a published snapshot, the day it was last opened (a date only, no person). The daily cleanup deletes snapshots whose macro nobody opened for 120 days (section 7).</li>
+      <li><strong>Short view cache (5 minutes, per reader):</strong> when someone opens a page, what Epic Progress, Jira Progress, Progress List and Page Progress showed them is kept for 5 minutes, so the page opens faster if the same person opens it again: the counts behind the bar, keys, names, labels, statuses and dates as shown, and the time the numbers were read. Only complete answers are kept, read with that person's own permissions, and they are shown to that person only. Each entry is stored under the ID of its page and macro, a fingerprint of the macro settings and a salted one-way hash of the reader's account ID instead of the ID itself. No assignees, no open work items and no JQL text. &ldquo;Refresh&rdquo; reads Jira again and replaces the entry.</li>
+      <li><strong>Key for the view cache:</strong> a random key, created by the App once per installation and kept in Forge's encrypted secret store, used only to make the hash above. It contains no data about anyone and gives access to nothing.</li>
+      <li><strong>App setting:</strong> whether published snapshots are allowed on the site (the admin switch).</li>
+      <li><strong>Anonymous daily usage counters:</strong> per day and site, how often features were used (for example "a macro was opened" or "a snapshot was published"), and whether page views saw an active subscription. No IDs, names, page or Jira content.</li>
+      <li><strong>Non-personal cache:</strong> the IDs of the site's story point fields (site configuration, refreshed every 6 hours).</li>
+    </ul>
+    <p>
+      A snapshot contains <strong>no person fields</strong>: no assignees and no account IDs, not even
+      of the person who published it, and no JQL text. Titles and names, however, are free text written
+      by your team: if your team writes personal data into the title of an epic or work item, or into
+      the name of a project, release or filter, a snapshot contains it as written, with
+      <em>Progress only</em> as well as with <em>Progress and work items</em>. The person who publishes
+      decides what to share, and editors of the page can remove a snapshot at any time
+      (&ldquo;Remove snapshot&rdquo;).
+    </p>
+    <p>
+      The <strong>macro settings</strong> (for example the chosen epic, project, release or filter, a
+      JQL search, labels, titles, notes and manual values) are stored by <strong>Confluence itself</strong>
+      as part of the page, not by the App, and follow Confluence's own page history and deletion rules.
+    </p>
+
+    <h2>4. Data We Do NOT Collect</h2>
+    <ul>
+      <li>We do <strong>not</strong> run any servers. There is no developer-operated backend or database.</li>
+      <li>We do <strong>not</strong> store account IDs, email addresses or avatars of anyone, nor person fields such as assignees (titles in snapshots are kept as your team wrote them, see section 3). The view cache uses only a salted one-way hash of the reader's account ID, for 5 minutes.</li>
+      <li>We do <strong>not</strong> use cookies, tracking pixels, analytics platforms or advertising networks.</li>
+      <li>We do <strong>not</strong> send any data to external services. The App makes no network calls outside the Atlassian platform.</li>
+      <li>We do <strong>not</strong> read work item descriptions, comments, attachments or page content.</li>
+    </ul>
+    <p>
+      <strong>Technical logs and usage counts:</strong> Like most Forge apps, the App writes technical log
+      lines (for example "a snapshot was published" or "Jira did not answer") and, once a day, the
+      anonymous usage counters listed above to Atlassian's app logging, which Atlassian makes available
+      to us as the app vendor. Log lines may contain identifiers from your site, namely project keys and
+      page IDs, as well as macro types, counts, HTTP statuses and error codes, but never content, names,
+      email addresses, account IDs, page or work item titles, or JQL text (a JQL search is described
+      only by a hash and its length). We use them only to find errors and to see which
+      features are used.
+    </p>
+
+    <h2>5. Data Processing Location and Data Residency</h2>
+    <p>
+      All processing occurs within the <strong>Atlassian Forge runtime environment</strong> under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      program. No data is transmitted to servers operated by us or any third party outside the Atlassian platform.
+    </p>
+    <p>
+      Everything listed in section 3 is stored in Forge hosted storage, which supports Atlassian's
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">data residency</a>:
+      it is held in the same location as your Confluence site, the App's required product, and moves
+      with it when an admin moves the site's data to another location. The technical logs in section 4
+      are handled by Atlassian's app logging and are not part of the App's stored data.
+    </p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>
+      The App does <strong>not</strong> integrate with or send data to any third-party service. It calls
+      no AI service, no analytics service and no advertising network.
+    </p>
+
+    <h2>7. Data Retention and Deletion</h2>
+    <ul>
+      <li><strong>Published snapshots</strong> are kept until a newer snapshot replaces them or an editor clicks "Remove snapshot", which deletes them at once (it needs edit permission on the page only, no Jira access and no active subscription). When an editor opens the published page with "Publish a snapshot" turned off in the macro settings, the snapshot is removed. When their page is moved to the trash or deleted, a daily cleanup deletes them within 24 hours; if the page is restored before that, the snapshot stays. The same cleanup deletes them within 24 hours after an admin blocks the App from the page with an app access rule, and deletes snapshots whose macro nobody opened for 120 days, for example because the macro was removed from the page, the page is no longer read, or view restrictions keep the App itself from reading it.</li>
+      <li><strong>Notes of the automatic update</strong> are deleted together with their snapshot; a claim left over is deleted by the daily cleanup.</li>
+      <li><strong>"Last opened" notes</strong> are deleted together with their snapshot, or by the daily cleanup once the macro has no snapshot any more.</li>
+      <li><strong>View cache entries</strong> expire 5 minutes after they were written and are deleted by Forge storage itself. Atlassian removes expired entries in the background, and the App never uses an entry older than 5 minutes. &ldquo;Refresh&rdquo; replaces an entry at once.</li>
+      <li><strong>Anonymous daily usage counters</strong> are deleted after 8 days.</li>
+      <li><strong>The app setting</strong>, the <strong>story point field cache</strong> and the <strong>key for the view cache</strong> are kept while the App is installed.</li>
+      <li>When the App deletes data, it is removed from Forge storage at once and the App can no longer read it. Atlassian keeps a soft-deleted copy for recovery from accidental deletion until the end of its retention period.</li>
+      <li><strong>After you uninstall the App</strong>, Atlassian keeps the App's storage, published snapshots included, for <strong>28 days</strong> and then deletes it (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Data lifecycle for Forge-hosted storage</a>). During that time the App cannot read it. Within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the App.</li>
+    </ul>
+
+    <h2>8. Personal Data and GDPR</h2>
+    <p>
+      The App stores no account IDs, email addresses or person fields such as assignees, in snapshots,
+      settings and counters alike. Assignee display names are shown live from Jira and never stored.
+      The only per-reader data is the short view cache (section 3): for 5 minutes, what the macros showed
+      one reader, stored under a salted one-way hash of their account ID instead of the ID itself. Such a
+      hash is pseudonymous data in the sense of the GDPR. It differs on every site, cannot be turned back
+      into the account ID without the site's secret key, and is used only to show the same reader the same
+      numbers again within those 5 minutes; Forge removes the entry afterwards (section 7). Titles and names in snapshots are kept as
+      your team wrote them in Jira (section 3); if they contain personal data, editors can remove the
+      snapshot at any time, and Confluence admins can turn snapshots off. Data held by Jira and Confluence themselves, including the macro
+      settings on a page, remains entirely within your Atlassian site and under Atlassian's controls;
+      GDPR data-subject requests relating to it should be directed to your admin or Atlassian. For
+      App-specific concerns, contact us below. After you uninstall the App, Atlassian deletes all
+      App-related data from Forge storage after 28 days (section 7).
+    </p>
+
+    <h2>9. Security</h2>
+    <ul>
+      <li>Runs in a sandboxed Forge environment with no egress to external networks outside the Atlassian platform.</li>
+      <li>Uses minimal API scopes with <strong>no write access</strong> to Jira or Confluence, plus app storage.</li>
+      <li>Reads Jira and Confluence with the permissions of the person viewing the page, so each reader sees only what Jira and Confluence allow them to see.</li>
+      <li>Stores no credentials or tokens; there are none. The only secret is the random key for the view cache's hash (section 3), created by the App for each installation and kept in Forge's encrypted secret store.</li>
+    </ul>
+    <p>See our <a href="epic-progress-security.html">Security Policy</a> for full details.</p>
+
+    <h2>10. Children's Privacy</h2>
+    <p>The App is a business productivity tool and is not directed at children under 16. We do not knowingly collect data from children.</p>
+
+    <h2>11. Changes to This Policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. Changes will be reflected in the
+      "Last updated" date above. Continued use of the App after changes constitutes acceptance
+      of the updated policy.
+    </p>
+
+    <div class="contact-box">
+      <h2>12. Contact</h2>
+      <p>
+        For questions about this Privacy Policy, contact us at:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">Atlassian, Confluence and Jira are trademarks of Atlassian. Epic Progress for Confluence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

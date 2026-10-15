@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Metrics für Jira — DORA™-Kennzahlen ohne CI/CD-Einrichtung</title>
+  <meta name="description" content="Bereitstellungshäufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit aus deinen Jira-Daten auf jedem Dashboard. Ohne CI/CD-Einrichtung. Probiere die interaktive Demo.">
+  <link rel="canonical" href="https://janekbehrens.de/de/dora-metrics-for-jira.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/de/dora-metrics-for-jira.html">
+  <meta property="og:title" content="DevOps Metrics für Jira — DORA™-Kennzahlen ohne CI/CD-Einrichtung">
+  <meta property="og:description" content="Bereitstellungshäufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit aus den vorhandenen Jira-Daten. Mit Vergleichsbereichen, Trends und einer Vorher-nachher-Ansicht deiner KI-Einführung.">
+  <meta property="og:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DevOps Metrics für Jira — DORA™-Kennzahlen ohne CI/CD-Einrichtung">
+  <meta name="twitter:description" content="Bereitstellungshäufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit aus den vorhandenen Jira-Daten. Mit Vergleichsbereichen, Trends und einer Vorher-nachher-Ansicht deiner KI-Einführung.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "DevOps Metrics for Jira",
+      "description": "Atlassian-Forge-Dashboard-Gadget mit den vier DORA™-Kennzahlen (Bereitstellungshäufigkeit, Durchlaufzeit von Änderungen, Änderungsfehlerrate und Wiederherstellungszeit), berechnet aus Jira-Vorgängen. Mit Vergleichsbereichen, Trends, einem Vorher-nachher-Vergleich einer KI-Einführung und Exporten. Keine CI/CD-Integration erforderlich.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "url": "https://janekbehrens.de/de/dora-metrics-for-jira.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wie lassen sich DORA™-Kennzahlen ohne CI/CD-Daten messen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aus deinen vorhandenen Jira-Daten: veröffentlichte Versionen oder Statuswechsel für Bereitstellungen, der erste Status „In progress“ bis zum letzten „Done“ für die Durchlaufzeit, innerhalb von 14 Tagen nach einem Release gemeldete Fehler (ohne Releases: aus „Done“ zurückgesetzte Vorgänge) für die Änderungsfehlerrate und Störungstickets vom Erstellen bis zum Beheben für die Wiederherstellungszeit. Das sind Näherungen aus Vorgängen, die immer auf dieselbe Weise gemessen werden. Das ⓘ auf jeder Kachel erklärt die Berechnung."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was zählt als Bereitstellung?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Du wählst im Einrichtungsassistenten: als veröffentlicht markierte Jira-Versionen mit Veröffentlichungsdatum oder Vorgänge, die erstmals einen von dir gewählten Status erreichen. Bei mindestens drei Releases in den letzten 90 Tagen empfiehlt der Assistent Releases, sonst die Statusoption. Beide Varianten sind in Free enthalten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann die App zeigen, ob unsere KI-Einführung die Lieferung verändert hat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, mit Pro. Trage das Einführungsdatum in Schritt 3 des Assistenten ein. Der Reiter „AI Impact“ vergleicht zwei gleich lange Zeiträume davor und danach für alle vier Kennzahlen, gibt eine regelbasierte Einschätzung und vergleicht Vorgänge mit KI-Beteiligung mit den übrigen. KI-Beteiligung wird aus Labels, Vorgangstypen und Aktivitäten von App-Konten ermittelt. Ergebnisse sind Team-Summen, niemals Werte pro Person."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie aktuell sind die Zahlen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die erste Analyse liest einmalig bis zu 12 Monate abgeschlossener Vorgänge. Danach werden Daten von Projekten, die in den letzten 45 Tagen geöffnet wurden, jede Nacht aktualisiert. Die Aktualisierungsschaltfläche aktualisiert ein Projekt sofort, höchstens einmal alle 10 Minuten. Jira lädt die Gadgets alle 3 Stunden neu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ändert die App meine Vorgänge oder speichert sie personenbezogene Daten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Die App liest nur Jira-Arbeitsdaten und schreibt niemals in deine Vorgänge. Im Forge-Speicher von Atlassian speichert sie wöchentliche aggregierte Zahlen, ohne Namen oder Konto-IDs. Einzelheiten stehen im Vertrauensportal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist die App kostenlos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira-Instanzen mit bis zu 10 Nutzern bezahlen nichts. Größere Instanzen beginnen mit einer kostenlosen Testphase. Pro-Funktionen sind bei aktivem Abonnement einschließlich Testphase eingeschaltet. Ohne Abonnement, etwa nach der Testphase, funktioniert das Übersichtsgadget für ein Projekt mit allen vier Kennzahlen, Vergleichsbereichen und Trends weiter."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://janekbehrens.de/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DevOps Metrics for Jira",
+          "item": "https://janekbehrens.de/dora-metrics-for-jira.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "DevOps Metrics — Deployment Frequency & Lead Time für Jira: Hat sich deine KI-Einführung gelohnt?",
+  "description": "Bereitstellungshäufigkeit, Durchlaufzeit von Änderungen, Änderungsfehlerrate und Wiederherstellungszeit, berechnet aus den bereits in Jira vorhandenen Releases, Statuswechseln und Störungen.",
+  "thumbnailUrl": "https://janekbehrens.de/imgDoraMetricsForJira/video-poster.webp",
+  "uploadDate": "2026-10-05",
+  "embedUrl": "https://www.youtube-nocookie.com/embed/gZlSMDVmt68",
+  "contentUrl": "https://www.youtube.com/watch?v=gZlSMDVmt68"
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <link rel="stylesheet" href="/demo/dora-demo.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/dora-metrics-for-jira.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/dora-metrics-for-jira.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/dora-metrics-for-jira.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd" data-app="dora">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="/img/dora-metrics-icon.png" alt="" width="48" height="48">
+            <div><b>DevOps Metrics for Jira</b><span>Jira Cloud · Auf Forge entwickelt</span></div>
+          </div>
+          <h1 class="h-display">Die vier DORA™-Kennzahlen auf deinem <em>Jira-Dashboard</em></h1>
+        </div>
+        <div>
+          <p class="lead">Bereitstellungshäufigkeit, Durchlaufzeit von Änderungen, Änderungsfehlerrate und Wiederherstellungszeit, berechnet aus den bereits in Jira vorhandenen Releases, Statuswechseln und Störungen. Ohne CI/CD-Einrichtung.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Kostenlos im Marketplace testen →</a>
+            <a href="/de/dora-metrics-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+          <p class="product-note">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interaktive Demo">
+      <div class="wrap">
+        <div data-demo="dora">
+          <noscript><img src="/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps-Metrics-Übersichtsgadget mit vier Kennzahlenkacheln und Trenddiagramm der Durchlaufzeit" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Beispieldaten in deinem Browser. Nichts wird gespeichert oder irgendwohin gesendet. Gestrichelte Rahmen markieren die Bereiche der App. Pro-Funktionen sind aktiviert, wie in der kostenlosen Testphase.</span>
+          <a href="#features">Echte Bildschirmaufnahmen weiter unten ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In deinem Jira</span>
+          <h2 class="h-section">Das bietet die App</h2>
+          <p class="lead">Bildschirmaufnahmen aus einer echten Jira-Instanz mit Beispieldaten.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Funktionen" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f1" aria-controls="panel-dora-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Vier Kennzahlen in einem Gadget</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f2" aria-controls="panel-dora-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Ohne CI/CD-Einrichtung</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f3" aria-controls="panel-dora-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Vor und nach deiner KI-Einführung</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f4" aria-controls="panel-dora-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Eine Kennzahl für die Übersichtsanzeige</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-dora-f5" aria-controls="panel-dora-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Berichte mit einem Klick</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f1" aria-labelledby="tab-dora-f1">
+              <a class="feat-shot" href="/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps-Metrics-Übersichtsgadget für die letzten 6 Monate: Bereitstellungshäufigkeit 1,7 pro Woche, Durchlaufzeit 3 Tage, Änderungsfehlerrate 13 % und Wiederherstellungszeit 10,5 Stunden, jeweils mit Vergleichsbereich und Pfeil; daneben der Trend-Reiter mit wöchentlicher Durchlaufzeit, Vergleichszonen und Markierungen für eine neue CI-Pipeline und die KI-Einführung" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Vier Kennzahlen in einem Gadget</h3>
+                <p>Bereitstellungshäufigkeit, Durchlaufzeit von Änderungen, Änderungsfehlerrate und Wiederherstellungszeit für die letzten 30 Tage, 90 Tage, 6 Monate oder 12 Monate. Der Trend-Reiter zeigt jede Kennzahl pro Woche oder Monat.</p>
+                </div>
+                <div><ul>
+                <li>Ein Vergleichsbereich „Elite“, „High“, „Medium“ oder „Low“ aus den veröffentlichten DORA™-Forschungsergebnissen.</li>
+                <li>Ein Pfeil im Vergleich zum vorherigen Zeitraum gleicher Länge und ein verständlich formulierter Satz.</li>
+                <li>ⓘ erklärt die Berechnung jeder Kennzahl. Unter „Details“ steht, was ausgeschlossen wurde.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/dora-metrics-docs.html#calc">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f2" aria-labelledby="tab-dora-f2" hidden>
+              <a class="feat-shot" href="/imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" alt="Einrichtungsassistent: Schritt 1 mit Projekt Storefront, Schritt 2 mit empfohlenen Releases nach 23 gefundenen Releases in den letzten 90 Tagen und fertiges Gadget mit den ersten echten Zahlen" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Ohne CI/CD-Einrichtung</h3>
+                <p>Das Gadget liest, was Jira bereits enthält: veröffentlichte Versionen, Statuswechsel, Fehler und Störungstickets. Ein Assistent in drei Schritten prüft dein Projekt und empfiehlt eine Einstellung.</p>
+                </div>
+                <div><ul>
+                <li>Eine Bereitstellung ist ein Jira-Release oder ein Vorgang, der einen gewählten Status erreicht. Releases werden empfohlen, wenn das Projekt mindestens drei in den letzten 90 Tagen hatte.</li>
+                <li><b>„Use recommended settings“</b> speichert dies mit einem Klick.</li>
+                <li>Die erste Analyse liest einmalig bis zu 12 Monate, meist in etwa einer Minute.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/dora-metrics-docs.html#start">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f3" aria-labelledby="tab-dora-f3" hidden>
+              <a class="feat-shot" href="/imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" alt="Reiter „AI Impact“: verständliche Einschätzung, Veränderung aller vier Kennzahlen über 182 Tage vor und nach der Einführung und mediane Durchlaufzeit von Vorgängen mit und ohne KI-Beteiligung" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Vor und nach deiner KI-Einführung <span class="pro">PRO</span></h3>
+                <p>Trage das Datum ein, an dem dein Team mit Copilot, Rovo, Claude oder Cursor begonnen hat. Der Reiter „AI Impact“ vergleicht zwei gleich lange Zeiträume für alle vier Kennzahlen und erklärt verständlich, was sich verändert hat.</p>
+                </div>
+                <div><ul>
+                <li>Beide Zeiträume sind so lang wie die Zeit seit der Einführung, höchstens ein Jahr, und liegen innerhalb der analysierten Historie.</li>
+                <li>Vorgänge mit KI-Beteiligung im Vergleich zu den übrigen: Anteil der abgeschlossenen Arbeit und mediane Durchlaufzeit.</li>
+                <li>KI-Beteiligung aus Labels, Vorgangstypen und Aktivitäten von App-Konten. Nur Team-Summen, niemals Werte pro Person.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/dora-metrics-docs.html#ai">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f4" aria-labelledby="tab-dora-f4" hidden>
+              <a class="feat-shot" href="/imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" alt="Vier DevOps-Metric-Card-Gadgets auf einem Jira-Dashboard: Bereitstellungshäufigkeit 1,8 pro Woche, Durchlaufzeit 2,9 Tage, Änderungsfehlerrate 13 % und Wiederherstellungszeit 10,3 Stunden, jeweils mit Vergleichsbereich, Veränderung zum vorherigen Zeitraum und Mini-Trenddiagramm" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Eine Kennzahl für die Übersichtsanzeige <span class="pro">PRO</span></h3>
+                <p>Das Gadget „DevOps Metric Card“ zeigt eine Kennzahl groß an, mit Vergleichsbereich, Veränderung zum vorherigen Zeitraum und Mini-Trenddiagramm. Vier Karten ergeben eine Übersichtsanzeige fürs Team.</p>
+                </div>
+                <div><ul>
+                <li>Ein Projekt, eine Kennzahl und ein Zeitraum pro Karte.</li>
+                <li>Verwendet die im Übersichtsgadget eingerichteten Definitionen des Projekts.</li>
+                <li>Jira lädt es alle 3 Stunden neu.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/dora-metrics-docs.html#card">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-dora-f5" aria-labelledby="tab-dora-f5" hidden>
+              <a class="feat-shot" href="/imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" alt="PNG-Berichtsbild der vier Kennzahlenkacheln für die letzten 6 Monate, mit Schaltflächen für CSV, PNG und Kopieren als Text" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Berichte mit einem Klick <span class="pro">PRO</span></h3>
+                <p>Übernimm die angezeigten Gadget-Daten in eine Präsentation, Tabelle oder Confluence-Seite. Jeweils mit einem Klick, ohne Dialog.</p>
+                </div>
+                <div><ul>
+                <li><b>PNG:</b> ein Berichtsbild der vier Kacheln oder des aktuellen Trenddiagramms.</li>
+                <li><b>CSV:</b> eine Zeile pro Woche des gewählten Zeitraums.</li>
+                <li><b>Als Text kopieren:</b> eine Markdown-Tabelle mit den verständlich formulierten Sätzen.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/dora-metrics-docs.html#export">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Rundgang ansehen</h2><p class="lead">Ein kurzer Rundgang durch DevOps Metrics in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url(&#x27;/imgDoraMetricsForJira/video-poster.webp&#x27;)"
+                 data-src="https://www.youtube-nocookie.com/embed/gZlSMDVmt68?autoplay=1" data-title="DevOps Metrics — Deployment Frequency &amp; Lead Time für Jira: Hat sich deine KI-Einführung gelohnt?">
+              <button class="yt-play-btn" aria-label="Video laden und abspielen: DevOps Metrics — Deployment Frequency &amp; Lead Time für Jira: Hat sich deine KI-Einführung gelohnt?"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Warum diese App?</span>
+          <h2 class="h-section">Jira allein und mit DevOps Metrics im Vergleich</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira allein</th><th scope="col" class="is-app">Mit DevOps Metrics</th></tr></thead>
+            <tbody>
+              <tr><td>Bereitstellungshäufigkeit</td><td class="no">Ein Bericht, der Bereitstellungsdaten aus einem verbundenen CI/CD-Werkzeug benötigt</td><td class="yes">Aus Jira-Releases oder Vorgängen beim Erreichen eines Status gezählt. Keine Verbindung erforderlich</td></tr>
+              <tr><td>Änderungsfehlerrate und Wiederherstellungszeit</td><td class="no">Nicht in den integrierten Berichten von Jira Software enthalten</td><td class="yes">Aus innerhalb von 14 Tagen nach einem Release gemeldeten Fehlern (ohne Releases: wieder geöffneten Vorgängen) und aus Störungstickets</td></tr>
+              <tr><td>Wirkung einer KI-Einführung</td><td class="no">Keine integrierte Vorher-nachher-Ansicht</td><td class="yes">Zwei gleich lange Zeiträume vor und nach dem Einführungsdatum für alle vier Kennzahlen (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Verglichen mit Jira Cloud ohne Apps. Jiras eigener <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-your-deployment-frequency-report/" target="_blank" rel="noopener">Bericht zur Bereitstellungshäufigkeit</a> ist im Atlassian Support beschrieben.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Tarife</span>
+          <h2 class="h-section">Free und Pro</h2>
+          <p class="muted">Instanzen mit bis zu 10 Nutzern bezahlen nichts für die App. Größere Instanzen beginnen mit einer kostenlosen Testphase; Preise pro Nutzer findest du im <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">Ohne aktives Abonnement, zum Beispiel nach der Testphase</p>
+            <ul>
+              <li>Übersichtsgadget für ein Projekt</li>
+              <li>Alle vier Kennzahlen mit Vergleichsbereichen, Pfeilen und Erläuterungen</li>
+              <li>Wöchentliche oder monatliche Trends mit Vergleichszonen</li>
+              <li>Bereitstellungen als Releases oder als Vorgänge beim Erreichen eines Status</li>
+              <li>Hinweis zur Datenqualität und Detailansicht</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">Während der kostenlosen Testphase und mit Abonnement</p>
+            <ul>
+              <li>Alles aus Free</li>
+              <li>Bis zu 10 Projekte gemeinsam in einem Gadget</li>
+              <li>Reiter „AI Impact“ und Schritt zur KI-Einführung</li>
+              <li>Erweiterte Einstellungen: Störungstypen und Unteraufgaben</li>
+              <li>Bis zu fünf Ereignismarkierungen im Trenddiagramm</li>
+              <li>Gadget „DevOps Metric Card“</li>
+              <li>Export als PNG, CSV und kopierter Text</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Einrichtung</span>
+          <h2 class="h-section">In drei Schritten startklar</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Installieren</h3><p>Hole dir die App aus dem Atlassian Marketplace und bestätige die Installation in deiner Jira-Instanz.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Gadget hinzufügen</h3><p>Wähle auf einem Jira-Dashboard „Add gadget“, suche nach „DevOps Metrics“ und füge „DevOps Metrics — Overview“ hinzu.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Projekt auswählen</h3><p>Übernimm die empfohlene Bereitstellungseinstellung. Die erste Analyse füllt die Kacheln, meist in etwa einer Minute.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Häufige Fragen</h2>
+          <p class="muted" style="margin-top:10px">Weitere Antworten findest du in der <a href="/de/dora-metrics-docs.html#faq">Dokumentation</a>, oder schreibe an <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>Wie lassen sich DORA™-Kennzahlen ohne CI/CD-Daten messen?</summary><div>Aus deinen vorhandenen Jira-Daten: veröffentlichte Versionen oder Statuswechsel für Bereitstellungen, der erste Status „In progress“ bis zum letzten „Done“ für die Durchlaufzeit, innerhalb von 14 Tagen nach einem Release gemeldete Fehler (ohne Releases: aus „Done“ zurückgesetzte Vorgänge) für die Änderungsfehlerrate und Störungstickets vom Erstellen bis zum Beheben für die Wiederherstellungszeit. Das sind Näherungen aus Vorgängen, die immer auf dieselbe Weise gemessen werden. Das ⓘ auf jeder Kachel erklärt die Berechnung.</div></details>
+          <details><summary>Was zählt als Bereitstellung?</summary><div>Du wählst im Einrichtungsassistenten: als veröffentlicht markierte Jira-Versionen mit Veröffentlichungsdatum oder Vorgänge, die erstmals einen von dir gewählten Status erreichen. Bei mindestens drei Releases in den letzten 90 Tagen empfiehlt der Assistent Releases, sonst die Statusoption. Beide Varianten sind in Free enthalten.</div></details>
+          <details><summary>Kann die App zeigen, ob unsere KI-Einführung die Lieferung verändert hat?</summary><div>Ja, mit Pro. Trage das Einführungsdatum in Schritt 3 des Assistenten ein. Der Reiter „AI Impact“ vergleicht zwei gleich lange Zeiträume davor und danach für alle vier Kennzahlen, gibt eine regelbasierte Einschätzung und vergleicht Vorgänge mit KI-Beteiligung mit den übrigen. KI-Beteiligung wird aus Labels, Vorgangstypen und Aktivitäten von App-Konten ermittelt. Ergebnisse sind Team-Summen, niemals Werte pro Person.</div></details>
+          <details><summary>Wie aktuell sind die Zahlen?</summary><div>Die erste Analyse liest einmalig bis zu 12 Monate abgeschlossener Vorgänge. Danach werden Daten von Projekten, die in den letzten 45 Tagen geöffnet wurden, jede Nacht aktualisiert. Die Aktualisierungsschaltfläche aktualisiert ein Projekt sofort, höchstens einmal alle 10 Minuten. Jira lädt die Gadgets alle 3 Stunden neu.</div></details>
+          <details><summary>Ändert die App meine Vorgänge oder speichert sie personenbezogene Daten?</summary><div>Nein. Die App liest nur Jira-Arbeitsdaten und schreibt niemals in deine Vorgänge. Im Forge-Speicher von Atlassian speichert sie wöchentliche aggregierte Zahlen, ohne Namen oder Konto-IDs. Einzelheiten stehen im <a href="/trust-center.html" hreflang="en">Vertrauensportal (EN)</a>.</div></details>
+          <details><summary>Ist die App kostenlos?</summary><div>Jira-Instanzen mit bis zu 10 Nutzern bezahlen nichts. Größere Instanzen beginnen mit einer kostenlosen Testphase. Pro-Funktionen sind bei aktivem Abonnement einschließlich Testphase eingeschaltet. Ohne Abonnement, etwa nach der Testphase, funktioniert das Übersichtsgadget für ein Projekt mit allen vier Kennzahlen, Vergleichsbereichen und Trends weiter.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Weitere Apps von Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="/de/velocity-chart.html"><img src="/img/velocity-chart-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Velocity Chart for Jira</b><span>Sprint-Velocity auf jedem Dashboard mit deiner eigenen Definition of Done.</span></div></a>
+          <a class="card" href="/de/team-capacity-for-jira.html"><img src="/img/team-capacity-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Team Capacity Planning for Jira</b><span>Erkenne in jedem Sprint, wer zu viel oder zu wenig Arbeit hat.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Lieferkennzahlen, die dein ganzes Team versteht</h2>
+            <p class="muted">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Im Marketplace installieren →</a>
+            <a href="/de/dora-metrics-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+        </div>
+        <p class="legal-note">DORA™ ist eine Marke von Google LLC. DevOps Metrics für Jira ist ein unabhängiges Produkt von Janek Behrens und steht weder in Verbindung mit Google noch wird es von Google empfohlen. „DORA™-Kennzahlen“ bezeichnet die vier Kennzahlen zur Softwarelieferung des Programms DevOps Research and Assessment.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/redesign.js"></script>
+  <script src="/demo/demo-core.js?v=cac30b1d1459"></script>
+  <script src="/demo/dora-demo.js"></script>
+</body>
+</html>

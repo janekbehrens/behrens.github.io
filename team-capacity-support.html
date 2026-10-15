@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Support — Team Capacity Planning for Jira</title>
+  <meta name="description" content="Get help with Team Capacity Planning for Jira: contact support, report a bug and find answers to common questions.">
+  <link rel="canonical" href="https://janekbehrens.de/team-capacity-support.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/team-capacity-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/team-capacity-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/team-capacity-support.html">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">Team Capacity Planning for Jira</p>
+
+    <h2>Get help</h2>
+    <p>
+      Have a question, found a bug, or want to request a feature? We're happy to help.
+      Email us and we typically respond within <strong>1–2 business days</strong>, or open a public
+      issue on GitHub. Check the existing issues first: your question may already have an answer.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Team%20Capacity%20Support">support@janekbehrens.de</a><br>
+        <strong>Bug reports &amp; feature requests:</strong> <a href="https://github.com/janekbehrens/team-capacity-for-jira-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/team-capacity-for-jira-issues</a><br>
+        <strong>Documentation:</strong> <a href="team-capacity-docs.html">Team Capacity Planning for Jira documentation</a><br>
+        <strong>Response time:</strong> 1–2 business days (Monday to Friday)
+      </p>
+    </div>
+
+    <h2>Before you reach out</h2>
+    <p>Most questions are answered in the <a href="team-capacity-docs.html">documentation</a>. Common ones:</p>
+    <ul>
+      <li><strong>Who can add the gadget?</strong> — any user, on any dashboard they can edit; only the initial app install needs a site admin. Share the dashboard via standard Jira dashboard sharing — viewers need no extra setup.</li>
+      <li><strong>"No estimates on these issues"</strong> — your board estimates with points/time but the sprint has none yet. Add estimates, or switch <em>Measure workload by</em> to issue count in the gadget's <em>Edit</em> (pencil) menu.</li>
+      <li><strong>"No active or recent sprint found"</strong> — the board has no sprints at all. Create one, or pick a different board in Edit mode. (Without an active sprint the gadget shows the next upcoming or the latest closed sprint.)</li>
+      <li><strong>"You do not have permission to view this board"</strong> — the app enforces Jira project permissions per viewer; ask your admin for Browse access to the project.</li>
+      <li><strong>A person is missing from the heatmap</strong> — only assignees of issues in the selected sprint appear. Unassigned work is shown in its own grey row.</li>
+      <li><strong>Numbers look like hours, not points</strong> — your board estimates with <em>Original estimate</em>; the gadget converts seconds to hours automatically and labels the unit.</li>
+      <li><strong>Pro fields are greyed out</strong> — per-person capacity, remaining-load mode, custom thresholds and CSV export require Pro (free on Jira sites with up to 10 users).</li>
+    </ul>
+
+    <h2>What to include in a bug report</h2>
+    <ul>
+      <li>Board type (company-managed or team-managed) and how the board estimates (points / time / none)</li>
+      <li>The selected sprint and what the header shows (people / totals)</li>
+      <li>What you expected vs. what you saw (a screenshot helps a lot)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Legal:</strong> <a href="team-capacity-privacy-policy.html">Privacy Policy</a> ·
+      <a href="team-capacity-terms-of-service.html">Terms of Service</a> ·
+      <a href="team-capacity-security.html">Security Policy</a>
+    </p>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

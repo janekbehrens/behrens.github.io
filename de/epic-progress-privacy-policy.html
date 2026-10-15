@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — Epic Progress for Confluence</title>
+  <meta name="description" content="Datenschutzerklärung von Epic Progress for Confluence: Was die App liest, was sie wie lange im Forge-Speicher aufbewahrt und warum sie keine Konto-IDs speichert.">
+  <link rel="canonical" href="https://janekbehrens.de/de/epic-progress-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/epic-progress-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/epic-progress-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/epic-progress-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Epic Progress for Confluence · Stand: 11. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch Epic Progress for Confluence ("die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Confluence Cloud-Site und optionaler Verbindung mit Jira auf derselben Site. Die App zeigt Fortschrittsbalken auf Confluence-Seiten. Sie liest Jira- und Confluence-Daten <strong>mit den Berechtigungen der Person, die die Seite betrachtet oder bearbeitet,</strong> und erstellt, verändert oder löscht niemals Jira-Vorgänge oder Confluence-Seiten.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App liest die folgenden Daten live ausschließlich zur Anzeige ihrer Makros und speichert sie nur, soweit dies in Abschnitt 3 angegeben ist:</p>
+    <ul>
+      <li><strong>Jira-Vorgänge:</strong> Schlüssel, Titel (Zusammenfassungen), Status und Statuskategorie, Vorgangstyp, übergeordneter Vorgang, Fälligkeitsdatum, Story-Point-Schätzungen und ob ein Vorgang markiert ist. Für die optionale Liste offener Vorgänge außerdem der Anzeigename des Bearbeiters.</li>
+      <li><strong>Jira-Struktur:</strong> Projekte (Schlüssel und Namen), Releases (Namen, Daten und Veröffentlichungsstatus), gespeicherte Filter (Namen), Felder und Vorgangstypen (zum Ermitteln der Story-Point-Felder und der Epic-Ebene) sowie die Jira-Prüfung einer in den Makroeinstellungen eingegebenen JQL-Suche.</li>
+      <li><strong>Confluence:</strong> Titel und Labels der Seiten im gewählten Bereich (Page Progress), Bereichsnamen (Bereichsauswahl), ob der aktuelle Nutzer die Seite sehen darf (vor der Anzeige einer Momentaufnahme geprüft) und ob er sie bearbeiten darf (zum Veröffentlichen oder Entfernen einer Momentaufnahme) sowie — wenn jemand den Administratorschalter ändert — ob diese Person Confluence-Administrator ist (die von Confluence erlaubten Aktionen; nichts davon wird gespeichert). Einmal täglich prüft die App selbst, ob eine Seite mit veröffentlichter Momentaufnahme noch existiert (siehe Abschnitt 7).</li>
+    </ul>
+    <p>
+      Vorgangsbeschreibungen, Kommentare und Anhänge sowie Inhalte von Confluence-Seiten werden
+      <strong>niemals gelesen</strong>. Anzeigenamen der Bearbeiter werden live in der Liste offener Vorgänge angezeigt und werden <strong>niemals gespeichert</strong> .
+    </p>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert nur die folgenden Daten in <strong>Atlassian Forge-Speicher</strong>, der von Atlassian für Ihre Site gehostet und verwaltet wird:
+    </p>
+    <ul>
+      <li><strong>Veröffentlichte Momentaufnahmen</strong>: Sie werden gespeichert, wenn ein Bearbeiter der Seite auf „Publish snapshot“ klickt, und werden — sofern dies nicht in den Makroeinstellungen deaktiviert ist — erneut aktualisiert, wenn ein Bearbeiter die Seite öffnet und die Momentaufnahme älter als 15 Minuten ist (mit dessen eigenen Jira-Berechtigungen; das Lesen einer Momentaufnahme löst niemals eine Jira-Anfrage aus, und „View live“ liest Jira mit den eigenen Berechtigungen des Lesers). Automatische Aktualisierungen erneuern die Zahlen der vom Bearbeiter veröffentlichten Daten; neue Epics, Vorgänge oder Namen erscheinen erst, wenn ein Bearbeiter die Momentaufnahme von Hand aktualisiert. Eine Momentaufnahme enthält die Zähler hinter dem Balken (erledigt, in Bearbeitung, offen, markiert, ohne Schätzung), die Schlüssel und Namen dessen, was das Makro misst (Epic, Projekt, Release oder gespeicherter Filter bzw. die Epics einer Liste), sowie Datum und Uhrzeit der Veröffentlichung. Wenn der Bearbeiter <em>„Progress and work items“ (Fortschritt und Vorgänge)</em> gewählt hat, enthält sie außerdem Statuswerte, Fälligkeits- und Veröffentlichungsdaten sowie bis zu 25 offene Vorgänge (Schlüssel, Titel, Status). Jede Momentaufnahme wird unter der ID ihrer Seite und ihres Makros zusammen mit einem Fingerabdruck der Makroeinstellungen gespeichert, für die sie veröffentlicht wurde.</li>
+      <li><strong>Vermerke der automatischen Aktualisierung:</strong> pro Momentaufnahme der Zeitpunkt der letzten Prüfung ohne Änderungen und während einer laufenden Aktualisierung eine Reservierung für eine Minute (zufällige ID, Zeitpunkt und nach einer Entfernung eine Löschmarkierung), damit nur eine Aktualisierung gleichzeitig läuft und eine Entfernung immer Vorrang hat (keine Person).</li>
+      <li><strong>Vermerk „zuletzt geöffnet“:</strong> für jedes Makro mit veröffentlichter Momentaufnahme der Tag des letzten Öffnens (nur ein Datum, keine Person). Die tägliche Bereinigung löscht Momentaufnahmen, deren Makro 120 Tage lang niemand geöffnet hat (Abschnitt 7).</li>
+      <li><strong>Kurzer Ansichts-Zwischenspeicher (5 Minuten, pro Leser):</strong> Wenn jemand eine Seite öffnet, wird das, was Epic Progress, Jira Progress, Progress List und Page Progress dieser Person gezeigt haben, für 5 Minuten gespeichert, damit die Seite schneller öffnet, wenn dieselbe Person sie erneut aufruft: Zähler hinter dem Balken, Schlüssel, Namen, Labels, Statuswerte und Daten wie angezeigt sowie der Zeitpunkt, zu dem die Zahlen gelesen wurden. Es werden nur vollständige Antworten gespeichert, die mit den eigenen Berechtigungen dieser Person gelesen wurden, und nur dieser Person angezeigt. Jeder Eintrag wird unter der ID seiner Seite und seines Makros, einem Fingerabdruck der Makroeinstellungen und einem gesalzenen Einweg-Hash der Konto-ID des Lesers anstelle der ID selbst gespeichert. Keine Bearbeiter, offenen Vorgänge oder JQL-Texte. „Refresh“ liest Jira erneut und ersetzt den Eintrag.</li>
+      <li><strong>Schlüssel für den Ansichts-Zwischenspeicher:</strong> ein zufälliger Schlüssel, den die App einmal pro Installation erzeugt und im verschlüsselten Geheimnisspeicher von Forge aufbewahrt, ausschließlich zur Erzeugung des obigen Hashs. Er enthält keine Daten über Personen und gewährt keinerlei Zugriff.</li>
+      <li><strong>App-Einstellung:</strong> ob veröffentlichte Momentaufnahmen auf der Site erlaubt sind (Administratorschalter).</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> wie oft Funktionen pro Tag und Site genutzt wurden (z. B. "ein Makro wurde geöffnet" oder "eine Momentaufnahme wurde veröffentlicht") und ob beim Seitenaufruf ein aktives Abonnement vorlag. Keine IDs, Namen, Seiten- oder Jira-Inhalte.</li>
+      <li><strong>Nicht personenbezogener Zwischenspeicher:</strong> die IDs der Story-Point-Felder der Site (Site-Konfiguration, Aktualisierung alle 6 Stunden).</li>
+    </ul>
+    <p>
+      Eine Momentaufnahme enthält <strong>keine Personenfelder</strong>: keine Bearbeiter und keine Konto-IDs, auch nicht die der veröffentlichenden Person, sowie keinen JQL-Text. Titel und Namen sind jedoch von Ihrem Team verfasster Freitext: Wenn Ihr Team personenbezogene Daten in den Titel eines Epics oder Vorgangs bzw. den Namen eines Projekts, Releases oder Filters schreibt, enthält die Momentaufnahme sie unverändert, sowohl mit
+      <em>„Progress only“ (nur Fortschritt)</em> als auch mit <em>„Progress and work items“ (Fortschritt und Vorgänge)</em>. Die veröffentlichende Person entscheidet, was sie teilt; Bearbeiter der Seite können eine Momentaufnahme jederzeit entfernen („Remove snapshot“).
+    </p>
+    <p>
+      Die <strong>Makroeinstellungen</strong> (z. B. gewähltes Epic, Projekt, Release oder Filter, JQL-Suche, Labels, Titel, Notizen und manuelle Werte) speichert <strong>Confluence selbst</strong>
+      als Teil der Seite, nicht die App. Sie unterliegen den eigenen Regeln von Confluence für Seitenverlauf und Löschung.
+    </p>
+
+    <h2>4. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> eigene Server betreiben. Es gibt weder ein vom Entwickler betriebenes Backend noch eine solche Datenbank.</li>
+      <li>Wir werden <strong>nicht</strong> Konto-IDs, E-Mail-Adressen oder Avatare von Personen sowie Personenfelder wie Bearbeiter speichern (Titel in Momentaufnahmen werden so aufbewahrt, wie Ihr Team sie geschrieben hat, siehe Abschnitt 3). Der Ansichts-Zwischenspeicher verwendet für 5 Minuten ausschließlich einen gesalzenen Einweg-Hash der Konto-ID des Lesers.</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an externe Dienste senden. Die App führt keine Netzwerkaufrufe außerhalb der Atlassian-Plattform aus.</li>
+      <li>Wir werden <strong>nicht</strong> Vorgangsbeschreibungen, Kommentare, Anhänge oder Seiteninhalte lesen.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "eine Momentaufnahme wurde veröffentlicht" oder "Jira hat nicht geantwortet") und einmal täglich die oben aufgeführten anonymen Nutzungszähler in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können Kennungen Ihrer Site enthalten, nämlich Projektschlüssel und Seiten-IDs, sowie Makrotypen, Zähler, HTTP-Statuswerte und Fehlercodes, jedoch niemals Inhalte, Namen, E-Mail-Adressen, Konto-IDs, Seiten- oder Vorgangstitel oder JQL-Text (eine JQL-Suche wird nur durch einen Hash und ihre Länge beschrieben). Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>5. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Verarbeitung erfolgt innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong> im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alle in Abschnitt 3 aufgeführten Daten liegen im gehosteten Forge-Speicher. Dieser unterstützt Atlassians
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>: Die Daten liegen am selben Ort wie Ihre Confluence-Site, dem erforderlichen Produkt der App, und werden mit ihr verschoben, wenn ein Administrator die Daten der Site an einen anderen Ort verlagert. Die technischen Logs aus Abschnitt 4 werden über die App-Protokollierung von Atlassian verarbeitet und gehören nicht zu den gespeicherten Daten der App.
+    </p>
+
+    <h2>6. Dienste Dritter</h2>
+    <p>
+      Die App wird <strong>nicht</strong> Dienste Dritter einbinden oder Daten an sie senden. Sie ruft weder KI-Dienste noch Analysedienste oder Werbenetzwerke auf.
+    </p>
+
+    <h2>7. Speicherdauer und Löschung</h2>
+    <ul>
+      <li><strong>Veröffentlichte Momentaufnahmen</strong> werden aufbewahrt, bis eine neuere Momentaufnahme sie ersetzt oder ein Bearbeiter auf „Remove snapshot“ klickt; dadurch werden sie sofort gelöscht (erforderlich ist nur die Bearbeitungsberechtigung für die Seite, kein Jira-Zugriff und kein aktives Abonnement). Öffnet ein Bearbeiter die veröffentlichte Seite, während „Publish a snapshot“ in den Makroeinstellungen deaktiviert ist, wird die Momentaufnahme entfernt. Wird ihre Seite in den Papierkorb verschoben oder gelöscht, löscht die tägliche Bereinigung sie innerhalb von 24 Stunden; wird die Seite zuvor wiederhergestellt, bleibt die Momentaufnahme erhalten. Dieselbe Bereinigung löscht sie innerhalb von 24 Stunden, nachdem ein Administrator der App durch eine App-Zugriffsregel den Zugriff auf die Seite entzogen hat. Sie löscht auch Momentaufnahmen, deren Makro 120 Tage lang niemand geöffnet hat, z. B. weil das Makro von der Seite entfernt wurde, die Seite nicht mehr gelesen wird oder Ansichtsbeschränkungen die App selbst am Lesen hindern.</li>
+      <li><strong>Vermerke der automatischen Aktualisierung</strong> werden zusammen mit ihrer Momentaufnahme gelöscht; eine zurückgebliebene Reservierung entfernt die tägliche Bereinigung.</li>
+      <li><strong>Vermerke „zuletzt geöffnet“</strong> werden zusammen mit ihrer Momentaufnahme gelöscht oder durch die tägliche Bereinigung, sobald das Makro keine Momentaufnahme mehr hat.</li>
+      <li><strong>Einträge des Ansichts-Zwischenspeichers</strong> laufen 5 Minuten nach dem Schreiben ab und werden vom Forge-Speicher selbst gelöscht. Atlassian entfernt abgelaufene Einträge im Hintergrund; die App verwendet niemals einen Eintrag, der älter als 5 Minuten ist. „Refresh“ ersetzt einen Eintrag sofort.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler</strong> werden nach 8 Tagen gelöscht.</li>
+      <li><strong>Die App-Einstellung</strong>, der <strong>der Zwischenspeicher der Story-Point-Felder</strong> und der <strong>der Schlüssel für den Ansichts-Zwischenspeicher</strong> werden aufbewahrt, solange die App installiert ist.</li>
+      <li>Wenn die App Daten löscht, werden sie sofort aus dem Forge-Speicher entfernt und die App kann sie nicht mehr lesen. Atlassian bewahrt bis zum Ende seiner Aufbewahrungsfrist eine als gelöscht markierte Kopie zur Wiederherstellung nach versehentlicher Löschung auf.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App einschließlich veröffentlichter Momentaufnahmen <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Datenlebenszyklus für von Forge gehosteten Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>8. Personenbezogene Daten und DSGVO</h2>
+    <p>
+      Die App speichert weder Konto-IDs noch E-Mail-Adressen oder Personenfelder wie Bearbeiter — weder in Momentaufnahmen noch in Einstellungen oder Zählern. Anzeigenamen der Bearbeiter werden live aus Jira angezeigt und niemals gespeichert. Die einzigen leserspezifischen Daten sind im kurzen Ansichts-Zwischenspeicher enthalten (Abschnitt 3): für 5 Minuten das, was die Makros einem Leser gezeigt haben, gespeichert unter einem gesalzenen Einweg-Hash seiner Konto-ID anstelle der ID selbst. Ein solcher Hash ist ein pseudonymes Datum im Sinne der DSGVO. Er ist auf jeder Site unterschiedlich, kann ohne den geheimen Schlüssel der Site nicht in die Konto-ID zurückverwandelt werden und dient ausschließlich dazu, demselben Leser innerhalb dieser 5 Minuten erneut dieselben Zahlen anzuzeigen; danach entfernt Forge den Eintrag (Abschnitt 7). Titel und Namen in Momentaufnahmen werden so aufbewahrt, wie Ihr Team sie in Jira geschrieben hat (Abschnitt 3). Enthalten sie personenbezogene Daten, können Bearbeiter die Momentaufnahme jederzeit entfernen und Confluence-Administratoren Momentaufnahmen deaktivieren. Daten, die Jira und Confluence selbst speichern, einschließlich der Makroeinstellungen auf einer Seite, bleiben vollständig in Ihrer Atlassian-Site und unter der Kontrolle von Atlassian; entsprechende DSGVO-Anfragen betroffener Personen sollten an Ihren Administrator oder Atlassian gerichtet werden. Bei Anliegen zur App kontaktieren Sie uns unter der unten angegebenen Adresse. Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus dem Forge-Speicher (Abschnitt 7).
+    </p>
+
+    <h2>9. Sicherheit</h2>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung ohne ausgehende Verbindungen zu externen Netzwerken außerhalb der Atlassian-Plattform.</li>
+      <li>Verwendet minimale API-Berechtigungen <strong>ohne Schreibzugriff</strong> auf Jira oder Confluence sowie App-Speicher.</li>
+      <li>Liest Jira und Confluence mit den Berechtigungen der Person, die die Seite betrachtet, sodass jeder Leser nur das sieht, was Jira und Confluence für ihn freigeben.</li>
+      <li>Speichert keine Zugangsdaten oder Token; solche gibt es nicht. Das einzige Geheimnis ist der zufällige Schlüssel für den Hash des Ansichts-Zwischenspeichers (Abschnitt 3), den die App pro Installation erzeugt und im verschlüsselten Geheimnisspeicher von Forge aufbewahrt.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/epic-progress-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>10. Datenschutz bei Kindern</h2>
+    <p>Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.</p>
+
+    <h2>11. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>12. Kontakt</h2>
+      <p>
+        Bei Fragen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">Atlassian, Confluence und Jira sind Marken von Atlassian. Epic Progress for Confluence ist eine unabhängige App von Janek Behrens und wird weder von Atlassian entwickelt noch unterstützt; die Produktnamen geben lediglich an, mit welchen Produkten die App funktioniert.</p>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

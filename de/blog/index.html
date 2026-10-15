@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Janek Behrens</title>
+  <meta name="description" content="Artikel zur Entwicklung für Atlassian — Jira, Confluence, Forge, KI-Dokumentation und Produktivitätstipps von einem unabhängigen Atlassian-Entwickler.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "url": "https://janekbehrens.de/de/blog/",
+  "name": "Atlassian-Entwicklung, verständlich erklärt",
+  "description": "Praxisnahe Artikel zur Entwicklung für Jira und Confluence — Forge, KI-Dokumentation, produktive Arbeitsweisen und Erfahrungen aus dem Marketplace.",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ],
+    "publication": {
+      "@type": "ScholarlyArticle",
+      "url": "https://dl.gi.de/items/76deef09-2b36-4bfa-b62d-a473220e947d",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Gesellschaft für Informatik"
+      }
+    }
+  },
+  "inLanguage": "de"
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <style>
+    .blog-hero {
+      padding: 64px 24px 52px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--white) 0%, var(--bg) 100%);
+    }
+    .blog-hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .blog-hero p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    .blog-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .blog-layout { grid-template-columns: 1fr; gap: 40px; }
+      .blog-sidebar { order: -1; }
+    }
+
+    /* ── Article list ── */
+    .post-list { list-style: none; padding: 0; }
+    .post-item {
+      border-bottom: 1px solid var(--border-2);
+      padding: 28px 0;
+    }
+    .post-item:first-child { padding-top: 0; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .post-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .tag-confluence { background: #E3FCEF; color: #006644; }
+    .tag-jira       { background: var(--blue-lite); color: var(--blue); }
+    .tag-atlassian  { background: #FFF7E6; color: #974F0C; }
+    .tag-forge      { background: #EAE6FF; color: #403294; }
+    .post-date { font-size: 0.8rem; color: var(--text-faint); }
+    .post-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.35;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .post-title:hover { color: var(--blue); }
+    .post-excerpt {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .post-readmore {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .post-readmore:hover { text-decoration: underline; }
+
+    /* Coming-soon overlay card */
+    .post-item.coming-soon { opacity: 0.55; pointer-events: none; }
+    .post-item.coming-soon .post-readmore {
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    /* ── Sidebar ── */
+    .blog-sidebar {}
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .sidebar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .sidebar-tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-card);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      text-decoration: none;
+    }
+    .sidebar-tag:hover { background: var(--blue-lite); color: var(--blue); border-color: #BAD6FB; }
+    .sidebar-apps { list-style: none; padding: 0; }
+    .sidebar-apps li { margin-bottom: 10px; }
+    .sidebar-apps a {
+      font-size: 0.88rem;
+      color: var(--text-3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-apps a:hover { color: var(--blue); }
+    .sidebar-apps img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      object-fit: contain;
+    }
+    .sidebar-about-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .sidebar-about-header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .sidebar-about-header-text { line-height: 1.3; }
+    .sidebar-about-header-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .sidebar-about-header-text a {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sidebar-about-header-text a:hover { color: var(--blue); }
+    .sidebar-about p {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .sidebar-about a { color: var(--blue); text-decoration: none; }
+    .sidebar-about a:hover { text-decoration: underline; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-2);
+      display: none;
+    }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 16px; opacity: 0.4; }
+    .empty-state h2 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .empty-state p { font-size: 0.9rem; line-height: 1.65; max-width: 360px; margin: 0 auto; }
+
+    /* ── Search & filter controls ── */
+    .blog-controls {
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .blog-search-wrap { position: relative; }
+    .blog-search {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 14px 9px 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s;
+      font-family: inherit;
+    }
+    .blog-search:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,82,204,0.1); }
+    .blog-search::placeholder { color: var(--text-faint); }
+    .blog-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      pointer-events: none;
+    }
+    .blog-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .sort-btn {
+      margin-left: auto;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all .15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .page-btn {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .page-btn:hover:not([disabled]) { border-color: var(--blue); color: var(--blue); }
+    .page-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .page-btn[disabled] { opacity: 0.35; cursor: default; }
+    .page-info { font-size: 0.8rem; color: var(--text-faint); margin-left: 6px; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Blog hero ── -->
+  <div class="blog-hero">
+    <div style="max-width:1000px;margin:0 auto;padding:0 24px;">
+      <span class="section-label" style="display:block;margin-bottom:10px;">Blog</span>
+      <h1>Atlassian-Entwicklung, verständlich erklärt</h1>
+      <p>Praxisnahe Artikel zur Entwicklung für Jira und Confluence — Forge, KI-Dokumentation, produktive Arbeitsweisen und Erfahrungen aus dem Marketplace.</p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="blog-layout">
+
+    <!-- Article list -->
+    <main>
+
+      <!-- Search / filter / sort -->
+      <div class="blog-controls">
+        <div class="blog-search-wrap">
+          <svg class="blog-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" class="blog-search" id="blogSearch" placeholder="Artikel suchen…" aria-label="Artikel suchen…" autocomplete="off">
+        </div>
+        <div class="blog-filter-row">
+          <button class="filter-btn active" data-filter="all">Alle</button>
+          <button class="filter-btn" data-filter="jira">Jira</button>
+          <button class="filter-btn" data-filter="priorityscoring">Priority Scoring</button>
+          <button class="filter-btn" data-filter="confluence">Confluence</button>
+          <button class="filter-btn" data-filter="enterprise">Unternehmen</button>
+          <button class="sort-btn" id="sortBtn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+            Neueste zuerst
+          </button>
+        </div>
+      </div>
+
+            <ul class="post-list" id="postList">
+        <li class="post-item" data-tags="jira" data-date="2026-10-15">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Aktualisiert <time datetime="2026-10-15">15. Oktober 2026</time></span>
+            <span class="post-date">· 4 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-epic-progress-tracking.html" class="post-title">Jira-Epic-Fortschritt: Vorgangsanzahl, Story Points und Dashboards</a>
+          <p class="post-excerpt">Verfolge Jira-Epic-Fortschritt mit nativen Ansichten, einem Feld oder einem Dashboard-Gadget. Vergleiche Vorgangsanzahl und Story Points mit einem Rechenbeispiel.</p>
+          <a href="/de/blog/jira-epic-progress-tracking.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-10-15">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Aktualisiert <time datetime="2026-10-15">15. Oktober 2026</time></span>
+            <span class="post-date">· 4 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-sprint-health-dashboard.html" class="post-title">Jira-Sprint-Dashboard: Sprint Health und Vorgangsfortschritt</a>
+          <p class="post-excerpt">Richte ein Jira-Sprint-Dashboard mit nativer Sprint-Auswertung und gefilterter Fortschrittstabelle ein. Mit JQL, Rechenbeispiel, Screenshots und Aktualisierungshinweisen.</p>
+          <a href="/de/blog/jira-sprint-health-dashboard.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-10-15">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Aktualisiert <time datetime="2026-10-15">15. Oktober 2026</time></span>
+            <span class="post-date">· 5 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-progress-bar.html" class="post-title">Jira-Fortschrittsbalken: Einrichtung, Beispiele und Dashboards</a>
+          <p class="post-excerpt">Ergänze Jira-Fortschrittsfelder für Status, Untervorgänge oder manuelle Schätzungen. Mit Rechenbeispiel, aktuellen Screenshots, JQL und interaktiver Demo.</p>
+          <a href="/de/blog/jira-progress-bar.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-06-02">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-06-02">2. Juni 2026</time></span>
+            <span class="post-date">· 9 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-velocity-chart.html" class="post-title">Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung</a>
+          <p class="post-excerpt">Ein Praxisleitfaden zum Jira-Velocity-Diagramm — was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Linie der durchschnittlichen Velocity liest, wie du Velocity für Sprint-Planung und Prognosen nutzt und welche Fehler sie irreführend machen.</p>
+          <a href="/de/blog/jira-velocity-chart.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-06-01">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-06-01">1. Juni 2026</time></span>
+            <span class="post-date">· 6 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/velocity-team-managed-jira.html" class="post-title">Velocity für teamverwaltete Projekte in Jira: Was verfügbar ist und was fehlt</a>
+          <p class="post-excerpt">Teamverwaltete Jira-Projekte haben einen Velocity-Bericht — allerdings mit Einschränkungen. Hier erfährst du, wie du ihn aktivierst und liest, wie er sich von der Velocity in unternehmensverwalteten Projekten unterscheidet, warum er häufig leer bleibt und wie du ein konfigurierbares Velocity-Diagramm auf ein Dashboard bekommst.</p>
+          <a href="/de/blog/velocity-team-managed-jira.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-05-30">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-30">30. Mai 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/how-sprint-velocity-is-calculated.html" class="post-title">So wird die Sprint-Velocity in Jira berechnet (zugesagt vs. abgeschlossen)</a>
+          <p class="post-excerpt">Eine genaue Erklärung, wie Jira die Sprint-Velocity berechnet: Was zur zugesagten und abgeschlossenen Arbeit zählt, wie Schätzfeld und Done-Zuordnung die Zahlen beeinflussen, warum Unteraufgaben ausgeschlossen sind und warum Velocity- und Sprint-Bericht manchmal voneinander abweichen.</p>
+          <a href="/de/blog/how-sprint-velocity-is-calculated.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-05-29">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-29">29. Mai 2026</time></span>
+            <span class="post-date">· 6 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/sprint-predictability-say-do-ratio.html" class="post-title">Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis: Velocity besser verstehen</a>
+          <p class="post-excerpt">Die reine Velocity zeigt dir, wie viel ein Team liefert; das Say/Do-Verhältnis zeigt, wie zuverlässig. Hier erfährst du, wie du die Sprint-Vorhersagbarkeit berechnest (abgeschlossen ÷ zugesagt), welcher Bereich gesund ist, warum sehr niedrige und sehr hohe Werte Warnzeichen sind und wie du sie verbesserst.</p>
+          <a href="/de/blog/sprint-predictability-say-do-ratio.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence" data-date="2026-05-21">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/confluence-progress-bar.html" class="post-title">Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen</a>
+          <p class="post-excerpt">Confluence enthält kein eigenes Fortschrittsbalkenfeld. Hier findest du die nativen Möglichkeiten — Statusmakros, manuelle Tabellen und Diagrammmakros — und erfährst, wie Teams sie mit Jira-Fortschrittsfeldern kombinieren, um Projekte in Echtzeit sichtbar zu machen.</p>
+          <a href="/de/blog/confluence-progress-bar.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence jira" data-date="2026-05-21">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/documenting-jira-issues.html" class="post-title">Jira-Vorgänge dokumentieren: Vom Beschreibungsfeld zu verknüpften Confluence-Seiten</a>
+          <p class="post-excerpt">Die meisten Teams dokumentieren Jira-Vorgänge auf drei Ebenen — im Beschreibungsfeld, in Dateianhängen und auf verknüpften Confluence-Seiten. Hier erfährst du, welchen Zweck jede Ebene erfüllt, welche Inhalte wohin gehören und wie die verknüpften Confluence-Seiten aktuell bleiben.</p>
+          <a href="/de/blog/documenting-jira-issues.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence" data-date="2026-05-21">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/github-wiki-to-confluence.html" class="post-title">Von GitHub Wiki zu Confluence: Zwei Migrationswege im Vergleich</a>
+          <p class="post-excerpt">Von GitHub Wiki zu Confluence wechseln: manueller Export mit pandoc oder Neuerzeugung aus dem Quellcode mit CodeDoc AI. Ein ehrlicher Vergleich, wann welcher Weg besser passt und wie du die Migration ungenutzter Seiten vermeidest.</p>
+          <a href="/de/blog/github-wiki-to-confluence.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-05-21">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-sprint-health-gadget.html" class="post-title">Jira-Sprint-Health-Gadget: Was es zeigt und wie du es sinnvoll nutzt</a>
+          <p class="post-excerpt">Das Jira-Sprint-Health-Gadget erfasst Blockaden, Umfangsänderungen und abgeschlossene Arbeit — allerdings nur auf Sprint-Ebene. Hier erfährst du, wie es funktioniert, was ihm fehlt und wie du es mit einem Fortschritts-Gadget kombinierst, um einzelne Vorgänge sichtbar zu machen.</p>
+          <a href="/de/blog/jira-sprint-health-gadget.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-05-21">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/sort-jira-backlog-by-priority.html" class="post-title">Dein Jira-Backlog automatisch nach Priorität sortieren</a>
+          <p class="post-excerpt">Jiras natives Prioritätsfeld ist ein Label mit fünf Stufen, keine Zahl — deshalb sind in vielen Backlogs irgendwann 80 % der Vorgänge „Hoch“. So sortierst du mit RICE, WSJF oder ICE nach einem echten numerischen Prioritätswert und verstehst die Grenzen der nativen Sortierung.</p>
+          <a href="/de/blog/sort-jira-backlog-by-priority.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira forge" data-date="2026-04-22">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira · Forge</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-04-22">22. April 2026</time></span>
+            <span class="post-date">· 11 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/best-jira-backlog-prioritization-apps.html" class="post-title">Die besten Apps zur Jira-Backlog-Priorisierung 2026: Ein ehrlicher Vergleich</a>
+          <p class="post-excerpt">Ein Vergleich der wichtigsten Apps zur Jira-Backlog-Priorisierung 2026 — Foxly, Priority Scoring Calculator, Dynamic Scoring, Issue Score und Priority Scoring. Mit ehrlichen Angaben zu Installationen, Hosting und Abwägungen.</p>
+          <a href="/de/blog/best-jira-backlog-prioritization-apps.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="enterprise forge" data-date="2026-04-15">
+          <div class="post-meta">
+            <span class="post-tag tag-atlassian">Unternehmen · Forge</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-04-15">15. April 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/atlassian-forge-vs-connect.html" class="post-title">Atlassian-Forge- und Connect-Apps: Was ist sicherer? (2026)</a>
+          <p class="post-excerpt">Forge-Apps laufen in Atlassians Infrastruktur. Connect-Apps laufen auf externen Servern. Für Atlassian-Administratoren in Unternehmen ist dieser Sicherheitsunterschied entscheidend — hier erfährst du, was du wissen solltest.</p>
+          <a href="/de/blog/atlassian-forge-vs-connect.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira forge" data-date="2026-04-09">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira · Forge</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-04-09">9. April 2026</time></span>
+            <span class="post-date">· 9 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/best-jira-progress-tracking-apps.html" class="post-title">Die besten Apps zur Jira-Fortschrittsverfolgung 2026: Ein ehrlicher Vergleich</a>
+          <p class="post-excerpt">Ein Vergleich der wichtigsten Apps zur Jira-Fortschrittsverfolgung 2026 — von nativen Feldern bis zu visuellen Trackern auf Forge. Mit einer ehrlichen Einschätzung der Vor- und Nachteile, einschließlich der Schwächen jeder Option.</p>
+          <a href="/de/blog/best-jira-progress-tracking-apps.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-04-02">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-04-02">2. April 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-custom-priority-scoring-weights.html" class="post-title">Eigene Prioritätsbewertung in Jira: Dimensionsgewichte für dein Team anpassen (2026)</a>
+          <p class="post-excerpt">Standard-RICE-Gewichte passen nicht zu jedem Team. So passt du die Dimensionsgewichte von RICE, WSJF und ICE (×1–×5) in Jira an — ohne Skripte oder Tabellenkalkulation, mit Live-Vorschau des Werts.</p>
+          <a href="/de/blog/jira-custom-priority-scoring-weights.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-03-26">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-03-26">26. März 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-priority-ranking.html" class="post-title">Jira-Prioritätsrangfolge: Dein Backlog automatisch nach Bewertung sortieren (2026)</a>
+          <p class="post-excerpt">Beende die Diskussion darüber, welcher Jira-Vorgang als Nächstes dran ist. Numerische Prioritätswerte schaffen eine echte Rangfolge im Backlog — sortierbar, filterbar und sprintübergreifend in einer Tabelle sichtbar.</p>
+          <a href="/de/blog/jira-priority-ranking.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="jira" data-date="2026-03-17">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-03-17">17. März 2026</time></span>
+            <span class="post-date">· 6 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-progress-no-code.html" class="post-title">Fortschrittsverfolgung ohne Code für Jira: Jeden Vorgang ohne ein einziges Skript verfolgen (2026)</a>
+          <p class="post-excerpt">Du brauchst weder JQL noch ScriptRunner oder einen Jira-Administrator, um den Fortschritt deiner Vorgänge zu verfolgen. So richtest du automatische, visuelle Fortschrittsverfolgung in Jira in weniger als zwei Minuten ein — ganz ohne Code.</p>
+          <a href="/de/blog/jira-progress-no-code.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence jira" data-date="2026-03-12">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-03-12">12. März 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-project-documentation.html" class="post-title">Ein Jira-Projekt automatisch dokumentieren: Von manuellen Updates zu lebendiger Dokumentation (2026)</a>
+          <p class="post-excerpt">Den meisten Jira-Projekten fehlt Dokumentation — und die meisten Confluence-Seiten veralten. So verbindest du beides, damit sich deine Projektdokumentation selbst schreibt und automatisch aktuell bleibt.</p>
+          <a href="/de/blog/jira-project-documentation.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-03-03">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-03-03">3. März 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-backlog-grooming-checklist.html" class="post-title">Checkliste zur Jira-Backlog-Pflege für Product Owner (2026)</a>
+          <p class="post-excerpt">Eine Checkliste mit zwölf Punkten zur Jira-Backlog-Pflege für Product Owner und Scrum Master — Story Points, Akzeptanzkriterien, Prioritätswerte, veraltete Vorgänge und mehr. Direkt kopieren und nutzen.</p>
+          <a href="/de/blog/jira-backlog-grooming-checklist.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-02-24">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-02-24">24. Februar 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-portfolio-backlog-health.html" class="post-title">Portfolio-Backlog-Gesundheit in Jira: Mehrere Projekte gleichzeitig verfolgen (2026)</a>
+          <p class="post-excerpt">Wie Entwicklungsleiter und Vizepräsidenten die Backlog-Gesundheit mehrerer Jira-Projekte in einer Ansicht überwachen — ohne jedes Projekt einzeln zu öffnen. Mit Einrichtung des Board Health Score und Anleitung zum Portfolio-Dashboard.</p>
+          <a href="/de/blog/jira-portfolio-backlog-health.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-02-16">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-02-16">16. Februar 2026</time></span>
+            <span class="post-date">· 10 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/wsjf-safe-pi-planning-jira.html" class="post-title">WSJF für SAFe PI Planning in Jira: Schrittweise Einrichtung (2026)</a>
+          <p class="post-excerpt">So ordnest du mit WSJF (Weighted Shortest Job First) dein ART-Backlog für SAFe PI Planning — Formel, Fibonacci-Bewertung, Jira-Einrichtung und die Sicht des RTE im Dashboard.</p>
+          <a href="/de/blog/wsjf-safe-pi-planning-jira.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-02-10">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-02-10">10. Februar 2026</time></span>
+            <span class="post-date">· 9 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/ai-backlog-prioritization-jira-rovo.html" class="post-title">KI-Backlog-Priorisierung in Jira: Wie Rovo Vorgänge automatisch bewertet</a>
+          <p class="post-excerpt">Rovo-KI kann RICE-, WSJF- und ICE-Werte für dein Jira-Backlog vorschlagen, nach Bestätigung übernehmen oder automatisch setzen. Lerne die drei Modi, ihre Einsatzfälle und die Bewertung eines gesamten Backlogs in wenigen Minuten kennen.</p>
+          <a href="/de/blog/ai-backlog-prioritization-jira-rovo.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence" data-date="2026-02-03">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-02-03">3. Februar 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/ai-documentation-confluence.html" class="post-title">KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden</a>
+          <p class="post-excerpt">Wie KI-Dokumentation für Confluence in der Praxis funktioniert — von Dokumentationsvoreinstellungen und Sprachunterstützung bis zu Freigabeprozessen und Kostenkontrolle mit BYOK.</p>
+          <a href="/de/blog/ai-documentation-confluence.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence" data-date="2026-01-27">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-01-27">27. Januar 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/automate-confluence-documentation.html" class="post-title">Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD</a>
+          <p class="post-excerpt">So automatisierst du Confluence-Dokumentation vollständig mit Webhooks, Zeitplänen und KI — vom ersten manuellen Durchlauf bis zur durch Commits ausgelösten CI/CD-Dokumentationspipeline.</p>
+          <a href="/de/blog/automate-confluence-documentation.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence enterprise" data-date="2026-01-19">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence · Unternehmen</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-01-19">19. Januar 2026</time></span>
+            <span class="post-date">· 8 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/byok-ai-atlassian.html" class="post-title">BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist</a>
+          <p class="post-excerpt">Bring Your Own Key (BYOK) für KI in Atlassian erklärt: Datenschutz, DSGVO-Konformität, Kostenkontrolle und die Bedeutung für Unternehmen mit Confluence und Jira.</p>
+          <a href="/de/blog/byok-ai-atlassian.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="confluence" data-date="2026-01-12">
+          <div class="post-meta">
+            <span class="post-tag tag-confluence">Confluence</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-01-12">12. Januar 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/confluence-documentation-github.html" class="post-title">Confluence-Dokumentation automatisch aus GitHub erzeugen</a>
+          <p class="post-excerpt">Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.</p>
+          <a href="/de/blog/confluence-documentation-github.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2026-01-06">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2026-01-06">6. Januar 2026</time></span>
+            <span class="post-date">· 7 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/ice-scoring-jira.html" class="post-title">ICE-Bewertung in Jira: Schnelle Priorisierung für Growth-Teams (2026)</a>
+          <p class="post-excerpt">ICE-Bewertung (Wirkung × Sicherheit × Einfachheit) ist der schnellste Weg zur Rangfolge deines Backlogs — ohne Nutzerdaten. Lerne die Formel, bewerte zehn Ideen in zwanzig Minuten und richte es heute in Jira ein.</p>
+          <a href="/de/blog/ice-scoring-jira.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2025-12-18">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2025-12-18">18. Dezember 2025</time></span>
+            <span class="post-date">· 9 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-backlog-health.html" class="post-title">Jira-Backlog-Gesundheit: Deine Projektqualitätskennzahl messen und verbessern</a>
+          <p class="post-excerpt">Erfahre, was ein Jira-Backlog ungesund macht, welche acht Qualitätssignale du verfolgen solltest und wie daraus eine einzige, automatisch aktualisierte Gesundheitskennzahl von 0–100 wird.</p>
+          <a href="/de/blog/jira-backlog-health.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2025-12-11">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2025-12-11">11. Dezember 2025</time></span>
+            <span class="post-date">· 10 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/jira-prioritization-framework-comparison.html" class="post-title">RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?</a>
+          <p class="post-excerpt">Ein ehrlicher Vergleich der RICE-, WSJF- und ICE-Verfahren für Jira. Sieh die Formeln und Einsatzfälle und wähle mit dem Entscheidungsbaum das passende Verfahren für dein Team.</p>
+          <a href="/de/blog/jira-prioritization-framework-comparison.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2025-12-04">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2025-12-04">4. Dezember 2025</time></span>
+            <span class="post-date">· 9 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/rice-scoring-jira.html" class="post-title">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung (2026)</a>
+          <p class="post-excerpt">So setzt du RICE-Bewertung in Jira um — verstehe die Formel, bewerte dein Backlog richtig und richte native benutzerdefinierte Felder in weniger als zehn Minuten ein. Ohne Skripte.</p>
+          <a href="/de/blog/rice-scoring-jira.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+        <li class="post-item" data-tags="priorityscoring jira" data-date="2025-11-26">
+          <div class="post-meta">
+            <span class="post-tag tag-jira">Priority Scoring · Jira</span>
+            <span class="post-date">Veröffentlicht <time datetime="2025-11-26">26. November 2025</time></span>
+            <span class="post-date">· 10 Min. Lesezeit</span>
+          </div>
+          <a href="/de/blog/wsjf-jira.html" class="post-title">WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation (2026)</a>
+          <p class="post-excerpt">Verstehe Weighted Shortest Job First (WSJF), berechne Verzögerungskosten richtig und richte native benutzerdefinierte WSJF-Felder in Jira für SAFe PI Planning ein — ohne Skripte.</p>
+          <a href="/de/blog/wsjf-jira.html" class="post-readmore">Artikel lesen →</a>
+        </li>
+      </ul>
+
+      <!-- Empty state (shown by JS when no results) -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔍</div>
+        <h2>Keine Artikel gefunden</h2>
+        <p>Versuche einen anderen Suchbegriff oder entferne den Filter, um alle Artikel zu sehen.</p>
+      </div>
+
+      <!-- Pagination (rendered by JS) -->
+      <div class="pagination" id="pagination"></div>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+
+      <div class="sidebar-block">
+        <h3>Themen</h3>
+        <div class="sidebar-tags">
+          <a href="#" class="sidebar-tag">Confluence</a>
+          <a href="#" class="sidebar-tag">Jira</a>
+          <a href="#" class="sidebar-tag">Forge</a>
+          <a href="#" class="sidebar-tag">KI</a>
+          <a href="#" class="sidebar-tag">Marketplace</a>
+          <a href="#" class="sidebar-tag">Dokumentation</a>
+        </div>
+      </div>
+
+      <div class="sidebar-block sidebar-about">
+        <h3>Über den Autor</h3>
+        <div class="sidebar-about-header">
+          <img src="/img/janek-behrens.webp" alt="Janek Behrens" width="48" height="48">
+          <div class="sidebar-about-header-text">
+            <strong>Janek Behrens</strong>
+            <a href="https://www.linkedin.com/in/janek-behrens-55b3651b6/" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <p>
+          Berater für Cloud-Technologie und unabhängiger Atlassian-Entwickler aus Deutschland. Entwickelt auf Forge basierende Apps — <a href="/de/codedoc-ai.html">CodeDoc AI</a> und
+          <a href="/de/visual-progress-tracker.html">Visual Progress Tracker</a> — für den Atlassian Marketplace. Wissenschaftliche Veröffentlichungen bei der Gesellschaft für Informatik.
+          <br><br>
+          <a href="/de/">Alle Apps →</a>
+        </p>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Apps</h3>
+        <ul class="sidebar-apps">
+          <li>
+            <a href="/de/priority-scoring.html">
+              <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" loading="lazy">
+              Priority Scoring for Jira
+            </a>
+          </li>
+          <li>
+            <a href="/de/codedoc-ai.html">
+              <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" loading="lazy">
+              CodeDoc AI for Confluence
+            </a>
+          </li>
+          <li>
+            <a href="/de/visual-progress-tracker.html">
+              <img src="/img/progresstracker144logo.png" alt="Visual Progress Tracker" loading="lazy">
+              Visual Progress Tracker for Jira
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Search and pagination enhance the generated article links ── -->
+  <script>
+  (function () {
+    var PER_PAGE = 8;
+    var currentFilter = 'all';
+    var currentSort   = 'desc';
+    var currentSearch = '';
+    var currentPage   = 1;
+
+    var list       = document.getElementById('postList');
+    var searchEl   = document.getElementById('blogSearch');
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var sortBtn    = document.getElementById('sortBtn');
+    var pagination = document.getElementById('pagination');
+    var emptyState = document.getElementById('emptyState');
+
+    var allItems = Array.prototype.slice.call(list.querySelectorAll('.post-item'));
+
+    function textOf(item) {
+      var t = item.querySelector('.post-title');
+      var e = item.querySelector('.post-excerpt');
+      return ((t ? t.textContent : '') + ' ' + (e ? e.textContent : '')).toLowerCase();
+    }
+
+    function render() {
+      var visible = allItems.filter(function (item) {
+        var tags = item.dataset.tags || '';
+        var matchFilter = currentFilter === 'all' || tags.indexOf(currentFilter) !== -1;
+        var matchSearch = !currentSearch || textOf(item).indexOf(currentSearch) !== -1;
+        return matchFilter && matchSearch;
+      });
+
+      visible.sort(function (a, b) {
+        var da = a.dataset.date || '';
+        var db = b.dataset.date || '';
+        return currentSort === 'desc' ? db.localeCompare(da) : da.localeCompare(db);
+      });
+
+      var totalPages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      var start = (currentPage - 1) * PER_PAGE;
+      var slice = visible.slice(start, start + PER_PAGE);
+
+      allItems.forEach(function (item) { item.style.display = 'none'; });
+      slice.forEach(function (item) { list.appendChild(item); item.style.display = ''; });
+
+      emptyState.style.display = visible.length === 0 ? 'block' : 'none';
+
+      pagination.innerHTML = '';
+      if (totalPages > 1) {
+        function makeBtn(label, page, disabled, active) {
+          var btn = document.createElement('button');
+          btn.className = 'page-btn' + (active ? ' active' : '');
+          btn.textContent = label;
+          if (disabled) btn.setAttribute('disabled', '');
+          if (!disabled) btn.addEventListener('click', function () {
+            currentPage = page;
+            render();
+            list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          return btn;
+        }
+        pagination.appendChild(makeBtn('\u2190', currentPage - 1, currentPage === 1, false));
+        for (var i = 1; i <= totalPages; i++) {
+          pagination.appendChild(makeBtn(String(i), i, false, i === currentPage));
+        }
+        pagination.appendChild(makeBtn('\u2192', currentPage + 1, currentPage === totalPages, false));
+        var info = document.createElement('span');
+        info.className = 'page-info';
+        info.textContent = visible.length + ' Artikel';
+        pagination.appendChild(info);
+      }
+    }
+
+    function init() {
+      searchEl.addEventListener('input', function () {
+        currentSearch = searchEl.value.trim().toLowerCase();
+        currentPage = 1;
+        render();
+      });
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          currentPage = 1;
+          render();
+        });
+      });
+
+      sortBtn.addEventListener('click', function () {
+        currentSort = currentSort === 'desc' ? 'asc' : 'desc';
+        sortBtn.innerHTML =
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M6 12h12M10 18h4"/></svg> ' +
+          (currentSort === 'desc' ? 'Neueste zuerst' : 'Älteste zuerst');
+        currentPage = 1;
+        render();
+      });
+
+      render();
+    }
+
+    init();
+
+  })();
+  </script>
+
+</body>
+</html>

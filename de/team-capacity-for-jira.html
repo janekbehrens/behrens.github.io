@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Capacity Planning für Jira — Sprint-Auslastungsübersicht pro Person</title>
+  <meta name="description" content="Kapazitätsplanung für Jira-Sprints: Erkenne mit einem farbigen Balken pro Person auf deinem Jira-Dashboard, wer überlastet ist. Auf Basis der vorhandenen Board-Schätzungen. Probiere die interaktive Demo.">
+  <link rel="canonical" href="https://janekbehrens.de/de/team-capacity-for-jira.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/de/team-capacity-for-jira.html">
+  <meta property="og:title" content="Team Capacity Planning für Jira — Sprint-Auslastungsübersicht pro Person">
+  <meta property="og:description" content="Ein farbiger Balken pro Person auf deinem Jira-Dashboard zeigt, wer in diesem Sprint überlastet ist, nahe der Kapazitätsgrenze liegt oder noch Zeit hat. Probiere die interaktive Demo mit Beispieldaten.">
+  <meta property="og:image" content="https://janekbehrens.de/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Team Capacity Planning für Jira — Sprint-Auslastungsübersicht pro Person">
+  <meta name="twitter:description" content="Ein farbiger Balken pro Person auf deinem Jira-Dashboard zeigt, wer in diesem Sprint überlastet ist, nahe der Kapazitätsgrenze liegt oder noch Zeit hat. Probiere die interaktive Demo mit Beispieldaten.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Team Capacity Planning for Jira",
+      "description": "Dashboard-Gadget für Jira Cloud auf Atlassian Forge: Ein farbiger Balken pro Person zeigt die Sprint-Auslastung im Verhältnis zur Kapazität, aus den vorhandenen Schätzungen des Boards. Pro ergänzt individuelle Kapazitäten, verbleibende Arbeit, eigene Schwellenwerte und einen CSV-Export mit Schätzung und tatsächlichem Aufwand pro Person.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "url": "https://janekbehrens.de/de/team-capacity-for-jira.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Müssen wir Schätzungen erneut eingeben?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Das Gadget verwendet die vorhandene Schätzmethode deines Boards: Story Points oder in Stunden umgerechnete Zeitschätzungen. Teams ohne Schätzungen können stattdessen Vorgänge zählen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Funktioniert die App mit teamverwalteten Projekten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Sowohl unternehmensverwaltete als auch teamverwaltete Scrum-Boards funktionieren, einschließlich des Feldes „Story point estimate“ in teamverwalteten Projekten. Klassische Kanban-Boards werden nicht aufgeführt, da sie keine Sprints haben."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Berücksichtigt die App Urlaub oder Feiertage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Die App liest keine Abwesenheiten oder Feiertage aus. Mit Pro reduzierst du die Kapazität der Person selbst; der Wert gilt für jeden Sprint, bis du ihn änderst."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aktualisiert sich das Gadget automatisch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. In der Fußzeile steht, wann die Zahlen abgerufen wurden, zum Beispiel „Aktualisiert 09:30“. Klicke auf „Refresh“ oder die Aktualisierungsschaltfläche des Gadgets beziehungsweise Dashboards, um Jira erneut auszulesen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist die App kostenlos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira-Instanzen mit bis zu 10 Nutzern bezahlen nichts. Größere Instanzen beginnen mit einer kostenlosen Testphase; danach wird pro Nutzer abgerechnet. Ohne aktive Lizenz funktioniert die Auslastungsübersicht weiter. Individuelle Kapazitäten, verbleibende Arbeit, eigene Schwellenwerte und der CSV-Export benötigen Pro."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Verlassen Daten Atlassian?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Die App greift nur lesend zu und läuft auf Atlassian Forge. Bei jeder Anfrage prüft sie die Jira-Projektberechtigungen des Betrachters. So sehen Nutzer nur Boards, deren Projekt sie einsehen dürfen."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://janekbehrens.de/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Team Capacity Planning for Jira",
+          "item": "https://janekbehrens.de/team-capacity-for-jira.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Team Capacity Planning für Jira: erkenne, wer überlastet ist",
+  "description": "Ein Jira-Dashboard-Gadget mit einem farbigen Balken pro Person: Sprint-Auslastung im Verhältnis zur Kapazität, aus den vorhandenen Schätzungen deines Boards.",
+  "thumbnailUrl": "https://janekbehrens.de/imgTeamCapacityForJira/video-poster.webp",
+  "uploadDate": "2026-10-05",
+  "embedUrl": "https://www.youtube-nocookie.com/embed/klrrET1nWeQ",
+  "contentUrl": "https://www.youtube.com/watch?v=klrrET1nWeQ"
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <link rel="stylesheet" href="/demo/tc-demo.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/team-capacity-for-jira.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/team-capacity-for-jira.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/team-capacity-for-jira.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd" data-app="tc">
+
+  <!-- Nav and app bar injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="/img/team-capacity-icon.png" alt="" width="48" height="48">
+            <div><b>Team Capacity Planning for Jira</b><span>Jira Cloud · Auf Forge entwickelt</span></div>
+          </div>
+          <h1 class="h-display">Erkenne, wer überlastet ist, <em>bevor der Sprint beginnt</em></h1>
+        </div>
+        <div>
+          <p class="lead">Ein Dashboard-Gadget mit einem farbigen Balken pro Person: Sprint-Auslastung im Verhältnis zur Kapazität, aus den Story Points, Zeitschätzungen oder Vorgangszahlen, die dein Board bereits verwendet.</p>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Kostenlos im Marketplace testen →</a>
+            <a href="/de/team-capacity-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+          <p class="product-note">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section" aria-label="Interaktive Demo">
+      <div class="wrap">
+        <div data-demo="tc">
+          <noscript><img src="/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team-Capacity-Gadget auf einem Jira-Dashboard: ein farbiger Balken pro Person im aktiven Sprint, eine Zeile für nicht zugewiesene Arbeit, Team-Summen, Aktualisierung und CSV-Export" width="1840" height="900" style="width:100%;height:auto;border-radius:16px"></noscript>
+        </div>
+        <div class="demo-caption">
+          <span>Beispieldaten in deinem Browser. Nichts wird gespeichert oder irgendwohin gesendet. Gestrichelte Rahmen markieren die Bereiche der App. Mit dem Tarifschalter siehst du die kostenlose Variante.</span>
+          <a href="#features">Echte Bildschirmaufnahmen weiter unten ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In deinem Jira</span>
+          <h2 class="h-section">Das bietet die App</h2>
+          <p class="lead">Bildschirmaufnahmen aus einer echten Jira-Instanz mit Beispieldaten.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Funktionen" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f1" aria-controls="panel-tc-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Auslastungsübersicht für den Sprint</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f2" aria-controls="panel-tc-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Kapazität pro Person</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f3" aria-controls="panel-tc-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Verwendet die Schätzungen deines Boards</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f4" aria-controls="panel-tc-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Verbleibende Arbeit im laufenden Sprint</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-tc-f5" aria-controls="panel-tc-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Schätzung und tatsächlicher Aufwand als CSV</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f1" aria-labelledby="tab-tc-f1">
+              <a class="feat-shot" href="/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgTeamCapacityForJira/highlight-1-capacity-heatmap.webp" alt="Team-Capacity-Gadget auf einem Jira-Dashboard: ein farbiger Balken pro Person für Sprint 24, zwei überlastete Personen in Rot, eine Zeile für nicht zugewiesene Arbeit, Team-Summen, Aktualisierungszeit sowie Schaltflächen für Aktualisierung und CSV-Export" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>Auslastungsübersicht für den Sprint</h3>
+                <p>Ein Balken pro Person, absteigend nach Kapazitätsauslastung: Rot bedeutet überlastet, Gelb nahe der Grenze, Grün im Plan und Blau noch Kapazität frei.</p>
+                </div>
+                <div><ul>
+                <li>Der Kopfbereich zeigt die Team-Summe: Personen, Auslastung im Verhältnis zur Kapazität und Anzahl der überlasteten Personen.</li>
+                <li>Nicht zugewiesene Arbeit erhält eine eigene graue Zeile und gehört nicht zur Team-Summe.</li>
+                <li>Mehrere Teams: Füge das Gadget einmal pro Board hinzu, jeweils mit eigenem Sprint und eigener Kapazität.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/team-capacity-docs.html#what">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f2" aria-labelledby="tab-tc-f2" hidden>
+              <a class="feat-shot" href="/imgTeamCapacityForJira/highlight-2-per-person-capacity.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgTeamCapacityForJira/highlight-2-per-person-capacity.webp" alt="Links: Team-Capacity-Bearbeitungsformular mit individuellen Kapazitäten von 10 und 12 für zwei Personen und drei Schwellenwertfeldern. Rechts: Auslastungsübersicht mit 12/10 bei 120 Prozent und 11/12 bei 92 Prozent für diese Personen" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Kapazität pro Person <span class="pro">PRO</span></h3>
+                <p>Eine Standardkapazität für das Team und individuelle Werte für Teilzeitkräfte, neue Mitglieder oder Personen mit weniger verfügbarer Zeit.</p>
+                </div>
+                <div><ul>
+                <li>Ein leeres Feld bedeutet Standardkapazität. Der individuelle Wert gilt für jeden Sprint, bis du ihn änderst.</li>
+                <li>Die App liest keine Abwesenheiten oder Feiertage aus. Bei Abwesenheit trägst du selbst eine niedrigere Kapazität ein.</li>
+                <li>Eigene Schwellenwerte: standardmäßig überlastet bei &gt; 100 %, nahe der Grenze bei ≥ 85 % und frei bei &lt; 50 %.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/team-capacity-docs.html#capacity">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f3" aria-labelledby="tab-tc-f3" hidden>
+              <a class="feat-shot" href="/imgTeamCapacityForJira/screenshot-2-board-estimate-or-issue-count.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgTeamCapacityForJira/screenshot-2-board-estimate-or-issue-count.webp" alt="Bearbeitungsformular des Team-Capacity-Gadgets: Board-Auswahl, automatisch aktiver Sprint, geöffnetes Menü zur Auslastungsmessung mit Board-Schätzung (Story Points / Zeit) und Vorgangsanzahl sowie Standardkapazität pro Person" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Verwendet die Schätzungen deines Boards</h3>
+                <p>Die Auslastung basiert auf den vorhandenen Schätzungen deines Boards. Kein erneutes Eingeben und keine Synchronisierung nötig.</p>
+                </div>
+                <div><ul>
+                <li>Story Points: das Feld „Story Points“ in unternehmensverwalteten Projekten und „Story point estimate“ in teamverwalteten Projekten.</li>
+                <li>Zeit: Bei Boards mit dem Feld „Original estimate“ wird in Stunden gerechnet.</li>
+                <li>Vorgangsanzahl für Teams ohne Schätzungen. Die Kapazität verwendet dieselbe Einheit.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/team-capacity-docs.html#measure">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f4" aria-labelledby="tab-tc-f4" hidden>
+              <a class="feat-shot" href="/imgTeamCapacityForJira/screenshot-3-count-only-unfinished-work.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgTeamCapacityForJira/screenshot-3-count-only-unfinished-work.webp" alt="„Count only unfinished work“ im Bearbeitungsformular aktiviert, darüber die Auslastungsübersicht: Erledigte Vorgänge werden ausgeschlossen, nur eine Person ist noch überlastet und die Team-Summe sinkt auf 64 von 102 Punkten" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Verbleibende Arbeit im laufenden Sprint <span class="pro">PRO</span></h3>
+                <p>„Count only unfinished work“ lässt erledigte Vorgänge weg. Jeder Balken zeigt dann die noch offene Arbeit.</p>
+                </div>
+                <div><ul>
+                <li>Gilt für jeden Balken und die Team-Summe im Kopfbereich.</li>
+                <li>Ein Vorgang gilt als erledigt, wenn sein Status zur Jira-Kategorie „Done“ gehört.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/team-capacity-docs.html#capacity">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-tc-f5" aria-labelledby="tab-tc-f5" hidden>
+              <a class="feat-shot" href="/imgTeamCapacityForJira/highlight-3-csv-estimate-vs-actual.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgTeamCapacityForJira/highlight-3-csv-estimate-vs-actual.webp" alt="Ein abgeschlossener Sprint in der Team-Capacity-Auslastungsübersicht mit CSV-Exportschaltfläche, darunter die exportierte Datei team-capacity-sprint-23.csv in einer Tabelle mit Auslastung, Kapazität, Auslastungsgrad, Status, Vorgängen, erledigten Vorgängen, Zeitaufwand, Sprint und Sprint-Zustand pro Person" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Schätzung und tatsächlicher Aufwand als CSV <span class="pro">PRO</span></h3>
+                <p>„Export CSV“ lädt eine Zeile pro Person für den angezeigten Sprint herunter. Die Datei lässt sich in Excel oder Google Sheets öffnen.</p>
+                </div>
+                <div><ul>
+                <li>Auslastung, Kapazität, Auslastungsgrad in Prozent, Status, Vorgänge, erledigte Vorgänge und Zeitaufwand in Stunden.</li>
+                <li>Für die Retrospektive wählst du zuerst einen abgeschlossenen Sprint. Das Menü enthält den aktiven Sprint, kommende Sprints und bis zu acht abgeschlossene Sprints.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/team-capacity-docs.html#csv">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Video</span><h2 class="h-section">Rundgang ansehen</h2><p class="lead">Ein kurzer Rundgang durch Team Capacity in Jira.</p></div>
+        <div class="video-frame">
+          <div class="video-wrapper">
+            <div class="yt-consent" style="background-image: url(&#x27;/imgTeamCapacityForJira/video-poster.webp&#x27;)"
+                 data-src="https://www.youtube-nocookie.com/embed/klrrET1nWeQ?autoplay=1" data-title="Team Capacity Planning für Jira: erkenne, wer überlastet ist">
+              <button class="yt-play-btn" aria-label="Video laden und abspielen: Team Capacity Planning für Jira — erkenne, wer überlastet ist"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Warum diese App?</span>
+          <h2 class="h-section">Jira allein und mit Team Capacity im Vergleich</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira allein</th><th scope="col" class="is-app">Mit Team Capacity</th></tr></thead>
+            <tbody>
+              <tr><td>Auslastung pro Person</td><td class="no">Gadgets zählen Vorgänge pro zuständiger Person, ohne eine Kapazität zum Vergleichen</td><td class="yes">Auslastung im Verhältnis zur individuellen Kapazität als roter, gelber, grüner oder blauer Balken</td></tr>
+              <tr><td>Nächsten Sprint planen</td><td class="no">Das Backlog zeigt die Gesamtschätzung jedes Sprints</td><td class="yes">Wechsle zu einem kommenden Sprint und erkenne, wer überlastet wäre</td></tr>
+              <tr><td>Verbleibende Arbeit im laufenden Sprint</td><td class="no">Das Burndown-Diagramm zeigt die verbleibende Arbeit des gesamten Sprints</td><td class="yes">Offene Auslastung pro Person, ohne erledigte Vorgänge (Pro)</td></tr>
+              <tr><td>Schätzung und tatsächlicher Aufwand</td><td class="no">Exportiere eine Suche als CSV mit einer Zeile pro Vorgang und summiere selbst nach Personen</td><td class="yes">Eine CSV-Zeile pro Person mit Auslastung, Kapazität, Status und Zeitaufwand (Pro)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Verglichen mit Jira Cloud ohne Apps.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Tarife</span>
+          <h2 class="h-section">Free und Pro</h2>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="plan-sub">Das leistet das Gadget ohne aktive Lizenz.</p>
+            <ul>
+              <li>Auslastungsübersicht für unternehmensverwaltete und teamverwaltete Scrum-Boards</li>
+              <li>Auslastung aus der Board-Schätzung (Story Points oder Zeit) oder der Vorgangsanzahl</li>
+              <li>Eine Standardkapazität für alle</li>
+              <li>Sprint-Auswahl: aktiv, kommend und bis zu acht abgeschlossene Sprints</li>
+              <li>Aktualisierung und Zeitpunkt des letzten Datenabrufs</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>Pro</h3>
+            <p class="plan-sub">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase; danach wird pro Nutzer abgerechnet.</p>
+            <ul>
+              <li>Alles aus Free</li>
+              <li>Kapazität pro Person</li>
+              <li>Nur unerledigte Arbeit zählen</li>
+              <li>Eigene Schwellenwerte für überlastet, nahe der Kapazitätsgrenze und freie Kapazität</li>
+              <li>CSV-Export mit Auslastung, Kapazität, Auslastungsgrad, Status und Zeitaufwand pro Person</li>
+            </ul>
+          </div>
+        </div>
+        <p class="compare-note">Die Preise pro Nutzer findest du im <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Einrichtung</span>
+          <h2 class="h-section">In drei Schritten startklar</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Installieren</h3><p>Hole dir die App aus dem Atlassian Marketplace. Ein Jira-Administrator installiert sie einmal.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Gadget hinzufügen</h3><p>Wähle auf einem Dashboard, das du bearbeiten darfst, „Add gadget“ und suche nach Team Capacity. Keine Administratorrechte nötig.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Board auswählen</h3><p>Wähle unter „Edit“ ein Scrum-Board, die Auslastungsmessung und eine Standardkapazität. Speichere, und die Auslastungsübersicht erscheint.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Häufige Fragen</h2>
+          <p class="muted" style="margin-top:10px">Weitere Antworten findest du in der <a href="/de/team-capacity-docs.html#faq">Dokumentation</a>, oder schreibe an <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>Müssen wir Schätzungen erneut eingeben?</summary><div>Nein. Das Gadget verwendet die vorhandene Schätzmethode deines Boards: Story Points oder in Stunden umgerechnete Zeitschätzungen. Teams ohne Schätzungen können stattdessen Vorgänge zählen.</div></details>
+          <details><summary>Funktioniert die App mit teamverwalteten Projekten?</summary><div>Ja. Sowohl unternehmensverwaltete als auch teamverwaltete Scrum-Boards funktionieren, einschließlich des Feldes „Story point estimate“ in teamverwalteten Projekten. Klassische Kanban-Boards werden nicht aufgeführt, da sie keine Sprints haben.</div></details>
+          <details><summary>Berücksichtigt die App Urlaub oder Feiertage?</summary><div>Nein. Die App liest keine Abwesenheiten oder Feiertage aus. Mit Pro reduzierst du die Kapazität der Person selbst; der Wert gilt für jeden Sprint, bis du ihn änderst.</div></details>
+          <details><summary>Aktualisiert sich das Gadget automatisch?</summary><div>Nein. In der Fußzeile steht, wann die Zahlen abgerufen wurden, zum Beispiel „Aktualisiert 09:30“. Klicke auf „Refresh“ oder die Aktualisierungsschaltfläche des Gadgets beziehungsweise Dashboards, um Jira erneut auszulesen.</div></details>
+          <details><summary>Ist die App kostenlos?</summary><div>Jira-Instanzen mit bis zu 10 Nutzern bezahlen nichts. Größere Instanzen beginnen mit einer kostenlosen Testphase; danach wird pro Nutzer abgerechnet. Ohne aktive Lizenz funktioniert die Auslastungsübersicht weiter. Individuelle Kapazitäten, verbleibende Arbeit, eigene Schwellenwerte und der CSV-Export benötigen Pro.</div></details>
+          <details><summary>Verlassen Daten Atlassian?</summary><div>Nein. Die App greift nur lesend zu und läuft auf Atlassian Forge. Bei jeder Anfrage prüft sie die Jira-Projektberechtigungen des Betrachters. So sehen Nutzer nur Boards, deren Projekt sie einsehen dürfen.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Weitere Apps von Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="/de/velocity-chart.html"><img src="/img/velocity-chart-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Velocity Chart for Jira</b><span>Sprint-Velocity auf jedem Dashboard mit deiner eigenen Definition of Done.</span></div></a>
+          <a class="card" href="/de/visual-progress-tracker.html"><img src="/img/progresstracker144logo.png" alt="" width="44" height="44" loading="lazy"><div><b>Visual Progress Tracker for Jira</b><span>Farbige Fortschrittsbalken an jedem Jira-Vorgang.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Erkenne, wer in diesem Sprint noch Kapazität hat</h2>
+            <p class="muted">Kostenlos für Jira-Instanzen mit bis zu 10 Nutzern. Größere Instanzen beginnen mit einer kostenlosen Testphase.</p>
+          </div>
+          <div class="btn-row">
+            <a href="https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Im Marketplace installieren →</a>
+            <a href="/de/team-capacity-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/redesign.js"></script>
+  <script src="/demo/demo-core.js?v=cac30b1d1459"></script>
+  <script src="/demo/tc-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Progress Tracker for Jira — Dokumentation und Einrichtung</title>
+  <meta name="description" content="Richte Visual Progress Tracker for Jira ein: die drei Fortschrittsfelder, Statuszuordnung, Farbschwellen, Spalten in der Listenansicht und beide Dashboard-Gadgets.">
+  <link rel="canonical" href="https://janekbehrens.de/de/visual-progress-tracker-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/de/visual-progress-tracker-docs.html">
+  <meta property="og:title" content="Visual Progress Tracker for Jira — Dokumentation und Einrichtung">
+  <meta property="og:description" content="Richte Visual Progress Tracker for Jira ein: die drei Fortschrittsfelder, Statuszuordnung, Farbschwellen, Spalten in der Listenansicht und beide Dashboard-Gadgets.">
+  <meta property="og:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Visual Progress Tracker for Jira — Dokumentation und Einrichtung">
+  <meta name="twitter:description" content="Richte Visual Progress Tracker for Jira ein: die drei Fortschrittsfelder, Statuszuordnung, Farbschwellen, Spalten in der Listenansicht und beide Dashboard-Gadgets.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Visual Progress Tracker for Jira",
+      "description": "App auf Atlassian Forge, die Jira-Vorgängen drei benutzerdefinierte Feldtypen mit farbigen Fortschrittsbalken hinzufügt (manuell, statusbasiert und anhand von Unteraufgaben), sowie zwei Dashboard-Gadgets.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für Jira-Websites mit bis zu 10 Nutzern. Größere Websites beginnen mit einer kostenlosen Testphase und anschließend einem Abonnement pro Nutzer."
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Visual Progress Tracker for Jira — Dokumentation und Einrichtung",
+      "description": "Richte Visual Progress Tracker for Jira ein: die drei Fortschrittsfelder, Statuszuordnung, Farbschwellen, Spalten in der Listenansicht und beide Dashboard-Gadgets.",
+      "url": "https://janekbehrens.de/de/visual-progress-tracker-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Der Statusbalken zeigt 0 %, obwohl der Vorgang einen Status hat.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wahrscheinlich fehlt der Status in der Statuszuordnung. Ergänze ihn mit seinem exakten Namen und speichere. Öffne danach den Vorgang erneut oder klicke auf Recalculate All Fields, um alle Vorgänge zu aktualisieren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ich habe das Feld zum Projekt hinzugefügt, aber bestehende Vorgänge zeigen „—“.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Status- und Subtask-Werte werden beim Öffnen eines Vorgangs berechnet. Noch nie geöffnete Vorgänge bleiben daher leer. Klicke auf der App-Seite auf Recalculate All Fields, um sie auszufüllen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich mehrere Feldtypen im selben Vorgang verwenden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Nutze etwa den manuellen Balken für den Gesamtfortschritt und den Unteraufgabenbalken für die Fertigstellung untergeordneter Vorgänge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aktualisieren sich Fortschrittsbalken automatisch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Status- und Subtask-Felder werden bei jedem Öffnen eines Vorgangs neu berechnet. Manuelle Felder ändern sich nur, wenn jemand einen neuen Wert setzt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Sind Fortschrittswerte in der JQL-Suche verfügbar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Beim Öffnen eines Vorgangs wird der berechnete Wert in Jira gespeichert. Danach ist er für JQL, REST-API und Spalten der Listenansicht verfügbar. Seit der letzten Statusänderung ungeöffnete Vorgänge können einen älteren Wert zeigen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Schaltfläche Recalculate zeigt ein Datum, statt die Berechnung zu starten.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die Neuberechnung ist einmal alle 7 Tage möglich; die Seite zeigt den nächsten verfügbaren Termin. Ein Durchlauf ohne geschriebene Werte zählt nicht. Einzelne Vorgänge werden beim Öffnen neu berechnet, deshalb brauchst du die Funktion selten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Recalculate meldet „no field values were written“ (Keine Feldwerte geschrieben).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kein geprüfter Vorgang wurde aktualisiert. Meist fehlen die Status- und Subtask-Felder auf den Vorgangsmasken dieser Projekte. Ergänze sie unter Jira settings → Work items → Screens und starte Recalculate All Fields erneut. Dieser Durchlauf verbraucht die wöchentliche Neuberechnung nicht. Die Meldung nennt auch nicht aktualisierbare Vorgänge und nicht lesbare Projekte."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Recalculate meldet „recalculation paused“ (Neuberechnung pausiert).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jira hat zu langsam geantwortet oder eine Anfrage ist fehlgeschlagen. Der Durchlauf stoppt nach den bereits erledigten Vorgängen. Klicke innerhalb von 6 Stunden nach Beginn auf Continue. Er setzt beim nächsten Vorgang fort und verbraucht keine weitere wöchentliche Neuberechnung. Wurde noch nichts geändert, starte ihn nach einigen Minuten erneut."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ich habe die Farbschwellen geändert, aber die Farben bleiben gleich.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Klicke auf der Registerkarte Color Settings auf Save Settings und lade den Vorgang neu. Schwellen gelten für Vorgangsbalken und Gadgets. Spalten der Listenansicht verwenden stets die festen Grenzen 34 % und 67 %."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wo werden meine Daten gespeichert?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alle Konfigurationsdaten liegen in Atlassian Forge Storage innerhalb deiner Jira-Cloud-Website. Es werden keine Daten an externe Server gesendet; die App läuft vollständig auf Atlassian-Infrastruktur (Runs on Atlassian). Die Dashboard-Gadgets speichern Ergebnisse zusätzlich pro Betrachter zwischen, genutzt für bis zu 5 Minuten. Details: Datenschutzerklärung · Sicherheitsrichtlinie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie deinstalliere ich die App?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gehe zu Jira settings → Apps → Manage apps, suche Visual Progress Tracker und klicke auf Uninstall. Atlassian hält gespeicherte App-Daten (Einstellungen und Zwischenspeicher) 28 Tage nach der Deinstallation vor und löscht sie dann; siehe Datenschutzerklärung. Feldwerte bleiben in Jira, bis du die Felder löschst."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/visual-progress-tracker-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/visual-progress-tracker-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/visual-progress-tracker-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="vpt">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#quick-start">Schnellstart</a>
+        <a href="#overview">Übersicht</a>
+        <a href="#install">Installation</a>
+        <a href="#add-fields">Felder hinzufügen</a>
+        <a href="#manual">Manueller Fortschritt</a>
+        <a href="#status">Statusbasierter Fortschritt</a>
+        <a href="#subtask">Fortschritt anhand von Unteraufgaben</a>
+        <a href="#listview">Listenansicht</a>
+        <a href="#admin">Administratoreinstellungen</a>
+        <a href="#color-thresholds" class="sub">Farbschwellen</a>
+        <a href="#recalculate" class="sub">Recalculate All Fields (Alle Felder neu berechnen)</a>
+        <a href="#dashboard">Übersichts-Gadget</a>
+        <a href="#jql-filter" class="sub">JQL-Filter</a>
+        <a href="#epic-gadget">Epic Progress Tracker</a>
+        <a href="#editions">Enthaltene Funktionen</a>
+        <a href="#faq">Häufige Fragen und Fehlerbehebung</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Visual Progress Tracker for Jira — Dokumentation</h1>
+      <p class="subtitle">Farbige Fortschrittsbalken in Jira-Vorgängen, Listenansichten und Dashboards. Die Grundeinrichtung dauert etwa zwei Minuten.</p>
+
+      <div class="quickstart" id="quick-start">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li><strong>Installiere</strong> die App aus dem <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a> auf deiner Jira-Cloud-Website.</li>
+          <li><strong>Erstelle ein Feld:</strong> Jira settings → Work items → Fields → Create field, suche nach <code>Progress Bar</code> und wähle einen der drei Typen.</li>
+          <li><strong>Füge das Feld den Vorgangsmasken deines Projekts hinzu.</strong> Öffne einen Vorgang: Der Balken ist da.</li>
+          <li><strong>Verwendest du den Typ Status oder Subtasks?</strong> Prüfe unter Apps → Visual Progress Tracker → Status Mapping, ob jeder verwendete Status einen Prozentwert hat.</li>
+          <li><strong>Optional:</strong> Füge das Gadget Progress Tracker Overview oder Epic Progress Tracker einem Dashboard hinzu.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#overview">Übersicht</a></li>
+          <li><a href="#install">Installation</a></li>
+          <li><a href="#add-fields">Felder hinzufügen</a></li>
+          <li><a href="#manual">Manueller Fortschritt</a></li>
+          <li><a href="#status">Statusbasierter Fortschritt</a></li>
+          <li><a href="#subtask">Fortschritt anhand von Unteraufgaben</a></li>
+          <li><a href="#listview">Listenansicht</a></li>
+          <li><a href="#admin">Administratoreinstellungen</a></li>
+          <li><a href="#dashboard">Übersichts-Gadget</a></li>
+          <li><a href="#epic-gadget">Epic Progress Tracker</a></li>
+          <li><a href="#editions">Enthaltene Funktionen</a></li>
+          <li><a href="#faq">Häufige Fragen und Fehlerbehebung</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section id="overview">
+        <h2>Übersicht</h2>
+        <p>Visual Progress Tracker ergänzt Jira um drei <dfn class="term" data-tip="Ein Feld, das ein Jira-Administrator neben integrierten Feldern wie Assignee oder Priority zu Vorgängen hinzufügt.">benutzerdefinierte Feldtypen</dfn> . Jeder zeigt einen Balken, der mit steigendem Fortschritt <span style="color:#AE2A19;">rot</span>,  <span style="color:#974B00;">gelb</span> oder <span style="color:#006644;">grün</span> wird:</p>
+        <ul>
+          <li><strong>Progress Bar (Manual) (Manueller Fortschrittsbalken)</strong>: Der Prozentwert wird per Schieberegler oder Schnellauswahl eingestellt.</li>
+          <li><strong>Progress Bar (Status) (Statusbasierter Fortschrittsbalken)</strong>: Der Prozentwert stammt aus dem <dfn class="term" data-tip="Der Workflowschritt eines Vorgangs, beispielsweise To Do, In Progress oder Done.">Workflowstatus</dfn> des Vorgangs gemäß deiner Zuordnung.</li>
+          <li><strong>Progress Bar (Subtasks) (Unteraufgaben-Fortschrittsbalken)</strong>: der durchschnittliche Fortschritt der Unteraufgaben oder untergeordneten Vorgänge.</li>
+        </ul>
+        <p>Zwei Dashboard-Gadgets zeigen ein ganzes Projekt oder einen Balken pro Epic. Du bestimmst, wann die Farbe wechselt (siehe <a href="#color-thresholds">Farbschwellen</a>).</p>
+        <img src="/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira-Vorgang mit Status-, Unteraufgaben- und manuellen Fortschrittsbalken im Detailbereich. Das manuelle Feld ist mit Schieberegler und Schnellauswahl 0, 10, 25, 50, 75 und 100 % geöffnet." width="1840" height="900" loading="lazy">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgVisualProgressTracker/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/uQkpO3Fq0EU?autoplay=1" data-title="Visual Progress Tracker for Jira — Fortschrittsbalken in Vorgängen, Listen und Dashboards">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: Visual Progress Tracker for Jira — Fortschrittsbalken in Vorgängen, Listen und Dashboards"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="install">
+        <h2>Installation</h2>
+        <p>Installiere die App einmal pro Jira-Cloud-Website.</p>
+        <ol>
+          <li>Öffne <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener">Visual Progress Tracker im Atlassian Marketplace</a> und klicke auf <strong>Try it free (Kostenlos testen)</strong> (oder <strong>Get it now (Jetzt installieren)</strong>).</li>
+          <li>Wähle deine Jira-Cloud-Website und bestätige die Installation.</li>
+          <li>Prüfung: <strong>Apps</strong> in Jiras oberer Navigation enthält jetzt <strong>Visual Progress Tracker</strong>. Darüber öffnest du die Einstellungen.</li>
+        </ol>
+        <div class="tip"><strong>Tipp:</strong> Du brauchst nur die Feldtypen, die dein Team verwendet. Einer, zwei oder alle drei funktionieren.</div>
+      </section>
+
+      <section id="add-fields">
+        <h2>Fortschrittsbalkenfelder hinzufügen</h2>
+        <p>Die App fügt selbst keine Felder hinzu. Erstelle jedes Feld einmal und ergänze es dann auf den Vorgangsmasken.</p>
+        <ol>
+          <li>Gehe zu <strong>Jira settings (Jira-Einstellungen)</strong> (Zahnradsymbol) → <strong>Work items (Vorgänge)</strong>  →  <strong>Fields (Felder)</strong> (in älterem Jira: <strong>Issues (Vorgänge)</strong>  →  <strong>Custom fields (Benutzerdefinierte Felder)</strong>).</li>
+          <li>Klicke auf <strong>Create field (Feld erstellen)</strong>, suche nach <code>Progress Bar</code> und wähle <strong>Progress Bar (Manual) (Manueller Fortschrittsbalken)</strong>,  <strong>(Status)</strong> oder <strong>(Subtasks)</strong>.</li>
+          <li>Benenne das Feld (zum Beispiel „Fortschritt“) und klicke auf <strong>Create (Erstellen)</strong>.</li>
+          <li>Füge das Feld den <dfn class="term" data-tip="Eine Maske ist die Zusammenstellung von Feldern, die Jira in den Vorgängen eines Projekts zeigt.">Vorgangsmasken</dfn> deiner Projekte hinzu (Jira settings → Work items → Screens oder die Maskeneinstellungen des Projekts).</li>
+        </ol>
+        <div class="tip"><strong>Tipp:</strong> Die Feldnamen sind frei wählbar. Die App findet sie anhand des Typs, nicht des Namens. Alle drei Typen können im selben Vorgang vorkommen.</div>
+      </section>
+
+      <section id="manual">
+        <h2>Manueller Fortschritt</h2>
+        <p>Der Prozentwert wird manuell festgelegt. Das eignet sich für Arbeit mit geschätztem Fertigstellungsgrad, etwa Design- oder Inhaltsaufgaben.</p>
+        <ol>
+          <li>Klicke im Vorgang in das Feld.</li>
+          <li>Ziehe den Schieberegler (5-%-Schritte) oder wähle 0, 10, 25, 50, 75 oder 100 % über eine Schnellschaltfläche.</li>
+          <li>Speichere über das Häkchen.</li>
+        </ol>
+        <p>Das Feld lässt sich auch auf Erstellungs- und Übergangsmasken im normalen Workflow ausfüllen.</p>
+      </section>
+
+      <section id="status">
+        <h2>Statusbasierter Fortschritt</h2>
+        <p>Der Balken zeigt den Prozentwert, den du dem aktuellen Status zugewiesen hast. Eine Zuordnung gilt für die ganze Website.</p>
+        <ol>
+          <li>Öffne <strong>Apps → Visual Progress Tracker</strong> und wähle die Registerkarte <strong>Status Mapping (Statuszuordnung)</strong> .</li>
+          <li>Ändere die Prozentwerte (0–100) und klicke bei nicht verwendeten Status auf <strong>Remove (Entfernen)</strong> . Zum Hinzufügen trage den exakten Statusnamen und einen Prozentwert ein und klicke auf <strong>+ Add (Hinzufügen)</strong>.</li>
+          <li>Klicke auf <strong>Save Mapping (Zuordnung speichern)</strong>. Nur Jira-Administratoren dürfen speichern.</li>
+        </ol>
+        <div class="warning"><strong>Hinweis:</strong> Ein Status ohne Zuordnung zählt als 0 %. Die App liest deine Workflows nicht, deshalb ordne jedem darin verwendeten Status einen Wert zu.</div>
+        <img src="/imgVisualProgressTracker/screenshot-1-status-mapping.webp" alt="Administratorseite, Registerkarte Status Mapping: jeder Workflowstatus mit Prozentwert und Remove-Schaltfläche, eine Zeile zum Hinzufügen sowie Save Mapping." width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Standardzuordnung und Details</summary>
+          <ul>
+            <li>Die Liste beginnt mit: To Do 0 %, Backlog 0 %, Selected for Development 25 %, In Progress 50 %, In Review 75 %, Done 100 %, Closed 100 %.</li>
+            <li>Statusnamen werden zuerst exakt abgeglichen; schlägt das fehl, wird Groß- und Kleinschreibung ignoriert.</li>
+            <li>Beim Erstellen eines Vorgangs zeigt das Feld „—“ und „Auto-calculated from status“ (automatisch aus Status berechnet). Der Wert erscheint, sobald der Vorgang existiert.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="subtask">
+        <h2>Fortschritt anhand von Unteraufgaben</h2>
+        <p>Der Balken zeigt den durchschnittlichen Fortschritt der <dfn class="term" data-tip="Kleine Arbeitseinheiten innerhalb eines Vorgangs, aufgeführt im Bereich Subtasks.">Unteraufgaben</dfn> des Vorgangs. Ohne Unteraufgaben werden stattdessen die <dfn class="term" data-tip="Vorgänge eine Ebene tiefer in Jiras Hierarchie, etwa Stories und Aufgaben eines Epics.">untergeordneten Vorgänge</dfn> verwendet, zum Beispiel die Vorgänge eines Epics. Es ist keine Einrichtung nötig.</p>
+        <ul>
+          <li>Ein erledigter untergeordneter Vorgang zählt als 100 %.</li>
+          <li>Alle anderen zählen mit dem Prozentwert ihres Status aus der <a href="#status">Statuszuordnung</a>.</li>
+          <li>Ein Vorgang ohne untergeordnete Vorgänge zeigt „—“.</li>
+        </ul>
+        <p><strong>Beispiel:</strong> Eine Story hat 4 Unteraufgaben, 2 erledigt und 2 To Do: <strong>50%</strong>. Eine wechselt zu In Progress (standardmäßig 50 %): <strong>63%</strong>. Alle 4 erledigt: <strong>100%</strong>.</p>
+        <p>Klicke auf <strong>Details</strong> neben dem Balken, um jeden untergeordneten Vorgang mit Status und Fortschritt aufzulisten; <strong>Hide (Ausblenden)</strong> klappt die Liste zu.</p>
+        <details class="more">
+          <summary>Was als erledigt zählt und wie bearbeitet wird</summary>
+          <ul>
+            <li>„Erledigt“ bedeutet: Der Status des untergeordneten Vorgangs gehört zu Jiras <dfn class="term" data-tip="Jira ordnet jeden Status einer von drei Gruppen zu: To Do, In Progress oder Done.">Statuskategorie</dfn> Done, unabhängig von der Zuordnung. Untergeordnete Vorgänge zählen auch bei vorhandener Lösung als erledigt.</li>
+            <li>Beim Klick in das Feld erscheint dieselbe Liste schreibgeschützt, da das Feld nicht bearbeitbar ist.</li>
+            <li>Beim Erstellen eines Vorgangs ist das Feld leer und nicht bearbeitbar. Der Wert erscheint, sobald der Vorgang existiert.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="listview">
+        <h2>Fortschritt in der Listenansicht</h2>
+        <p>Alle drei Typen können als Spalten erscheinen in Jiras <dfn class="term" data-tip="Die Tabelle der Projektvorgänge in Jira mit einer Spalte pro Feld.">Listenansicht</dfn>. Jede Zelle zeigt einen roten, gelben oder grünen Punkt und den Prozentwert; leere Werte erscheinen als Strich.</p>
+        <img src="/imgVisualProgressTracker/highlight-3-progress-in-jira-list-views.webp" alt="Jira-Listenansicht mit drei Fortschrittsspalten (Status, Subtask und Manual), jeweils mit rotem, gelbem oder grünem Punkt und Prozentwert." width="1840" height="900" loading="lazy">
+        <ol>
+          <li>Öffne im Projekt die Ansicht <strong>List (Liste)</strong> .</li>
+          <li>Öffne die Spaltenauswahl und suche nach dem Namen deines Fortschrittsfelds.</li>
+          <li>Aktiviere das Kontrollkästchen, um die Spalte anzuzeigen.</li>
+        </ol>
+        <div class="warning"><strong>Hinweis:</strong> Die Listenfarben sind fest: Rot unter 34 %, Gelb von 34 bis 66 %, Grün ab 67 %. Sie folgen nicht deinen <a href="#color-thresholds">Farbschwellen</a>.</div>
+        <div class="tip"><strong>Tipp:</strong> Fehlt das Feld in der Spaltenauswahl, ist es noch nicht auf den Projektmasken vorhanden. Siehe <a href="#add-fields">Fortschrittsbalkenfelder hinzufügen</a>.</div>
+      </section>
+
+      <section id="admin">
+        <h2>Administratoreinstellungen</h2>
+        <p>Die App-Seite unter <strong>Apps → Visual Progress Tracker</strong> hat drei Registerkarten: <strong>Setup Guide (Einrichtungsanleitung)</strong> (eine kurze Anleitung innerhalb der App), <strong>Status Mapping (Statuszuordnung)</strong> (siehe <a href="#status">Statusbasierter Fortschritt</a>) und <strong>Color Settings (Farbeinstellungen)</strong>. Nur Jira-Administratoren dürfen Änderungen speichern.</p>
+
+        <h3 id="color-thresholds">Farbschwellen</h3>
+        <p>Auf der Registerkarte <strong>Color Settings (Farbeinstellungen)</strong> legst du die Farbwechsel der Balken fest. Eine Live-Vorschau zeigt das Ergebnis.</p>
+        <ul>
+          <li><span style="color:#AE2A19;"><strong>Rot</strong></span>: von 0 % bis zum ersten Wert (Standard 34 %, also 0–33 %)</li>
+          <li><span style="color:#974B00;"><strong>Gelb</strong></span>: vom ersten bis zum zweiten Wert (Standard 34–66 %)</li>
+          <li><span style="color:#006644;"><strong>Grün</strong></span>: ab dem zweiten Wert (Standard 67–100 %)</li>
+        </ul>
+        <p>Beide Werte müssen zwischen 1 und 99 liegen, der erste niedriger als der zweite. Klicke auf <strong>Save Settings (Einstellungen speichern)</strong>. Die Schwellen gelten für Vorgangsbalken und beide Gadgets, nicht für die Spalten in der <a href="#listview">Listenansicht</a> .</p>
+        <img src="/imgVisualProgressTracker/screenshot-2-color-thresholds.webp" alt="Administratorseite, Registerkarte Color Settings: Rot unter 34 %, Gelb von 34 bis 66 %, Grün ab 67 %, mit Live-Vorschau dreier Balken." width="1840" height="900" loading="lazy">
+
+        <h3 id="recalculate">Recalculate All Fields (Alle Felder neu berechnen)</h3>
+        <p>Status- und Subtask-Werte aktualisieren sich beim Öffnen eines Vorgangs. Die Schaltfläche <strong>Recalculate All Fields (Alle Felder neu berechnen)</strong> oben auf der Seite aktualisiert alle Vorgänge zugleich. Nutze sie nach Änderungen an der Statuszuordnung oder beim Hinzufügen der Felder zu einem Projekt. Manuelle Werte bleiben unverändert.</p>
+        <details class="more">
+          <summary>Ablauf der Neuberechnung</summary>
+          <ul>
+            <li>Sie läuft in kleinen Paketen und funktioniert auch bei großen Projekten. Das Ergebnis nennt aktualisierte, übersprungene (Feld fehlt auf der Maske) oder fehlgeschlagene Vorgänge sowie nicht lesbare Projekte.</li>
+            <li>Sie ist <strong>einmal alle 7 Tage</strong> möglich. Während der Sperre zeigt die Seite das nächste Datum. Ein manueller Durchlauf ohne geschriebene Werte zählt nicht.</li>
+            <li>Öffnest du die Seite, während die meisten aktuellen Vorgänge noch keinen Wert haben, startet die App automatisch eine Neuberechnung. Dieser Durchlauf zählt als wöchentlicher Durchlauf.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="dashboard">
+        <h2>Übersichts-Gadget</h2>
+        <p> <strong>Progress Tracker Overview</strong> <dfn class="term" data-tip="Eine Kachel auf einem Jira-Dashboard, die einen Bericht oder eine Liste zeigt.">Gadget</dfn> listet die Vorgänge eines Projekts samt Fortschritt auf und zeigt oben den Durchschnitt.</p>
+        <img src="/imgVisualProgressTracker/highlight-2-dashboard-gadget-project-overview.webp" alt="Progress-Tracker-Overview-Gadget mit Projektdurchschnitt, sortierbarer Vorgangstabelle mit Fortschrittsbalken und markierten Einstellungen Progress Calculation und JQL-Filter." width="1840" height="900" loading="lazy">
+        <div class="step-box">
+          <h3>Gadget hinzufügen</h3>
+          <ol>
+            <li>Öffne ein Jira <strong>Dashboard</strong> und klicke auf <strong>Add gadget (Gadget hinzufügen)</strong>.</li>
+            <li>Suche nach <strong>Progress Tracker Overview</strong> und klicke auf <strong>Add (Hinzufügen)</strong>.</li>
+            <li>Wähle in den Gadget-Einstellungen:
+              <ul>
+                <li><strong>Project (Projekt)</strong>.</li>
+                <li><strong>Progress Calculation (Fortschrittsberechnung)</strong>:  <em>Subtasks (Unteraufgaben)</em> (Standard; Durchschnitt der untergeordneten Vorgänge), <em>Status</em> (Statuszuordnung) oder <em>Manual (Manuell)</em> (Werte des manuellen Felds; gibt es kein manuelles Feld, wird die Statuszuordnung verwendet).</li>
+                <li><strong>Additional JQL Filter (Zusätzlicher JQL-Filter)</strong> (optional).</li>
+                <li><strong>Rows per Page (Zeilen pro Seite)</strong>: 10, 25 oder 50 (Standard 25).</li>
+              </ul>
+            </li>
+            <li>Klicke auf <strong>Save Configuration (Konfiguration speichern)</strong>.</li>
+          </ol>
+        </div>
+        <p>Die Tabelle hat die Spalten Key, Summary, Type, Status und Progress. Ein Klick auf eine Überschrift sortiert; anfangs ist nach Fortschritt absteigend sortiert. Vorgänge ohne Wert zeigen „—“ und zählen nicht zum Durchschnitt.</p>
+
+        <h3 id="jql-filter">JQL-Filter</h3>
+        <p>Das Gadget ergänzt die Projektabfrage um deinen Filter in <dfn class="term" data-tip="Jira Query Language: der Textfilter der erweiterten Jira-Suche, zum Beispiel sprint in openSprints().">JQL</dfn> . Schreibe daher nur die zusätzlichen Bedingungen:</p>
+        <ul>
+          <li><code>sprint in openSprints()</code>: Vorgänge im aktiven Sprint.</li>
+          <li><code>assignee = currentUser()</code>: Vorgänge, die der Person zugewiesen sind, die das Dashboard ansieht.</li>
+          <li><code>labels = "frontend"</code>: Vorgänge mit einem Label.</li>
+        </ul>
+        <details class="more">
+          <summary>Grenzen, Fehler und Aktualisierung</summary>
+          <ul>
+            <li>Halte den Filter unter 500 Zeichen. Eine <code>ORDER BY</code> -Sortieranweisung wird ignoriert; sortiere stattdessen über die Spaltenüberschriften.</li>
+            <li>Lehnt Jira den Filter ab, zeigt das Gadget Jiras Fehlermeldung, damit du ihn in den Einstellungen korrigieren kannst.</li>
+            <li>Das Gadget lädt bis zu <strong>500 Vorgänge</strong>. Passen mehr, meldet ein Hinweis oben die Beschränkung auf die ersten 500. Grenze den Filter ein (Sprint, Epic, Label), um weitere zu sehen.</li>
+            <li>Ergebnisse werden in einem <dfn class="term" data-tip="Eine gespeicherte Kopie eines Ergebnisses, die kurzzeitig erneut genutzt wird, damit das Gadget schneller lädt.">Zwischenspeicher</dfn> für bis zu <strong>5 Minuten</strong> pro Betrachter gehalten. Das Gadget zeigt das Datenalter (zum Beispiel „5 min ago“); <strong>Refresh (Aktualisieren)</strong> lädt sofort die aktuellen Daten.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="epic-gadget">
+        <h2>Epic-Progress-Tracker-Gadget</h2>
+        <p> <strong>Epic Progress Tracker</strong> zeigt als Gadget einen Balken pro <dfn class="term" data-tip="Ein großer Arbeitsumfang, der mehrere Stories oder Aufgaben zusammenfasst.">Epic</dfn> oder einen Balken pro zugewiesener Person. Nutze es, wenn Beteiligte den Fortschritt jedes Epics sehen möchten, ohne es zu öffnen.</p>
+        <img src="/imgVisualProgressTracker/screenshot-3-epic-progress-gadget.webp" alt="Epic-Progress-Tracker-Gadget: ein Balken pro Epic mit erledigten Story Points und den Einstellungen Group by und Progress metric." width="1840" height="900" loading="lazy">
+        <div class="step-box">
+          <h3>Gadget hinzufügen</h3>
+          <ol>
+            <li>Öffne ein Jira <strong>Dashboard</strong>, klicke auf <strong>Add gadget (Gadget hinzufügen)</strong>, suche nach <strong>Epic Progress Tracker</strong> und klicke auf <strong>Add (Hinzufügen)</strong>.</li>
+            <li>Wähle in den Gadget-Einstellungen:
+              <ul>
+                <li><strong>Project (Projekt)</strong>.</li>
+                <li><strong>Group by (Gruppieren nach)</strong>:  <em>Epic</em> (ein Balken pro Epic anhand seiner untergeordneten Vorgänge) oder <em>Assignee (Zugewiesene Person)</em> (ein Balken pro Person anhand ihrer Vorgänge).</li>
+                <li><strong>Progress metric (Fortschrittsmetrik)</strong>:  <em>Issue count (Vorgangsanzahl)</em> oder <em>Story Points</em>.</li>
+                <li><strong>Additional JQL Filter (Zusätzlicher JQL-Filter)</strong> (optional): Im Epic-Modus filtert er Epics, im Assignee-Modus Vorgänge.</li>
+                <li><strong>Rows per Page (Zeilen pro Seite)</strong>: 10, 25 oder 50 (Standard 10).</li>
+              </ul>
+            </li>
+            <li>Klicke auf <strong>Save Configuration (Konfiguration speichern)</strong>.</li>
+          </ol>
+        </div>
+        <ul>
+          <li><strong>Vorgangsanzahl:</strong> Jeder Vorgang zählt gleich viel. <em>Done (Erledigt)</em> zeigt erledigte Vorgänge im Verhältnis zu allen Vorgängen (zum Beispiel „8/16“). Der Balken ist der durchschnittliche Fortschritt; laufende Vorgänge zählen gemäß Statuszuordnung anteilig.</li>
+          <li><strong>Story Points:</strong> Jeder Vorgang wird mit seinen <dfn class="term" data-tip="Die Aufwandsschätzung eines Teams für einen Vorgang, gespeichert in einem Jira-Feld.">Story Points</dfn> gewichtet; eine große Story beeinflusst den Balken stärker. <em>Done (Erledigt)</em> zeigt Punkte (zum Beispiel „8/16 pts“). Vorgänge ohne Schätzung haben kein Gewicht.</li>
+        </ul>
+        <p>Der oberste Balken ist der Durchschnitt der Zeilen. Zwischenspeicherung und die Schaltfläche <strong>Refresh (Aktualisieren)</strong> funktionieren wie im <a href="#dashboard">Übersichts-Gadget</a>.</p>
+        <details class="more">
+          <summary>Grenzen und Details</summary>
+          <ul>
+            <li>Im Assignee-Modus fehlen Epics und Unteraufgaben; nicht zugewiesene Vorgänge haben eine eigene Zeile.</li>
+            <li>Das Gadget lädt bis zu 100 Epics (neueste zuerst) mit bis zu 1.000 untergeordneten Vorgängen je 50 Epics oder bis zu 500 Vorgänge im Assignee-Modus. Bei abgeschnittenen Ergebnissen erscheint ein Hinweis; grenze den JQL-Filter ein.</li>
+            <li>Der Story-Points-Modus findet das Feld „Story Points“ oder „Story point estimate“ deiner Website selbst. Fehlt es, verwendet das Gadget die Vorgangsanzahl und zeigt einen Hinweis.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="editions">
+        <h2>Enthaltene Funktionen</h2>
+        <p>Es gibt eine Edition mit allen Funktionen. Websites mit bis zu 10 Nutzern verwenden sie kostenlos. Größere Websites beginnen mit einer kostenlosen Testphase und benötigen anschließend ein Abonnement. Ohne Abonnement zeigen Felder „Trial ended“, Gadgets verlangen eine aktive Lizenz und Einstellungen sind schreibgeschützt.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Funktion</th><th>Enthalten</th></tr></thead>
+            <tbody>
+              <tr><td>Manuelle, statusbasierte und Unteraufgaben-Fortschrittsfelder</td><td>Ja</td></tr>
+              <tr><td>Progress-Tracker-Overview-Gadget</td><td>Ja</td></tr>
+              <tr><td>Epic-Progress-Tracker-Gadget (pro Epic oder Person, Vorgangsanzahl oder Story Points)</td><td>Ja</td></tr>
+              <tr><td>Statuszuordnung und Farbschwellen</td><td>Ja</td></tr>
+              <tr><td>Farbige Spalten in der Listenansicht</td><td>Ja</td></tr>
+              <tr><td>E-Mail-Support</td><td>Ja</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>Häufige Fragen und Fehlerbehebung</h2>
+        <p>Klicke auf eine Frage, um die Antwort anzuzeigen.</p>
+
+        <details class="more">
+          <summary>Der Statusbalken zeigt 0 %, obwohl der Vorgang einen Status hat.</summary>
+          <p>Der Status fehlt wahrscheinlich in der <a href="#status">Statuszuordnung</a>. Ergänze seinen exakten Namen und speichere. Öffne den Vorgang erneut oder klicke auf <strong>Recalculate All Fields (Alle Felder neu berechnen)</strong> , um alle Vorgänge zu aktualisieren.</p>
+        </details>
+
+        <details class="more">
+          <summary>Ich habe das Feld zum Projekt hinzugefügt, aber bestehende Vorgänge zeigen „—“.</summary>
+          <p>Status- und Subtask-Werte werden beim Öffnen eines Vorgangs berechnet; noch nie geöffnete Vorgänge bleiben leer. Klicke auf <strong>Recalculate All Fields (Alle Felder neu berechnen)</strong> auf der App-Seite, um sie auszufüllen.</p>
+        </details>
+
+        <details class="more">
+          <summary>Kann ich mehrere Feldtypen im selben Vorgang verwenden?</summary>
+          <p>Ja. Nutze etwa den manuellen Balken für den Gesamtfortschritt und den Unteraufgabenbalken für die Fertigstellung untergeordneter Vorgänge.</p>
+        </details>
+
+        <details class="more">
+          <summary>Aktualisieren sich Fortschrittsbalken automatisch?</summary>
+          <p><strong>Status und Subtask</strong> werden als Felder bei jedem Öffnen neu berechnet. Manuelle Felder ändern sich nur durch einen neu gesetzten Wert.</p>
+        </details>
+
+        <details class="more">
+          <summary>Sind Fortschrittswerte in der JQL-Suche verfügbar?</summary>
+          <p>Ja. Beim Öffnen eines Vorgangs wird der berechnete Wert in Jira gespeichert. Er ist dann für JQL, die <dfn class="term" data-tip="Die Webschnittstelle, über die Skripte und Werkzeuge Jira-Daten lesen und ändern.">REST-API</dfn> und Listenansichtsspalten verfügbar. Seit der letzten Statusänderung ungeöffnete Vorgänge können ältere Werte zeigen.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Schaltfläche Recalculate zeigt ein Datum, statt die Berechnung zu starten.</summary>
+          <p>Die Neuberechnung ist einmal alle 7 Tage möglich; die Seite zeigt den nächsten verfügbaren Termin. Ein Durchlauf ohne geschriebene Werte zählt nicht. Einzelne Vorgänge werden beim Öffnen neu berechnet, deshalb brauchst du die Funktion selten.</p>
+        </details>
+
+        <details class="more">
+          <summary>Recalculate meldet „no field values were written“ (Keine Feldwerte geschrieben).</summary>
+          <p>Kein geprüfter Vorgang wurde aktualisiert. Meist fehlen die Status- und Subtask-Felder auf den Vorgangsmasken dieser Projekte. Ergänze sie unter <strong>Jira settings → Work items → Screens</strong> und starte <strong>Recalculate All Fields (Alle Felder neu berechnen)</strong> erneut. Dieser Durchlauf verbraucht die wöchentliche Neuberechnung nicht. Die Meldung nennt auch nicht aktualisierbare Vorgänge und nicht lesbare Projekte.</p>
+        </details>
+
+        <details class="more">
+          <summary>Recalculate meldet „recalculation paused“ (Neuberechnung pausiert).</summary>
+          <p>Jira hat zu langsam geantwortet oder eine Anfrage ist fehlgeschlagen; der Durchlauf stoppt nach den bereits erledigten Vorgängen. Klicke auf <strong>Continue (Fortsetzen)</strong> innerhalb von 6 Stunden nach Beginn. Er setzt beim nächsten Vorgang fort und verbraucht keine weitere wöchentliche Neuberechnung. Wurde noch nichts geändert, starte ihn nach einigen Minuten erneut.</p>
+        </details>
+
+        <details class="more">
+          <summary>Ich habe die Farbschwellen geändert, aber die Farben bleiben gleich.</summary>
+          <p>Klicke auf <strong>Save Settings (Einstellungen speichern)</strong> auf der Registerkarte Color Settings und lade den Vorgang neu. Schwellen gelten für Vorgangsbalken und Gadgets. <a href="#listview">Listenansicht</a> verwendet für Spalten stets die festen Grenzen 34 % und 67 %.</p>
+        </details>
+
+        <details class="more">
+          <summary>Wo werden meine Daten gespeichert?</summary>
+          <p>Alle Konfigurationsdaten liegen in <strong>Atlassian Forge Storage</strong> innerhalb deiner Jira-Cloud-Website. Es werden keine Daten an externe Server gesendet und die App läuft vollständig auf Atlassian-Infrastruktur (<a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>). Die Dashboard-Gadgets speichern Ergebnisse zusätzlich pro Betrachter zwischen, genutzt für bis zu 5 Minuten. Details: <a href="/de/visual-progress-tracker-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/visual-progress-tracker-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
+        </details>
+
+        <details class="more">
+          <summary>Wie deinstalliere ich die App?</summary>
+          <p>Gehe zu <strong>Jira settings → Apps → Manage apps</strong>, suche Visual Progress Tracker und klicke auf <strong>Uninstall (Deinstallieren)</strong>. Atlassian hält gespeicherte App-Daten (Einstellungen und Zwischenspeicher) 28 Tage nach der Deinstallation vor und löscht sie dann; siehe <a href="/de/visual-progress-tracker-privacy-policy.html">Datenschutzerklärung</a>. Feldwerte bleiben in Jira, bis du die Felder löschst.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Visual%20Progress%20Tracker%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/visual-progress-tracker-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/visual-progress-tracker-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/visual-progress-tracker-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/visual-progress-tracker-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/visual-progress-tracker-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/visual-progress-tracker-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

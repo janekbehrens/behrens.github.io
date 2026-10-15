@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Datenschutzerklärung — Priority Scoring for Jira</title>
+  <meta name="description" content="Datenschutzerklärung von Priority Scoring for Jira: Welche Daten die App liest und speichert, wo sie verarbeitet und wie lange sie aufbewahrt werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/priority-scoring-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/priority-scoring-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/priority-scoring-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/priority-scoring-privacy-policy.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Priority Scoring for Jira · Stand: 5. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch Priority Scoring — RICE, WSJF, ICE &amp; Rovo AI for Jira ("die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Jira Cloud-Instanz. Wir verpflichten uns zum Schutz Ihrer Privatsphäre und zur Transparenz unserer Datenverarbeitung.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App greift ausschließlich zur Bereitstellung ihrer Funktionen auf die folgenden Jira-Daten zu:</p>
+    <ul>
+      <li><strong>Vorgangsdaten:</strong> Vorgangsschlüssel, Zusammenfassungen, Beschreibungen, Vorgangstypen, Prioritäten, Statuswerte, Labels und Story Points — zur Berechnung der Backlog-Qualität, Anzeige der Bewertungsfelder und (für die Rovo-KI-Funktion) zum Vorschlagen von Werten für Bewertungsdimensionen.</li>
+      <li><strong>Anzeigenamen der Bearbeiter:</strong> Anzeigenamen der den Vorgängen zugeordneten Nutzer — angezeigt in der Rangfolge (zum Filtern nach Bearbeiter) und wenn der Rovo-KI-Agent Sprint-Vorgänge auflistet. Die App speichert sie niemals.</li>
+      <li><strong>Projektdaten:</strong> Projektschlüssel und -namen — zur Eingrenzung von Qualitätsberechnungen, Dashboard und Gadget.</li>
+      <li><strong>Werte benutzerdefinierter Felder:</strong> Die von der App erstellten RICE-, WSJF- und ICE-Bewertungsfelder — zur Anzeige und Aktualisierung von Prioritätsbewertungen in Vorgängen.</li>
+      <li><strong>Bewertungsfelder anderer Apps:</strong> nur wenn ein Nutzer den Bewertungsimport ausführt: Werte der RICE-, WSJF- oder ICE-Felder einer anderen App im gewählten Projekt — sie werden in die eigenen Bewertungsfelder der App kopiert.</li>
+      <li><strong>Sprint-Daten:</strong> Sprint-Name und Zugehörigkeit zu offenen Sprints — vom Rovo-KI-Agenten bei der Analyse von Vorgängen in einem Sprint verwendet.</li>
+    </ul>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert die folgenden Daten in <strong>Atlassian Forge Storage (KVS)</strong>, das von Atlassian innerhalb Ihrer Cloud-Instanz gehostet und verwaltet wird:
+    </p>
+    <ul>
+      <li><strong>Bewertungsdimensionen pro Vorgang:</strong> Die numerischen Eingabewerte für jedes Bewertungsverfahren (z. B. RICE: Reichweite, Wirkung, Sicherheit, Aufwand), zugeordnet zu einem Vorgangsschlüssel.</li>
+      <li><strong>Berechnete Bewertungen:</strong> Die resultierende Prioritätsbewertung pro Vorgang und Verfahren wird nicht in Forge Storage gespeichert; sie wird in das entsprechende benutzerdefinierte Feld geschrieben, das Jira speichert.</li>
+      <li><strong>Konfiguration der Bewertungsverfahren:</strong> Eigene Gewichtungen der Dimensionen (×1–×5 pro Dimension und Verfahren) und im Administrator-Dashboard festgelegte Bewertungsschwellen.</li>
+      <li><strong>Rovo-KI-Einstellungen:</strong> Der konfigurierte Anwendungsmodus (suggest / confirm / auto), die Obergrenze für Sammelaktionen und ob das Schreiben von KI-Kommentaren aktiviert ist.</li>
+      <li><strong>Einstellungen für „Board Health“:</strong> Der Schwellenwert für veraltete Vorgänge und die pro Projektschlüssel gewählten Qualitätskriterien („Health Criteria“).</li>
+      <li><strong>Zwischenspeicher für Backlog-Qualität:</strong> Aggregierte, anonymisierte Backlog-Kennzahlen pro Projekt (Anzahl veralteter Vorgänge, fehlender Felder und unbewerteter Vorgänge). Dieser Zwischenspeicher enthält keine personenbezogenen Daten. Er läuft nach einer Stunde ab.</li>
+      <li><strong>Zwischenspeicher der Projektliste:</strong> IDs, Schlüssel und Namen der Jira-Projekte für die Projektauswahl. Er läuft nach 15 Minuten ab.</li>
+      <li><strong>Bewertungsverlauf („Score Audit Trail“):</strong> Wird nur aufgezeichnet, wenn ein Jira-Administrator ihn in den Einstellungen aktiviert hat; er ist standardmäßig deaktiviert und kann jederzeit wieder ausgeschaltet werden. Höchstens ein Eintrag pro Vorgang, Verfahren und Tag (eine spätere Änderung am selben Tag ersetzt den Eintrag dieses Tages), mit Datum und Uhrzeit, Bewertungswert und Quelle (manuell oder Rovo-KI). Die letzten 30 Einträge pro Vorgang und Verfahren werden aufbewahrt.</li>
+      <li><strong>Rovo-KI-Aktivitätsprotokoll:</strong> Ein begrenztes Protokoll (die letzten 50 Einträge) der vom Rovo-KI-Agenten ausgelösten Bewertungsübernahmen mit Vorgangsschlüsseln, Bewertungen, Verfahren, Modi und Zeitstempeln. In diesem Protokoll werden keine personenbezogenen Daten gespeichert.</li>
+      <li><strong>Nutzerspezifische Einstellungen:</strong> Das zuletzt vom Nutzer ausgewählte Projekt (Schlüssel und Name), ob er den Bewertungsimport aktiviert hat und der Zustand der Bewertungsaufforderung. Sie werden pro Nutzer unter dessen Atlassian-Konto-ID gespeichert, damit Teammitglieder ihre Auswahl nicht gegenseitig überschreiben. Außerdem speichert die App ihr Installationsdatum.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> Wie oft Funktionen pro Tag genutzt wurden (z. B. "eine Bewertung wurde gespeichert"). Keine IDs, Namen oder Inhalte.</li>
+    </ul>
+    <p><strong>Wir speichern keine Vorgangsbeschreibungen, Vorgangstitel, Kommentare, E-Mail-Adressen von Nutzern oder sonstige von Ihrem Team eingegebene Freitextinhalte; die einzigen von der App gespeicherten Namen sind Projektnamen (Projektliste und zuletzt ausgewähltes Projekt).</strong></p>
+
+    <h2>4. Rovo-KI-Funktion und Vorgangsinhalte</h2>
+    <p>
+      Die App enthält einen Rovo-KI-Agenten ("Priority Scoring"), der Jira-Vorgänge analysieren und RICE-, WSJF- oder ICE-Bewertungen vorschlagen oder übernehmen kann. Bei der Nutzung dieser Funktion:
+    </p>
+    <ul>
+      <li>liest die App <strong>Zusammenfassung und Beschreibung</strong> (bis zu 600 Zeichen) des angefragten Vorgangs und übergibt diese Daten dem Rovo-Agenten zur Analyse.</li>
+      <li>Diese Verarbeitung erfolgt <strong>innerhalb der Rovo-Plattform von Atlassian</strong> und unterliegt den Angaben auf
+        <a href="https://www.atlassian.com/legal/privacy-policy" target="_blank" rel="noopener">Datenschutzerklärung von Atlassian</a>
+        und
+        <a href="https://www.atlassian.com/trust/ai" target="_blank" rel="noopener">Atlassians Seite zur Vertrauenswürdigkeit von KI und zum Umgang mit Daten</a>.
+
+      </li>
+      <li>Die App selbst wird <strong>nicht</strong> Vorgangsinhalte an externe KI-Dienste oder Server Dritter außerhalb der Atlassian-Plattform senden.</li>
+      <li>Von KI vorgeschlagene Bewertungen dienen der Orientierung. Die App speichert nur die numerischen Dimensionswerte und die berechnete Bewertung — keine unbearbeiteten Vorgangsinhalte oder KI-Begründungstexte —, sofern das Schreiben von Kommentaren nicht ausdrücklich vom Administrator aktiviert wurde (siehe unten).</li>
+    </ul>
+
+    <h2>5. Optional: Schreiben von Rovo-KI-Kommentaren</h2>
+    <p>
+      Wenn ein Administrator in den Dashboard-Einstellungen die Option „Write AI reasoning as comment“ aktiviert, kann der Rovo-KI-Agent einen Kommentar in einem Jira-Vorgang veröffentlichen, der die berechnete Bewertung und den Begründungstext der KI enthält. Dies erfordert eine ausdrückliche Aktivierung und ist standardmäßig deaktiviert. Diese Kommentare werden als normale Jira-Vorgangskommentare gemäß den Datenverarbeitungsverfahren von Atlassian gespeichert.
+    </p>
+
+    <h2>6. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> Daten auf eigenen Servern erheben, übertragen oder speichern. Wir betreiben keine Server.</li>
+      <li>Wir werden <strong>nicht</strong> E-Mail-Adressen, Avatare oder sonstige Profildaten speichern. Atlassian-Konto-IDs werden ausschließlich als Schlüssel für die nutzerspezifischen Einstellungen aus Abschnitt 3 verwendet; Anzeigenamen der Bearbeiter werden live angezeigt und niemals gespeichert.</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Vorgangsbeschreibungen, Kommentare oder von Nutzern eingegebene Freitextinhalte speichern.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "eine Bewertung wurde gespeichert" oder "Jira hat nicht geantwortet") und einmal täglich die anonymen Nutzungszähler und den Abonnementstatus in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können Projektschlüssel Ihrer Site enthalten (ein Vorgangsschlüssel wird auf sein Projekt reduziert; die Vorgangsnummer wird niemals protokolliert) sowie Bewertungsverfahren, Modi, Zähler, Bewertungen, HTTP-Statuswerte und Fehlercodes, jedoch niemals Vorgangsnummern, Titel, Beschreibungen, Namen, E-Mail-Adressen, Konto-IDs oder JQL. Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>7. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Datenverarbeitung erfolgt innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong>. Die App läuft auf der Infrastruktur von Atlassian im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alle in Forge Storage gespeicherten Daten der App (Abschnitt 3) liegen im gehosteten Forge-Speicher. Dieser unterstützt Atlassians
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a>: Die Daten liegen am selben Ort wie Ihre Jira-Site und werden mit ihr verschoben, wenn ein Administrator die Daten der Site an einen anderen Ort verlagert. Ausgenommen sind Jira-Daten, die die App liest, ohne sie zu speichern, Bewertungen in den benutzerdefinierten Feldern der App und optionale Rovo-Kommentare (beides von Jira gemäß dessen eigener Datenresidenz gespeichert), Rovo-Chat-Inhalte (von Atlassian Rovo verarbeitet) sowie die technischen Logs aus Abschnitt 6, die über die App-Protokollierung von Atlassian verarbeitet werden.
+    </p>
+
+    <h2>8. Speicherdauer</h2>
+    <ul>
+      <li><strong>Bewertungsdaten, Konfiguration und nutzerspezifische Einstellungen</strong> (Bewertungsdimensionen, Gewichtungen, Schwellenwerte, Einstellungen) werden in Forge Storage aufbewahrt, solange die App installiert ist.</li>
+      <li><strong>Werte benutzerdefinierter Felder</strong> (RICE-, WSJF- und ICE-Bewertungen in Vorgängen) speichert Jira als normale Daten benutzerdefinierter Felder. Mit dem Entfernen der benutzerdefinierten Felder aus der Feldkonfiguration von Jira werden diese Werte gelöscht.</li>
+      <li><strong>Der Zwischenspeicher für Backlog-Qualität</strong> läuft automatisch nach einer Stunde ab und wird auf Abruf aktualisiert; der <strong>Zwischenspeicher der Projektliste</strong> nach 15 Minuten. Ein abgelaufener Eintrag wird beim nächsten Lesen gelöscht.</li>
+      <li><strong>Der Bewertungsverlauf</strong> bewahrt die letzten 30 Einträge pro Vorgang und Verfahren auf; der Verlauf eines Vorgangs und Verfahrens wird 90 Tage nach seiner letzten Änderung automatisch gelöscht. Das Ausschalten des Audit-Trails verhindert neue Einträge; bestehende Einträge laufen nach demselben Zeitplan ab.</li>
+      <li><strong>Das Rovo-KI-Aktivitätsprotokoll</strong> ist auf 50 Einträge begrenzt; ältere Einträge werden automatisch überschrieben.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler</strong> werden nach 8 Tagen automatisch gelöscht; Zähler aus App-Versionen vor 6.36 (Oktober 2026) werden aufbewahrt, solange die App installiert ist.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/#data-recovery" target="_blank" rel="noopener">Forge-Dokumentation: Datenwiederherstellung für Apps mit gehostetem Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen.</li>
+    </ul>
+
+    <h2>9. Personenbezogene Daten und DSGVO</h2>
+    <p>
+      Die App speichert Atlassian-Konto-IDs ausschließlich als Schlüssel für die nutzerspezifischen Einstellungen aus Abschnitt 3 (zuletzt ausgewähltes Projekt, Importschalter, Bewertungsaufforderung), damit Teammitglieder ihre Auswahl nicht gegenseitig überschreiben. Sie speichert keine E-Mail-Adressen, Avatare oder sonstigen Profildaten. Anzeigenamen der Bearbeiter werden aus Jira gelesen, wenn die Rangfolge oder der Rovo-KI-Agent Vorgänge auflistet, nur für diese Anzeige verwendet und von der App niemals gespeichert oder extern übertragen. Die nutzerspezifischen Einstellungen bleiben in Forge Storage auf der Plattform von Atlassian (Abschnitt 7).
+    </p>
+    <p>
+      Bei allen anderen gespeicherten Daten bewahrt die App numerische Werte (Bewertungen, Dimensionen, Gewichtungen, Schwellenwerte), Vorgangs- und Projektschlüssel sowie Projektnamen auf. DSGVO-Anfragen betroffener Personen (Auskunft, Berichtigung, Löschung, Übertragbarkeit) zu personenbezogenen Daten, die Jira selbst speichert, sollten an Atlassian gerichtet werden. Bei Datenanliegen zur App kontaktieren Sie uns unter der unten angegebenen Adresse.
+    </p>
+    <p>Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus Forge Storage (Abschnitt 8).</p>
+
+    <h2>10. Sicherheit</h2>
+    <p>Die App folgt den bewährten Sicherheitsverfahren von Atlassian Forge:</p>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung ohne ausgehende Verbindungen zu externen Netzwerken außerhalb der Atlassian-Plattform.</li>
+      <li>Verwendet eingeschränkte Jira-API-Berechtigungen: Sie liest Vorgangs-, Projekt-, Label- und Nutzerdaten (Anzeigenamen) sowie den Rovo-Chat, in dem sie aufgerufen wird, und schreibt ausschließlich Bewertungen und, sofern aktiviert, Rovo-Kommentare.</li>
+      <li>Speichert keine Zugangsdaten, Token oder Geheimnisse.</li>
+      <li>Rovo-KI-Schreibaktionen (Bewertung übernehmen, Sammelübernahme) werden durch eine konfigurierbare Einstellung des Anwendungsmodus (suggest / confirm / auto) geschützt, die Administratoren einschränken können.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/priority-scoring-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>11. Datenschutz bei Kindern</h2>
+    <p>
+      Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.
+    </p>
+
+    <h2>12. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>13. Kontakt</h2>
+      <p>
+        Bei Fragen oder Anliegen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

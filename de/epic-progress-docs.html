@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epic Progress for Confluence — Dokumentation und Einrichtung</title>
+  <meta name="description" content="Anleitung für Epic Progress for Confluence: Live-Fortschrittsbalken für Jira-Epics, Releases und Filter auf Confluence-Seiten, Seitenfortschritt und Momentaufnahmen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/epic-progress-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/de/epic-progress-docs.html">
+  <meta property="og:title" content="Epic Progress for Confluence — Dokumentation und Einrichtung">
+  <meta property="og:description" content="So richtest du Epic Progress for Confluence ein: Inhalte der fünf Makros, veröffentlichte Momentaufnahmen für Leser ohne Jira-Zugriff und Sichtbarkeit der Daten.">
+  <meta property="og:image" content="https://janekbehrens.de/imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Epic Progress for Confluence",
+      "description": "App auf Atlassian Forge mit fünf Confluence-Makros: Live-Fortschrittsbalken für Jira-Epics, Projekte, Releases, gespeicherte Filter und JQL-Suchen, eine Epic-Liste, Seitenfortschritt anhand von Labels und manuelle Fortschrittsbalken sowie veröffentlichte Momentaufnahmen für Leser ohne Jira-Zugriff.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Confluence Cloud",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Epic Progress for Confluence — Dokumentation und Einrichtung",
+      "description": "Einrichtung und Benutzeranleitung für Epic Progress for Confluence: Installation, Jira-Verbindung, die fünf Makros und ihre Einstellungen, veröffentlichte Momentaufnahmen, Berechtigungen, Administratorseite und Datenlöschung.",
+      "url": "https://janekbehrens.de/de/epic-progress-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Brauchen Leser Jira-Zugriff?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Für Live-Werte ja: Jeder Leser sieht die Zahlen, die seine eigenen Jira-Berechtigungen erlauben. Für Leser ohne Jira-Zugriff kann ein Seitenbearbeiter eine datierte Momentaufnahme veröffentlichen, die alle Leser der Seite sehen. Progress Bar und Page Progress benötigen überhaupt kein Jira."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum bittet Confluence um „Allow access“?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Forge-Apps, die mit den Berechtigungen der nutzenden Person lesen, benötigen einmal deren Zustimmung. Beim ersten Öffnen einer Seite mit einem Makro bittet Confluence um Zugriff. Das gilt auch für Leser, die nur eine veröffentlichte Momentaufnahme sehen. Die Zustimmung ändert nichts in Jira oder Confluence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum weicht die Zahl von meiner Jira-Suche ab?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Epic Progress zählt die direkt unter dem Epic liegenden Vorgänge. Jira Progress lässt bei Projekten und Releases Unteraufgaben aus, sofern du Leave out sub-tasks nicht deaktivierst. Jeder Leser sieht zudem nur die in Jira erlaubten Vorgänge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum 99 %, obwohl fast alles erledigt ist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100 % bedeutet, dass jeder Vorgang erledigt ist. Ein offener Vorgang von 200 ergibt 99 %."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Können Confluence-Gäste oder anonyme Besucher die Makros sehen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Forge-Apps laufen für lizenzierte Nutzer einer Website, sofern sie nicht für Gäste und anonyme Besucher eingerichtet sind. Diese App ist dafür nicht eingerichtet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welche Jira-Projekte funktionieren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vom Unternehmen und vom Team verwaltete Projekte einschließlich ihrer Story-Point-Felder. Epics werden anhand ihrer Hierarchieebene erkannt, auch nach einer Umbenennung auf deiner Website."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/epic-progress-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/epic-progress-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/epic-progress-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="ep">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#what">Funktionsweise</a>
+        <a class="sub" href="#counting">So zählen die Jira-Makros</a>
+        <a href="#setup">Einrichtung</a>
+        <a href="#allow-access">„Allow access“ (Zugriff erlauben)</a>
+        <a href="#macros">Die fünf Makros</a>
+        <a class="sub" href="#epic-progress">Epic Progress</a>
+        <a class="sub" href="#jira-progress">Jira Progress</a>
+        <a class="sub" href="#progress-list">Progress List</a>
+        <a class="sub" href="#page-progress">Page Progress</a>
+        <a class="sub" href="#progress-bar">Progress Bar</a>
+        <a href="#settings">Der Einstellungsdialog</a>
+        <a href="#snapshots">Momentaufnahmen</a>
+        <a class="sub" href="#publish">Momentaufnahme veröffentlichen</a>
+        <a class="sub" href="#why-click">Automatische Aktualisierung</a>
+        <a class="sub" href="#who-publishes">Wer Änderungen vornehmen darf</a>
+        <a class="sub" href="#who-sees">Wer was sieht</a>
+        <a class="sub" href="#snapshot-content">Enthaltene Daten</a>
+        <a class="sub" href="#snapshot-storage">Speicherung und Löschung</a>
+        <a href="#permissions">Berechtigungen</a>
+        <a href="#admin">Administratorseite</a>
+        <a href="#deletion">App-Daten löschen</a>
+        <a href="#export">PDF- und Word-Export</a>
+        <a href="#faq">Häufige Fragen und Meldungen</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Epic Progress for Confluence — Dokumentation</h1>
+      <p class="subtitle">Fortschrittsbalken auf Confluence-Seiten: live aus Jira-Epics, Projekten, Releases und Filtern, anhand von Seitenlabels oder manuell eingestellt.</p>
+
+      <div class="quickstart">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li>Ein <strong>Confluence-Administrator</strong> installiert die App einmal aus dem Atlassian Marketplace.</li>
+          <li>Für die Jira-Makros verbindet ein <strong>Website-Administrator</strong> Jira in Atlassian Administration: <span class="ui">Apps → Epic Progress for Confluence → connect to Jira</span>. Progress Bar und Page Progress funktionieren ohne diese Verbindung.</li>
+          <li>Bearbeite eine Seite, gib <strong>/progress</strong> ein und wähle eines der <a href="#macros">fünf Makros</a>.</li>
+          <li>Fülle die mit <strong>*</strong> gekennzeichneten Felder aus, prüfe die Live-Vorschau und klicke auf <span class="ui">Save (Speichern)</span> und veröffentliche die Seite.</li>
+          <li>Leser ohne Jira-Zugriff? Aktiviere <span class="ui">Publish a snapshot for people without Jira access (Momentaufnahme für Personen ohne Jira-Zugriff veröffentlichen)</span> in den Makroeinstellungen, veröffentliche die Seite und klicke auf <span class="ui">Publish snapshot (Momentaufnahme veröffentlichen)</span> unter dem Makro (<a href="#snapshots">Details</a>).</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#what">Funktionsweise</a></li>
+          <li><a href="#setup">Einrichtung</a></li>
+          <li><a href="#allow-access">„Allow access“: einmal pro Person</a></li>
+          <li><a href="#macros">Die fünf Makros</a></li>
+          <li><a href="#settings">Der Einstellungsdialog</a></li>
+          <li><a href="#snapshots">Momentaufnahmen für Leser ohne Jira-Zugriff</a></li>
+          <li><a href="#permissions">Berechtigungen: wer was sieht</a></li>
+          <li><a href="#admin">Administratorseite</a></li>
+          <li><a href="#deletion">Momentaufnahmen und App-Daten löschen</a></li>
+          <li><a href="#export">PDF- und Word-Export</a></li>
+          <li><a href="#faq">Häufige Fragen und Meldungen</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section>
+        <h2 id="what">Funktionsweise</h2>
+        <p><strong>Epic Progress for Confluence</strong> ergänzt Confluence-Seiten um fünf <dfn class="term" data-tip="Ein Baustein, den du beim Bearbeiten einer Confluence-Seite über das /-Menü hinzufügst.">Makros</dfn> . Drei zeigen Live-Fortschritt aus Jira, zwei funktionieren ohne Jira.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Makro</th><th>Anzeige</th><th>Quelle</th></tr>
+            <tr><td><a href="#epic-progress">Epic Progress</a></td><td>Ein <dfn class="term" data-tip="Ein großer Jira-Vorgang, der Stories und Aufgaben bündelt, eine Ebene über Stories in der Vorgangshierarchie.">Epic</dfn>: wie viele seiner Vorgänge erledigt sind</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#jira-progress">Jira Progress</a></td><td>Ein Projekt, Release (Fix Version), gespeicherter Filter oder eine JQL-Suche</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#progress-list">Progress List</a></td><td>Mehrere Epics als Liste von Fortschrittsbalken mit Gesamtzeile</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#page-progress">Page Progress</a></td><td>Wie viele Seiten ein Label tragen, beispielsweise <code>approved</code></td><td><span class="tag tag-free">Kein Jira erforderlich</span></td></tr>
+            <tr><td><a href="#progress-bar">Progress Bar</a></td><td>Ein manuell eingestellter Balken</td><td><span class="tag tag-free">Kein Jira erforderlich</span></td></tr>
+          </table>
+        </div>
+        <img src="/imgEpicProgressForConfluence/highlight-1-epic-progress-status-page.webp" alt="Confluence-Statusseite mit sechs Epic-Progress-Makros: Status, Fälligkeitsdatum, Prozentwert und Anzahlen je Epic, bei zwei Epics sind die offenen Vorgänge ausgeklappt." loading="lazy" width="1840" height="900">
+
+        <h3 id="counting">So zählen die Jira-Makros</h3>
+        <ul>
+          <li><strong>Farben wie in Jira.</strong> Jeder Vorgang zählt anhand der <dfn class="term" data-tip="Jira ordnet jeden Workflowstatus einer von drei Gruppen zu: To Do, In Progress oder Done.">Statuskategorie</dfn> seines Status: <span class="dot" style="background:#1F845A"></span>Grün ist erledigt, <span class="dot" style="background:#0C66E4"></span>Blau in Bearbeitung, <span class="dot" style="background:#8590A2"></span>Grau offen. So entsprechen die Zahlen Jiras Fortschrittsanzeige. Rot und Gelb hängen nicht vom Prozentwert ab: Auch 30 % können völlig im Plan sein.</li>
+          <li><strong>Jeder Prozentwert mit Grundlage:</strong> „50 % · 4 of 8 work items done“ (4 von 8 Vorgängen erledigt) und die Legende „4 done · 2 in progress · 2 to do“ (4 erledigt · 2 in Bearbeitung · 2 offen). Gegebenenfalls ergänzt das Makro „1 flagged“ (1 markiert) und „3 work items without estimate“ (3 Vorgänge ohne Schätzung).</li>
+          <li><strong>Vorgänge oder Story Points.</strong> <em>Work items (Vorgänge)</em> zählt jeden Vorgang einmal (empfohlen). <em>Story Points</em> addiert die <dfn class="term" data-tip="Aufwandsschätzungen des Teams in Jira-Vorgängen; größere Arbeit erhält mehr Punkte.">Schätzwerte</dfn>, sodass eine große Story mehr wiegt als eine kleine. Sowohl „Story Points“ (vom Unternehmen verwaltete Projekte) als auch „Story point estimate“ (vom Team verwaltete Projekte) funktionieren.</li>
+          <li><strong>Fußzeile.</strong> „Live from Jira · as of 14:05“: Zeitpunkt der Jira-Abfrage mit deinen Berechtigungen. Öffnest du die Seite innerhalb von 5 Minuten erneut, zeigt die App dieselben Werte ohne erneute Jira-Anfrage, damit häufig besuchte Seiten schneller laden. Die Zeit bleibt die der Abfrage; ein Hinweis beim Darüberfahren erklärt dies. <span class="ui">Refresh (Aktualisieren)</span> liest Jira sofort erneut; <span class="ui">Open in Jira (In Jira öffnen)</span> öffnet genau diese Vorgänge in der Jira-Suche.</li>
+        </ul>
+        <details class="more">
+          <summary>Rundung und sehr große Suchergebnisse</summary>
+          <ul>
+            <li><strong>Ehrliche Zahlen.</strong> 100 % nur, wenn alles erledigt ist (199 von 200 sind 99 %). Ist etwas erledigt, aber weniger als 1 %, erscheint „&lt;1 %“ statt 0 %.</li>
+            <li><strong>Sehr große Suchergebnisse.</strong> Bei großen Suchen liefert Jira eine ungefähre Anzahl. Das Makro zeigt dann „about …“ (ungefähr …) und nie 100 %, solange Jira offene Vorgänge zählt.</li>
+          </ul>
+        </details>
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgEpicProgressForConfluence/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/HxG5TAB10Q0?autoplay=1" data-title="Epic Progress for Confluence — Live-Fortschrittsbalken aus Jira auf deinen Seiten">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: Epic Progress for Confluence — Live-Fortschrittsbalken aus Jira auf deinen Seiten"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 id="setup">Einrichtung</h2>
+        <p>Installiere die App, verbinde Jira für die Jira-Makros und füge anschließend ein Makro zu einer Seite hinzu.</p>
+        <h3 id="install">1. App in Confluence installieren</h3>
+        <p>Ein Confluence-Administrator installiert <strong>Epic Progress for Confluence</strong> einmal aus dem Atlassian Marketplace. Die App wird in Confluence installiert, nicht in Jira. Direkt danach bietet Confluence die Seite <em>Get started (Erste Schritte)</em> der App an, also die <a href="#admin">Administratorseite</a>: Sie zeigt den Jira-Verbindungsstatus und die nächsten Schritte.</p>
+
+        <h3 id="connect-jira">2. Jira verbinden (optional)</h3>
+        <p>Epic Progress, Jira Progress und Progress List lesen Jira. Ein <dfn class="term" data-tip="Administrator der gesamten Atlassian-Website, der Apps und Produkte in Atlassian Administration verwaltet.">Website-Administrator</dfn> verbindet die App mit Jira in <strong>Atlassian Administration</strong>:  <span class="ui">Apps → Epic Progress for Confluence → connect to Jira</span>. Jira und Confluence müssen auf derselben Website liegen. Bis dahin funktionieren Progress Bar und Page Progress bereits; die Jira-Makros zeigen einen kurzen Hinweis zur noch fehlenden Verbindung.</p>
+        <div class="tip"><strong>Tipp:</strong> Die <a href="#admin">Administratorseite</a> zeigt <em>Connected (Verbunden)</em> , sobald die App Jira erreichen kann. Klicke auf <span class="ui">Check again (Erneut prüfen)</span> nach dem Verbinden.</div>
+
+        <h3 id="add-macro">3. Makro zur Seite hinzufügen</h3>
+        <ol>
+          <li>Bearbeite eine Seite und gib <strong>/progress</strong> ein (oder einen Makronamen, beispielsweise <em>/epic</em>).</li>
+          <li>Wähle eines der fünf Makros. Der <a href="#settings">Einstellungsdialog</a> öffnet sich.</li>
+          <li>Fülle die mit <strong>*</strong> gekennzeichneten Felder aus. Die Vorschau zeigt das Makro mit Live-Daten.</li>
+          <li>Klicke auf <span class="ui">Save (Speichern)</span> und veröffentliche dann die Seite.</li>
+        </ol>
+        <p>Zum späteren Ändern bearbeite die Seite, wähle das Makro und klicke auf das <strong>Stiftsymbol</strong>.</p>
+      </section>
+
+      <section>
+        <h2 id="allow-access">„Allow access“: einmal pro Person</h2>
+        <p>Beim ersten Öffnen einer Seite mit einem Makro zeigt Confluence stattdessen: <em>einen Hinweis, dass die App in deinem Namen Zugriff auf Atlassian-Apps benötigt</em>, mit der Schaltfläche <span class="ui">Allow access (Zugriff erlauben)</span> .</p>
+        <ul>
+          <li>Das ist Atlassians Standardzustimmung für Apps, die Daten <strong>mit den Berechtigungen der nutzenden Person</strong> lesen: Die App liest Jira und Confluence unter deinem Konto mit deinen Berechtigungen.</li>
+          <li>Jede Person bestätigt dies <strong>einmal</strong>. Danach laden die Makros wie gewohnt.</li>
+          <li>Das gilt auch für <strong>Leser, die nur eine veröffentlichte Momentaufnahme sehen</strong>: Confluence fragt vor jedem erstmaligen Anzeigen eines App-Makros, auch wenn dieses anschließend keine Jira-Anfrage stellt.</li>
+          <li>Die Zustimmung ändert nichts in Jira oder Confluence. Die App hat keinen Schreibzugriff.</li>
+        </ul>
+        <div class="tip"><strong>Tipp:</strong> Auf Statusseiten mit vielen neuen Lesern erspart eine Zeile wie „Klicke einmal auf <em>Allow access (Zugriff erlauben)</em> , um die Fortschrittsbalken zu sehen“ über den Makros Rückfragen.</div>
+      </section>
+
+      <section>
+        <h2 id="macros">Die fünf Makros</h2>
+        <p>Alle fünf haben das gleiche Aussehen und denselben <a href="#settings">Einstellungsdialog</a>. Jede Einstellung hat im Dialog selbst eine kurze Erklärung (das <strong>(?)</strong> -Symbol), deshalb sind die Einstellungstabellen unten eingeklappt.</p>
+
+        <h3 id="epic-progress">Epic Progress <span class="tag">Jira</span></h3>
+        <p>Live-Fortschritt eines Jira-Epics anhand seiner Vorgangsstatus: Epic-Schlüssel als Link, Name, Balken, „4 of 8 work items done“ (4 von 8 Vorgängen erledigt) und Legende. Gezählt werden die direkt untergeordneten Vorgänge wie bei Jiras Fortschrittsanzeige für untergeordnete Vorgänge.</p>
+        <details class="more">
+          <summary>Einstellungen für Epic Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+              <tr><td><strong>Epic</strong>  *</td><td>Gib einen Teil des Namens oder Schlüssels ein (zum Beispiel <code>PL-42</code>) oder füge einen Epic-Link ein. Das Makro zählt die direkt untergeordneten Vorgänge wie Jiras eigene Fortschrittsanzeige.</td></tr>
+              <tr><td>Also find other work items (Auch andere Vorgänge finden)</td><td>Lässt die Suche auch andere übergeordnete Vorgänge finden, beispielsweise eine <dfn class="term" data-tip="Ein Vorgang über Epics, der auf manchen Websites mehrere Epics bündelt.">Initiative</dfn> oder eine Story mit Unteraufgaben.</td></tr>
+              <tr><td>Count by (Zählen nach)</td><td><em>Work items (Vorgänge)</em> (empfohlen) oder <em>Story Points</em>. Vorgänge ohne Schätzung werden gesondert angezeigt.</td></tr>
+              <tr><td>Title (Titel)</td><td>Optional. Leer: Name des Epics.</td></tr>
+              <tr><td>Status und Fälligkeitsdatum des Epics</td><td>Zeigt Epic-Status und Fälligkeitsdatum. Beim Darüberfahren erscheint „in 12 days“ (in 12 Tagen) oder „4 days ago“ (vor 4 Tagen). Ein überschrittenes Datum wird rot („Overdue“), solange das Epic nicht erledigt ist.</td></tr>
+              <tr><td>Schaltfläche zur Liste offener Vorgänge</td><td>„Show 8 open work items“ öffnet bis zu 25 offene Vorgänge mit Schlüssel, Titel, Status und zugewiesener Person samt „Show all in Jira“ (Alle in Jira anzeigen).</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access (Momentaufnahme für Personen ohne Jira-Zugriff veröffentlichen)</td><td>Siehe <a href="#snapshots">Momentaufnahmen</a>.</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <h3 id="jira-progress">Jira Progress <span class="tag">Jira</span></h3>
+        <p>Live-Fortschritt eines Jira-Projekts, eines Releases (<dfn class="term" data-tip="Ein Jira-Release. Vorgänge gehören über das Feld Fix versions dazu.">Fix Version</dfn>), eines <dfn class="term" data-tip="Eine benannte, gespeicherte Jira-Suche, die ihr Eigentümer teilen kann.">gespeicherten Filters</dfn> oder einer <dfn class="term" data-tip="Jira Query Language: Text einer erweiterten Jira-Suche, etwa project = CP AND type = Bug.">JQL-Suche</dfn> . Der Name verlinkt Projekt, Releaseseite oder Filter; eine JQL-Suche zeigt die Abfrage selbst. Releases zeigen <em>Released (Veröffentlicht)</em> oder <em>Unreleased (Unveröffentlicht)</em> und das Veröffentlichungsdatum. Bei unveröffentlichten Releases wird es nach Überschreiten rot.</p>
+        <p><dfn class="term" data-tip="Ein kleiner Vorgang unter einer Story oder Aufgabe, etwa ein Arbeitsschritt.">Unteraufgaben</dfn> werden bei Projekten und Releases standardmäßig ausgelassen, damit Story und Unteraufgaben nicht doppelt zählen. Bei Filtern und JQL werden sie mitgezählt, damit die Zahl genau dem Filter entspricht.</p>
+        <details class="more">
+          <summary>Einstellungen für Jira Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+              <tr><td><strong>What to count (Was gezählt wird)</strong></td><td><em>A project (Ein Projekt)</em>,  <em>A release (fix version) (Ein Release)</em>,  <em>A saved filter (Ein gespeicherter Filter)</em> oder <em>A JQL search (for experts) (Eine JQL-Suche für Fortgeschrittene)</em>.</td></tr>
+              <tr><td>Project * (Projekt)</td><td>Alle Vorgänge dieses Projekts werden gezählt.</td></tr>
+              <tr><td>Project of the release * und Release * (Projekt des Releases und Release)</td><td>Zuerst das Projekt, dann eines seiner Releases. Unveröffentlichte Versionen stehen zuerst.</td></tr>
+              <tr><td>Saved filter * (Gespeicherter Filter)</td><td>Deine markierten Filter stehen zuerst; suche per Eingabe nach allen zugänglichen Filtern. Leser benötigen Jira-Zugriff auf den Filter, sonst meldet das Makro die fehlende Freigabe.</td></tr>
+              <tr><td>JQL *</td><td>Jede in Jira gültige JQL bis zu 2.000 Zeichen. Jeder Leser führt sie mit eigenen Jira-Berechtigungen aus. Sortierung (ORDER BY) wird ignoriert. Tipp: Erstelle die Suche zuerst in Jira und kopiere die JQL hierher.</td></tr>
+              <tr><td>Leave out sub-tasks (Unteraufgaben auslassen)</td><td>Für Projekte und Releases standardmäßig an (sonst zählen Story und Unteraufgaben einzeln), für Filter und JQL aus, damit die Zahl exakt dem Filter entspricht.</td></tr>
+              <tr><td>Count by (Zählen nach)</td><td><em>Work items (Vorgänge)</em> oder <em>Story Points</em>. Story Points funktionieren für bis zu 2.000 Vorgänge.</td></tr>
+              <tr><td>Title (Titel)</td><td>Optional. Leer: Name von Projekt, Release oder Filter.</td></tr>
+              <tr><td>Schaltfläche zur Liste offener Vorgänge</td><td>Wie bei Epic Progress.</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access (Momentaufnahme für Personen ohne Jira-Zugriff veröffentlichen)</td><td>Siehe <a href="#snapshots">Momentaufnahmen</a>.</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <h3 id="progress-list">Progress List <span class="tag">Jira</span></h3>
+        <p>Mehrere Epics als Fortschrittsliste für Roadmaps und Statusseiten. Jede Zeile zeigt Epic-Name als Link und Schlüssel, Balken, erledigten Anteil („4/8“ oder „19/34 pts“), Status und Fälligkeit. Wähle Epics selbst, alle Epics eines Projekts, untergeordnete Vorgänge oder eine JQL-Suche.</p>
+        <img src="/imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" alt="Alle Epics eines Projekts, früheste Fälligkeit zuerst, mit Gesamtzeile. Darunter das nächste Release mit Datum und ein gespeicherter Filter für Betafehler." loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>Einstellungen und Grenzen für Progress List</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+              <tr><td><strong>Which epics (Welche Epics)</strong></td><td><em>Epics I choose (Selbst gewählte Epics)</em> (bis zu 20 in der Reihenfolge des Hinzufügens), <em>All epics of a project (Alle Epics eines Projekts)</em> (in Jiras Rangfolge), <em>The children of a work item (Untergeordnete Vorgänge)</em> (zum Beispiel Epics einer Initiative) oder <em>Work items from a JQL search (Vorgänge einer JQL-Suche)</em> (jeder Treffer wird eine Zeile, gezählt werden seine untergeordneten Vorgänge, die JQL-Reihenfolge bleibt erhalten).</td></tr>
+              <tr><td>Include epics that are already done (Bereits erledigte Epics einbeziehen)</td><td>Für <em>All epics of a project (Alle Epics eines Projekts)</em> und <em>The children of a work item (Untergeordnete Vorgänge)</em>.</td></tr>
+              <tr><td>Count by (Zählen nach)</td><td><em>Work items (Vorgänge)</em> oder <em>Story Points</em>.</td></tr>
+              <tr><td>Title (Titel)</td><td>Optional, wird über der Liste gezeigt.</td></tr>
+              <tr><td>Order (Reihenfolge)</td><td><em>As chosen (or in Jira’s order) (Wie gewählt oder Jiras Rangfolge)</em>,  <em>Least progress first (Geringster Fortschritt zuerst)</em> (Epics mit Handlungsbedarf oben) oder <em>Earliest due date first (Früheste Fälligkeit zuerst)</em>.</td></tr>
+              <tr><td>Gesamtzeile unter der Liste</td><td>„Overall 61 % · 8 of 13 work items done“ (Gesamt 61 % · 8 von 13 erledigt) mit eigenem Balken und „Open the list in Jira“ (Liste in Jira öffnen).</td></tr>
+              <tr><td>Publish a snapshot for people without Jira access (Momentaufnahme für Personen ohne Jira-Zugriff veröffentlichen)</td><td>Siehe <a href="#snapshots">Momentaufnahmen</a>.</td></tr>
+            </table>
+          </div>
+          <p>Eine Liste zeigt bis zu 20 Zeilen. Weitere Treffer werden gemeldet; grenze die Auswahl ein oder öffne die Liste in Jira. Eine unzugängliche Zeile meldet „Not found, or you cannot see it in Jira“; andere Zeilen und Gesamtzeile bleiben. Epics liegen eine Ebene über Stories, auch nach Umbenennung, etwa zu „Feature“.</p>
+        </details>
+
+        <h3 id="page-progress">Page Progress <span class="tag tag-free">Kein Jira erforderlich</span></h3>
+        <p>Wie viele Seiten ein <dfn class="term" data-tip="Ein Schlagwort auf einer Confluence-Seite, ergänzt unten auf der Seite oder über das Labelsymbol. Kleingeschrieben und ohne Leerzeichen.">Label</dfn> tragen, etwa wie viele Handbuchseiten <code>approved</code> sind: „75 % · 3 of 4 pages labelled “approved”“ (3 von 4 Seiten mit Label „approved“). Für Leser unzugängliche Seiten werden nicht gezählt.</p>
+        <details class="more">
+          <summary>Einstellungen für Page Progress</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+              <tr><td><strong>Which pages (Welche Seiten)</strong></td><td><em>Pages below this page (Untergeordnete Seiten)</em> (alle Ebenen), <em>All pages in this space (Alle Seiten dieses Bereichs)</em> oder <em>All pages in another space (Alle Seiten eines anderen Bereichs)</em> (nur zugängliche Bereiche werden aufgelistet).</td></tr>
+              <tr><td>„Done“ label * (Label für erledigte Seiten)</td><td>Eine Seite zählt als erledigt, wenn sie dieses Label trägt. Confluence-Labels sind kleingeschrieben ohne Leerzeichen; „Approved“ zählt daher Seiten mit dem Label <code>approved</code>.</td></tr>
+              <tr><td>Only count pages with this label (Nur Seiten mit diesem Label zählen)</td><td>Optional, zum Beispiel <code>doc</code>, um Besprechungsnotizen auszuschließen. Leer: Alle Seiten der Auswahl zählen.</td></tr>
+              <tr><td>Title (Titel)</td><td>Optional. Leer: Pages labelled „approved“ (Seiten mit Label „approved“).</td></tr>
+              <tr><td>Schaltfläche zur Liste der Seiten ohne das Label</td><td>„Show 1 page without “approved”“ listet diese Seiten als Links.</td></tr>
+            </table>
+          </div>
+          <p>Ergänze Labels unten auf der Seite oder über das Symbol im Seitenkopf. Neue Labels erscheinen manchmal erst nach einigen Sekunden in der Confluence-Suche; klicke auf Refresh.</p>
+        </details>
+
+        <h3 id="progress-bar">Progress Bar <span class="tag tag-free">Kein Jira erforderlich</span></h3>
+        <p>Ein manuell gesetzter Fortschrittsbalken für Arbeit außerhalb von Jira: Migration, Personalplanung, Checkliste. Du wählst die Statusfarbe; der Balken leitet sie nicht aus der Zahl ab.</p>
+        <img src="/imgEpicProgressForConfluence/screenshot-2-page-progress-manual-bars.webp" alt="Kein Jira nötig: Page Progress zählt untergeordnete Seiten mit dem Label „approved“ und listet die übrigen. Progress Bar wird manuell eingestellt, samt Status, Notiz und Änderungsdatum." loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>Einstellungen für Progress Bar</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Einstellung</th><th>Funktionsweise</th></tr>
+              <tr><td><strong>Progress (Fortschritt)</strong></td><td><em>As a percentage (Als Prozentwert)</em> (0 bis 100, Dezimalstellen erlaubt; der Balken zeigt ganze Prozent) oder <em>As steps (Als Schritte)</em>, etwa 3 von 5 Meilensteinen (<em>Steps done (Erledigte Schritte)</em> und <em>Total steps (Schritte insgesamt)</em>).</td></tr>
+              <tr><td>Title (Titel)</td><td>Optional, erscheint über dem Balken.</td></tr>
+              <tr><td>Status colour (Statusfarbe)</td><td><em>Automatic (Automatisch)</em> (blau, bei 100 % grün), <em>Im Plan</em> (grün), <em>At risk (Gefährdet)</em> (gelb), <em>Off track (Außer Plan)</em> (rot) oder <em>Neutral</em> (blau, ohne Statusbeschriftung). Du bestimmst den Status; der Balken leitet ihn nicht aus der Zahl ab.</td></tr>
+              <tr><td>Note under the bar (Notiz unter dem Balken)</td><td>Optional, etwa „Nächster Meilenstein: Beta am 15. November“.</td></tr>
+              <tr><td>Show when the value was last changed (Letzte Änderung anzeigen)</td><td>„Updated 4 Oct 2026“ (Aktualisiert am 4. Oktober 2026). Das Datum ändert sich nur mit dem Wert und zeigt die Aktualität.</td></tr>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <h2 id="settings">Der Einstellungsdialog</h2>
+        <p>Jedes Makro hat einen Einstellungsdialog. Er öffnet sich beim Hinzufügen; später bearbeitest du die Seite, wählst das Makro und klickst auf das Stiftsymbol.</p>
+        <ul>
+          <li>Jedes Feld hat ein <strong>(?)</strong> -Symbol mit Kurzinfo und darunter einen Hinweis. Pflichtfelder sind gekennzeichnet mit <strong>*</strong>.</li>
+          <li><strong>Suchauswahlfelder</strong> finden Epics, Projekte, Releases, Filter und Bereiche nach Namen. Bei Epics kannst du auch einen Vorgangslink einfügen.</li>
+          <li><span class="ui">Save (Speichern)</span> prüft zuerst die Einstellungen und nennt fehlende Felder; der Dialog bleibt offen.</li>
+          <li> <strong>Vorschau</strong> zeigt das Makro genau wie später auf der Seite, mit Live-Daten gemäß deinen Berechtigungen. Nach dem Speichern veröffentlichst du die Seite, damit Leser die Änderung sehen.</li>
+        </ul>
+        <img src="/imgEpicProgressForConfluence/screenshot-1-settings-live-preview.webp" alt="Gib /progress ein, wähle und konfiguriere ein Makro: Suche das Epic, wähle Zählung und Anzeige und prüfe die Live-Vorschau vor dem Speichern. Das Makro sieht später genau so aus." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="snapshots">Momentaufnahmen für Leser ohne Jira-Zugriff</h2>
+        <p>Epic Progress, Jira Progress und Progress List können eine <strong>datierte Momentaufnahme</strong> für Personen ohne Jira-Zugriff zeigen, etwa Führungskräfte oder Beteiligte, die nur Confluence lesen. Ein Seitenbearbeiter mit Jira-Zugriff veröffentlicht sie per Klick; Besuche von Bearbeitern halten die Zahlen aktuell.</p>
+
+        <h3 id="publish">Momentaufnahme veröffentlichen</h3>
+        <ol>
+          <li>Bearbeite die Seite, öffne die Makroeinstellungen und aktiviere <span class="ui">Publish a snapshot for people without Jira access (Momentaufnahme für Personen ohne Jira-Zugriff veröffentlichen)</span> (Abschnitt <em>Momentaufnahmen für Leser ohne Jira-Zugriff</em>).</li>
+          <li>Wähle <strong>What the snapshot shows (Inhalt der Momentaufnahme)</strong>:  <em>Progress only (Nur Fortschritt)</em> (empfohlen) oder <em>Progress and work items (Fortschritt und Vorgänge)</em>.</li>
+          <li>Lasse <span class="ui">Keep the snapshot up to date when page editors open the page (at most every 15 minutes) (Beim Öffnen durch Seitenbearbeiter aktuell halten, höchstens alle 15 Minuten)</span> aktiviert oder deaktiviere es, um die Momentaufnahme unverändert zu behalten, bis jemand auf <span class="ui">Update snapshot (Momentaufnahme aktualisieren)</span>.</li>
+          <li>Speichere und veröffentliche die Seite.</li>
+          <li>Klicke unter dem Makro auf <span class="ui">Publish snapshot (Momentaufnahme veröffentlichen)</span>.</li>
+        </ol>
+        <img src="/imgEpicProgressForConfluence/screenshot-4-publish-snapshot.webp" alt="Momentaufnahme veröffentlichen: in den Makroeinstellungen aktivieren, Inhalt und Aktualisierung bei Bearbeiterbesuchen wählen und unter dem Makro auf „Publish snapshot“ klicken. Nur Seitenbearbeiter mit Jira-Zugriff dürfen dies." loading="lazy" width="1840" height="900">
+        <p>Leser sehen dann den Balken mit „Snapshot · <em>Datum und Uhrzeit</em> · published“ (veröffentlicht) oder nach Aktualisierung durch einen Bearbeiterbesuch „… · updated automatically“ (automatisch aktualisiert). Nach 14 Tagen wird die Zeile gelb und nennt das Alter, etwa „18 days old“ (18 Tage alt). Momentaufnahmen funktionieren auf Seiten, nicht in Blogbeiträgen oder Vorlagen.</p>
+        <img src="/imgEpicProgressForConfluence/highlight-3-status-report-snapshot-without-jira.webp" alt="Steuerungsausschussseite aus Lesersicht: Epic-Liste als datierte Momentaufnahme, automatisch aktualisiert beim Öffnen durch einen Bearbeiter. Ausschnitt: dessen Live-Ansicht, in der ein Klick die Momentaufnahme aktualisiert." loading="lazy" width="1840" height="900">
+
+        <h3 id="why-click">Warum braucht die Veröffentlichung einen Klick und wann erfolgt die automatische Aktualisierung?</h3>
+        <p>Epic Progress for Confluence liest Jira mit den Berechtigungen des Seitenbetrachters. Ohne Jira-Zugriff gäbe es deshalb keine Zahlen. Eine Momentaufnahme schließt diese Lücke: Wer die Seite bearbeiten und Jira-Vorgänge sehen darf, entscheidet per Klick, die aktuellen Zahlen auf der Seite zu teilen. Das entspricht dem Kopieren der Zahlen auf die Seite, nur datiert und löschbar.</p>
+        <p>Danach halten Seitenbearbeiter sie aktuell: Öffnet jemand von ihnen die Seite und ist die Momentaufnahme älter als 15 Minuten, liest die App mit dessen Berechtigungen neue Jira-Werte. Das Lesen einer Momentaufnahme stellt nie eine Jira-Anfrage; <span class="ui">View live (Live-Ansicht)</span> liest Jira mit den Berechtigungen des Lesers. Die App liest nie mit eigenem Konto oder im Namen einer abwesenden Person, entsprechend Atlassians Vorgaben (<a href="https://developer.atlassian.com/platform/forge/shared-responsibility-model/" target="_blank" rel="noopener">Forge-Modell geteilter Verantwortung</a>).</p>
+        <details class="more">
+          <summary>Details der automatischen Aktualisierung</summary>
+          <ul>
+            <li>Die Seite wartet nicht darauf: Die gespeicherte Momentaufnahme erscheint sofort, die neuen Zahlen kurz danach.</li>
+            <li>Automatische Aktualisierungen erneuern nur die veröffentlichten Zahlen. Neue Epics, Vorgänge oder Namen erscheinen erst nach manueller Aktualisierung durch einen Bearbeiter; bis dahin bleiben auch die Epics einer Liste gleich.</li>
+            <li>Bei neuen Jira-Epics oder Vorgängen sehen Bearbeiter „New epics or work items in Jira since this snapshot. Update it to show them.“ (Neue Epics oder Vorgänge seit dieser Momentaufnahme; zum Anzeigen aktualisieren). Ist ein Epic gelöscht oder für den Bearbeiter unzugänglich, lautet der Hinweis „An epic or work item in this snapshot can't be read in Jira anymore. Update the snapshot to refresh it.“ (Vorgang nicht mehr lesbar; Momentaufnahme aktualisieren).</li>
+            <li>Schlägt eine Jira-Anfrage während der Aktualisierung fehl, bleibt die Momentaufnahme erhalten. Pro Makro läuft nur eine Aktualisierung zugleich; Löschung hat immer Vorrang: Während einer laufenden Automatik gelöschte Momentaufnahmen bleiben gelöscht.</li>
+            <li>Neue Zahlen erreichen Leser nur über Bearbeiter mit eigenem Jira-Zugriff. Ohne deren Besuch bleibt die Momentaufnahme unverändert. Das Datum zeigt die Aktualität; nach 14 Tagen erscheint das Alter in Gelb.</li>
+            <li>Soll die Momentaufnahme bis zum Klick auf <span class="ui">Update snapshot (Momentaufnahme aktualisieren)</span> unverändert bleiben, deaktiviere <span class="ui">Keep the snapshot up to date when page editors open the page (Beim Öffnen durch Seitenbearbeiter aktuell halten)</span> in den Makroeinstellungen.</li>
+          </ul>
+        </details>
+
+        <h3 id="who-publishes">Wer darf Momentaufnahmen veröffentlichen, aktualisieren oder löschen?</h3>
+        <p>Personen mit Bearbeitungsrechten für die Seite. Veröffentlichen und Aktualisieren benötigen zusätzlich Zugriff auf die Jira-Vorgänge, da die App mit deren Berechtigungen liest. Die Automatik arbeitet ebenso und nur beim Öffnen durch solche Personen. Bearbeiter finden <span class="ui">Update snapshot (Momentaufnahme aktualisieren)</span> und <span class="ui">Remove snapshot (Momentaufnahme entfernen)</span> nach dem Klick auf <span class="ui">View live (Live-Ansicht)</span>.</p>
+        <p>Können Live-Werte nicht geladen werden, etwa nach Verlust des Jira-Zugriffs, bleibt <span class="ui">Remove snapshot (Momentaufnahme entfernen)</span> verfügbar: Entfernen benötigt nur Seitenbearbeitungsrechte, weder Jira-Zugriff noch aktives Abonnement. Confluence-Administratoren können Momentaufnahmen websiteweit abschalten: Confluence settings → Epic Progress for Confluence → <span class="ui">Allow published snapshots (Veröffentlichte Momentaufnahmen erlauben)</span> (siehe <a href="#admin">Administratorseite</a>).</p>
+
+        <h3 id="who-sees">Wer sieht was?</h3>
+        <ul>
+          <li>Alle Seitenleser sehen die Momentaufnahme mit Datum, Uhrzeit und Kennzeichnung „published“ oder „updated automatically“. Confluence bestimmt den Seitenzugriff; die App prüft ihn vor jeder Anzeige erneut mit den Leserberechtigungen. Bei entzogenem Seitenzugriff erscheint ein neutraler Hinweis.</li>
+          <li><span class="ui">View live (Live-Ansicht)</span> zeigt aktuelle Zahlen mit den eigenen Jira-Berechtigungen für Leser mit Vorgangszugriff. <span class="ui">Back to the snapshot (Zurück zur Momentaufnahme)</span> zeigt die Seite wie für andere Leser. Ohne Jira-Zugriff bleibt die Momentaufnahme mit „Live numbers need access to Jira“ (Live-Werte benötigen Jira-Zugriff) erhalten.</li>
+          <li>Nur ein Bearbeiterbesuch kann die Momentaufnahme aktualisieren, höchstens alle 15 Minuten und mit dessen Jira-Berechtigungen. Ohne Jira-Zugriff bleibt sie unverändert.</li>
+          <li>Wie alle anderen beantworten Momentaufnahmeleser zuerst die einmalige <a href="#allow-access">„Allow access“ (Zugriff erlauben)</a> -Abfrage.</li>
+          <li>Die Makros sind für lizenzierte Nutzer deiner Confluence-Website. Gäste und anonyme Besucher öffentlicher Seiten sehen die App-Makros einschließlich Momentaufnahmen nicht.</li>
+        </ul>
+
+        <h3 id="snapshot-content">Was enthält eine Momentaufnahme?</h3>
+        <p>Du wählst dies in den Einstellungen jedes Makros:</p>
+        <ul>
+          <li><strong>Progress only (Nur Fortschritt)</strong> (Standard): Prozentwert und Anzahlen mit Schlüssel und Name des gemessenen Inhalts: Epic, Projekt, Release, gespeicherter Filter oder Epics einer Liste. Eine JQL-Suche hat keinen Namen; ihr Text wird nie gespeichert.</li>
+          <li><strong>Progress and work items (Fortschritt und Vorgänge)</strong>: zusätzlich Status, Fälligkeiten, Veröffentlichungsdatum und bis zu 25 offene Vorgänge mit Schlüssel, Titel und Status.</li>
+        </ul>
+        <p>Momentaufnahmen enthalten keine Personenfelder: weder zugewiesene Personen noch Konto-IDs, auch nicht die der veröffentlichenden Person, und nie JQL-Text. Titel und Namen werden so übernommen, wie dein Team sie in Jira schrieb. Nach Änderungen der Makroeinstellungen bleibt die alte Momentaufnahme bis zur erneuten Veröffentlichung verborgen.</p>
+        <details class="more">
+          <summary>Warum keine Konto-IDs und was ist mit Namen in Titeln?</summary>
+          <p>Konto-IDs im App-Speicher würden Meldepflichten nach Atlassians Datenschutzregeln auslösen (<a href="https://developer.atlassian.com/cloud/confluence/user-privacy-developer-guide/" target="_blank" rel="noopener">Datenschutzleitfaden für App-Entwickler</a>); Momentaufnahmen speichern keine. Enthält ein Epic-Titel oder Release-Name einen Personennamen, etwa „Interview mit Anna Müller“, zeigt die Momentaufnahme ihn. Die veröffentlichende Person entscheidet über die Freigabe wie beim Kopieren von Zahlen auf die Seite; Bearbeiter können die Momentaufnahme jederzeit löschen.</p>
+        </details>
+
+        <h3 id="snapshot-storage">Wo werden die Daten gespeichert und wie gelöscht?</h3>
+        <p>Im App-Speicher in Atlassians Cloud (<dfn class="term" data-tip="Von Atlassian bereitgestellter Speicher jeder Forge-App, getrennt von Seiten und deren Verlauf.">Forge-Speicher</dfn>), nicht auf der Seite. Momentaufnahmen sind deshalb weder Teil des Seitenverlaufs noch werden sie mit der Seite kopiert. Forge-Speicher bleibt am <dfn class="term" data-tip="Die Region, in der Atlassian deine Website-Daten speichert, zum Beispiel EU oder USA.">Datenresidenz-Standort</dfn> deiner Confluence-Website.</p>
+        <div class="note"><strong>Makro von einer Seite entfernen?</strong> Klicke auf <span class="ui">Remove snapshot (Momentaufnahme entfernen)</span> zuerst. Nach Makrolöschung wird die Momentaufnahme nirgends mehr angezeigt, bleibt aber im App-Speicher, bis das Makro 120 Tage nicht geöffnet oder die Seite gelöscht wurde.</div>
+        <details class="more">
+          <summary>Wann eine Momentaufnahme gelöscht wird</summary>
+          <ul>
+            <li>Bei Veröffentlichung einer neueren, die die alte ersetzt.</li>
+            <li>Ein Bearbeiter klickt auf <span class="ui">Remove snapshot (Momentaufnahme entfernen)</span> (sofortige Löschung).</li>
+            <li>Die Seite landet im Papierkorb oder wird gelöscht: Die tägliche Bereinigung löscht Momentaufnahmen innerhalb von 24 Stunden. Bei vorheriger Wiederherstellung bleiben sie erhalten; sonst veröffentliche erneut.</li>
+            <li>Ein Bearbeiter öffnet die veröffentlichte Seite mit deaktivierter Option <span class="ui">Momentaufnahme veröffentlichen</span> in den Makroeinstellungen: Abschalten bedeutet Entfernen (nicht während der Seitenbearbeitung).</li>
+            <li>Ein Administrator sperrt den App-Zugriff auf die Seite mit einer <dfn class="term" data-tip="Eine Regel in Atlassian Administration, die Apps von bestimmten Confluence-Bereichen oder -Seiten fernhält.">App-Zugriffsregel</dfn>: Die tägliche Bereinigung löscht Momentaufnahmen innerhalb von 24 Stunden.</li>
+            <li>Das Makro wurde 120 Tage nicht geöffnet, etwa nach Entfernung oder weil die Seite nicht mehr gelesen wird (einschließlich Zugriffsbeschränkungen, die die App selbst ausschließen): Die tägliche Bereinigung löscht die Momentaufnahme. Dafür speichert die App pro Makro nur den Tag des letzten Öffnens, keine Person.</li>
+          </ul>
+          <p>Nach Deinstallation hält Atlassian den App-Speicher einschließlich Momentaufnahmen 28 Tage vor und löscht ihn danach. Innerhalb von 21 Tagen kannst du uns um Wiederherstellung in einer neuen Installation bitten (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Datenlebenszyklus für Forge-gehosteten Speicher</a>).</p>
+        </details>
+      </section>
+
+      <section>
+        <h2 id="permissions">Berechtigungen: wer was sieht</h2>
+        <p>Die App liest Jira und Confluence <strong>als Person, die die Seite ansieht</strong>, nie mit einem geteilten App-Konto, und hat in beiden Systemen keinen Schreibzugriff.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aktion</th><th>Wer</th></tr>
+            <tr><td>App installieren</td><td>Ein <strong>Confluence-Administrator</strong>, einmal aus dem Atlassian Marketplace.</td></tr>
+            <tr><td>Jira verbinden</td><td>Ein <strong>Website-Administrator</strong>, in Atlassian Administration. Jira muss auf derselben Website liegen.</td></tr>
+            <tr><td>Makro hinzufügen oder ändern</td><td>Jeder mit dem Recht, <strong>die Seite zu bearbeiten</strong>.</td></tr>
+            <tr><td>Live-Werte sehen</td><td><strong>Jeder Leser mit eigenen Berechtigungen</strong>. Jira und Confluence wenden diese an, einschließlich <dfn class="term" data-tip="Jira-Einstellungen, die bestimmte Vorgänge vor bestimmten Personen verbergen.">Vorgangssicherheit</dfn> und Seitenbeschränkungen. Ohne Vorgangszugriff erscheint nur ein kurzer Hinweis, nie Zahlen oder Namen. Gesehene Daten werden nur für denselben Leser 5 Minuten vorgehalten (siehe <a href="#counting">Fußzeile</a>); niemand anderes sieht sie.</td></tr>
+            <tr><td>Momentaufnahme veröffentlichen oder aktualisieren</td><td>Seitenbearbeiter, die die Jira-Vorgänge sehen dürfen.</td></tr>
+            <tr><td>Momentaufnahme entfernen</td><td>Seitenbearbeiter, auch ohne Jira-Zugriff oder aktives Abonnement.</td></tr>
+            <tr><td>Momentaufnahme ansehen</td><td>Alle Seitenleser (lizenzierte Nutzer deiner Confluence-Website).</td></tr>
+            <tr><td>Momentaufnahmen websiteweit abschalten</td><td>Ein <strong>Confluence-Administrator</strong>, auf der <a href="#admin">Administratorseite</a>. Die App prüft mit Confluence unter dem Konto dieser Person deren Confluence-Administratorrolle.</td></tr>
+          </table>
+        </div>
+        <p>Das eigene App-Konto wird nur für zwei Ja/Nein-Fragen verwendet: auf der Administratorseite zur Jira-Verbindung und bei der täglichen Bereinigung zum Fortbestehen einer Seite mit Momentaufnahme. Keine davon zeigt Nutzern Jira- oder Confluence-Daten. Details: <a href="/epic-progress-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
+      </section>
+
+      <section>
+        <h2 id="admin">Administratorseite</h2>
+        <p>Öffne in Confluence <span class="ui">Einstellungen</span> und wähle <strong>Epic Progress for Confluence</strong> in der linken Navigation. Dieselbe Seite ist nach der Installation die <em>Get started (Erste Schritte)</em> -Seite der App.</p>
+        <ul>
+          <li><strong>Jira-Verbindung</strong>:  <em>Connected (Verbunden)</em> oder <em>Not connected (Nicht verbunden)</em> mit Verbindungsschritten.</li>
+          <li><strong>Abonnement</strong>:  <em>Trial (Testphase)</em> (mit Enddatum), <em>Active (Aktiv)</em> oder <em>Not active (Nicht aktiv)</em>.</li>
+          <li><strong>Wer was sieht</strong>: die obigen Berechtigungsregeln in zwei Sätzen.</li>
+          <li><strong>Veröffentlichte Momentaufnahmen</strong>: der Schalter <span class="ui">Allow published snapshots (Veröffentlichte Momentaufnahmen erlauben)</span>, standardmäßig an. Nur Confluence-Administratoren dürfen ändern; die App prüft dies jedes Mal mit Confluence unter dem Konto der ändernden Person.</li>
+          <li><strong>Die fünf Makros</strong>, jeweils gekennzeichnet als <em>Jira</em> oder <em>Kein Jira erforderlich</em>.</li>
+        </ul>
+        <p><span class="ui">Check again (Erneut prüfen)</span> neben <em>Einrichtung</em> prüft Abonnement und Jira-Verbindung erneut.</p>
+        <details class="more">
+          <summary>Wirkung von ausgeschaltetem „Allow published snapshots“</summary>
+          <p>Momentaufnahmen sind websiteweit verborgen und werden weder veröffentlicht noch automatisch aktualisiert. Makros zeigen Live-Werte bei Jira-Zugriff, sonst einen Hinweis. Bestehende Momentaufnahmen bleiben erhalten (bis ein Bearbeiter sie entfernt, die Bereinigung sie mit der Seite löscht oder das Makro 120 Tage nicht geöffnet wird) und erscheinen beim erneuten Einschalten wieder.</p>
+        </details>
+        <img src="/imgEpicProgressForConfluence/screenshot-3-admin-who-sees-what.webp" alt="Administratorseite in den Confluence-Einstellungen, auch direkt nach Installation: Jira-Verbindung, Abonnement, Sichtbarkeitsregeln und Schalter für veröffentlichte Momentaufnahmen." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="deletion">Momentaufnahmen und App-Daten löschen</h2>
+        <p>Die App speichert sehr wenig, vollständig in Atlassians Forge-Speicher. Die <strong>Makroeinstellungen</strong> (etwa Epic-Auswahl, JQL-Suche, Titel oder Notiz) gehören zur Seite. Confluence speichert sie wie andere Seiteninhalte; sie sind an Makro oder Seite gebunden und folgen dem Seitenverlauf.</p>
+        <details class="more">
+          <summary>Gespeicherte App-Daten und Löschfristen</summary>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Daten</th><th>Löschung</th></tr>
+              <tr><td>Veröffentlichte Momentaufnahmen</td><td>Sofort bei Ersatz durch eine neuere Momentaufnahme, Entfernung durch einen Bearbeiter oder Öffnen der veröffentlichten Seite durch einen Bearbeiter mit deaktivierter Momentaufnahme. Durch tägliche Bereinigung innerhalb von 24 Stunden nach Papierkorb oder Seitenlöschung (vorher wiederhergestellte Seiten behalten sie) oder App-Zugriffssperre; außerdem nach 120 Tagen ohne Makroaufruf.</td></tr>
+              <tr><td>Notizen zur Automatik: Zeitpunkt der letzten Prüfung und ein einminütiger Anspruch während der Aktualisierung (zufällige ID, Zeit und nach Entfernung eine Löschmarkierung; keine Person)</td><td>Zusammen mit der Momentaufnahme; übrig gebliebene Ansprüche löscht die tägliche Bereinigung.</td></tr>
+              <tr><td>Notiz „Zuletzt geöffnet“ eines Makros mit Momentaufnahme (nur Datum, keine Person)</td><td>Mit der Momentaufnahme oder durch tägliche Bereinigung, sobald das Makro keine Momentaufnahme mehr hat.</td></tr>
+              <tr><td>Administratorschalter „Allow published snapshots“</td><td>28 Tage nach App-Deinstallation.</td></tr>
+              <tr><td>Kurzer Ansichtszwischenspeicher: Live-Makroinhalt eines Lesers (Anzahlen, Schlüssel, Namen, Status, Daten und Abfragezeit, kein JQL-Text), unter einem gesalzenen Einweg-Hash der Konto-ID gespeichert, nie unter der ID selbst</td><td>Nach 5 Minuten durch Forge-Speicher selbst: Atlassian entfernt abgelaufene Einträge im Hintergrund; die App zeigt nie Einträge über 5 Minuten Alter. <span class="ui">Refresh (Aktualisieren)</span> ersetzt ihn sofort.</td></tr>
+              <tr><td>Zufälliger Installationsschlüssel nur für diesen Hash (in Forges verschlüsseltem Geheimnisspeicher; keine personenbezogenen Daten)</td><td>28 Tage nach App-Deinstallation.</td></tr>
+              <tr><td>Anonyme tägliche Nutzungszähler</td><td>Nach 8 Tagen.</td></tr>
+              <tr><td>IDs der Story-Point-Felder der Website (Zwischenspeicher)</td><td>Im Gebrauch alle 6 Stunden erneuert; 28 Tage nach App-Deinstallation gelöscht.</td></tr>
+            </table>
+          </div>
+        </details>
+        <p>Nach Deinstallation hält Atlassian sämtliche App-Daten einschließlich Momentaufnahmen 28 Tage vor und löscht sie anschließend nach seinen <a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Aufbewahrungsregeln</a>. Innerhalb von 21 Tagen kannst du uns um Wiederherstellung in einer neuen Installation bitten. Details: <a href="/de/epic-progress-privacy-policy.html">Datenschutzerklärung</a>.</p>
+      </section>
+
+      <section>
+        <h2 id="export">PDF- und Word-Export</h2>
+        <p>PDF- und Word-Exporte sowie der Seitenverlauf zeigen jedes Makro als Text mit denselben Zahlen wie auf der Seite; Progress List als Tabelle mit Gesamtzeile. Sie werden live gelesen <strong>unter dem Konto der exportierenden Person</strong> mit deren Berechtigungen. Ein Export nutzt nie ein App-Konto und enthält nie eine Momentaufnahme. Ohne vorherige Zustimmung zu <a href="#allow-access">„Allow access“ (Zugriff erlauben)</a> zeigt der Export eine neutrale Zeile statt Zahlen: Öffne einmal die Seite, erlaube Zugriff und exportiere erneut.</p>
+      </section>
+
+      <section>
+        <h2 id="faq">Häufige Fragen und Meldungen</h2>
+        <p>Kurze Antworten auf häufige Fragen, danach App-Meldungen mit Abhilfe.</p>
+        <h3>Brauchen Leser Jira-Zugriff?</h3>
+        <p>Für Live-Werte ja: Jeder Leser sieht die Zahlen, die seine eigenen Jira-Berechtigungen erlauben. Für Leser ohne Jira-Zugriff kann ein Seitenbearbeiter eine datierte Momentaufnahme veröffentlichen, die alle Leser der Seite sehen. Progress Bar und Page Progress benötigen überhaupt kein Jira.</p>
+        <h3>Warum bittet Confluence um „Allow access“?</h3>
+        <p>Forge-Apps, die mit den Berechtigungen der nutzenden Person lesen, benötigen einmal deren Zustimmung. Beim ersten Öffnen einer Seite mit einem Makro bittet Confluence um Zugriff. Das gilt auch für Leser, die nur eine veröffentlichte Momentaufnahme sehen. Die Zustimmung ändert nichts in Jira oder Confluence.</p>
+        <h3>Warum weicht die Zahl von meiner Jira-Suche ab?</h3>
+        <p>Epic Progress zählt die Vorgänge <em>direkt</em> unter dem Epic. Jira Progress lässt bei Projekten und Releases Unteraufgaben aus, sofern du nicht folgende Option deaktivierst: <em>Leave out sub-tasks (Unteraufgaben auslassen)</em>. Jeder Leser sieht zudem nur in Jira erlaubte Vorgänge.</p>
+        <h3>Warum 99 %, obwohl fast alles erledigt ist?</h3>
+        <p>100 % bedeutet, dass jeder Vorgang erledigt ist. Ein offener Vorgang von 200 ergibt 99 %.</p>
+        <h3>Können Confluence-Gäste oder anonyme Besucher die Makros sehen?</h3>
+        <p>Nein. Forge-Apps laufen für lizenzierte Nutzer einer Website, sofern sie nicht für Gäste und anonyme Besucher eingerichtet sind. Diese App ist dafür nicht eingerichtet.</p>
+        <h3>Welche Jira-Projekte funktionieren?</h3>
+        <p>Vom Unternehmen und vom Team verwaltete Projekte einschließlich ihrer Story-Point-Felder. Epics werden anhand ihrer Hierarchieebene erkannt, auch nach einer Umbenennung auf deiner Website.</p>
+
+        <p>Jede App-Meldung nennt Ereignis, Ursache und Abhilfe.</p>
+        <details class="more">
+          <summary>Meldungen und Abhilfe</summary>
+          <h4>„Live numbers need access to Jira“ (Live-Werte benötigen Jira-Zugriff)</h4>
+          <p>Du hast auf <span class="ui">View live (Live-Ansicht)</span> geklickt, aber dein Konto hat auf dieser Website keinen Jira-Zugriff. Die Seite zeigt weiter die veröffentlichte Momentaufnahme. Bitte bei Bedarf deinen Jira-Administrator um Zugriff.</p>
+          <h4>„This progress comes from Jira, which you cannot open“ (Fortschritt stammt aus Jira, auf das du keinen Zugriff hast)</h4>
+          <p>Dein Konto hat auf dieser Website keinen Jira-Zugriff. Bitte deinen Jira-Administrator um Zugriff oder einen Seitenbearbeiter, eine <a href="#snapshots">Momentaufnahme zu veröffentlichen</a>.</p>
+          <h4>„Epic Progress for Confluence is not connected to Jira yet“ (Noch nicht mit Jira verbunden)</h4>
+          <p>Die App ist in Confluence installiert, kann Jira aber noch nicht lesen. Ein Website-Administrator verbindet sie in Atlassian Administration: Apps → Epic Progress for Confluence → connect to Jira (<a href="#connect-jira">Details</a>). Progress Bar und Page Progress funktionieren bereits.</p>
+          <h4>„Epic Progress cannot find the work item …“ (Vorgang nicht gefunden)</h4>
+          <p>Vorgang, Projekt, Release, Filter oder Bereich existiert nicht oder ist für dich unzugänglich. Prüfe die Makroeinstellungen (Stiftsymbol bei Seitenbearbeitung) oder bitte deinen Jira-Administrator um Zugriff. Bei gespeicherten Filtern bitte den Eigentümer um Freigabe.</p>
+          <h4>„Jira cannot run the search of this …“ (Jira kann diese Suche nicht ausführen)</h4>
+          <p>Die JQL ist ungültig. Das Makro zeigt Jiras Erklärung (zum Beispiel „Field 'x' does not exist“). Korrigiere die JQL in den Makroeinstellungen und teste sie zuerst in Jira.</p>
+          <h4>„Too many work items for story points“ (Zu viele Vorgänge für Story Points)</h4>
+          <p>Story Points werden pro Vorgang addiert; die Suche liefert mehr als 2.000. Grenze die Suche ein oder zähle stattdessen Vorgänge.</p>
+          <h4>„Epic Progress for Confluence: the subscription is not active“ (Abonnement nicht aktiv)</h4>
+          <p>Testphase oder Abonnement sind beendet. Ein Confluence-Administrator kann sie unter Settings → Apps → Manage apps starten oder erneuern.</p>
+          <h4>„The snapshot was published for other macro settings and is not shown“ (Momentaufnahme für andere Makroeinstellungen veröffentlicht; wird nicht angezeigt)</h4>
+          <p>Die Makroeinstellungen wurden nach Veröffentlichung geändert. Ein Bearbeiter mit Zugriff auf die Jira-Vorgänge veröffentlicht die Momentaufnahme erneut.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Epic%20Progress%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/epic-progress-for-confluence-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/epic-progress-for-confluence-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/epic-progress-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/epic-progress-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/epic-progress-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/epic-progress-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+        <p class="legal-note">Atlassian, Confluence und Jira sind Marken von Atlassian. Epic Progress for Confluence ist eine unabhängige App von Janek Behrens, die nicht von Atlassian erstellt oder unterstützt wird; die Produktnamen nennen lediglich die kompatiblen Produkte.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

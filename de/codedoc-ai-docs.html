@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <title>CodeDoc-AI-Dokumentation: Synchronisierungsblöcke und KI-Seiten für Confluence</title>
+  <meta name="description" content="Halte Confluence-Seiten mit deinem Code synchron: Versionen, Konfigurationswerte, README-Abschnitte und Ausschnitte aus GitHub, GitLab, Bitbucket oder Azure DevOps.">
+  <link rel="canonical" href="https://janekbehrens.de/de/codedoc-ai-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CodeDoc AI for Confluence — Dokumentation">
+  <meta property="og:description" content="Übernimm Versionen, Konfigurationswerte, README-Abschnitte und Codeausschnitte aus GitHub, GitLab, Bitbucket oder Azure DevOps auf Confluence-Seiten oder lasse KI vollständige Dokumentationsseiten schreiben.">
+  <meta property="og:url" content="https://janekbehrens.de/de/codedoc-ai-docs.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "CodeDoc AI for Confluence",
+      "description": "App auf Atlassian Forge, die Confluence-Dokumentation mit Git-Repositories synchron hält: Synchronisierungsblöcke halten Werte, Tabellen, Abschnitte und Code aus Dateien auf beliebigen Seiten aktuell; optionale KI-Seiten erstellen vollständige Dokumentationsseiten. Unterstützt GitHub, GitLab, Bitbucket Cloud, Azure DevOps sowie eigene GitHub-Enterprise- und GitLab-Server.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Atlassian Confluence Cloud",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "CodeDoc AI for Confluence — Dokumentation",
+      "description": "Einrichtung und Benutzeranleitung für CodeDoc AI for Confluence: Git verbinden, Synchronisierungsblöcke zu Confluence-Seiten hinzufügen und optional KI-Dokumentation aus deinem Code erstellen lassen.",
+      "url": "https://janekbehrens.de/de/codedoc-ai-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Verwenden Synchronisierungsblöcke KI oder kosten sie Tokens?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Ein Synchronisierungsblock kopiert exakt den Dateiinhalt: keine KI-Aufrufe, keine Tokenkosten, keine Übertragung an KI-Anbieter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Findet die Confluence-Suche den Inhalt eines Synchronisierungsblocks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Der synchronisierte Inhalt wird wie normaler Text auf der Seite gespeichert und ist in Confluence-Suche, PDF-/Word-Export und Seitenverlauf enthalten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Überfüllen Synchronisierungsblöcke den Seitenverlauf?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. CodeDoc schreibt nur bei geändertem Git-Inhalt auf die Seite; jede Seitenversion entspricht einer echten Dateiänderung."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Verbraucht CodeDoc unsere Rovo- oder Atlassian-AI-Kontingente?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. Atlassian AI in CodeDoc Advanced hat ein eigenes monatliches Kontingent im Abonnement. Deine Rovo- und Atlassian-AI-Kontingente bleiben unberührt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann CodeDoc GitLab oder GitHub Enterprise hinter einer Firewall lesen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nur wenn der Server aus Atlassians Cloud erreichbar ist: CodeDoc läuft auf Forge, nicht in deinem Netzwerk. Erlaube Atlassians ausgehende IP-Adressen oder mache den Server über HTTPS erreichbar. Siehe Dein eigener Git-Server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was kostet die KI-Nutzung?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mit Atlassian AI (Advanced) sind KI-Seiten bis zum monatlichen Kontingent ohne Zusatzkosten enthalten. Mit eigenem Schlüssel erhebt CodeDoc keine Gebühr pro Seite; dein KI-Anbieter berechnet Tokens, und der Verlauf zeigt deren Anzahl je Durchlauf. Ein mittleres Repository benötigt typischerweise 10.000–50.000 Eingabe- und 2.000–8.000 Ausgabetokens. Grobe Kosten pro Seite mit eigenem Schlüssel: Google Geminis kostenloser Tarif kostet nichts (Google kann dessen Daten zur Produktverbesserung nutzen); Claude Haiku oder ein GPT-mini-Modell meist 0,01–0,05 USD; größere Modelle (Claude Sonnet, vollständige GPT-Modelle) 0,10–0,50 USD, je nach Repositorygröße."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich verschiedene KI-Modelle für unterschiedliche KI-Seiten verwenden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Noch nicht: Alle KI-Seiten verwenden ein Modell. Ändere es jederzeit unter Settings → Connections; der nächste Durchlauf nutzt es."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich mehrere Repositories auf einer KI-Seite dokumentieren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, bis zu 2 Repositories pro KI-Seite. Die KI erhält den Code beider und erstellt eine gemeinsame Seite."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welche Programmiersprachen und Dateitypen werden unterstützt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alle Textdateien; es gibt keine Sprachbeschränkung. Wie gut die KI einen Dateityp versteht, hängt vom Modell ab. CodeDoc lässt Abhängigkeiten, Buildausgaben, Sperrdateien, minimierte Dateien, Binär- und Mediendateien aus und liest nie typische Zugangsdaten-Dateien (.env, private Schlüssel, Zertifikate, Terraform-Zustands- und Variablendateien, Zugangsdaten-Dateien), auch nicht bei passenden Einschlussmustern."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "In welchen Sprachen kann die Dokumentation erstellt werden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch, Japanisch, Chinesisch und Koreanisch stehen in der Liste; Other language… akzeptiert jede eingegebene Sprache (Qualität modellabhängig)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wo wird meine Dokumentation gespeichert?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Als normale Confluence-Seite im gewählten Bereich. Du kannst sie wie jede Seite bearbeiten, verschieben oder löschen. Erneute KI-Durchläufe aktualisieren dieselbe Seite ohne Duplikat. Bei aktivierter Prüfung wird jeder Durchlauf zunächst als [DRAFT]-Seite gespeichert."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich Dokumentation vor der Veröffentlichung prüfen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Aktiviere in Schritt 3 der KI-Seite Review each run before it is published. Die veröffentlichte Seite ändert sich erst beim Veröffentlichen des Entwurfs in CodeDoc. Discard lässt sie unverändert; Undo last run stellt die Version vor dem Durchlauf wieder her. Siehe Prüfung und Rückgängig machen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Schreiben Webhook- und Zeitplanaktualisierungen die KI-Seite komplett neu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Jede Aktualisierung liest den aktuellen Git-Code, die KI schreibt die Seite neu und CodeDoc aktualisiert die vorhandene Confluence-Seite."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich private Repositories verwenden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. CodeDoc verwendet deinen Zugriffstoken. Mit Lesezugriff funktioniert es bei öffentlichen und privaten Repositories."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie deinstalliere ich die App?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gehe zu Confluence Settings → Apps → Manage apps, suche CodeDoc und klicke auf Uninstall. Danach kann die App ihre Konfiguration und gespeicherten Daten nicht mehr lesen. Atlassian hält sie 28 Tage vor und löscht sie dann (innerhalb von 21 Tagen kannst du uns um Wiederherstellung in einer neuen Installation bitten). Erstellte Confluence-Seiten bleiben in deinen Bereichen; lösche sie bei Bedarf manuell."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/codedoc-ai-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/codedoc-ai-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="cd">
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#overview">Übersicht</a>
+        <a href="#how-it-works">Funktionsweise</a>
+        <a href="#install">Installation</a>
+        <a href="#setup">Ersteinrichtung</a>
+        <a href="#repos">Repositories</a>
+        <a href="#sync">Synchronisierungsblöcke</a>
+        <a href="#sync-add" class="sub">Block hinzufügen</a>
+        <a href="#sync-kinds" class="sub">Mögliche Inhalte</a>
+        <a href="#sync-latest" class="sub">Versionsprüfung</a>
+        <a href="#sync-updates" class="sub">Aktualisierungsregeln</a>
+        <a href="#sync-approval" class="sub">Wer einrichten darf</a>
+        <a href="#sync-status" class="sub">Status und Meldungen</a>
+        <a href="#sync-manage" class="sub">Alle Blöcke verwalten</a>
+        <a href="#jobs">KI-Seiten</a>
+        <a href="#jobs-presets" class="sub">Schreibstile</a>
+        <a href="#jobs-triggers" class="sub">Aktualisierungen</a>
+        <a href="#jobs-webhooks" class="sub">Webhook-Einrichtung</a>
+        <a href="#jobs-schedule" class="sub">Zeitpläne</a>
+        <a href="#jobs-files" class="sub">Dateiauswahl</a>
+        <a href="#jobs-target" class="sub">Confluence-Ziel</a>
+        <a href="#jobs-approval" class="sub">Prüfung und Rückgängig machen</a>
+        <a href="#presets">Gespeicherte Stile</a>
+        <a href="#dashboard">Registerkarte Übersicht</a>
+        <a href="#queue">Durchläufe</a>
+        <a href="#settings">Einstellungen</a>
+        <a href="#providers">Unterstützte Anbieter</a>
+        <a href="#editions">Editionen und Testphase</a>
+        <a href="#permissions">Zugriffskontrolle</a>
+        <a href="#data">Daten und Datenschutz</a>
+        <a href="#troubleshooting">Fehlerbehebung</a>
+        <a href="#faq">Häufige Fragen</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>CodeDoc AI for Confluence — Dokumentation</h1>
+      <p class="subtitle">Zeige Versionen, Konfigurationswerte, README-Abschnitte und Git-Code auf jeder Confluence-Seite und halte sie aktuell. Optional: Lasse KI vollständige Dokumentationsseiten schreiben.</p>
+
+      <div class="quickstart">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li>Installiere CodeDoc aus dem <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Atlassian Marketplace</a> (30 Tage kostenlos testen) und öffne <strong>Apps → CodeDoc</strong>.</li>
+          <li>Verbinde Git mit einem Token nur für Lesezugriff. Mehr brauchen Synchronisierungsblöcke nicht; die <a href="/de/codedoc-ai-setup.html">Schnellstartanleitung</a> beschreibt die Token-Einrichtung je Anbieter.</li>
+          <li>Ergänze die für CodeDoc zugänglichen Repositories unter <strong>Repositories</strong> .</li>
+          <li>Bearbeite eine Seite, öffne das Makromenü mit <code>/</code> und wähle <strong>CodeDoc Sync Block</strong> . Füge einen Dateilink ein, prüfe die Vorschau, speichere und veröffentliche.</li>
+          <li>Optional: Erstelle eine KI-Seite mit Atlassian AI (Advanced-Edition) oder eigenem KI-Schlüssel.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#overview">Übersicht</a></li>
+          <li><a href="#how-it-works">Funktionsweise</a></li>
+          <li><a href="#install">Installation</a>  ·  <a href="#setup">Ersteinrichtung</a>  ·  <a href="#repos">Repositories</a></li>
+          <li><a href="#sync">Synchronisierungsblöcke</a>:  <a href="#sync-add">hinzufügen</a>,  <a href="#sync-kinds">mögliche Inhalte</a>,  <a href="#sync-latest">Versionsprüfung</a>,  <a href="#sync-updates">Aktualisierungen</a>,  <a href="#sync-status">Status</a></li>
+          <li><a href="#jobs">KI-Seiten</a>:  <a href="#jobs-presets">Stile</a>,  <a href="#jobs-webhooks">Webhook</a>,  <a href="#jobs-files">Dateien</a>,  <a href="#jobs-approval">Prüfung</a></li>
+          <li><a href="#settings">Einstellungen</a>  ·  <a href="#providers">Anbieter</a>  ·  <a href="#editions">Editionen</a>  ·  <a href="#permissions">Zugriffskontrolle</a></li>
+          <li><a href="#data">Daten und Datenschutz</a>  ·  <a href="#troubleshooting">Fehlerbehebung</a>  ·  <a href="#faq">Häufige Fragen</a>  ·  <a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section id="overview">
+        <h2>Übersicht</h2>
+        <p>CodeDoc hält Confluence-Seiten auf zwei Arten mit deinem Code synchron:</p>
+        <ul>
+          <li><strong>Synchronisierungsblöcke</strong>: Ein <dfn class="term" data-tip="Ein CodeDoc-Block auf einer Confluence-Seite. Er zeigt Dateiinhalt aus deinem Repository und hält ihn aktuell.">Synchronisierungsblock</dfn> übernimmt Fakten aus einer Datei auf die Seite, etwa Helm-Chart-Version, YAML-Einstellungen, README-Abschnitt, neuesten CHANGELOG-Eintrag oder Codeausschnitt. Ohne KI und ohne KI-Schlüssel. <a href="#sync">Mehr erfahren</a></li>
+          <li><strong>KI-Seiten</strong> (optional): KI schreibt vollständige Dokumentationsseiten aus deinem Code, mit Atlassian AI (Advanced-Edition) oder eigenem Anthropic-, OpenAI- oder Google-Gemini-Schlüssel. <a href="#jobs">Mehr erfahren</a></li>
+        </ul>
+        <p>Die App liest GitHub, GitLab, Bitbucket Cloud, Azure DevOps und eigene GitHub-Enterprise- oder GitLab-Server, auch über mehrere Verbindungen zugleich. Seiten aktualisieren sich bei jedem Push, täglich oder wöchentlich, mit einer Seitenversion je echter Änderung.</p>
+        <img src="/imgCodeDoc/screenshot-4-overview.webp" alt="CodeDoc-Registerkarte Overview: Synchronisierungsblöcke, letzte Synchronisationsänderung, KI-Seiten, Repositories und jüngste KI-Durchläufe auf einen Blick" width="1840" height="900" loading="lazy">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgCodeDoc/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/fd3xCaSIC9A?autoplay=1" data-title="CodeDoc for Confluence — Seiten, die mit deinem Code synchron bleiben">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: CodeDoc for Confluence — Seiten, die mit deinem Code synchron bleiben"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <h2>Funktionsweise</h2>
+        <ol>
+          <li><strong>Git verbinden</strong> mit einem Token nur für Lesezugriff. Ein KI-Schlüssel ist optional und später ergänzbar.</li>
+          <li><strong>Repositories hinzufügen</strong>: Durchsuche dein Git-Konto oder füge eine Repositoryadresse ein.</li>
+          <li><strong>Synchronisierungsblock hinzufügen</strong>: Bearbeite eine Seite, öffne das Makromenü mit <code>/</code> und wähle <strong>CodeDoc Sync Block</strong>, füge den Dateilink ein und wähle den Inhalt (<a href="#sync">Synchronisierungsblöcke</a>).</li>
+          <li><strong>Optional: KI-Seite erstellen</strong>: Wähle Repositories, Schreibstil, Zielbereich und Aktualisierungszeitpunkt. CodeDoc veröffentlicht direkt oder als Entwurf zur Prüfung (<a href="#jobs">KI-Seiten</a>).</li>
+        </ol>
+      </section>
+
+      <section id="examples">
+        <h2>Beispielausgabe</h2>
+        <p>So sieht eine KI-Seite aus: Aus einem Terraform-Repository erstellte Seiten im Stil <strong>Developer Documentation (Entwicklerdokumentation)</strong> .</p>
+        <details class="more">
+          <summary>Beispielseiten anzeigen</summary>
+          <img src="/imgCodeDoc/exampleGenerations/3.png" alt="KI-Beispielseite: Übersicht mit Technologietabelle aus Versionen, Rollen und Beschreibungen aus dem Code" width="1526" height="2200" loading="lazy">
+          <img src="/imgCodeDoc/exampleGenerations/1.png" alt="KI-Beispielseite: Architekturabschnitt mit Grundprinzipien, Komponenteninteraktion und zentralen Modulen" width="2842" height="2400" loading="lazy">
+          <img src="/imgCodeDoc/exampleGenerations/2.png" alt="KI-Beispielseite: API-Referenz mit Codebeispielen und Abhängigkeitsliste" width="2824" height="1368" loading="lazy">
+          <p>Andere Stile erzeugen andere Strukturen: Developer Documentation hat 9 Abschnitte einschließlich Architektur, API-Referenz und Fehlerbehebung; Management Overview liefert eine nichttechnische Zusammenfassung mit Risiken und strategischen Empfehlungen.</p>
+        </details>
+      </section>
+
+      <section id="install">
+        <h2>Installation</h2>
+        <ol>
+          <li>Suche <strong>CodeDoc</strong> im <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener">Atlassian Marketplace</a>, klicke auf <strong>Try it free (Kostenlos testen)</strong> (30 Tage Testphase) und wähle deine Confluence-Cloud-Website.</li>
+          <li>Öffne in Confluence <strong>Apps → CodeDoc</strong>. Beim ersten Start erscheint der Einrichtungsassistent.</li>
+        </ol>
+      </section>
+
+      <section id="setup">
+        <h2>Ersteinrichtung</h2>
+        <p>Der Einrichtungsassistent hat drei Schritte: <strong>Git verbinden</strong> (erforderlich), <strong>KI-Seiten</strong> (optional) und <strong>Ready (Bereit)</strong>. Ein CodeDoc-Administrator führt ihn aus; Confluence-Administratoren sind immer Administratoren.</p>
+        <img src="/imgCodeDoc/screenshot-8-setup-without-ai.webp" alt="Einrichtungsassistent: zuerst Git-Anbieter verbinden; der KI-Schritt kann übersprungen werden" width="1840" height="900" loading="lazy">
+
+        <h3 id="setup-git">Git verbinden</h3>
+        <p>CodeDoc liest nur Dateien. Deshalb genügt ein Token mit <strong>read (Lesen)</strong> als Berechtigung. Welche Tokens die Anbieter benötigen: <a href="#providers">Unterstützte Anbieter</a>.</p>
+        <ol>
+          <li>Wähle den <strong>Git-Anbieter</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps oder dein eigener Server mit <strong>GitHub Enterprise</strong> oder <strong>GitLab self-managed</strong> (<a href="#providers-server">Details</a>). Ein Hinweis nennt den benötigten Token samt direktem Link.</li>
+          <li>Trage ein: <dfn class="term" data-tip="Ein Schlüssel deines Git-Anbieters, mit dem CodeDoc Repositories lesen kann. Ein Token nur für Lesezugriff genügt.">Zugriffstoken</dfn>. Bei Azure DevOps trage zusätzlich die Organisations-URL ein (<code>https://dev.azure.com/your-org</code>).</li>
+          <li>Optional kannst du einen <strong>Anzeigenamen</strong> festlegen, etwa „GitHub Arbeit“, und auf <strong>Connect and continue (Verbinden und fortfahren)</strong> klicken. Funktioniert der Token nicht, nennt die Meldung den Grund.</li>
+        </ol>
+
+        <h3 id="setup-ai">KI-Seiten (optional)</h3>
+        <p>Mit der <strong>Advanced-Edition</strong> ist Atlassian AI enthalten: Klicke auf <strong>Continue with Atlassian AI (Mit Atlassian AI fortfahren)</strong>. Andernfalls klicke auf <strong>Skip, use sync blocks only (Überspringen, nur Synchronisierungsblöcke verwenden)</strong> oder <strong>Connect an AI provider (KI-Anbieter verbinden)</strong> für einen eigenen Schlüssel. Das lässt sich jederzeit ändern unter <a href="#settings-ai">Settings → Connections (Einstellungen → Verbindungen)</a>.</p>
+        <details class="more">
+          <summary>Eigenen KI-Anbieter verbinden</summary>
+          <ol>
+            <li>Wähle <strong>Anthropic</strong>,  <strong>OpenAI</strong> oder <strong>Google Gemini</strong> und füge deinen <strong>API-Schlüssel ein</strong>:  <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">Anthropic</a>,  <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI</a>,  <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>.</li>
+            <li>Klicke auf <strong>Connect (Verbinden)</strong>. CodeDoc prüft den Schlüssel und lädt die vollständige Modellliste des Anbieters.</li>
+            <li>CodeDoc wählt ein ausgewogenes, schnelles Modell vor. Wähle bei Bedarf ein anderes in der durchsuchbaren Liste <strong>Model (Modell)</strong> ; Empfehlungen stehen oben.</li>
+          </ol>
+          <p>Schnelle Modelle (Claude Haiku, GPT-mini-Modelle, Gemini Flash) schreiben eine Seite für mittlere Repositories für wenige Cent. Setze im Anbieterkonto ein Ausgabenlimit.</p>
+        </details>
+      </section>
+
+      <section id="repos">
+        <h2>Repositories</h2>
+        <p> <strong>Repositories</strong> : Diese Registerkarte listet die für CodeDoc zugänglichen Repositories. Nur diese stehen für Blöcke und KI-Seiten zur Verfügung. Nur CodeDoc-Administratoren dürfen sie hinzufügen oder entfernen.</p>
+        <img src="/imgCodeDoc/v2/repositories.webp" alt="Registerkarte Repositories mit fünf verbundenen Repositories, Branch und Anbieter" width="1600" height="892" loading="lazy">
+        <ul>
+          <li><strong>Browse repositories (Repositories durchsuchen)</strong>: Bei mehreren Git-Verbindungen wähle zuerst die Verbindung. Suche, markiere die Repositories und klicke auf <strong>Add N Selected Repository(ies) (N ausgewählte Repositories hinzufügen)</strong>. Die Liste zeigt bis zu 100 Repositories.</li>
+          <li><strong>Add by address (Per Adresse hinzufügen)</strong>: Füge die Adresse ein, etwa <code>https://github.com/org/repo</code>; auch Datei- oder Branchlinks funktionieren. Lasse <strong>Branch</strong> leer für den Standardbranch und klicke auf <strong>Add Repository (Repository hinzufügen)</strong>. CodeDoc prüft zuerst den Zugriff.</li>
+        </ul>
+        <details class="more">
+          <summary>GitLab-Untergruppen, Bitbucket und eigener Server</summary>
+          <p><strong>Add by address (Per Adresse hinzufügen)</strong> funktioniert mit allen Tokentypen und ist die einzige Möglichkeit bei Bitbucket-Zugriffstokens, die keine Repositories auflisten können. GitLab-Projekte in Untergruppen (<code>group/subgroup/project</code>) werden unterstützt. Bei eigenem GitHub-Enterprise- oder GitLab-Server verbinde ihn zuerst unter Settings → Connections und füge dann hier Repositories hinzu. Bei Fehlern nennt die Meldung Repository und verwendete Verbindung.</p>
+        </details>
+      </section>
+
+      <section id="sync">
+        <h2>Synchronisierungsblöcke</h2>
+        <p>Ein Synchronisierungsblock zeigt und aktualisiert einen Wert, eine Tabelle, einen Abschnitt oder Code aus einer Repositorydatei auf einer Confluence-Seite. CodeDoc kopiert exakt den Dateiinhalt: keine KI-Aufrufe, kein KI-Schlüssel, keine Tokenkosten.</p>
+        <img src="/imgCodeDoc/highlight-1-sync-blocks-on-a-page.webp" alt="Runbook-Seite mit Release- und Konfigurationstabellen aus Helm-Chart-Dateien und Codeausschnitt, jeweils durch einen Synchronisierungsblock mit Status In sync aktuell gehalten" width="1840" height="900" loading="lazy">
+        <p>Der synchronisierte Text liegt wie getippter Inhalt auf der Seite; Confluence-Suche, PDF-/Word-Export und Seitenverlauf enthalten ihn. CodeDoc schreibt nur bei Git-Änderungen. Bei nicht lesbaren Dateien behält der Block seinen letzten gültigen Inhalt und erklärt den Fehler.</p>
+
+        <h3 id="sync-add">Synchronisierungsblock hinzufügen</h3>
+        <ol>
+          <li>Bearbeite eine Seite, öffne das Makromenü mit <code>/</code> und wähle <strong>CodeDoc Sync Block</strong>.</li>
+          <li>Füge den Dateilink ein (aus der Adresszeile bei geöffneter Datei im Git-Anbieter) und klicke auf <strong>Use link (Link verwenden)</strong>. CodeDoc setzt Repository, Branch und Pfad. Das Repository muss auf der Registerkarte <a href="#repos">Repositories</a> vorhanden sein. Oder wähle das Repository und die Datei unter <strong>Find a file (Datei suchen)</strong> oder <strong>Common files (Häufige Dateien)</strong>.</li>
+          <li>Wähle <strong>den anzuzeigenden Inhalt</strong>  (<a href="#sync-kinds">Tabelle unten</a>). Statt Schlüsselpfad, Überschrift oder Ausschnittname einzutippen, klicke auf <strong>Show the keys of the file (Dateischlüssel anzeigen)</strong> (oder Überschriften oder Ausschnitte) und wähle aus der Liste.</li>
+          <li>Wähle <strong>wie oft</strong> CodeDoc den Block aktualisiert.</li>
+          <li>Klicke auf <strong>Show preview (Vorschau anzeigen)</strong>, dann auf <strong>Save (Speichern)</strong>: Der Inhalt erscheint sofort im Editor. Veröffentliche die Seite; ab dann hält CodeDoc den Block aktuell.</li>
+        </ol>
+        <img src="/imgCodeDoc/highlight-2-paste-link-pick-preview.webp" alt="Synchronisierungsblock-Einstellungen: GitHub-Link setzt Repository und Pfad, aus der Datei gewählte Schlüsselpfade und Tabellenvorschau" width="1840" height="900" loading="lazy">
+        <p>Jedes Feld hat ein <strong>(?)</strong> mit kurzer Erklärung. Zum späteren Ändern bearbeite die Seite, wähle den Block und klicke auf das <strong>Stiftsymbol (Edit)</strong>.</p>
+
+        <h3 id="sync-kinds">Mögliche Inhalte eines Synchronisierungsblocks</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Anzuzeigender Inhalt</th><th>Deine Eingabe</th><th>Beispiel und Ergebnis</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Value(s) from YAML or JSON (Werte aus YAML oder JSON)</strong></td><td> <dfn class="term" data-tip="Der Name eines Werts in einer YAML- oder JSON-Datei, mit Punkten geschrieben, etwa image.tag.">Schlüsselpfad</dfn> pro Zeile, optional <code>Label = path</code></td><td><code>image.tag</code> oder <code>App version = appVersion</code>. Ein Wert erscheint als Text, mehrere als Tabelle.</td></tr>
+              <tr><td><strong>Regular expression (Regulärer Ausdruck)</strong></td><td>Ein <dfn class="term" data-tip="Ein Textsuchmuster. CodeDoc prüft zeilenweise und zeigt die erste geklammerte Gruppe.">regulärer Ausdruck</dfn>; angezeigt wird die erste geklammerte Gruppe</td><td><code>^FROM\s+(\S+)</code> zeigt die Basisimages einer Dockerfile.</td></tr>
+              <tr><td><strong>Markdown section (Markdown-Abschnitt)</strong></td><td>Die Überschrift ohne <code>#</code></td><td><code>Installation</code> zeigt alles darunter bis zur nächsten Überschrift gleicher Ebene.</td></tr>
+              <tr><td><strong>Latest CHANGELOG entry (Neuester CHANGELOG-Eintrag)</strong></td><td>—</td><td>Der neueste Releaseeintrag samt Überschrift; „Unreleased“ wird übersprungen.</td></tr>
+              <tr id="sync-snippet"><td><strong>Code snippet between markers (Codeausschnitt zwischen Markierungen)</strong></td><td>Der Ausschnittname</td><td>Markiere den Code mit zwei <dfn class="term" data-tip="Zwei Kommentarzeilen markieren Beginn und Ende eines Ausschnitts. Der Block folgt dem Code, auch wenn sich Zeilen verschieben.">Markierungskommentaren</dfn>, etwa <code># codedoc:start install</code> und <code># codedoc:end install</code>. Der Block folgt dem Code bei darüber eingefügten Zeilen.</td></tr>
+              <tr><td><strong>Line range (Zeilenbereich)</strong></td><td><code>10-25</code> oder <code>42</code></td><td>Ein Codeauszug. Werden darüber Zeilen eingefügt, zeigt der Block andere Zeilen; verwende vorzugsweise einen markierten Ausschnitt.</td></tr>
+              <tr><td><strong>Whole file (Gesamte Datei)</strong></td><td>—</td><td>Markdown-Dateien formatiert, andere als Codeblock.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="/imgCodeDoc/screenshot-2-pick-keys-or-snippets.webp" alt="Schlüsselpfadauswahl aus YAML und markierter Codeausschnitt statt manueller Eingabe" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Schlüsselpfadsyntax, Ausschnittmarkierungen und Überschriften</summary>
+          <p><strong>Schlüsselpfade:</strong> Schlüssel mit Punkten trennen (<code>image.tag</code>), Listeneinträge über Index (<code>containers[0].image</code>), alle Einträge mit <code>*</code>  (<code>services.*.image.tag</code>) und Schlüssel mit enthaltenen Punkten in Anführungszeichen (<code>labels["app.kubernetes.io/version"]</code>). Dateien mit mehreren YAML-Dokumenten, etwa Kubernetes-Manifeste, werden dokumentweise durchsucht. Bei fehlendem Schlüsselpfad nennt die Meldung die vorhandenen Schlüssel.</p>
+          <p><strong>Ausschnittmarkierungen:</strong> Neben <code>codedoc:start</code>  /  <code>codedoc:end</code> funktionieren auch AsciiDoc-Tags (<code>tag::install[]</code>  …  <code>end::install[]</code>) und <code>[START install]</code>  …  <code>[END install]</code> . Ausschnitte erscheinen als Code mit Syntaxhervorhebung, Markdown-Dateien formatiert.</p>
+          <p><strong>Überschriften eine Ebene kleiner:</strong> Für Markdown-Inhalte kannst du <strong>Make headings one level smaller (Überschriften eine Ebene kleiner machen)</strong> aktivieren. Eine Überschrift mit <code>#</code> wird dann Ebene 2 und passt unter die Seitenüberschriften.</p>
+        </details>
+
+        <h3 id="sync-latest">Compare with the latest release (Mit neuestem Release vergleichen)</h3>
+        <p>Aktiviere für eine Dateiversion, etwa Imagetag oder Paketversion, <strong>Compare with the latest release (Mit neuestem Release vergleichen)</strong> (Arten „Value(s)“ und „Regular expression“). Der Block zeigt das neueste veröffentlichte Release daneben samt farbigem Status; Tabellen erhalten die Spalten <strong>Latest release (Neuestes Release)</strong> und <strong>Status</strong>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>Bedeutung</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Up to date (Aktuell)</strong> (grün)</td><td>Die Datei verwendet das neueste Release.</td></tr>
+              <tr><td><strong>Newer than latest (Neuer als latest)</strong> (blau)</td><td>Die Dateiversion liegt über dem von der Registry als latest bezeichneten Release, etwa eine Vorabversion.</td></tr>
+              <tr><td><strong>Update available (Aktualisierung verfügbar)</strong> (gelb)</td><td>Ein neueres Neben- oder Korrekturrelease ist verfügbar.</td></tr>
+              <tr><td><strong>Major update (Neue Hauptversion)</strong> (gelb)</td><td>Eine neuere Hauptversion ist verfügbar.</td></tr>
+              <tr><td><strong>End of life (Supportende)</strong> (rot)</td><td>Die Versionslinie erhält keine Aktualisierungen mehr (laut <a href="https://endoflife.date" target="_blank" rel="noopener">endoflife.date</a>, für Produkte wie nginx, PostgreSQL, Redis, Node.js, Python, Ubuntu und Alpine). Während des Supports nennt der Block das Enddatum.</td></tr>
+              <tr><td><strong>Not checked (Nicht geprüft)</strong> (grau)</td><td>CodeDoc konnte den Wert nicht zuordnen, er ist keine Version oder die <dfn class="term" data-tip="Ein öffentlicher Softwarekatalog, etwa Docker Hub, npm oder PyPI.">Registry</dfn> hat nicht geantwortet. Der Grund steht daneben.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="/imgCodeDoc/screenshot-9-version-check.webp" alt="Versionsprüfung auf einer Seite: package.json-Abhängigkeiten mit Spalten Latest release und Status" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Suchquellen und übertragene Daten</summary>
+          <p><strong>Suchquelle:</strong> <em>Automatically (Automatisch)</em> erkennt Imagereferenzen (<code>nginx:1.25.3</code> oder ein Helm-Wert <code>image.tag</code> neben <code>image.repository</code>), Abhängigkeiten in <code>package.json</code> und <code>name==version</code> in den Zeilen von <code>requirements.txt</code>. Wähle für andere Werte Quelle und Name: Docker-Hub-Image, npm- oder PyPI-Paket, Releases eines GitHub-Projekts (<code>owner/repository</code>) oder Produkt auf endoflife.date.</p>
+          <p>Images werden mit Tags desselben Formats verglichen: <code>1.25.3-alpine</code> mit dem neuesten <code>x.y.z-alpine</code>,  <code>20-alpine</code> mit dem neuesten <code>NN-alpine</code>. Vorabversionen werden ausgelassen. Images außerhalb von Docker Hub (ghcr.io, quay.io, private Registrys) werden noch nicht geprüft.</p>
+          <p><strong>Datenschutz:</strong> Nur der öffentliche Image- oder Paketname (etwa <code>nginx</code> oder <code>react</code>) wird an die öffentliche Registry gesendet, nie Datei oder Repository, und nur bei aktivierter Prüfung. Für GitHub-Releases enthält die Anfrage auch deinen verbundenen github.com-Token, der nur das Anfragelimit erhöht. Aktiviere dies nicht für interne Paketnamen. Antworten bleiben 12 Stunden gespeichert; ein Prüfdatum wird nicht angezeigt, damit sich die Seite nur bei geänderter Antwort ändert. Blöcke mit „On every push“ werden bei aktivierter Prüfung auch täglich ausgeführt, da neue Releases ohne Push erscheinen.</p>
+        </details>
+
+        <h3 id="sync-updates">Aktualisierungsregeln</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Häufigkeit</th><th>Verhalten</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Daily (Täglich)</strong> oder <strong>Weekly (Wöchentlich)</strong></td><td>CodeDoc prüft die Datei täglich oder wöchentlich und ändert die Seite nur bei geändertem Inhalt.</td></tr>
+              <tr><td><strong>On every push to the branch (Bei jedem Push auf den Branch)</strong></td><td>Der Block aktualisiert sich sofort nach einem Push. Dafür muss der <dfn class="term" data-tip="Eine Adresse, die dein Git-Anbieter bei Repositoryereignissen wie einem Push aufruft, damit CodeDoc sofort aktualisieren kann.">Webhook</dfn> von CodeDoc im Repository eingerichtet sein (<a href="#jobs-webhooks">Webhook-Einrichtung</a>); eine Webhook-URL bedient KI-Seiten und Synchronisierungsblöcke.</td></tr>
+              <tr><td><strong>Only manually (Nur manuell)</strong></td><td>Der Block ändert sich nur beim Klick auf <strong>Update now (Jetzt aktualisieren)</strong>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Unabhängig von der Regel darf ein Job Operator auf <strong>Update now (Jetzt aktualisieren)</strong> am Block oder unter Sync blocks klicken. Ohne Änderungen meldet der Block dies und die Seite bleibt unverändert.</p>
+
+        <h3 id="sync-approval">Wer Synchronisierungsblöcke einrichten darf</h3>
+        <p>Nur Nutzer mit der Rolle <dfn class="term" data-tip="Die CodeDoc-Rolle für Personen, die Blöcke einrichten sowie KI-Seiten erstellen und ausführen. Sie dürfen keine Einstellungen oder Berechtigungen ändern.">Job Operator</dfn> oder Administrator (<a href="#permissions-roles">Rollen</a>) dürfen die Inhaltsquelle eines Blocks wählen. Seitenbearbeiter ohne CodeDoc-Rolle können keine Repositorydateien auf die Seite übernehmen.</p>
+        <details class="more">
+          <summary>So funktioniert die Freigabe</summary>
+          <ul>
+            <li>Im Blockdialog gespeicherte Einstellungen gelten als freigegeben: Nach Veröffentlichung der Seite beginnt die Synchronisierung beim ersten Aufruf.</li>
+            <li>Anderweitig auf die Seite gelangte Einstellungen (mit Seite oder Vorlage kopiert, per API geschrieben oder später geändert) zeigen <strong>Waiting for approval (Warten auf Freigabe)</strong> , bis ein Job Operator mit Seitenbearbeitungsrechten Repository, Datei, Branch, Inhalt, Aktualisierungsregel und Versionsprüfung prüft und anschließend <strong>Approve and sync (Freigeben und synchronisieren) anklickt</strong>.</li>
+            <li>Ein Block liest nur Dateien seines verbundenen Repositories. Pfade und Branches, die <code>../</code> enthalten (auch geschrieben als <code>%2e%2e</code>), Rückstrichen oder Steuerzeichen werden abgelehnt (<strong>Settings incomplete (Einstellungen unvollständig)</strong> mit Erklärung).</li>
+            <li>Zugriffstokens bleiben in CodeDoc. Die auf der Seite gespeicherten Blockeinstellungen enthalten nur Repository, Pfad und Optionen.</li>
+          </ul>
+        </details>
+
+        <h3 id="sync-status">Status und Meldungen</h3>
+        <p>Unter jedem Block nennt eine Statuszeile App (<strong>CodeDoc Sync Block</strong>), Zustand und letzte Prüfung. Job Operators sehen außerdem <strong>Update now (Jetzt aktualisieren)</strong> und <strong>Manage (Verwalten)</strong> zum Öffnen von CodeDoc. Beim Darüberfahren erscheinen Details wie die Quelldatei.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>Bedeutung</th><th>Abhilfe</th></tr></thead>
+            <tbody>
+              <tr><td><strong>In sync (Synchron)</strong></td><td>Der Block ist aktuell.</td><td>Nichts erforderlich.</td></tr>
+              <tr><td><strong>Update failed (Aktualisierung fehlgeschlagen)</strong></td><td>Die letzte Aktualisierung scheiterte, etwa nach Dateiumbenennung oder Tokenablauf. Der letzte gültige Inhalt bleibt erhalten.</td><td>Befolge den Hinweis „What to do“ und klicke anschließend auf <strong>Update now (Jetzt aktualisieren)</strong>.</td></tr>
+              <tr><td><strong>Settings incomplete (Einstellungen unvollständig)</strong></td><td>Pflichteinstellungen fehlen; die Meldung listet sie auf.</td><td>Bearbeite die Seite, wähle den Block und klicke auf das Stiftsymbol.</td></tr>
+              <tr><td><strong>Waiting for approval (Warten auf Freigabe)</strong></td><td>Neue oder geänderte Einstellungen sind noch nicht freigegeben.</td><td>Ein Job Operator mit Seitenbearbeitungsrechten öffnet den Block einmal.</td></tr>
+              <tr><td><strong>Detached (Nicht mehr verbunden)</strong></td><td>Der Block wurde entfernt oder seine Seite gelöscht beziehungsweise in den Papierkorb verschoben. CodeDoc schreibt nie in Seiten im Papierkorb.</td><td><strong>Remove detached (Nicht mehr verbundene Einträge entfernen)</strong> auf der Registerkarte Sync blocks.</td></tr>
+              <tr><td><strong>Not synced (license) (Nicht synchronisiert, Lizenz)</strong></td><td>Ohne aktive Lizenz werden 3 Synchronisierungsblöcke aktuell gehalten; dieser wäre ein weiterer.</td><td>Entferne einen unnötigen Block oder hole CodeDoc im Atlassian Marketplace.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="/imgCodeDoc/sync-blocks/sync-block-incomplete.webp" alt="Blockmeldung: CodeDoc Sync Block settings incomplete mit fehlendem Dateipfad und Schlüsselpfad samt Anleitung" width="1460" height="296" loading="lazy">
+
+        <h3 id="sync-manage">Alle Synchronisierungsblöcke verwalten</h3>
+        <p> <strong>Synchronisierungsblöcke</strong> : Diese Registerkarte listet alle Blöcke mit Seite, Quelle, Inhaltsart, Aktualisierungsregel, Status, letzter Prüfung und gegebenenfalls Abhilfe. Filtere mit <strong>Needs attention (Handlungsbedarf)</strong>, starte einen Block über <strong>Update now (Jetzt aktualisieren)</strong> oder stoppe die Synchronisierung mit <strong>Remove (Entfernen)</strong> (der Inhalt bleibt als normaler Text auf der Seite). <strong>Remove detached (Nicht mehr verbundene Einträge entfernen)</strong> löscht Einträge nicht mehr vorhandener Seiten oder Blöcke.</p>
+        <img src="/imgCodeDoc/screenshot-1-sync-blocks-overview.webp" alt="Registerkarte Sync blocks mit allen Blöcken, Seite, Quelle, Art, Aktualisierungsregel, Status und letzter Prüfung" width="1840" height="900" loading="lazy">
+
+        <h3 id="sync-limits">Gut zu wissen</h3>
+        <details class="more">
+          <summary>Grenzen und Verhalten der Synchronisierungsblöcke</summary>
+          <ul>
+            <li>Dateien bis 1 MB. Ausschnitte, Zeilenbereiche und vollständige Dateien werden bis 20.000 Zeichen angezeigt; Markdown-Abschnitte haben keine Zeichengrenze, nur die 1-MB-Dateigrenze. Bis zu 20 Schlüsselpfade oder 50 Tabellenzeilen pro Block, reguläre Ausdrücke bis 200 Zeichen.</li>
+            <li>Änderungen innerhalb eines Blocks werden bei der nächsten Aktualisierung ersetzt. Schreibe eigenen Text darüber oder darunter.</li>
+            <li>Jede echte Aktualisierung erstellt eine Seitenversion; Confluence benachrichtigt Seitenbeobachter wie bei anderen Änderungen.</li>
+            <li>Relative Markdown-Links führen zur Datei im Git-Anbieter; Bilder erscheinen als Links, da Confluence Bilder privater Repositories nicht laden kann. Die Quellenzeile unter jedem Block verlinkt die Datei.</li>
+            <li>Ohne aktive Lizenz bleiben 3 Synchronisierungsblöcke aktuell; zuvor freigegebene Blöcke laufen weiter (<a href="#editions">Editionen</a>).</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="jobs">
+        <h2>KI-Seiten (optional)</h2>
+        <p>Eine KI-Seite (in früheren Versionen <em>Job</em> genannt) definiert Inhalt, Schreibstil und Veröffentlichungsziel. Sie benötigt Atlassian AI (Advanced-Edition) oder einen verbundenen KI-Anbieter (<a href="#settings-ai">Settings → Connections (Einstellungen → Verbindungen)</a>).</p>
+        <p> <strong>KI-Seiten</strong> : Dieser Bereich hat drei Unterregisterkarten: <strong>Pages (Seiten)</strong> (Run, Edit, Copy, Delete — Ausführen, Bearbeiten, Kopieren, Löschen), <strong>Durchläufe</strong> und <strong>Schreibstile</strong>.  <strong>New AI page (Neue KI-Seite)</strong> öffnet einen Editor mit vier Schritten:</p>
+        <ol>
+          <li><strong>Quelle</strong>: Seitenname, bis zu zwei Repositories mit Branch und Ordner sowie die von der KI gelesenen Dateien (<a href="#jobs-files">Dateiauswahl</a>).</li>
+          <li><strong>Content (Inhalt)</strong>: Schreibstil, Sprache und maximale Seitenlänge; optional beginnen mit einem <a href="#presets">gespeicherten Stil</a>.</li>
+          <li><strong>Target page (Zielseite)</strong>: Bereich, übergeordnete Seite und Prüfung jedes Durchlaufs (<a href="#jobs-approval">Prüfung und Rückgängig machen</a>).</li>
+          <li><strong>Aktualisierungen</strong>: manuell, bei jedem Push oder nach Zeitplan, mit Zusammenfassung der CodeDoc-Aktionen.</li>
+        </ol>
+        <img src="/imgCodeDoc/highlight-3-ai-pages-own-key.webp" alt="Neue KI-Seite, Schritt Source mit den von der KI gelesenen Dateien; daneben Auswahl zwischen Atlassian AI und eigenem KI-Anbieter" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>KI-Seite bearbeiten oder kopieren</summary>
+          <p><strong>Next (Weiter)</strong> nennt noch fehlende Angaben eines Schritts. <strong>Edit (Bearbeiten)</strong> ändert eine bestehende KI-Seite: <strong>Go to step (Zum Schritt)</strong> springt zum gewünschten Bereich und <strong>Save changes (Änderungen speichern)</strong> funktioniert aus jedem Schritt (die Seite selbst ändert sich beim nächsten Durchlauf). <strong>Copy (Kopieren)</strong> erstellt eine neue KI-Seite mit denselben Einstellungen einschließlich Zielbereich.</p>
+        </details>
+
+        <h3 id="jobs-presets">Schreibstile</h3>
+        <p>Der Schreibstil legt Struktur, Ton und Detailtiefe für die Zielgruppe fest.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Stil</th><th>Für</th><th>Ergebnis</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Developer Documentation (Entwicklerdokumentation)</strong></td><td>Entwickler</td><td>Codebeispiele, Architektur, API-Referenz, Konfiguration und Fehlerbehebung. 9 Abschnitte.</td></tr>
+              <tr><td><strong>Comprehensive Technical (Umfassende technische Dokumentation)</strong></td><td>Entwickler</td><td>Alle Module, Datenmodelle, Sicherheit, Buildpipeline, Teststrategie und bekannte Einschränkungen. 12 Abschnitte.</td></tr>
+              <tr><td><strong>Management Overview (Managementübersicht)</strong></td><td>Beteiligte und Entscheider</td><td>Funktionen, Risiken, Skalierbarkeit und Empfehlungen ohne Fachjargon oder Code.</td></tr>
+              <tr><td><strong>Customer Documentation (Kundendokumentation)</strong></td><td>Externe Kunden</td><td>Funktionen, Einstieg und Integration ohne interne Details.</td></tr>
+              <tr><td><strong>Compliance &amp; Audit (Compliance und Prüfung)</strong></td><td>Sicherheit, Compliance</td><td>Sicherheitskontrollen, Datenklassifizierung, Zugriffsverwaltung, Zuordnungen zu DSGVO/ISO 27001/SOC 2 und Risikoregister.</td></tr>
+              <tr><td><strong>Onboarding Guide (Einarbeitungsanleitung)</strong></td><td>Neue Teammitglieder</td><td>Einrichtung, Grundkonzepte, tägliche Abläufe und häufige Fehler.</td></tr>
+              <tr><td><strong>Quick Reference (Kurzreferenz)</strong></td><td>Entwickler</td><td>Technologien, wichtige Befehle, Projektstruktur und zentrale Konfigurationswerte. 5 Abschnitte.</td></tr>
+              <tr><td><strong>Custom (Eigener Stil)</strong></td><td>Beliebig</td><td>Deine eigenen Anweisungen (bis zu 2.000 Zeichen).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="/imgCodeDoc/screenshot-5-ai-page-style-and-schedule.webp" alt="Neue KI-Seite: Schritt Content mit Schreibstil, Sprache und Seitenlänge sowie Schritt Updates mit täglichem Zeitplan und Zusammenfassung" width="1840" height="900" loading="lazy">
+
+        <h3 id="jobs-triggers">Ausführungszeitpunkt einer KI-Seite</h3>
+        <p>Schritt 4 legt die Ausführung fest. Alle drei Optionen funktionieren in jeder Edition und ohne aktive Lizenz („On every push“ benötigt das Webhook-Geheimnis).</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Aktualisierungsregel</th><th>Funktionsweise</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Manually (Manuell)</strong></td><td>Klicke auf <strong>Run (Ausführen)</strong> auf der KI-Seite.</td></tr>
+              <tr><td><strong>On every push (Bei jedem Push)</strong></td><td>Startet nach einem Push auf den konfigurierten Branch. Benötigt den Webhook (unten).</td></tr>
+              <tr><td><strong>On a schedule (Nach Zeitplan)</strong></td><td>Startet täglich, wöchentlich oder monatlich. Alle Zeiten sind UTC.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="jobs-webhooks">Webhook-Einrichtung</h3>
+        <p> <strong>Webhook-URL</strong> bedient alle KI-Seiten und <a href="#sync-updates">Synchronisierungsblöcke mit „On every push“</a>. Kopiere sie aus <a href="#settings-webhook">Settings → Webhook (Einstellungen → Webhook)</a> und ergänze sie als Webhook in jedem Repository. CodeDoc ordnet Ereignisse über Repositoryadresse und Branch KI-Seiten und Blöcken zu; dieselbe URL funktioniert überall. Jeder Webhook braucht das Webhook-Geheimnis aus <a href="#settings-webhook">Settings → Webhook (Einstellungen → Webhook)</a>  (<strong>Create secret (Geheimnis erstellen)</strong>): Ohne es verarbeitet CodeDoc keine Webhook-Aufrufe.</p>
+        <p>Push-Ereignisse genügen überall, da auch ein Merge in den Branch ein Push ist. CodeDoc akzeptiert außerdem die unten genannten Merge-Ereignisse; andere Ereignisse (etwa GitHub <code>issues</code> oder Bitbucket <code>repo:fork</code>) werden ignoriert.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Anbieter</th><th>Verwendete Ereignisse</th><th>Aktualisierter Branch</th></tr></thead>
+            <tbody>
+              <tr><td><strong>GitHub</strong></td><td>Nur Push-Ereignisse (<code>push</code>). Pull-Request-Ereignisse werden ignoriert; ein zusammengeführter Pull Request kommt als Push an.</td><td>Der Branch des Pushs</td></tr>
+              <tr><td><strong>GitLab</strong></td><td>Push-Ereignisse (<code>Push Hook</code>) und Merge-Request-Ereignisse (<code>Merge Request Hook</code>; jedes zählt, auch Öffnen oder Aktualisieren)</td><td>Push: Branch des Pushs. Merge Request: Zielbranch</td></tr>
+              <tr><td><strong>Bitbucket</strong></td><td>Push (<code>repo:push</code>) und Zusammenführung eines Pull Requests (<code>pullrequest:fulfilled</code>)</td><td>Push: Branch des Pushs. Zusammengeführter Pull Request: Zielbranch</td></tr>
+              <tr><td><strong>Azure DevOps</strong></td><td>Code pushed (<code>git.push</code>) und Zusammenführung eines Pull Requests (<code>git.pullrequest.merged</code>)</td><td>Push: Branch des Pushs. Zusammengeführter Pull Request: Zielbranch</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="more">
+          <summary>GitHub: Webhook hinzufügen</summary>
+          <ol>
+            <li>Repository → <strong>Einstellungen</strong>  →  <strong>Webhooks</strong>  →  <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
+            <li>Trage ein: <strong>Webhook-URL</strong> in „Payload URL“. Setze <strong>Content type (Inhaltstyp)</strong> auf <code>application/json</code>. Falls du ein Webhook-Geheimnis erstellt hast, füge es ein unter <strong>Secret (Geheimnis)</strong>.</li>
+            <li>Wähle <strong>Just the push event (Nur Push-Ereignisse)</strong> und klicke dann auf <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>GitLab: Webhook hinzufügen</summary>
+          <ol>
+            <li>Project (Projekt) → <strong>Einstellungen</strong>  →  <strong>Webhooks</strong>.</li>
+            <li>Trage ein: <strong>Webhook-URL</strong>. Falls du ein Webhook-Geheimnis erstellt hast, füge es ein unter <strong>Secret token (Geheimnistoken)</strong>.</li>
+            <li>Aktiviere unter „Trigger“ <strong>Push events (Push-Ereignisse)</strong> und klicke dann auf <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: Webhook hinzufügen</summary>
+          <ol>
+            <li>Repository → <strong>Repository settings (Repositoryeinstellungen)</strong>  →  <strong>Webhooks</strong>  →  <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
+            <li>Gib einen Titel ein (etwa „CodeDoc“) und trage ein: <strong>Webhook-URL</strong>. Falls du ein Webhook-Geheimnis erstellt hast, füge es ein unter <strong>Secret (Geheimnis)</strong>.</li>
+            <li>Wähle unter „Triggers“ <strong>Repository → Push</strong>  (<code>repo:push</code>) und klicke auf <strong>Save (Speichern)</strong>.</li>
+          </ol>
+        </details>
+        <details class="more">
+          <summary>Azure DevOps: Service Hook hinzufügen</summary>
+          <ol>
+            <li><strong>Project settings (Projekteinstellungen)</strong>  →  <strong>Service hooks</strong>  →  <strong>Create subscription (Abonnement erstellen)</strong>  →  <strong>Web Hooks</strong>.</li>
+            <li>Wähle das auslösende Ereignis <strong>Code pushed</strong>.</li>
+            <li>Trage ein: <strong>Webhook-URL</strong>. Falls du ein Webhook-Geheimnis erstellt hast, wähle <strong>Basic authentication (Basisauthentifizierung)</strong>: beliebiger Nutzername, Geheimnis als Passwort. Klicke auf <strong>Finish (Fertigstellen)</strong>.</li>
+          </ol>
+        </details>
+        <p>Auf eigenen GitHub-Enterprise- oder GitLab-Servern sind die Schritte gleich; der Server muss die Webhook-Adresse im Internet erreichen können.</p>
+
+        <h3 id="jobs-schedule">Geplante Aktualisierungen</h3>
+        <p>Ein Zeitplan schreibt die Seite regelmäßig neu, ohne Webhook. Wähle in Schritt 4 <strong>Daily (Täglich)</strong> (früheste Stunde, 0–23 UTC), <strong>Weekly (Wöchentlich)</strong> (Wochentag und Stunde) oder <strong>Monthly (Monatlich)</strong> (Tag 1–28 und Stunde). Aktiviere <strong>Write the page once right after saving (Direkt nach dem Speichern einmal erstellen)</strong> für eine sofortige erste Version.</p>
+        <div class="note"><strong>Zeitpunkt:</strong> Atlassian prüft Zeitpläne stündlich, deshalb startet ein Durchlauf innerhalb etwa einer Stunde nach der eingestellten Zeit. „Daily 02:00 UTC“ läuft zwischen 02:00 und etwa 03:00 UTC.</div>
+
+        <h3 id="jobs-files">Dateiauswahl</h3>
+        <p>In Schritt 1 liest CodeDoc die Dateiliste gewählter Repositories und Ordner und zeigt drei Zahlen: die <strong>gefundenen Codedateien</strong>, die Anzahl der <strong>pro Durchlauf gelesenen Dateien</strong> und die geschätzte <strong>KI-Eingabe</strong> in <dfn class="term" data-tip="Einheiten, in denen KI-Modelle Text zählen. Ein Token entspricht ungefähr drei bis vier Codezeichen.">Tokens</dfn> im Vergleich zur Grenze unter Settings → AI limits. Bei Atlassian AI erscheint auch der maximale Creditverbrauch pro Durchlauf.</p>
+        <img src="/imgCodeDoc/v2/ai-editor-source.webp" alt="Schritt Source: KI-Dateiauswahl mit Zahlen und Auswahl zwischen Automatik und fester Liste" width="1600" height="2332" loading="lazy">
+        <ul>
+          <li><strong>Automatically (recommended) (Automatisch, empfohlen)</strong>: Bis zu 30 Codedateien werden vollständig gelesen. Bei mehr Dateien wählt dein KI-Anbieter pro Durchlauf die wichtigsten bis zur Dateigrenze, einschließlich neuer Dateien; dafür ist ein kleiner zusätzlicher KI-Aufruf nötig.</li>
+          <li><strong>From my file list (Aus meiner Dateiliste)</strong>: Jeder Durchlauf liest genau deine ausgewählten Dateien. CodeDoc beginnt mit den wichtigsten (Einstiegspunkte, Konfiguration, READMEs); <strong>Suggest files with AI (Dateien mit KI vorschlagen)</strong> lässt deinen KI-Anbieter eine Liste vorschlagen. Neue Dateien werden nicht automatisch ergänzt.</li>
+        </ul>
+        <p>Um ein Modul eines großen Repositories zu dokumentieren, trage dessen <strong>Folder (Ordner)</strong> in Schritt 1 ein.</p>
+        <details class="more">
+          <summary>„Too large for one page“ (Zu groß für eine Seite)</summary>
+          <p>Eine Seite wird aus höchstens 50 Dateien (in Settings anpassbar) innerhalb etwa 120.000 Tokens erstellt. Bei mehr als 1.500 Codedateien im gewählten Umfang oder über 10.000 Repositorydateien meldet Schritt 1 <strong>„Too large for one page“ (Zu groß für eine Seite)</strong> mit Zahlen und nächsten Schritten. Ein trotzdem gestarteter Durchlauf stoppt direkt nach Lesen der Dateiliste vor jedem KI-Aufruf; keine Tokens werden verbraucht. Grenze mit dem Feld <strong>Folder (Ordner)</strong> ein (ein Modul oder Dienst pro KI-Seite), wähle <strong>From my file list (Aus meiner Dateiliste)</strong> (dann werden unabhängig von der Repositorygröße nur markierte Dateien gelesen) oder halte einzelne Fakten aktuell mit einem <a href="#sync">Synchronisierungsblock</a>.</p>
+          <p>Die Dateiliste wird pro Editorsitzung einmal gelesen; Zurückspringen oder Rückkehr zu einem früheren Ordner fragt Git nicht erneut ab. <strong>Dateien anzeigen</strong>  /  <strong>Choose files (Dateien auswählen)</strong> öffnet die Liste mit Filterfeld; lange Listen zeigen die ersten 60 Dateien und <strong>Show all (Alle anzeigen)</strong>. Nach Ordnerwechsel fallen außerhalb liegende Dateien aus deiner Auswahl.</p>
+        </details>
+        <details class="more">
+          <summary>Dateifilter (erweitert)</summary>
+          <p>Klappe <strong>Dateifilter (erweitert)</strong> unten im Dateibereich auf, um die Liste mit <dfn class="term" data-tip="Ein Dateinamensmuster: * passt auf beliebige Zeichen innerhalb einer Ordnerebene, ** auf beliebige Tiefe.">Glob-Mustern</dfn> zu verfeinern, eines pro Zeile:</p>
+          <ul>
+            <li><strong>Leave out (Auslassen)</strong>: passende Dateien werden entfernt, zum Beispiel <code>**/*.test.ts</code>,  <code>**/__tests__/**</code>,  <code>**/migrations/**</code>.</li>
+            <li><strong>Keep anyway (Trotzdem behalten)</strong>: behält von einem Leave-out-Muster ausgeschlossene Dateien, etwa <code>**/api.test.ts</code>. Es ist <strong>keine Positivliste</strong>: Passt eine Datei zu keinem Feld, bleibt sie immer enthalten. Für ein einzelnes Verzeichnis verwende das Feld <strong>Folder (Ordner)</strong> .</li>
+          </ul>
+          <p><code>**/</code> benötigt mindestens einen Ordner vor dem Namen. Ergänze deshalb auch <code>*.test.ts</code> , um Testdateien im Repository-Hauptverzeichnis auszuschließen. Bei leeren Feldern gelten die Standards: Buildausgaben, Sperrdateien, minimierte und Binärdateien werden gefiltert; typische Zugangsdaten-Dateien, zum Beispiel <code>.env</code> oder private Schlüssel, werden nie gelesen.</p>
+        </details>
+        <details class="more">
+          <summary>Maximale Seitenlänge</summary>
+          <p>Wähle in Schritt 2 <strong>Short (Kurz)</strong> (etwa 5–7 Seiten), <strong>Standard</strong> (etwa 10–15 Seiten, empfohlen) oder <strong>Long (Lang)</strong> (etwa 20–30 Seiten). Das ist eine Obergrenze, kein Ziel: Die KI stoppt bei vollständigem Inhalt. Bei abruptem Ende wähle länger. Optionen jenseits der Modellkapazität fehlen (etwa Long bei <code>gpt-4o-mini</code>). Administratoren können stattdessen die genaue Anzahl Ausgabetokens aktivieren: <strong>Settings → AI limits → Advanced: exact page length in tokens (Erweitert: genaue Seitenlänge in Tokens)</strong>.</p>
+        </details>
+
+        <h3 id="jobs-target">Confluence-Ziel</h3>
+        <p>Jede KI-Seite veröffentlicht in einen Confluence-Bereich, optional unter einer <strong>übergeordneten Seite</strong> („Root (no parent)“ erstellt auf oberster Ebene). Weitere Durchläufe aktualisieren dieselbe Seite ohne Duplikate.</p>
+        <details class="more">
+          <summary>Titelkonflikte</summary>
+          <p>Confluence-Seitentitel sind pro Bereich eindeutig. Beim Speichern prüft CodeDoc den Bereich; bei Konflikten warnt Schritt 3. Benenne die KI-Seite um oder klicke auf <strong>Save anyway (Trotzdem speichern)</strong>. Die KI-Seite zeigt dann den Hinweis <strong>⚠ Title conflict (Titelkonflikt)</strong> und <strong>Run (Ausführen)</strong> fragt zuerst nach Bestätigung.</p>
+        </details>
+
+        <h3 id="jobs-approval">Prüfung und Rückgängig machen</h3>
+        <p>Aktiviere <strong>Review each run before it is published (Jeden Durchlauf vor Veröffentlichung prüfen)</strong> in Schritt 3. Jeder Durchlauf erstellt dann einen Entwurf <strong>[DRAFT] &lt;Seitenname&gt;</strong> am selben Ort; die KI-Seite zeigt <strong>In review (In Prüfung)</strong>. Die veröffentlichte Seite bleibt bis zur Entwurfsveröffentlichung unverändert. Der Entwurf ist eine normale Seite: Alle mit Bereichszugriff können ihn sehen.</p>
+        <ul>
+          <li><strong>Open draft (Entwurf öffnen)</strong>: Lies oder bearbeite ihn in Confluence.</li>
+          <li><strong>Publish (Veröffentlichen)</strong>: Die veröffentlichte Seite erhält den Entwurfsinhalt (beim ersten Mal wird der Entwurf selbst zur Seite). Die vorherige Version bleibt im Verlauf.</li>
+          <li><strong>Discard (Verwerfen)</strong>: Nach Bestätigung landet der Entwurf im Bereichspapierkorb; die veröffentlichte Seite bleibt unverändert.</li>
+        </ul>
+        <h4 id="jobs-undo">Letzten Durchlauf rückgängig machen</h4>
+        <p>Hat ein Durchlauf direkt oder über Entwurfsveröffentlichung eine bestehende Seite aktualisiert, bietet die KI-Seite <strong>Undo last run (Letzten Durchlauf rückgängig machen)</strong>. CodeDoc stellt die vorherige Fassung als neue Version wieder her; die KI-Fassung bleibt im Verlauf. Der Durchlauf zeigt <strong>Undone (Rückgängig gemacht)</strong>.</p>
+        <details class="more">
+          <summary>Details zu Prüfung und Rückgängig machen</summary>
+          <ul>
+            <li>Bei Änderungen nach dem Durchlauf stellt CodeDoc nicht zurück, damit keine Bearbeitungen verloren gehen. Stattdessen nennt es die wiederherstellbare Verlaufsfassung. Bei einer neu erstellten Seite gibt es keine Vorversion; lösche sie in Confluence.</li>
+            <li>Ein verworfener Entwurf lässt sich aus dem Bereichspapierkorb wiederherstellen. Verweigert Confluence die Löschung, nennt die Meldung Grund und Abhilfe; der Entwurf bleibt für einen neuen Versuch verknüpft.</li>
+            <li>Bei erneutem Durchlauf mit wartendem Entwurf landet der alte im Papierkorb und ein neuer wird erstellt. Wartende Entwürfe erscheinen auch unter <strong>Needs attention (Handlungsbedarf)</strong> in der Übersicht.</li>
+            <li>Ein nach Prüfung veröffentlichter Durchlauf zeigt <em>Published (Veröffentlicht)</em> im Verlauf; ein Klick zeigt veröffentlichende Person und Zeitpunkt.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="presets">
+        <h2>Gespeicherte Schreibstile</h2>
+        <p>Ein gespeicherter Stil legt Inhaltseinstellungen als benannte Vorlage ab. Erstelle ihn einmal unter <strong>AI pages → Writing styles (KI-Seiten → Schreibstile)</strong> und starte neue KI-Seiten damit über <strong>Start from a saved style (Mit gespeichertem Stil beginnen)</strong> in Schritt 2.</p>
+        <img src="/imgCodeDoc/v2/ai-styles.webp" alt="Registerkarte Writing styles mit gespeichertem Stil, Basisstil, Sprache und Erstellungsdatum" width="1600" height="719" loading="lazy">
+        <details class="more">
+          <summary>Gespeicherte Einstellungen und Änderungsrechte</summary>
+          <ul>
+            <li> <strong>Dokumentationstyp</strong> (einer der 8 Stile oder <em>Custom (Eigener Stil)</em> mit eigenen Anweisungen; dein Text ist die vollständige Anweisung), <strong>Ausgabesprache</strong>,  <strong>maximale Seitenlänge</strong> und <strong>Ausschlussmuster</strong>.</li>
+            <li>Nur <strong>Administratoren</strong> dürfen Stile erstellen, bearbeiten, kopieren oder löschen (<strong>+ New style (Neuer Stil)</strong>,  <strong>Edit (Bearbeiten)</strong>,  <strong>Copy (Kopieren)</strong>,  <strong>Delete (Löschen)</strong>); alle mit Zugriff dürfen sie verwenden.</li>
+            <li>Ein gespeicherter Stil füllt alle passenden Felder zugleich aus; sie bleiben einzeln anpassbar. Direkt in eine KI-Seite eingegebene eigene Anweisungen gelten nur für diese Seite.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="dashboard">
+        <h2>Registerkarte Übersicht</h2>
+        <p>CodeDocs erste Ansicht. Bis Repository und Synchronisierungsblock vorhanden sind, zeigt sie die <strong>ersten Schritte</strong>. Danach:</p>
+        <ul>
+          <li><strong>Auf einen Blick</strong>: Blöcke und Anzahl mit Handlungsbedarf, letzte Seitenänderung eines Blocks, KI-Seiten und Repositories.</li>
+          <li><strong>Needs attention (Handlungsbedarf)</strong>: fehlgeschlagene Blöcke, wartende Freigaben, KI-Entwürfe zur Prüfung, fehlgeschlagene KI-Seiten, fast aufgebrauchtes KI-Kontingent und zu ersetzende Bitbucket-Verbindungen, jeweils mit passender Schaltfläche.</li>
+          <li><strong>Letzte KI-Durchläufe</strong>: die letzten fünf mit Ergebnis, Modell und Seitenlink.</li>
+        </ul>
+      </section>
+
+      <section id="queue">
+        <h2>Durchläufe (KI-Seiten)</h2>
+        <p><strong>AI pages → Runs (KI-Seiten → Durchläufe)</strong> protokolliert Zeitpunkt und Wirkung aller Durchläufe. Angezeigt werden die Anzahlen der letzten 30 Tage, <strong>Running now (Aktuell laufend)</strong> mit Fortschritt und <strong>Cancel (Abbrechen)</strong> sowie der <strong>Run history (Durchlaufverlauf)</strong>.</p>
+        <img src="/imgCodeDoc/v2/ai-runs.webp" alt="Registerkarte Runs: Anzahlen der letzten 30 Tage und Verlauf mit Zeit, KI-Seite, Ergebnis, Modell, gelesenen Dateien und Tokens" width="1600" height="2509" loading="lazy">
+        <details class="more">
+          <summary>Inhalt des Durchlaufverlaufs</summary>
+          <ul>
+            <li>Jeder Durchlauf, neuester zuerst: Zeit, KI-Seite, Ergebnis (<em>Published (Veröffentlicht)</em>,  <em>In review (In Prüfung)</em>,  <em>Discarded (Verworfen)</em>,  <em>Undone (Rückgängig gemacht)</em>,  <em>Failed (Fehlgeschlagen)</em>), KI-Anbieter und Modell, gelesene Dateien (etwa „42 of 128“ mit Auswahlmethode), Tokens und Seitenlink. Klicke auf <em>Failed (Fehlgeschlagen)</em> für Grund und Abhilfe.</li>
+            <li><strong>Nächste geplante Durchläufe</strong>: Bei geplanten KI-Seiten nächster Durchlauf mit Countdown und letzter Durchlauf.</li>
+            <li><strong>Durchläufe pro Zeitraum</strong>: erfolgreiche Durchläufe je Tag, Woche oder Monat.</li>
+            <li><strong>Clear history (Verlauf löschen)</strong> (Administratoren) entfernt alle Durchlaufdatensätze; Confluence-Seiten bleiben unverändert.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="settings">
+        <h2>Einstellungen</h2>
+        <p><strong>Einstellungen</strong> : Hier gibt es fünf Registerkarten: <strong>Connections (Verbindungen)</strong>,  <strong>Webhook</strong>,  <strong>AI limits (KI-Grenzen)</strong>,  <strong>Berechtigungen</strong> (Administratoren) und <strong>Privacy &amp; help (Datenschutz und Hilfe)</strong>. Nur Administratoren dürfen Einstellungen ändern; Job Operators dürfen sie sehen.</p>
+        <img src="/imgCodeDoc/screenshot-6-connections.webp" alt="Settings, Connections: Git-Verbindung mit Token nur für Lesezugriff und KI-Karte mit Atlassian AI oder eigenem KI-Anbieter" width="1840" height="900" loading="lazy">
+
+        <h3 id="settings-git">Git-Verbindungen</h3>
+        <p>Verbinde mehrere Anbieter oder Konten gleichzeitig, etwa Arbeits-GitHub, GitLab-Gruppe und eigenen GitLab-Server. Jede Verbindung zeigt Anbieter, Name, Nutzer, Hinzufügungsdatum und Anzahl zugehöriger Repositories; eigene Server tragen die Kennzeichnung <strong>Own server (Eigener Server)</strong>.</p>
+        <details class="more">
+          <summary>Verbindungen hinzufügen und entfernen</summary>
+          <p><strong>Add connection (Verbindung hinzufügen)</strong> öffnet dasselbe Formular wie bei der Einrichtung. <strong>Remove (Entfernen)</strong> löscht den gespeicherten Token und zugehörige Repositories; die letzte Verbindung lässt sich nicht entfernen. Bei Entfernung der letzten Verbindung zu einem eigenen Server entfällt auch dessen Freigabe (Atlassian verlangt eine Bestätigung durch einen Website-Administrator).</p>
+        </details>
+
+        <h3 id="settings-ai">KI für KI-Seiten</h3>
+        <p>KI ist optional und nur für KI-Seiten nötig. Die Karte zeigt deine Edition. Mit <strong>Advanced (Erweitert)</strong> wählst du den Ersteller der Seiten: <dfn class="term" data-tip="Claude-Modelle auf Atlassians Plattform (Forge LLMs). In CodeDoc Advanced enthalten, kein eigener Schlüssel nötig.">Atlassian AI</dfn> (enthalten, ohne Schlüssel; Modell <em>Balanced (Ausgewogen)</em> oder <em>Fast (Schnell)</em> mit Kontingentanzeige) oder <strong>deinen eigenen KI-Anbieter</strong>  (<a href="#editions-ai">Kontingent</a>).</p>
+        <p>Für deinen eigenen Anbieter prüft <strong>Connect AI provider (KI-Anbieter verbinden)</strong> (oder <strong>Change provider or key (Anbieter oder Schlüssel ändern)</strong>) einen Schlüssel und lädt die Modelle. <strong>Turn AI off (KI ausschalten)</strong> (Standard) oder <strong>Remove own key (Eigenen Schlüssel entfernen)</strong> (Advanced) löscht den gespeicherten Schlüssel. Blöcke funktionieren weiter und KI-Seiten bleiben erhalten; mit Advanced laufen sie mit Atlassian AI weiter.</p>
+        <details class="more">
+          <summary>Die Modellliste</summary>
+          <img src="/imgCodeDoc/v2/model-picker.webp" alt="Durchsuchbare Modellliste: zuerst Empfehlungen, danach alle Textmodelle des Anbieters" width="1314" height="1476" loading="lazy">
+          <ul>
+            <li> <strong>Model (Modell)</strong> : Die Liste enthält alle Textmodelle deines Anbieters, neueste zuerst, mit <strong>Recommended (Empfohlen)</strong> oben (etwa neueste Sonnet-, Haiku- und Opus-Modelle, GPT und GPT mini, Gemini Pro und Flash). Suche per Eingabe.</li>
+            <li><strong>Refresh list (Liste aktualisieren)</strong> lädt seit der Verbindung veröffentlichte Modelle. Audio-, Bild-, Embedding- und andere Nichttextmodelle werden ausgelassen.</li>
+            <li>Bei nicht mehr angebotenem Modell erscheint eine Warnung. Wähle ein anderes, sonst scheitern KI-Seiten mit „model not available“.</li>
+          </ul>
+        </details>
+
+        <h3 id="settings-webhook">Webhook</h3>
+        <p>Zeigt die gemeinsame <strong>Webhook-URL</strong> für KI-Seiten und Blöcke mit „On every push“, mit kurzen Anleitungen je Git-Anbieter (<a href="#jobs-webhooks">Webhook-Einrichtung</a>). Ohne Webhook verwende tägliche oder wöchentliche Aktualisierung.</p>
+        <img src="/imgCodeDoc/v2/settings-webhook-blurred.webp" alt="Settings, Webhook: unkenntlich gemachte Webhook-Adresse, Einrichtungsschritte je Git-Anbieter und Karte für das Webhook-Geheimnis" width="1600" height="1387" loading="lazy">
+        <p><strong>Webhook-Geheimnis</strong> (Administratoren): <strong>Create secret (Geheimnis erstellen)</strong> erstellt ein zufälliges Geheimnis. Es ist erforderlich: CodeDoc nimmt Aufrufe nur mit Geheimnis an, damit niemand sonst über die Adresse Aktualisierungen oder KI-Durchläufe mit deinem KI-Budget auslöst. Ergänze es bei jedem Webhook an CodeDoc. Ohne Geheimnis zeigt die Karte <strong>Secret missing (Geheimnis fehlt)</strong> und CodeDoc lehnt alle Webhook-Aufrufe ab. „On every push“ lässt sich erst mit vorhandenem Geheimnis speichern.</p>
+        <details class="more">
+          <summary>Weitere Informationen zum Geheimnis</summary>
+          <p><strong>Show secret (Geheimnis anzeigen)</strong> und <strong>Replace secret (Geheimnis ersetzen)</strong> stehen daneben; Entfernen ist nicht möglich. Nach Ersatz aktualisiere es in allen Git-Webhooks. URL und Geheimnis sind für alle Anbieter gleich: GitHub und GitHub Enterprise verwenden das Webhook-Feld <strong>Secret (Geheimnis)</strong>, GitLab <strong>Secret token (Geheimnistoken)</strong>, Bitbucket <strong>Secret (Geheimnis)</strong>, Azure DevOps <strong>Basic authentication (Basisauthentifizierung)</strong> mit dem Geheimnis als Passwort. Ein Push bei noch wartender KI-Seite startet keinen zweiten Durchlauf; der wartende liest ohnehin den neuesten Commit.</p>
+        </details>
+
+        <h3 id="settings-limits">AI limits (KI-Grenzen)</h3>
+        <ul>
+          <li><strong>Maximale Dateien pro KI-Seite</strong>: Standard 50 (Bereich 5–200). Größere Ordner werden auf die wichtigsten Dateien eingegrenzt.</li>
+          <li><strong>Budget für Eingabetokens</strong>: gesamter Code pro KI-Durchlauf, Standard 120.000 (Bereich 30.000–500.000). Bleibe unter dem Kontextfenster deines Modells.</li>
+        </ul>
+        <p>Zu große Repositories (mehr als 1.500 Codedateien oder insgesamt 10.000 Dateien) stoppen vor KI-Aufrufen mit Hinweisen zu nächsten Schritten. Blöcke sind von diesen Grenzen nicht betroffen.</p>
+        <img src="/imgCodeDoc/v2/settings-limits.webp" alt="Settings, AI limits: maximale Dateianzahl pro KI-Seite und Eingabetokenbudget" width="1600" height="1104" loading="lazy">
+      </section>
+
+      <section id="providers">
+        <h2>Unterstützte Anbieter</h2>
+        <h3>KI-Anbieter</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Anbieter</th><th>Modelle</th><th>Hinweise</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Anthropic</strong></td><td>Claude Opus, Sonnet, Haiku</td><td>Vollständige Modellliste deines Kontos, Empfehlungen zuerst.</td></tr>
+              <tr><td><strong>OpenAI</strong></td><td>GPT und GPT mini</td><td>Nur Textmodelle deines Kontos.</td></tr>
+              <tr><td><strong>Google AI</strong></td><td>Gemini Pro und Flash</td><td>Kostenloser Tarif für erste Tests (Google kann dessen Daten zur Produktverbesserung nutzen).</td></tr>
+              <tr><td><strong>Atlassian AI</strong> (Advanced)</td><td>Claude Sonnet (Balanced), neuestes Claude Haiku (Fast)</td><td>Ohne eigenen Schlüssel; auf Atlassians Plattform mit monatlichem Kontingent (<a href="#editions-ai">unten</a>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Git-Anbieter</h3>
+        <p>CodeDoc liest nur. Die <a href="/de/codedoc-ai-setup.html">Schnellstartanleitung</a> enthält schrittweise Token-Anleitungen je Anbieter.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Anbieter</th><th>Token</th></tr></thead>
+            <tbody>
+              <tr><td><strong>GitHub</strong> (github.com)</td><td>Fine-grained token mit <strong>Contents: Read</strong> oder klassischer Token mit dem <code>repo</code> als Berechtigungsbereich. <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub-Dokumentation</a></td></tr>
+              <tr><td><strong>GitHub Enterprise</strong> (dein Server oder <code>NAME.ghe.com</code>)</td><td>Dieselben Tokens, auf deinem Server erstellt. Ein Website-Administrator gibt die Adresse einmal frei (<a href="#providers-server">Details</a>).</td></tr>
+              <tr><td><strong>GitLab</strong> (gitlab.com)</td><td>Persönlicher, Gruppen- oder Projektzugriffstoken mit <code>read_api</code>  +  <code>read_repository</code>.  <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">GitLab-Dokumentation</a></td></tr>
+              <tr><td><strong>GitLab self-managed</strong> (dein Server, auch unter einem Pfad)</td><td>Dieselben Tokens, auf deinem Server erstellt. Ein Website-Administrator gibt die Adresse einmal frei.</td></tr>
+              <tr><td><strong>Bitbucket Cloud</strong> (bitbucket.org)</td><td>Repository-, Projekt- oder Workspace-Zugriffstoken mit <strong>Repositories: Read</strong>. Keine persönlichen API-Tokens (<a href="#providers-bitbucket">Begründung</a>).  <a href="https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/" target="_blank" rel="noopener">Bitbucket-Dokumentation</a></td></tr>
+              <tr><td><strong>Azure DevOps</strong> (dev.azure.com)</td><td>Persönlicher Zugriffstoken mit <code>Code (Read)</code>; die Organisations-URL ist erforderlich. <a href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate" target="_blank" rel="noopener">Microsoft-Dokumentation</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="providers-server">Dein eigener Git-Server</h3>
+        <p>CodeDoc liest <strong>GitHub Enterprise Server</strong>,  <strong>GitHub Enterprise Cloud with data residency</strong>  (<code>NAME.ghe.com</code>) und <strong>GitLab self-managed</strong> (auch unter einem Pfad wie <code>https://example.com/gitlab</code>) genauso wie github.com und gitlab.com.</p>
+        <ol>
+          <li>Settings → Connections → <strong>Add connection (Verbindung hinzufügen)</strong>: Wähle <strong>GitHub Enterprise</strong> oder <strong>GitLab self-managed</strong> und gib die Adresse ein, über die du den Server öffnest.</li>
+          <li>Klicke auf <strong>Allow access to the server (Serverzugriff erlauben)</strong>: Atlassian bittet einen Website-Administrator um Bestätigung von CodeDoc-Anfragen an diese Adresse. Ohne Freigabe blockiert <dfn class="term" data-tip="Atlassians Cloudplattform für Apps. CodeDoc läuft dort, ohne eigene Server.">Forge</dfn> jede Anfrage.</li>
+          <li>Gib einen Servertoken nur für Lesezugriff ein und klicke auf <strong>Connect (Verbinden)</strong>. Direkt nach neuer Freigabe braucht Atlassian etwas Zeit; das Formular versucht es automatisch erneut.</li>
+        </ol>
+        <img src="/imgCodeDoc/screenshot-10-own-server.webp" alt="Settings, Git connections: Formular für GitLab self-managed mit Serveradresse und Allow access to the server" width="1840" height="900" loading="lazy">
+        <details class="more">
+          <summary>Netzwerk und Freigabedetails</summary>
+          <p>CodeDoc läuft in Atlassians Cloud, nicht in deinem Netzwerk. Der Server muss über HTTPS aus dem Internet erreichbar sein, mit Zertifikat einer öffentlichen Zertifizierungsstelle. Bei Firewall erlaube Atlassians ausgehende IP-Adressen (<a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">IP-Adressen und Domains für Atlassian-Cloud-Produkte</a>).</p>
+          <p>Die Freigabe steht unter Atlassian Administration → Connected apps → CodeDoc → Data management („Data storage, sharing, receiving and processing“), wo Administratoren sie entfernen können. Repositories, Dateilinks, Blöcke, KI-Seiten und Webhooks funktionieren danach wie bei Cloud-Diensten.</p>
+        </details>
+
+        <h3 id="providers-bitbucket">Bitbucket-Tokens</h3>
+        <p>CodeDoc liest Bitbucket Cloud mit einem <strong>Zugriffstoken</strong>: Ein <strong>Repository-Zugriffstoken</strong> (Repository settings → Access tokens, „Repositories: Read“, alle Tarife) oder mit Bitbucket Premium einem <strong>Projekt-</strong> oder <strong>Workspace-Zugriffstoken</strong> für mehrere Repositories. Bei Repository-Tokens füge je Repository eine Verbindung hinzu.</p>
+        <details class="more">
+          <summary>Warum persönliche API-Tokens und App-Passwörter nicht akzeptiert werden</summary>
+          <p>Atlassians Sicherheitsanforderungen für Marketplace-Apps verbieten das Sammeln und Speichern von Atlassian-Kontozugangsdaten; Bitbucket-API-Tokens gehören einem Atlassian-Konto. Zugriffstokens gehören dagegen Repository, Projekt oder Workspace. Vor CodeDoc 8 mit persönlichem Token erstellte Verbindungen laufen zunächst weiter und sind zum Ersatz markiert. Ergänze eine Zugriffstoken-Verbindung und entferne die alte.</p>
+        </details>
+      </section>
+
+      <section id="editions">
+        <h2>Editionen, Testphase und Lizenz</h2>
+        <p>CodeDoc ist eine kostenpflichtige App mit zwei Editionen und einer <strong>30-tägigen kostenlosen Testphase</strong>. Beide enthalten sämtliche CodeDoc-Funktionen; <strong>Advanced (Erweitert)</strong> ergänzt Atlassian-gehostete KI, sodass KI-Seiten keinen eigenen Schlüssel brauchen.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Funktion</th><th>Standard</th><th>Advanced (Erweitert)</th></tr></thead>
+            <tbody>
+              <tr><td>Synchronisierungsblöcke: Werte, Abschnitte, Änderungsprotokolle, Ausschnitte, Dateien, Versionsprüfung</td><td>✓</td><td>✓</td></tr>
+              <tr><td>GitHub, GitLab, Bitbucket Cloud, Azure DevOps und eigene GitHub-Enterprise- oder GitLab-Server</td><td>✓</td><td>✓</td></tr>
+              <tr><td>KI-Seiten mit eigenem Anthropic-, OpenAI- oder Google-Gemini-Schlüssel</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Prüfung vor Veröffentlichung, Rückgängig machen, Zeitpläne, Webhooks, Rollen</td><td>✓</td><td>✓</td></tr>
+              <tr><td><strong>Atlassian AI</strong>: KI-Seiten ohne eigenen Schlüssel, Claude-Modelle auf Atlassians Plattform</td><td>—</td><td>✓</td></tr>
+              <tr><td><strong>Monatliches KI-Kontingent</strong> mit Verbrauchsanzeige (100 Credits pro Monat)</td><td>—</td><td>✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="editions-ai">Atlassian AI und monatliches Kontingent</h3>
+        <ul>
+          <li>Atlassian AI erstellt KI-Seiten mit Claude-Modellen auf Atlassians Plattform (Forge LLMs) und derselben Inhaltsmoderation wie Atlassians KI-Funktionen. Wähle unter Settings → Connections <strong>Balanced (Ausgewogen)</strong> (Claude Sonnet, ausführlichste Seiten) oder <strong>Fast (Schnell)</strong> (neuestes von Atlassian angebotenes Claude Haiku, etwa ein Drittel der <dfn class="term" data-tip="CodeDocs Einheit für Atlassian-AI-Nutzung. Eine typische Balanced-Seite benötigt 2–5 Credits.">Credits</dfn>). Die Dateiauswahl großer Repositories verwendet immer das schnelle Modell.</li>
+          <li>Jede Website erhält <strong>100 Credits pro Monat</strong>; die Advanced-Testphase hat 30 für die gesamte Dauer. Eine typische Balanced-Seite braucht 2–5 Credits, eine kleine deutlich unter einem. Der Editor zeigt den maximalen Verbrauch („up to N credits per run“).</li>
+          <li>Vor dem Start prüft CodeDoc, ob der maximal mögliche Verbrauch noch passt. Andernfalls startet nichts; die Meldung nennt die Rücksetzung am ersten Tag des nächsten Monats (UTC). Bis dahin können KI-Seiten einen eigenen Anbieter nutzen. Die 30 Testcredits werden nicht zurückgesetzt; nach Verbrauch nutze für den Rest der Testphase einen eigenen Anbieter.</li>
+          <li>Settings zeigt verbrauchte und verbleibende Credits, Durchläufe und Monatstokens; Overview warnt ab 80 %. CodeDoc-Credits sind von Rovo getrennt: Keine Belastung deiner Atlassian-AI-/Rovo-Kontingente und keine Zusatzgebühr.</li>
+        </ul>
+        <img src="/imgCodeDoc/screenshot-11-ai-allowance.webp" alt="CodeDoc Advanced: Atlassian AI mit monatlicher Kontingentanzeige und Auswahl eines eigenen KI-Anbieters" width="1840" height="900" loading="lazy">
+        <p>Ein vor dem Wechsel zu Advanced verbundener eigener Anbieter bleibt aktiv, bis ein Administrator Atlassian AI auswählt.</p>
+
+        <h3>Trial (Testphase)</h3>
+        <p>Während der 30-tägigen Testphase sind alle Editionsfunktionen verfügbar, mit unbegrenzten Blöcken, Repositories, KI-Seiten und Durchläufen. Advanced enthält dabei Atlassian AI mit <strong>30 Credits für die gesamte Testphase</strong>; danach 100 Credits monatlich.</p>
+        <h3>Ohne aktive Lizenz (nach der Testphase)</h3>
+        <ul>
+          <li><strong>3 Synchronisierungsblöcke</strong> bleiben aktuell. Früher freigegebene Blöcke laufen weiter; neue über der Grenze zeigen „Not synced (license)“ und behalten ihren Inhalt.</li>
+          <li><strong>1 KI-Seite</strong> kann mit eigenem KI-Anbieter eingerichtet werden. Früher eingerichtete KI-Seiten funktionieren weiter mit allen Regeln (manuell, Webhook, Zeitplan).</li>
+          <li>Unbegrenzte Repositories; alle Schreibstile, Sprachen und eigenen KI-Anbieter bleiben verfügbar. Atlassian AI benötigt eine aktive Advanced-Lizenz oder Testphase.</li>
+        </ul>
+      </section>
+
+      <section id="permissions">
+        <h2>Zugriffskontrolle</h2>
+        <p>Confluence-Administratoren haben immer vollen Zugriff. Andere erhalten ihn über Confluence-Gruppen, die du einer von zwei Rollen zuweist.</p>
+
+        <h3 id="permissions-roles">Rollen</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Rolle</th><th>Für</th><th>Befugnisse</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Administrator</strong></td><td>App-Administratoren, Teamleiter</td><td>Alles: Overview (Übersicht), Sync blocks (Synchronisierungsblöcke), AI pages (KI-Seiten), Repositories und Settings (Einstellungen) einschließlich Permissions (Berechtigungen).</td></tr>
+              <tr><td><strong>Job Operator</strong></td><td>Entwickler, Dokumentationsverantwortliche</td><td>Overview (Übersicht), Sync blocks (Synchronisierungsblöcke einrichten, freigeben, aktualisieren), AI pages (KI-Seiten erstellen und ausführen); Repositories und Settings (Einstellungen) schreibgeschützt.</td></tr>
+              <tr><td><strong>Confluence-Administrator</strong></td><td>Website- und Produktadministratoren</td><td>Immer voller Administratorzugriff ohne Konfiguration.</td></tr>
+              <tr><td><em>Keine Rolle</em></td><td>Alle anderen Nutzer</td><td>Zugriff verweigert mit Link zur Zugriffsanfrage beim Administrator.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="permissions-setup">Konfiguration</h3>
+        <ol>
+          <li>Öffne CodeDoc → <strong>Settings → Permissions (Einstellungen → Berechtigungen)</strong> (nur Administratoren).</li>
+          <li>Unter <strong>Administrator Groups (Administratorgruppen)</strong> und <strong>Job Operator Groups (Job-Operator-Gruppen)</strong> suche eine Confluence-Gruppe und klicke auf <strong>+ Add (Hinzufügen)</strong>.</li>
+          <li>Verwalte die Gruppenmitglieder unter <strong>Confluence Settings → Groups</strong>; die App braucht bei Ein- oder Austritten keine Änderungen.</li>
+        </ol>
+        <img src="/imgCodeDoc/v2/settings-permissions.webp" alt="Settings, Permissions: Administratorgruppen und Job-Operator-Gruppen" width="1600" height="1318" loading="lazy">
+        <details class="more">
+          <summary>Tipps und Verzögerungen</summary>
+          <p>Erstelle zwei eigene Gruppen, beispielsweise <code>codeDocAI-Admins</code> und <code>codeDocAI-JobOperator</code>, um CodeDoc-Zugriff getrennt und leicht prüfbar zu halten. Deine Rolle steht oben rechts in der App.</p>
+          <p>Neue Gruppenmitglieder erhalten innerhalb etwa 2 Minuten Zugriff; entfernte verlieren ihn innerhalb etwa 30 Minuten. Eine erzwungene Aktualisierung ist nicht möglich, um Confluence-API-Aufrufe gering zu halten.</p>
+        </details>
+      </section>
+
+      <section id="data">
+        <h2>Datenverarbeitung und Datenschutz</h2>
+        <p>Alle Verarbeitung läuft auf Atlassians Forge-Infrastruktur; es gibt keinen CodeDoc-Server.</p>
+        <ul>
+          <li><strong>Synchronisierungsblöcke:</strong> Die Forge-Laufzeit liest die gewählte Datei mit deinem Token beim Git-Anbieter und CodeDoc schreibt den ausgewählten Teil in den Block. Nichts geht an KI-Anbieter. CodeDoc speichert Blockeinstellungen und Inhaltsprüfsumme, nicht die Datei.</li>
+          <li><strong>Versionsprüfung (optional):</strong> Nur bei aktivierter Prüfung wird der öffentliche Image- oder Paketname (etwa <code>nginx</code>) an die öffentliche Registry gesendet: Docker Hub, npm, PyPI, GitHub-Releases oder endoflife.date. Antworten liegen 12 Stunden im App-Speicher deiner Website. Weder Dateiinhalt noch Repository werden gesendet; GitHub-Releases-Anfragen enthalten den verbundenen github.com-Token.</li>
+          <li><strong>KI-Seiten (optional):</strong> Die Forge-Laufzeit lädt gewählte Dateien mit deinem Token; typische Zugangsdaten-Dateien wie <code>.env</code> oder private Schlüssel werden nie geladen. Bei eigenem KI-Anbieter werden Dateien mit deinem API-Schlüssel unter deinem Konto und dessen Datenbedingungen gesendet. Bei <strong>Atlassian AI</strong> (Advanced) gehen sie an Claude-Modelle auf Atlassians Plattform, ohne externes KI-Konto oder Schlüssel. CodeDoc speichert Dateinamen, Tokenanzahlen und Atlassian-AI-Credits je Durchlauf, nicht den Code.</li>
+        </ul>
+        <div class="warning"><strong>Eigener KI-Anbieter:</strong> Bei eigenen Anbietern geht Quellcode auch an sie und unterliegt deren Verarbeitungs- und Aufbewahrungsregeln. Prüfe die Bedingungen vor Übertragung sensiblen Codes. Bei Atlassian AI bleibt Code auf Atlassians Plattform.</div>
+        <details class="more">
+          <summary>Speicherung, Verschlüsselung, Seitenänderungen und Nutzungsstatistik</summary>
+          <ul>
+            <li>Alle Übertragungen sind verschlüsselt mit <strong>TLS</strong>.</li>
+            <li>CodeDoc ruft nur deine Git-Anbieter (einschließlich freigegebener eigener Server), für KI-Seiten deinen KI-Anbieter oder Atlassian AI und bei Versionsprüfung die oben genannten öffentlichen Registrys auf.</li>
+            <li>API-Schlüssel und Zugriffstokens liegen im <strong>verschlüsselten Forge-Speicher</strong> deiner Confluence-Website. Sie werden nie erneut angezeigt, auf Seiten geschrieben oder protokolliert.</li>
+            <li>CodeDoc erstellt und aktualisiert Seiten als CodeDoc-App: KI-Seiten in gewählten Bereichen, Blöcke nur innerhalb ihres Blocks. Seitenbeschränkungen gegen die App stoppen diese Aktualisierungen.</li>
+            <li><strong>Nutzungsstatistik:</strong> CodeDoc zählt Funktionsaufrufe (etwa „Synchronisierungsblock aktualisiert“) websiteübergreifend und schreibt technische Logs, die Atlassian App-Anbietern bereitstellt. Die Zähler enthalten keine Seiten-, Bereichs-, Repository-, Datei- oder Nutzerinformationen.</li>
+          </ul>
+        </details>
+        <p>Vollständige Details: <a href="/de/codedoc-ai-privacy-policy.html">Datenschutzerklärung</a>.</p>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>Fehlerbehebung</h2>
+        <p>Die meisten CodeDoc-Meldungen nennen Ursache und Abhilfe. Hilft das nicht, schreibe an <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        <h3>Synchronisierungsblöcke</h3>
+        <details class="more">
+          <summary>„the file or the branch does not exist (HTTP 404)“ (Datei oder Branch existiert nicht)</summary>
+          <p>Prüfe <strong>den Dateipfad</strong> und den <strong>Branch</strong> in den Blockeinstellungen: Pfade beachten Groß- und Kleinschreibung und beginnen unterhalb des Repository-Hauptverzeichnisses. Kopiere den Pfad beim Git-Anbieter (Teil nach dem Branchnamen). Aktualisiere ihn nach Umbenennung oder Verschiebung. <strong>Show preview (Vorschau anzeigen)</strong> prüft den Pfad vor dem Speichern.</p>
+        </details>
+        <details class="more">
+          <summary>„Key path … was not found in the file“ (Schlüsselpfad nicht gefunden)</summary>
+          <p>Die Meldung nennt vorhandene Schlüssel an dieser Stelle, beispielsweise <em>Keys under „image“: repository, pullPolicy, tag. (Schlüssel unter „image“)</em> Schlüsselpfade beachten Groß- und Kleinschreibung und funktionieren nur mit YAML und JSON. Für andere Dateien wähle regulären Ausdruck, Zeilenbereich oder vollständige Datei.</p>
+        </details>
+        <details class="more">
+          <summary>„Settings incomplete“ oder „Waiting for approval“ (Einstellungen unvollständig oder Freigabe ausstehend)</summary>
+          <p><strong>Settings incomplete (Einstellungen unvollständig)</strong> listet fehlende Einstellungen auf: Bearbeite die Seite, wähle den Block und klicke auf das Stiftsymbol. <strong>Waiting for approval (Warten auf Freigabe)</strong> bedeutet, dass neue oder geänderte Einstellungen noch nicht freigegeben sind. Ein Job Operator oder Administrator mit Seitenbearbeitungsrechten muss den Block einmal öffnen (<a href="#sync-approval">Details</a>).</p>
+        </details>
+        <details class="more">
+          <summary>„the Git provider rejected the access token (HTTP 401)“ (Git-Anbieter lehnt Zugriffstoken ab)</summary>
+          <p>Der gespeicherte Token ist ungültig oder abgelaufen. Ein Administrator ersetzt ihn unter <strong>Settings → Connections (Einstellungen → Verbindungen)</strong>. Bis zur nächsten erfolgreichen Aktualisierung bleibt der letzte gültige Blockinhalt erhalten.</p>
+        </details>
+        <details class="more">
+          <summary>„On every push“ aktualisiert nicht</summary>
+          <p>Push-Aktualisierungen benötigen den CodeDoc-Webhook mit Geheimnis im Repository (<a href="#jobs-webhooks">Webhook-Einrichtung</a>) und einen Push auf den Branch des Blocks (Einstellung <strong>Branch</strong> oder Standardbranch des Repositories). <strong>Update now (Jetzt aktualisieren)</strong> prüft den Block zwischenzeitlich.</p>
+        </details>
+        <h3>KI-Seiten</h3>
+        <details class="more">
+          <summary>„A Confluence page with this title already exists“ (Seitentitel bereits vorhanden)</summary>
+          <p>Seitentitel sind je Bereich eindeutig. <strong>Benenne die KI-Seite um</strong> oder benenne beziehungsweise verschiebe die andere Confluence-Seite. CodeDoc warnt beim Speichern vor Konflikten (<a href="#jobs-target">Confluence-Ziel</a>).</p>
+        </details>
+        <details class="more">
+          <summary>„AI returned empty response“ (Leere KI-Antwort)</summary>
+          <ul>
+            <li><strong>Eingabetokenbudget zu niedrig:</strong> Erhöhe es unter Settings → AI limits.</li>
+            <li><strong>Seitenlänge zu kurz:</strong> Erhöhe die Einstellung <strong>Maximale Seitenlänge</strong> in Schritt 2.</li>
+            <li><strong>Modellgrenzen:</strong> Teste ein leistungsfähigeres Modell (etwa Haiku → Sonnet oder GPT mini → vollständiges GPT-Modell).</li>
+          </ul>
+        </details>
+        <details class="more">
+          <summary>XHTML-Verarbeitungsfehler</summary>
+          <p>KI-Ausgaben sind manchmal kein gültiges Confluence-Markup. CodeDoc repariert Tags und Makros automatisch; schlägt das fehl, nutzt es ein vereinfachtes Format (Klartext mit Überschriften), sodass die Seite immer entsteht. Starte die KI-Seite erneut.</p>
+        </details>
+        <details class="more">
+          <summary>„Rate limit exceeded“ (429) (Anfragelimit überschritten)</summary>
+          <p>Dein KI-Anbieter begrenzt Anfragen. CodeDoc versucht es bis zu 3-mal mit steigenden Wartezeiten (3, 8, 15 Sekunden). Bei anhaltendem Fehler warte einige Minuten, prüfe Tarifgrenzen und reduziere die gelesene Dateianzahl.</p>
+        </details>
+        <details class="more">
+          <summary>„Insufficient credits/balance“ oder Kontingentmeldung des Anbieters</summary>
+          <p>Dein KI-Konto hat kein Guthaben. Lade es auf bei <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener">Anthropic</a> oder <a href="https://platform.openai.com/settings/organization/billing" target="_blank" rel="noopener">OpenAI</a>; prüfe bei Gemini das Kontingent in <a href="https://aistudio.google.com/" target="_blank" rel="noopener">AI Studio</a>.</p>
+        </details>
+        <details class="more">
+          <summary>Der Anbieter meldet eine zu große Anfrage</summary>
+          <p>Der Code überschreitet die maximale Modelleingabe. Lasse CodeDoc Dateien automatisch wählen oder markiere weniger, reduziere das <strong>Eingabetokenbudget</strong>, ergänze Muster unter <strong>Leave out (Auslassen)</strong> oder setze einen <strong>Folder (Ordner)</strong>  (<a href="#jobs-files">Dateiauswahl</a>) oder wechsle zu einem Modell mit größerem Kontextfenster.</p>
+        </details>
+        <details class="more">
+          <summary>Atlassian AI: „the included AI allowance for this month is used up“ (Monatliches Kontingent aufgebraucht)</summary>
+          <p>Der Durchlauf startete nicht und verbrauchte nichts. Das Kontingent erneuert sich am ersten Tag des nächsten Monats (UTC). Wähle bis dahin <strong>Your own AI provider (Eigener KI-Anbieter)</strong> unter Settings → Connections oder warte. Bei kleinem Rest können weniger Dateien oder kürzere Seiten noch passen.</p>
+        </details>
+        <details class="more">
+          <summary>Atlassian AI: „declined this request in its content safety check“ (Anfrage bei Inhaltsprüfung abgelehnt)</summary>
+          <p>Atlassian prüft jede Anfrage wie bei eigenen KI-Funktionen. Lasse ungewöhnliche Inhalte aus (AI page → Source → file filters) oder verwende für diese Seite einen eigenen Anbieter.</p>
+        </details>
+        <details class="more">
+          <summary>Eine geplante KI-Seite lief nicht zum erwarteten Zeitpunkt</summary>
+          <p>Zeitpläne werden stündlich geprüft; Durchläufe starten bis etwa eine Stunde nach der eingestellten Zeit. Prüfe nach 2 Stunden ohne Durchlauf die Aktualisierungsregel <strong>On a schedule (Nach Zeitplan)</strong>, den korrekten Eintrag <strong>Nächste geplante Durchläufe</strong> unter AI pages → Runs und die Gültigkeit von Git-Token sowie gegebenenfalls eigenem KI-Schlüssel.</p>
+        </details>
+        <details class="more">
+          <summary>Die Seite ist zu kurz oder ungenau</summary>
+          <p>Erhöhe die Einstellung <strong>Maximale Seitenlänge</strong>, ergänze wichtigere Dateien (die KI kann nur erhaltenen Code dokumentieren, also Konfiguration, README und <code>package.json</code>) oder teste ein leistungsfähigeres Modell. KI-Seiten können Fehler enthalten; prüfe sie vor dem Teilen und erwäge <strong>Review each run before it is published (Jeden Durchlauf vor Veröffentlichung prüfen)</strong>.</p>
+        </details>
+        <h3>Webhooks, Verbindungen und Server</h3>
+        <details class="more">
+          <summary>Webhook: „Event is not supported“ (Ereignis nicht unterstützt)</summary>
+          <p>Der Webhook sendet ein ungenutztes Ereignis. Sende Push- oder unterstützte Merge-Ereignisse aus der <a href="#jobs-webhooks">Ereignistabelle</a>; fork, issue, comment und andere werden ignoriert.</p>
+        </details>
+        <details class="more">
+          <summary>Webhook kommt an, aber nichts aktualisiert sich</summary>
+          <p>Keine KI-Seite oder kein Block passt. Prüfe, ob das Repository auf der Registerkarte <strong>Repositories</strong> mit derselben Adresse wie im Webhook steht, ob der Push auf den konfigurierten Branch erfolgt und ob die Aktualisierungsregel lautet: <strong>On every push (Bei jedem Push)</strong>.</p>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: „personal API tokens and app passwords cannot be used“ (Persönliche API-Tokens und App-Passwörter nicht verwendbar)</summary>
+          <p>CodeDoc akzeptiert nur <strong>Bitbucket-Zugriffstokens</strong>  (<a href="#providers-bitbucket">Bitbucket-Tokens</a>). Erstelle einen Repository-Zugriffstoken mit „Repositories: Read“ und füge nur den Tokenwert ein.</p>
+        </details>
+        <details class="more">
+          <summary>Bitbucket: „Browse“ zeigt meine Repositories nicht</summary>
+          <p>Bitbucket erlaubt Zugriffstokens keine Repositoryauflistung (die kontoweite Liste wurde 2026 entfernt). Ergänze jedes Repository über <strong>Add by address (Per Adresse hinzufügen)</strong>; dort prüft CodeDoc den Lesezugriff. Mit Bitbucket Premium deckt ein Projekt- oder Workspace-Token mehrere Repositories ab.</p>
+        </details>
+        <details class="more">
+          <summary>Eigener Server: „CodeDoc may not connect to … yet“ oder „could not reach …“ (Verbindung noch nicht erlaubt oder Server nicht erreichbar)</summary>
+          <ul>
+            <li><strong>Verbindung noch nicht erlaubt</strong>: Klicke auf <strong>Allow access to the server (Serverzugriff erlauben)</strong>; ein Website-Administrator bestätigt Atlassians Dialog. Warte direkt nach Freigabe eine Minute und klicke erneut auf <strong>Connect (Verbinden)</strong> .</li>
+            <li><strong>Nicht erreichbar</strong>: Atlassians Cloud kann die Adresse nicht öffnen. Prüfe HTTPS mit öffentlichem Zertifikat und Firewallfreigabe für <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">Atlassians ausgehende IP-Adressen</a>.</li>
+            <li><strong>Erreichbar, aber Token abgelehnt</strong>: Token falsch, abgelaufen oder ohne Leseberechtigung (GitHub: Contents read; GitLab: read_api und read_repository).</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="faq">
+        <h2>Häufige Fragen</h2>
+        <details class="more"><summary>Verwenden Synchronisierungsblöcke KI oder kosten sie Tokens?</summary><p>Nein. Ein Synchronisierungsblock kopiert exakt den Dateiinhalt: keine KI-Aufrufe, keine Tokenkosten, keine Übertragung an KI-Anbieter.</p></details>
+        <details class="more"><summary>Findet die Confluence-Suche den Inhalt eines Synchronisierungsblocks?</summary><p>Ja. Der synchronisierte Inhalt wird wie normaler Text auf der Seite gespeichert und ist in Confluence-Suche, PDF-/Word-Export und Seitenverlauf enthalten.</p></details>
+        <details class="more"><summary>Überfüllen Synchronisierungsblöcke den Seitenverlauf?</summary><p>Nein. CodeDoc schreibt nur bei geändertem Git-Inhalt auf die Seite; jede Seitenversion entspricht einer echten Dateiänderung.</p></details>
+        <details class="more"><summary>Verbraucht CodeDoc unsere Rovo- oder Atlassian-AI-Kontingente?</summary><p>Nein. Atlassian AI in CodeDoc Advanced hat ein eigenes monatliches Kontingent im Abonnement. Deine Rovo- und Atlassian-AI-Kontingente bleiben unberührt.</p></details>
+        <details class="more"><summary>Kann CodeDoc GitLab oder GitHub Enterprise hinter einer Firewall lesen?</summary><p>Nur bei Erreichbarkeit aus Atlassians Cloud: CodeDoc läuft auf Forge, nicht in deinem Netzwerk. Erlaube Atlassians ausgehende IP-Adressen oder mache den Server über HTTPS erreichbar. Siehe <a href="#providers-server">Dein eigener Git-Server</a>.</p></details>
+        <details class="more"><summary>Was kostet die KI-Nutzung?</summary><p>Mit Atlassian AI (Advanced) sind KI-Seiten bis zum monatlichen Kontingent ohne Zusatzkosten enthalten. Mit eigenem Schlüssel erhebt CodeDoc keine Gebühr pro Seite; dein KI-Anbieter berechnet Tokens, und der Verlauf zeigt deren Anzahl je Durchlauf. Ein mittleres Repository benötigt typischerweise 10.000–50.000 Eingabe- und 2.000–8.000 Ausgabetokens. Grobe Kosten pro Seite mit eigenem Schlüssel: Google Geminis kostenloser Tarif kostet nichts (Google kann dessen Daten zur Produktverbesserung nutzen); Claude Haiku oder ein GPT-mini-Modell meist 0,01–0,05 USD; größere Modelle (Claude Sonnet, vollständige GPT-Modelle) 0,10–0,50 USD, je nach Repositorygröße.</p></details>
+        <details class="more"><summary>Kann ich verschiedene KI-Modelle für unterschiedliche KI-Seiten verwenden?</summary><p>Noch nicht: Alle KI-Seiten verwenden ein Modell. Ändere es jederzeit unter Settings → Connections; der nächste Durchlauf nutzt es.</p></details>
+        <details class="more"><summary>Kann ich mehrere Repositories auf einer KI-Seite dokumentieren?</summary><p>Ja, bis zu 2 Repositories pro KI-Seite. Die KI erhält den Code beider und erstellt eine gemeinsame Seite.</p></details>
+        <details class="more"><summary>Welche Programmiersprachen und Dateitypen werden unterstützt?</summary><p>Alle Textdateien; es gibt keine Sprachbeschränkung. Wie gut die KI einen Dateityp versteht, hängt vom Modell ab. CodeDoc lässt Abhängigkeiten, Buildausgaben, Sperrdateien, minimierte Dateien, Binär- und Mediendateien aus und liest nie typische Zugangsdaten-Dateien (.env, private Schlüssel, Zertifikate, Terraform-Zustands- und Variablendateien, Zugangsdaten-Dateien), auch nicht bei passenden Einschlussmustern.</p></details>
+        <details class="more"><summary>In welchen Sprachen kann die Dokumentation erstellt werden?</summary><p>Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch, Japanisch, Chinesisch und Koreanisch stehen in der Liste; <strong>Other language… (Andere Sprache)</strong> akzeptiert jede eingegebene Sprache (Qualität modellabhängig).</p></details>
+        <details class="more"><summary>Wo wird meine Dokumentation gespeichert?</summary><p>Als normale Confluence-Seite im gewählten Bereich. Du kannst sie bearbeiten, verschieben oder löschen. Weitere KI-Durchläufe aktualisieren dieselbe Seite ohne Duplikat. Bei aktivierter Prüfung wird jeder Durchlauf zuerst als <code>[DRAFT]</code> gekennzeichnete Seite gespeichert.</p></details>
+        <details class="more"><summary>Kann ich Dokumentation vor der Veröffentlichung prüfen?</summary><p>Ja. Aktiviere <strong>Review each run before it is published (Jeden Durchlauf vor Veröffentlichung prüfen)</strong> in Schritt 3. Die veröffentlichte Seite ändert sich erst beim Veröffentlichen des Entwurfs in CodeDoc. <strong>Discard (Verwerfen)</strong> lässt die veröffentlichte Seite unverändert; <strong>Undo last run (Letzten Durchlauf rückgängig machen)</strong> stellt die Version vor dem Durchlauf wieder her. Siehe <a href="#jobs-approval">Prüfung und Rückgängig machen</a>.</p></details>
+        <details class="more"><summary>Schreiben Webhook- und Zeitplanaktualisierungen die KI-Seite komplett neu?</summary><p>Ja. Jede Aktualisierung liest den aktuellen Git-Code, die KI schreibt die Seite neu und CodeDoc aktualisiert die vorhandene Confluence-Seite.</p></details>
+        <details class="more"><summary>Kann ich private Repositories verwenden?</summary><p>Ja. CodeDoc verwendet deinen Zugriffstoken. Mit Lesezugriff funktioniert es bei öffentlichen und privaten Repositories.</p></details>
+        <details class="more"><summary>Wie deinstalliere ich die App?</summary><p>Gehe zu <strong>Confluence Settings → Apps → Manage apps</strong>, suche CodeDoc und klicke auf <strong>Uninstall (Deinstallieren)</strong>. Danach kann die App ihre Konfiguration und gespeicherten Daten nicht mehr lesen; Atlassian hält sie 28 Tage vor und löscht sie dann (innerhalb von 21 Tagen kannst du uns um Wiederherstellung in einer neuen Installation bitten). Erstellte Confluence-Seiten bleiben in deinen Bereichen; lösche sie bei Bedarf manuell.</p></details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=CodeDoc%20AI%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/codedoc-ai-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/codedoc-ai-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/codedoc-ai-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/codedoc-ai-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/codedoc-ai-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/codedoc-ai-security.html" hreflang="en">Sicherheitserklärung (EN)</a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

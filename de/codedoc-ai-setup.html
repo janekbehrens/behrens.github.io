@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <title>Schnellstart — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Richte CodeDoc AI in etwa 5 Minuten ein: Verbinde deinen Git-Anbieter mit einem Token nur für Lesezugriff, ergänze den ersten Synchronisierungsblock und optional KI-Seiten.">
+  <link rel="canonical" href="https://janekbehrens.de/de/codedoc-ai-setup.html">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <style>
+    /* Page-specific: long links in code wrap on phones */
+    .docs main code, .docs main li a { overflow-wrap: anywhere; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-setup.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/codedoc-ai-setup.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/codedoc-ai-setup.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="cd">
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#git">1. Git verbinden</a>
+        <a href="#first-block">2. Erster Synchronisierungsblock</a>
+        <a href="#ai">3. KI-Seiten (optional)</a>
+        <a href="#access">Zugriffskontrolle</a>
+        <a href="#next">Nächste Schritte</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Schnellstart</h1>
+      <p class="subtitle">CodeDoc AI for Confluence, in etwa 5 Minuten verbunden.</p>
+
+      <div class="tip"><strong>Vor dem Start:</strong> Du benötigst einen <dfn class="term" data-tip="Ein Schlüssel deines Git-Hostingdienstes, mit dem CodeDoc Repositories lesen kann. Lesezugriff genügt.">Zugriffstoken</dfn> deines Git-Hostingdienstes mit <strong>read (Lesen)</strong> als Zugriffsrecht. Mehr brauchen Blöcke nicht. KI-Seiten sind optional. Beim ersten CodeDoc-Aufruf durch einen Confluence-Administrator führt ein kurzer Assistent durch beide Schritte.</div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#git">Git-Anbieter verbinden</a></li>
+          <li><a href="#first-block">Ersten Synchronisierungsblock hinzufügen</a></li>
+          <li><a href="#ai">KI-Seiten (optional)</a></li>
+          <li><a href="#access">Zugriffskontrolle</a>  ·  <a href="#next">Nächste Schritte</a></li>
+        </ol>
+      </details>
+
+      <section id="git"><span id="git-tab-bar"></span>
+        <h2>1. Git-Anbieter verbinden</h2>
+        <p>CodeDoc <strong>liest</strong> nur Dateien; es schreibt nie in deine Repositories. Der Token liegt verschlüsselt in deiner Confluence-Website (Forge-Geheimnisspeicher) und wird nie erneut angezeigt. Öffne die Schritte deines Anbieters:</p>
+
+        <details class="more" id="git-github">
+          <summary>GitHub: Fine-grained-Zugriffstoken</summary>
+          <ol>
+            <li>Gehe zu <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">github.com/settings/personal-access-tokens/new</a>.</li>
+            <li>Gib dem Token einen Namen (etwa „CodeDoc AI“) und ein Ablaufdatum.</li>
+            <li>Unter <strong>Repository access (Repositoryzugriff)</strong> wähle die für CodeDoc zugänglichen Repositories.</li>
+            <li>Unter <strong>Repository permissions (Repositoryberechtigungen)</strong> setze <strong>Contents</strong> auf <strong>Read-only (Nur lesen)</strong>.</li>
+            <li>Klicke auf <strong>Generate token (Token erstellen)</strong> und kopiere ihn; er beginnt mit <code>github_pat_</code> und wird nur einmal angezeigt.</li>
+            <li>Wähle in CodeDoc <strong>GitHub</strong> und füge den Token ein unter <strong>Access token (Zugriffstoken)</strong> und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong> (später unter Settings: <strong>Connect (Verbinden)</strong>). CodeDoc bestätigt das verbundene Konto.</li>
+          </ol>
+          <p>Ein klassischer Token (<code>ghp_</code>) mit dem <code>repo</code> <dfn class="term" data-tip="Eine beim Erstellen zugewiesene Tokenberechtigung, etwa Lesezugriff auf Code.">als Berechtigungsbereich</dfn> funktioniert ebenfalls. Bei Organisationsrepositories muss die Organisation einen Fine-grained-Token möglicherweise zuerst freigeben.</p>
+        </details>
+
+        <details class="more" id="git-gitlab">
+          <summary>GitLab: Persönlicher Zugriffstoken</summary>
+          <ol>
+            <li>Gehe zu <a href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" rel="noopener noreferrer">gitlab.com/-/user_settings/personal_access_tokens</a> und klicke auf <strong>Add new token (Neuen Token hinzufügen)</strong>.</li>
+            <li>Wähle die Berechtigungsbereiche <code>read_api</code> und <code>read_repository</code>.</li>
+            <li>Klicke auf <strong>Create personal access token (Persönlichen Zugriffstoken erstellen)</strong> und kopiere ihn; er beginnt mit <code>glpat-</code> und wird nur einmal angezeigt.</li>
+            <li>Wähle in CodeDoc <strong>GitLab</strong>, füge den Token ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>.</li>
+          </ol>
+          <p>Gruppen- und Projektzugriffstokens mit denselben Berechtigungsbereichen funktionieren ebenfalls; Untergruppen (<code>group/subgroup/project</code>) werden unterstützt. Eigener GitLab-Server: siehe <a href="#git-server">Own server (Eigener Server)</a>.</p>
+        </details>
+
+        <details class="more" id="git-bitbucket">
+          <summary>Bitbucket Cloud: Zugriffstoken</summary>
+          <p><strong>Repository-Zugriffstoken</strong> (ein Repository, alle Tarife):</p>
+          <ol>
+            <li>Öffne das Repository in Bitbucket → <strong>Repository settings → Access tokens</strong>.</li>
+            <li>Erstelle einen Token mit der Berechtigung <strong>Repositories: Read</strong> und kopiere ihn.</li>
+            <li>Wähle in CodeDoc <strong>Bitbucket Cloud</strong>, füge den Token ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>.</li>
+            <li>Füge das Repository hinzu unter <strong>Repositories → Add by address (Per Adresse hinzufügen)</strong> (Repositoryadresse einfügen).</li>
+          </ol>
+          <p><strong>Projekt- oder Workspace-Zugriffstoken</strong> (mehrere Repositories, Bitbucket Premium): Erstelle ihn in den Projekt- oder Workspace-Einstellungen → <strong>Access tokens (Zugriffstokens)</strong> mit <strong>Repositories: Read</strong>, füge ihn ebenso ein und ergänze jedes Repository über <strong>Add by address (Per Adresse hinzufügen)</strong>. Bitbucket erlaubt Zugriffstokens keine Repositoryauflistung, deshalb ist <strong>Browse repositories (Repositories durchsuchen)</strong> für Bitbucket nicht verfügbar. CodeDoc prüft den Token beim Hinzufügen eines Repositories.</p>
+          <div class="warning"><strong>Keine persönlichen API-Tokens:</strong> Atlassians Sicherheitsanforderungen verbieten Marketplace-Apps das Sammeln oder Speichern von Atlassian-Kontozugangsdaten. CodeDoc akzeptiert deshalb keine persönlichen Bitbucket-API-Tokens oder App-Passwörter. Ein Repository-Token liest nur sein Repository; ergänze je Repository eine Verbindung oder nutze einen Projekt- beziehungsweise Workspace-Token.</div>
+        </details>
+
+        <details class="more" id="git-azure">
+          <summary>Azure DevOps: Persönlicher Zugriffstoken</summary>
+          <ol>
+            <li>Gehe zu <a href="https://dev.azure.com" target="_blank" rel="noopener noreferrer">dev.azure.com</a>, öffne deine Organisation und dann <strong>User settings (Nutzereinstellungen)</strong> (oben rechts) → <strong>Personal access tokens (Persönliche Zugriffstokens)</strong>.</li>
+            <li>Klicke auf <strong>+ New Token (Neuer Token)</strong>, benenne ihn und setze den Berechtigungsbereich <strong>Code</strong> auf <strong>Read (Lesen)</strong>.</li>
+            <li>Klicke auf <strong>Create (Erstellen)</strong> und kopiere den nur einmal angezeigten Token.</li>
+            <li>Wähle in CodeDoc <strong>Azure DevOps</strong>, füge den Token ein und trage deine <strong>Organization URL (Organisations-URL)</strong>  (<code>https://dev.azure.com/your-org</code>) ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>.</li>
+          </ol>
+          <p>Die Organisations-URL ist erforderlich. Du findest sie nach Anmeldung bei Azure DevOps in der Adresszeile, etwa <code>https://dev.azure.com/mycompany</code>.</p>
+        </details>
+
+        <details class="more" id="git-server">
+          <summary>GitHub Enterprise oder GitLab self-managed: eigener Server</summary>
+          <ol>
+            <li>Wähle in CodeDoc <strong>GitHub Enterprise (eigener Server oder ghe.com)</strong> oder <strong>GitLab self-managed</strong> und trage die Serveradresse ein, beispielsweise <code>https://github.example.com</code> oder <code>https://example.com/gitlab</code>.</li>
+            <li>Klicke auf <strong>Allow access to the server (Serverzugriff erlauben)</strong>. Atlassian bittet einen <strong>Website-Administrator</strong> um Freigabe von CodeDoc-Anfragen an diese Adresse.</li>
+            <li>Erstelle auf deinem Server einen Token nur für Lesezugriff (GitHub Enterprise: Contents read-only oder klassischer Token mit <code>repo</code>; GitLab: <code>read_api</code> und <code>read_repository</code>), füge ihn ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>. Nach neuer Freigabe braucht Atlassian kurz Zeit; CodeDoc versucht es automatisch erneut.</li>
+          </ol>
+          <div class="warning"><strong>Aus Atlassians Cloud erreichbar:</strong> CodeDoc läuft auf Atlassian <dfn class="term" data-tip="Atlassians Cloudplattform für Apps. CodeDoc läuft dort, nicht in deinem Netzwerk oder auf eigenen Servern.">Forge-</dfn>, nicht in deinem Netzwerk. Der Server muss per HTTPS mit öffentlichem Zertifikat erreichbar sein. Erlaube hinter einer Firewall <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener noreferrer">Atlassians ausgehende IP-Adressen</a>. Administratoren können die Freigabe unter Atlassian Administration → Connected apps → CodeDoc → Data management sehen und entfernen.</div>
+        </details>
+      </section>
+
+      <section id="first-block">
+        <h2>2. Ersten Synchronisierungsblock hinzufügen</h2>
+        <p>Ein <dfn class="term" data-tip="Ein CodeDoc-Block auf einer Confluence-Seite. Er zeigt Dateiinhalt aus deinem Repository und hält ihn aktuell.">Synchronisierungsblock</dfn> zeigt einen Wert, Abschnitt oder Code aus einer Datei auf einer Confluence-Seite und hält ihn aktuell. Ohne KI und ohne Tokenkosten.</p>
+        <ol>
+          <li>Öffne in CodeDoc <strong>Repositories</strong> und füge das Repository hinzu: <strong>Browse repositories (Repositories durchsuchen)</strong> oder <strong>Add by address (Per Adresse hinzufügen)</strong>.</li>
+          <li>Bearbeite eine Confluence-Seite, öffne das Makromenü mit <code>/</code> und wähle <strong>CodeDoc Sync Block</strong>.</li>
+          <li>Füge einen Dateilink ein, etwa <code>https://github.com/helm/examples/blob/main/charts/hello-world/Chart.yaml</code>, und klicke auf <strong>Use link (Link verwenden)</strong>. Oder wähle Repository und Datei selbst.</li>
+          <li>Wähle den Inhalt: Werte (Schlüssel aus einer Liste wählen), Markdown-Abschnitt, neuester Änderungsprotokolleintrag, markierter Ausschnitt, Zeilenbereich oder vollständige Datei.</li>
+          <li>Wähle den Aktualisierungszeitpunkt (bei jedem Push, täglich, wöchentlich oder manuell), prüfe die Vorschau, speichere und veröffentliche die Seite.</li>
+        </ol>
+        <p>Der Inhalt ist normaler Seitentext und in Confluence-Suche, Export und Verlauf enthalten. Alle Details: <a href="/de/codedoc-ai-docs.html#sync">Synchronisierungsblöcke</a>. Für Aktualisierung bei jedem Push ergänze den <a href="/de/codedoc-ai-docs.html#jobs-webhooks">CodeDoc-Webhook</a> im Repository.</p>
+      </section>
+
+      <section id="ai"><span id="ai-anthropic"></span><span id="ai-openai"></span><span id="ai-google"></span><span id="ai-tab-bar"></span>
+        <h2>3. KI-Seiten (optional)</h2>
+        <p><strong>CodeDoc Advanced</strong> enthält <dfn class="term" data-tip="Claude-Modelle auf Atlassians Plattform (Forge LLMs), in CodeDoc Advanced mit monatlichem Kontingent enthalten. Kein eigener Schlüssel nötig.">Atlassian AI</dfn>; es ist keine Verbindung nötig. Klicke auf <strong>Continue with Atlassian AI (Mit Atlassian AI fortfahren)</strong> im Einrichtungsassistenten (<a href="/de/codedoc-ai-docs.html#editions-ai">Funktionsweise des Kontingents</a>).</p>
+        <p>Mit Standard oder für ein eigenes Modell und einen eigenen Vertrag verbinde deinen KI-Anbieter. CodeDoc ruft ihn direkt mit deinem Schlüssel auf; dein Vertrag und deine Abrechnung gelten. Du kannst überspringen und später verbinden unter <strong>Settings → Connections (Einstellungen → Verbindungen)</strong>.</p>
+
+        <details class="more">
+          <summary>Anthropic (Claude)</summary>
+          <ol>
+            <li>Gehe zu <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener noreferrer">platform.claude.com/settings/keys</a>, klicke auf <strong>Create Key (Schlüssel erstellen)</strong> und kopiere den Schlüssel.</li>
+            <li>Wähle in CodeDoc <strong>Anthropic</strong> und füge den Schlüssel ein unter <strong>API-Schlüssel</strong> und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>.</li>
+            <li>Wähle ein Modell: Empfehlungen zuerst; suche per Eingabe alle Modelle deines Kontos.</li>
+          </ol>
+          <p>Anthropic benötigt auch bei geringer Nutzung eine Zahlungsmethode: <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener noreferrer">platform.claude.com/settings/billing</a>.</p>
+        </details>
+        <details class="more">
+          <summary>OpenAI (GPT)</summary>
+          <ol>
+            <li>Gehe zu <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">platform.openai.com/api-keys</a>, klicke auf <strong>+ Create new secret key (Neuen geheimen Schlüssel erstellen)</strong> und kopiere ihn (nur einmal sichtbar).</li>
+            <li>Wähle in CodeDoc <strong>OpenAI</strong>, füge den Schlüssel ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>, dann wähle ein Modell.</li>
+          </ol>
+          <p>Prüfe, ob dein Konto Guthaben hat: <a href="https://platform.openai.com/settings/organization/billing" target="_blank" rel="noopener noreferrer">platform.openai.com/settings/organization/billing</a>.</p>
+        </details>
+        <details class="more">
+          <summary>Google (Gemini)</summary>
+          <ol>
+            <li>Gehe zu <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/app/apikey</a>, klicke auf <strong>Create API key (API-Schlüssel erstellen)</strong> und wähle oder erstelle ein Google-Cloud-Projekt.</li>
+            <li>Wähle in CodeDoc <strong>Google AI (Gemini)</strong>, füge den Schlüssel ein und klicke auf <strong>Connect and continue (Verbinden und fortfahren)</strong>, dann wähle ein Modell.</li>
+          </ol>
+          <p>Googles kostenloser Tarif mit Anfragegrenzen eignet sich für erste Tests. Google kann darin übertragene Daten zur Produktverbesserung nutzen; verwende nur Code, den du auf diese Weise teilen darfst. Ein Schlüssel mit aktivierter Abrechnung vermeidet dies.</p>
+        </details>
+        <p>Kosten hängen von Modell und Dateiauswahl ab; kleinere Modelle (Claude Haiku, GPT mini, Gemini Flash) kosten einen Bruchteil großer Modelle. Setze beim Anbieter ein Ausgabenlimit. Blöcke rufen nie einen KI-Anbieter auf.</p>
+      </section>
+
+      <section id="access">
+        <h2>Zugriffskontrolle (optional)</h2>
+        <p>Standardmäßig dürfen nur Confluence-Administratoren CodeDoc nutzen. Für andere öffne <strong>Settings → Permissions (Einstellungen → Berechtigungen)</strong> und füge <dfn class="term" data-tip="Von Confluence-Administratoren verwaltete Nutzergruppen. CodeDoc weist Rollen ganzen Gruppen zu, nicht Einzelpersonen.">Confluence-Gruppen</dfn> einer von zwei Rollen hinzu:</p>
+        <ul>
+          <li><strong>Administrator</strong>: alles einschließlich Verbindungen, Repositories, Settings und Permissions.</li>
+          <li><strong>Job Operator</strong>: richtet Blöcke ein und erstellt und startet KI-Seiten, darf Settings und Permissions aber nicht ändern.</li>
+        </ul>
+        <p>Verwalte die Gruppenmitglieder in Confluence (<strong>Confluence administration → Groups</strong>); Ein- oder Austritte benötigen keine App-Änderung. Tipp: eine Gruppe wie <code>codedoc-ai-operators</code> für Job Operators. Seitenblöcke sind für alle Seitenleser sichtbar.</p>
+      </section>
+
+      <section id="next">
+        <h2>Nächste Schritte</h2>
+        <ul>
+          <li><strong>Übersicht</strong> zeigt Blöcke, KI-Seiten und Handlungsbedarf auf einen Blick.</li>
+          <li><strong>Synchronisierungsblöcke</strong> listet als Registerkarte jeden Block mit Seite, Quelle und Status; <strong>Update now (Jetzt aktualisieren)</strong> aktualisiert einen Block.</li>
+          <li><strong>AI pages → New AI page (KI-Seiten → Neue KI-Seite)</strong> führt durch vier Schritte: Quelldateien, Inhalt (Stil, Sprache), Zielseite und Aktualisierungszeitpunkt.</li>
+          <li><strong>Settings → Webhook (Einstellungen → Webhook)</strong> richtet Push-Aktualisierungen ein (erstelle dort zuerst das Webhook-Geheimnis).</li>
+        </ul>
+        <p>Alle Details stehen in der <a href="/de/codedoc-ai-docs.html">Dokumentation</a>. Fragen: <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        <p class="legal-note"><a href="/de/codedoc-ai-docs.html">Dokumentation</a>  ·  <a href="/de/codedoc-ai-support.html">Support</a>  ·  <a href="/de/codedoc-ai-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/de/impressum.html">Impressum</a></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>

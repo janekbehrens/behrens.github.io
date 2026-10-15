@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Security Statement — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Security of CodeDoc AI for Confluence: hosting on Atlassian Forge, permissions, data storage and how to report a vulnerability.">
+  <link rel="canonical" href="https://janekbehrens.de/codedoc-ai-security.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Security Statement</h1>
+    <p class="updated">CodeDoc AI for Confluence · Last updated: October 12, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      CodeDoc AI for Confluence ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and follows the principle of <strong>minimal data access, zero external infrastructure, and
+      user-controlled credentials</strong>. This document describes the security architecture, data
+      protection measures, and operational practices of the App.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <p>The App runs entirely within Atlassian's Forge runtime:</p>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is hosted by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions execute in isolated, sandboxed containers with restricted system access.</li>
+      <li><strong>Network isolation:</strong> Outbound network requests are restricted to domains explicitly declared in the App's manifest and to own Git servers that a site admin approved for your site (see section 5). The App cannot make arbitrary network calls.</li>
+      <li><strong>Atlassian AI (Advanced edition):</strong> AI pages use Claude models hosted on Atlassian's platform (Forge LLMs) unless an own AI key is connected and chosen in Settings. No AI key is involved, the code is not sent to a third-party AI provider, and every request is checked against the site's monthly allowance before it starts.</li>
+      <li><strong>No ingress:</strong> The App does not expose any endpoints to the public internet except a Forge webtrigger URL for Git webhook events (validated and scoped).</li>
+    </ul>
+
+    <h2>3. Credential Management (BYOK)</h2>
+    <p>
+      The App operates on a <strong>Bring Your Own Key</strong> model. Users provide their own access tokens
+      (Git providers) and, unless AI pages use Atlassian AI in the Advanced edition, their own API keys (AI providers).
+      These credentials, and the webhook secret, are handled as follows:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Measure</th>
+          <th>Details</th>
+        </tr>
+        <tr>
+          <td>Storage</td>
+          <td>All credentials stored via Atlassian Forge's encrypted secret storage (<code>kvs.setSecret()</code> of <code>@forge/kvs</code>), encrypted at rest by Atlassian.</td>
+        </tr>
+        <tr>
+          <td>Access scope</td>
+          <td>Credentials are only read by the App's backend functions during job execution. They are never exposed to the frontend UI after initial save.</td>
+        </tr>
+        <tr>
+          <td>Developer access</td>
+          <td><strong>None.</strong> We cannot read, export, or access your credentials. They reside in your Confluence instance's Forge storage.</td>
+        </tr>
+        <tr>
+          <td>Logging</td>
+          <td>Credentials are never logged, included in error messages, or transmitted to us.</td>
+        </tr>
+        <tr>
+          <td>Deletion</td>
+          <td>Deleting a Git or AI connection deletes its credential at once. After an uninstall, Atlassian keeps the App's storage, credentials included, for 28 days and then deletes it (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Data lifecycle for Forge-hosted storage</a>); during that time the App cannot read it.</td>
+        </tr>
+        <tr>
+          <td>Bitbucket</td>
+          <td>Since version 8, only repository, project and workspace access tokens are accepted; personal API tokens and app passwords (entered as <em>email:token</em> or <em>username:password</em>) are refused. Connections made earlier with a personal token keep working and are marked in CodeDoc until an admin replaces them.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>4. Data Protection</h2>
+
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All communication between the App and external services (Git providers, AI providers) uses <strong>TLS encryption</strong> (HTTPS only).</li>
+      <li>The App rejects non-HTTPS Git provider URLs at configuration time.</li>
+      <li>Forge-to-Confluence API calls use Atlassian's internal secured transport.</li>
+    </ul>
+
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>Sensitive credentials: Encrypted at rest via Forge secret storage, managed by Atlassian.</li>
+      <li>Configuration data: Stored in Forge app storage within the customer's Confluence instance.</li>
+      <li>Source code: <strong>Never stored.</strong> Fetched on demand, processed in memory, and discarded after each job execution.</li>
+    </ul>
+
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App only accesses the minimum data needed: source code files (read-only), Confluence space/page metadata (for publishing).</li>
+      <li>Generation history stores only metadata (job name, status, timestamp, token count, repository names, the paths of up to 50 files read) — no source code or documentation content.</li>
+      <li>Webhook deduplication stores only SHA-256 hashes of delivery IDs and request bodies (kept for up to 7 days), not payload content.</li>
+    </ul>
+
+    <h2>5. Network Security &amp; Allowlisted Domains</h2>
+    <p>
+      The App's Forge manifest declares the following external domains, without wildcards. Outbound requests are
+      <strong>only possible</strong> to these domains and to own Git servers approved as described below — no other
+      network communication can occur:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Service</th>
+          <th>Domains</th>
+        </tr>
+        <tr>
+          <td>GitHub</td>
+          <td><code>api.github.com</code></td>
+        </tr>
+        <tr>
+          <td>GitLab</td>
+          <td><code>gitlab.com</code></td>
+        </tr>
+        <tr>
+          <td>Bitbucket</td>
+          <td><code>api.bitbucket.org</code></td>
+        </tr>
+        <tr>
+          <td>Azure DevOps</td>
+          <td><code>dev.azure.com</code>, <code>app.vssps.visualstudio.com</code></td>
+        </tr>
+        <tr>
+          <td>Anthropic</td>
+          <td><code>api.anthropic.com</code></td>
+        </tr>
+        <tr>
+          <td>OpenAI</td>
+          <td><code>api.openai.com</code></td>
+        </tr>
+        <tr>
+          <td>Google AI</td>
+          <td><code>generativelanguage.googleapis.com</code></td>
+        </tr>
+        <tr>
+          <td>Version check of sync blocks (public package names only)</td>
+          <td><code>hub.docker.com</code>, <code>registry.npmjs.org</code>, <code>pypi.org</code>, <code>endoflife.date</code>; GitHub releases via <code>api.github.com</code></td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      <strong>Own Git servers:</strong> GitHub Enterprise and GitLab self-managed servers are not in the manifest. When a CodeDoc admin
+      connects one, Atlassian asks a site admin to approve exactly that server address (customer-managed egress); the approval is kept by
+      Atlassian and shown in Atlassian Administration. Without it, Forge blocks every request to the server.
+    </p>
+    <p>
+      <strong>Atlassian AI</strong> needs no entry: Forge LLMs run on Atlassian's platform.
+    </p>
+
+    <p><strong>IP blocking:</strong> The App validates Git provider URLs and blocks connections to private, reserved, and loopback IP ranges to prevent SSRF attacks.</p>
+
+    <h2>6. Authentication &amp; Authorization</h2>
+    <ul>
+      <li><strong>Confluence access:</strong> Uses Atlassian Forge's built-in OAuth. User-initiated actions run with the user's permissions (<code>api.asUser()</code>); background jobs run with app-level permissions (<code>api.asApp()</code>).</li>
+      <li><strong>Minimal API scopes:</strong> The App requests only the scopes it needs:
+        <code>storage:app</code>, <code>read:space:confluence</code>, <code>search:confluence</code>, <code>read:page:confluence</code>,
+        <code>write:page:confluence</code>, <code>delete:page:confluence</code>, <code>read:confluence-user</code>, <code>read:confluence-groups</code>.</li>
+      <li><strong>Webhook verification:</strong> CodeDoc admins create a webhook secret in Settings &rarr; Webhook; the secret is required. The App accepts only webhook calls
+        that carry it (GitHub, GitHub Enterprise and Bitbucket: HMAC-SHA256 signature; GitLab: secret token; Azure DevOps: basic authentication password),
+        compared in constant time over the original request body (at most 5 MB), each provider only with its own method. Without a secret no webhook call is processed (HTTP 403) and the settings page shows <em>Secret missing</em>. Repeated deliveries do not start a second run.</li>
+      <li><strong>The user's own permissions before app writes:</strong> AI pages are written by the app user, because scheduled and webhook runs have no user.
+        Before the App acts for a person, it checks that person's own Confluence permissions with Confluence's permissions API, called as that person:
+        creating or changing an AI page needs permission to create pages in the target space and access to the parent page; publishing, discarding and manual
+        runs check the target, the draft and the published page; undoing a run needs edit permission on the page; replacing a page of the same name needs edit
+        and delete permission on it, also when CodeDoc created that page. Sync blocks are approved and synced on demand only by someone who may edit the page,
+        and the block list shows only blocks on pages the person can see. Title searches and the group picker run as the person. If a check cannot be completed,
+        the action does not run, and no answer is kept for the next request.</li>
+    </ul>
+
+    <h2>7. Input Validation &amp; Output Safety</h2>
+    <ul>
+      <li><strong>URL validation:</strong> Git provider URLs must be HTTPS and are checked against private IP ranges.</li>
+      <li><strong>Repository paths and branches:</strong> File paths and branch names with <code>../</code> parts (also percent-encoded, also as a
+        folder name inside the repository), backslashes or control characters are refused before any request, so a sync block or AI page reads only its
+        own connected repository.</li>
+      <li><strong>Credential files:</strong> Environment files, Terraform state and variable files, package manager credentials, private keys and key stores,
+        and credential or secret files are never sent to an AI provider, whatever the include patterns of an AI page say.</li>
+      <li><strong>Time limits:</strong> Reading a file into a sync block and applying include/exclude patterns stop after 8 seconds with a message, so a
+        complex regular expression or pattern cannot block the App.</li>
+      <li><strong>Content sanitization:</strong> AI-generated documentation passes through a multi-layer XML validation and repair pipeline before publishing to Confluence, preventing malformed content from being injected.</li>
+      <li><strong>Token budget limits:</strong> File fetching is bounded by configurable token budgets (~120,000 tokens) and content size limits (~1 MB) to prevent resource exhaustion.</li>
+      <li><strong>Webhook deduplication:</strong> Duplicate webhook events are detected and rejected to prevent replay-style abuse.</li>
+    </ul>
+
+    <h2>8. Dependency Management</h2>
+    <ul>
+      <li>Runtime dependencies are Atlassian's official Forge packages (<code>@forge/api</code>, <code>@forge/bridge</code>, <code>@forge/events</code>,
+        <code>@forge/kvs</code>, <code>@forge/llm</code>, <code>@forge/metrics</code>, <code>@forge/react</code>, <code>@forge/resolver</code>), maintained by Atlassian,
+        plus <code>react</code>, <code>marked</code> (reading Markdown files for sync blocks) and <code>yaml</code> (reading YAML files for sync blocks).</li>
+      <li>Build and development tooling is not shipped in the production runtime.</li>
+      <li>We run <code>npm audit</code> before every deploy via an automated pre-deploy gate that blocks a release on high or critical findings, plus a weekly automated audit.</li>
+    </ul>
+
+    <h2>9. Vulnerability Management</h2>
+    <ul>
+      <li>We monitor for security issues in the App and Forge platform updates.</li>
+      <li>Security patches are deployed promptly via Forge's deployment mechanism.</li>
+      <li>The Forge runtime is maintained and patched by Atlassian, including the Node.js environment.</li>
+    </ul>
+
+    <h2>10. Incident Response</h2>
+    <p>
+      If a security issue is discovered in the App:
+    </p>
+    <ul>
+      <li>We will investigate and remediate promptly.</li>
+      <li>Affected customers will be notified via the Atlassian Marketplace listing and/or direct contact.</li>
+      <li>Fixes will be deployed as a priority update.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, please contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — CodeDoc AI"</strong>. We aim to acknowledge reports within 2 business days.
+    </p>
+
+    <h2>11. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> As personal data, the App stores Atlassian account IDs (who approved, discarded or undid a run, approved a sync block or dismissed the rating prompt) and the name of the Git account behind each Git connection, all in Forge storage for your site. Code that contains personal data is sent to the AI provider you connected with your own key, or processed by Atlassian AI. See our <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> for details.</li>
+      <li><strong>Atlassian Security:</strong> The App follows <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a>. Because it connects to Git and AI services outside Atlassian, it is not part of Atlassian's <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a> program and offers no data residency options.</li>
+      <li><strong>Sub-processors:</strong> Atlassian only — it hosts the App on Forge (runtime and storage) under Atlassian's <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum</a>, which includes Standard Contractual Clauses for transfers outside the EEA. All other third-party data transmission is initiated by the user via their own credentials, or reads public registry data; Atlassian AI is part of Atlassian's platform.</li>
+    </ul>
+
+    <h2>12. What We Do NOT Have Access To</h2>
+    <p>For complete transparency:</p>
+    <ul>
+      <li>Your API keys or Git access tokens</li>
+      <li>Your source code or repository contents</li>
+      <li>The generated documentation content</li>
+      <li>Your Confluence instance data beyond what the App's scopes allow</li>
+      <li>User identity, email addresses, or personal data (the account IDs the App stores stay in your site's Forge storage)</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2>13. Contact</h2>
+      <p>
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — CodeDoc AI
+      </p>
+    </div>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

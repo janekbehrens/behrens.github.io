@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir? | Janek Behrens</title>
+  <meta name="description" content="Ein ehrlicher Vergleich der RICE-, WSJF- und ICE-Verfahren für Jira. Sieh die Formeln und Einsatzfälle und wähle mit dem Entscheidungsbaum das passende Verfahren für dein Team.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-prioritization-framework-comparison.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+
+  <!-- ── BlogPosting Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?",
+  "description": "Ein ehrlicher Vergleich der RICE-, WSJF- und ICE-Verfahren für Jira. Sieh die Formeln und Einsatzfälle und wähle mit dem Entscheidungsbaum das passende Verfahren für dein Team.",
+  "url": "https://janekbehrens.de/de/blog/jira-prioritization-framework-comparison.html",
+  "datePublished": "2025-12-11T00:00:00+02:00",
+  "dateModified": "2025-12-11T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+  "keywords": [
+    "Jira-Priorisierungsverfahren",
+    "RICE und WSJF",
+    "ICE-Bewertung",
+    "Backlog-Priorisierung",
+    "Jira",
+    "Atlassian"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Article Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?",
+  "description": "Ein ehrlicher Vergleich der RICE-, WSJF- und ICE-Verfahren für Jira. Sieh die Formeln und Einsatzfälle und wähle mit dem Entscheidungsbaum das passende Verfahren für dein Team.",
+  "image": "https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png",
+  "datePublished": "2025-12-11T00:00:00+02:00",
+  "dateModified": "2025-12-11T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/jira-prioritization-framework-comparison.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema (Featured Snippets) ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was unterscheidet RICE-, WSJF- und ICE-Bewertung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RICE (Reichweite × Wirkung × Sicherheit ÷ Aufwand) fokussiert Nutzerwirkung pro Aufwandseinheit — ideal für Produktteams, die nach der Anzahl profitierender Nutzer priorisieren. WSJF ((Geschäftswert + Zeitkritikalität + Risikoreduktion) ÷ Umfang) fokussiert wirtschaftlichen Wert pro Zeiteinheit — ideal für Unternehmen in SAFe-Umgebungen mit Fristendruck. ICE (Wirkung × Sicherheit × Einfachheit) ist das schnellste Verfahren — ideal für Growth-Teams mit vielen kleinen Ideen und wenig Daten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welches Priorisierungsverfahren sollte ich in Jira nutzen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nutze WSJF bei SAFe oder PI Planning. Nutze RICE bei verlässlichen Reichweitendaten und Priorisierung nach Nutzerwirkung. Nutze ICE für schnelle, schlanke Bewertung ohne detaillierte Discovery. Mit Priority Scoring for Jira können alle drei parallel laufen — du wählst das Verfahren je Projekt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist RICE oder WSJF besser für Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keines ist allgemein besser — sie optimieren unterschiedliche Dinge. RICE optimiert Nutzerwert pro Aufwandseinheit und passt zu Produktteams. WSJF optimiert wirtschaftlichen Wert pro Zeiteinheit und passt zu großen Entwicklungsorganisationen und SAFe PI Planning. Viele große Organisationen nutzen RICE auf Funktions- und WSJF auf Initiative- oder Portfolio-Ebene."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich mehrere Bewertungsverfahren gleichzeitig in Jira verwenden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Priority Scoring for Jira ergänzt RICE, WSJF und ICE als separate benutzerdefinierte Felder. Ein Vorgang kann alle drei Werte gleichzeitig haben. Teams nutzen oft ein Verfahren als primäre Rangfolge und die übrigen zur Gegenprüfung. Im Dashboard wechselst du mit einem Klick zwischen Verfahren."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie lautet die WSJF-Formel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "WSJF = Verzögerungskosten ÷ Umfang, wobei Verzögerungskosten = Geschäftswert + Zeitkritikalität + Risikoreduktion/Ermöglichung von Chancen. Alle vier Dimensionen nutzen eine relative Fibonacci-Skala (1, 2, 3, 5, 8, 13, 20). Typische WSJF-Werte reichen von 0,3 bis 10. Höher bedeutet höhere Priorität — die Arbeit liefert möglichst viel Wert in kurzer Zeit."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?">
+  <meta property="og:description" content="Ein ehrlicher Vergleich von RICE, WSJF und ICE für Jira — Formeln, passende Einsatzfälle und ein Entscheidungsbaum für dein Team.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-prioritization-framework-comparison.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2025-12-11">
+  <meta property="article:modified_time" content="2025-12-11">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="RICE Scoring">
+  <meta property="article:tag" content="WSJF">
+  <meta property="article:tag" content="ICE Scoring">
+  <meta property="article:tag" content="Backlog Prioritization">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?">
+  <meta name="twitter:description" content="Ein ehrlicher Vergleich von RICE, WSJF und ICE — Formeln, passende Einsatzfälle und ein Entscheidungsbaum für das richtige Jira-Verfahren.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgPriorityScorer/AppStartpage_Dashboard.png">
+
+  <!-- ── Fonts & shared CSS ── -->
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    /* ── Article layout ── */
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Article hero ── */
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .article-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: var(--blue-lite);
+      color: var(--blue);
+    }
+    .article-date { font-size: 0.82rem; color: var(--text-faint); }
+    .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-intro {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* ── Article body typography ── */
+    .article-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 40px 0 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 0;
+      padding-left: 24px;
+    }
+    .article-body li {
+      font-size: 0.95rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .callout-blue {
+      background: var(--blue-lite);
+      border-left: 3px solid var(--blue);
+      color: #0747A6;
+    }
+    .callout-green {
+      background: #E3FCEF;
+      border-left: 3px solid #00875A;
+      color: #006644;
+    }
+    .callout-yellow {
+      background: #FFFAE6;
+      border-left: 3px solid #FF8B00;
+      color: #974F00;
+    }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+
+    /* ── Framework cards ── */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 20px 0 24px;
+    }
+    @media (max-width: 600px) { .framework-grid { grid-template-columns: 1fr; } }
+    .framework-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+      box-shadow: 0 2px 8px rgba(23,43,77,0.05);
+    }
+    .framework-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .framework-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 5px;
+      text-transform: uppercase;
+    }
+    .badge-rice  { background: #DEEBFF; color: #0052CC; }
+    .badge-wsjf  { background: #EAE6FF; color: #403294; }
+    .badge-ice   { background: #E3FCEF; color: #006644; }
+    .framework-card-name {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      font-weight: 600;
+    }
+    .framework-formula {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      background: #F4F5F7;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .framework-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .framework-card li {
+      font-size: 0.82rem;
+      color: var(--text-3);
+      padding: 4px 0;
+      border-top: 1px solid var(--border-2);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .framework-card li:first-child { border-top: none; }
+    .framework-card li strong { color: var(--text); font-size: 0.78rem; }
+
+    /* ── Comparison table ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.85rem;
+    }
+    .compare-table thead th {
+      background: #F4F5F7;
+      color: var(--text-faint);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .compare-table thead th:first-child { width: 30%; }
+    .compare-table tbody td {
+      padding: 10px 14px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .compare-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+    .compare-table .row-label {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+    .check { color: #00875A; font-weight: 700; }
+    .cross { color: #DE350B; font-weight: 700; }
+    .partial { color: #FF8B00; font-weight: 700; }
+
+    /* ── Decision tree ── */
+    .decision-tree {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(23,43,77,0.06);
+    }
+    .decision-tree-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-faint);
+      margin-bottom: 18px;
+    }
+    .dt-node {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .dt-q {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #F4F5F7;
+      border: 2px solid var(--border);
+      color: var(--text-faint);
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .dt-content { flex: 1; }
+    .dt-question { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .dt-answers { display: flex; flex-direction: column; gap: 4px; }
+    .dt-answer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-3);
+    }
+    .dt-yes { color: #00875A; font-weight: 700; font-size: 0.78rem; min-width: 28px; }
+    .dt-no  { color: #DE350B; font-weight: 700; font-size: 0.78rem; min-width: 28px; }
+    .dt-result {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .result-rice  { background: #DEEBFF; color: #0052CC; }
+    .result-wsjf  { background: #EAE6FF; color: #403294; }
+    .result-ice   { background: #E3FCEF; color: #006644; }
+
+    /* ── FAQ ── */
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-a a { color: var(--blue); text-decoration: none; }
+
+    /* ── Article CTA ── */
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+
+    /* ── Sidebar ── */
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      line-height: 1.4;
+      display: block;
+    }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+
+    /* ── Diagrams ── */
+    .diagram { margin: 24px 0; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 8px;
+      font-style: italic;
+    }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-prioritization-framework-comparison.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-prioritization-framework-comparison.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-prioritization-framework-comparison.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <!-- ── Article hero ── -->
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-tag" style="background:#E3FCEF;color:#006644;">Priority Scoring</span>
+        <span class="article-date">11. Dezember 2025</span>
+        <span class="article-readtime">· 10 Min. Lesezeit</span>
+      </div>
+      <h1>RICE, WSJF oder ICE: Welches Jira-Priorisierungsverfahren passt zu dir?</h1>
+      <p class="article-intro">
+        Drei Verfahren, drei unterschiedliche Grundgedanken. RICE fragt, wer wie stark profitiert. WSJF fragt, was Verzögerung kostet. ICE fragt, wie schnell du vorankommst. Alle drei sind sinnvoll — das falsche Verfahren schafft für dein Team aber Verwirrung statt Klarheit. So triffst du die Wahl.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="article-layout">
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <h2 id="overview">Die drei Verfahren auf einen Blick</h2>
+      <p>
+        Alle drei teilen eine Grundidee: Bauchgefühl durch eine Zahl ersetzen, die Wert und Kosten berücksichtigt. Sie definieren „Wert“ und „Kosten“ aber unterschiedlich — genau das bestimmt, welches zu deinem Kontext passt.
+      </p>
+
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-card-header">
+            <span class="framework-badge badge-rice">RICE</span>
+            <span class="framework-card-name">Intercom, 2016</span>
+          </div>
+          <div class="framework-formula">Wert = (R × I × C) ÷ E</div>
+          <ul>
+            <li><strong>R</strong> Reichweite — Nutzer/Quartal</li>
+            <li><strong>I</strong> Wirkung — 0,25×–3×</li>
+            <li><strong>C</strong> Sicherheit — 10–100 %</li>
+            <li><strong>E</strong> Aufwand — Personenmonate</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-card-header">
+            <span class="framework-badge badge-wsjf">WSJF</span>
+            <span class="framework-card-name">SAFe, Dean Leffingwell</span>
+          </div>
+          <div class="framework-formula">Wert = (BV + TC + RR) ÷ JS</div>
+          <ul>
+            <li><strong>BV</strong> Geschäftswert (Business Value)</li>
+            <li><strong>TC</strong> Zeitkritikalität (Time Criticality)</li>
+            <li><strong>RR</strong> Risikoreduktion (Risk Reduction)</li>
+            <li><strong>JS</strong> Umfang (Fibonacci)</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-card-header">
+            <span class="framework-badge badge-ice">ICE</span>
+            <span class="framework-card-name">Sean Ellis, GrowthHackers</span>
+          </div>
+          <div class="framework-formula">Wert = I × C × E</div>
+          <ul>
+            <li><strong>I</strong> Wirkung — 1–10</li>
+            <li><strong>C</strong> Sicherheit — 1–10</li>
+            <li><strong>E</strong> Einfachheit — 1–10</li>
+            <li>Bereich: 1–1.000</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-blue">
+        <p><strong>Alle drei lassen sich nativ in Jira nutzen.</strong> <a href="/de/priority-scoring-docs.html" style="color:#0052CC;">Priority Scoring for Jira</a> ergänzt RICE, WSJF und ICE als separate benutzerdefinierte Felder — alle drei können im selben Vorgang stehen, mit einem Klick wechselst du das Verfahren im Dashboard.</p>
+      </div>
+
+      <h2 id="rice">RICE-Bewertung — Nutzerwert pro Aufwandseinheit</h2>
+      <p>
+        <a href="/de/blog/rice-scoring-jira.html">RICE</a> wurde von Sean McBride bei Intercom für ein konkretes Problem entwickelt: Wachsende Produktteams konnten sich nicht auf Funktionsprioritäten einigen, weil jeder Stakeholder „wichtig“ anders einschätzte. Die Formel zwingt Teams, vier konkrete Fragen zu jedem Backlog-Eintrag zu beantworten.
+      </p>
+      <p>
+        <strong>Worauf RICE optimiert:</strong> Der höchstbewertete Eintrag erreicht viele Nutzer, verändert deren Nutzung deutlich, funktioniert mit hoher Sicherheit und ist schnell umzusetzen. RICE misst <em> gelieferten Nutzerwert pro Personenmonat Arbeit</em>.
+
+      </p>
+      <p>
+        <strong>RICE funktioniert am besten, wenn:</strong>
+      </p>
+      <ul>
+        <li>Du echte Daten zur Anzahl betroffener Nutzer hast (Analysen, Support-Tickets, Forschung)</li>
+        <li>Dein Team Funktionen nach der Breite ihrer Nutzerwirkung priorisiert</li>
+        <li>Du Verbraucher-Software oder breit genutzte B2B-Software entwickelst</li>
+        <li>Das Team etwa 10–50 Personen hat und einen Discovery-Prozess nutzt</li>
+      </ul>
+      <p>
+        <strong>RICE stößt an Grenzen, wenn:</strong> Dein Backlog von regulatorischen Fristen, Partnerzusagen oder strategischen Initiativen mit wenigen betroffenen Nutzern, aber enormer Unternehmensbedeutung bestimmt wird. Eine Compliance-Funktion für fünf Unternehmenskunden, die den Verlust eines 2-Millionen-US-Dollar-Vertrags verhindert, erhält einen niedrigen RICE-Wert — obwohl sie das nicht sollte.
+      </p>
+
+      <h2 id="wsjf">WSJF-Bewertung — wirtschaftlicher Wert pro Zeiteinheit</h2>
+      <p>
+        WSJF (Weighted Shortest Job First) stammt aus dem <a href="https://framework.scaledagile.com/wsjf" target="_blank" rel="noopener">Scaled Agile Framework (SAFe)</a> und ordnet dort Epics und Funktionen über mehrere Agile Release Trains (ARTs). Anders als RICE fragt es nicht „Welche Funktion nützt den meisten Nutzern?“, sondern „Welche Arbeit sollten wir <em>zuerst</em> erledigen, um die wirtschaftlichen Kosten des Wartens zu minimieren?“.
+      </p>
+      <p>
+        Der Zähler sind die <strong>Verzögerungskosten (Cost of Delay)</strong> — aufgeteilt in drei Komponenten:
+      </p>
+      <ul>
+        <li><strong>Geschäftswert:</strong> Relativer Wert für Unternehmen oder Endnutzer bei sofortiger Lieferung</li>
+        <li><strong>Zeitkritikalität:</strong> Gibt es eine Frist, ein Marktfenster oder eine Abhängigkeit, die Verzögerung teuer macht?</li>
+        <li><strong>Risikoreduktion / Ermöglichung von Chancen:</strong> Senkt der Eintrag ein technisches Risiko oder ermöglicht zukünftige Arbeit?</li>
+      </ul>
+      <p>
+        Alle vier Dimensionen (einschließlich Umfang als Nenner) werden auf einer <strong>relativen Fibonacci-Skala</strong> bewertet — typischerweise 1, 2, 3, 5, 8, 13, 20. Du bewertest Einträge <em>im Vergleich zueinander</em> statt auf einer absoluten Skala. Das Team wählt einen Referenzeintrag und fragt: Ist diese Funktion doppelt so wertvoll? Halb so aufwendig? Die Bewertung erfolgt gemeinsam, häufig beim PI Planning.
+      </p>
+      <p>
+        <strong>WSJF funktioniert am besten, wenn:</strong>
+      </p>
+      <ul>
+        <li>Dein Team SAFe mit Program Increments nutzt (PI Planning)</li>
+        <li>Deine Arbeit Fristen hat und Verzögerungskosten konkret sind</li>
+        <li>Mehrere Teams gemeinsame Kapazität benötigen und eine transparente Reihenfolgemethode brauchen</li>
+        <li>Du auf Initiative- oder Epic-Ebene statt bei einzelnen User Stories priorisierst</li>
+      </ul>
+      <p>
+        <strong>WSJF stößt an Grenzen, wenn:</strong> Dein Backlog von Nutzerforschung statt geschäftlichen Fristen bestimmt wird. Bei den meisten Funktionen liegt Zeitkritikalität dann bei 1 oder 2 — die Rangfolge wird flach, und WSJF wirkt wie eine komplizierte Form von „Geschäftswert zuerst“.
+      </p>
+      <p>
+        Eine detaillierte Jira-Einrichtungsanleitung mit Fibonacci-Vorlagen und PI-Planning-Konfiguration findest du hier: <a href="/de/blog/wsjf-jira.html">WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation</a>.
+
+      </p>
+
+      <h2 id="ice">ICE-Bewertung — schnell zu einer ersten Rangfolge</h2>
+      <p>
+        Sean Ellis, Gründer von GrowthHackers, machte ICE bekannt, um große Mengen von Experimentideen in Growth-Teams schnell einzuordnen. Die Einfachheit ist bewusst — keine Schätzungen pro Nutzer, kein Fibonacci-Workshop, keine Discovery-Daten nötig. Bewerte Wirkung, Sicherheit und Einfachheit jeweils mit 1–10, multipliziere sie und bilde die Rangfolge.
+      </p>
+      <p>
+        <strong>Worauf ICE optimiert:</strong> Ideen mit hoher Wirkung, hoher Sicherheit und niedrigem Aufwand (= hoher Einfachheit) steigen nach oben. Es belohnt schnelle Erfolge — einfach durchführbare Experimente mit hoher Erfolgsaussicht.
+      </p>
+      <p>
+        <strong>ICE funktioniert am besten, wenn:</strong>
+      </p>
+      <ul>
+        <li>Du viele kleine Experimente oder Hypothesen einordnen musst (mehr als zehn Ideen pro Woche)</li>
+        <li>Discovery-Zeit knapp ist — du brauchst eine Bewertung in zwei Minuten statt zwei Tagen</li>
+        <li>Dein Team klein und in einer frühen Phase ist (unter zehn Personen)</li>
+        <li>Es um Wachstumsschleifen, A/B-Tests, Marketingexperimente oder MVP-Funktionsentscheidungen geht</li>
+      </ul>
+      <p>
+        <strong>Die Abwägung bei ICE:</strong> Ohne Reichweitendimension unterscheidet ICE nicht zwischen einer Idee für fünf Nutzer und einer für 5.000. Bei Backlogs mit stark unterschiedlicher Nutzerzahl ist das ein wesentlicher blinder Fleck. Teams beginnen häufig mit ICE und wechseln zu RICE, sobald das Produkt genug Daten für verlässliche Reichweitenschätzungen liefert.
+      </p>
+
+      <h2 id="comparison">Direkter Vergleich</h2>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Kriterium</th>
+            <th>RICE</th>
+            <th>WSJF</th>
+            <th>ICE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Ursprung</td>
+            <td>Intercom (Sean McBride)</td>
+            <td>SAFe (Dean Leffingwell)</td>
+            <td>GrowthHackers (Sean Ellis)</td>
+          </tr>
+          <tr>
+            <td class="row-label">Optimiert auf</td>
+            <td>Nutzerwert pro Aufwand</td>
+            <td>Wirtschaftlicher Wert pro Zeit</td>
+            <td>Schnelle erste Rangfolge</td>
+          </tr>
+          <tr>
+            <td class="row-label">Benötigte Daten</td>
+            <td>Schätzungen der Nutzerreichweite</td>
+            <td>Relative Bewertung im Team</td>
+            <td>Keine — reine Einschätzung</td>
+          </tr>
+          <tr>
+            <td class="row-label">Bewertungssitzung</td>
+            <td>Einzeln oder asynchron</td>
+            <td>Gruppe (PI Planning)</td>
+            <td>Einzeln, zwei Minuten pro Vorgang</td>
+          </tr>
+          <tr>
+            <td class="row-label">SAFe-kompatibel</td>
+            <td><span class="partial">Teilweise</span></td>
+            <td><span class="check">Nativ</span></td>
+            <td><span class="cross">Nein</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Berücksichtigt Fristen</td>
+            <td><span class="cross">Nein</span></td>
+            <td><span class="check">Ja (Zeitkritikalität)</span></td>
+            <td><span class="cross">Nein</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Berücksichtigt Nutzerzahl</td>
+            <td><span class="check">Ja (Reichweite)</span></td>
+            <td><span class="partial">Indirekt</span></td>
+            <td><span class="cross">Nein</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Lernkurve</td>
+            <td>Mittel</td>
+            <td>Hoch (Fibonacci, Verzögerungskosten)</td>
+            <td>Niedrig</td>
+          </tr>
+          <tr>
+            <td class="row-label">Beste Teamgröße</td>
+            <td>10–100</td>
+            <td>50+ (Unternehmen)</td>
+            <td>1–20</td>
+          </tr>
+          <tr>
+            <td class="row-label">Wertebereich</td>
+            <td>0–∞ (typischerweise 0–500)</td>
+            <td>0.3–10</td>
+            <td>1–1,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="decision-tree">Entscheidungsbaum: Dein Verfahren wählen</h2>
+      <p>
+        Beantworte die Fragen der Reihe nach. Stoppe beim ersten Treffer.
+      </p>
+
+      <div class="decision-tree">
+        <div class="decision-tree-title">Verfahrensauswahl — Entscheidungsbaum</div>
+
+        <div class="dt-node">
+          <div class="dt-q">1</div>
+          <div class="dt-content">
+            <div class="dt-question">Nutzt dein Team SAFe mit Program Increments (PI Planning)?</div>
+            <div class="dt-answers">
+              <div class="dt-answer"><span class="dt-yes">JA →</span> Nutze <span class="dt-result result-wsjf">WSJF</span> — die native SAFe-Priorisierungsmethode. Verzögerungskosten passen direkt zu PI-Reihenfolgeentscheidungen.</div>
+              <div class="dt-answer"><span class="dt-no">NEIN →</span> Weiter mit Frage 2.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dt-node">
+          <div class="dt-q">2</div>
+          <div class="dt-content">
+            <div class="dt-question">Hast du verlässliche Daten dazu, wie viele Nutzer jeder Backlog-Eintrag betrifft?</div>
+            <div class="dt-answers">
+              <div class="dt-answer"><span class="dt-yes">JA →</span> Nutze <span class="dt-result result-rice">RICE</span> — Reichweite macht Werte bei größerem Umfang aussagekräftig. Mittelgroße Teams mit Analysedaten passen besonders gut.</div>
+              <div class="dt-answer"><span class="dt-no">NEIN →</span> Weiter mit Frage 3.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dt-node">
+          <div class="dt-q">3</div>
+          <div class="dt-content">
+            <div class="dt-question">Hast du viele kleine Ideen, die schnell geordnet werden müssen (Experimente, Wachstumstests, MVP-Funktionen)?</div>
+            <div class="dt-answers">
+              <div class="dt-answer"><span class="dt-yes">JA →</span> Nutze <span class="dt-result result-ice">ICE</span> — in Minuten bewerten, schnell vorankommen und mit verfügbaren Nutzerdaten zu RICE wechseln.</div>
+              <div class="dt-answer"><span class="dt-no">NEIN →</span> Beginne mit <span class="dt-result result-rice">RICE</span> und schätze die Reichweite vorsichtig. Ungenaue Reichweite ist besser als gar keine Bewertung.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="combining">Kannst du mehr als eines nutzen?</h2>
+      <p>
+        Ja — gut geführte Produktorganisationen tun das häufig. Eine übliche Aufteilung: Nutze <strong>RICE auf Funktionsebene</strong> (einzelne Backlog-Einträge, Schätzung von User Stories) und <strong>WSJF auf Initiativebene</strong> (Quartalsplanung, Epic-Reihenfolge über Teams hinweg). ICE kann als schneller Vorfilter dienen — Ideen unter einer Mindestgrenze aussortieren, bevor du Zeit in vollständige RICE-Bewertung investierst.
+      </p>
+      <p>
+        In Jira bestehen alle drei Verfahren als separate benutzerdefinierte Felder nebeneinander. Ein Vorgang kann gleichzeitig RICE 240, WSJF 6,5 und ICE 350 haben. Im Priority-Scoring-Dashboard wechselst du die Rangfolgeansicht mit einem Klick — hilfreich, wenn Produktteam (zuerst RICE) und Entwicklungsleitung (zuerst WSJF) dasselbe Backlog prüfen.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgPriorityScorer/AppStartpage_Dashboard.png" alt="Priority-Scoring-for-Jira-Dashboard mit Prioritätsranglistentabelle und Verfahrensauswahl — zwischen RICE-, WSJF- und ICE-Ansichten wechseln" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">Zwischen RICE-, WSJF- und ICE-Rangfolgen im Priority-Scoring-Dashboard wechseln — dasselbe Backlog aus unterschiedlichen Perspektiven</p>
+      </div>
+
+      <h2 id="starting">Von Grund auf beginnen: Eine praktische erste Woche</h2>
+      <p>
+        Wenn dein Team noch nie strukturiert priorisiert hat, ist eine überkomplizierte Einrichtung das größte Risiko. Dieser einfache Ablauf funktioniert für die meisten Teams:
+      </p>
+      <ol>
+        <li><strong>Tag 1:</strong> Installiere Priority Scoring for Jira. Ergänze ein Verfahrensfeld (ICE bei kleinen, RICE bei mittelgroßen Teams) in der Maske deines aktivsten Projekts.</li>
+        <li><strong>Tag 2–3:</strong> Bewerte die wichtigsten 20 Backlog-Vorgänge. Strebe Einheitlichkeit statt Perfektion an. Nutze für alle 20 dieselben Definitionen von Aufwand und Reichweite.</li>
+        <li><strong>Tag 4:</strong> Nutze die Rangfolgeansicht in der nächsten Sprint-Planung. Achte darauf, wo die Bewertung deinem Gefühl entspricht und wo nicht. Abweichungen sind besonders wertvoll — sie erzwingen ein Gespräch.</li>
+        <li><strong>Ab Woche 2:</strong> Stimme die Schwellen ab. Bewerte neue Vorgänge bei ihrem Eingang. Ergänze bei Nutzen ein zweites Verfahren zur Gegenprüfung.</li>
+      </ol>
+
+      <div class="callout callout-green">
+        <p><strong>Tipp:</strong> Warte nicht auf ein „perfektes“ Bewertungssystem. Ein zu 80 % richtiger RICE-Wert ist unendlich besser als keiner — er zwingt das Team, Annahmen zu benennen und zu diskutieren, statt der lautesten Stimme im Raum zu folgen.</p>
+      </div>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was unterscheidet RICE-, WSJF- und ICE-Bewertung?</p>
+        <p class="faq-a">RICE (Reichweite × Wirkung × Sicherheit ÷ Aufwand) misst Nutzerwert pro Aufwandseinheit. WSJF ((Geschäftswert + Zeitkritikalität + Risikoreduktion) ÷ Umfang) misst wirtschaftlichen Wert pro Zeiteinheit und ist das native SAFe-Verfahren. ICE (Wirkung × Sicherheit × Einfachheit) ist am schnellsten und einfachsten — ohne Discovery-Daten, Bewertung in Minuten. Alle drei sind als native Jira-Felder verfügbar in <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Ist RICE oder WSJF besser für Jira?</p>
+        <p class="faq-a">Keines ist allgemein besser — sie optimieren unterschiedliche Dinge. RICE passt zu Produktteams mit Nutzerwirkungsfokus. WSJF passt zu Unternehmen in SAFe-Umgebungen mit wichtigen Verzögerungskosten und Zeitkritikalität. Viele große Organisationen nutzen RICE auf Funktions- und WSJF auf Initiativebene, beide gleichzeitig in Jira.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Welches Priorisierungsverfahren sollte ich in Jira nutzen?</p>
+        <p class="faq-a">Nutze WSJF bei SAFe mit PI Planning. Nutze RICE bei verlässlichen Reichweitendaten und Priorisierung nach der Breite der Nutzerwirkung. Nutze ICE für schnelle, schlanke Bewertung ohne detaillierte Discovery. Im Zweifel beginne mit ICE und wechsle zu RICE, sobald Nutzeranalysen die Reichweitenschätzungen stützen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich mehrere Bewertungsverfahren gleichzeitig in Jira verwenden?</p>
+        <p class="faq-a">Ja. Priority Scoring for Jira ergänzt RICE, WSJF und ICE als separate benutzerdefinierte Felder — ein Vorgang kann alle drei Werte gleichzeitig tragen. Die Dashboard-Rangfolgeansicht wechselt mit einem Klick. Das hilft bei gemeinsamer Backlog-Prüfung durch Produktteams (RICE) und Entwicklungsleitung (WSJF).</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Wie lautet die WSJF-Formel?</p>
+        <p class="faq-a">WSJF = Verzögerungskosten ÷ Umfang, wobei Verzögerungskosten = Geschäftswert + Zeitkritikalität + Risikoreduktion/Ermöglichung von Chancen. Alle Dimensionen nutzen eine relative Fibonacci-Skala (1, 2, 3, 5, 8, 13, 20). Höhere WSJF-Werte kommen zuerst; typische Werte liegen bei 0,3–10. Siehe die vollständige Anleitung: <a href="/de/blog/wsjf-jira.html">WSJF in Jira</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Unterstützt Jira RICE, WSJF und ICE nativ?</p>
+        <p class="faq-a">Nein. Jira enthält standardmäßig kein Bewertungsverfahren. Du ergänzt sie über eine Marketplace-App. <a href="/de/priority-scoring-docs.html">Priority Scoring for Jira</a> ergänzt alle drei als native benutzerdefinierte Felder (Schieberegler, unmittelbare Berechnung, Ranglisten-Dashboard) ohne Skripte oder zu pflegende eigene Formeln.</p>
+      </div>
+
+      <!-- Article CTA -->
+            <div class="article-cta">
+        <h3>Alle drei Verfahren, eine Jira-App</h3>
+        <p>Priority Scoring for Jira ergänzt RICE, WSJF und ICE als native benutzerdefinierte Felder. Wechsle im Dashboard zwischen Verfahren. Lass den Rovo-KI-Agenten Vorgänge automatisch bewerten. Kostenlose Testversion enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#overview">Drei Verfahren auf einen Blick</a></li>
+          <li><a href="#rice">RICE — Nutzerwert pro Aufwand</a></li>
+          <li><a href="#wsjf">WSJF — wirtschaftlicher Wert pro Zeit</a></li>
+          <li><a href="#ice">ICE — schnelle erste Rangfolge</a></li>
+          <li><a href="#comparison">Direkter Vergleich</a></li>
+          <li><a href="#decision-tree">Entscheidungsbaum</a></li>
+          <li><a href="#combining">Mehr als eines nutzen</a></li>
+          <li><a href="#starting">Von Grund auf beginnen</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/priority-scoring-docs.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/priority-scoring-icon.png" alt="Priority Scoring for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Priority Scoring for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">RICE · WSJF · ICE · Rovo-KI · Forge</div>
+          </div>
+        </a>
+                <a href="https://marketplace.atlassian.com/apps/966645375" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Vertiefende Artikel</h3>
+        <a href="/de/blog/rice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">RICE-Bewertung in Jira: Die vollständige Einrichtungsanleitung</a>
+        <a href="/de/blog/wsjf-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">WSJF in Jira: SAFe-Priorisierung ohne Tabellenkalkulation</a>
+        <a href="/de/blog/ice-scoring-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">ICE-Bewertung in Jira: Schnelle Priorisierung für Growth-Teams</a>
+        <a href="/de/blog/jira-backlog-health.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Die Kennzahl zur Jira-Backlog-Gesundheit erklärt</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Footer + nav injected by components.js -->
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <!-- ── Active ToC highlight ── -->
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

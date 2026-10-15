@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung | Janek Behrens</title>
+  <meta name="description" content="Ein Praxisleitfaden zum Jira-Velocity-Diagramm — was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Linie der durchschnittlichen Velocity liest, wie du Velocity für Sprint-Planung und Prognosen nutzt und welche Fehler sie irreführend machen.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/jira-velocity-chart.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung",
+  "description": "Was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Linie der durchschnittlichen Velocity liest, wie du Velocity für Sprint-Planung und Prognosen nutzt und welche Fehler sie irreführend machen.",
+  "url": "https://janekbehrens.de/de/blog/jira-velocity-chart.html",
+  "datePublished": "2026-06-02T00:00:00+02:00",
+  "dateModified": "2026-06-02T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png",
+  "keywords": [
+    "Jira",
+    "Velocity-Diagramm",
+    "Sprint-Velocity",
+    "Sprint-Planung",
+    "Scrum",
+    "Agil",
+    "Story Points"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung">
+  <meta property="og:description" content="Was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Durchschnittslinie liest und wie du Velocity ohne die üblichen Fehler für die Sprint-Planung nutzt.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/jira-velocity-chart.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-06-02">
+  <meta property="article:tag" content="Jira">
+  <meta property="article:tag" content="Agile">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung">
+  <meta name="twitter:description" content="Was die Balken für zugesagte und abgeschlossene Arbeit bedeuten, wie du die Durchschnittslinie liest und wie du Velocity für die Sprint-Planung nutzt.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgVelocityChartForJira/velocity-chart-banner.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was zeigt ein Velocity-Diagramm in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Jira-Velocity-Diagramm zeigt für jeden abgeschlossenen Sprint zwei Balken: die Zusage (die gesamte Schätzung der Arbeit im Sprint zu dessen Beginn) und die abgeschlossene Arbeit (die gesamte Schätzung der bis zum Sprintende erledigten Arbeit). Velocity ist der Durchschnitt der abgeschlossenen Werte über die letzten Sprints. Die meisten Diagramme stellen diesen Durchschnitt zusätzlich als Linie dar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist eine gute Velocity in Jira?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es gibt keine allgemein gute Zahl. Velocity wird in den eigenen Story Points eines Teams gemessen, die relativ sind. Die Zahl ist deshalb nur für dieses Team aussagekräftig. Eine gesunde Velocity ist stabil und berechenbar — abgeschlossene Arbeit entspricht ungefähr der Zusage, Sprint für Sprint — statt möglichst hoch. Vergleiche niemals die reine Velocity zweier verschiedener Teams."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Auf wie vielen Sprints sollte eine Velocity-Prognose basieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nutze die letzten drei bis sechs abgeschlossenen Sprints. Weniger als drei ergeben zu starke Schwankungen für eine zuverlässige Aussage; ein deutlich längerer Rückblick kann eine andere Teamzusammensetzung oder Arbeitsweise einbeziehen. Betrachte das Ergebnis als Bereich (von der niedrigsten bis zur höchsten jüngsten Velocity) statt als einzelne Zahl."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum ist mein Jira-Velocity-Diagramm leer oder zeigt null?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die beiden üblichen Ursachen sind: Das Board ist ein Kanban-Board (ohne Sprints gibt es keine Velocity), oder die Vorgänge werden in einem anderen Feld geschätzt als dem, das das Diagramm ausliest. Velocity benötigt ein Scrum-Board mit mindestens einem abgeschlossenen Sprint. Die Schätzstatistik muss dem Feld entsprechen, das dein Team tatsächlich verwendet (zum Beispiel Story Points)."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
+    @media (max-width: 760px) { .article-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .article-hero { background: linear-gradient(180deg, #fff 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 48px; }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--blue-lite); color: var(--blue); }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin: 40px 0 14px; padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body code { background:#F4F5F7; padding:2px 5px; border-radius:4px; font-size:0.88rem; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta { background: linear-gradient(135deg, #00A3BF 0%, #0747A6 100%); border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0; }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .sidebar-block h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px; }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .dim-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
+    .dim-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
+    .dim-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    figure.article-figure { margin: 24px 0; }
+    figure.article-figure img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(23,43,77,0.08); }
+    figure.article-figure figcaption { font-size: 0.8rem; color: var(--text-faint); text-align: center; margin-top: 10px; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-velocity-chart.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-velocity-chart.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-velocity-chart.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Jira</span>
+        <span class="article-date">2. Juni 2026</span>
+        <span class="article-readtime">· 9 Min. Lesezeit</span>
+      </div>
+      <h1>Jira-Velocity-Diagramm: So liest du es und nutzt es für die Sprint-Planung</h1>
+      <p class="article-intro">
+        Das Velocity-Diagramm kommt einem Tachometer für Scrum-Teams am nächsten: zwei Balken pro Sprint, eine Linie darüber und eine Zahl, mit der du planen kannst. Gleichzeitig gehört es zu den am häufigsten falsch gelesenen Diagrammen in Jira. Hier erfährst du genau, was jeder Teil bedeutet, wie du daraus eine sinnvolle Sprint-Prognose ableitest und welche vier Fehler die Velocity unbemerkt irreführend machen.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="what-it-shows">Was ein Velocity-Diagramm tatsächlich zeigt</h2>
+      <p>
+        Ein Velocity-Diagramm stellt deine letzten <strong>abgeschlossene Arbeit</strong> Sprints dar. Für jeden Sprint zeigt es zwei Balken nebeneinander, die Atlassian in der folgenden Dokumentation genau definiert: <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-velocity-chart/" target="_blank" rel="noopener">Dokumentation zum Velocity-Diagramm</a>:
+
+      </p>
+      <ul>
+        <li><strong>Zugesagte Arbeit</strong> (der graue Balken) — „die gesamte Schätzung aller Vorgänge im Sprint zu dessen Beginn“. Das ist der Umfang, den das Team zu Sprintbeginn zugesagt hat.</li>
+        <li><strong>Abgeschlossen</strong> (der grüne Balken) — „die gesamte abgeschlossene Schätzung am Sprintende“. Das ist die tatsächlich fertiggestellte Arbeit.</li>
+      </ul>
+      <p>
+        <strong>Velocity</strong> selbst ist der Durchschnitt dieser abgeschlossenen Werte: „Velocity wird als Durchschnitt der gesamten abgeschlossenen Schätzungen über die letzten Sprints berechnet.“ Die meisten Velocity-Diagramme zeigen diesen Durchschnitt als horizontale Linie über den Balken. So erkennst du auf einen Blick, in welchem Tempo das Team üblicherweise liefert.
+      </p>
+
+      <figure class="article-figure">
+        <img src="/imgVelocityChartForJira/screenshot-1-velocity-chart.webp" alt="Ein Velocity-Diagramm mit grauen Balken für zugesagte und grünen Balken für abgeschlossene Arbeit über zehn Sprints, einer gestrichelten Durchschnittslinie bei 16,1 Punkten und einem Say/Do-Verhältnis von 85 %" loading="lazy">
+        <figcaption>Zugesagte Arbeit (grau) und abgeschlossene Arbeit (grün) über zehn Sprints, mit gestrichelter Linie für die durchschnittliche Velocity und einem Say/Do-Verhältnis.</figcaption>
+      </figure>
+
+      <p>
+        Die Schätzung kann in <strong>Story Points</strong> (die mit Abstand häufigste Einheit), als <strong>Anzahl der Vorgänge</strong> oder in einem anderen Schätzfeld erfolgen, je nach Konfiguration deines Boards. Unabhängig von der Einheit vergleicht das Diagramm immer dasselbe: was du geplant und was du geliefert hast.
+      </p>
+
+      <h2 id="how-to-read">So liest du es: vier Muster</h2>
+      <p>
+        Lies ein Velocity-Diagramm nicht Sprint für Sprint — betrachte das <em>Muster</em> über die letzten Sprints. Vier Muster verraten dir fast alles.</p>
+
+      <h3>1. Abgeschlossene Arbeit liegt dauerhaft knapp unter der Zusage</h3>
+      <p>
+        Das ist der gesunde Normalfall. Teams schaffen selten 100 % der aufgenommenen Arbeit. Eine kleine, gleichmäßige Lücke (etwa 85–95 % der zugesagten Arbeit abgeschlossen) bedeutet, dass deine Planung realistisch ist. Die Durchschnittslinie bleibt waagerecht, und die Balken liegen nahe daran. Du kannst verlässlich prognostizieren.
+      </p>
+
+      <h3>2. Abgeschlossene Arbeit liegt Sprint für Sprint deutlich unter der Zusage</h3>
+      <p>
+        Regelmäßig zu hohe Zusagen. Das Team plant dauerhaft mehr, als es abschließt. Die Lösung ist nicht „härter arbeiten“, sondern <strong>weniger zusagen</strong>, näher am bewährten Durchschnitt der abgeschlossenen Arbeit. Zu hohe Zusagen untergraben unbemerkt das Vertrauen der Stakeholder, weil jeder Sprint wie ein verfehltes Ziel aussieht.
+      </p>
+
+      <h3>3. Die Balken schwanken von Sprint zu Sprint stark</h3>
+      <p>
+        Hohe Schwankungen — 30 Punkte, dann 8, dann 22 — bedeuten normalerweise, dass etwas anderes als das Arbeitstempo des Teams die Zahl beeinflusst: uneinheitliche Schätzungen, Umfangsänderungen mitten im Sprint, Urlaub oder große unfertige Stories, die zwischen Sprints weitergetragen werden. Ein sprunghaftes Diagramm fordert dazu auf, deinen Prozess zu prüfen. Prognosen aus einem einzigen Durchschnitt werden dadurch unzuverlässig (nutze stattdessen einen Bereich — siehe unten).
+      </p>
+
+      <h3>4. Ein langsamer, stetiger Anstieg</h3>
+      <p>
+        Ein allmählicher Aufwärtstrend über viele Sprints ist eine sinnvolle Verbesserung: Das Team wächst zusammen, Schätzungen werden stabiler und Hindernisse beseitigt. Sei aber vorsichtig bei einem <em>plötzlichen</em> Sprung — häufiger stecken Neuschätzungen oder Änderungen bei der Zählung des Umfangs dahinter als ein echter Produktivitätsgewinn.
+      </p>
+
+      <div class="callout callout-blue">
+        <p><strong>Das eine Verhältnis, das du ergänzen solltest:</strong> Teile für jeden Sprint die abgeschlossene durch die zugesagte Arbeit. Das ist dein <strong>Say/Do-Verhältnis</strong> (manchmal auch Zuverlässigkeit von Zusagen genannt). Ein Team mit durchschnittlich 60 % sagt zu viel zu; ein Team mit dauerhaft über 100 % setzt seine Zusage bewusst niedrig an. Etwa 80–100 % sind ein guter Bereich. Ausführlich behandeln wir das hier: <a href="/de/blog/sprint-predictability-say-do-ratio.html">Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis</a>.</p>
+      </div>
+
+      <h2 id="where-to-find">Wo du das Velocity-Diagramm in Jira findest</h2>
+      <p>
+        In einem <strong>unternehmensverwalteten</strong> Projekt öffnest du dein Scrum-Board und dann <strong>Berichte → Velocity-Diagramm</strong>. In einem <strong>teamverwalteten</strong> Projekt ist das entsprechende Werkzeug der <a href="https://support.atlassian.com/jira-software-cloud/docs/view-and-understand-the-team-managed-velocity-report/" target="_blank" rel="noopener">Velocity-Bericht</a>. Er misst die Velocity in Story Points oder anhand der Anzahl von Vorgängen. Beide benötigen die Funktion „Sprints“ und mindestens einen abgeschlossenen Sprint.
+      </p>
+      <p>
+        Eine strukturelle Einschränkung solltest du von Anfang an kennen: Das native Velocity-Diagramm befindet sich <em>in den Berichten eines einzelnen Boards</em>. Jira bietet nativ kein <strong>Dashboard-Gadget</strong> für Velocity. Du kannst es deshalb nicht neben Gadgets zur Sprint-Gesundheit, zum Burndown und zu Filtern auf einem gemeinsamen Dashboard platzieren, sondern musst den Bericht jedes Boards einzeln öffnen. Diese Lücke schließen Teams häufig mit einer Marketplace-App; dazu mehr am Ende. Den nativen Bericht und die App-Option haben wir hier ausführlich verglichen: <a href="/de/blog/velocity-team-managed-jira.html">Velocity für teamverwaltete Projekte</a>.
+
+      </p>
+
+      <h2 id="sprint-planning">Velocity für die Sprint-Planung nutzen</h2>
+      <p>
+        Die eigentliche Aufgabe der Velocity sind <strong>Prognosen</strong> — sie beantwortet „Wie viel können wir realistisch in den nächsten Sprint aufnehmen?“ und „Wie viele Sprints wird dieses Epic ungefähr brauchen?“. So nutzt du sie systematisch.</p>
+
+      <h3>Plane mit einem Bereich statt mit einer einzelnen Zahl</h3>
+      <p>
+        Nimm deine letzten drei bis sechs abgeschlossenen Sprints. Bilde daraus nicht nur einen Durchschnitt, den du als unumstößlich behandelst, sondern notiere den <strong>niedrigsten und höchsten Wert</strong>. Liegen die jüngsten abgeschlossenen Werte bei 18, 22, 25, 19 und 24, ist deine realistische Kapazität „ungefähr 18–25, plane mit etwa 21“. Ein Bereich berücksichtigt natürliche Schwankungen echter Teams und verhindert eine Scheingenauigkeit in der Planung.
+      </p>
+
+      <h3>Prognostiziere Epics als Bereich von Sprints</h3>
+      <p>
+        Wenn ein Epic auf 120 Punkte geschätzt ist und dein Velocity-Bereich bei 18–25 liegt, entspricht das ungefähr <strong>5 bis 7 Sprints</strong>. „5–7 Sprints“ zu kommunizieren ist deutlich ehrlicher — und hilfreicher — als mit vorgetäuschter Sicherheit „6 Sprints“ zu nennen.
+      </p>
+
+      <h3>Ziehe bekannte Unterbrechungen ab</h3>
+      <p>
+        Velocity setzt einen ungefähr normalen Sprint voraus. Reduziere die Kapazität für Feiertage, Urlaub oder einen geplanten Support-Dienst. Senke die Velocity wegen eines einmaligen Ereignisses nicht dauerhaft; plane lediglich diesen konkreten Sprint mit weniger Arbeit.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Faustregel:</strong> Ein ganz neues Team hat noch keine Velocity. Führe zunächst zwei oder drei Sprints mit bewusst niedrigen Zusagen durch, bevor du das Diagramm als Planungsgrundlage nutzt. Sowohl die Scrum-Literatur als auch Atlassians eigener <a href="https://www.atlassian.com/agile/project-management/velocity-scrum" target="_blank" rel="noopener">Leitfaden zur Velocity</a> betonen, dass Velocity ein Werkzeug ist, das ein Team im Laufe der Zeit aufbaut, keine Zahl, die du am ersten Tag festlegst.</p>
+      </div>
+
+      <h2 id="mistakes">Vier Fehler, die Velocity irreführend machen</h2>
+
+      <h3>1. Velocity verschiedener Teams vergleichen</h3>
+      <p>
+        Das ist der wichtigste Fehler. Story Points sind <em>relativ</em> — jedes Team schätzt anhand seiner eigenen bisherigen Arbeit und nicht auf einer absoluten Skala. Eine 8 des einen Teams ist eine 3 des anderen. Die Velocity zweier Teams zu vergleichen oder Teams sogar danach zu bewerten, ist sinnlos und schädlich: Es verleitet Teams dazu, ihre Schätzungen aufzublähen. Velocity lässt sich immer nur mit den bisherigen Werten <em> desselben Teams</em> vergleichen.
+      </p>
+
+      <h3>2. Velocity als Ziel behandeln, das maximiert werden muss</h3>
+      <p>
+        Sobald Velocity zum Ziel wird, verliert sie ihren Nutzen als Messgröße (ein klassisches Beispiel für Goodharts Gesetz). Teams erreichen ein Velocity-Ziel durch aufgeblähte Schätzungen, nicht dadurch, dass sie mehr Wert liefern. Das Ziel ist eine <strong>stabile, nachhaltige</strong> Velocity, die verlässliche Prognosen unterstützt — keine ständig steigende Zahl.
+      </p>
+
+      <h3>3. Die Definition von „Done“ ignorieren</h3>
+      <p>
+        Der Abschlussbalken zählt nur Vorgänge, die das Board als fertig betrachtet — standardmäßig nur die letzte Spalte. Wenn dein Team zusätzliche Status wie <em>Released</em>,  <em>QA Passed</em> oder <em>Accepted</em> verwendet, die tatsächlich fertige Arbeit bedeuten, aber nicht als abgeschlossen zugeordnet sind, wird deine Velocity in jedem Sprint unbemerkt zu niedrig ausgewiesen. Stimme deine Definition of Done und die Statuszuordnung deines Boards aufeinander ab.
+      </p>
+
+      <h3>4. Vergessen, dass Unteraufgaben ausgeschlossen sind</h3>
+      <p>
+        Atlassians natives Velocity-Diagramm <strong>berücksichtigt ausdrücklich keine Schätzungen von Unteraufgaben</strong>. Wenn dein Team oft auf Ebene der Unteraufgaben schätzt, weist das native Diagramm einen zu niedrigen Durchsatz aus. Du musst entweder auf Story-Ebene schätzen oder ein Werkzeug nutzen, das Unteraufgaben optional einbeziehen kann.
+      </p>
+
+      <h2 id="dashboard">Velocity dort anzeigen, wo das Team tatsächlich hinschaut</h2>
+      <p>
+        Die häufigste praktische Beschwerde über Jira-Velocity betrifft nicht die Berechnung, sondern den <em>Ort</em>. Das Diagramm liegt versteckt in den Berichten eines Boards, während das Dashboard die gemeinsame Sicht des Teams auf den Sprint bietet. Stand-ups finden am Dashboard statt; Reviews finden am Dashboard statt; Velocity nicht.
+      </p>
+      <p>
+        Genau diese Lücke schließt <a href="/de/velocity-chart.html">Velocity Chart for Jira</a> . Das auf Forge basierende Dashboard-Gadget zeigt dasselbe Diagramm aus zugesagter und abgeschlossener Arbeit samt Durchschnittslinie auf jedem Dashboard — und ergänzt Funktionen, die im nativen Bericht fehlen: eine <strong>konfigurierbare Definition of Done</strong>, ein auswählbares Schätzfeld, optional berücksichtigte Unteraufgaben, die Say/Do-Kennzahl zur Vorhersagbarkeit und den Vergleich mehrerer Boards in einem Gadget. Es funktioniert mit unternehmensverwalteten und teamverwalteten Scrum-Boards und greift nur lesend zu — deine Daten verlassen Atlassian nicht.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Was zeigt ein Velocity-Diagramm in Jira?</p>
+        <p class="faq-a">Zwei Balken pro abgeschlossenem Sprint: die Zusage (die gesamte Schätzung zu Sprintbeginn) und die abgeschlossene Arbeit (die gesamte Schätzung der bis zum Sprintende erledigten Arbeit). Velocity ist der Durchschnitt der abgeschlossenen Werte über die letzten Sprints und wird normalerweise als Linie angezeigt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist eine gute Velocity in Jira?</p>
+        <p class="faq-a">Es gibt keine allgemeingültige Zahl — Velocity wird in den eigenen relativen Story Points eines Teams gemessen. Eine gute Velocity ist stabil und berechenbar (abgeschlossene Arbeit entspricht über die Zeit ungefähr der Zusage), nicht möglichst hoch. Vergleiche niemals die reine Velocity zweier verschiedener Teams.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Auf wie vielen Sprints sollte eine Velocity-Prognose basieren?</p>
+        <p class="faq-a">Die letzten drei bis sechs abgeschlossenen Sprints. Weniger als drei schwanken zu stark; ein deutlich längerer Rückblick kann ein anderes Team oder eine andere Arbeitsweise vermischen. Nutze den Bereich vom niedrigsten bis zum höchsten Wert, nicht nur den Durchschnitt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Warum ist mein Velocity-Diagramm leer oder zeigt null?</p>
+        <p class="faq-a">Meistens gibt es einen von zwei Gründen: Das Board ist ein Kanban-Board (ohne Sprints keine Velocity), oder deine Vorgänge werden in einem anderen Feld geschätzt, als das Diagramm ausliest. Velocity benötigt ein Scrum-Board mit mindestens einem abgeschlossenen Sprint. Das Schätzfeld muss dem entsprechen, das dein Team tatsächlich nutzt.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Hat Jira ein Velocity-Dashboard-Gadget?</p>
+        <p class="faq-a">Nativ nicht — das Velocity-Diagramm befindet sich im Bereich „Berichte“ eines einzelnen Boards, ohne integriertes Dashboard-Gadget. Um Velocity auf einem Dashboard anzuzeigen, verwendest du eine Marketplace-App wie Velocity Chart for Jira.</p>
+      </div>
+
+      <div class="article-cta">
+        <h3>Sieh deine Velocity auf jedem Dashboard</h3>
+        <p>Velocity Chart for Jira zeigt zugesagte und abgeschlossene Arbeit, die Durchschnittslinie und Say/Do auf jedem Dashboard — mit deiner eigenen Definition of Done, auf unternehmensverwalteten und teamverwalteten Boards.</p>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-white">Im Marketplace ansehen →</a>
+      </div>
+
+    </article>
+
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#what-it-shows">Was es zeigt</a></li>
+          <li><a href="#how-to-read">So liest du es</a></li>
+          <li><a href="#where-to-find">Wo du es findest</a></li>
+          <li><a href="#sprint-planning">Für die Planung nutzen</a></li>
+          <li><a href="#mistakes">Vier Fehler</a></li>
+          <li><a href="#dashboard">Auf einem Dashboard</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/velocity-chart.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/img/velocity-chart-icon.png" alt="Velocity Chart for Jira" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Velocity Chart for Jira</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenloser Tarif</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Im Marketplace ansehen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/how-sprint-velocity-is-calculated.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">So wird die Sprint-Velocity in Jira berechnet</a>
+        <a href="/de/blog/sprint-predictability-say-do-ratio.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Sprint-Vorhersagbarkeit und das Say/Do-Verhältnis</a>
+        <a href="/de/blog/velocity-team-managed-jira.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Velocity für teamverwaltete Projekte in Jira</a>
+        <a href="/de/blog/jira-sprint-health-gadget.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Das Jira-Sprint-Health-Gadget</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) { if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h; });
+      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + active.id); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

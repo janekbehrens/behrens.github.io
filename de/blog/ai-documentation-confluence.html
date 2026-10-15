@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary SEO ── -->
+  <title>KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden | Janek Behrens</title>
+  <meta name="description" content="Wie KI-Dokumentation für Confluence in der Praxis funktioniert — von Dokumentationsvoreinstellungen und Sprachunterstützung bis zu Freigabeprozessen und Kostenkontrolle mit BYOK.">
+  <link rel="canonical" href="https://janekbehrens.de/de/blog/ai-documentation-confluence.html">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden",
+  "description": "Wie KI-Dokumentation für Confluence in der Praxis funktioniert — von Dokumentationsvoreinstellungen und Sprachunterstützung bis zu Freigabeprozessen und Kostenkontrolle mit BYOK.",
+  "url": "https://janekbehrens.de/de/blog/ai-documentation-confluence.html",
+  "datePublished": "2026-02-03T00:00:00+02:00",
+  "dateModified": "2026-02-03T00:00:00+02:00",
+  "image": "https://janekbehrens.de/imgCodeDoc/DashboardTop.png",
+  "keywords": [
+    "Confluence",
+    "KI",
+    "Dokumentation",
+    "Atlassian"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/",
+    "sameAs": [
+      "https://www.linkedin.com/in/janek-behrens-55b3651b6/"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden">
+  <meta property="og:description" content="Wie KI-Dokumentation für Confluence tatsächlich funktioniert — Voreinstellungen, Auslöser, Freigabeprozesse und Kostenkontrolle. Ein Praxisleitfaden für Atlassian-Teams.">
+  <meta property="og:url" content="https://janekbehrens.de/de/blog/ai-documentation-confluence.html">
+  <meta property="og:image" content="https://janekbehrens.de/imgCodeDoc/DashboardTop.png">
+  <meta property="og:site_name" content="Janek Behrens">
+  <meta property="article:author" content="Janek Behrens">
+  <meta property="article:published_time" content="2026-02-03">
+  <meta property="article:modified_time" content="2026-02-03">
+  <meta property="article:tag" content="Confluence">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Documentation">
+  <meta property="article:tag" content="Atlassian">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden">
+  <meta name="twitter:description" content="KI-Dokumentation für Confluence — Voreinstellungen, Auslöser, Freigabeprozesse und BYOK-Kostenkontrolle für Atlassian-Teams erklärt.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/DashboardTop.png">
+
+  <!-- ── Schema.org Article ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden",
+  "description": "Wie KI-Dokumentation für Confluence in der Praxis funktioniert — Dokumentationsvoreinstellungen, Sprachunterstützung, Freigabeprozesse und Kostenkontrolle mit BYOK.",
+  "image": "https://janekbehrens.de/imgCodeDoc/DashboardTop.png",
+  "datePublished": "2026-02-03T00:00:00+02:00",
+  "dateModified": "2026-02-03T00:00:00+02:00",
+  "author": {
+    "@type": "Person",
+    "name": "Janek Behrens",
+    "url": "https://janekbehrens.de/de/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Janek Behrens",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://janekbehrens.de/img/companyLogo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://janekbehrens.de/de/blog/ai-documentation-confluence.html",
+    "inLanguage": "de"
+  },
+  "inLanguage": "de"
+}
+</script>
+
+  <!-- ── FAQ Schema ── -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann KI automatisch Dokumentation für Confluence schreiben?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Werkzeuge wie CodeDoc AI lesen dein Quellcode-Repository und erzeugen mit einem KI-Modell (Anthropic Claude, OpenAI GPT oder Google Gemini) strukturierte Dokumentationsseiten direkt in Confluence. Die Ausgabe ist eine native Confluence-Seite — kein PDF oder Export —, die du wie jede andere Seite bearbeiten, kommentieren und versionieren kannst."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist eine Dokumentationsvoreinstellung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Eine Voreinstellung ist eine Vorlage, die Struktur, Ton und Detailtiefe der erzeugten Confluence-Seite steuert. Unterschiedliche Voreinstellungen richten sich an unterschiedliche Zielgruppen: „Developer Documentation“ erzeugt neun technische Abschnitte mit Codebeispielen und API-Referenzen; „Management Overview“ eine nicht technische Geschäftszusammenfassung; „Compliance & Audit“ eine Tabelle zu Sicherheitskontrollen und DSGVO-Zuordnungen. CodeDoc AI enthält acht integrierte Voreinstellungen und eine benutzerdefinierte Option."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was kostet KI-Dokumentation für Confluence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CodeDoc AI berechnet keine Gebühr pro Erzeugung — du bezahlst nur das Marketplace-Abonnement. KI-Kosten rechnet dein Anbieter direkt ab. Google Gemini bietet ein kostenloses Kontingent zum Testen. Anthropic Claude Haiku oder OpenAI gpt-4o-mini kosten bei einem mittelgroßen Repository typischerweise 0,01–0,05 US-Dollar pro Erzeugung."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche Programmiersprachen unterstützt KI-Dokumentation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CodeDoc AI unterstützt alle textbasierten Quelldateien — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin und weitere. Es gibt keine Positivliste von Sprachen. Binärdateien, Build-Ausgaben und Lock-Dateien werden automatisch von der Analyse ausgeschlossen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich KI-Dokumentation prüfen, bevor sie in Confluence veröffentlicht wird?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Aktiviere in den Auftragseinstellungen „Require approval before publishing“ (Freigabe vor Veröffentlichung erforderlich). Die erzeugte Seite wird als Confluence-Entwurf mit dem Präfix [DRAFT] gespeichert und erst veröffentlicht, wenn du sie im Dashboard freigibst."
+      }
+    }
+  ],
+  "inLanguage": "de"
+}
+</script>
+
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+
+  <style>
+    .article-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .article-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .article-hero {
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+    }
+    .article-hero-inner { max-width: 740px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      background: #E3FCEF; color: #006644;
+    }
+    .article-date, .article-readtime { font-size: 0.82rem; color: var(--text-faint); }
+    .article-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .article-intro { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .article-body h2 {
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin: 40px 0 14px;
+      padding-top: 8px; border-top: 1px solid var(--border-2); line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+    .article-body p { font-size: 0.95rem; color: var(--text-3); line-height: 1.75; margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 0; padding-left: 24px; }
+    .article-body li { font-size: 0.95rem; color: var(--text-3); line-height: 1.7; margin-bottom: 6px; }
+    .article-body strong { color: var(--text); }
+    .article-body a { color: var(--blue); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; line-height: 1.65; }
+    .callout-blue { background: var(--blue-lite); border-left: 3px solid var(--blue); color: #0747A6; }
+    .callout-green { background: #E3FCEF; border-left: 3px solid #00875A; color: #006644; }
+    .callout p { margin: 0; color: inherit; font-size: inherit; }
+    .callout strong { color: inherit; }
+    .faq-item { border-top: 1px solid var(--border-2); padding: 18px 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--border-2); }
+    .faq-q { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 0.92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .article-cta {
+      background: linear-gradient(135deg, #0052CC 0%, #0747A6 100%);
+      border-radius: 12px; padding: 32px; text-align: center; margin: 40px 0 0;
+    }
+    .article-cta h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .article-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    @media (min-width: 761px) { .article-sidebar { position: sticky; top: 72px; } }
+    .sidebar-block {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .sidebar-block h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { font-size: 0.85rem; color: var(--text-2); text-decoration: none; line-height: 1.4; display: block; }
+    .toc-list a:hover { color: var(--blue); }
+    .toc-list a.active { color: var(--blue); font-weight: 600; }
+    .diagram { margin: 24px 0; }
+    .diagram img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(23,43,77,0.07); }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+
+    /* Preset table */
+    .preset-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.88rem; }
+    .preset-table th {
+      background: #F4F5F7; text-align: left; padding: 10px 12px;
+      border: 1px solid var(--border); font-weight: 700; font-size: 0.8rem;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .preset-table td { padding: 10px 12px; border: 1px solid var(--border-2); color: var(--text-3); vertical-align: top; }
+    .preset-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .preset-table tr:hover td { background: #FAFBFC; }
+  </style>
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/ai-documentation-confluence.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/ai-documentation-confluence.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/ai-documentation-confluence.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body>
+
+  <!-- Nav injected by components.js -->
+
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-meta">
+        <span class="article-tag">Confluence · KI</span>
+        <span class="article-date">3. Februar 2026</span>
+        <span class="article-readtime">· 7 Min. Lesezeit</span>
+      </div>
+      <h1>KI-gestützte Dokumentation für Atlassian-Teams: Ein Praxisleitfaden</h1>
+      <p class="article-intro">
+        KI kann deine Confluence-Dokumentation schreiben — wenn du ihr die richtige Struktur, Zielgruppe und Qualitätsprüfung vorgibst. Hier erfährst du praktisch, wie KI-Dokumentation für Atlassian-Teams funktioniert, was du davon erwarten kannst und wo weiterhin ein Mensch mitwirken muss.
+      </p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-body">
+
+      <h2 id="problem">Warum Dokumentation immer hinterherhinkt</h2>
+      <p>
+        Dokumentation hat ein grundlegendes Zeitproblem. Genau dann, wenn sie am präzisesten wäre — unmittelbar nach der Entwicklung einer Funktion —, wollen alle zum nächsten Ticket weitergehen. Also wird sie verschoben. Aus einem Sprint wird ein Quartal und daraus „Wir machen es richtig, wenn wir Zeit haben“.
+      </p>
+      <p>
+        Das Ergebnis sind Confluence-Bereiche voller Seiten, die bestenfalls zu 80 % stimmen, ohne klares Signal für veraltete Abschnitte. Neue Teammitglieder können ihnen nicht vertrauen. Auditoren können sich nicht darauf verlassen. Support-Entwickler verschwenden Zeit damit, die Person zu finden, die den Code geschrieben hat.
+      </p>
+      <p>
+        KI-Dokumentation verändert den Aufwand dieses Problems. Statt einen Entwickler zwei Stunden eine Confluence-Seite schreiben zu lassen, erstellt KI den Entwurf in weniger als einer Minute — danach investierst du fünfzehn Minuten in Prüfung und Anpassung. Der Zeitaufwand sinkt um eine Größenordnung, und die Mindestgenauigkeit steigt, weil die KI den tatsächlichen Code liest statt die Erinnerung einer Person daran.
+      </p>
+
+      <h2 id="what-it-does">Was KI-Dokumentation für Confluence tatsächlich tut</h2>
+      <p>
+        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> liest deinen Quellcode aus einem verbundenen Git-Repository (GitHub, GitLab, Bitbucket oder Azure DevOps) und erzeugt mit deinem ausgewählten KI-Modell eine strukturierte Confluence-Seite. Die App nutzt <a href="/de/blog/byok-ai-atlassian.html">BYOK (Bring Your Own Key)</a> — du verbindest dein eigenes Anthropic-, OpenAI- oder Google-KI-Konto, und der Code gelangt direkt von Git zu deinem KI-Anbieter. Die App selbst speichert deinen Quellcode nie.
+      </p>
+      <p>
+        Die Ausgabe ist eine native Confluence-Seite, kein PDF oder Anhang. Du kannst sie bearbeiten, Kommentare direkt im Text ergänzen, eine Seitenvorlage anwenden, zwischen Bereichen verschieben oder versionieren — genau wie jede andere manuell erstellte Seite deines Teams.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/DashboardTop.png" alt="CodeDoc-AI-Dashboard mit Dokumentationsaufträgen, Erzeugungsverlauf und aktiven Repositories" loading="lazy">
+        <p class="diagram-caption">Das CodeDoc-AI-Dashboard — Dokumentationsaufträge, jüngste Erzeugungen und Status auf einen Blick</p>
+      </div>
+
+      <h2 id="presets">Die acht Dokumentationsvoreinstellungen — für wen sie gedacht sind</h2>
+      <p>
+        Nicht jede Dokumentation richtet sich an dieselbe Zielgruppe. Ein Entwickler braucht in deiner API-Referenz andere Informationen als ein Compliance-Verantwortlicher bei der Prüfung deiner DSGVO-Kontrollen. Beide brauchen etwas anderes als ein neues Teammitglied, das die Codebasis erstmals verstehen möchte. Dafür gibt es Voreinstellungen.
+      </p>
+      <p>
+        Jede Voreinstellung erzeugt eine andere, auf ihre Zielgruppe abgestimmte Seitenstruktur:
+      </p>
+
+      <table class="preset-table">
+        <thead>
+          <tr>
+            <th>Voreinstellung</th>
+            <th>Zielgruppe</th>
+            <th>Was sie erzeugt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Entwicklerdokumentation (Developer Documentation)</td>
+            <td>Entwickler</td>
+            <td>Technische Übersicht, Architektur, API-Referenz, Konfiguration, Fehlerbehebung. Neun Abschnitte.</td>
+          </tr>
+          <tr>
+            <td>Umfassende technische Dokumentation (Comprehensive Technical)</td>
+            <td>Entwickler</td>
+            <td>Vertiefung aller Module, Datenmodelle, Sicherheit, Build-Pipeline, Tests und bekannter Einschränkungen. Zwölf Abschnitte.</td>
+          </tr>
+          <tr>
+            <td>Managementübersicht (Management Overview)</td>
+            <td>Stakeholder</td>
+            <td>Geschäftliche Fähigkeiten, Risiken, Skalierbarkeit und strategische Empfehlungen. Ohne Codebeispiele.</td>
+          </tr>
+          <tr>
+            <td>Kundendokumentation (Customer Documentation)</td>
+            <td>Externe Nutzer</td>
+            <td>Funktionen, Einstiegsanleitung und Integrationshinweise. Keine internen Implementierungsdetails.</td>
+          </tr>
+          <tr>
+            <td>Compliance und Audit (Compliance &amp; Audit)</td>
+            <td>Sicherheit / Compliance</td>
+            <td>Sicherheitskontrollen, Datenklassifizierung, Zugriffsverwaltung, DSGVO-/ISO-27001-/SOC-2-Zuordnungen und Risikoregister.</td>
+          </tr>
+          <tr>
+            <td>Einarbeitungsanleitung (Onboarding Guide)</td>
+            <td>Neue Teammitglieder</td>
+            <td>Schrittweise Einrichtung, einfach erklärte Grundkonzepte, tägliche Abläufe und typische Fehler, die du vermeiden solltest.</td>
+          </tr>
+          <tr>
+            <td>Kurzreferenz (Quick Reference)</td>
+            <td>Entwickler</td>
+            <td>Kompakte Technologietabelle, wichtige Befehle, Projektstruktur und zentrale Konfigurationswerte. Fünf Abschnitte.</td>
+          </tr>
+          <tr>
+            <td>Benutzerdefiniert</td>
+            <td>Beliebig</td>
+            <td>Dein eigener Prompt (bis zu 2.000 Zeichen). Vollständige Kontrolle über Struktur und Inhalt.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/Presets.png" alt="Auswahl der Voreinstellungen in CodeDoc AI mit allen acht Dokumentationsvoreinstellungen" loading="lazy">
+        <p class="diagram-caption">Die acht integrierten Voreinstellungen — wähle die passende für deine Zielgruppe</p>
+      </div>
+
+      <div class="callout callout-blue">
+        <p><strong>Praktischer Tipp:</strong> Führe dasselbe Repository mit zwei unterschiedlichen Voreinstellungen aus und veröffentliche beide Seiten. Ein Stakeholder aus dem Management und ein neuer Entwickler brauchen beide Dokumentation — nur unterschiedliche. Zwei Aufträge, eine Codebasis, zwei automatisch versorgte Zielgruppen.</p>
+      </div>
+
+      <h2 id="languages">Dokumentation in zehn Sprachen</h2>
+      <p>
+        Mehrsprachige Teams haben häufig Confluence-Bereiche in mehreren Sprachen. Dokumentation wird trotzdem oft auf Englisch geschrieben, weil das am wenigsten Aufwand macht. Mit CodeDoc AI wählst du die Ausgabesprache beim Erstellen des Auftrags. Aktuell verfügbar sind:
+      </p>
+      <p>
+        Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch, Japanisch, Chinesisch (vereinfacht), Koreanisch und benutzerdefiniert (eigene Sprache oder eigenen Dialekt im Prompt festlegen).
+      </p>
+      <p>
+        Die Sprache wird je Auftrag eingestellt. Du kannst dasselbe Repository zweimal ausführen — einmal auf Englisch für dein Entwicklungsteam und einmal auf Deutsch für eine lokale Compliance-Anforderung —, indem du zwei separate Aufträge für dasselbe Repository erstellst.
+      </p>
+
+      <h2 id="file-selection">KI-gestützte Dateiauswahl: Qualität vor Menge</h2>
+      <p>
+        Die Qualität KI-generierter Dokumentation hängt stark von den bereitgestellten Dateien ab. Ein Repository mit 400 Dateien einschließlich Lock-Dateien, Build-Artefakten, Migrationsskripten und Drittanbietercode liefert schlechtere Dokumentation als eine sorgfältig gewählte Teilmenge von 30 Dateien mit der Kernlogik der Anwendung.
+      </p>
+      <p>
+        CodeDoc AI löst das mit einem zweistufigen Auswahlprozess. Zuerst analysiert die KI Dateinamen und Repository-Struktur, um die relevantesten Quelldateien zu bestimmen. Dann prüfst du die Auswahl, fixierst sie (für jeden Durchlauf gleich) oder lässt sie dynamisch (bei jedem Durchlauf neu bewertet). Optional ergänzt du Glob-Filter zum Ein- oder Ausschließen bestimmter Pfade.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/Fileselection.png" alt="Dateianalyse-Vorschau mit ausgewählten Dateien, Tokenschätzung und KI-ausgewählten Dateien in CodeDoc AI" loading="lazy">
+        <p class="diagram-caption">Dateianalyse-Vorschau — Tokenschätzung und KI-ausgewählte Dateien vor der Erzeugung</p>
+      </div>
+
+      <p>
+        Die Analysevorschau zeigt vor der Ausführung <strong>Gesamtanzahl der Dateien</strong>,  <strong>Anzahl der Codedateien</strong> und <strong>geschätzte Tokenkosten</strong> an. Bei großen Repositories senkt die KI-Dateiauswahl den Tokenverbrauch typischerweise um 60–80 % und erzeugt dabei fokussiertere Dokumentation.
+      </p>
+
+      <h2 id="triggers">Wann wird Dokumentation neu erzeugt?</h2>
+      <p>
+        Die Auslösereinstellung steuert, wie häufig ein Auftrag läuft. Es gibt vier Optionen:
+      </p>
+      <ul>
+        <li><strong>Manuell:</strong> Klicke beim Auftrag auf „Run“. Gut für einmalige Erzeugung und Tests.</li>
+        <li><strong>Bei Commit:</strong> Läuft automatisch per Webhook, wenn Code auf den konfigurierten Branch gepusht wird. Hält die Dokumentation möglichst aktuell — jeder Push erzeugt sie neu.</li>
+        <li><strong>Bei Merge:</strong> Läuft beim Zusammenführen eines Pull Requests. Besser geeignet für Teams, deren Dokumentation stabilen, geprüften Code statt jeden Zwischenstand abbilden soll.</li>
+        <li><strong>Nach Zeitplan:</strong> Läuft täglich, wöchentlich oder monatlich zu deiner gewählten Zeit. Geeignet für Dokumentation langlebiger Infrastruktur oder langsam veränderlicher Systeme.</li>
+      </ul>
+      <p>
+        Mehr zur Einrichtung von Webhook-Auslösern mit GitHub, GitLab, Bitbucket und Azure DevOps findest du hier: <a href="/de/blog/automate-confluence-documentation.html">Confluence-Dokumentation automatisieren: Von manuellen Updates zu CI/CD</a>.
+
+      </p>
+
+      <h2 id="approval">Der Freigabeprozess: Eine menschliche Qualitätsprüfung</h2>
+      <p>
+        KI-generierte Dokumentation beschreibt präzise, was der Code tut. Sie beschreibt nicht immer präzise, was der Code <em> tun sollte</em> , den geschäftlichen Kontext einer Architekturentscheidung oder den historischen Grund für die Gestaltung einer Komponente. Diese Feinheiten erfordern einen Menschen.
+      </p>
+      <p>
+        Mit dem Freigabeprozess ergänzt du einen Prüfschritt, bevor Inhalte die veröffentlichte Confluence-Seite erreichen. Bei Aktivierung wird die erzeugte Dokumentation als Confluence-Entwurf mit dem Präfix <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code>  gespeichert. Sie bleibt dort, bis du das Dashboard öffnest, sie prüfst und veröffentlichst oder verwirfst.
+      </p>
+
+      <div class="diagram">
+        <img src="/imgCodeDoc/Jobs.png" alt="Auftragsübersicht in CodeDoc AI mit Auftragsstatus, letztem Durchlauf und Freigabewarteschlange" loading="lazy">
+        <p class="diagram-caption">Auftragsübersicht — ausstehende Freigaben erscheinen hier vor der Veröffentlichung in Confluence</p>
+      </div>
+
+      <p>
+        Wann du ihn nutzen solltest: Kundendokumentation, Compliance-Seiten und Einarbeitungsanleitungen. Wann du darauf verzichten kannst: interne Entwicklerreferenzen, die bei jedem Merge aktualisiert werden und bei denen Geschwindigkeit wichtiger ist als redaktionelle Präzision.
+      </p>
+
+      <h2 id="example">Praxisbeispiel: Einen neuen Entwickler einarbeiten</h2>
+      <p>
+        Ein häufiger Engpass wachsender Teams ist Einarbeitungsdokumentation, die schon wenige Wochen nach Erstellung veraltet. So könnte ein Team das mit CodeDoc AI lösen:
+      </p>
+      <ol>
+        <li>Erstelle einen Auftrag pro Repository mit der Voreinstellung <strong>Einarbeitungsanleitung (Onboarding Guide)</strong> .</li>
+        <li>Setze den Auslöser auf <strong>Bei Merge (On Merge)</strong> — die Anleitung wird jedes Mal neu erzeugt, wenn eine größere Änderung zusammengeführt wird.</li>
+        <li>Aktiviere den <strong>Freigabeprozess</strong> — ein erfahrener Entwickler prüft den Entwurf und ergänzt Kontext, den die KI nicht kennen kann (das „Warum“ hinter Architekturentscheidungen).</li>
+        <li>Veröffentliche die freigegebene Seite im Confluence-Einarbeitungsbereich des Teams.</li>
+      </ol>
+      <p>
+        Das Ergebnis ist eine Einarbeitungsdokumentation, die die aktuelle Codebasis statt die von vor sechs Monaten abbildet. Neue Entwickler erhalten korrekte Einrichtungshinweise, eine klare Projektstruktur und Erklärungen verbreiteter Muster — ohne dass ein erfahrener Entwickler einen Nachmittag mit dem Schreiben verbringt.
+      </p>
+
+      <h2 id="cost">Die Kosten verstehen</h2>
+      <p>
+        CodeDoc AI berechnet keine Gebühr pro Erzeugung. Du zahlst nur das Atlassian-Marketplace-Abonnement. KI-Kosten rechnet dein Anbieter direkt nach Tokenverbrauch ab:
+      </p>
+      <ul>
+        <li><strong>Google Gemini</strong> hat ein kostenloses Kontingent — gut zum Testen und für geringe Nutzung.</li>
+        <li><strong>Anthropic Claude Haiku</strong> und <strong>OpenAI gpt-4o-mini</strong> sind die günstigsten kostenpflichtigen Optionen: typischerweise 0,01–0,05 US-Dollar pro Erzeugung bei einem mittelgroßen Repository.</li>
+        <li>Größere Modelle (Claude Sonnet, GPT-4o) kosten mehr, liefern bei komplexen Codebasen aber differenziertere Ergebnisse.</li>
+      </ul>
+      <p>
+        Auch die Dateiauswahl ist entscheidend für die Kostenkontrolle: 30 relevante Dateien statt 300 zu senden, kann Tokenverbrauch und damit KI-Kosten um 80 % oder mehr senken.
+      </p>
+
+      <h2 id="faq">Häufig gestellte Fragen</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann KI automatisch Dokumentation für Confluence schreiben?</p>
+        <p class="faq-a">Ja. CodeDoc AI liest deinen Quellcode aus einem verbundenen Git-Repository und erzeugt mit deinem ausgewählten KI-Modell strukturierte Confluence-Seiten. Als Auslöser stehen manuelle Durchläufe, Git-Webhooks (bei Commit oder Merge) und geplante Durchläufe zur Verfügung.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was ist eine Dokumentationsvoreinstellung?</p>
+        <p class="faq-a">Eine Voreinstellung steuert Struktur, Ton und Detailtiefe der erzeugten Seite. „Developer Documentation“ erzeugt technische Abschnitte mit API-Referenzen, „Management Overview“ eine nicht technische Geschäftszusammenfassung und „Compliance &amp; Audit“ Sicherheitskontrollen und Zuordnungstabellen zu Regelwerken. CodeDoc AI enthält acht integrierte Voreinstellungen und eine vollständig benutzerdefinierte Option.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Was kostet KI-Dokumentation für Confluence?</p>
+        <p class="faq-a">Die App selbst berechnet keine Gebühr pro Erzeugung — du zahlst nur das Marketplace-Abonnement. KI-Kosten rechnet dein Anbieter ab: Google Gemini hat ein kostenloses Kontingent; Anthropic Haiku und OpenAI gpt-4o-mini kosten bei einem mittelgroßen Repository typischerweise 0,01–0,05 US-Dollar pro Erzeugung.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Welche Programmiersprachen werden unterstützt?</p>
+        <p class="faq-a">Alle textbasierten Quelldateien — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin und weitere. Es gibt keine Positivliste von Sprachen. Binärdateien, Build-Artefakte und Lock-Dateien werden automatisch ausgeschlossen.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Kann ich KI-generierte Dokumentation vor der Veröffentlichung prüfen?</p>
+        <p class="faq-a">Ja. Aktiviere in den Auftragseinstellungen „Require approval before publishing“ (Freigabe vor Veröffentlichung erforderlich). Die Seite wird als Confluence-Entwurf mit dem Präfix [DRAFT] gespeichert und erst veröffentlicht, wenn du sie im Dashboard freigibst.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Unterstützt CodeDoc AI mehrere Git-Anbieter?</p>
+        <p class="faq-a">Ja — GitHub, GitLab, Bitbucket und Azure DevOps (Cloud). Du kannst mehrere Anbieter gleichzeitig verbinden und separate Aufträge für Repositories auf unterschiedlichen Plattformen erstellen.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3>Erzeuge Dokumentation für dein Team</h3>
+        <p>CodeDoc AI lässt sich im Atlassian Marketplace kostenlos testen — alle acht Voreinstellungen, zehn Sprachen und automatische Auslöser sind enthalten.</p>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
+      </div>
+
+    </article>
+
+    <!-- ── Sidebar ── -->
+    <aside class="article-sidebar">
+
+      <div class="sidebar-block">
+        <h3>In diesem Artikel</h3>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Warum Dokumentation immer hinterherhinkt</a></li>
+          <li><a href="#what-it-does">Was KI-Dokumentation tut</a></li>
+          <li><a href="#presets">Die acht Dokumentationsvoreinstellungen</a></li>
+          <li><a href="#languages">Dokumentation in zehn Sprachen</a></li>
+          <li><a href="#file-selection">KI-Dateiauswahl</a></li>
+          <li><a href="#triggers">Wann wird neu erzeugt?</a></li>
+          <li><a href="#approval">Der Freigabeprozess</a></li>
+          <li><a href="#example">Praxisbeispiel</a></li>
+          <li><a href="#cost">Die Kosten verstehen</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Die App</h3>
+        <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:14px;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Mehr aus dem Blog</h3>
+        <a href="/de/blog/confluence-documentation-github.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Confluence-Dokumentation automatisch aus GitHub erzeugen</a>
+        <a href="/de/blog/byok-ai-atlassian.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">BYOK-KI für Atlassian: Was sie bedeutet</a>
+        <a href="/de/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Confluence-Dokumentation automatisieren: Von manuell zu CI/CD</a>
+        <a href="/de/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Ein Jira-Projekt automatisch dokumentieren</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+
+  <script>
+  (function () {
+    var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
+    var links    = document.querySelectorAll('#toc a');
+    if (!headings.length || !links.length) return;
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active  = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top + window.scrollY <= scrollY) active = h;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
+
+</body>
+</html>

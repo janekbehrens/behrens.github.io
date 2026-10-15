@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <title>Support — CodeDoc AI for Confluence</title>
+  <meta name="description" content="Hilfe zu CodeDoc AI for Confluence — häufige Fragen, Anleitungen zur Fehlerbehebung und direkter Supportkontakt für die Atlassian Forge-App.">
+  <link rel="canonical" href="https://janekbehrens.de/de/codedoc-ai-support.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/codedoc-ai-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/codedoc-ai-support.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">CodeDoc AI for Confluence</p>
+
+    <h2>Hilfe erhalten</h2>
+    <p>
+      Du hast eine Frage, einen Fehler gefunden oder einen Funktionswunsch? Wir helfen dir gerne. Schreib uns eine E-Mail; wir antworten in der Regel innerhalb von <strong>1–2 Werktagen</strong>. Alternativ kannst du ein öffentliches Issue auf GitHub eröffnen. Schau zuerst in die vorhandenen Issues: Vielleicht gibt es bereits eine Antwort auf deine Frage.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=CodeDoc%20AI%20Support">support@janekbehrens.de</a><br>
+        <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/codedoc-ai-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/codedoc-ai-issues</a><br>
+        <strong>Dokumentation:</strong> <a href="/de/codedoc-ai-docs.html">Dokumentation zu CodeDoc AI for Confluence</a><br>
+        <strong>Antwortzeit:</strong> 1–2 Werktage (Montag bis Freitag)
+      </p>
+    </div>
+
+    <h2>Bevor du uns kontaktierst</h2>
+    <p>Die meisten Fragen beantwortet die <a href="/de/codedoc-ai-docs.html">Dokumentation</a>: Sie behandelt Einrichtung, Synchronisierungsblöcke, KI-Seiten, Git- und KI-Anbieter, Webhooks, Zeitpläne und <a href="/de/codedoc-ai-docs.html#troubleshooting">Fehlerbehebung</a>. Häufige Fragen:</p>
+    <ul>
+      <li><strong>„the file or the branch does not exist (HTTP 404)“ (Datei oder Branch existiert nicht)</strong>: Prüfe den Dateipfad und den Branch in den Blockeinstellungen. Pfade unterscheiden Groß- und Kleinschreibung und beginnen unterhalb des Repository-Stammverzeichnisses; <em>„Show preview“ (Vorschau anzeigen)</em> prüft den Pfad vor dem Speichern.</li>
+      <li><strong>„the Git provider rejected the access token (HTTP 401)“ (Git-Anbieter hat das Zugriffstoken abgelehnt)</strong>: Das in CodeDoc gespeicherte Token ist ungültig oder abgelaufen. Ein Administrator kann es unter „Settings → Connections“ ersetzen. Der Block behält seinen letzten gültigen Inhalt bis zur nächsten erfolgreichen Aktualisierung.</li>
+      <li><strong>„Settings incomplete“ (Einstellungen unvollständig) oder „Waiting for approval“ (Freigabe ausstehend)</strong>:  <em>„Settings incomplete“</em> listet die fehlenden Einstellungen auf (Seite bearbeiten, Block auswählen und Stiftsymbol anklicken). <em>„Waiting for approval“</em> bedeutet, dass neue oder geänderte Einstellungen noch nicht freigegeben sind: Ein Job Operator oder Administrator, der die Seite bearbeiten darf, muss sie einmal öffnen.</li>
+      <li><strong>„On every push“ (bei jedem Push) aktualisiert nicht</strong>: Push-Aktualisierungen benötigen im Repository den CodeDoc-Webhook mit dem Geheimnis aus „CodeDoc → Settings → Webhook“ (<a href="/de/codedoc-ai-docs.html#jobs-webhooks">Webhook-Einrichtung</a>) und einen Push auf den Branch, dem der Block folgt. Aufrufe ohne das Geheimnis werden abgelehnt (das Zustellprotokoll des Git-Anbieters zeigt HTTP 403). <em>„Update now“ (jetzt aktualisieren)</em> prüft den Block in der Zwischenzeit.</li>
+      <li><strong>„A Confluence page with this title already exists“ (Confluence-Seite mit diesem Titel existiert bereits)</strong>: Seitentitel sind pro Bereich eindeutig. Benenne die KI-Seite um oder benenne die andere Seite in Confluence um bzw. verschiebe sie.</li>
+      <li><strong>Eine geplante KI-Seite wurde nicht zum erwarteten Zeitpunkt ausgeführt</strong>: Zeitpläne werden stündlich geprüft, sodass ein Lauf bis zu etwa 1 Stunde nach dem konfigurierten Zeitpunkt startet.</li>
+    </ul>
+
+    <h2>Was in eine Fehlermeldung gehört</h2>
+    <ul>
+      <li>Die URL deiner Confluence-Site</li>
+      <li>Ob es um einen Synchronisierungsblock oder eine KI-Seite geht und welche genaue Meldung CodeDoc anzeigt</li>
+      <li>Am einfachsten: Die Schaltfläche <strong>„Report a bug“ (Fehler melden)</strong> unter <strong>„Settings → Privacy &amp; help“</strong> erstellt eine vorausgefüllte E-Mail mit Diagnoseinformationen</li>
+      <li>Was du erwartet hast und was tatsächlich angezeigt wurde (ein Screenshot hilft sehr)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Rechtliches:</strong> <a href="/de/codedoc-ai-privacy-policy.html">Datenschutzerklärung</a>  ·
+
+      <a href="/codedoc-ai-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·
+
+      <a href="/codedoc-ai-security.html" hreflang="en">Sicherheitserklärung (EN)</a>
+    </p>
+  </main>
+  <script src="/components.js?v=cac30b1d1459"></script>
+</body>
+</html>

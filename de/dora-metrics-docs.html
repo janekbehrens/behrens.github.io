@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Metrics for Jira — Dokumentation und Einrichtung</title>
+  <meta name="description" content="So richtest du DevOps Metrics for Jira ein und liest die Ergebnisse: Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit, mit Trends, KI-Auswirkungen und Exporten.">
+  <link rel="canonical" href="https://janekbehrens.de/de/dora-metrics-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/de/dora-metrics-docs.html">
+  <meta property="og:title" content="DevOps Metrics for Jira — Dokumentation und Einrichtung">
+  <meta property="og:description" content="So berechnet DevOps Metrics for Jira Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit aus Jira-Daten: Einrichtungsassistent, Definitionen, KI-Auswirkungen und Exporte.">
+  <meta property="og:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DevOps Metrics for Jira — Dokumentation und Einrichtung">
+  <meta name="twitter:description" content="So berechnet DevOps Metrics for Jira Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit aus Jira-Daten: Einrichtungsassistent, Definitionen, KI-Auswirkungen und Exporte.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "DevOps Metrics for Jira",
+      "description": "Dashboard-Gadget auf Atlassian Forge, das die vier DORA™-Metriken (Deployment-Häufigkeit, Durchlaufzeit für Änderungen, Änderungsfehlerrate und Wiederherstellungszeit) aus Jira-Vorgängen berechnet, mit Benchmark-Bereichen, Trends, einem Vorher-nachher-Vergleich bei einer KI-Einführung und Exporten.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Cloud",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Kostenlos für bis zu 10 Nutzer, danach ein Abonnement pro Nutzer"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "DevOps Metrics for Jira — Dokumentation und Einrichtung",
+      "description": "Einrichtung und Benutzeranleitung für DevOps Metrics for Jira: Berechnung der einzelnen DORA™-Metriken aus Jira-Daten, Einrichtungsassistent, Vergleich der KI-Auswirkungen, Datenqualität und Exporte.",
+      "url": "https://janekbehrens.de/de/dora-metrics-docs.html",
+      "author": {
+        "@type": "Person",
+        "name": "Janek Behrens",
+        "url": "https://janekbehrens.de/de/"
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Das Gadget zeigt „Sample data“ (Beispieldaten).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das ist die integrierte Demo vor der Einrichtung. Öffne Edit (Stiftsymbol) und wähle dein Projekt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Das Gadget meldet, dass keine Daten vorhanden sind.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die Analyse hat keine darstellbaren Daten gefunden. Die Meldung nennt den Grund und die nötige Änderung: keine abgeschlossenen Vorgänge, nur Unteraufgaben, keine veröffentlichten Versionen, Veröffentlichungen ohne Datum oder Vorgänge, die nie einen Status der Kategorie In Progress durchlaufen haben. Prüfe die Voraussetzungen deines Projekts. Die Metric Card zeigt dieselbe Erklärung; ändere die Einstellung für dieses Projekt im Overview-Gadget."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Eine Kachel zeigt „— not enough history for a comparison“ (Nicht genügend Verlaufsdaten für einen Vergleich).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der Pfeil vergleicht mit dem vorherigen Zeitraum gleicher Länge, aber die analysierten Verlaufsdaten reichen nicht bis zu dessen Beginn zurück. Das ist bei Last 12 months typisch, da die erste Analyse 12 Monate liest. Der Wert selbst stimmt; wähle einen kürzeren Zeitraum für einen Vergleich."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Deployment-Häufigkeit ist null.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Im Modus Releases zählt die App Versionen, die als veröffentlicht markiert sind und ein Veröffentlichungsdatum haben. Wenn dein Team keine Releases pflegt, ändere die Deployment-Definition im Assistenten auf Issues reaching a status."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "„Analyzing your project history…“ (Projektverlauf wird analysiert) dauert etwas.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der erste Durchlauf liest bis zu 12 Monate abgeschlossener Vorgänge (höchstens die neuesten 10.000), meist in etwa einer Minute, bei sehr großen Projekten länger. Das geschieht einmalig."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Zahlen wirken veraltet.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Daten von Projekten, die in den letzten 45 Tagen geöffnet wurden, werden jede Nacht aktualisiert. Klicke für eine sofortige Aktualisierung auf ↻; das ist pro Projekt alle 10 Minuten einmal möglich."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Durchlaufzeit zeigt „—“ oder lässt viele Vorgänge aus.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Für die Durchlaufzeit ist ein Übergang in einen Status der Kategorie In Progress nötig. Direkt im Status Done erstellte Vorgänge lassen sich nicht messen; sie zählen weiterhin zum Durchsatz und werden im Fenster Details aufgelistet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Änderungsfehlerrate erscheint zu hoch oder zu niedrig.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prüfe im Fenster Details, wie Fehler Releases zugeordnet wurden. Das Feld Affected versions bei Fehlern liefert die genaueste Zuordnung; bei wenigen Releases schwankt die Rate stark."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Wiederherstellungszeit zeigt keine Störungen.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es zählen nur im gewählten Zeitraum behobene Vorgänge eines Störungstyps. Standardmäßig sind das Typen mit bug, incident, outage oder defect im Namen; mit Pro kannst du die Typen unter Advanced wählen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "„You don’t have access to this gadget’s project“ (Du hast keinen Zugriff auf das Projekt dieses Gadgets).",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die App prüft die Jira-Projektberechtigungen für jeden Betrachter: Du siehst nur Metriken von Projekten, die du ansehen darfst. Bitte deinen Jira-Administrator um Zugriff oder wähle ein anderes Projekt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Die Registerkarte AI Impact fragt nach einem Datum, obwohl ich eines gespeichert habe.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prüfe, ob das Datum in Schritt 3 des Assistenten festgelegt und gespeichert wurde. Das Datumsfeld auf der Registerkarte selbst dient nur der Vorschau."
+          }
+        }
+      ],
+      "inLanguage": "de"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=cac30b1d1459">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/dora-metrics-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/dora-metrics-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/dora-metrics-docs.html">
+  <script src="/de/ui.js?v=cac30b1d1459"></script>
+</head>
+<body class="rd docs" data-app="dora">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="Auf dieser Seite">
+      <div class="sidebar-toc-heading">Auf dieser Seite</div>
+      <div class="sidebar-toc">
+        <a href="#quick-start">Schnellstart</a>
+        <a href="#overview">Übersicht</a>
+        <a href="#start">Einrichtung</a>
+        <a href="#config">Konfiguration</a>
+        <a href="#advanced" class="sub">Erweiterte Einstellungen (Pro)</a>
+        <a href="#ai-rollout" class="sub">KI-Einführung (Pro)</a>
+        <a href="#calc">So werden die Metriken berechnet</a>
+        <a href="#trends" class="sub">Trenddiagramme</a>
+        <a href="#quality">Datenqualität</a>
+        <a href="#ai">KI-Auswirkungen</a>
+        <a href="#card">Metric-Card-Gadget</a>
+        <a href="#export">Exporte</a>
+        <a href="#plans">Kostenlos und Pro im Vergleich</a>
+        <a href="#faq">Häufige Fragen und Fehlerbehebung</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>DevOps Metrics for Jira — Dokumentation</h1>
+      <p class="subtitle">Alle vier DORA™-Metriken auf jedem Jira-Dashboard, berechnet aus deinen vorhandenen Jira-Daten. Keine CI/CD-Einrichtung erforderlich.</p>
+
+      <div class="quickstart" id="quick-start">
+        <h2>Schnellstart</h2>
+        <ol>
+          <li><strong>Installiere</strong> die App aus dem <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira" target="_blank" rel="noopener">Atlassian Marketplace</a>.</li>
+          <li>Wähle auf einem Jira-Dashboard <strong>Add gadget (Gadget hinzufügen)</strong>, suche nach „DevOps Metrics“ und füge <strong>DevOps Metrics — Overview</strong> hinzu. Zunächst werden Beispieldaten angezeigt.</li>
+          <li>Öffne beim Gadget das Menü <strong>Edit (Bearbeiten)</strong> (Stiftsymbol) und wähle dein Projekt.</li>
+          <li>Klicke auf <strong>Use recommended settings (Empfohlene Einstellungen verwenden)</strong>. Die erste Analyse dauert meist etwa eine Minute.</li>
+          <li><strong>Optional (Pro):</strong> Trage in Schritt 3 des Assistenten das Datum deiner KI-Einführung ein oder ergänze für eine große Dashboard-Anzeige DevOps-Metric-Card-Gadgets.</li>
+        </ol>
+      </div>
+
+      <details class="toc">
+        <summary>Auf dieser Seite</summary>
+        <ol>
+          <li><a href="#overview">Übersicht</a></li>
+          <li><a href="#start">Einrichtung</a></li>
+          <li><a href="#config">Konfiguration</a></li>
+          <li><a href="#calc">So werden die Metriken berechnet</a></li>
+          <li><a href="#quality">Datenqualität</a></li>
+          <li><a href="#ai">KI-Auswirkungen</a></li>
+          <li><a href="#card">Metric-Card-Gadget</a></li>
+          <li><a href="#export">Exporte</a></li>
+          <li><a href="#plans">Kostenlos und Pro im Vergleich</a></li>
+          <li><a href="#faq">Häufige Fragen und Fehlerbehebung</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section id="overview">
+        <h2>Übersicht</h2>
+        <p>Die App zeigt die vier Liefermetriken der <dfn class="term" data-tip="DevOps Research and Assessment: das Forschungsprogramm hinter den vier Liefermetriken und den jährlichen State-of-DevOps-Berichten.">DORA™-Forschung</dfn> auf einem Jira-Dashboard als <dfn class="term" data-tip="Ein kleines App-Fenster, das du einem Jira-Dashboard hinzufügst und dort konfigurierst.">Gadget</dfn>:</p>
+        <ul>
+          <li><strong>Deployment-Häufigkeit:</strong> Wie oft du Änderungen auslieferst.</li>
+          <li><strong>Durchlaufzeit für Änderungen:</strong> Wie lange Arbeit vom Beginn bis zum Abschluss dauert.</li>
+          <li><strong>Änderungsfehlerrate:</strong> Der Anteil der Releases, die Probleme verursacht haben.</li>
+          <li><strong>Wiederherstellungszeit:</strong> Wie schnell der Betrieb nach einer Störung wiederhergestellt wird. Gemessen wird der <dfn class="term" data-tip="Der mittlere Wert: Die Hälfte der Vorgänge dauert kürzer, die andere Hälfte länger. Ein einzelner sehr langsamer Vorgang verändert ihn kaum.">Median</dfn>, obwohl die gebräuchliche Abkürzung MTTR lautet.</li>
+        </ul>
+        <p>Alle Werte stammen aus Jira-Releases, Statusänderungen, Fehlern und Störungstickets. Jede Zahl hat einen <dfn class="term" data-tip="Eine Leistungsstufe aus der DORA™-Forschung (Elite, High, Medium oder Low), die eine Zahl einordnet.">Benchmark-Bereich</dfn>, eine verständliche Erklärung und ein ⓘ zur Berechnung. Das Gadget hat drei Registerkarten: <strong>Übersicht</strong>,  <strong>Trends</strong> und <strong>KI-Auswirkungen</strong> (Pro).</p>
+        <img src="/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps-Metrics-Overview-Gadget mit vier Metrikkacheln (Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate, Wiederherstellungszeit) und der Registerkarte Trends mit wöchentlicher Durchlaufzeit, Benchmark-Bereichen sowie Markierungen für eine neue CI-Pipeline und die KI-Einführung" loading="lazy" width="1840" height="900">
+        <div class="video-wrapper">
+          <div class="yt-consent" style="background-image: url(&#x27;/imgDoraMetricsForJira/video-poster.webp&#x27;)"
+               data-src="https://www.youtube-nocookie.com/embed/gZlSMDVmt68?autoplay=1" data-title="DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: Hat sich deine KI-Einführung gelohnt?">
+            <button class="yt-play-btn" aria-label="Video laden und abspielen: DevOps Metrics — Deployment Frequency &amp; Lead Time for Jira: Hat sich deine KI-Einführung gelohnt?"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+            <p class="yt-consent-label">Klicke, um das Video von YouTube (youtube-nocookie.com) zu laden.<br><a href="/de/datenschutz.html#youtube">Datenschutzerklärung</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="start">
+        <h2>Einrichtung</h2>
+        <p>Füge das Gadget hinzu, wähle ein Projekt und übernimm die Empfehlung. Du musst kein CI/CD-Werkzeug verbinden.</p>
+        <ol>
+          <li><strong>Gadget hinzufügen:</strong> Wähle auf einem Jira-Dashboard <strong>Add gadget (Gadget hinzufügen)</strong>, suche nach „DevOps Metrics“ und füge <strong>DevOps Metrics — Overview</strong> hinzu. Es beginnt mit integrierten Beispieldaten, gekennzeichnet mit SAMPLE, damit du zunächst alle Registerkarten ausprobieren kannst.</li>
+          <li><strong>Projekt auswählen:</strong> Öffne beim Gadget das Menü <strong>Edit (Bearbeiten)</strong> (Stiftsymbol). Schritt 1 des Assistenten listet Projekte auf, die du ansehen darfst. Pro: bis zu 10 Projekte gemeinsam in einer Ansicht.</li>
+          <li><strong>Empfehlung übernehmen:</strong> Bei mindestens drei veröffentlichten Versionen in den letzten 90 Tagen empfiehlt der Assistent <strong>Releases</strong> und zeigt die gefundene Anzahl. Andernfalls empfiehlt er <strong>Issues reaching a status (Vorgänge, die einen Status erreichen)</strong>.  <strong>Use recommended settings (Empfohlene Einstellungen verwenden)</strong> speichert und überspringt Schritt 3 (KI-Einführung), den du später ergänzen kannst.</li>
+        </ol>
+        <img src="/imgDoraMetricsForJira/highlight-2-no-ci-cd-setup.webp" alt="Einrichtungsassistent: Projektauswahl in Schritt 1, Deployment-Definition in Schritt 2 mit Empfehlung Releases nach 23 gefundenen Releases in den letzten 90 Tagen und das fertige Gadget mit echten Zahlen" loading="lazy" width="1840" height="900">
+        <div class="note"><strong>Voraussetzungen deines Projekts:</strong> Abgeschlossene Vorgänge. Die Zahlen beruhen auf erledigter Arbeit. Der Assistent prüft die letzten 90 Tage und warnt dich bei der Projektauswahl.</div>
+        <details class="more">
+          <summary>Wenn das Gadget leer bleibt</summary>
+          <ul>
+            <li>Kein Vorgang hat im analysierten Zeitraum einen Status der Kategorie <em>Done (Erledigt)</em> erreicht.</li>
+            <li>Die gesamte abgeschlossene Arbeit besteht aus <dfn class="term" data-tip="Ein kleiner Vorgang unter einem übergeordneten Vorgang, oft für technische Arbeitsschritte.">Unteraufgaben</dfn>. Diese sind ausgeschlossen, sofern du nicht <em>Include sub-tasks in lead time &amp; throughput (Unteraufgaben in Durchlaufzeit und Durchsatz einbeziehen)</em> aktivierst (Pro, unter Advanced).</li>
+            <li>Modus Releases, aber keine Jira-Version ist als veröffentlicht markiert <strong>und hat ein Veröffentlichungsdatum</strong>.</li>
+          </ul>
+          <p>Die erste Analyse liest einmalig bis zu 12 Monate Verlauf. Danach lädt das Gadget vorberechnete Wochenwerte, die jede Nacht und über die Schaltfläche ↻ aktualisiert werden.</p>
+        </details>
+      </section>
+
+      <section id="config">
+        <h2>Konfiguration</h2>
+        <p>Der Assistent legt fest, was als Deployment, Störung und KI-unterstützte Arbeit zählt. Öffne ihn erneut über das •••-Menü oder Stiftsymbol des Gadgets; eine geänderte Definition startet eine Neuberechnung.</p>
+        <h3>Schritt 2 — Was zählt als Deployment?</h3>
+        <ul>
+          <li><strong>Releases:</strong> Jede Jira-Version, die als <em>veröffentlicht</em> markiert ist und ein Veröffentlichungsdatum hat, zählt als ein Deployment.</li>
+          <li><strong>Issues reaching a status (Vorgänge, die einen Status erreichen):</strong> Jeder Vorgang zählt bei seinem <em>ersten</em> Übergang in einen ausgewählten Status als ein Deployment. Standardmäßig sind deine Done-Status ausgewählt.</li>
+        </ul>
+        <p>Beide Optionen sind in der kostenlosen Version enthalten.</p>
+        <h3 id="advanced">Advanced (Erweitert) <span class="pro">PRO</span></h3>
+        <ul>
+          <li><strong>Störungstypen:</strong> Welche Vorgangstypen bei der Wiederherstellungszeit als Störung zählen. Standard: Typen mit bug, incident, outage oder defect im Namen.</li>
+          <li><strong>Unteraufgaben:</strong> In Durchlaufzeit und Durchsatz einbeziehen oder auslassen (Standard).</li>
+        </ul>
+        <h3 id="ai-rollout">Schritt 3 — KI-Einführung <span class="pro">PRO</span> (optional)</h3>
+        <p>Liefert die Grundlage für die <a href="#ai">Registerkarte AI Impact (KI-Auswirkungen)</a>: Einführungsdatum, Labels für KI-unterstützte Vorgänge (bis zu 10), zu verwendende KI-Signale, optionale Vorgangstypen für „AI task“ und bis zu fünf zusätzliche Diagrammmarkierungen (Beschriftung bis zu 24 Zeichen). In der kostenlosen Version ist dieser Schritt ausgegraut.</p>
+      </section>
+
+      <section id="calc">
+        <h2>So werden die Metriken berechnet</h2>
+        <p>Was jede Zahl bedeutet und wie sie berechnet wird. Die App zählt nach <dfn class="term" data-tip="Eine Kalenderwoche von Montag bis Sonntag, nummeriert von W01 bis W53.">ISO-Kalenderwoche</dfn>. Die Zeitraumwahl (<em>Last 30 days, Last 90 days, Last 6 months, Last 12 months (letzte 30 Tage, 90 Tage, 6 Monate oder 12 Monate)</em>) fasst diese Wochen zusammen. Zeitspannen werden als Mediane (P50) angegeben, damit wenige Ausreißer sie nicht verzerren.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Metrik</th><th>Berechnung (Standarddefinitionen)</th></tr>
+            <tr><td><strong>Deployment-Häufigkeit</strong></td><td>Veröffentlichte Jira-Versionen (oder erste Übergänge in die gewählten Status) pro Woche, gemittelt über die abgeschlossenen Wochen des Zeitraums; die laufende Woche wird ausgelassen. Anzeige pro Woche oder Monat, je nach Lesbarkeit.</td></tr>
+            <tr><td><strong>Durchlaufzeit für Änderungen</strong></td><td>Medianzeit vom <em>ersten</em> Übergang in die <dfn class="term" data-tip="Jira ordnet jeden Workflowstatus einer von drei Kategorien zu: To Do, In Progress oder Done. Die App verwendet die Kategorien, nicht die Statusnamen.">Statuskategorie</dfn> <strong>In Progress (In Bearbeitung)</strong> bis zum <em>letzten</em> Übergang in <strong>Done (Erledigt)</strong>, für im Zeitraum abgeschlossene Vorgänge. Wieder geöffnete Vorgänge zählen ab ihrem endgültigen Abschluss.</td></tr>
+            <tr><td><strong>Änderungsfehlerrate</strong></td><td>Anteil der Releases mit mindestens einem <strong>innerhalb von 14 Tagen erfassten Fehler</strong> nach dem Release, zugeordnet über <dfn class="term" data-tip="Jira-Felder, die einen Vorgang mit einem Release verbinden: die Version, die ihn behebt, oder die Version, in der der Fehler gefunden wurde.">Fix versions oder Affected versions</dfn>. Ein Fehler ohne Version wird dem jüngsten vorherigen Release zugeordnet, wenn dieses höchstens 14 Tage zurückliegt. Im Modus „Issues reaching a status“ ist es die Wiederöffnungsrate (Übergänge aus Done ÷ Übergänge in Done).</td></tr>
+            <tr><td><strong>Wiederherstellungszeit</strong></td><td>Medianzeit von der <strong>Erstellung</strong> bis zur <strong>Behebung</strong> eines Störungsvorgangs, für im Zeitraum behobene Störungen.</td></tr>
+          </table>
+        </div>
+        <p>Der Pfeil (▲/▼) vergleicht mit dem vorherigen Zeitraum gleicher Länge. Die Benchmark-Bereiche folgen der veröffentlichten DORA™-Forschung (klassisches Modell Elite/High/Medium/Low) und lassen sich nicht ändern.</p>
+        <details class="more">
+          <summary>Bereichsgrenzen, kleine Stichproben und fehlende Vergleiche</summary>
+          <p>Bei weniger als 5 Releases oder Störungen ergänzen die Kacheln für Änderungsfehlerrate und Wiederherstellungszeit den Hinweis „treat as directional“ (nur als Tendenz werten). Fehler sind Vorgänge eines Typs wie „Bug“. Deckt der analysierte Verlauf den vorherigen Zeitraum nicht ab, zeigt die Kachel <em>„— not enough history for a comparison“ (nicht genügend Verlaufsdaten für einen Vergleich)</em> anstelle eines Pfeils (siehe <a href="#faq">Häufige Fragen</a>).</p>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Metrik</th><th>Elite</th><th>Hoch</th><th>Mittel</th><th>Niedrig</th></tr>
+              <tr><td>Deployment-Häufigkeit</td><td>7 oder mehr pro Woche</td><td>1 bis 7 pro Woche</td><td>etwa 1 pro Monat bis 1 pro Woche</td><td>weniger als etwa 1 pro Monat</td></tr>
+              <tr><td>Durchlaufzeit für Änderungen</td><td>unter 1 Tag</td><td>unter 1 Woche</td><td>unter 30 Tagen</td><td>30 Tage oder mehr</td></tr>
+              <tr><td>Änderungsfehlerrate</td><td>15 % oder weniger</td><td>bis 30 %</td><td>bis 45 %</td><td>über 45 %</td></tr>
+              <tr><td>Wiederherstellungszeit</td><td>unter 1 Stunde</td><td>unter 1 Tag</td><td>unter 1 Woche</td><td>1 Woche oder mehr</td></tr>
+            </table>
+          </div>
+        </details>
+        <div class="warning"><strong>Bewusst transparent:</strong> Das sind Näherungswerte aus Jira-Arbeitsdaten, die stets gleich gemessen werden. Für präzise Messungen auf Pipelineebene über mehrere CI-Werkzeuge hinweg brauchst du ein Plattformprodukt.</div>
+
+        <h3 id="trends">Trenddiagramme lesen</h3>
+        <p> <strong>Trends</strong> zeigt als Registerkarte eine Metrik für den gewählten Zeitraum, <strong>Weekly (Wöchentlich)</strong> oder <strong>Monthly (Monatlich)</strong>. In der Wochenansicht ist die gestrichelte Linie ein <dfn class="term" data-tip="Für jede Woche der Median aus dieser Woche und den drei vorherigen Wochen. Er glättet einzelne Ausreißer.">gleitender 4-Wochen-Median</dfn>. Bewege die Maus über einen Punkt, um die Anzahl der zugrunde liegenden Vorgänge zu sehen.</p>
+        <p><em>Benchmarks (Vergleichsbereiche)</em> hinterlegt die Bereiche hinter der Linie farbig. Gestrichelte senkrechte Linien markieren Ereignisse: automatisch das Datum deiner KI-Einführung sowie bis zu fünf eigene Markierungen <span class="pro">PRO</span> aus <a href="#ai-rollout">Schritt 3 des Assistenten</a>.</p>
+      </section>
+
+      <section id="quality">
+        <h2>Datenqualität und ausgeschlossene Daten</h2>
+        <p>Die Fußnote unter jeder Ansicht nennt die Datengrundlage, zum Beispiel <em>„Based on 142 completed issues · 12 releases · 8 excluded“ (142 abgeschlossene Vorgänge · 12 Releases · 8 ausgeschlossen)</em>. Klicke auf <strong>Details</strong> , um zu sehen, was ausgelassen wurde und warum.</p>
+        <details class="more">
+          <summary>Was unter Details aufgeführt wird</summary>
+          <ul>
+            <li>Vorgänge, die nie den Status <em>In progress (In Bearbeitung)</em> durchlaufen haben (Durchlaufzeit nicht messbar),</li>
+            <li>Vorgänge mit widersprüchlichen Datumsangaben und Unteraufgaben (falls ausgeschlossen),</li>
+            <li>veröffentlichte Versionen ohne Veröffentlichungsdatum,</li>
+            <li>die Zuordnung jedes Fehlers der Änderungsfehlerrate (Versionsverknüpfung oder Zeitpunkt),</li>
+            <li>eine Warnung, wenn ein Projekt mehr als 10.000 abgeschlossene Vorgänge in 12 Monaten hat und nur die neuesten 10.000 analysiert wurden.</li>
+          </ul>
+        </details>
+        <div class="tip"><strong>Tipp:</strong> Markiere Jira-Versionen als <em>veröffentlicht</em> und setze bei Fehlern die <em>Affected versions (Betroffene Versionen)</em> . Das liefert die genaueste Deployment-Häufigkeit und Änderungsfehlerrate.</div>
+      </section>
+
+      <section id="ai">
+        <h2>KI-Auswirkungen <span class="pro">PRO</span></h2>
+        <p>Die Registerkarte AI Impact zeigt, ob sich die Auslieferung nach Einführung von KI-Werkzeugen im Team verändert hat (Copilot, <dfn class="term" data-tip="Atlassians KI-Assistent und Agenten in Jira und Confluence.">Rovo</dfn>, Claude, Cursor …). Lege das Einführungsdatum fest in <a href="#ai-rollout">Schritt 3 des Assistenten</a>.</p>
+        <ul>
+          <li><strong>Vorher und nachher:</strong> Zwei gleich lange Zeiträume rund um das Einführungsdatum, verglichen anhand aller vier Metriken, mit einer verständlichen regelbasierten Bewertung (kein KI-Modell). Beide Zeiträume sind so lang wie die Zeit seit der Einführung, höchstens ein Jahr.</li>
+          <li><strong>Vorgänge mit KI-Beteiligung und andere Vorgänge:</strong> Mediane Durchlaufzeit und Anteil an der abgeschlossenen Arbeit im Zeitraum, der im Gadget ausgewählt ist.</li>
+        </ul>
+        <img src="/imgDoraMetricsForJira/highlight-3-delivery-before-and-after-ai-rollout.webp" alt="Registerkarte AI Impact: Veränderungen aller vier Metriken vor und nach der Einführung über 182 Tage, eine verständliche Bewertung und die mediane Durchlaufzeit von Vorgängen mit KI-Beteiligung im Vergleich zu anderen Vorgängen" loading="lazy" width="1840" height="900">
+        <p>KI-Beteiligung wird anhand von drei Signalen erkannt; eines genügt und jedes lässt sich abschalten:</p>
+        <ul>
+          <li><strong><dfn class="term" data-tip="Der Jira-Nutzer, unter dem eine App oder Automatisierung handelt, zum Beispiel ein Rovo-Agent oder Automation for Jira.">App-Konto</dfn> aktivität:</strong> Ein Rovo-Agent, Automation for Jira oder eine andere App hat den Status des Vorgangs geändert.</li>
+          <li><strong>Labels:</strong> Standardwerte <code>ai-assisted</code>,  <code>copilot</code>,  <code>rovo</code>.</li>
+          <li><strong>Vorgangstypen:</strong> Falls dein Team einen Typ „AI task“ hat.</li>
+        </ul>
+        <div class="warning"><strong>Datenschutz:</strong> Die Erkennung ist ein transparenter Indikator und keine Telemetrie. Ergebnisse werden nur als Teamgesamtwerte angezeigt, nie pro Person. Die App speichert weder Konto-IDs noch Nutzernamen.</div>
+        <details class="more">
+          <summary>Länge der beiden Zeiträume</summary>
+          <p>Beide Zeiträume sind so lang wie die Zeit seit der Einführung (höchstens ein Jahr) und nie länger als der davor analysierte Verlauf. Die Vorher-Seite liegt daher immer innerhalb deiner Daten. Der Vergleich hängt nicht von der Zeitraumwahl ab. Bei weniger als einer Woche Verlauf auf einer Seite meldet die Registerkarte dies, statt einen Vergleich anzuzeigen.</p>
+        </details>
+      </section>
+
+      <section id="card">
+        <h2>Das Metric-Card-Gadget <span class="pro">PRO</span></h2>
+        <p> <strong>DevOps Metric Card</strong> zeigt als Gadget eine Metrik groß genug, um sie von der anderen Raumseite zu lesen: Wert, Bereich, Pfeil, Miniaturdiagramm und Erklärung. Gedacht für ein <dfn class="term" data-tip="Ein Dashboard auf einem großen Bildschirm im Teamraum.">Wallboard</dfn>.</p>
+        <ul>
+          <li><strong>Einstellungen:</strong> Ein Projekt, eine Metrik, ein Zeitraum (Standard: Last 30 days). Füge pro Metrik eine Karte hinzu. Jira lädt jede Karte alle 3 Stunden neu.</li>
+          <li><strong>Definitionen:</strong> Die Karte verwendet die zuletzt im Overview-Gadget für das Projekt eingerichteten Definitionen oder die Standardwerte. Ändere sie in den Overview-Einstellungen.</li>
+        </ul>
+        <img src="/imgDoraMetricsForJira/screenshot-1-metric-cards-wallboard.webp" alt="Vier DevOps-Metric-Card-Gadgets auf einem Jira-Dashboard: Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate und Wiederherstellungszeit, jeweils mit Benchmark-Bereich, Veränderung zum vorherigen Zeitraum und Miniaturdiagramm" loading="lazy" width="1840" height="900">
+      </section>
+
+      <section id="export">
+        <h2>Exporte <span class="pro">PRO</span></h2>
+        <p>Übernimm die angezeigten Daten in einen Bericht. Die Schaltflächen stehen unter jeder Registerkarte des Overview-Gadgets.</p>
+        <ul>
+          <li><strong>PNG:</strong> Ein Berichtsbild der vier Kacheln. Auf der Registerkarte Trends wird stattdessen das aktuelle Diagramm gespeichert.</li>
+          <li><strong>CSV:</strong> Eine Zeile pro Woche des gewählten Zeitraums.</li>
+          <li><strong>Copy as text (Als Text kopieren):</strong> Eine Tabelle in <dfn class="term" data-tip="Ein Klartextformat für Tabellen und Überschriften, das Confluence, Slack und viele Editoren verstehen.">Markdown</dfn> (Wert, Veränderung zum Vorzeitraum, Bereich) samt verständlichen Erklärungen, bereit für Confluence, Slack oder E-Mail.</li>
+        </ul>
+        <img src="/imgDoraMetricsForJira/screenshot-2-png-report-and-exports.webp" alt="PNG-Berichtsbild der vier Metrikkacheln mit den Exportschaltflächen CSV, PNG und Copy as text; PNG ist hervorgehoben" loading="lazy" width="1840" height="900">
+        <details class="more">
+          <summary>CSV-Spalten</summary>
+          <p>Kalenderwoche, Deployments, abgeschlossene Vorgänge, Durchlaufzeit P50 und P85 (Stunden), fehlerhafte Releases, Releases, Änderungsfehlerrate, Wiederherstellungszeit P50 (Stunden), Störungen, Vorgänge mit KI-Beteiligung und ausgeschlossene Vorgänge.</p>
+        </details>
+      </section>
+
+      <section id="plans">
+        <h2>Kostenlos und Pro im Vergleich</h2>
+        <p>Kostenlos für Jira-Websites mit bis zu 10 Nutzern; größere Websites beginnen mit einer kostenlosen Testphase. <strong>Pro-Funktionen sind während eines aktiven Abonnements verfügbar</strong>, einschließlich der Testphase. Ohne aktives Abonnement, etwa nach der Testphase, arbeitet das Overview-Gadget im Modus <strong>Kostenlos</strong> weiter. Preise stehen im <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Kostenlos</th><th>Pro</th></tr>
+            <tr><td>Overview-Gadget (Kacheln, Benchmark-Bereiche, Trends, verständliche Erklärungen)</td><td>✓ (1 Projekt)</td><td>✓</td></tr>
+            <tr><td>Deployment-Definition (Releases oder Status)</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Erweiterte Einstellungen: Störungstypen, Unteraufgaben</td><td>—</td><td>✓</td></tr>
+            <tr><td>Mehrere Projekte in einem Gadget (bis zu 10)</td><td>—</td><td>✓</td></tr>
+            <tr><td>Registerkarte AI Impact und Einstellungen zur KI-Einführung</td><td>—</td><td>✓</td></tr>
+            <tr><td>Zusätzliche Ereignismarkierungen in Trenddiagrammen</td><td>—</td><td>✓</td></tr>
+            <tr><td>DevOps-Metric-Card-Gadget</td><td>—</td><td>✓</td></tr>
+            <tr><td>Exporte als PNG, CSV und über Copy as text</td><td>—</td><td>✓</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>Häufige Fragen und Fehlerbehebung</h2>
+        <p>Klicke auf eine Frage, um die Antwort anzuzeigen.</p>
+
+        <details class="more">
+          <summary>Das Gadget zeigt „Sample data“ (Beispieldaten).</summary>
+          <p>Das ist die integrierte Demo vor der Einrichtung. Öffne <strong>Edit (Bearbeiten)</strong> (Stiftsymbol) und wähle dein Projekt.</p>
+        </details>
+
+        <details class="more">
+          <summary>Das Gadget meldet, dass keine Daten vorhanden sind.</summary>
+          <p>Die Analyse hat keine darstellbaren Daten gefunden. Die Meldung nennt den Grund und die nötige Änderung: keine abgeschlossenen Vorgänge, nur Unteraufgaben, keine veröffentlichten Versionen, Veröffentlichungen ohne Datum oder Vorgänge, die nie einen Status der Kategorie In Progress durchlaufen haben. Siehe <a href="#start">Voraussetzungen deines Projekts</a>. Die Metric Card zeigt dieselbe Erklärung; ändere die Einstellung für dieses Projekt im Overview-Gadget.</p>
+        </details>
+
+        <details class="more">
+          <summary>Eine Kachel zeigt „— not enough history for a comparison“ (Nicht genügend Verlaufsdaten für einen Vergleich).</summary>
+          <p>Der Pfeil vergleicht mit dem vorherigen Zeitraum gleicher Länge, aber die analysierten Verlaufsdaten reichen nicht bis zu dessen Beginn zurück. Das ist bei Last 12 months typisch, da die erste Analyse 12 Monate liest. Der Wert selbst stimmt; wähle einen kürzeren Zeitraum für einen Vergleich.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Deployment-Häufigkeit ist null.</summary>
+          <p>Im Modus Releases zählt die App Versionen, die als veröffentlicht markiert sind und ein Veröffentlichungsdatum haben. Wenn dein Team keine Releases pflegt, ändere die Deployment-Definition auf <strong>Issues reaching a status (Vorgänge, die einen Status erreichen)</strong> im Assistenten.</p>
+        </details>
+
+        <details class="more">
+          <summary>„Analyzing your project history…“ (Projektverlauf wird analysiert) dauert etwas.</summary>
+          <p>Der erste Durchlauf liest bis zu 12 Monate abgeschlossener Vorgänge (höchstens die neuesten 10.000), meist in etwa einer Minute, bei sehr großen Projekten länger. Das geschieht einmalig.</p>
+          <img src="/imgDoraMetricsForJira/screenshot-3-first-analysis-reads-12-months.webp" alt="Fortschrittskarte mit „Analyzing your project history…“: Der erste Durchlauf liest einmalig bis zu 12 Monate abgeschlossener Vorgänge, danach lädt das Gadget vorberechnete Daten" loading="lazy" width="1840" height="900">
+        </details>
+
+        <details class="more">
+          <summary>Die Zahlen wirken veraltet.</summary>
+          <p>Daten von Projekten, die in den letzten 45 Tagen geöffnet wurden, werden jede Nacht aktualisiert. Klicke für eine sofortige Aktualisierung auf ↻; das ist pro Projekt alle 10 Minuten einmal möglich.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Durchlaufzeit zeigt „—“ oder lässt viele Vorgänge aus.</summary>
+          <p>Für die Durchlaufzeit ist ein Übergang in einen Status der Kategorie In Progress nötig. Direkt im Status Done erstellte Vorgänge lassen sich nicht messen; sie zählen weiterhin zum Durchsatz und werden im Fenster Details aufgelistet.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Änderungsfehlerrate erscheint zu hoch oder zu niedrig.</summary>
+          <p>Prüfe im Fenster <strong>Details</strong> , wie Fehler Releases zugeordnet wurden. Das Feld Affected versions bei Fehlern liefert die genaueste Zuordnung; bei wenigen Releases schwankt die Rate stark.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Wiederherstellungszeit zeigt keine Störungen.</summary>
+          <p>Es zählen nur im gewählten Zeitraum behobene Vorgänge eines Störungstyps. Standardmäßig sind das Typen mit bug, incident, outage oder defect im Namen; mit Pro kannst du die Typen unter Advanced wählen.</p>
+        </details>
+
+        <details class="more">
+          <summary>„You don’t have access to this gadget’s project“ (Du hast keinen Zugriff auf das Projekt dieses Gadgets).</summary>
+          <p>Die App prüft die Jira-Projektberechtigungen für jeden Betrachter: Du siehst nur Metriken von Projekten, die du ansehen darfst. Bitte deinen Jira-Administrator um Zugriff oder wähle ein anderes Projekt.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Registerkarte AI Impact fragt nach einem Datum, obwohl ich eines gespeichert habe.</summary>
+          <p>Prüfe, ob das Datum in Schritt 3 des Assistenten festgelegt und gespeichert wurde. Das Datumsfeld auf der Registerkarte selbst dient nur der Vorschau.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Fragen, Fehler oder Funktionswünsche? Wir antworten üblicherweise innerhalb von <strong>1–2 Werktagen</strong> (Montag bis Freitag).</p>
+          <p>
+            <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=DevOps%20Metrics%20Support">support@janekbehrens.de</a><br>
+            <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/dora-metrics-for-jira-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/dora-metrics-for-jira-issues</a><br>
+            <strong>Supportseite:</strong> <a href="/de/dora-metrics-support.html">häufige Fragen und benötigte Angaben für eine Fehlermeldung</a><br>
+            <strong>Rechtliches:</strong> <a href="/de/dora-metrics-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/dora-metrics-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·  <a href="/dora-metrics-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+          </p>
+        </div>
+        <p class="legal-note">DORA™ ist eine Marke von Google LLC. DevOps Metrics for Jira ist ein unabhängiges Produkt von Janek Behrens und steht in keiner Verbindung zu Google; Google unterstützt es nicht. „DORA™-Metriken“ bezeichnet die vier vom Programm DevOps Research and Assessment definierten Metriken der Softwareauslieferung.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="/components.js?v=cac30b1d1459"></script>
+  <script src="/docs.js?v=cac30b1d1459"></script>
+</body>
+</html>
