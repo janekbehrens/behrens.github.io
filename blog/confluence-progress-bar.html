@@ -6,7 +6,7 @@
 
   <!-- ── Primary SEO ── -->
   <title>Confluence Progress Bar: How to Show Page and Project Progress | Janek Behrens</title>
-  <meta name="description" content="Confluence does not ship a dedicated progress bar field. Here are the native options — status macros, manual tables, chart macros — and how teams combine them with Jira progress fields for real-time project visibility.">
+  <meta name="description" content="Confluence has no built-in progress bar. Compare the native options (Status macro, manual table, Chart macro, Jira Issues macro) with progress bar macros that show live Jira progress on the page.">
   <link rel="canonical" href="https://janekbehrens.de/blog/confluence-progress-bar.html">
   <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
   <script type="application/ld+json">
@@ -14,12 +14,12 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "Confluence Progress Bar: How to Show Page and Project Progress",
-    "description": "Confluence does not ship a dedicated progress bar field. Here are the native options — status macros, manual tables, chart macros — and how teams combine them with Jira progress fields for real-time project visibility.",
+    "description": "Confluence has no built-in progress bar. Compare the native options (Status macro, manual table, Chart macro, Jira Issues macro) with progress bar macros that show live Jira progress on the page.",
     "url": "https://janekbehrens.de/blog/confluence-progress-bar.html",
     "datePublished": "2026-05-21T00:00:00+02:00",
-    "dateModified": "2026-05-21T00:00:00+02:00",
+    "dateModified": "2026-10-15T00:00:00+02:00",
     "image": "https://janekbehrens.de/img/companyLogo.png",
-    "keywords": ["Confluence", "Atlassian", "Project Tracking", "Progress Bar"],
+    "keywords": ["Confluence", "Atlassian", "Project Tracking", "Confluence progress bar"],
     "author": {
       "@type": "Person",
       "name": "Janek Behrens",
@@ -37,20 +37,20 @@
   <!-- ── Open Graph ── -->
   <meta property="og:type" content="article">
   <meta property="og:title" content="Confluence Progress Bar: How to Show Page and Project Progress">
-  <meta property="og:description" content="Native and Jira-linked approaches to displaying progress in Confluence — status macros, manual percentage tables, chart macros, and the Jira issue macro.">
+  <meta property="og:description" content="Native and app-based ways to show progress in Confluence — Status macro, manual percentage tables, Chart macro, Jira Issues macro and progress bar macros.">
   <meta property="og:url" content="https://janekbehrens.de/blog/confluence-progress-bar.html">
   <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
   <meta property="og:site_name" content="Janek Behrens">
   <meta property="article:author" content="Janek Behrens">
   <meta property="article:published_time" content="2026-05-21">
-  <meta property="article:modified_time" content="2026-05-21">
+  <meta property="article:modified_time" content="2026-10-15">
   <meta property="article:tag" content="Confluence">
   <meta property="article:tag" content="Atlassian">
 
   <!-- ── Twitter Card ── -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Confluence Progress Bar: How to Show Page and Project Progress">
-  <meta name="twitter:description" content="Native and Jira-linked approaches to displaying progress in Confluence — status macros, manual percentage tables, chart macros, and the Jira issue macro.">
+  <meta name="twitter:description" content="Native and app-based ways to show progress in Confluence — Status macro, manual percentage tables, Chart macro, Jira Issues macro and progress bar macros.">
   <meta name="twitter:image" content="https://janekbehrens.de/img/companyLogo.png">
 
   <!-- ── FAQ Schema ── -->
@@ -80,7 +80,7 @@
         "name": "Can I show a Jira progress bar inside a Confluence page?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes — partially. The Jira Issues macro displays issue keys, status, and standard fields. Custom progress fields added by Marketplace apps to Jira are accessible via JQL in the macro, but the visual coloured bar itself only renders inside Jira. The macro shows the percentage value as a column, which is still useful for status reporting in Confluence."
+          "text": "Not with the built-in macros. The Jira Issues macro shows issue keys, status and other fields, including progress fields from Jira apps, but only as text columns; the coloured bar itself only renders in Jira. For real bars on the page, use a progress bar macro app such as Epic Progress for Confluence, which shows bars for Jira epics, releases and saved filters with each reader's own Jira permissions."
         }
       },
       {
@@ -141,6 +141,8 @@
     .approach-table { width:100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
     .approach-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
     .approach-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
   </style>
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/confluence-progress-bar.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/confluence-progress-bar.html">
@@ -154,12 +156,12 @@
     <div class="article-hero-inner">
       <div class="article-meta">
         <span class="article-tag">Confluence</span>
-        <span class="article-date">May 21, 2026</span>
+        <span class="article-date">Published <time datetime="2026-05-21">May 21, 2026</time></span><span class="article-date">Updated <time datetime="2026-10-15">October 15, 2026</time></span>
         <span class="article-readtime">· 7 min read</span>
       </div>
       <h1>Confluence Progress Bar: How to Show Page and Project Progress</h1>
       <p class="article-intro">
-        Confluence is great at capturing what was decided — and surprisingly weak at showing how far you've got. There is no native progress bar field, no built-in percentage column, no project meter at the top of a space. Here are the practical options teams actually use, and how to combine them with Jira if you already have one of the progress apps installed.
+        Confluence is great at capturing what was decided — and surprisingly weak at showing how far you've got. There is no native progress bar field, no built-in percentage column, no project meter at the top of a space. Here are the practical options teams actually use, how to pull progress from Jira, and when a progress bar macro is worth adding.
       </p>
     </div>
   </div>
@@ -184,10 +186,10 @@
       </ul>
 
       <div class="callout callout-blue">
-        <p><strong>Quick answer:</strong> If you only need a stage label, use the Status macro. If you need a real percentage, build a table with a percentage column or pull the value from Jira via the Jira Issues macro.</p>
+        <p><strong>Quick answer:</strong> If you only need a stage label, use the Status macro. If you need a percentage, build a table with a percentage column or pull the value from Jira with the Jira Issues macro. If you want a real bar that stays current with Jira, add a progress bar macro app (approach 5).</p>
       </div>
 
-      <h2 id="approaches">Four practical approaches</h2>
+      <h2 id="approaches">Five practical approaches</h2>
       <p>Here are the approaches teams use most often, with the trade-offs spelled out:</p>
 
       <table class="approach-table">
@@ -223,6 +225,12 @@
             <td>Live count of resolved vs total</td>
             <td>Automatic, from JQL</td>
             <td>Project pages tied to a Jira epic or sprint</td>
+          </tr>
+          <tr>
+            <td><strong>Progress bar macro (app)</strong></td>
+            <td>Coloured bar per epic, release or filter; bars set by hand</td>
+            <td>Automatically from Jira; manual bars by hand</td>
+            <td>Project pages, status reports, readers without Jira</td>
           </tr>
         </tbody>
       </table>
@@ -264,8 +272,27 @@
       </ul>
 
       <div class="callout callout-green">
-        <p><strong>Tip:</strong> The visual coloured bar from a Jira progress-field app only renders inside Jira itself — the Confluence Jira macro displays the numeric value as a column. For most reporting needs that's enough, and it has the big advantage of always being current.</p>
+        <p><strong>Tip:</strong> The Jira Issues macro shows a progress field from a Jira app as a number column; the coloured bar itself only renders inside Jira. For many reports that is enough, and the table is always current. If you want the bar on the page, see approach 5.</p>
       </div>
+
+      <h3 id="progress-macro">5. Progress bar macros from an app</h3>
+      <p>
+        Confluence has no progress bar macro of its own, but Marketplace apps add one. <a href="/epic-progress-for-confluence.html">Epic Progress for Confluence</a> adds five macros. Type <code>/progress</code> on a page and pick one:
+      </p>
+      <ul>
+        <li><strong>Epic Progress</strong> — one bar for an epic: done, in progress and to do, coloured like in Jira, with “8 of 13 work items done” next to the percentage. It counts work items or story points.</li>
+        <li><strong>Jira Progress</strong> — the same bar for a project, a release (fix version), a saved filter or a JQL search.</li>
+        <li><strong>Progress List</strong> — several epics with an overall row, for example all epics of a project.</li>
+        <li><strong>Page Progress</strong> — the share of pages that carry a label such as “approved”. No Jira needed.</li>
+        <li><strong>Progress Bar</strong> — a bar you set by hand, with a status colour and the date of the last update. No Jira needed.</li>
+      </ul>
+      <p>
+        The Jira bars are read with each reader's own Jira permissions, so readers only see numbers for work they are allowed to see. For readers without Jira access, an editor can publish a dated snapshot of the numbers. The app has no write access to Jira or Confluence. It is free for Confluence sites with up to 10 users; larger sites start with a free trial.
+      </p>
+      <figure class="diagram"><a href="/imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp"><img src="/imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" alt="Confluence page with a Progress List of all epics of a project, the next release with its release date and a saved filter, each shown as a coloured progress bar." width="1840" height="900" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border)"></a><figcaption class="diagram-caption">Epic Progress for Confluence with sample data: a list of epics, a release and a saved filter on one page.</figcaption></figure>
+      <p>
+        You can try the macros with sample data in the <a href="/epic-progress-for-confluence.html#demo">interactive demo</a> or read the setup in the <a href="/epic-progress-docs.html">documentation</a>.
+      </p>
 
       <h2 id="setup-jira-macro">How to embed Jira progress in a Confluence page</h2>
       <p>The Jira Issues macro is the most underused option for this problem. Here's how to set it up:</p>
@@ -294,6 +321,9 @@
       <p>
         For the second case, a dedicated progress field in Jira is usually the right starting point. <a href="/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> adds three field types (manual, status-based, subtask-based) directly to Jira issues — and because the values are stored on standard Jira custom fields, they appear in any Confluence page that uses the Jira Issues macro to query that project.
       </p>
+      <p>
+        For the first case, <a href="/epic-progress-for-confluence.html">Epic Progress for Confluence</a> brings the Jira numbers onto the page as bars, next to the narrative, with a dated snapshot for readers who have no Jira access.
+      </p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -309,7 +339,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Can I show a Jira progress bar inside a Confluence page?</p>
-        <p class="faq-a">Partially. The Jira Issues macro displays issue keys, status, and standard fields. Custom progress fields added by Marketplace apps to Jira are accessible via JQL in the macro, but the visual coloured bar itself only renders inside Jira. The macro shows the percentage value as a column, which is still useful for status reporting in Confluence.</p>
+        <p class="faq-a">Not with the built-in macros. The Jira Issues macro shows issue keys, status and other fields, including progress fields from Jira apps, but only as text columns; the coloured bar itself only renders in Jira. For real bars on the page, use a progress bar macro app such as <a href="/epic-progress-for-confluence.html">Epic Progress for Confluence</a>, which shows bars for Jira epics, releases and saved filters with each reader's own Jira permissions.</p>
       </div>
 
       <div class="faq-item">
@@ -324,9 +354,9 @@
 
       <!-- Article CTA -->
       <div class="article-cta">
-        <h3>Tracking progress in Jira instead?</h3>
-        <p>Visual Progress Tracker for Jira adds manual, status-based, and subtask-based progress fields to every issue — values that you can pull into Confluence with the Jira Issues macro.</p>
-        <a href="/visual-progress-tracker.html" class="btn-white">See Visual Progress Tracker →</a>
+        <h3>Want real progress bars in Confluence?</h3>
+        <p>Epic Progress for Confluence shows live bars for Jira epics, releases and saved filters, plus page progress by label and bars set by hand. Free for sites with up to 10 users.</p>
+        <a href="/epic-progress-for-confluence.html" class="btn-white">See Epic Progress →</a>
       </div>
 
     </article>
@@ -337,11 +367,12 @@
         <h3>In this article</h3>
         <ul class="toc-list" id="toc">
           <li><a href="#native">Does Confluence have a progress bar?</a></li>
-          <li><a href="#approaches">Four practical approaches</a></li>
+          <li><a href="#approaches">Five practical approaches</a></li>
           <li><a href="#status-macro">Status macro</a></li>
           <li><a href="#manual-table">Manual % column</a></li>
           <li><a href="#chart-macro">Chart macro</a></li>
           <li><a href="#jira-macro">Jira Issues macro</a></li>
+          <li><a href="#progress-macro">Progress bar macros</a></li>
           <li><a href="#setup-jira-macro">Embed Jira progress in Confluence</a></li>
           <li><a href="#confluence-vs-jira">Confluence vs Jira</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -350,6 +381,14 @@
 
       <div class="sidebar-block">
         <h3>Related apps</h3>
+        <a href="/epic-progress-for-confluence.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/imgEpicProgressForConfluence/app-assets/logo_144.png" alt="Epic Progress for Confluence" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Epic Progress for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · Forge · Free up to 10 users</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;margin-bottom:18px;">Try it free →</a>
         <a href="/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
           <img src="../img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
@@ -357,13 +396,12 @@
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Free trial</div>
           </div>
         </a>
-        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Try it free →</a>
       </div>
 
       <div class="sidebar-block">
         <h3>More from the blog</h3>
         <a href="/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Progress Bar: How to Track Issue Progress Visually</a>
-        <a href="/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">How to Document a Jira Project Automatically</a>
+        <a href="/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira Epic Progress: Issue Count, Story Points and Dashboards</a>
         <a href="/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Automating Confluence Documentation</a>
       </div>
 

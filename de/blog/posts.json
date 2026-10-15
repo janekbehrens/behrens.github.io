@@ -1,5 +1,19 @@
 [
   {
+    "file": "confluence-progress-bar.html",
+    "title": "Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen",
+    "description": "Confluence hat keinen eingebauten Fortschrittsbalken. Vergleiche die nativen Möglichkeiten (Statusmakro, manuelle Tabelle, Diagrammmakro, Jira-Vorgangsmakro) mit Fortschrittsbalken-Makros, die aktuellen Jira-Fortschritt direkt auf der Seite zeigen.",
+    "date": "2026-05-21",
+    "dateStr": "21. Mai 2026",
+    "updated": "2026-10-15",
+    "updatedStr": "15. Oktober 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 7
+  },
+  {
     "file": "jira-epic-progress-tracking.html",
     "title": "Jira-Epic-Fortschritt: Vorgangsanzahl, Story Points und Dashboards",
     "description": "Verfolge Jira-Epic-Fortschritt mit nativen Ansichten, einem Feld oder einem Dashboard-Gadget. Vergleiche Vorgangsanzahl und Story Points mit einem Rechenbeispiel.",
@@ -88,18 +102,6 @@
     ],
     "label": "Jira",
     "readTime": 6
-  },
-  {
-    "file": "confluence-progress-bar.html",
-    "title": "Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen",
-    "description": "Confluence enthält kein eigenes Fortschrittsbalkenfeld. Hier findest du die nativen Möglichkeiten — Statusmakros, manuelle Tabellen und Diagrammmakros — und erfährst, wie Teams sie mit Jira-Fortschrittsfeldern kombinieren, um Projekte in Echtzeit sichtbar zu machen.",
-    "date": "2026-05-21",
-    "dateStr": "21. Mai 2026",
-    "tags": [
-      "confluence"
-    ],
-    "label": "Confluence",
-    "readTime": 7
   },
   {
     "file": "documenting-jira-issues.html",

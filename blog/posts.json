@@ -1,5 +1,19 @@
 [
   {
+    "file": "confluence-progress-bar.html",
+    "title": "Confluence Progress Bar: How to Show Page and Project Progress",
+    "description": "Confluence has no built-in progress bar. Compare the native options (Status macro, manual table, Chart macro, Jira Issues macro) with progress bar macros that show live Jira progress on the page.",
+    "date": "2026-05-21",
+    "dateStr": "May 21, 2026",
+    "updated": "2026-10-15",
+    "updatedStr": "October 15, 2026",
+    "tags": [
+      "confluence"
+    ],
+    "label": "Confluence",
+    "readTime": 7
+  },
+  {
     "file": "jira-epic-progress-tracking.html",
     "title": "Jira Epic Progress: Issue Count, Story Points and Dashboards",
     "description": "Track Jira epic progress with native views, a custom field or a dashboard gadget. Compare issue-count and story-point calculations with a worked example.",
@@ -88,18 +102,6 @@
     ],
     "label": "Jira",
     "readTime": 6
-  },
-  {
-    "file": "confluence-progress-bar.html",
-    "title": "Confluence Progress Bar: How to Show Page and Project Progress",
-    "description": "Confluence does not ship a dedicated progress bar field. Here are the native options — status macros, manual tables, chart macros — and how teams combine them with Jira progress fields for real-time project visibility.",
-    "date": "2026-05-21",
-    "dateStr": "May 21, 2026",
-    "tags": [
-      "confluence"
-    ],
-    "label": "Confluence",
-    "readTime": 7
   },
   {
     "file": "documenting-jira-issues.html",

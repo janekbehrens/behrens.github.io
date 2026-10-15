@@ -6,7 +6,7 @@
 
   <!-- ── Primary SEO ── -->
   <title>Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen | Janek Behrens</title>
-  <meta name="description" content="Confluence enthält kein eigenes Fortschrittsbalkenfeld. Hier findest du die nativen Möglichkeiten — Statusmakros, manuelle Tabellen und Diagrammmakros — und erfährst, wie Teams sie mit Jira-Fortschrittsfeldern kombinieren, um Projekte in Echtzeit sichtbar zu machen.">
+  <meta name="description" content="Confluence hat keinen eingebauten Fortschrittsbalken. Vergleiche die nativen Möglichkeiten (Statusmakro, manuelle Tabelle, Diagrammmakro, Jira-Vorgangsmakro) mit Fortschrittsbalken-Makros, die aktuellen Jira-Fortschritt direkt auf der Seite zeigen.">
   <link rel="canonical" href="https://janekbehrens.de/de/blog/confluence-progress-bar.html">
   <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
   <script type="application/ld+json">
@@ -14,16 +14,16 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen",
-  "description": "Confluence enthält kein eigenes Fortschrittsbalkenfeld. Hier findest du die nativen Möglichkeiten — Statusmakros, manuelle Tabellen und Diagrammmakros — und erfährst, wie Teams sie mit Jira-Fortschrittsfeldern kombinieren, um Projekte in Echtzeit sichtbar zu machen.",
+  "description": "Confluence hat keinen eingebauten Fortschrittsbalken. Vergleiche die nativen Möglichkeiten (Statusmakro, manuelle Tabelle, Diagrammmakro, Jira-Vorgangsmakro) mit Fortschrittsbalken-Makros, die aktuellen Jira-Fortschritt direkt auf der Seite zeigen.",
   "url": "https://janekbehrens.de/de/blog/confluence-progress-bar.html",
   "datePublished": "2026-05-21T00:00:00+02:00",
-  "dateModified": "2026-05-21T00:00:00+02:00",
+  "dateModified": "2026-10-15T00:00:00+02:00",
   "image": "https://janekbehrens.de/img/companyLogo.png",
   "keywords": [
     "Confluence",
     "Atlassian",
     "Projektverfolgung",
-    "Fortschrittsbalken"
+    "Confluence-Fortschrittsbalken"
   ],
   "author": {
     "@type": "Person",
@@ -45,20 +45,20 @@
   <!-- ── Open Graph ── -->
   <meta property="og:type" content="article">
   <meta property="og:title" content="Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen">
-  <meta property="og:description" content="Native und mit Jira verknüpfte Ansätze zur Fortschrittsanzeige in Confluence — Statusmakros, manuelle Prozenttabellen, Diagrammmakros und das Jira-Vorgangsmakro.">
+  <meta property="og:description" content="Native und App-basierte Wege, Fortschritt in Confluence zu zeigen — Statusmakro, manuelle Prozenttabellen, Diagrammmakro, Jira-Vorgangsmakro und Fortschrittsbalken-Makros.">
   <meta property="og:url" content="https://janekbehrens.de/de/blog/confluence-progress-bar.html">
   <meta property="og:image" content="https://janekbehrens.de/img/companyLogo.png">
   <meta property="og:site_name" content="Janek Behrens">
   <meta property="article:author" content="Janek Behrens">
   <meta property="article:published_time" content="2026-05-21">
-  <meta property="article:modified_time" content="2026-05-21">
+  <meta property="article:modified_time" content="2026-10-15">
   <meta property="article:tag" content="Confluence">
   <meta property="article:tag" content="Atlassian">
 
   <!-- ── Twitter Card ── -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen">
-  <meta name="twitter:description" content="Native und mit Jira verknüpfte Ansätze zur Fortschrittsanzeige in Confluence — Statusmakros, manuelle Prozenttabellen, Diagrammmakros und das Jira-Vorgangsmakro.">
+  <meta name="twitter:description" content="Native und App-basierte Wege, Fortschritt in Confluence zu zeigen — Statusmakro, manuelle Prozenttabellen, Diagrammmakro, Jira-Vorgangsmakro und Fortschrittsbalken-Makros.">
   <meta name="twitter:image" content="https://janekbehrens.de/img/companyLogo.png">
 
   <!-- ── FAQ Schema ── -->
@@ -88,7 +88,7 @@
       "name": "Kann ich einen Jira-Fortschrittsbalken innerhalb einer Confluence-Seite anzeigen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja — teilweise. Das Jira-Vorgangsmakro zeigt Vorgangsschlüssel, Status und Standardfelder. Benutzerdefinierte Fortschrittsfelder, die Marketplace-Apps in Jira ergänzen, sind im Makro über JQL zugänglich, der farbige Balken selbst wird jedoch nur innerhalb von Jira dargestellt. Das Makro zeigt den Prozentwert als Spalte, was für Statusberichte in Confluence weiterhin hilfreich ist."
+        "text": "Nicht mit den eingebauten Makros. Das Jira-Vorgangsmakro zeigt Vorgangsschlüssel, Status und weitere Felder, auch Fortschrittsfelder von Jira-Apps, aber nur als Textspalten; den farbigen Balken selbst zeigt nur Jira. Für echte Balken auf der Seite nutzt du eine App mit Fortschrittsbalken-Makros wie Epic Progress for Confluence, die Balken für Jira-Epics, Releases und gespeicherte Filter mit den eigenen Jira-Berechtigungen jedes Lesers zeigt."
       }
     },
     {
@@ -150,6 +150,8 @@
     .approach-table { width:100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.9rem; }
     .approach-table th { background:#F4F5F7; text-align:left; padding:10px 14px; border:1px solid var(--border); font-weight:600; color: var(--text); }
     .approach-table td { padding:10px 14px; border:1px solid var(--border); color: var(--text-3); vertical-align: top; }
+    .diagram { margin: 24px 0; }
+    .diagram-caption { text-align: center; font-size: 0.8rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
   </style>
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/confluence-progress-bar.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/confluence-progress-bar.html">
@@ -164,12 +166,12 @@
     <div class="article-hero-inner">
       <div class="article-meta">
         <span class="article-tag">Confluence</span>
-        <span class="article-date">21. Mai 2026</span>
+        <span class="article-date">Veröffentlicht <time datetime="2026-05-21">21. Mai 2026</time></span><span class="article-date">Aktualisiert <time datetime="2026-10-15">15. Oktober 2026</time></span>
         <span class="article-readtime">· 7 Min. Lesezeit</span>
       </div>
       <h1>Confluence-Fortschrittsbalken: Fortschritt von Seiten und Projekten anzeigen</h1>
       <p class="article-intro">
-        Confluence eignet sich hervorragend zum Festhalten von Entscheidungen — und ist überraschend schwach darin, den erreichten Fortschritt zu zeigen. Es gibt kein natives Fortschrittsbalkenfeld, keine integrierte Prozentspalte und keine Projektanzeige oben in einem Bereich. Hier findest du die praktischen Optionen, die Teams tatsächlich nutzen, und ihre Kombination mit Jira, wenn du dort bereits eine Fortschritts-App installiert hast.
+        Confluence eignet sich hervorragend zum Festhalten von Entscheidungen — und ist überraschend schwach darin, den erreichten Fortschritt zu zeigen. Es gibt kein natives Fortschrittsbalkenfeld, keine integrierte Prozentspalte und keine Projektanzeige oben in einem Bereich. Hier findest du die praktischen Möglichkeiten, die Teams tatsächlich nutzen, wie du Fortschritt aus Jira holst und wann sich ein Fortschrittsbalken-Makro lohnt.
       </p>
     </div>
   </div>
@@ -194,10 +196,10 @@
       </ul>
 
       <div class="callout callout-blue">
-        <p><strong>Kurzantwort:</strong> Wenn du nur eine Phasenbezeichnung brauchst, nutze das Statusmakro. Für einen echten Prozentwert erstellst du eine Tabelle mit Prozentspalte oder holst den Wert über das Jira-Vorgangsmakro aus Jira.</p>
+        <p><strong>Kurzantwort:</strong> Wenn du nur eine Phasenbezeichnung brauchst, nutze das Statusmakro. Für einen Prozentwert erstellst du eine Tabelle mit Prozentspalte oder holst den Wert mit dem Jira-Vorgangsmakro aus Jira. Wenn du einen echten Balken willst, der mit Jira aktuell bleibt, ergänze eine App mit Fortschrittsbalken-Makro (Ansatz 5).</p>
       </div>
 
-      <h2 id="approaches">Vier praktische Ansätze</h2>
+      <h2 id="approaches">Fünf praktische Ansätze</h2>
       <p>Hier sind die am häufigsten genutzten Ansätze mit ihren jeweiligen Vor- und Nachteilen:</p>
 
       <table class="approach-table">
@@ -233,6 +235,12 @@
             <td>Aktuelle Anzahl abgeschlossener und aller Vorgänge</td>
             <td>Automatisch über JQL</td>
             <td>Projektseiten, die mit einem Jira-Epic oder -Sprint verknüpft sind</td>
+          </tr>
+          <tr>
+            <td><strong>Fortschrittsbalken-Makro (App)</strong></td>
+            <td>Farbiger Balken pro Epic, Release oder Filter; manuell gesetzte Balken</td>
+            <td>Automatisch aus Jira; manuelle Balken von Hand</td>
+            <td>Projektseiten, Statusberichte, Leser ohne Jira</td>
           </tr>
         </tbody>
       </table>
@@ -274,8 +282,28 @@
       </ul>
 
       <div class="callout callout-green">
-        <p><strong>Tipp:</strong> Der farbige Balken einer Jira-Fortschrittsfeld-App wird nur innerhalb von Jira selbst dargestellt — das Jira-Makro in Confluence zeigt den Zahlenwert als Spalte. Für die meisten Berichtsanforderungen genügt das, mit dem großen Vorteil, immer aktuell zu sein.</p>
+        <p><strong>Tipp:</strong> Das Jira-Vorgangsmakro zeigt ein Fortschrittsfeld einer Jira-App als Zahlenspalte; den farbigen Balken selbst stellt nur Jira dar. Für viele Berichte reicht das, und die Tabelle ist immer aktuell. Wenn du den Balken auf der Seite haben willst, sieh dir Ansatz 5 an.</p>
       </div>
+
+      <h3 id="progress-macro">5. Fortschrittsbalken-Makros aus einer App</h3>
+      <p>
+        Confluence hat kein eigenes Fortschrittsbalken-Makro, aber Marketplace-Apps ergänzen eines. <a href="/de/epic-progress-for-confluence.html">Epic Progress for Confluence</a> fügt fünf Makros hinzu. Gib <code>/progress</code> auf einer Seite ein und wähle eines aus:
+      </p>
+      <ul>
+        <li><strong>Epic Progress</strong> — ein Balken für ein Epic: erledigt, in Bearbeitung und offen, mit Farben wie in Jira und „8 von 13 Vorgängen erledigt“ neben dem Prozentwert. Gezählt werden Vorgänge oder Story Points.</li>
+        <li><strong>Jira Progress</strong> — derselbe Balken für ein Projekt, ein Release (Fix-Version), einen gespeicherten Filter oder eine JQL-Suche.</li>
+        <li><strong>Progress List</strong> — mehrere Epics mit einer Gesamtzeile, zum Beispiel alle Epics eines Projekts.</li>
+        <li><strong>Page Progress</strong> — der Anteil der Seiten mit einem Label wie „approved“. Kein Jira nötig.</li>
+        <li><strong>Progress Bar</strong> — ein Balken, den du von Hand setzt, mit Statusfarbe und dem Datum der letzten Aktualisierung. Kein Jira nötig.</li>
+      </ul>
+      <p>
+        Die Jira-Balken werden mit den eigenen Jira-Berechtigungen des jeweiligen Lesers gelesen; jeder sieht also nur Zahlen zu Arbeit, die er sehen darf. Für Leser ohne Jira-Zugang kann ein Bearbeiter eine datierte Momentaufnahme der Zahlen veröffentlichen. Die App hat keinen Schreibzugriff auf Jira oder Confluence. Für Confluence-Instanzen mit bis zu 10 Nutzern ist sie kostenlos; größere Instanzen beginnen mit einer kostenlosen Testphase.
+      </p>
+      <figure class="diagram"><a href="/imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp"><img src="/imgEpicProgressForConfluence/highlight-2-progress-bars-releases-filters.webp" alt="Confluence-Seite mit einer Progress List aller Epics eines Projekts, dem nächsten Release mit Veröffentlichungsdatum und einem gespeicherten Filter, jeweils als farbiger Fortschrittsbalken." width="1840" height="900" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border)"></a><figcaption class="diagram-caption">Epic Progress for Confluence mit Beispieldaten: eine Epic-Liste, ein Release und ein gespeicherter Filter auf einer Seite.</figcaption></figure>
+      <p>
+        Probiere die Makros mit Beispieldaten in der <a href="/de/epic-progress-for-confluence.html#demo">interaktiven Demo</a> aus oder lies die Einrichtung in der <a href="/de/epic-progress-docs.html">Dokumentation</a>.
+
+      </p>
 
       <h2 id="setup-jira-macro">So bettest du Jira-Fortschritt in eine Confluence-Seite ein</h2>
       <p>Das Jira-Vorgangsmakro wird für dieses Problem am häufigsten unterschätzt. So richtest du es ein:</p>
@@ -304,6 +332,9 @@
       <p>
         Im zweiten Fall ist ein eigenes Fortschrittsfeld in Jira normalerweise der richtige Ausgangspunkt. <a href="/de/visual-progress-tracker.html">Visual Progress Tracker for Jira</a> ergänzt drei Feldtypen (manuell, statusbasiert, unteraufgabenbasiert) direkt in Jira-Vorgängen. Da die Werte in standardmäßigen benutzerdefinierten Jira-Feldern gespeichert werden, erscheinen sie auf jeder Confluence-Seite, die das Projekt über das Jira-Vorgangsmakro abfragt.
       </p>
+      <p>
+        Für den ersten Fall bringt <a href="/de/epic-progress-for-confluence.html">Epic Progress for Confluence</a> die Jira-Zahlen als Balken auf die Seite, direkt neben den erläuternden Text, mit einer datierten Momentaufnahme für Leser ohne Jira-Zugang.
+      </p>
 
       <h2 id="faq">Häufig gestellte Fragen</h2>
 
@@ -319,7 +350,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Kann ich einen Jira-Fortschrittsbalken innerhalb einer Confluence-Seite anzeigen?</p>
-        <p class="faq-a">Teilweise. Das Jira-Vorgangsmakro zeigt Vorgangsschlüssel, Status und Standardfelder. Benutzerdefinierte Fortschrittsfelder, die Marketplace-Apps in Jira ergänzen, sind im Makro über JQL zugänglich, der farbige Balken selbst wird jedoch nur innerhalb von Jira dargestellt. Das Makro zeigt den Prozentwert als Spalte, was für Statusberichte in Confluence weiterhin hilfreich ist.</p>
+        <p class="faq-a">Nicht mit den eingebauten Makros. Das Jira-Vorgangsmakro zeigt Vorgangsschlüssel, Status und weitere Felder, auch Fortschrittsfelder von Jira-Apps, aber nur als Textspalten; den farbigen Balken selbst zeigt nur Jira. Für echte Balken auf der Seite nutzt du eine App mit Fortschrittsbalken-Makros wie <a href="/de/epic-progress-for-confluence.html">Epic Progress for Confluence</a>, die Balken für Jira-Epics, Releases und gespeicherte Filter mit den eigenen Jira-Berechtigungen jedes Lesers zeigt.</p>
       </div>
 
       <div class="faq-item">
@@ -334,9 +365,9 @@
 
       <!-- Article CTA -->
       <div class="article-cta">
-        <h3>Fortschritt lieber in Jira verfolgen?</h3>
-        <p>Visual Progress Tracker for Jira ergänzt jeden Vorgang um manuelle, statusbasierte und unteraufgabenbasierte Fortschrittsfelder — deren Werte du über das Jira-Vorgangsmakro nach Confluence holen kannst.</p>
-        <a href="/de/visual-progress-tracker.html" class="btn-white">Visual Progress Tracker ansehen →</a>
+        <h3>Echte Fortschrittsbalken in Confluence?</h3>
+        <p>Epic Progress for Confluence zeigt aktuelle Balken für Jira-Epics, Releases und gespeicherte Filter, dazu Seitenfortschritt nach Label und manuell gesetzte Balken. Kostenlos für Instanzen mit bis zu 10 Nutzern.</p>
+        <a href="/de/epic-progress-for-confluence.html" class="btn-white">Epic Progress ansehen →</a>
       </div>
 
     </article>
@@ -347,11 +378,12 @@
         <h3>In diesem Artikel</h3>
         <ul class="toc-list" id="toc">
           <li><a href="#native">Hat Confluence einen Fortschrittsbalken?</a></li>
-          <li><a href="#approaches">Vier praktische Ansätze</a></li>
+          <li><a href="#approaches">Fünf praktische Ansätze</a></li>
           <li><a href="#status-macro">Statusmakro</a></li>
           <li><a href="#manual-table">Manuelle Prozentspalte</a></li>
           <li><a href="#chart-macro">Diagrammmakro</a></li>
           <li><a href="#jira-macro">Jira-Vorgangsmakro</a></li>
+          <li><a href="#progress-macro">Fortschrittsbalken-Makros</a></li>
           <li><a href="#setup-jira-macro">Jira-Fortschritt in Confluence einbetten</a></li>
           <li><a href="#confluence-vs-jira">Confluence und Jira</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -360,6 +392,14 @@
 
       <div class="sidebar-block">
         <h3>Verwandte Apps</h3>
+        <a href="/de/epic-progress-for-confluence.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
+          <img src="/imgEpicProgressForConfluence/app-assets/logo_144.png" alt="Epic Progress for Confluence" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">Epic Progress for Confluence</div>
+            <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · Forge · Kostenlos bis 10 Nutzer</div>
+          </div>
+        </a>
+        <a href="https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;margin-bottom:18px;">Kostenlos testen →</a>
         <a href="/de/visual-progress-tracker.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
           <img src="/img/progresstracker144logo.png" alt="Visual Progress Tracker" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
@@ -367,13 +407,12 @@
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Jira · Forge · Kostenlose Testversion</div>
           </div>
         </a>
-        <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;font-size:0.875rem;padding:10px 16px;">Kostenlos testen →</a>
       </div>
 
       <div class="sidebar-block">
         <h3>Mehr aus dem Blog</h3>
         <a href="/de/blog/jira-progress-bar.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Fortschrittsbalken: Vorgangsfortschritt visuell verfolgen</a>
-        <a href="/de/blog/jira-project-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Ein Jira-Projekt automatisch dokumentieren</a>
+        <a href="/de/blog/jira-epic-progress-tracking.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;margin-bottom:10px;">Jira-Epic-Fortschritt: Vorgangsanzahl, Story Points und Dashboards</a>
         <a href="/de/blog/automate-confluence-documentation.html" style="display:block;font-size:0.85rem;color:var(--text-3);text-decoration:none;line-height:1.5;">Confluence-Dokumentation automatisieren</a>
       </div>
 
