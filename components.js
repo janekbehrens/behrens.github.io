@@ -57,7 +57,7 @@
     { id: 'vel',  slug: 'velocity-chart',          name: 'Velocity Chart',   full: 'Velocity Chart for Jira',            page: 'velocity-chart.html',                icon: '/img/velocity-chart-icon.png',       mp: 'https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira' },
     { id: 'cd',   slug: 'codedoc-ai',              name: 'CodeDoc AI',       full: 'CodeDoc AI for Confluence',          page: 'codedoc-ai.html',                    icon: '/img/codedoc-ai-icon.webp',          mp: 'https://marketplace.atlassian.com/apps/2654352538', extra: { label: 'Quick start', href: 'codedoc-ai-setup.html', key: 'setup' } },
     { id: 'ps',   slug: 'priority-scoring',        name: 'Priority Scoring', full: 'Priority Scoring for Jira',          page: 'priority-scoring.html',              icon: '/img/priority-scoring-icon.png',     mp: 'https://marketplace.atlassian.com/apps/966645375' },
-    { id: 'rc',   slug: 'riskcadence',             name: 'Riskcadence',      full: 'Riskcadence for Jira',               page: 'riskcadence.html',                   icon: '/img/riskcadence-icon.png',          status: 'soon', hidden: true }
+    { id: 'rc',   slug: 'riskcadence',             name: 'Riskcadence',      full: 'Riskcadence for Jira',               page: 'riskcadence.html',                   icon: '/img/riskcadence-icon.png',          status: 'soon' }
   ];
   function appById(id) { for (var i = 0; i < APPS.length; i++) if (APPS[i].id === id) return APPS[i]; return null; }
   function soonTag(a) { return a.status === 'soon' ? ' <span class="soon-tag">Soon</span>' : ''; }
