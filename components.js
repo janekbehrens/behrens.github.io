@@ -48,6 +48,7 @@
 
   // ── Apps (one registry for nav menus, app bar and app sub-nav) ──
   // status 'soon' = submitted, not on the Marketplace yet: no Marketplace link anywhere.
+  // hidden = the pages exist and show the app sub-nav, but the app is not listed in the menus or the app bar.
   var APPS = [
     { id: 'ep',   slug: 'epic-progress',           name: 'Epic Progress',    full: 'Epic Progress for Confluence',       page: 'epic-progress-for-confluence.html',  icon: '/img/epic-progress-icon.png',        mp: 'https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence' },
     { id: 'tc',   slug: 'team-capacity',           name: 'Team Capacity',    full: 'Team Capacity Planning for Jira',   page: 'team-capacity-for-jira.html',        icon: '/img/team-capacity-icon.png',        mp: 'https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira' },
@@ -55,13 +56,14 @@
     { id: 'dora', slug: 'dora-metrics',            name: 'DevOps Metrics',   full: 'DevOps Metrics for Jira',            page: 'dora-metrics-for-jira.html',         icon: '/img/dora-metrics-icon.png',         mp: 'https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira' },
     { id: 'vel',  slug: 'velocity-chart',          name: 'Velocity Chart',   full: 'Velocity Chart for Jira',            page: 'velocity-chart.html',                icon: '/img/velocity-chart-icon.png',       mp: 'https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira' },
     { id: 'cd',   slug: 'codedoc-ai',              name: 'CodeDoc AI',       full: 'CodeDoc AI for Confluence',          page: 'codedoc-ai.html',                    icon: '/img/codedoc-ai-icon.webp',          mp: 'https://marketplace.atlassian.com/apps/2654352538', extra: { label: 'Quick start', href: 'codedoc-ai-setup.html', key: 'setup' } },
-    { id: 'ps',   slug: 'priority-scoring',        name: 'Priority Scoring', full: 'Priority Scoring for Jira',          page: 'priority-scoring.html',              icon: '/img/priority-scoring-icon.png',     mp: 'https://marketplace.atlassian.com/apps/966645375' }
+    { id: 'ps',   slug: 'priority-scoring',        name: 'Priority Scoring', full: 'Priority Scoring for Jira',          page: 'priority-scoring.html',              icon: '/img/priority-scoring-icon.png',     mp: 'https://marketplace.atlassian.com/apps/966645375' },
+    { id: 'rc',   slug: 'riskcadence',             name: 'Riskcadence',      full: 'Riskcadence for Jira',               page: 'riskcadence.html',                   icon: '/img/riskcadence-icon.png',          status: 'soon', hidden: true }
   ];
   function appById(id) { for (var i = 0; i < APPS.length; i++) if (APPS[i].id === id) return APPS[i]; return null; }
   function soonTag(a) { return a.status === 'soon' ? ' <span class="soon-tag">Soon</span>' : ''; }
 
   function menuItems(kind) {
-    return APPS.map(function (a) {
+    return APPS.filter(function (a) { return !a.hidden; }).map(function (a) {
       var href = '/' + a.slug + '-' + kind + '.html';
       return '<a href="' + href + '" role="menuitem"><img src="' + a.icon + '" alt="" width="18" height="18">' + a.name + soonTag(a) + '</a>';
     }).join('');
@@ -107,7 +109,7 @@
   // Homepage: bar with all apps (<body data-appbar>)
   function appBarHtml() {
     return '<div class="app-bar" id="app-bar"><nav class="app-bar-inner" aria-label="Apps">' +
-      APPS.map(function (a) {
+      APPS.filter(function (a) { return !a.hidden; }).map(function (a) {
         return '<a href="/' + a.page + '" class="app-bar-link" data-app-id="' + a.id + '">' +
           '<img src="' + a.icon + '" alt="" width="20" height="20">' + a.name + soonTag(a) + '</a>';
       }).join('') +

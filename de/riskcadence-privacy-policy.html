@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=559ba31868fd">
+  <title>Datenschutzerklärung — Riskcadence for Jira</title>
+  <meta name="description" content="Datenschutzerklärung von Riskcadence for Jira: was die App liest, was sie im Forge-Speicher aufbewahrt und wie lange, welche personenbezogenen Daten sie hält und wie geschlossene Konten gelöscht werden.">
+  <link rel="canonical" href="https://janekbehrens.de/de/riskcadence-privacy-policy.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/riskcadence-privacy-policy.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/riskcadence-privacy-policy.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/riskcadence-privacy-policy.html">
+  <script src="/de/ui.js?v=559ba31868fd"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">↓ Als PDF speichern</button>
+    </div>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Riskcadence for Jira · Stand: 18. Oktober 2026</p>
+
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Datenschutzerklärung erläutert den Umgang mit Daten durch Riskcadence: Risikoregister &amp; Risikomanagement für Jira ("die App"), entwickelt von Janek Behrens ("wir", "uns", "unser"), bei Installation auf Ihrer Atlassian Jira Cloud-Site und optionaler Nutzung in Confluence auf derselben Site. Die App führt ein Risikoregister in Jira: Jedes Risiko ist ein Jira-Vorgang. Die App liest und ändert diese Vorgänge <strong>mit den Berechtigungen der Person, die sie verwendet</strong>, berechnet Scores und Stufen, protokolliert Reviews und erstellt Steering-Reports.
+    </p>
+
+    <h2>2. Daten, auf die wir zugreifen</h2>
+    <p>Die App liest die folgenden Daten live ausschließlich zur Anzeige ihrer Ansichten und speichert sie nur, soweit dies in Abschnitt 3 angegeben ist:</p>
+    <ul>
+      <li><strong>Jira-Vorgänge vom Typ Risk:</strong> Schlüssel, Zusammenfassungen, Status und Statuskategorie, Projekt, Bearbeiter, Labels, Komponenten, Erstellungs- und letztes Änderungsdatum, die Werte der sieben Risikofelder (Eintrittswahrscheinlichkeit, Auswirkung, Rest-Eintrittswahrscheinlichkeit, Rest-Auswirkung, Risikoeigner, Risikoreaktion, nächstes Review) sowie die mit „is mitigated by“ verknüpften Vorgänge (Schlüssel, Zusammenfassung, Status).</li>
+      <li><strong>Jira-Personen:</strong> die Anzeigenamen von Risikoeignern und von Personen im Verlauf und in Reviews sowie die Nutzer, die die Auswahlfelder für den Risikoeigner und der Tabellenimport (per Name oder E-Mail-Adresse) nachschlagen, um einen Risikoeigner zu finden.</li>
+      <li><strong>Jira-Struktur:</strong> Projekte (Schlüssel und Namen), Vorgangstypen, Felder, Vorgangstyp-Schemata, Bildschirme und Verknüpfungstypen (zur Einrichtung eines Projekts), die Berechtigungen des aktuellen Nutzers in einem Projekt (um zu entscheiden, was er darf) sowie gespeicherte Filter, die die App für Review-Erinnerungen anlegt.</li>
+      <li><strong>Confluence:</strong> der Titel einer Seite, die das Makro enthält, und ob der aktuelle Nutzer sie ansehen oder bearbeiten darf (geprüft, bevor ein veröffentlichter Review-Stand angezeigt, veröffentlicht oder zurückgezogen wird).</li>
+    </ul>
+    <p>
+      Die App <strong>liest niemals</strong> Vorgangsbeschreibungen, Kommentare oder Anhänge und auch nicht den Inhalt von Confluence-Seiten. Zusammenfassungen von Risiken und Namen von Risikoeignern werden live den Personen angezeigt, die sie sehen dürfen; gespeichert werden sie nur in einem veröffentlichten Review-Stand (Abschnitt 3).
+    </p>
+    <p>
+      Die App <strong>ändert außerdem</strong> Daten in Jira, und zwar nur, wenn eine Person es verlangt, und mit deren Berechtigungen: die Risikofelder, den Risikoeigner, die Reaktion und das Datum des nächsten Reviews; einen Jira-Kommentar, wenn jemand eine Neubewertung anfordert; den Status, wenn ein Risiko in einem Review oder einem Import geschlossen wird; Risiken, die im Register oder durch einen Import angelegt werden; und bei der Einrichtung den Vorgangstyp Risk, die Felder, den Verknüpfungstyp und die Bildschirmeinträge.
+    </p>
+
+    <h2>3. Daten, die wir speichern</h2>
+    <p>
+      Die App speichert Folgendes im <strong>Atlassian Forge-Speicher</strong> (Forge SQL und Schlüssel-Wert-Speicher), den Atlassian für Ihre Site hostet und verwaltet:
+    </p>
+    <ul>
+      <li><strong>Änderungsverlauf der Risiken:</strong> zu jeder Änderung der Risikofelder, des Risikoeigners, der Reaktion, des Datums des nächsten Reviews oder des Status, in der App oder in Jira vorgenommen, ein Datensatz mit der Vorgangs-ID, dem Projektschlüssel, der Zeit, der Konto-ID der Person, die sie vorgenommen hat, dem Feld, dem alten und dem neuen Wert (beim Risikoeigner die Konto-IDs des alten und des neuen Risikoeigners) und, falls vorhanden, einer Notiz von bis zu 500 Zeichen: der Notiz einer Neubewertungsanfrage oder der Begründung einer Review-Entscheidung.</li>
+      <li><strong>Review-Sitzungen:</strong> der Name des Reviews (Freitext, bis zu 120 Zeichen), sein Umfang, die Konto-IDs der Person, die es gestartet, und der Person, die es abgeschlossen hat, die Zeiten und die Version der Risikomatrix.</li>
+      <li><strong>Review-Einträge und Abschlussstand:</strong> pro Risiko in einem Review seine Bewertung zu Beginn und beim Abschluss (Eintrittswahrscheinlichkeit, Auswirkung, Restwerte, Stufe, Statuskategorie, Risikoeigner als Konto-ID, Reaktion, Datum des nächsten Reviews), die Entscheidung, die Begründung (bis zu 500 Zeichen) sowie wer wann entschieden hat. Der Abschlussstand ist der Referenzstand für spätere Vergleiche und Berichte.</li>
+      <li><strong>Review-Entscheidungen (Audit-Trail):</strong> jede Entscheidung mit ihrer Art (confirm, re-assess, accept, close), der Begründung (bis zu 1.000 Zeichen), der Konto-ID der entscheidenden Person und der Zeit. Bei einer Akzeptanz zusätzlich die Konto-ID der akzeptierenden Person und das Akzeptanzdatum; bei einer Entscheidung, die den Risikoeigner ändert, die Konto-ID des neuen Risikoeigners.</li>
+      <li><strong>Veröffentlichte Review-Stände</strong>, wenn ein Bearbeiter einer Confluence-Seite den Steering-Report veröffentlicht: die Seiten- und Makro-IDs, die Konto-ID und der Anzeigename der veröffentlichenden Person, die Zeit, die Version der Risikomatrix und der Bericht wie veröffentlicht: Risikoschlüssel, Zusammenfassungen, Stufen, Scores, Risikoeigner (Konto-ID und Anzeigename), Reaktionen, Review-Daten, Anzahl der Gegenmaßnahmen, die Zahlen der Kennzahlen und die offenen Risiken pro Stufe bei den letzten abgeschlossenen Reviews. Ein veröffentlichter Stand wird allen angezeigt, die die Seite sehen dürfen, auch Personen ohne Jira-Zugriff.</li>
+      <li><strong>Konfiguration:</strong> die IDs der Felder, des Vorgangstyps und des Verknüpfungstyps, die eingerichteten Projekte, die Versionen der Risikomatrix (Namen der Stufen, Namen der Risikostufen, Farben und Review-Intervalle) und der Einrichtungsstand jedes Projekts.</li>
+      <li><strong>Gespeicherte Registeransichten:</strong> Name, Filter (einschließlich Suchtext), Sortierung, Gruppierung, sichtbare Spalten, die Konto-ID der Person, die die Ansicht gespeichert hat, und das Datum. Eine Ansicht wird mit den Personen geteilt, die das Register öffnen können.</li>
+      <li><strong>Job-Status:</strong> der Status, die Zeit und die Zahlen der letzten Neuberechnung der berechneten Felder im Hintergrund sowie die Zeit des letzten Berichts über personenbezogene Daten (Abschnitt 8).</li>
+      <li><strong>Import-Markierungen (2 Tage):</strong> während ein Import läuft, pro importierter Zeile ein Vorgangsschlüssel unter einem Hash aus Projekt und Quell-ID, damit kein Risiko doppelt angelegt wird.</li>
+      <li><strong>Anonyme tägliche Nutzungszähler:</strong> pro Tag und Site, wie oft Funktionen genutzt wurden (zum Beispiel „das Register wurde geöffnet“ oder „ein Review wurde abgeschlossen“). Keine IDs, Namen, Projektschlüssel oder Inhalte.</li>
+      <li><strong>Importinformationen am Risiko, in Jira:</strong> Risiken, die durch einen Import angelegt oder aktualisiert wurden, tragen eine Jira-Vorgangseigenschaft namens riskcadence mit der Quell-ID, dem Zeitpunkt des Imports und den importierten Werten (Beschreibungen bis zu 6.000 Zeichen; die Spalte mit dem Risikoeigner nur als kurze Prüfsumme, mit der der nächste Import eine Änderung erkennt; sie ist weder anonymisiert noch verschlüsselt). Jira speichert sie zusammen mit dem Risiko, und jeder, der das Risiko sehen darf, kann sie lesen.</li>
+      <li><strong>In Ihrem Browser:</strong> die Willkommenskarte und die Karte „Getting started“ merken sich im Speicher Ihres Browsers, dass Sie sie gesehen oder ausgeblendet haben, und ob die Checkliste aufgeklappt ist. Das wird nie an uns gesendet.</li>
+    </ul>
+    <p>
+      Die Risiken selbst sind Jira-Vorgänge. Die Risikofelder, der Vorgangstyp Risk, der Verknüpfungstyp und die Werte bleiben in
+      <strong>Jira selbst</strong> und folgen Jiras eigenem Verlauf und seinen eigenen Löschregeln. Die berechneten Felder (Risk score, Residual score und Risk level) werden daraus abgeleitet und gehören zur App.
+    </p>
+    <p>
+      Zusammenfassungen, Namen und Notizen sind Freitext, den Ihr Team schreibt: Wenn Ihr Team personenbezogene Daten in die Zusammenfassung eines Risikos, den Namen eines Reviews oder eine Begründung schreibt, bewahrt die App sie so auf, wie sie geschrieben wurden, soweit dieser Abschnitt das vorsieht (zum Beispiel in einem veröffentlichten Review-Stand).
+    </p>
+
+    <h2>4. Daten, die wir NICHT erheben</h2>
+    <ul>
+      <li>Wir werden <strong>nicht</strong> eigene Server betreiben. Es gibt weder ein vom Entwickler betriebenes Backend noch eine solche Datenbank.</li>
+      <li>Wir werden <strong>nicht</strong> E-Mail-Adressen oder Avatare von Personen speichern. Die App speichert Konto-IDs und, in veröffentlichten Review-Ständen, Anzeigenamen (Abschnitt 3).</li>
+      <li>Wir werden <strong>nicht</strong> Cookies, Tracking-Pixel, Analyseplattformen oder Werbenetzwerke verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Daten an externe Dienste senden. Die App führt keine Netzwerkaufrufe außerhalb der Atlassian-Plattform aus.</li>
+      <li>Wir werden <strong>nicht</strong> KI-Dienste verwenden.</li>
+      <li>Wir werden <strong>nicht</strong> Vorgangsbeschreibungen, Kommentare, Anhänge oder Seiteninhalte lesen.</li>
+    </ul>
+    <p>
+      <strong>Technische Logs und Nutzungszähler:</strong> Wie die meisten Forge-Apps schreibt die App technische Logzeilen (z. B. "ein Review wurde gestartet" oder "ein Import wurde abgeschlossen") und einmal täglich die oben aufgeführten anonymen Nutzungszähler in die App-Protokollierung von Atlassian, die Atlassian uns als App-Anbieter zugänglich macht. Logzeilen können Projektschlüssel, Zähler und Fehlercodes enthalten, jedoch niemals Zusammenfassungen, Namen, E-Mail-Adressen, Konto-IDs oder Freitext. Wir nutzen sie ausschließlich zur Fehlersuche und um zu erkennen, welche Funktionen genutzt werden.
+    </p>
+
+    <h2>5. Verarbeitungsort und Datenresidenz</h2>
+    <p>
+      Die gesamte Verarbeitung erfolgt innerhalb der <strong>Atlassian Forge-Laufzeitumgebung</strong> im Rahmen des Programms
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      . Es werden keine Daten an Server von uns oder Dritten außerhalb der Atlassian-Plattform übertragen.
+    </p>
+    <p>
+      Alles, was in Abschnitt 3 als von der App gespeichert aufgeführt ist, liegt im gehosteten Forge-Speicher, der die
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a> von Atlassian unterstützt: Die Daten liegen am selben Standort wie Ihre Jira-Site und ziehen mit ihr um, wenn ein Administrator die Daten der Site an einen anderen Standort verlegt. Die technischen Logs in Abschnitt 4 werden von der App-Protokollierung von Atlassian verarbeitet und sind kein Teil der von der App gespeicherten Daten.
+    </p>
+
+    <h2>6. Dienste Dritter</h2>
+    <p>
+      Die App wird <strong>nicht</strong> Dienste Dritter einbinden oder Daten an sie senden. Sie ruft weder KI-Dienste noch Analysedienste oder Werbenetzwerke auf. Einziger Unterauftragsverarbeiter ist Atlassian.
+    </p>
+
+    <h2>7. Speicherdauer und Löschung</h2>
+    <ul>
+      <li><strong>Verlauf, Review-Sitzungen und -Einträge, Entscheidungen, Abschlussstände und veröffentlichte Review-Stände</strong> bleiben im Forge-Speicher, bis die App deinstalliert wird. Sie sind der Audit-Trail Ihres Risikomanagements und laufen nicht automatisch ab. Ein veröffentlichter Review-Stand, der zurückgezogen oder ersetzt wurde, wird lediglich als zurückgezogen markiert: Niemand sieht ihn mehr, sein Datensatz bleibt aber im Speicher der App.</li>
+      <li><strong>Geschlossene Konten:</strong> ein wöchentlicher Job für personenbezogene Daten löscht die Konto-IDs geschlossener Atlassian-Konten aus allem, was die App speichert (Abschnitt 8).</li>
+      <li><strong>Gespeicherte Ansichten und Konfiguration</strong> bleiben erhalten, solange die App installiert ist; ein Projektadministrator kann eine Ansicht löschen, und mit dem vollständigen Export können Sie die Daten eines Projekts mitnehmen (<a href="/de/riskcadence-docs.html#export">Dokumentation</a>).</li>
+      <li>Nur <strong>Import-Markierungen</strong> (nach 2 Tagen) und <strong>anonyme tägliche Nutzungszähler</strong> (nach 8 Tagen) laufen automatisch ab; der Forge-Speicher löscht sie selbst.</li>
+      <li>Wenn die App Daten löscht, werden sie sofort aus dem Forge-Speicher entfernt und die App kann sie nicht mehr lesen. Atlassian bewahrt bis zum Ende seiner Aufbewahrungsfrist eine als gelöscht markierte Kopie zur Wiederherstellung nach versehentlicher Löschung auf.</li>
+      <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Datenlebenszyklus für von Forge gehosteten Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen. Die Risiken, die Felder und ihre Werte bleiben in Jira erhalten; es sind Daten von Jira. Die berechneten Felder gehen mit der App und lassen sich aus den übrigen Feldern neu berechnen.</li>
+    </ul>
+
+    <h2>8. Personenbezogene Daten und DSGVO</h2>
+    <p>
+      Die personenbezogenen Daten, die die App hält, sind <strong>Atlassian-Konto-IDs</strong> (von Personen, die ein Risiko geändert, ein Review gestartet oder abgeschlossen, in einem Review entschieden, ein Risiko akzeptiert, ein Risiko besitzen, einen Bericht veröffentlicht oder eine Ansicht gespeichert haben) und die <strong>Anzeigenamen</strong>
+      in veröffentlichten Review-Ständen. Die Namen anderer Personen werden live aus Jira gelesen und nicht gespeichert. Freitext, den Ihr Team schreibt, kann personenbezogene Daten enthalten (Abschnitt 3).
+    </p>
+    <p>
+      <strong>Wöchentlicher Bericht über personenbezogene Daten:</strong> wie Atlassians
+      <a href="https://developer.atlassian.com/cloud/jira/platform/user-privacy-developer-guide/" target="_blank" rel="noopener">Leitfaden zum Nutzerdatenschutz für App-Entwickler</a>
+      verlangt, meldet die App die von ihr gespeicherten Konto-IDs mindestens alle 7 Tage an die Datenschutz-API von Atlassian. Wird ein Konto geschlossen, löscht die App es überall dort, wo sie es speichert: Die Konto-ID wird aus Verlauf, Reviews, Entscheidungen und gespeicherten Ansichten entfernt, und veröffentlichte Review-Stände zeigen für diesen Risikoeigner „Former user“ und tragen den Namen dieser Person als Veröffentlichende nicht mehr (der Bericht zeigt dann „Unknown publisher“). Ändert eine Person ihren Namen, aktualisiert die App den Namen in veröffentlichten Review-Ständen.
+    </p>
+    <p>
+      Daten, die Jira und Confluence selbst halten, einschließlich der Risikofelder, Kommentare und Seiteninhalte, bleiben vollständig innerhalb Ihrer Atlassian-Site und unter der Kontrolle von Atlassian; Auskunftsersuchen nach der DSGVO dazu richten Sie bitte an Ihren Administrator oder an Atlassian. Bei App-spezifischen Anliegen kontaktieren Sie uns unten. Nach der Deinstallation der App löscht Atlassian alle App-bezogenen Daten nach 28 Tagen aus dem Forge-Speicher (Abschnitt 7).
+    </p>
+
+    <h2>9. Sicherheit</h2>
+    <ul>
+      <li>Läuft in einer isolierten Forge-Umgebung ohne ausgehende Verbindungen zu externen Netzwerken außerhalb der Atlassian-Plattform.</li>
+      <li>Alles, was eine Person in Riskcadence sieht oder ändert, läuft mit deren Jira-Berechtigungen, sodass jede Person nur sieht, was Jira ihr erlaubt.</li>
+      <li>Verwendet nur die API-Scopes, die sie braucht; sie sind in der Sicherheitsrichtlinie aufgeführt.</li>
+      <li>Speichert keine Zugangsdaten oder Tokens; es gibt keine.</li>
+    </ul>
+    <p>Ausführliche Informationen finden Sie in unserer <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a> .</p>
+
+    <h2>10. Datenschutz bei Kindern</h2>
+    <p>Die App ist ein Werkzeug für die Produktivität im geschäftlichen Umfeld und richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.</p>
+
+    <h2>11. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Änderungen werden im oben angegebenen Datum "Stand" ausgewiesen. Die fortgesetzte Nutzung der App nach Änderungen gilt als Zustimmung zur aktualisierten Erklärung.
+    </p>
+
+    <div class="contact-box">
+      <h2>12. Kontakt</h2>
+      <p>
+        Bei Fragen zu dieser Datenschutzerklärung kontaktieren Sie uns unter:<br>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">Atlassian, Jira und Confluence sind Marken von Atlassian. Riskcadence ist eine unabhängige App von Janek Behrens und wird weder von Atlassian entwickelt noch unterstützt; die Produktnamen geben lediglich an, mit welchen Produkten die App funktioniert.</p>
+  <script src="/components.js?v=559ba31868fd"></script>
+</body>
+</html>

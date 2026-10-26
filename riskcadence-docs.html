@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Riskcadence for Jira — Documentation &amp; Setup</title>
+  <meta name="description" content="Guide to Riskcadence for Jira: setting up the risk register, fields, risk matrix, register, reviews, steering report, Confluence macro, dashboards, import, reminders and permissions.">
+  <link rel="canonical" href="https://janekbehrens.de/riskcadence-docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://janekbehrens.de/riskcadence-docs.html">
+  <meta property="og:title" content="Riskcadence for Jira — Documentation &amp; Setup">
+  <meta property="og:description" content="How to set up Riskcadence for Jira, assess and review risks, publish the steering report in Confluence, import a register and who can do what.">
+  <meta property="og:image" content="https://janekbehrens.de/imgRiskcadence/highlight-1-risk-register-heat-map.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Riskcadence: Risk Register & Risk Management for Jira",
+        "description": "Atlassian Forge app that keeps the risk register in Jira: risks as work items, a configurable risk matrix, a review inbox, review sessions with an audit trail, a steering report in Jira and Confluence, dashboard widgets for the heat map and the review inbox, and CSV or XLSX import.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for up to 10 users, then per-user subscription" },
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Riskcadence for Jira — Documentation & Setup",
+        "description": "Setup and user guide for Riskcadence for Jira: project setup, fields, risk matrix, register, issue panel, reviews, steering report, Confluence macro, dashboards, import, reminders, export, permissions and limits.",
+        "url": "https://janekbehrens.de/riskcadence-docs.html",
+        "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Why are Risk score and Risk level missing on the work item in my team-managed project?", "acceptedAnswer": { "@type": "Answer", "text": "Jira does not show app-calculated fields in team-managed projects. Riskcadence still shows score and level in the register, the matrix, the issue panel, the review views and the reports." } },
+          { "@type": "Question", "name": "Why does the register show only 2,000 risks?", "acceptedAnswer": { "@type": "Answer", "text": "A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, so narrow the view with a filter or a matrix cell." } },
+          { "@type": "Question", "name": "How do I link a mitigation to a risk?", "acceptedAnswer": { "@type": "Answer", "text": "Link a work item to the risk with the link type “is mitigated by” (on the mitigation itself: “mitigates”). The risk then shows how many of its mitigations are done." } },
+          { "@type": "Question", "name": "Do finished mitigations lower the score?", "acceptedAnswer": { "@type": "Answer", "text": "No. Riskcadence never changes an assessment by itself. When all mitigations are done and the residual risk is not assessed, the risk appears in the review inbox under Needs re-assessment." } },
+          { "@type": "Question", "name": "What does “Former user” mean in a report?", "acceptedAnswer": { "@type": "Answer", "text": "The risk owner's Atlassian account was closed. Once a week Riskcadence asks Atlassian which accounts were closed and erases them from what it stores; published reports then show “Former user” for the owner and “Unknown publisher” if the publisher's account was closed." } },
+          { "@type": "Question", "name": "Which Jira projects work?", "acceptedAnswer": { "@type": "Answer", "text": "Company-managed and team-managed projects. Team-managed projects need a one-time manual setup of the work type Risk and its fields." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css?v=559ba31868fd">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/riskcadence-docs.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/riskcadence-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/riskcadence-docs.html">
+</head>
+<body class="rd docs" data-app="rc">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <div class="docs-layout">
+    <nav class="sidebar" aria-label="On this page">
+      <div class="sidebar-toc-heading">On this page</div>
+      <div class="sidebar-toc">
+        <a href="#getting-started">Getting started</a>
+        <a href="#what">What it does</a>
+        <a href="#setup">Setup</a>
+        <a class="sub" href="#setup-company">Company-managed projects</a>
+        <a class="sub" href="#setup-team">Team-managed projects</a>
+        <a class="sub" href="#setup-repair">Repair setup</a>
+        <a class="sub" href="#examples">Example risks</a>
+        <a href="#fields">Fields</a>
+        <a href="#matrix">Risk matrix</a>
+        <a href="#register">Register</a>
+        <a class="sub" href="#saved-views">Saved views</a>
+        <a class="sub" href="#bulk-edit">Bulk edit</a>
+        <a class="sub" href="#portfolio">Portfolio</a>
+        <a href="#panel">Risk assessment panel</a>
+        <a href="#reviews">Reviews</a>
+        <a class="sub" href="#inbox">Review inbox</a>
+        <a class="sub" href="#sessions">Review sessions</a>
+        <a class="sub" href="#compare">Compare with a review</a>
+        <a href="#report">Steering report</a>
+        <a href="#confluence">Confluence macro</a>
+        <a class="sub" href="#published-state">Published review states</a>
+        <a href="#dashboard">Dashboards</a>
+        <a href="#import">Import</a>
+        <a href="#reminders">Reminders</a>
+        <a href="#export">Export</a>
+        <a href="#permissions">Permissions</a>
+        <a href="#limits">Limits</a>
+        <a href="#faq">FAQ and messages</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>Riskcadence for Jira — Documentation</h1>
+      <p class="subtitle">A risk register in Jira: risks as work items, a configurable risk matrix, reviews with an audit trail and a steering report for Jira and Confluence, and dashboard widgets for the heat map and the review inbox.</p>
+
+      <div class="quickstart" id="getting-started">
+        <h2>Getting started</h2>
+        <ol>
+          <li>Open the <strong>Riskcadence</strong> page of your Jira project, in the project's sidebar.</li>
+          <li>Choose a risk matrix and click <span class="ui">Set up project</span>. A Jira admin does this in one click in company-managed projects; in team-managed projects a project admin works through a short checklist (<a href="#setup">details</a>). Tick <span class="ui">Add 6 example risks to try Riskcadence</span> if you want sample data.</li>
+          <li>Add your risks: type them into the <a href="#register">register</a>, bring a spreadsheet in with the <span class="ui">Import</span> tab (<a href="#import">details</a>), or keep the example risks.</li>
+          <li>Assess a risk: pick likelihood and impact in the register, or click a cell of the matrix in the <a href="#panel">Risk assessment panel</a> of the work item.</li>
+          <li>Hold your first review: <span class="ui">Review</span> → <span class="ui">Sessions</span> → <span class="ui">Start review</span>, decide on each risk and click <span class="ui">Close review…</span> (<a href="#reviews">details</a>).</li>
+          <li>Share the result: the <span class="ui">Report</span> tab, a <span class="ui">Riskcadence risk report</span> macro on a Confluence page (<a href="#confluence">details</a>), or the risk matrix on a Jira dashboard (<a href="#dashboard">details</a>).</li>
+        </ol>
+        <p>In the app, a short <em>Welcome to Riskcadence</em> explains how it works in four ideas: risks live in Jira, you assess them on your matrix, you review them regularly and you report what changed. It appears on the setup page and on your first visit, and the <em>Getting started</em> checklist ticks these steps from your data. Every tab has a <span class="ui">Help</span> link to the matching section of this documentation.</p>
+      </div>
+
+      <details class="toc">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#getting-started">Getting started</a></li>
+          <li><a href="#what">What it does</a></li>
+          <li><a href="#setup">Setup</a></li>
+          <li><a href="#fields">Fields</a></li>
+          <li><a href="#matrix">Risk matrix</a></li>
+          <li><a href="#register">Register</a></li>
+          <li><a href="#panel">Risk assessment panel</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#report">Steering report</a></li>
+          <li><a href="#confluence">Confluence macro</a></li>
+          <li><a href="#dashboard">Dashboards</a></li>
+          <li><a href="#import">Import</a></li>
+          <li><a href="#reminders">Reminders</a></li>
+          <li><a href="#export">Export</a></li>
+          <li><a href="#permissions">Permissions: who can do what</a></li>
+          <li><a href="#limits">Limits</a></li>
+          <li><a href="#faq">FAQ and messages</a></li>
+          <li><a href="#support">Support</a></li>
+        </ol>
+      </details>
+
+      <section>
+        <h2 id="what">What it does</h2>
+        <p><strong>Riskcadence for Jira</strong> keeps the <dfn class="term" data-tip="A list of the risks of a project or an organisation, each with its likelihood, impact, owner and the planned response.">risk register</dfn> in Jira. Every risk is a normal Jira <dfn class="term" data-tip="What Jira calls an issue: a task, bug, story or, here, a risk. A work item has a type, a status and fields.">work item</dfn> of the type <em>Risk</em>, so workflows, permissions, comments, attachments and JQL work as usual. Riskcadence adds the assessment and the review routine on top:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Part</th><th>What it does</th><th>Where</th></tr>
+            <tr><td><a href="#matrix">Risk matrix</a></td><td>Likelihood and impact on your own scales, with a risk level for every cell</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#register">Register</a></td><td>All risks of a project or of all projects, with filters, saved views, bulk edit and export</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#panel">Risk assessment panel</a></td><td>Inherent and residual risk, owner, response, mitigation progress and history on the work item</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#reviews">Reviews</a></td><td>A review inbox, review sessions with an audit trail and the comparison with a closed review</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#report">Steering report</a></td><td>Headline numbers, heat map, top risks, changes, mitigations and open decisions</td><td><span class="tag">Jira</span> <span class="tag">Confluence</span></td></tr>
+            <tr><td><a href="#dashboard">Dashboard widget</a></td><td>The risk matrix or the review inbox for one or more projects</td><td><span class="tag">Jira</span></td></tr>
+            <tr><td><a href="#import">Import</a></td><td>Bring a register in from CSV or XLSX</td><td><span class="tag">Jira</span></td></tr>
+          </table>
+        </div>
+        <img src="imgRiskcadence/highlight-1-risk-register-heat-map.webp" alt="The Riskcadence register in Jira: risks grouped by level with likelihood, impact, score, residual score, owner, response, mitigation progress and next review, editable in place. Inset: the heat map of the open risks by likelihood and impact." loading="lazy" width="1840" height="900">
+        <p>Riskcadence runs on Atlassian Forge. Everything a person sees or changes runs with their own Jira permissions, there are no external servers and no AI.</p>
+      </section>
+
+      <section>
+        <h2 id="setup">Setup</h2>
+        <p>Install the app, then set up each project that should hold risks. Setup adds the work type <em>Risk</em>, its fields and a link type for mitigations. It differs by <dfn class="term" data-tip="Projects whose work types, fields and screens a Jira admin manages for the whole site (formerly called classic).">company-managed</dfn> and <dfn class="term" data-tip="Projects that the team sets up itself, without a Jira admin (formerly called next-gen).">team-managed</dfn> projects.</p>
+        <p>A Jira admin installs <strong>Riskcadence</strong> once from the Atlassian Marketplace. Open the project, choose <strong>Riskcadence</strong> in its sidebar, and Riskcadence checks the project and offers the right setup.</p>
+
+        <h3 id="setup-company">Company-managed projects: one click</h3>
+        <p>Choose a risk matrix (<a href="#matrix">templates</a>) and click <span class="ui">Set up project</span>. This needs a Jira admin: only they can add work types and fields. Setup adds to the project:</p>
+        <ul>
+          <li>the work type <strong>Risk</strong>, in the project's work type scheme,</li>
+          <li>the seven <a href="#fields">fields</a> (they stay in Jira with their values even if you remove the app),</li>
+          <li>the link type <strong>Mitigates / is mitigated by</strong>,</li>
+          <li>the calculated fields Risk score, Residual score and Risk level, on the project's screens.</li>
+        </ul>
+        <p>Existing items with the same name are reused, nothing is duplicated.</p>
+        <div class="warning"><strong>Shared configuration.</strong> If the project shares its work type scheme or its screens with other projects, or uses Jira's default scheme, the work type and the fields also appear in those projects. Riskcadence says so and asks you to confirm with <span class="ui">I understand, set it up anyway</span>.</div>
+
+        <h3 id="setup-team">Team-managed projects: a short checklist</h3>
+        <p>Jira does not let apps add work types or fields to team-managed projects. A project admin adds them once, and Riskcadence finds and uses them:</p>
+        <ol>
+          <li>In <span class="ui">Project settings → Work types</span>, add the work type <strong>Risk</strong>.</li>
+          <li>Add these fields to the work type <strong>Risk</strong>, with exactly these names: <em>Risk likelihood</em>, <em>Risk impact</em>, <em>Residual likelihood</em> and <em>Residual impact</em> (type Number), <em>Risk owner</em> (People), <em>Risk response</em> (Dropdown with the options Avoid, Mitigate, Transfer and Accept) and <em>Risk next review</em> (Date).</li>
+          <li>Back in Riskcadence, click <span class="ui">Check again</span>. Each item shows as found or says what is wrong, for example a field with the right name but the wrong type, or a dropdown that lacks an option. When everything is found, click <span class="ui">Finish setup</span>.</li>
+        </ol>
+        <div class="note"><strong>Score and level in team-managed projects.</strong> Jira does not show app-calculated fields in team-managed projects, so <em>Risk score</em> and <em>Risk level</em> are not fields of the work item there. Riskcadence still shows score and level in the register, the matrix, the panel, the review views and the reports.</div>
+
+        <h3 id="setup-repair">Repair setup</h3>
+        <p>If Jira refused a step, Riskcadence lists the failed steps and keeps going. A project admin can run the setup again at any time: <span class="ui">Settings → Project setup → Repair setup</span>. Every step finds or creates, so running it again is safe and changes no data. In team-managed projects it checks the work type and the fields again.</p>
+
+        <h3 id="examples">Example risks</h3>
+        <p>Tick <span class="ui">Add 6 example risks to try Riskcadence</span> during setup, or click <span class="ui">Settings → Add example risks</span> later (project admins). The six risks carry the label <code>riskcadence_example</code>, show the register, the matrix, the review inbox and the report with data, and some are assigned to you. Adding them twice creates no duplicates; on a smaller matrix their values are scaled down. <span class="ui">Remove example risks</span> deletes them where Jira allows it and closes the others.</p>
+      </section>
+
+      <section>
+        <h2 id="fields">Fields</h2>
+        <p>Riskcadence works with seven fields that a person fills in and three that the app calculates. Setup creates them (<a href="#setup">Setup</a>).</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Field</th><th>Type</th><th>What it holds</th></tr>
+            <tr><td><strong>Risk likelihood</strong></td><td>Number</td><td>Likelihood before treatment: a step of the matrix, 1 is the lowest.</td></tr>
+            <tr><td><strong>Risk impact</strong></td><td>Number</td><td>Impact before treatment.</td></tr>
+            <tr><td><strong>Residual likelihood</strong></td><td>Number</td><td>Likelihood after treatment, as last reviewed.</td></tr>
+            <tr><td><strong>Residual impact</strong></td><td>Number</td><td>Impact after treatment, as last reviewed.</td></tr>
+            <tr><td><strong>Risk owner</strong></td><td>Person</td><td>The person accountable for the risk.</td></tr>
+            <tr><td><strong>Risk response</strong></td><td>Dropdown</td><td><em>Avoid</em>, <em>Mitigate</em>, <em>Transfer</em> or <em>Accept</em>.</td></tr>
+            <tr><td><strong>Risk next review</strong></td><td>Date</td><td>When the risk is reviewed next.</td></tr>
+          </table>
+        </div>
+        <p><strong>Calculated by the app:</strong></p>
+        <ul>
+          <li><strong>Risk score</strong>: likelihood × impact before treatment.</li>
+          <li><strong>Residual score</strong>: residual likelihood × residual impact.</li>
+          <li><strong>Risk level</strong>: the current level, that is the residual level if the residual risk is assessed, otherwise the inherent level. It holds the label of your matrix, for example <code>High</code>.</li>
+        </ul>
+        <p>These three are Jira fields, so you can use them in <dfn class="term" data-tip="Jira Query Language: the text of an advanced search in Jira, for example project = ABC AND type = Bug.">JQL</dfn>, filters and Jira's own views, for example <code>issuetype = Risk AND "Risk level" = Critical</code>. They only exist in company-managed projects (see the note under <a href="#setup-team">team-managed projects</a>).</p>
+        <p>Riskcadence keeps them current after every change it makes, a background run checks all risks once a week, and a project admin can click <span class="ui">Settings → Recalculate Jira fields</span> at any time. Only values that differ are written.</p>
+        <p><strong>Inherent and residual.</strong> <dfn class="term" data-tip="The risk before any treatment: likelihood and impact as if nothing were done about it.">Inherent risk</dfn> is assessed before treatment, <dfn class="term" data-tip="The risk that remains after the planned treatment, as last reviewed.">residual risk</dfn> after it. Riskcadence never lowers an assessment by itself: finished mitigations do not change a score, they only prompt a re-assessment.</p>
+      </section>
+
+      <section>
+        <h2 id="matrix">Risk matrix</h2>
+        <p>The matrix decides what a combination of likelihood and impact means. Start from a template and make it yours:</p>
+        <ul>
+          <li><strong>Templates:</strong> <em>Project risk 5×5</em>, <em>Project risk 4×4</em> and <em>Simple 3×3</em>, with four risk levels: Low, Medium, High and Critical.</li>
+          <li><strong>Your own labels:</strong> rename every step of the likelihood and impact scales (2 to 7 steps each).</li>
+          <li><strong>Your own levels:</strong> rename the levels and choose their colours (2 to 6 levels).</li>
+          <li><strong>A level for every cell:</strong> click a cell to cycle through the levels (arrow keys, Enter or Space also work), so the level is not just a band of the score.</li>
+          <li><strong>A review interval per level</strong>, 1 to 730 days. It prefills the next review date when you decide on a risk in a review.</li>
+        </ul>
+        <img src="imgRiskcadence/screenshot-3-risk-matrix-settings.webp" alt="The risk matrix settings: names for the five likelihood and impact steps, the risk level of every cell, colour, label and review interval in days for each risk level, and a template menu." loading="lazy" width="1840" height="900">
+        <p>Project or Jira admins change the matrix under <span class="ui">Settings</span> and click <span class="ui">Save matrix</span>; everyone else sees it read-only. The <span class="ui">Matrix</span> tab shows the open risks in the matrix, for the inherent or the residual assessment, and a click on a cell opens the register filtered to its risks.</p>
+        <h3 id="matrix-versions">Versions</h3>
+        <ul>
+          <li><strong>Saving creates a new version.</strong> The register, the matrix and the panels use it right away; the calculated Jira fields follow in the background within a few minutes.</li>
+          <li><strong>Reviews keep their version.</strong> A review and its closing state keep the matrix they were made with. When the matrix changed since a baseline, comparisons say so and compare severity by the rank of the levels, then by score.</li>
+          <li><strong>A smaller matrix needs a confirmation.</strong> Risks with values above the new scale count as not assessed until someone assesses them again. Their values stay in Jira.</li>
+          <li><strong>Several projects in one report or widget</strong> need the same matrix version. Once a project saves changes, it has a matrix of its own.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 id="register">Register</h2>
+        <p>The <span class="ui">Register</span> tab lists the risks of the project, most severe first. Most cells are editable in place: likelihood, impact, residual likelihood and impact, owner, response and next review. A change is written to the work item in Jira at once, with your permissions.</p>
+        <ul>
+          <li><strong>Add a risk</strong> in the line above the table: describe what could happen and what it would cause, choose likelihood and impact, click <span class="ui">Add risk</span>. This needs the permission to create work items.</li>
+          <li><strong>Search and filters:</strong> key or summary, level, owner (<em>My risks</em>, <em>Without owner</em>), response, <span class="ui">Overdue reviews</span> and a matrix cell. Closed risks are hidden until you tick <span class="ui">Show closed</span>.</li>
+          <li><strong>Grouping and columns:</strong> group by level, owner, response, status, component or category (Jira labels), sort by any column and choose the columns under <span class="ui">Columns</span>.</li>
+          <li><strong>Mitigation</strong> shows how many linked mitigation work items are done (<a href="#panel">details</a>).</li>
+          <li><strong>Export</strong> the current view as CSV or XLSX (<a href="#export">details</a>).</li>
+        </ul>
+        <p>Until the first steps are done, the register shows a <em>Getting started</em> card that lists them and ticks them from your data; <span class="ui">Hide</span> removes it in your browser.</p>
+
+        <h3 id="saved-views">Saved views</h3>
+        <p>A view is a set of filters, grouping, sort order and columns. <span class="ui">Save view</span> shares it with everyone who can open the register of the project; choose it from the list <em>Shared saved view</em> later. Saving needs permission to edit work items. <span class="ui">View ▾</span> updates or deletes the selected view; only its creator or an admin can delete it. A project holds up to 30 views.</p>
+
+        <h3 id="bulk-edit">Bulk edit</h3>
+        <p>Tick risks in the first column, tick the fields to change (owner, response, next review, likelihood, impact, residual likelihood, residual impact), click <span class="ui">Review changes…</span> and then <span class="ui">Apply to … risks…</span>. Riskcadence sends the selection in batches of 25 and lists every risk that could not be changed, with the reason. Fields you leave unticked stay as they are.</p>
+
+        <h3 id="portfolio">Portfolio</h3>
+        <p>Open <span class="ui">Apps → Riskcadence</span> in Jira for the <em>Risk portfolio</em>: a register and a report across all projects that are set up for Riskcadence and that you can browse. <span class="ui">Projects ▾</span> chooses which projects to include. Saving a shared portfolio view needs a Jira admin or a project admin of a set-up project.</p>
+      </section>
+
+      <section>
+        <h2 id="panel">Risk assessment panel</h2>
+        <p>Every work item of the type <em>Risk</em> has a <strong>Risk assessment</strong> panel:</p>
+        <ul>
+          <li><strong>Inherent and residual risk</strong> with level and score, on two matrices. Click a cell to assess; the change is saved to the work item.</li>
+          <li><strong>Owner, response and next review</strong>, editable.</li>
+          <li><strong>Mitigation progress</strong> from the work items linked with <em>is mitigated by</em>, with the finished ones marked (<a href="#faq">how to link</a>). When all mitigations are done and the residual risk is not assessed, the panel reminds you to assess it.</li>
+          <li><span class="ui">Add mitigation</span> creates a new work item (a summary and, if you like, an assignee) and links it to the risk with <em>is mitigated by</em>, or links an existing work item that you find by key or summary. A new work item has the type Task where the project has it. This runs with your own Jira permissions: a new work item needs the permission to create work items, the link needs the permission to link work items. If the link fails after the work item was created, the panel keeps it and offers to link it.</li>
+          <li><span class="ui">Request re-assessment</span> sets the next review to today and adds a Jira comment that mentions the risk owner, with an optional note, so Jira notifies them. The risk then shows as due in the <a href="#inbox">review inbox</a>.</li>
+          <li><strong>History</strong>: every change to the assessment fields, the owner, the response, the next review and the status, wherever it was made, with who and when, plus review decisions and re-assessment requests. The panel shows the latest 20.</li>
+        </ul>
+        <img src="imgRiskcadence/screenshot-1-issue-panel.webp" alt="The Risk assessment panel on a risk: the inherent and the residual risk on two matrices, owner, response and next review, the mitigation work items with their progress, a Request re-assessment button and the history of changes." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="reviews">Reviews</h2>
+        <p>The <span class="ui">Review</span> tab has three views: <span class="ui">Inbox</span>, <span class="ui">Sessions</span> and <span class="ui">Compare</span>. Everyone who can browse the project can look; deciding, starting and closing a review need the permission to edit work items.</p>
+
+        <h3 id="inbox">Review inbox</h3>
+        <p>The inbox shows what needs attention now. Each open risk appears once, in the first group that matches:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Group</th><th>Which risks</th></tr>
+            <tr><td><strong>Overdue</strong></td><td>The next review date has passed.</td></tr>
+            <tr><td><strong>Due in 7 days</strong></td><td>Due today or within the next seven days.</td></tr>
+            <tr><td><strong>Without owner</strong></td><td>Nobody is accountable yet.</td></tr>
+            <tr><td><strong>Needs re-assessment</strong></td><td>All mitigations are done, but the residual assessment is missing.</td></tr>
+            <tr><td><strong>Mine</strong></td><td>Other open risks assigned to you.</td></tr>
+          </table>
+        </div>
+        <p>Each group shows its exact total and lists the first 100 risks. <span class="ui">Review now</span> opens the decision form (<a href="#decisions">decisions</a>).</p>
+        <h4 id="decisions">Decisions</h4>
+        <ul>
+          <li><strong>Confirm:</strong> the assessment is still valid.</li>
+          <li><strong>Re-assess:</strong> record a new inherent or residual assessment (likelihood and impact of a pair together).</li>
+          <li><strong>Accept:</strong> record who accepts the risk and why. Acceptance needs a named person, a date and a justification of at least <strong>10 characters</strong>, and sets the response to Accept.</li>
+          <li><strong>Close:</strong> move the risk to a done status, with a reason. The risk's workflow needs a transition to a done status; otherwise Riskcadence says so and you close it in Jira.</li>
+        </ul>
+        <p>Every decision needs a justification, and the next review date is prefilled from the interval of the risk's level; you can change it. A decision can also change the owner or the response. It is saved to the audit and applied to the work item; if Jira rejects the change, the decision is not kept.</p>
+        <img src="imgRiskcadence/highlight-2-review-sessions-audit-trail.webp" alt="A review session: one risk at the start of the review and now, and the decision Accept with the accepting person, the date and a justification. Inset: the review inbox with overdue risks, risks due in 7 days and risks without an owner." loading="lazy" width="1840" height="900">
+
+        <h3 id="sessions">Review sessions</h3>
+        <p>A session takes a starting point of the risks and walks the team through them, with an audit trail.</p>
+        <ol>
+          <li>Open <span class="ui">Review → Sessions</span>, name the review and choose the risks to review: <em>All open risks</em>, <em>Two highest levels</em> or <em>Due within 30 days or without review date</em>. Click <span class="ui">Start review</span>. A session covers at most 1,000 risks, and a project has one open session at a time.</li>
+          <li>Open the session. Each risk shows its state at the start of the review next to its current state. Click <span class="ui">Review now</span> and decide; <span class="ui">Review again</span> replaces a decision.</li>
+          <li>Click <span class="ui">Close review…</span>. If risks have no decision yet, Riskcadence asks again and names how many (<span class="ui">Close with … undecided</span>).</li>
+        </ol>
+        <p>Closing <strong>freezes the state of all risks as a baseline</strong>, with the matrix version it was made with. The closed session stays readable, with who started it, who closed it and every decision, and is the baseline for comparisons and reports.</p>
+
+        <h3 id="compare">Compare with a closed review</h3>
+        <p>Open <span class="ui">Review → Compare</span>, choose a closed review as the baseline. Riskcadence compares it with the risks you can see now:</p>
+        <ul>
+          <li><strong>Worsened</strong>, <strong>Improved</strong>, <strong>New</strong>, <strong>Closed</strong> and <strong>Reopened</strong> risks, each with the score and level before and after and the fields that changed.</li>
+          <li><strong>Unchanged</strong> risks are counted, not listed. Each list shows up to 500 risks.</li>
+          <li><strong>Removed</strong> risks were in the baseline and are no longer visible to you: deleted, moved or not accessible. Riskcadence cannot tell which.</li>
+        </ul>
+        <img src="imgRiskcadence/screenshot-5-compare-with-last-review.webp" alt="Compare with a closed review: counts of worsened, reopened, new, improved, closed, unchanged and removed risks since the Q3 steering review, with the worsened, new and improved risks listed below." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="report">Steering report</h2>
+        <p>The report gives a committee the state of the risks on one page. Open the <span class="ui">Report</span> tab of a project, or the <span class="ui">Report</span> tab of the <a href="#portfolio">portfolio</a> for up to 20 projects that use the same matrix. It reads the risks with your Jira permissions, so you see what Jira lets you see.</p>
+        <ul>
+          <li><strong>Headline numbers:</strong> open risks per level, and the numbers of visible, open and closed risks, unassessed open risks, overdue reviews, risks without an owner and accepted risks.</li>
+          <li><strong>Open risk heat map:</strong> the open risks in the matrix by their current assessment, the reviewed residual risk where it exists, otherwise the inherent risk.</li>
+          <li><strong>Top risks:</strong> the 5, 10 or 20 most severe open risks with level, score, owner, response, next review and mitigation progress.</li>
+          <li><strong>Changes since the baseline:</strong> choose a <span class="ui">Baseline</span> from the closed reviews to see the changes of the <a href="#compare">comparison</a>. The changes come from the review of one project; with several projects the report says which.</li>
+          <li><strong>Risk trend across reviews:</strong> in the report of a single project, one stacked bar for each of the last six closed reviews and for <em>Now</em>, split by risk level, so you see how the open risks developed. The bars count the risks that are visible when the report is created, in the state each review saved when it closed. Each closed review adds a bar. Reports of several projects, such as the portfolio report, do not show the trend, and in the PDF and Word export of a Confluence page it is a table.</li>
+          <li><strong>Mitigations:</strong> open risks with unfinished mitigations, and how many mitigations are done.</li>
+          <li><strong>Open decisions:</strong> risks without an owner, without a response, with an overdue review, that need a re-assessment, or that are accepted without a person, a date and a justification.</li>
+        </ul>
+        <p>Long lists show up to 100 entries with their exact totals. <span class="ui">Refresh</span> rebuilds the report, <span class="ui">Print</span> prints it or saves it as PDF.</p>
+        <img src="imgRiskcadence/screenshot-6-steering-report-jira.webp" alt="The steering report in Jira: the open risk heat map with the number of open risks in every cell, and the table of top risks with level, score, owner, response, next review and mitigation progress." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="confluence">Confluence macro</h2>
+        <p>The macro <strong>Riskcadence risk report</strong> puts the steering report on a Confluence page, for example the page of a steering committee. While editing the page, insert it from the <strong>/</strong> menu.</p>
+        <h3 id="macro-settings">Macro settings</h3>
+        <p>The settings dialog <em>Riskcadence report settings</em> has these choices; the preview below them shows the report with your own Jira access:</p>
+        <ul>
+          <li><strong>Report mode:</strong> <em>Live from Jira</em> or <em>Published review state</em> (<a href="#published-state">below</a>).</li>
+          <li><strong>Projects:</strong> one or more projects, up to 20, with the same matrix.</li>
+          <li><strong>Baseline:</strong> a closed review to compare with, or no baseline.</li>
+          <li><strong>Top risks:</strong> 5, 10 or 20.</li>
+        </ul>
+        <p>Save is available once the preview has loaded. In <em>Live</em> mode, every reader sees the report with their own Jira permissions, so different readers can see different risks. Readers without Jira access need a published review state.</p>
+        <p>The first time someone opens a page with the macro, Confluence may ask them to allow Riskcadence to act with their own permissions; this is Atlassian's one-time consent for such apps.</p>
+
+        <h3 id="published-state">Published review states</h3>
+        <p>For readers without Jira access, a page editor can publish the report as a <strong>dated review state</strong>. Everyone who can view the Confluence page then sees the same saved report, with the date and the name of the person who published it.</p>
+        <ol>
+          <li>In the macro settings, choose <em>Published review state</em> and save.</li>
+          <li>Publish the page. In the macro, click <span class="ui">Publish current state</span> and confirm.</li>
+        </ol>
+        <img src="imgRiskcadence/highlight-3-steering-report-confluence.webp" alt="A Confluence page for a steering committee with the Riskcadence risk report as a published review state: headline numbers per risk level and the counts of visible, open and closed risks. Inset: the comparison with the closed Q3 steering review." loading="lazy" width="1840" height="900">
+        <ul>
+          <li><strong>Who publishes:</strong> only people who can edit the page, checked on the server. Riskcadence reads the risks with the publisher's Jira access, so the published report contains what the publisher can see. The confirmation says so.</li>
+          <li><strong>Bound to this macro:</strong> a published state belongs to this macro on this page. It is not shown anywhere else, and a new publication replaces the previous one.</li>
+          <li><strong>Who sees it:</strong> everyone who can view the page, also without Jira access. The server checks the page permission each time, and Jira permission changes later do not withdraw a publication.</li>
+          <li><strong>Withdraw:</strong> <span class="ui">Withdraw</span> removes it at once. Page editors can do it, and so can the person who published it while they can still view the page.</li>
+          <li><strong>What it holds:</strong> the report as published: risk keys, summaries, levels, scores, owners (account ID and display name), responses, review dates and the counts, and the account ID and name of the publisher; see the <a href="riskcadence-privacy-policy.html">Privacy Policy</a>.</li>
+        </ul>
+        <h3 id="confluence-export">PDF and Word export</h3>
+        <p>Exporting the page to PDF or Word shows the report as text and tables, with the heat map and the risk trend as tables of counts. A page with a published state exports that state; a live macro exports the report as the person who exports. The export finds its macro on the page; if a page has several report macros with the same settings, it prints a note instead of a published state, so give each macro its own settings. If something fails, the export shows a short neutral line instead.</p>
+      </section>
+
+      <section>
+        <h2 id="dashboard">Dashboards</h2>
+        <p>Add <strong>Riskcadence risk matrix</strong> to a Jira dashboard: a widget on the new dashboards, a gadget on classic ones, with the same content and settings. Anyone who can edit a dashboard can add it. In its settings choose:</p>
+        <ul>
+          <li><strong>Widget kind:</strong> <em>Risk matrix</em> or <em>Review inbox</em>.</li>
+          <li><strong>Projects</strong> (required): one or more of the projects set up for Riskcadence that you can browse. Several projects need the same matrix.</li>
+          <li><strong>Default assessment</strong> for the matrix: <em>Inherent</em> or <em>Residual</em>. A switch on the widget changes the view without saving it.</li>
+          <li><strong>Title</strong> (optional).</li>
+        </ul>
+        <p>The matrix shows the number of open risks in every cell, the totals for risks, overdue reviews and risks without an owner, and a link to the register. A click on a cell opens the register filtered to its risks. The inbox lists overdue reviews, risks due in 7 days, risks without an owner and risks that need a re-assessment, up to 15 per group. The widget shows when its numbers were read, and <span class="ui">Refresh</span> reads Jira again.</p>
+        <img src="imgRiskcadence/screenshot-4-dashboard-gadgets.webp" alt="Two Riskcadence gadgets on a Jira dashboard: the risk matrix with the number of open risks in every cell, and the review inbox with overdue risks, risks due in 7 days, risks without an owner and risks that need a re-assessment." loading="lazy" width="1840" height="900">
+      </section>
+
+      <section>
+        <h2 id="import">Import</h2>
+        <p>The <span class="ui">Import</span> tab brings a register in from a CSV or XLSX file. It needs the permission to create work items. The file is read in your browser, and nothing changes in Jira until you confirm the preview.</p>
+        <ol>
+          <li><strong>Choose file:</strong> a CSV or XLSX file of up to 5 MB and 5,000 rows. For a workbook, choose the worksheet.</li>
+          <li><strong>Map columns:</strong> Riskcadence suggests a target for each column, also from German column names such as <em>Wahrscheinlichkeit</em> or <em>Verantwortlicher</em>. Choose the order of ambiguous dates (day/month/year or month/day/year). A column for the summary is required.</li>
+          <li><strong>Preview:</strong> every row is checked against the matrix of the project. You see how many risks will be created, updated and left unchanged, and the errors and warnings of each row. Rows with errors are skipped.</li>
+          <li><strong>Import:</strong> Riskcadence writes the rows in batches of 25. <span class="ui">Stop after this batch</span> pauses, and an interrupted import resumes where it stopped. <span class="ui">Download problems (CSV)</span> saves the errors and warnings.</li>
+        </ol>
+        <img src="imgRiskcadence/screenshot-2-import-preview.webp" alt="The import preview: six rows of a CSV file checked against the project matrix, with the number of risks to create, update and leave unchanged, and each row's source ID, summary, likelihood and impact with the resulting risk level, owner, response and next review." loading="lazy" width="1840" height="900">
+        <h3 id="import-columns">Columns and values</h3>
+        <ul>
+          <li><strong>Targets:</strong> source ID, summary, description, likelihood, impact, residual likelihood, residual impact, owner, response, next review, category and status. Columns you do not map are ignored, and fields without a mapped column stay unchanged on updates.</li>
+          <li><strong>Likelihood and impact</strong> as numbers on the scale of your matrix, as the labels of your matrix, or as words such as Low, Medium and High (also in German). Likelihood can also be a percentage.</li>
+          <li><strong>Owner</strong> by e-mail address or exact display name. If no single active user matches, the owner stays empty and the row gets a warning.</li>
+          <li><strong>Response</strong> as Avoid, Mitigate, Transfer or Accept, or a common synonym.</li>
+          <li><strong>Category</strong> becomes a Jira label of the risk.</li>
+          <li><strong>Status:</strong> a value that means done, such as Closed or Done, closes the risk, if its workflow has a transition to a done status. Other values are not applied and get a warning.</li>
+        </ul>
+        <h3 id="import-source-id">Source ID and re-imports</h3>
+        <p><strong>Source ID:</strong> a column, such as a risk number from your old register, makes re-imports safe. Riskcadence keeps the source ID and the imported values with each risk, in a Jira work item property. Importing the file again skips unchanged rows, updates only what changed in the file, and never creates a second risk for the same source ID. Every row needs its own source ID.</p>
+      </section>
+
+      <section>
+        <h2 id="reminders">Reminders</h2>
+        <p>Riskcadence has no notification engine of its own; it uses Jira for reminders. Under <span class="ui">Settings → Review reminders</span>:</p>
+        <ul>
+          <li><span class="ui">Create filter: reviews due in this project</span> creates a Jira filter with all open risks whose next review is due within 7 days or overdue. <span class="ui">Create filter: my reviews due</span> does the same for the risks you own. Open the filter in Jira and use <span class="ui">Subscribe</span> to get the list by e-mail.</li>
+          <li><strong>Remind every risk owner</strong> shows the steps of a scheduled Jira Automation rule: trigger <em>Scheduled</em>, <em>Run a JQL search</em> with the JQL that Riskcadence provides (<span class="ui">Copy JQL</span>), and an action <em>Send email</em> to the user in the field <em>Risk owner</em>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 id="export">Export</h2>
+        <ul>
+          <li><strong>The register:</strong> <span class="ui">Export ▾</span> in the register saves the current view as CSV or XLSX: every filtered risk, with the visible columns and the grouping.</li>
+          <li><strong>Everything Riskcadence stores for a project:</strong> a project admin clicks <span class="ui">Settings → Download full export (JSON)</span>. The file holds the matrix versions, review sessions with their entries, decisions and closing states, and the history, limited to the risks the person can see in Jira, with a note that account IDs identify people. The risks themselves are Jira work items; export them with Jira's own tools or the register export.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 id="permissions">Permissions: who can do what</h2>
+        <p>Everything a person sees or changes in Riskcadence runs <strong>with their own Jira permissions</strong>, including issue security. Riskcadence checks the license on the server for every request.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Action</th><th>Who</th></tr>
+            <tr><td>Install the app</td><td>A <strong>Jira admin</strong>, once, from the Atlassian Marketplace.</td></tr>
+            <tr><td>Set up a company-managed project</td><td>A <strong>Jira admin</strong>.</td></tr>
+            <tr><td>Set up a team-managed project</td><td>A <strong>project admin</strong>, who also adds the work type and the fields.</td></tr>
+            <tr><td>Change the matrix, recalculate fields, repair setup, example risks, full export</td><td>A <strong>project admin</strong> or Jira admin.</td></tr>
+            <tr><td>See the register, matrix, review inbox, sessions, comparisons and reports</td><td>Anyone who can <strong>browse the project</strong>, for the risks they can see.</td></tr>
+            <tr><td>Edit a risk, bulk edit, request a re-assessment, decide in a review, start or close a review, save a view</td><td>Anyone who can <strong>edit work items</strong> in the project.</td></tr>
+            <tr><td>Add a mitigation in the risk assessment panel</td><td>The project permissions <strong>Create work items</strong> (for a new work item) and <strong>Link work items</strong>.</td></tr>
+            <tr><td>Add a risk, import</td><td>Anyone who can <strong>create work items</strong> in the project.</td></tr>
+            <tr><td>Delete a shared view</td><td>Its creator, or a project admin or Jira admin.</td></tr>
+            <tr><td>Add a dashboard widget</td><td>Anyone who can edit the dashboard.</td></tr>
+            <tr><td>Publish a review state in Confluence</td><td>Editors of the page; the report contains what the publisher can see in Jira.</td></tr>
+            <tr><td>Withdraw a published state</td><td>Editors of the page, or the publisher while they can view the page.</td></tr>
+            <tr><td>See a published state</td><td>Everyone who can view the Confluence page.</td></tr>
+          </table>
+        </div>
+        <p>Riskcadence uses its own app account only for the calculated fields and their background recalculation, field metadata, the closing state of a review and the display-name lookups of the weekly personal data job. Whatever it stores is filtered by what the reader can see in Jira before it is shown. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
+      </section>
+
+      <section>
+        <h2 id="limits">Limits</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>What</th><th>Limit</th></tr>
+            <tr><td>Register list</td><td>2,000 risks. In a bigger register the filters run in Jira and reach every risk, and the list shows the 2,000 most recently updated matches. The page shows 200 rows at a time.</td></tr>
+            <tr><td>Review inbox</td><td>The first 100 risks per group, with exact totals.</td></tr>
+            <tr><td>Review session</td><td>1,000 risks. Choose a narrower scope for a bigger register.</td></tr>
+            <tr><td>Steering report</td><td>20 projects with the same matrix. Long lists show up to 100 entries, with exact totals. Above 20,000 risks the report reads open risks first and says that it is incomplete; the matrix tab and the dashboard count open risks.</td></tr>
+            <tr><td>Dashboard widget inbox</td><td>The first 15 risks per group.</td></tr>
+            <tr><td>Risk trend</td><td>The last 6 closed reviews and now, in the report of a single project.</td></tr>
+            <tr><td>Import</td><td>5 MB and 5,000 rows per file, written in batches of 25.</td></tr>
+            <tr><td>Matrix</td><td>2 to 7 steps per scale, 2 to 6 levels, review intervals of 1 to 730 days.</td></tr>
+            <tr><td>Saved views</td><td>30 per project and 30 for the portfolio.</td></tr>
+            <tr><td>History in the panel</td><td>The latest 20 entries.</td></tr>
+          </table>
+        </div>
+        <p>Riskcadence was tested with 10,000 risks in one project.</p>
+      </section>
+
+      <section>
+        <h2 id="faq">FAQ and messages</h2>
+        <p>Short answers to common questions, then the app's messages and what to do about them.</p>
+        <h3>Why are Risk score and Risk level missing on the work item in my team-managed project?</h3>
+        <p>Jira does not show app-calculated fields in team-managed projects. Riskcadence still shows score and level in the register, the matrix, the issue panel, the review views and the reports.</p>
+        <h3>Why does the register show only 2,000 risks?</h3>
+        <p>A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, so narrow the view with a filter or a matrix cell.</p>
+        <h3>How do I link a mitigation to a risk?</h3>
+        <p>Link a work item to the risk with the link type <em>is mitigated by</em> (on the mitigation work item itself: <em>mitigates</em>). Riskcadence adds this link type during setup. The risk then shows how many of its mitigations are done, in the register and in the panel.</p>
+        <h3>Do finished mitigations lower the score?</h3>
+        <p>No. Riskcadence never changes an assessment by itself. When all mitigations are done and the residual risk is not assessed, the risk appears in the review inbox under <em>Needs re-assessment</em>, and the panel reminds you.</p>
+        <h3>What does “Former user” mean in a report?</h3>
+        <p>The risk owner's Atlassian account was closed. Once a week Riskcadence asks Atlassian which of the accounts it stores were closed or changed, and erases closed accounts from what it stores. Published reports then show “Former user” for that owner, drop the publisher's name (the report then says “Unknown publisher”) and refresh the names of people who changed theirs. See the <a href="riskcadence-privacy-policy.html">Privacy Policy</a>.</p>
+        <h3>Which Jira projects work?</h3>
+        <p>Company-managed and team-managed projects. Team-managed projects need the one-time manual <a href="#setup-team">setup</a> of the work type Risk and its fields.</p>
+
+        <p>Every message of the app names what happened and what to do.</p>
+        <details class="more">
+          <summary>Messages and what to do</summary>
+          <h4>“The Riskcadence license on this site is not active.”</h4>
+          <p>The trial or the subscription has ended. Ask a Jira admin to start or renew it for your site.</p>
+          <h4>“A Jira admin needs to run this setup.”</h4>
+          <p>Only Jira admins can add work types and fields in company-managed projects. Ask a Jira admin to open the Riskcadence page of the project.</p>
+          <h4>“This project shares its configuration with other projects.”</h4>
+          <p>The work type and the fields will also appear in the other projects that use the same schemes. Confirm with <span class="ui">I understand, set it up anyway</span> if that is what you want.</p>
+          <h4>“Riskcadence setup is incomplete in this project.”</h4>
+          <p>Jira refused some setup steps. A project admin runs <span class="ui">Settings → Project setup → Repair setup</span> (<a href="#setup-repair">details</a>).</p>
+          <h4>“Only project or Jira admins can change this.”</h4>
+          <p>Changing the matrix, recalculating fields, example risks and the full export are for project or Jira admins. Ask one of them.</p>
+          <h4>“A review of this project is already open.”</h4>
+          <p>A project has one open review at a time. Open that review and close it before you start a new one.</p>
+          <h4>“This review would cover … risks; a review session covers at most 1,000.”</h4>
+          <p>Choose a narrower scope: <em>Two highest levels</em> or <em>Due within 30 days or without review date</em>.</p>
+          <h4>“… risks in this review have no decision yet.”</h4>
+          <p>You tried to close a review with undecided risks. Continue reviewing, or confirm with <span class="ui">Close with … undecided</span>.</p>
+          <h4>“These projects use different risk matrices, so one report cannot combine them.”</h4>
+          <p>A report or widget combines projects only if they use the same matrix version. Choose projects with the same matrix, or one project per report.</p>
+          <h4>“Only people who can edit this page can publish a review state on it.”</h4>
+          <p>Ask an editor of the Confluence page to publish the state.</p>
+          <h4>“The report is too large to publish.”</h4>
+          <p>Choose fewer projects for the macro and publish again.</p>
+          <h4>“… risks have values above the new scale …”</h4>
+          <p>You are saving a smaller matrix. Those risks count as not assessed until someone assesses them again; their values stay in Jira. Confirm with <span class="ui">Save smaller matrix</span> or keep the size.</p>
+          <h4>“Owner … was not found or is not unique”</h4>
+          <p>An import row names an owner that Jira cannot match to exactly one active user. The owner stays empty; set it in the register.</p>
+          <h4>“Jira does not allow you to create work items in this project.”</h4>
+          <p>Importing needs the permission to create work items. Ask a project admin for it, then choose the file again.</p>
+          <h4>“Riskcadence cannot read this file because it exceeds 5 MB.”</h4>
+          <p>Split the file into files of at most 5 MB and import them one after the other.</p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <div class="contact-box">
+          <p>Questions, bugs or feature requests? We typically respond within <strong>1–2 business days</strong> (Monday to Friday). You can write in English or German.</p>
+          <p>
+            <strong>Email:</strong> <a href="mailto:support@janekbehrens.de?subject=Riskcadence%20Support">support@janekbehrens.de</a><br>
+            <strong>Support page:</strong> <a href="riskcadence-support.html">common questions and what to include in a bug report</a><br>
+            <strong>Legal:</strong> <a href="riskcadence-privacy-policy.html">Privacy Policy</a> · <a href="riskcadence-terms-of-service.html">Terms of Service</a> · <a href="riskcadence-security.html">Security Policy</a>
+          </p>
+        </div>
+        <p class="legal-note">Atlassian, Jira and Confluence are trademarks of Atlassian. Riskcadence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="components.js?v=559ba31868fd"></script>
+  <script src="docs.js?v=559ba31868fd"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=559ba31868fd">
+  <title>Support — Riskcadence for Jira</title>
+  <meta name="description" content="Support für Riskcadence for Jira: Kontakt, häufige Fragen und Angaben für eine Fehlermeldung.">
+  <link rel="canonical" href="https://janekbehrens.de/de/riskcadence-support.html">
+  <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/legal.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/riskcadence-support.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/riskcadence-support.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/riskcadence-support.html">
+  <script src="/de/ui.js?v=559ba31868fd"></script>
+</head>
+<body class="rd legal">
+  <main class="container">
+    <h1>Support</h1>
+    <p class="updated">Riskcadence for Jira</p>
+
+    <h2>Hilfe erhalten</h2>
+    <p>
+      Du hast eine Frage, einen Fehler gefunden oder einen Funktionswunsch? Wir helfen dir gerne. Schreib uns auf Englisch oder Deutsch eine E-Mail; wir antworten in der Regel innerhalb von <strong>1–2 Werktagen</strong>. Alternativ kannst du ein öffentliches Issue auf GitHub eröffnen. Schau zuerst in die vorhandenen Issues: Vielleicht gibt es bereits eine Antwort auf deine Frage.
+    </p>
+
+    <div class="contact-box">
+      <p>
+        <strong>E-Mail:</strong> <a href="mailto:support@janekbehrens.de?subject=Riskcadence%20Support">support@janekbehrens.de</a><br>
+        <strong>Fehlermeldungen und Funktionswünsche:</strong> <a href="https://github.com/janekbehrens/riskcadence-issues/issues" target="_blank" rel="noopener">github.com/janekbehrens/riskcadence-issues</a><br>
+        <strong>Dokumentation:</strong> <a href="/de/riskcadence-docs.html">Dokumentation zu Riskcadence for Jira</a><br>
+        <strong>Antwortzeit:</strong> 1–2 Werktage (Montag bis Freitag)
+      </p>
+    </div>
+
+    <h2>Bevor du uns kontaktierst</h2>
+    <p>Die meisten Fragen beantwortet die <a href="/de/riskcadence-docs.html">Dokumentation</a>. Häufige Fragen:</p>
+    <ul>
+      <li><strong>Wie richte ich ein teamverwaltetes Projekt ein?</strong> Jira erlaubt Apps dort nicht, Vorgangstypen oder Felder anzulegen. Deshalb legt ein Projektadministrator den Vorgangstyp <em>Risk</em> und sieben Felder einmalig mit den genauen Namen an, die Riskcadence auflistet, und klickt anschließend auf <em>Finish setup</em>  (<a href="/de/riskcadence-docs.html#setup-team">Einrichtung</a>).</li>
+      <li><strong>„Risk score“ und „Risk level“ fehlen am Vorgang:</strong> In teamverwalteten Projekten zeigt Jira von Apps berechnete Felder nicht an. Riskcadence zeigt Score und Stufe trotzdem im Register, im Panel und in den Berichten (<a href="/de/riskcadence-docs.html#fields">Felder</a>).</li>
+      <li><strong>Das Register zeigt nur 2.000 Risiken:</strong> In einem größeren Register laufen die Filter in Jira und erreichen jedes Risiko; die Liste zeigt die 2.000 zuletzt aktualisierten Treffer. Grenze die Ansicht mit einem Filter ein (<a href="/de/riskcadence-docs.html#limits">Limits</a>).</li>
+      <li><strong>Wie verknüpfe ich Gegenmaßnahmen?</strong> Verknüpfe einen Vorgang mit dem Risiko über den Verknüpfungstyp <em>is mitigated by</em>. Das Risiko zeigt dann, wie viele seiner Gegenmaßnahmen erledigt sind (<a href="/de/riskcadence-docs.html#panel">Panel</a>).</li>
+      <li><strong>„Former user“ in einem Bericht:</strong> Das Atlassian-Konto des Risikoeigners wurde geschlossen, und Riskcadence hat es aus den gespeicherten Daten gelöscht (<a href="/de/riskcadence-docs.html#faq">Details</a>).</li>
+      <li><strong>„A review of this project is already open“ (ein Review dieses Projekts ist bereits offen):</strong> Ein Projekt hat immer nur ein offenes Review. Öffne es und schließe es, bevor du ein neues startest (<a href="/de/riskcadence-docs.html#sessions">Reviews</a>).</li>
+      <li><strong>„The Riskcadence license on this site is not active“ (Lizenz nicht aktiv):</strong> Die Testphase oder das Abonnement ist abgelaufen. Bitte einen Jira-Administrator, es zu starten oder zu verlängern.</li>
+    </ul>
+
+    <h2>Was in eine Fehlermeldung gehört</h2>
+    <ul>
+      <li>Wo es passiert: das Register, die Matrix, das Vorgangspanel, ein Review, der Bericht, das Confluence-Makro, ein Dashboard-Widget oder der Import</li>
+      <li>Was du getan hast und was Riskcadence anzeigt: der Titel der Meldung oder ein Screenshot (hilft sehr)</li>
+      <li>Unternehmensverwaltetes oder teamverwaltetes Jira-Projekt und deine Rolle (Jira-Administrator, Projektadministrator oder Mitglied)</li>
+      <li>Bei einem Import: die Anzahl der Zeilen und die Meldung der fehlgeschlagenen Zeile (bitte keine Inhalte der Risiken senden)</li>
+    </ul>
+
+    <p class="page-links">
+      <strong>Rechtliches:</strong> <a href="/de/riskcadence-privacy-policy.html">Datenschutzerklärung</a>  ·
+
+      <a href="/riskcadence-terms-of-service.html" hreflang="en">Nutzungsbedingungen (EN)</a>  ·
+
+      <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>
+    </p>
+  </main>
+  <p class="tm-note">Atlassian, Jira und Confluence sind Marken von Atlassian. Riskcadence ist eine unabhängige App von Janek Behrens und wird weder von Atlassian entwickelt noch unterstützt; die Produktnamen geben lediglich an, mit welchen Produkten die App funktioniert.</p>
+  <script src="/components.js?v=559ba31868fd"></script>
+</body>
+</html>

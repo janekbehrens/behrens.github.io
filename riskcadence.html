@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Riskcadence: Risk Register &amp; Risk Management for Jira</title>
+  <meta name="description" content="Keep your risk register in Jira: risks as work items, a configurable risk matrix, a review inbox, review sessions with an audit trail and a steering report in Jira and Confluence, plus the heat map on Jira dashboards.">
+  <link rel="canonical" href="https://janekbehrens.de/riskcadence.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janekbehrens.de/riskcadence.html">
+  <meta property="og:title" content="Riskcadence: Risk Register &amp; Risk Management for Jira">
+  <meta property="og:description" content="Risks as Jira work items, a configurable risk matrix, a review inbox, review sessions with an audit trail and a steering report for your committee, in Jira and in Confluence.">
+  <meta property="og:image" content="https://janekbehrens.de/imgRiskcadence/highlight-1-risk-register-heat-map.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Riskcadence: Risk Register &amp; Risk Management for Jira">
+  <meta name="twitter:description" content="Risks as Jira work items, a configurable risk matrix, a review inbox, review sessions with an audit trail and a steering report for your committee, in Jira and in Confluence.">
+  <meta name="twitter:image" content="https://janekbehrens.de/imgRiskcadence/highlight-1-risk-register-heat-map.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Riskcadence: Risk Register & Risk Management for Jira",
+        "description": "Atlassian Forge app that keeps the risk register in Jira: every risk is a Jira work item with likelihood, impact, owner, response and next review. A configurable risk matrix, a review inbox, review sessions with an audit trail, a steering report in Jira and Confluence, dashboard widgets for the heat map and the review inbox, and CSV or XLSX import. Everything runs with each person's own Jira permissions.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Atlassian Jira Cloud",
+        "url": "https://janekbehrens.de/riskcadence.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free for up to 10 users, then per-user subscription"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Janek Behrens",
+          "url": "https://janekbehrens.de"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I set up a risk register in Jira?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open Riskcadence in your project, choose a risk matrix template and click Set up project. In company-managed projects a Jira admin does this in one click: the app adds the work type Risk, seven fields, a link type for mitigations and the screen entries. In team-managed projects a project admin adds the work type and the fields by hand, following a checklist, and Riskcadence checks them. Six example risks are optional."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use my own risk matrix?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Start from a 5×5, 4×4 or 3×3 template, rename the steps, change the colours and set the level of every cell. Each level has a review interval. Saving creates a new version of the matrix, and earlier reviews keep the version they were made with."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it work in team-managed projects?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. A project admin adds the work type Risk and the seven fields once, following a checklist in Riskcadence. Jira does not show app-calculated fields in team-managed projects, so Risk score and Risk level are missing from the work item there; Riskcadence still shows score and level in the register, the panel and the reports."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do reviews work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The review inbox lists risks that are overdue, due within seven days, without an owner, or that need a re-assessment because all mitigations are done. In a review session your team confirms, re-assesses, accepts or closes each risk. Accepting a risk needs a named person, a date and a justification of at least 10 characters. Closing the session freezes the state as a baseline for the next comparison and report."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can people without Jira access read the steering report?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, in Confluence. A page editor publishes the current state of the report on the page with one click, and everyone who can view the page sees it with its date, also without Jira access. The editor can withdraw it at any time. A live report shows every reader what their own Jira permissions allow."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I see how risks changed over time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The steering report of a project shows the risk trend across reviews: the open risks per risk level at each of the last six closed reviews and now, as stacked bars. Each closed review adds a bar. Reports across several projects do not show the trend."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does any data leave Atlassian?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The app runs on Atlassian Forge with no external servers, no external services and no AI. It reads and changes risks with each person's own Jira permissions. Review sessions, history and published reports are kept in Atlassian's Forge storage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Jira sites with up to 10 users pay nothing, with every feature. Larger sites start with a free trial; after the trial it is priced per user, from USD 0.79 per user per month."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://janekbehrens.de/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Riskcadence for Jira",
+            "item": "https://janekbehrens.de/riskcadence.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="site.css?v=559ba31868fd">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="alternate" hreflang="en" href="https://janekbehrens.de/riskcadence.html">
+  <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/riskcadence.html">
+  <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/riskcadence.html">
+</head>
+<body class="rd" data-app="rc">
+
+  <!-- Nav and app sub-nav injected by components.js -->
+
+  <main>
+    <section class="product-hero">
+      <div class="wrap">
+        <div>
+          <div class="product-id">
+            <img src="img/riskcadence-icon.png" alt="" width="48" height="48">
+            <div><b>Riskcadence for Jira</b><span>Jira Cloud · Built on Forge · Confluence optional</span></div>
+          </div>
+          <h1 class="h-display">The risk register that lives <em>in Jira</em></h1>
+        </div>
+        <div>
+          <p class="lead">Every risk is a Jira work item. A configurable risk matrix, a review inbox, review sessions with an audit trail and a steering report for your committee, in Jira and Confluence. The heat map and the review inbox also run on Jira dashboards.</p>
+          <div class="btn-row">
+            <span class="btn btn-soon" aria-disabled="true">Coming soon to Atlassian Marketplace</span>
+            <a href="riskcadence-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+          <p class="product-note">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In your Jira</span>
+          <h2 class="h-section">What you get</h2>
+          <p class="lead">Screenshots from a real Jira site with sample data.</p>
+        </div>
+        <div class="card switcher feat-switch">
+          <div class="switcher-body">
+            <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f1" aria-controls="panel-rc-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">A risk register in Jira</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f2" aria-controls="panel-rc-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Assessment on every risk</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f3" aria-controls="panel-rc-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Your own risk matrix</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f4" aria-controls="panel-rc-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Review inbox and sessions</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f5" aria-controls="panel-rc-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Compare with the last review</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f6" aria-controls="panel-rc-f6" aria-selected="false" tabindex="-1"><span class="feat-num">6</span><span class="switcher-tab-name">A steering report for your committee</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f7" aria-controls="panel-rc-f7" aria-selected="false" tabindex="-1"><span class="feat-num">7</span><span class="switcher-tab-name">Matrix and inbox on dashboards</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-rc-f8" aria-controls="panel-rc-f8" aria-selected="false" tabindex="-1"><span class="feat-num">8</span><span class="switcher-tab-name">Import your existing register</span></button>
+            </div>
+            <div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f1" aria-labelledby="tab-rc-f1">
+              <a class="feat-shot" href="imgRiskcadence/highlight-1-risk-register-heat-map.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/highlight-1-risk-register-heat-map.webp" alt="The Riskcadence register in Jira: risks grouped by level with likelihood, impact, score, residual score, owner, response, mitigation progress and next review, editable in place. Inset: the heat map of the open risks by likelihood and impact" width="1840" height="900"></a>
+              <div class="feat-text">
+                <div><h3>A risk register in Jira</h3>
+                <p>Every risk is a Jira work item of the type Risk. The register lists them with score, level, owner, response, mitigation progress and next review, and you change most of it in place.</p>
+                </div>
+                <div><ul>
+                <li>Search, filters, grouping and columns; save a view and share it with your team.</li>
+                <li>Bulk edit, and export of the current view as CSV or XLSX.</li>
+                <li>A heat map shows where the open risks sit; click a cell to see its risks.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#register">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f2" aria-labelledby="tab-rc-f2" hidden>
+              <a class="feat-shot" href="imgRiskcadence/screenshot-1-issue-panel.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/screenshot-1-issue-panel.webp" alt="The Risk assessment panel on a risk: the inherent and the residual risk on two matrices, owner, response and next review, the mitigation work items with their progress, a Request re-assessment button and the history of changes" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Assessment on every risk</h3>
+                <p>The “Risk assessment” panel on each risk shows the inherent and the residual risk on the matrix, with owner, response and next review.</p>
+                </div>
+                <div><ul>
+                <li>Mitigations are Jira work items linked with “is mitigated by”; the panel shows how many are done.</li>
+                <li>“Add mitigation” creates a work item or links an existing one, right from the panel.</li>
+                <li>“Request re-assessment” sets the next review to today and mentions the owner in a Jira comment.</li>
+                <li>The history lists who changed what, and when.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#panel">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f3" aria-labelledby="tab-rc-f3" hidden>
+              <a class="feat-shot" href="imgRiskcadence/screenshot-3-risk-matrix-settings.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/screenshot-3-risk-matrix-settings.webp" alt="The risk matrix settings: names for the five likelihood and impact steps, the risk level of every cell, colour, label and review interval in days for each risk level, and a template menu" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Your own risk matrix</h3>
+                <p>Start from a 5×5, 4×4 or 3×3 template and make it yours: names for the steps, colours and a level for every cell, not just score bands.</p>
+                </div>
+                <div><ul>
+                <li>A review interval per level prefills the next review date.</li>
+                <li>Saving creates a new version; earlier reviews keep the one they were made with.</li>
+                <li>Project admins change the matrix; everyone else sees it read-only.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#matrix">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f4" aria-labelledby="tab-rc-f4" hidden>
+              <a class="feat-shot" href="imgRiskcadence/highlight-2-review-sessions-audit-trail.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/highlight-2-review-sessions-audit-trail.webp" alt="A review session: one risk at the start of the review and now, and the decision Accept with the accepting person, the date and a justification. Inset: the review inbox with overdue risks, risks due in 7 days and risks without an owner" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Review inbox and sessions</h3>
+                <p>The inbox shows what needs attention: overdue reviews, risks due within seven days, risks without an owner and risks that need a re-assessment. A review session walks your team through the register.</p>
+                </div>
+                <div><ul>
+                <li>Confirm, re-assess, accept or close each risk, with a justification that stays in the audit.</li>
+                <li>Accepting a risk needs a named person, a date and at least 10 characters of justification.</li>
+                <li>Closing a session freezes the state as a baseline.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#reviews">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f5" aria-labelledby="tab-rc-f5" hidden>
+              <a class="feat-shot" href="imgRiskcadence/screenshot-5-compare-with-last-review.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/screenshot-5-compare-with-last-review.webp" alt="Compare with a closed review: counts of worsened, reopened, new, improved, closed, unchanged and removed risks since the Q3 steering review, with the worsened, new and improved risks listed below" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Compare with the last review</h3>
+                <p>Pick a closed review as the baseline and see what changed since: new, worsened, improved, closed, reopened and removed risks.</p>
+                </div>
+                <div><ul>
+                <li>Each change shows the score before and after and which fields changed.</li>
+                <li>Unchanged risks are counted, not listed.</li>
+                <li>The same comparison feeds the steering report.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#reviews">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f6" aria-labelledby="tab-rc-f6" hidden>
+              <a class="feat-shot" href="imgRiskcadence/highlight-3-steering-report-confluence.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/highlight-3-steering-report-confluence.webp" alt="A Confluence page for a steering committee with the Riskcadence risk report as a published review state: headline numbers per risk level and the counts of visible, open and closed risks. Inset: the comparison with the closed Q3 steering review" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>A steering report for your committee</h3>
+                <p>Headline numbers, an open-risk heat map, top risks, changes since a baseline, mitigations and open decisions, in Jira, across projects and as a Confluence macro.</p>
+                </div>
+                <div><ul>
+                <li>In Confluence, a page editor publishes a dated review state that readers see without Jira access; it can be withdrawn at any time.</li>
+                <li>A live report shows every reader what their own Jira permissions allow.</li>
+                <li>The risk trend shows the open risks per level at the last six closed reviews and now.</li>
+                <li>Print it or save it as PDF; the Confluence page exports to PDF and Word.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#confluence">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f7" aria-labelledby="tab-rc-f7" hidden>
+              <a class="feat-shot" href="imgRiskcadence/screenshot-4-dashboard-gadgets.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/screenshot-4-dashboard-gadgets.webp" alt="Two Riskcadence gadgets on a Jira dashboard: the risk matrix with the number of open risks in every cell, and the review inbox with overdue risks, risks due in 7 days, risks without an owner and risks that need a re-assessment" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Matrix and inbox on dashboards</h3>
+                <p>Add the risk matrix or the review inbox for one or more projects to a Jira dashboard.</p>
+                </div>
+                <div><ul>
+                <li>Show the inherent or the residual risk on the matrix.</li>
+                <li>Click a cell to open the register filtered to its risks.</li>
+                <li>The inbox groups overdue reviews, risks due in 7 days, risks without an owner and risks that need a re-assessment.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#dashboard">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-rc-f8" aria-labelledby="tab-rc-f8" hidden>
+              <a class="feat-shot" href="imgRiskcadence/screenshot-2-import-preview.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgRiskcadence/screenshot-2-import-preview.webp" alt="The import preview: six rows of a CSV file checked against the project matrix, with the number of risks to create, update and leave unchanged, and each row's source ID, summary, likelihood and impact with the resulting risk level, owner, response and next review" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Import your existing register</h3>
+                <p>Bring in a register from CSV or XLSX: map the columns, check the preview, import.</p>
+                </div>
+                <div><ul>
+                <li>Column mapping recognises English and German column names.</li>
+                <li>A source ID makes a re-import update risks instead of duplicating them.</li>
+                <li>The preview shows errors and warnings before anything changes in Jira.</li>
+              </ul>
+                <a class="text-link feat-more" href="riskcadence-docs.html#import">More in the docs →</a></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why the app</span>
+          <h2 class="h-section">Jira alone vs. with Riskcadence</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Jira alone</th><th scope="col" class="is-app">With Riskcadence</th></tr></thead>
+            <tbody>
+              <tr><td>Assessing a risk</td><td class="no">Custom fields that you create and keep consistent by hand</td><td class="yes">Likelihood and impact on your own matrix, with score and level calculated for you</td></tr>
+              <tr><td>Knowing what to review</td><td class="no">A saved filter that you build and check yourself</td><td class="yes">A review inbox: overdue, due in 7 days, without an owner, needs re-assessment</td></tr>
+              <tr><td>Recording a decision</td><td class="no">The work item history shows field changes, not who accepted a risk and why</td><td class="yes">Review sessions keep each decision with the person, the date and the justification</td></tr>
+              <tr><td>Reporting to a committee</td><td class="no">Counts on a dashboard, or a spreadsheet that someone updates by hand</td><td class="yes">A steering report with heat map, top risks and changes since the last review</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare-note">Compared with Jira Cloud and Confluence Cloud without apps.</p>
+      </div>
+    </section>
+
+    <section id="plans" class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Plans</span>
+          <h2 class="h-section">Free for small sites, per user above</h2>
+        </div>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free for up to 10 users</h3>
+            <p class="plan-sub">No cost on Jira sites with up to 10 users, with every feature.</p>
+            <ul>
+              <li>Risk register, matrix, issue panel and import</li>
+              <li>Review inbox, sessions and comparison</li>
+              <li>Steering report in Jira and in Confluence</li>
+              <li>Dashboard matrix and review inbox</li>
+            </ul>
+          </div>
+          <div class="card plan is-pro">
+            <h3>11 users and more</h3>
+            <p class="plan-sub">Larger sites start with a free trial; after the trial it is priced per user, with graduated prices per user and month in USD:</p>
+            <ul>
+              <li>11–100 users: 0.79</li>
+              <li>101–250 users: 0.59</li>
+              <li>251–1,000 users: 0.39</li>
+              <li>1,001–2,500 users: 0.29</li>
+            </ul>
+          </div>
+        </div>
+        <p class="compare-note">Billing and the trial are handled by Atlassian through the Marketplace.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 class="h-section">Running in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="card step"><span class="step-num">1</span><h3>Install</h3><p>Once the app is live on the Atlassian Marketplace, a Jira admin installs it on the Jira site.</p></div>
+          <div class="card step"><span class="step-num">2</span><h3>Set up a project</h3><p>Open Riskcadence in a project and click Set up project. In company-managed projects a Jira admin does it in one click; in team-managed projects a project admin follows a short checklist.</p></div>
+          <div class="card step"><span class="step-num">3</span><h3>Add risks</h3><p>Add risks in the register, import a spreadsheet or add six example risks. Then open the review inbox and the steering report.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="faq-layout">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h-section">Common questions</h2>
+          <p class="muted" style="margin-top:10px">More answers in the <a href="riskcadence-docs.html#limits">documentation</a>, or write to <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a>.</p>
+        </div>
+        <div class="faq-c">
+          <details><summary>How do I set up a risk register in Jira?</summary><div>Open Riskcadence in your project, choose a risk matrix template and click Set up project. In company-managed projects a Jira admin does this in one click: the app adds the work type Risk, seven fields, a link type for mitigations and the screen entries. In team-managed projects a project admin adds the work type and the fields by hand, following a checklist, and Riskcadence checks them. Six example risks are optional.</div></details>
+          <details><summary>Can I use my own risk matrix?</summary><div>Yes. Start from a 5×5, 4×4 or 3×3 template, rename the steps, change the colours and set the level of every cell. Each level has a review interval. Saving creates a new version of the matrix, and earlier reviews keep the version they were made with.</div></details>
+          <details><summary>Does it work in team-managed projects?</summary><div>Yes. A project admin adds the work type Risk and the seven fields once, following a checklist in Riskcadence. Jira does not show app-calculated fields in team-managed projects, so Risk score and Risk level are missing from the work item there; Riskcadence still shows score and level in the register, the panel and the reports.</div></details>
+          <details><summary>How do reviews work?</summary><div>The review inbox lists risks that are overdue, due within seven days, without an owner, or that need a re-assessment because all mitigations are done. In a review session your team confirms, re-assesses, accepts or closes each risk. Accepting a risk needs a named person, a date and a justification of at least 10 characters. Closing the session freezes the state as a baseline for the next comparison and report.</div></details>
+          <details><summary>Can people without Jira access read the steering report?</summary><div>Yes, in Confluence. A page editor publishes the current state of the report on the page with one click, and everyone who can view the page sees it with its date, also without Jira access. The editor can withdraw it at any time. A live report shows every reader what their own Jira permissions allow.</div></details>
+          <details><summary>Can I see how risks changed over time?</summary><div>Yes. The steering report of a project shows the risk trend across reviews: the open risks per risk level at each of the last six closed reviews and now, as stacked bars. Each closed review adds a bar. Reports across several projects do not show the trend.</div></details>
+          <details><summary>Does any data leave Atlassian?</summary><div>No. The app runs on Atlassian Forge with no external servers, no external services and no AI. It reads and changes risks with each person's own Jira permissions. Review sessions, history and published reports are kept in Atlassian's Forge storage.</div></details>
+          <details><summary>Is it free?</summary><div>Jira sites with up to 10 users pay nothing, with every feature. Larger sites start with a free trial; after the trial it is priced per user, from USD 0.79 per user per month.</div></details>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-section" style="font-size:1.375rem">Also from Janek Behrens</h2></div>
+        <div class="related">
+          <a class="card" href="team-capacity-for-jira.html"><img src="img/team-capacity-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Team Capacity Planning for Jira</b><span>See who is over- or under-loaded each sprint.</span></div></a>
+          <a class="card" href="priority-scoring.html"><img src="img/priority-scoring-icon.png" alt="" width="44" height="44" loading="lazy"><div><b>Priority Scoring for Jira</b><span>Score Jira issues with RICE, WSJF or ICE and rank the backlog.</span></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="card closing">
+          <div>
+            <h2>Your risk register, reviews and reports in one place</h2>
+            <p class="muted">Free for Jira sites with up to 10 users. Larger sites start with a free trial.</p>
+          </div>
+          <div class="btn-row">
+            <span class="btn btn-soon" aria-disabled="true">Coming soon to Atlassian Marketplace</span>
+            <a href="riskcadence-docs.html" class="btn btn-ghost">Read the docs</a>
+          </div>
+        </div>
+        <p class="legal-note">Atlassian, Jira and Confluence are trademarks of Atlassian. Riskcadence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="components.js?v=559ba31868fd"></script>
+  <script src="redesign.js"></script>
+</body>
+</html>

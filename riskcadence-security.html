@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
+  <link rel="stylesheet" href="/site.css?v=559ba31868fd">
+  <title>Security Policy — Riskcadence for Jira</title>
+  <meta name="description" content="Security of Riskcadence for Jira: runs on Atlassian without external calls, reads and changes risks with each person&#x27;s Jira permissions and keeps its data in Forge storage.">
+  <link rel="canonical" href="https://janekbehrens.de/riskcadence-security.html">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="legal.css">
+</head>
+<body class="rd legal">
+  <main class="container">
+    <div class="pdf-bar">
+      <button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
+    </div>
+
+    <h1>Security Policy</h1>
+    <p class="updated">Riskcadence for Jira · Last updated: October 18, 2026</p>
+
+    <h2>1. Overview</h2>
+    <p>
+      Riskcadence: Risk Register &amp; Risk Management for Jira ("the App") is built on the
+      <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge platform</a>
+      and operates entirely within Atlassian's infrastructure under the
+      <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a>
+      trust boundary. It reads and changes risks <strong>with the permissions of the person using
+      it</strong>, makes <strong>no outbound network calls to any external server</strong>, calls no AI
+      service and stores no credentials of any kind. This document describes the App's security architecture
+      and our practices.
+    </p>
+
+    <h2>2. Architecture &amp; Runtime Environment</h2>
+    <ul>
+      <li><strong>No developer-operated servers:</strong> There is no external backend, database, or infrastructure operated by us. All compute and storage is provided by Atlassian.</li>
+      <li><strong>Sandboxed execution:</strong> Forge functions run in isolated, sandboxed containers with restricted system access managed by Atlassian.</li>
+      <li><strong>No external network egress:</strong> The App declares no egress domains and makes no outbound requests to any server outside the Atlassian platform. No external API keys or third-party services are involved.</li>
+      <li><strong>No AI services:</strong> The App does not call any AI service. Scores and levels are deterministic arithmetic on the values your team enters and on the risk matrix you define.</li>
+      <li><strong>Bundled user interface:</strong> The screens, the dashboard widget and the Confluence macro are part of the App package and served by Atlassian; the App loads no third-party scripts, fonts, frames or images. Spreadsheets are read and written in your browser with a library bundled in the App.</li>
+    </ul>
+
+    <h2>3. Access Control</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Control</th><th>Details</th></tr>
+        <tr>
+          <td>Each person's own permissions</td>
+          <td>Everything a person triggers, such as listing risks, changing a field, importing, starting or closing a review, building a report or publishing it, runs <strong>as the user</strong>, in the name of that person. Jira applies that person's permissions, including issue security, and Confluence applies page permissions. People see only the risks they may see in Jira.</td>
+        </tr>
+        <tr>
+          <td>App account, narrowly used</td>
+          <td>The App uses its own app account only for: writing the calculated fields it owns (Risk score, Residual score, Risk level) and recalculating them in the background, reading the metadata of those fields, reading all risks of a project once when a review is closed, so that its closing state does not depend on who closes it, and the display-name lookups of the weekly personal data job. Stored rows are always filtered by the reader's current visibility in Jira before anything is displayed, so a review, a comparison or a report never shows a risk the reader cannot see.</td>
+        </tr>
+        <tr>
+          <td>Minimal API scopes</td>
+          <td>
+            <code>read:jira-work</code> (read risks, projects and search), <code>write:jira-work</code> (create and edit risks, comments, transitions, filters for reminders and issue properties), <code>read:jira-user</code> (names for history and pickers), <code>manage:jira-configuration</code> (company-managed setup: work type, fields, link type, screens), <code>manage:jira-project</code> (project schemes and screens during setup), <code>storage:app</code> (Forge key-value store and Forge SQL), <code>write:app-data:jira</code> (write the App's own calculated fields), <code>read:page:confluence</code> (check whether the user may view or edit the page before a published review state is shown or published; no page content is read) and <code>report:personal-data</code> (the weekly personal data report). The configuration scopes are used only by project or Jira admins during setup.
+          </td>
+        </tr>
+        <tr>
+          <td>Admin actions checked on the server</td>
+          <td>Setup, changing the risk matrix, recalculating fields, example risks and the full export need a project or Jira admin; Jira confirms this with the user's permissions on every call. The browser cannot grant itself these rights.</td>
+        </tr>
+        <tr>
+          <td>Published review states</td>
+          <td>Only people who can edit the page can publish. Withdrawing is open to page editors and to the publisher while they can still view the page. Both are checked on the server with Confluence, as the user. A published state is stored under the page ID and macro ID of the Forge context, never from an ID sent by the browser, and bound to that page and macro. Showing it is a read of the App's own Forge storage after a check of the reader's permission to view the page, repeated each time; it makes no Jira request. Publishing reads the risks with the publisher's Jira permissions, and the confirmation tells the publisher what that shares. Jira permission changes after the fact do not withdraw a publication; withdrawing does.</td>
+        </tr>
+        <tr>
+          <td>Input validation</td>
+          <td>Project keys, work item keys and IDs are validated before use, filters are built on the server from validated values and escaped, and the browser cannot send JQL. Spreadsheet rows are validated again on the server, in batches of at most 25, and an import never creates a second risk for the same source ID.</td>
+        </tr>
+        <tr>
+          <td>License enforcement</td>
+          <td>The license is checked <strong>server-side</strong> on every request; if the Marketplace license of the site is inactive, the App shows a notice instead of data. A trial has the full functionality.</td>
+        </tr>
+        <tr>
+          <td>Developer access</td>
+          <td><strong>None.</strong> We cannot read, access, or export any data stored in your Jira or Confluence site or in the App's Forge storage. All data resides within Atlassian's infrastructure.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>4. Data Protection</h2>
+    <p><strong>Data in transit:</strong></p>
+    <ul>
+      <li>All Forge-to-Jira and Forge-to-Confluence API calls use Atlassian's internal secured transport (TLS 1.2+).</li>
+      <li>The App makes no outbound HTTPS calls to external services.</li>
+    </ul>
+    <p><strong>Data at rest:</strong></p>
+    <ul>
+      <li>The App stores the change history of risks, review sessions with their entries, decisions and closing states, published review states, saved register views, configuration, job status, short-lived import markers and anonymous daily usage counters in <strong>Atlassian Forge storage</strong> (Forge SQL and the key-value store), hosted by Atlassian with encryption at rest and data residency in the location of your Jira site.</li>
+      <li>The risks and their fields are stored by Jira itself.</li>
+      <li>No credentials or tokens are stored; there are none to store.</li>
+      <li>The personal data the App holds is Atlassian account IDs and, in published review states, display names. A weekly personal data report to Atlassian erases closed accounts and refreshes changed names. See the <a href="riskcadence-privacy-policy.html">Privacy Policy</a>.</li>
+    </ul>
+    <p><strong>Data minimization:</strong></p>
+    <ul>
+      <li>The App reads only the fields it needs and never reads work item descriptions, comments, attachments or page content.</li>
+      <li>Logs contain counts, project keys and error codes, never summaries, names, account IDs or free text. Retention and deletion are described in the <a href="riskcadence-privacy-policy.html">Privacy Policy</a>.</li>
+    </ul>
+
+    <h2>5. No External Credentials or Integrations</h2>
+    <p>
+      The App does not require or accept any API keys, tokens, passwords, or third-party credentials.
+      There is no configuration that could expose user secrets, and there are no integrations beyond
+      the Atlassian platform itself.
+    </p>
+
+    <h2>6. Dependency &amp; Vulnerability Management</h2>
+    <ul>
+      <li>Runtime dependencies are limited to Atlassian's official Forge packages, React and a spreadsheet library for the import and the export of the register, maintained and patched by their publishers.</li>
+      <li>Build and test tooling is not included in the production runtime bundle.</li>
+      <li>We run <code>npm audit</code> before <strong>every</strong> deploy via an automated pre-deploy gate that blocks the release on high-severity findings in the App's own dependencies, plus a weekly automated audit. Current status: 0 known vulnerabilities in the production dependencies.</li>
+      <li>Security patches are deployed promptly via Forge; the Node.js runtime is maintained by Atlassian.</li>
+    </ul>
+
+    <h2>7. Incident Response</h2>
+    <p>If a security issue is discovered in the App:</p>
+    <ul>
+      <li>We investigate and begin remediation promptly upon notification or discovery.</li>
+      <li>A fix is deployed as a priority update via the Forge deployment pipeline.</li>
+      <li>Affected customers are notified via the Marketplace listing and, where possible, directly.</li>
+    </ul>
+    <p>
+      To report a security vulnerability, contact
+      <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a> with the subject line
+      <strong>"Security Report — Riskcadence"</strong>. We aim to acknowledge reports within 2 business days.
+    </p>
+
+    <h2>8. Organizational Security Controls</h2>
+    <ul>
+      <li><strong>Access to production:</strong> Deployments are performed exclusively by the maintainer (Janek Behrens) via the authenticated Forge CLI, behind an automated security gate.</li>
+      <li><strong>Source code:</strong> Maintained in a version-controlled repository under the maintainer's control.</li>
+      <li><strong>Sub-processors:</strong> Atlassian only — it hosts the App on Forge (runtime and storage) under Atlassian's <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum</a>, which includes Standard Contractual Clauses for transfers outside the EEA. All processing occurs within the Atlassian platform.</li>
+    </ul>
+
+    <h2>9. Compliance</h2>
+    <ul>
+      <li><strong>GDPR:</strong> The App stores Atlassian account IDs and, in published review states, display names, and it erases closed accounts weekly. See our <a href="riskcadence-privacy-policy.html">Privacy Policy</a>.</li>
+      <li><strong>Atlassian security requirements:</strong> Built to comply with <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a>, the <a href="https://developer.atlassian.com/platform/forge/shared-responsibility-model/" target="_blank" rel="noopener">Forge shared responsibility model</a> and the Marketplace security review.</li>
+      <li><strong>Runs on Atlassian:</strong> Operates under Atlassian's trust boundary, so Atlassian's infrastructure, security controls, and compliance certifications (SOC 2, ISO 27001, etc.) apply to the underlying platform.</li>
+    </ul>
+
+    <h2>10. What We Cannot Access</h2>
+    <p>For complete transparency, we have no technical means to access:</p>
+    <ul>
+      <li>Any data in your Jira or Confluence site (work items, pages, comments, attachments, user data)</li>
+      <li>The review data, history, published review states and other data in the App's Forge storage</li>
+      <li>Your Atlassian account credentials or session tokens</li>
+      <li>Any personal data of your team members</li>
+    </ul>
+
+    <div class="contact-box">
+      <h2>11. Contact</h2>
+      <p>
+        For security questions or to report a vulnerability:<br>
+        <strong>Email:</strong> <a href="mailto:support@janekbehrens.de">support@janekbehrens.de</a><br>
+        <strong>Subject:</strong> Security Report — Riskcadence
+      </p>
+    </div>
+  </main>
+  <p class="tm-note">Atlassian, Jira and Confluence are trademarks of Atlassian. Riskcadence is an independent app by Janek Behrens and is not made or endorsed by Atlassian; the product names only say which products the app works with.</p>
+  <script src="/components.js?v=559ba31868fd"></script>
+</body>
+</html>
