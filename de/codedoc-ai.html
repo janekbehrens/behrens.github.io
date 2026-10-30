@@ -54,6 +54,14 @@
     },
     {
       "@type": "Question",
+      "name": "Funktioniert CodeDoc mit einer GitHub-IP-Allowlist?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. CodeDoc liest deine Repositories aus Atlassians Cloud, daher trägt ein Owner der GitHub-Organisation Atlassians ausgehende IP-Bereiche einmalig in die Allowlist ein."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Wie lange dauert die Einrichtung?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -320,6 +328,7 @@
           <details><summary>Brauche ich einen KI-Schlüssel?</summary><div>Nicht für Synchronisationsblöcke: Sie benötigen nur einen Git-Zugriffstoken mit Leseberechtigung. KI-Seiten benötigen Atlassian AI, enthalten in CodeDoc Advanced, oder deinen eigenen Anthropic-, OpenAI- oder Google-Gemini-Schlüssel. Mit eigenem Schlüssel rechnet dein Anbieter direkt mit dir ab; CodeDoc erhebt keinen Aufschlag.</div></details>
           <details><summary>Welche Git-Ereignisse aktualisieren eine Seite?</summary><div>Mit dem CodeDoc-Webhook im Repository aktualisieren sich Blöcke und KI-Seiten mit der Einstellung „On every push“ bei Pushes von GitHub, GitLab, Bitbucket und Azure DevOps. GitLab-Merge-Request-Ereignisse sowie zusammengeführte Pull Requests in Bitbucket und Azure DevOps zählen ebenfalls; bei GitHub kommt eine Zusammenführung als Push an. Ohne Webhook wählst du tägliche oder wöchentliche Aktualisierung. Einzelheiten: <a href="/de/codedoc-ai-docs.html#jobs-webhooks">Webhook-Einrichtung</a>.</div></details>
           <details><summary>Welche Confluence-Version brauche ich?</summary><div>CodeDoc benötigt Confluence Cloud. Die Forge-App läuft auf der Atlassian-Infrastruktur; es gibt keine Data-Center- oder Server-Version. Sie kann deinen eigenen GitHub-Enterprise- oder GitLab-Server lesen, wenn dieser aus der Atlassian-Cloud erreichbar ist.</div></details>
+          <details><summary>Funktioniert CodeDoc mit einer GitHub-IP-Allowlist?</summary><div>Ja. CodeDoc liest deine Repositories aus Atlassians Cloud, daher trägt ein Owner der GitHub-Organisation <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians ausgehende IP-Bereiche</a> einmalig in die Allowlist ein. <a href="/de/codedoc-ai-docs.html#ip-allow-list">Details</a>.</div></details>
           <details><summary>Wie lange dauert die Einrichtung?</summary><div>Die meisten Teams sind in etwa 5 Minuten verbunden. Du benötigst einen Git-Zugriffstoken mit Leseberechtigung. KI-Seiten benötigen zusätzlich Atlassian AI (Advanced-Edition) oder deinen eigenen KI-Anbieterschlüssel. Der <a href="/de/codedoc-ai-setup.html">Schnellstart</a> führt dich durch jeden Schritt.</div></details>
           <details><summary>Verlässt mein Code die Atlassian-Infrastruktur?</summary><div>Synchronisationsblöcke senden nichts an einen KI-Anbieter. Für KI-Seiten ruft die Forge-Laufzeit die gewählten Dateien ab und sendet sie entweder an Atlassian AI (Advanced-Edition; der Code bleibt auf der Atlassian-Plattform) oder direkt an deinen eigenen KI-Anbieter. Zu keinem Zeitpunkt sind Server von Janek Behrens beteiligt. Einzelheiten stehen im <a href="/trust-center.html" hreflang="en">Vertrauensportal (EN)</a>.</div></details>
         </div>

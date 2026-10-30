@@ -855,6 +855,10 @@
           <summary>„the Git provider rejected the access token (HTTP 401)“ (Git-Anbieter lehnt Zugriffstoken ab)</summary>
           <p>Der gespeicherte Token ist ungültig oder abgelaufen. Ein Administrator ersetzt ihn unter <strong>Settings → Connections (Einstellungen → Verbindungen)</strong>. Bis zur nächsten erfolgreichen Aktualisierung bleibt der letzte gültige Blockinhalt erhalten.</p>
         </details>
+        <details class="more" id="ip-allow-list">
+          <summary>„the GitHub organization accepts requests only from addresses on its IP allow list (HTTP 403)“ (GitHub-Organisation akzeptiert nur Adressen ihrer IP-Allowlist)</summary>
+          <p>Deine GitHub-Organisation akzeptiert nur Anfragen von Adressen auf ihrer IP-Allowlist, und CodeDoc liest deine Repositories aus Atlassians Cloud. Ein Owner der Organisation trägt <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians ausgehende IP-Bereiche</a> (IPv4 und IPv6) unter <strong>Settings → Authentication security → IP allow list</strong> ein; in CodeDoc ändert sich nichts. Die Bereiche gelten für Atlassians gesamte Cloud, und GitHub verlangt für jede Anfrage weiterhin dein Zugriffstoken.</p>
+        </details>
         <details class="more">
           <summary>„On every push“ aktualisiert nicht</summary>
           <p>Push-Aktualisierungen benötigen den CodeDoc-Webhook mit Geheimnis im Repository (<a href="#jobs-webhooks">Webhook-Einrichtung</a>) und einen Push auf den Branch des Blocks (Einstellung <strong>Branch</strong> oder Standardbranch des Repositories). <strong>Update now (Jetzt aktualisieren)</strong> prüft den Block zwischenzeitlich.</p>
