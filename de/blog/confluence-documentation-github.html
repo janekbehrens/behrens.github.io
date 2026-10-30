@@ -6,7 +6,7 @@
 
   <!-- ── Primary SEO ── -->
   <title>Confluence-Dokumentation automatisch aus GitHub erzeugen | Janek Behrens</title>
-  <meta name="description" content="Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.">
+  <meta name="description" content="Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.">
   <link rel="canonical" href="https://janekbehrens.de/de/blog/confluence-documentation-github.html">
   <link rel="icon" type="image/png" href="/img/companyLogo_transparent.png">
   <script type="application/ld+json">
@@ -14,7 +14,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
-  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
   "url": "https://janekbehrens.de/de/blog/confluence-documentation-github.html",
   "datePublished": "2026-01-12T00:00:00+02:00",
   "dateModified": "2026-01-12T00:00:00+02:00",
@@ -70,7 +70,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
-  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+  "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
   "image": "https://janekbehrens.de/imgCodeDoc/GenerationHistory.png",
   "datePublished": "2026-01-12T00:00:00+02:00",
   "dateModified": "2026-01-12T00:00:00+02:00",
@@ -107,7 +107,7 @@
       "name": "Kann Confluence Dokumentation automatisch aus GitHub übernehmen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Confluence hat keine integrierte GitHub-Synchronisierung. Du benötigst eine App wie CodeDoc AI, die dein GitHub-Repository liest, mithilfe eines KI-Modells strukturierte Dokumentation erzeugt und als Confluence-Seite veröffentlicht — manuell ausgelöst, bei jedem Push, bei PR-Merges oder nach Zeitplan."
+        "text": "Confluence hat keine integrierte GitHub-Synchronisierung. Du benötigst eine App wie CodeDoc, die dein GitHub-Repository liest, mithilfe eines KI-Modells strukturierte Dokumentation erzeugt und als Confluence-Seite veröffentlicht — manuell ausgelöst, bei jedem Push, bei PR-Merges oder nach Zeitplan."
       }
     },
     {
@@ -115,7 +115,7 @@
       "name": "Wie verbinde ich GitHub mit Confluence?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Mit CodeDoc AI: Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen der App hinzu, suche dein Repository und füge es hinzu. Erstelle anschließend einen Dokumentationsauftrag. Für automatische Aktualisierungen trägst du die Webhook-URL der App in die Webhook-Einstellungen deines GitHub-Repositories ein und wählst das Ereignis push oder pull_request."
+        "text": "Mit CodeDoc: Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen der App hinzu, suche dein Repository und füge es hinzu. Erstelle anschließend einen Dokumentationsauftrag. Für automatische Aktualisierungen trägst du die Webhook-URL der App in die Webhook-Einstellungen deines GitHub-Repositories ein und wählst das Ereignis push oder pull_request."
       }
     },
     {
@@ -148,7 +148,7 @@
 </script>
 
   <!-- ── Fonts & shared CSS ── -->
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -340,7 +340,7 @@
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/confluence-documentation-github.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/confluence-documentation-github.html">
   <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/confluence-documentation-github.html">
-  <script src="/de/ui.js?v=44d6c0624b67"></script>
+  <script src="/de/ui.js?v=ff7e95cf7422"></script>
 </head>
 <body>
 
@@ -374,11 +374,11 @@
         Die Ursache ist nicht Faulheit, sondern Reibung. Die Dokumentation liegt in einem anderen Werkzeug und Kontext und verlangt einen manuellen Wechsel genau dann, wenn Entwickler sich am stärksten auf den Code konzentrieren. Die Lösung sind nicht mehr Dokumentationserinnerungen im Ticket-Workflow, sondern Dokumentation, die sich selbst aktualisiert.
       </p>
       <p>
-        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> verbindet dein GitHub-Repository über einen Webhook-Auslöser mit Confluence. Bei einem Push oder dem Zusammenführen eines Pull Requests liest die App das Repository, sendet die relevanten Dateien an deinen KI-Anbieter und veröffentlicht aktualisierte Dokumentation auf der Zielseite in Confluence — automatisch.
+        <a href="/de/codedoc-ai.html">CodeDoc for Confluence</a> verbindet dein GitHub-Repository über einen Webhook-Auslöser mit Confluence. Bei einem Push oder dem Zusammenführen eines Pull Requests liest die App das Repository, sendet die relevanten Dateien an deinen KI-Anbieter und veröffentlicht aktualisierte Dokumentation auf der Zielseite in Confluence — automatisch.
       </p>
 
       <div class="callout callout-blue">
-        <p><strong>Was du brauchst:</strong> Eine Confluence-Cloud-Instanz mit installiertem CodeDoc AI, ein GitHub-Konto und einen API-Schlüssel eines unterstützten KI-Anbieters (Anthropic, OpenAI oder Google Gemini). Der KI-Schlüssel ist dein eigener — die App nutzt BYOK (Bring Your Own Key). Dein Code läuft also nie über eigene Server der App.</p>
+        <p><strong>Was du brauchst:</strong> Eine Confluence-Cloud-Instanz mit installiertem CodeDoc, ein GitHub-Konto und einen API-Schlüssel eines unterstützten KI-Anbieters (Anthropic, OpenAI oder Google Gemini). Der KI-Schlüssel ist dein eigener — die App nutzt BYOK (Bring Your Own Key). Dein Code läuft also nie über eigene Server der App.</p>
       </div>
 
       <h2 id="pipeline">So funktioniert die Pipeline</h2>
@@ -397,7 +397,7 @@
         </div>
         <div class="pipeline-step">
           <span class="ps-icon">🤖</span>
-          CodeDoc AI liest das Repository
+          CodeDoc liest das Repository
         </div>
         <div class="pipeline-step">
           <span class="ps-icon">✨</span>
@@ -415,7 +415,7 @@
 
       <h2 id="step1">Schritt 1 — Ein GitHub Personal Access Token erstellen</h2>
       <p>
-        CodeDoc AI benötigt Lesezugriff auf dein Repository. Empfohlen wird ein <strong>persönliches Zugriffstoken (Personal Access Token, PAT)</strong> mit dem Berechtigungsumfang <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> (Lesezugriff genügt — die App schreibt nie in dein Repository).
+        CodeDoc benötigt Lesezugriff auf dein Repository. Empfohlen wird ein <strong>persönliches Zugriffstoken (Personal Access Token, PAT)</strong> mit dem Berechtigungsumfang <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> (Lesezugriff genügt — die App schreibt nie in dein Repository).
       </p>
       <p>
         Erstelle es unter <strong>GitHub → Settings → Developer settings → Personal access tokens</strong>. Wähle bei fein abgestuften Tokens „Repository contents: Read-only“. Aktiviere bei klassischen Tokens den <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">repo</code> Berechtigungsumfang. Die vollständige Token-Dokumentation von GitHub findest du unter <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">docs.github.com</a>.
@@ -425,13 +425,13 @@
         Kopiere das Token sofort — GitHub zeigt es nicht erneut an.
       </p>
 
-      <h2 id="step2">Schritt 2 — GitHub in CodeDoc AI verbinden</h2>
+      <h2 id="step2">Schritt 2 — GitHub in CodeDoc verbinden</h2>
       <p>
-        Öffne CodeDoc AI aus dem Confluence-App-Menü und gehe zu <strong>Einstellungen → Git-Anbieter</strong>. Wähle GitHub, füge dein Zugriffstoken ein und klicke auf <strong>Verbinden und prüfen (Connect &amp; Validate)</strong>. Die App prüft das Token und bestätigt den Zugriff.
+        Öffne CodeDoc aus dem Confluence-App-Menü und gehe zu <strong>Einstellungen → Git-Anbieter</strong>. Wähle GitHub, füge dein Zugriffstoken ein und klicke auf <strong>Verbinden und prüfen (Connect &amp; Validate)</strong>. Die App prüft das Token und bestätigt den Zugriff.
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/SettingsGitProvider.png" alt="Git-Anbieter-Einstellungen in CodeDoc AI — GitHub-Token-Konfiguration" loading="lazy">
+        <img src="/imgCodeDoc/SettingsGitProvider.png" alt="Git-Anbieter-Einstellungen in CodeDoc — GitHub-Token-Konfiguration" loading="lazy">
         <p class="diagram-caption">Git-Anbieter-Einstellungen — GitHub mit deinem persönlichen Zugriffstoken verbinden</p>
       </div>
 
@@ -448,7 +448,7 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/RepoSelection.png" alt="Repository-Auswahl in CodeDoc AI mit GitHub-Repositories" loading="lazy">
+        <img src="/imgCodeDoc/RepoSelection.png" alt="Repository-Auswahl in CodeDoc mit GitHub-Repositories" loading="lazy">
         <p class="diagram-caption">GitHub-Repositories durchsuchen und hinzufügen — oder eine URL direkt einfügen, unabhängig von der Sichtbarkeit</p>
       </div>
 
@@ -459,7 +459,7 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/CreateJobMiddle.png" alt="Formular zur Erstellung eines Dokumentationsauftrags in CodeDoc AI — Auswahl von Voreinstellung, Sprache und Auslöser" loading="lazy">
+        <img src="/imgCodeDoc/CreateJobMiddle.png" alt="Formular zur Erstellung eines Dokumentationsauftrags in CodeDoc — Auswahl von Voreinstellung, Sprache und Auslöser" loading="lazy">
         <p class="diagram-caption">Auftragserstellung — Repository, Voreinstellung, Sprache und Auslösertyp auswählen</p>
       </div>
 
@@ -484,7 +484,7 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc AI" loading="lazy">
+        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc" loading="lazy">
         <p class="diagram-caption">Die Webhook-URL erscheint automatisch bei Auswahl eines automatischen Auslösers</p>
       </div>
 
@@ -496,7 +496,7 @@
       <ol class="step-list">
         <li>
           <div class="step-num">1</div>
-          <div class="step-text">Füge die <strong>Webhook-URL</strong> von CodeDoc AI in das Feld „Payload URL“ ein.</div>
+          <div class="step-text">Füge die <strong>Webhook-URL</strong> von CodeDoc in das Feld „Payload URL“ ein.</div>
         </li>
         <li>
           <div class="step-num">2</div>
@@ -526,7 +526,7 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc AI mit abgeschlossenen Dokumentationsdurchläufen, Tokenanzahlen und Links" loading="lazy">
+        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc mit abgeschlossenen Dokumentationsdurchläufen, Tokenanzahlen und Links" loading="lazy">
         <p class="diagram-caption">Erzeugungsverlauf — jeder Durchlauf mit Tokennutzung, Dateianzahl und direktem Link zur Confluence-Seite</p>
       </div>
 
@@ -552,12 +552,12 @@
 
       <div class="faq-item">
         <p class="faq-q">Kann Confluence Dokumentation automatisch aus GitHub übernehmen?</p>
-        <p class="faq-a">Confluence hat keine integrierte GitHub-Synchronisierung. CodeDoc AI schließt die Lücke: Es liest dein Repository per Webhook, erzeugt Dokumentation mit deinem KI-Anbieter und veröffentlicht sie als native Confluence-Seite — ausgelöst durch Commits, PR-Merges oder einen Zeitplan.</p>
+        <p class="faq-a">Confluence hat keine integrierte GitHub-Synchronisierung. CodeDoc schließt die Lücke: Es liest dein Repository per Webhook, erzeugt Dokumentation mit deinem KI-Anbieter und veröffentlicht sie als native Confluence-Seite — ausgelöst durch Commits, PR-Merges oder einen Zeitplan.</p>
       </div>
 
       <div class="faq-item">
         <p class="faq-q">Wie verbinde ich GitHub mit Confluence?</p>
-        <p class="faq-a">Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen von CodeDoc AI hinzu, ergänze dein Repository und erstelle einen Dokumentationsauftrag mit automatischem Auslöser. Registriere anschließend die Webhook-URL der App in den GitHub-Repository-Einstellungen. Die vollständige Anleitung steht in diesem Artikel.</p>
+        <p class="faq-a">Erstelle ein GitHub Personal Access Token mit Lesezugriff auf Repositories, füge es in den Git-Anbieter-Einstellungen von CodeDoc hinzu, ergänze dein Repository und erstelle einen Dokumentationsauftrag mit automatischem Auslöser. Registriere anschließend die Webhook-URL der App in den GitHub-Repository-Einstellungen. Die vollständige Anleitung steht in diesem Artikel.</p>
       </div>
 
       <div class="faq-item">
@@ -576,14 +576,14 @@
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Welche KI-Anbieter kann ich mit CodeDoc AI nutzen?</p>
+        <p class="faq-q">Welche KI-Anbieter kann ich mit CodeDoc nutzen?</p>
         <p class="faq-a">Anthropic (Claude), OpenAI (GPT-Modelle) und Google (Gemini). Du nutzt deinen eigenen API-Schlüssel — die App berechnet keine Gebühr pro Erzeugung. Google Gemini bietet ein kostenloses Kontingent, sodass du beim Testen der App Dokumentation ohne KI-Kosten erzeugen kannst.</p>
       </div>
 
       <!-- CTA -->
       <div class="article-cta">
         <h3>Verbinde dein GitHub-Repository mit Confluence</h3>
-        <p>CodeDoc AI lässt sich kostenlos testen — alle Auslöser, Voreinstellungen und die KI-Dateiauswahl sind von Anfang an enthalten.</p>
+        <p>CodeDoc lässt sich kostenlos testen — alle Auslöser, Voreinstellungen und die KI-Dateiauswahl sind von Anfang an enthalten.</p>
         <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
       </div>
 
@@ -612,9 +612,9 @@
       <div class="sidebar-block">
         <h3>Die App</h3>
         <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
           </div>
         </a>
@@ -633,7 +633,7 @@
   </div>
 
   <!-- Footer + nav injected by components.js -->
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 
   <script>
   (function () {

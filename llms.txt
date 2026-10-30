@@ -1,0 +1,38 @@
+# Janek Behrens: Apps for Jira and Confluence
+
+> Janek Behrens is an independent Atlassian Marketplace vendor based in Germany. His apps for Jira and Confluence are built on Atlassian Forge and run on Atlassian's cloud; he operates no servers of his own. The site has a product page, documentation, support and legal pages for every app. The pages are English; a German version of the site lives under /de/.
+
+## Apps
+
+- [Visual Progress Tracker for Jira](https://janekbehrens.de/visual-progress-tracker.html): Color-coded progress bars for Jira issues, calculated from the status or the subtasks or set by hand, plus two dashboard gadgets. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira)
+- [Priority Scoring for Jira](https://janekbehrens.de/priority-scoring.html): Scores Jira issues with RICE, WSJF or ICE, ranks the backlog and tracks Board Health, with a Rovo agent that suggests scores and gives reasons. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/966645375)
+- [Velocity Chart for Jira](https://janekbehrens.de/velocity-chart.html): Sprint velocity on any Jira dashboard: committed vs completed, average line and say/do ratio, with your own Definition of Done. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/3707070829/velocity-chart-for-jira)
+- [DevOps Metrics for Jira](https://janekbehrens.de/dora-metrics-for-jira.html): Deployment frequency, lead time, change failure rate and time to restore, calculated from your Jira data on any dashboard without CI/CD setup. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira)
+- [Team Capacity Planning for Jira](https://janekbehrens.de/team-capacity-for-jira.html): Sprint workload per person as one color-coded bar on a Jira dashboard, built from the estimates your board already uses. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira)
+- [CodeDoc for Confluence](https://janekbehrens.de/codedoc-ai.html): Keeps Confluence pages in sync with GitHub, GitLab, Bitbucket and Azure DevOps (versions, YAML values, README sections, code snippets), with optional AI-written pages. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2654352538)
+- [Epic Progress for Confluence](https://janekbehrens.de/epic-progress-for-confluence.html): Live progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira, with dated snapshots for readers without Jira access. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence)
+
+## Documentation
+
+- [Visual Progress Tracker for Jira: Documentation](https://janekbehrens.de/visual-progress-tracker-docs.html)
+- [Priority Scoring for Jira: Documentation](https://janekbehrens.de/priority-scoring-docs.html)
+- [Velocity Chart for Jira: Documentation](https://janekbehrens.de/velocity-chart-docs.html)
+- [DevOps Metrics for Jira: Documentation](https://janekbehrens.de/dora-metrics-docs.html)
+- [Team Capacity Planning for Jira: Documentation](https://janekbehrens.de/team-capacity-docs.html)
+- [CodeDoc for Confluence: Documentation](https://janekbehrens.de/codedoc-ai-docs.html)
+- [CodeDoc for Confluence: Quick start](https://janekbehrens.de/codedoc-ai-setup.html)
+- [Epic Progress for Confluence: Documentation](https://janekbehrens.de/epic-progress-docs.html)
+
+## Company
+
+- [Trust Center](https://janekbehrens.de/trust-center.html): How the apps handle data, hosting, subprocessors, GDPR and security.
+- [Visual Progress Tracker for Jira: Support](https://janekbehrens.de/visual-progress-tracker-support.html)
+- [Priority Scoring for Jira: Support](https://janekbehrens.de/priority-scoring-support.html)
+- [Velocity Chart for Jira: Support](https://janekbehrens.de/velocity-chart-support.html)
+- [DevOps Metrics for Jira: Support](https://janekbehrens.de/dora-metrics-support.html)
+- [Team Capacity Planning for Jira: Support](https://janekbehrens.de/team-capacity-support.html)
+- [CodeDoc for Confluence: Support](https://janekbehrens.de/codedoc-ai-support.html)
+- [Epic Progress for Confluence: Support](https://janekbehrens.de/epic-progress-support.html)
+- [Privacy policy of this website](https://janekbehrens.de/privacy-policy.html)
+- [Impressum (legal notice, German)](https://janekbehrens.de/impressum.html)
+- [Vendor profile on the Atlassian Marketplace](https://marketplace.atlassian.com/vendors/92692174/janek-behrens)

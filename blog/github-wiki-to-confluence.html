@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>From GitHub Wiki to Confluence: Two Migration Paths Compared | Janek Behrens</title>
-  <meta name="description" content="Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc AI. Honest comparison, when each one wins, and how to avoid migrating dead pages.">
+  <meta name="description" content="Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc. Honest comparison, when each one wins, and how to avoid migrating dead pages.">
   <link rel="canonical" href="https://janekbehrens.de/blog/github-wiki-to-confluence.html">
   <link rel="icon" type="image/png" href="../img/companyLogo_transparent.png">
   <script type="application/ld+json">
@@ -13,7 +13,7 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "From GitHub Wiki to Confluence: Two Migration Paths Compared",
-    "description": "Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc AI. Honest comparison, when each one wins, and how to avoid migrating dead pages.",
+    "description": "Moving from GitHub Wiki to Confluence: the manual export path with pandoc, and the regenerate-from-source path with CodeDoc. Honest comparison, when each one wins, and how to avoid migrating dead pages.",
     "url": "https://janekbehrens.de/blog/github-wiki-to-confluence.html",
     "datePublished": "2026-05-21T00:00:00+02:00",
     "dateModified": "2026-05-21T00:00:00+02:00",
@@ -48,7 +48,7 @@
         "name": "How do I migrate a GitHub Wiki to Confluence?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "There are two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc AI. The first preserves history; the second avoids migrating stale pages."
+          "text": "There are two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc. The first preserves history; the second avoids migrating stale pages."
         }
       },
       {
@@ -71,7 +71,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
@@ -245,12 +245,12 @@ done</code></pre>
         <p><strong>Watch out for:</strong> internal wiki links of the form <code>[[Page Name]]</code>. Pandoc doesn't know they refer to other wiki pages, so they come through as plain text. Run a post-processing pass that rewrites these into Confluence links using the new page IDs.</p>
       </div>
 
-      <h2 id="path-b">Path B — regenerate from source with CodeDoc AI</h2>
+      <h2 id="path-b">Path B — regenerate from source with CodeDoc</h2>
       <p>
         The second path skips the migration entirely. Instead of moving the existing wiki, you point an AI documentation tool at the source repository, choose how the output should be structured, and let it write fresh pages directly into Confluence.
       </p>
       <p>
-        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> is one such tool, built on Atlassian Forge. The workflow:
+        <a href="/codedoc-ai.html">CodeDoc for Confluence</a> is one such tool, built on Atlassian Forge. The workflow:
       </p>
       <ol>
         <li><strong>Connect an AI provider</strong> — bring your own key for Anthropic Claude, OpenAI, or Google Gemini.</li>
@@ -263,7 +263,7 @@ done</code></pre>
 
       <h3>What this path is — and isn't</h3>
       <p>
-        This is not a wiki content migrator. CodeDoc AI does not read your GitHub Wiki pages; it reads the source code in the main repository. The output is documentation that reflects <em>the code as it exists today</em>. If your wiki has an architecture decision log or an onboarding tutorial that doesn't live in code, that part has to be captured separately (Path A is the right tool for it).
+        This is not a wiki content migrator. CodeDoc does not read your GitHub Wiki pages; it reads the source code in the main repository. The output is documentation that reflects <em>the code as it exists today</em>. If your wiki has an architecture decision log or an onboarding tutorial that doesn't live in code, that part has to be captured separately (Path A is the right tool for it).
       </p>
       <p>
         What you get for free, though, is that the generated documentation stays current. Set the trigger to <strong>on commit</strong> via webhook, or <strong>on a schedule</strong> (daily / weekly / monthly), and the Confluence pages refresh automatically when the code changes. That is the failure mode the original wiki was suffering from — pages that drifted from the code over years — solved by removing the human gap entirely.
@@ -291,7 +291,7 @@ done</code></pre>
       <ol>
         <li>Audit the wiki. Tag keep / regenerate / archive.</li>
         <li>Migrate the <em>keep</em> pages with pandoc + REST API into a fresh Confluence space.</li>
-        <li>Install CodeDoc AI, point it at the same Confluence space, set up jobs for each repository.</li>
+        <li>Install CodeDoc, point it at the same Confluence space, set up jobs for each repository.</li>
         <li>Wire the jobs to your CI: webhook trigger on push to <code>main</code>, so the docs refresh whenever the code does.</li>
         <li>Archive the old GitHub Wiki — keep it read-only as a reference, point the README at Confluence.</li>
       </ol>
@@ -300,7 +300,7 @@ done</code></pre>
 
       <div class="faq-item">
         <p class="faq-q">How do I migrate a GitHub Wiki to Confluence?</p>
-        <p class="faq-a">Two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result via the Confluence REST API. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc AI. The first preserves history; the second avoids migrating stale pages.</p>
+        <p class="faq-a">Two viable paths. One is a content migration: clone the wiki repository, convert the Markdown to Confluence storage format with a tool like pandoc, and import the result via the Confluence REST API. The other is a regeneration approach: keep the source code in GitHub, but generate fresh documentation from the code itself directly into Confluence using an AI documentation tool such as CodeDoc. The first preserves history; the second avoids migrating stale pages.</p>
       </div>
 
       <div class="faq-item">
@@ -314,19 +314,19 @@ done</code></pre>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Does CodeDoc AI migrate wiki content?</p>
-        <p class="faq-a">No. CodeDoc AI reads source code from a Git repository and generates documentation from it — it does not read existing wiki pages. Use pandoc + the Confluence REST API for true content migration; use CodeDoc AI to replace the "what does this code do" subset of the wiki with always-current pages generated from source.</p>
+        <p class="faq-q">Does CodeDoc migrate wiki content?</p>
+        <p class="faq-a">No. CodeDoc reads source code from a Git repository and generates documentation from it — it does not read existing wiki pages. Use pandoc + the Confluence REST API for true content migration; use CodeDoc to replace the "what does this code do" subset of the wiki with always-current pages generated from source.</p>
       </div>
 
       <div class="faq-item">
         <p class="faq-q">Can the documentation in Confluence update automatically when code changes?</p>
-        <p class="faq-a">Yes, if you use the regeneration path. CodeDoc AI supports webhook triggers (regenerate on every push or merge to a chosen branch) and scheduled triggers (daily, weekly, monthly). Pages migrated manually via pandoc do not auto-update — they are static copies.</p>
+        <p class="faq-a">Yes, if you use the regeneration path. CodeDoc supports webhook triggers (regenerate on every push or merge to a chosen branch) and scheduled triggers (daily, weekly, monthly). Pages migrated manually via pandoc do not auto-update — they are static copies.</p>
       </div>
 
       <div class="article-cta">
         <h3>Replace your GitHub Wiki with always-current Confluence docs</h3>
-        <p>CodeDoc AI generates documentation from your source code and publishes it directly to Confluence. Bring your own AI key. Free trial on the Atlassian Marketplace.</p>
-        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc AI →</a>
+        <p>CodeDoc generates documentation from your source code and publishes it directly to Confluence. Bring your own AI key. Free trial on the Atlassian Marketplace.</p>
+        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc →</a>
       </div>
 
     </article>
@@ -349,9 +349,9 @@ done</code></pre>
       <div class="sidebar-block">
         <h3>The app</h3>
         <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
-          <img src="../img/companyLogo.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="../img/companyLogo.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · Forge · BYOK</div>
           </div>
         </a>
@@ -369,7 +369,7 @@ done</code></pre>
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
   <script>
   (function () {
     var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');

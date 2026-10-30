@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
-  <title>Trust Center — Janek Behrens</title>
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
+  <title>Trust Center: Janek Behrens</title>
   <meta name="description" content="Trust Center of Janek Behrens: how the Atlassian apps handle data, hosting, subprocessors, GDPR and security.">
   <link rel="canonical" href="https://janekbehrens.de/trust-center.html">
   <style>
@@ -107,7 +107,7 @@
     <ul>
       <li>App code runs entirely within Atlassian's infrastructure — there are no third-party servers, no external cloud providers, and no infrastructure operated by Janek Behrens.</li>
       <li>App logic runs within the Forge runtime on Atlassian's infrastructure. Where an app makes outbound calls (e.g., to AI or Git providers you configure), these are made via Forge's allowlisted external fetch mechanism — not through any infrastructure operated by Janek Behrens.</li>
-      <li>Apps without outbound calls qualify for the <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a> designation, meaning Atlassian provides the underlying security, availability, and compliance guarantees for the hosting layer. CodeDoc AI does not qualify, because it connects to the Git and AI services you configure.</li>
+      <li>Apps without outbound calls qualify for the <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a> designation, meaning Atlassian provides the underlying security, availability, and compliance guarantees for the hosting layer. CodeDoc does not qualify, because it connects to the Git and AI services you configure.</li>
     </ul>
     <p>
       For Atlassian's own infrastructure security and compliance certifications (ISO 27001, SOC 2, etc.),
@@ -118,11 +118,11 @@
     <p>All apps adhere to the following data privacy principles:</p>
     <ul>
       <li><strong>Data minimization:</strong> Apps only request the Atlassian API scopes strictly necessary to deliver their functionality. No speculative permissions are requested.</li>
-      <li><strong>No personal data on our systems:</strong> Apps do not collect, transmit, or store personally identifiable information (PII) such as names, email addresses, user keys, or account details on any system controlled by Janek Behrens. Some apps keep a little personal data in Atlassian Forge Storage for your site, such as Atlassian account IDs, display names or, in CodeDoc AI, the name of the Git account behind a Git connection; the app overview below and each app's Privacy Policy say exactly what.</li>
-      <li><strong>No data sent to servers of Janek Behrens:</strong> No app transmits any data to servers operated by Janek Behrens. Any external calls made by an app go exclusively to services that you explicitly configure using your own credentials (Bring Your Own Key model), to public package registries for CodeDoc AI's optional version check (public package names only), or to no external services at all. See the app overview table below for details per app.</li>
+      <li><strong>No personal data on our systems:</strong> Apps do not collect, transmit, or store personally identifiable information (PII) such as names, email addresses, user keys, or account details on any system controlled by Janek Behrens. Some apps keep a little personal data in Atlassian Forge Storage for your site, such as Atlassian account IDs, display names or, in CodeDoc, the name of the Git account behind a Git connection; the app overview below and each app's Privacy Policy say exactly what.</li>
+      <li><strong>No data sent to servers of Janek Behrens:</strong> No app transmits any data to servers operated by Janek Behrens. Any external calls made by an app go exclusively to services that you explicitly configure using your own credentials (Bring Your Own Key model), to public package registries for CodeDoc's optional version check (public package names only), or to no external services at all. See the app overview table below for details per app.</li>
       <li><strong>Technical logs:</strong> Like most Forge apps, each app writes technical log lines and anonymous daily usage counters to Atlassian's app logging, which Atlassian makes available to us as the app vendor. They may contain IDs and keys from your site (for example project keys), but never names of people or account IDs; each app's Privacy Policy lists what they may contain.</li>
       <li><strong>No tracking:</strong> Apps do not use cookies, tracking pixels, session recording, analytics platforms, advertising networks, or any form of per-person behavioral analytics. The only usage data is the anonymous daily usage counters described above.</li>
-      <li><strong>Data in Atlassian storage only:</strong> Apps store data only in Atlassian Forge Storage — such as settings, mappings, credentials you provide, job history metadata, caches, computed results and progress snapshots that page editors publish (Epic Progress for Confluence, without person fields such as assignees or account IDs); each app's Privacy Policy lists what it stores. This data resides on Atlassian's infrastructure. Values an app writes into Jira or Confluence, such as progress or score values in the app's own custom fields or CodeDoc AI's documentation pages, are stored by Jira or Confluence itself. After an app is uninstalled, Atlassian keeps its stored data for 28 days and then deletes it; within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the app.</li>
+      <li><strong>Data in Atlassian storage only:</strong> Apps store data only in Atlassian Forge Storage — such as settings, mappings, credentials you provide, job history metadata, caches, computed results and progress snapshots that page editors publish (Epic Progress for Confluence, without person fields such as assignees or account IDs); each app's Privacy Policy lists what it stores. This data resides on Atlassian's infrastructure. Values an app writes into Jira or Confluence, such as progress or score values in the app's own custom fields or CodeDoc's documentation pages, are stored by Jira or Confluence itself. After an app is uninstalled, Atlassian keeps its stored data for 28 days and then deletes it; within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the app.</li>
     </ul>
 
     <h2>4. App Overview</h2>
@@ -167,7 +167,7 @@
             <td><a href="velocity-chart-privacy-policy.html">Privacy Policy</a></td>
           </tr>
           <tr>
-            <td><a href="codedoc-ai.html">CodeDoc AI for Confluence</a></td>
+            <td><a href="codedoc-ai.html">CodeDoc for Confluence</a></td>
             <td>Confluence Cloud</td>
             <td>Atlassian account IDs of people who approved, discarded or undid a run, approved a sync block or dismissed the rating prompt; the name of the Git account behind each Git connection; in a Bitbucket connection made before version 8 with a personal token, the e-mail address or user name inside that token (Atlassian Forge Storage only)</td>
             <td>Your Git provider (GitHub, GitLab, Bitbucket, Azure DevOps, or your own GitHub Enterprise or GitLab server after a site admin approved it) &amp; your AI provider (Anthropic, OpenAI, Google AI) — via BYOK, using your own credentials; Atlassian AI in the Advanced edition runs on Atlassian's platform; public registries for the optional version check of sync blocks (public package names only)</td>
@@ -203,7 +203,7 @@
     <ul>
       <li><strong>Lawful basis:</strong> Data access is based on the legitimate interest of delivering the app's contractual functionality to the installing organization.</li>
       <li><strong>Data subject rights:</strong> Since no personal data is stored outside the Atlassian platform, data subject requests (access, rectification, erasure, portability) can be addressed by uninstalling the app (Atlassian deletes its stored data 28 days later) or contacting us directly.</li>
-      <li><strong>Data processing location:</strong> All data is processed within Atlassian's infrastructure, except what CodeDoc AI sends to the Git and AI providers you configure and, for its optional version check, to public registries (see section 8). Atlassian provides GDPR-compliant data processing agreements as part of its standard terms. Apps do not introduce sub-processors beyond those listed in section 8.</li>
+      <li><strong>Data processing location:</strong> All data is processed within Atlassian's infrastructure, except what CodeDoc sends to the Git and AI providers you configure and, for its optional version check, to public registries (see section 8). Atlassian provides GDPR-compliant data processing agreements as part of its standard terms. Apps do not introduce sub-processors beyond those listed in section 8.</li>
       <li><strong>Breach notification:</strong> In the unlikely event of a security incident affecting app-related data, affected customers will be notified in accordance with GDPR Article 33/34 requirements and applicable law.</li>
     </ul>
 
@@ -261,7 +261,7 @@
     </div>
     <p class="flow-label">All data stays within Atlassian infrastructure. No external calls.</p>
 
-    <p><strong>CodeDoc AI for Confluence</strong></p>
+    <p><strong>CodeDoc for Confluence</strong></p>
     <div class="hub-wrap">
       <div class="hub-center">
         <div class="flow-box forge">
@@ -327,7 +327,7 @@
       <p>
         <strong>Janek Behrens acts as a data processor</strong> under GDPR Article 4(8) for the End-User Data
         our apps process on your behalf (each app's Privacy Policy describes that data). This processing takes
-        place within Atlassian's platform and, for CodeDoc AI, with the Git and AI providers you configure
+        place within Atlassian's platform and, for CodeDoc, with the Git and AI providers you configure
         (see below); no personal data is transmitted to or processed on systems controlled by Janek Behrens.
         We do not currently offer a separate Data Processing Agreement.
       </p>
@@ -339,7 +339,7 @@
       which is part of Atlassian's standard Cloud Terms of Service.
     </p>
     <p>
-      For <strong>CodeDoc AI</strong>: outbound calls to your Git and AI providers are made using credentials
+      For <strong>CodeDoc</strong>: outbound calls to your Git and AI providers are made using credentials
       you supply (Bring Your Own Key). You hold the direct contractual relationship with those providers —
       Janek Behrens is not a party to that data flow. With Atlassian AI (Advanced edition), AI pages are processed
       on Atlassian's platform under Atlassian's terms.
@@ -403,28 +403,28 @@
             <td>—</td>
           </tr>
           <tr>
-            <td>CodeDoc AI</td>
+            <td>CodeDoc</td>
             <td>GitHub / GitLab / Bitbucket / Azure DevOps, or your own GitHub Enterprise or GitLab server</td>
             <td>Repository access to fetch source code for documentation generation</td>
             <td>Customer-configured (BYOK)</td>
             <td>Per provider / customer account</td>
           </tr>
           <tr>
-            <td>CodeDoc AI</td>
+            <td>CodeDoc</td>
             <td>Anthropic / OpenAI / Google Gemini</td>
             <td>AI-powered documentation generation using your API key</td>
             <td>Customer-configured (BYOK)</td>
             <td>Per provider / customer account</td>
           </tr>
           <tr>
-            <td>CodeDoc AI</td>
+            <td>CodeDoc</td>
             <td>Atlassian AI (Forge LLMs)</td>
             <td>AI-powered documentation generation without an own key (Advanced edition)</td>
             <td>Part of Atlassian's platform</td>
             <td>Determined by Atlassian</td>
           </tr>
           <tr>
-            <td>CodeDoc AI</td>
+            <td>CodeDoc</td>
             <td>Docker Hub / npm / PyPI / GitHub releases / endoflife.date</td>
             <td>Optional version check of sync blocks: only the public name of an image or package is sent</td>
             <td>Public data (GitHub lookups use your github.com token, if one is connected)</td>
@@ -491,7 +491,7 @@
     <ul>
       <li><strong>Least privilege:</strong> Only the minimum required Atlassian API scopes are requested. Permission justifications are provided during the Marketplace approval process.</li>
       <li><strong>Sandboxed execution:</strong> Forge apps run in a sandboxed environment with no access to the underlying host system.</li>
-      <li><strong>No credential storage:</strong> Apps do not store API keys, tokens, passwords, or secrets — except CodeDoc AI, which keeps the Git access tokens, AI keys and webhook secret you enter in Atlassian Forge's encrypted secret storage, readable only by its backend.</li>
+      <li><strong>No credential storage:</strong> Apps do not store API keys, tokens, passwords, or secrets — except CodeDoc, which keeps the Git access tokens, AI keys and webhook secret you enter in Atlassian Forge's encrypted secret storage, readable only by its backend.</li>
       <li><strong>Dependency management:</strong> Dependencies are kept up to date to minimize exposure to known vulnerabilities.</li>
       <li><strong>Atlassian security review:</strong> All versions submitted to the Atlassian Marketplace undergo Atlassian's security review process before becoming publicly available.</li>
     </ul>
@@ -535,6 +535,6 @@
     </div>
 
   </main>
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 </body>
 </html>

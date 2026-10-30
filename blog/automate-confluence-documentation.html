@@ -96,7 +96,7 @@
         "name": "Can Confluence documentation be automated?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. With CodeDoc AI for Confluence, you can trigger documentation generation automatically on every Git commit or pull request merge via a webhook, or on a recurring schedule (daily, weekly, or monthly). The generated documentation is published directly to a Confluence page without manual intervention."
+          "text": "Yes. With CodeDoc for Confluence, you can trigger documentation generation automatically on every Git commit or pull request merge via a webhook, or on a recurring schedule (daily, weekly, or monthly). The generated documentation is published directly to a Confluence page without manual intervention."
         }
       },
       {
@@ -112,7 +112,7 @@
         "name": "How do I set up automatic Confluence documentation from a GitHub repository?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Install CodeDoc AI from the Atlassian Marketplace, connect your GitHub personal access token and AI provider API key, add your repository, create a documentation job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Documentation will regenerate automatically on the next qualifying event."
+          "text": "Install CodeDoc from the Atlassian Marketplace, connect your GitHub personal access token and AI provider API key, add your repository, create a documentation job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Documentation will regenerate automatically on the next qualifying event."
         }
       },
       {
@@ -128,14 +128,14 @@
         "name": "Does Confluence documentation automation work with GitLab, Bitbucket, and Azure DevOps?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. CodeDoc AI supports webhook triggers from GitHub, GitLab, Bitbucket, and Azure DevOps. The webhook URL is the same for all providers — the app identifies the correct job by repository URL and branch name. Scheduled triggers work independently of the Git provider."
+          "text": "Yes. CodeDoc supports webhook triggers from GitHub, GitLab, Bitbucket, and Azure DevOps. The webhook URL is the same for all providers — the app identifies the correct job by repository URL and branch name. Scheduled triggers work independently of the Git provider."
         }
       }
     ]
   }
   </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -267,7 +267,7 @@
 
       <h2 id="the-pipeline">The documentation automation pipeline</h2>
       <p>
-        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> supports four trigger types. Together, they cover the full spectrum from exploratory manual runs to fully automated CI/CD-like pipelines:
+        <a href="/codedoc-ai.html">CodeDoc for Confluence</a> supports four trigger types. Together, they cover the full spectrum from exploratory manual runs to fully automated CI/CD-like pipelines:
       </p>
 
       <div class="pipeline-vertical">
@@ -349,11 +349,11 @@
 
       <h2 id="webhooks">Setting up webhook triggers</h2>
       <p>
-        Webhook-based triggers (On Commit and On Merge) work by registering CodeDoc AI's Webhook URL in your Git provider. The app provides a single URL that works for all jobs and all providers — it identifies which job to run based on the incoming repository URL and branch.
+        Webhook-based triggers (On Commit and On Merge) work by registering CodeDoc's Webhook URL in your Git provider. The app provides a single URL that works for all jobs and all providers — it identifies which job to run based on the incoming repository URL and branch.
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/EditJobWebhook.png" alt="Webhook URL in CodeDoc AI job settings for On Commit and On Merge triggers" loading="lazy">
+        <img src="../imgCodeDoc/EditJobWebhook.png" alt="Webhook URL in CodeDoc job settings for On Commit and On Merge triggers" loading="lazy">
         <p class="diagram-caption">The Webhook URL appears when you select On Commit or On Merge — copy it to your Git provider's webhook settings</p>
       </div>
 
@@ -389,7 +389,7 @@
       </ul>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/UpcomingJobSchedule.png" alt="Upcoming scheduled documentation jobs in CodeDoc AI with countdown timers and last run info" loading="lazy">
+        <img src="../imgCodeDoc/UpcomingJobSchedule.png" alt="Upcoming scheduled documentation jobs in CodeDoc with countdown timers and last run info" loading="lazy">
         <p class="diagram-caption">Upcoming scheduled jobs — next run time and countdown visible on the dashboard</p>
       </div>
 
@@ -399,12 +399,12 @@
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview in CodeDoc AI showing file count, token estimate, and AI-selected files" loading="lazy">
+        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview in CodeDoc showing file count, token estimate, and AI-selected files" loading="lazy">
         <p class="diagram-caption">File analysis preview — estimated token usage and AI-selected files before the job runs</p>
       </div>
 
       <p>
-        CodeDoc AI offers several approaches to file selection:
+        CodeDoc offers several approaches to file selection:
       </p>
       <ul>
         <li><strong>All files</strong> — Every code file in the repository. Use for small, well-structured repos.</li>
@@ -424,7 +424,7 @@
         Fully automated documentation works well when you trust the output — which is reasonable for internal developer reference documentation that gets used and corrected over time. For documentation with a wider audience or higher stakes, you want a review step before anything goes live.
       </p>
       <p>
-        The approval workflow in CodeDoc AI inserts a human review step without breaking the automation. When enabled, the generated documentation is saved as a Confluence draft with a <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code> prefix. The job still runs on schedule or webhook trigger — you just don't publish until you've reviewed it.
+        The approval workflow in CodeDoc inserts a human review step without breaking the automation. When enabled, the generated documentation is saved as a Confluence draft with a <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code> prefix. The job still runs on schedule or webhook trigger — you just don't publish until you've reviewed it.
       </p>
       <p>
         Practical split:
@@ -451,7 +451,7 @@
       </ul>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/GenerationHistory.png" alt="Generation History in CodeDoc AI with charts and individual run details including token counts" loading="lazy">
+        <img src="../imgCodeDoc/GenerationHistory.png" alt="Generation History in CodeDoc with charts and individual run details including token counts" loading="lazy">
         <p class="diagram-caption">Generation History — activity charts (7 days, 4 weeks, 12 months) and individual run details</p>
       </div>
 
@@ -476,7 +476,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Can Confluence documentation be automated?</p>
-        <p class="faq-a">Yes. With CodeDoc AI for Confluence, documentation regenerates automatically on Git commits, PR merges, or a recurring schedule. The result is a native Confluence page that updates without manual intervention.</p>
+        <p class="faq-a">Yes. With CodeDoc for Confluence, documentation regenerates automatically on Git commits, PR merges, or a recurring schedule. The result is a native Confluence page that updates without manual intervention.</p>
       </div>
 
       <div class="faq-item">
@@ -486,7 +486,7 @@
 
       <div class="faq-item">
         <p class="faq-q">How do I set up automatic Confluence documentation from GitHub?</p>
-        <p class="faq-a">Install CodeDoc AI, connect your GitHub token and AI provider key, add your repository, create a job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Full step-by-step instructions in <a href="/blog/confluence-documentation-github.html">this article</a>.</p>
+        <p class="faq-a">Install CodeDoc, connect your GitHub token and AI provider key, add your repository, create a job with On Commit or On Merge as the trigger, and register the provided webhook URL in your GitHub repository settings. Full step-by-step instructions in <a href="/blog/confluence-documentation-github.html">this article</a>.</p>
       </div>
 
       <div class="faq-item">
@@ -507,7 +507,7 @@
       <!-- CTA -->
       <div class="article-cta">
         <h3>Turn your next merge into a documentation update</h3>
-        <p>CodeDoc AI is free to try — all triggers, AI file selection, and the approval workflow included from day one.</p>
+        <p>CodeDoc is free to try — all triggers, AI file selection, and the approval workflow included from day one.</p>
         <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
       </div>
 
@@ -535,9 +535,9 @@
       <div class="sidebar-block">
         <h3>The app</h3>
         <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
           </div>
         </a>
@@ -555,7 +555,7 @@
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 
   <script>
   (function () {

@@ -107,7 +107,7 @@
       "name": "Lässt sich Confluence-Dokumentation automatisieren?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. Mit CodeDoc AI for Confluence kannst du die Dokumentationserzeugung automatisch bei jedem Git-Commit oder Pull-Request-Merge per Webhook auslösen oder regelmäßig planen (täglich, wöchentlich oder monatlich). Die erzeugte Dokumentation wird ohne manuellen Eingriff direkt auf einer Confluence-Seite veröffentlicht."
+        "text": "Ja. Mit CodeDoc for Confluence kannst du die Dokumentationserzeugung automatisch bei jedem Git-Commit oder Pull-Request-Merge per Webhook auslösen oder regelmäßig planen (täglich, wöchentlich oder monatlich). Die erzeugte Dokumentation wird ohne manuellen Eingriff direkt auf einer Confluence-Seite veröffentlicht."
       }
     },
     {
@@ -123,7 +123,7 @@
       "name": "Wie richte ich automatische Confluence-Dokumentation aus einem GitHub-Repository ein?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Installiere CodeDoc AI aus dem Atlassian Marketplace, verbinde dein persönliches GitHub-Zugriffstoken und den API-Schlüssel deines KI-Anbieters, füge dein Repository hinzu und erstelle einen Dokumentationsauftrag mit „On Commit“ oder „On Merge“ als Auslöser. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Beim nächsten passenden Ereignis wird die Dokumentation automatisch neu erzeugt."
+        "text": "Installiere CodeDoc aus dem Atlassian Marketplace, verbinde dein persönliches GitHub-Zugriffstoken und den API-Schlüssel deines KI-Anbieters, füge dein Repository hinzu und erstelle einen Dokumentationsauftrag mit „On Commit“ oder „On Merge“ als Auslöser. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Beim nächsten passenden Ereignis wird die Dokumentation automatisch neu erzeugt."
       }
     },
     {
@@ -139,7 +139,7 @@
       "name": "Funktioniert die Confluence-Dokumentationsautomatisierung mit GitLab, Bitbucket und Azure DevOps?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. CodeDoc AI unterstützt Webhook-Auslöser von GitHub, GitLab, Bitbucket und Azure DevOps. Die Webhook-URL ist für alle Anbieter gleich — die App erkennt den richtigen Auftrag anhand von Repository-URL und Branchname. Geplante Auslöser funktionieren unabhängig vom Git-Anbieter."
+        "text": "Ja. CodeDoc unterstützt Webhook-Auslöser von GitHub, GitLab, Bitbucket und Azure DevOps. Die Webhook-URL ist für alle Anbieter gleich — die App erkennt den richtigen Auftrag anhand von Repository-URL und Branchname. Geplante Auslöser funktionieren unabhängig vom Git-Anbieter."
       }
     }
   ],
@@ -147,7 +147,7 @@
 }
 </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -243,7 +243,7 @@
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/automate-confluence-documentation.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/automate-confluence-documentation.html">
   <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/automate-confluence-documentation.html">
-  <script src="/de/ui.js?v=44d6c0624b67"></script>
+  <script src="/de/ui.js?v=ff7e95cf7422"></script>
 </head>
 <body>
 
@@ -280,7 +280,7 @@
 
       <h2 id="the-pipeline">Die Pipeline zur Dokumentationsautomatisierung</h2>
       <p>
-        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> unterstützt vier Auslösertypen. Zusammen decken sie das gesamte Spektrum von manuellen Testläufen bis zu vollständig automatisierten Pipelines nach dem CI/CD-Prinzip ab:
+        <a href="/de/codedoc-ai.html">CodeDoc for Confluence</a> unterstützt vier Auslösertypen. Zusammen decken sie das gesamte Spektrum von manuellen Testläufen bis zu vollständig automatisierten Pipelines nach dem CI/CD-Prinzip ab:
       </p>
 
       <div class="pipeline-vertical">
@@ -362,11 +362,11 @@
 
       <h2 id="webhooks">Webhook-Auslöser einrichten</h2>
       <p>
-        Webhook-basierte Auslöser („On Commit“ und „On Merge“) funktionieren, indem du die Webhook-URL von CodeDoc AI bei deinem Git-Anbieter registrierst. Die App liefert eine einzige URL für alle Aufträge und Anbieter — anhand der eingehenden Repository-URL und des Branchs erkennt sie den auszuführenden Auftrag.
+        Webhook-basierte Auslöser („On Commit“ und „On Merge“) funktionieren, indem du die Webhook-URL von CodeDoc bei deinem Git-Anbieter registrierst. Die App liefert eine einzige URL für alle Aufträge und Anbieter — anhand der eingehenden Repository-URL und des Branchs erkennt sie den auszuführenden Auftrag.
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc AI für Auslöser bei Commit und Merge" loading="lazy">
+        <img src="/imgCodeDoc/EditJobWebhook.png" alt="Webhook-URL in den Auftragseinstellungen von CodeDoc für Auslöser bei Commit und Merge" loading="lazy">
         <p class="diagram-caption">Die Webhook-URL erscheint bei Auswahl von „On Commit“ oder „On Merge“ — kopiere sie in die Webhook-Einstellungen deines Git-Anbieters</p>
       </div>
 
@@ -402,7 +402,7 @@
       </ul>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/UpcomingJobSchedule.png" alt="Bevorstehende geplante Dokumentationsaufträge in CodeDoc AI mit Countdowns und Informationen zum letzten Durchlauf" loading="lazy">
+        <img src="/imgCodeDoc/UpcomingJobSchedule.png" alt="Bevorstehende geplante Dokumentationsaufträge in CodeDoc mit Countdowns und Informationen zum letzten Durchlauf" loading="lazy">
         <p class="diagram-caption">Bevorstehende geplante Aufträge — nächste Ausführung und Countdown im Dashboard sichtbar</p>
       </div>
 
@@ -412,12 +412,12 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/Fileselection.png" alt="Dateianalyse-Vorschau in CodeDoc AI mit Dateianzahl, Tokenschätzung und KI-ausgewählten Dateien" loading="lazy">
+        <img src="/imgCodeDoc/Fileselection.png" alt="Dateianalyse-Vorschau in CodeDoc mit Dateianzahl, Tokenschätzung und KI-ausgewählten Dateien" loading="lazy">
         <p class="diagram-caption">Dateianalyse-Vorschau — geschätzter Tokenverbrauch und KI-ausgewählte Dateien vor der Ausführung</p>
       </div>
 
       <p>
-        CodeDoc AI bietet mehrere Ansätze zur Dateiauswahl:
+        CodeDoc bietet mehrere Ansätze zur Dateiauswahl:
       </p>
       <ul>
         <li><strong>Alle Dateien</strong> — jede Codedatei im Repository. Für kleine, gut strukturierte Repositories.</li>
@@ -437,7 +437,7 @@
         Vollautomatische Dokumentation funktioniert gut, wenn du der Ausgabe vertraust — das ist bei interner Entwicklerreferenzdokumentation vertretbar, die im Laufe der Zeit genutzt und korrigiert wird. Bei Dokumentation für einen größeren Leserkreis oder mit höheren Anforderungen solltest du vor der Veröffentlichung eine Prüfung einbauen.
       </p>
       <p>
-        Der Freigabeprozess in CodeDoc AI ergänzt einen menschlichen Prüfschritt, ohne die Automatisierung zu unterbrechen. Bei Aktivierung wird die erzeugte Dokumentation als Confluence-Entwurf mit dem Präfix <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code>  gespeichert. Der Auftrag läuft weiterhin nach Zeitplan oder Webhook-Auslösung — du veröffentlichst lediglich erst nach der Prüfung.
+        Der Freigabeprozess in CodeDoc ergänzt einen menschlichen Prüfschritt, ohne die Automatisierung zu unterbrechen. Bei Aktivierung wird die erzeugte Dokumentation als Confluence-Entwurf mit dem Präfix <code style="background:#F4F5F7;padding:2px 5px;border-radius:4px;font-size:0.88rem;">[DRAFT]</code>  gespeichert. Der Auftrag läuft weiterhin nach Zeitplan oder Webhook-Auslösung — du veröffentlichst lediglich erst nach der Prüfung.
       </p>
       <p>
         Praktische Aufteilung:
@@ -464,7 +464,7 @@
       </ul>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc AI mit Diagrammen und Details einzelner Durchläufe einschließlich Tokenanzahlen" loading="lazy">
+        <img src="/imgCodeDoc/GenerationHistory.png" alt="Erzeugungsverlauf in CodeDoc mit Diagrammen und Details einzelner Durchläufe einschließlich Tokenanzahlen" loading="lazy">
         <p class="diagram-caption">Erzeugungsverlauf — Aktivitätsdiagramme (7 Tage, 4 Wochen, 12 Monate) und Details einzelner Durchläufe</p>
       </div>
 
@@ -489,7 +489,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Lässt sich Confluence-Dokumentation automatisieren?</p>
-        <p class="faq-a">Ja. Mit CodeDoc AI for Confluence wird Dokumentation bei Git-Commits, PR-Merges oder nach einem regelmäßigen Zeitplan automatisch neu erzeugt. Das Ergebnis ist eine native Confluence-Seite, die sich ohne manuellen Eingriff aktualisiert.</p>
+        <p class="faq-a">Ja. Mit CodeDoc for Confluence wird Dokumentation bei Git-Commits, PR-Merges oder nach einem regelmäßigen Zeitplan automatisch neu erzeugt. Das Ergebnis ist eine native Confluence-Seite, die sich ohne manuellen Eingriff aktualisiert.</p>
       </div>
 
       <div class="faq-item">
@@ -499,7 +499,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Wie richte ich automatische Confluence-Dokumentation aus GitHub ein?</p>
-        <p class="faq-a">Installiere CodeDoc AI, verbinde dein GitHub-Token und den Schlüssel des KI-Anbieters, füge dein Repository hinzu und erstelle einen Auftrag mit „On Commit“ oder „On Merge“. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Eine vollständige schrittweise Anleitung steht in <a href="/de/blog/confluence-documentation-github.html">diesem Artikel</a>.</p>
+        <p class="faq-a">Installiere CodeDoc, verbinde dein GitHub-Token und den Schlüssel des KI-Anbieters, füge dein Repository hinzu und erstelle einen Auftrag mit „On Commit“ oder „On Merge“. Registriere die angegebene Webhook-URL in deinen GitHub-Repository-Einstellungen. Eine vollständige schrittweise Anleitung steht in <a href="/de/blog/confluence-documentation-github.html">diesem Artikel</a>.</p>
       </div>
 
       <div class="faq-item">
@@ -520,7 +520,7 @@
       <!-- CTA -->
       <div class="article-cta">
         <h3>Mache deinen nächsten Merge zur Dokumentationsaktualisierung</h3>
-        <p>CodeDoc AI lässt sich kostenlos testen — alle Auslöser, die KI-Dateiauswahl und der Freigabeprozess sind von Anfang an enthalten.</p>
+        <p>CodeDoc lässt sich kostenlos testen — alle Auslöser, die KI-Dateiauswahl und der Freigabeprozess sind von Anfang an enthalten.</p>
         <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
       </div>
 
@@ -548,9 +548,9 @@
       <div class="sidebar-block">
         <h3>Die App</h3>
         <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="/img/codedoc-ai-icon.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Kostenlose Testversion</div>
           </div>
         </a>
@@ -568,7 +568,7 @@
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 
   <script>
   (function () {

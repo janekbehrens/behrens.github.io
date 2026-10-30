@@ -1,5 +1,5 @@
 /* ============================================================
-   cd-demo.js — interactive demo for CodeDoc AI for Confluence
+   cd-demo.js — interactive demo for CodeDoc for Confluence
    Sample data and fixed behavior only; written for the website,
    not taken from the app. The sync block sample choices have
    stored answers; no repository extraction

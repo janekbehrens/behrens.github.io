@@ -72,14 +72,14 @@
         "name": "How do I keep Confluence pages linked to Jira issues from going stale?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Two common approaches: (1) tie the Confluence page to a regular review cadence, e.g. updated in the sprint that closes the related epic; (2) regenerate the Confluence page automatically from a source-of-truth, such as the underlying code repository for technical pages. CodeDoc AI for Confluence regenerates pages from source code on webhook or schedule, removing the human gap entirely."
+          "text": "Two common approaches: (1) tie the Confluence page to a regular review cadence, e.g. updated in the sprint that closes the related epic; (2) regenerate the Confluence page automatically from a source-of-truth, such as the underlying code repository for technical pages. CodeDoc for Confluence regenerates pages from source code on webhook or schedule, removing the human gap entirely."
         }
       }
     ]
   }
   </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout { max-width: 1000px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 260px; gap: 64px; align-items: start; }
@@ -250,7 +250,7 @@
         For technical context — module overviews, API references, architecture summaries — the document the linked pages should describe is the code itself, and the source of truth is the repository. Manually keeping a Confluence page in sync with a moving codebase is a guaranteed loss.
       </p>
       <p>
-        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> regenerates these pages from the source code automatically. Connect the repo, pick a preset (Developer Documentation, Onboarding Guide, Quick Reference, etc.), wire a webhook to a branch, and the Confluence page rewrites itself on every push. Any Jira issue linked to that page suddenly references documentation that is always current — without anyone in the team having to remember to update it.
+        <a href="/codedoc-ai.html">CodeDoc for Confluence</a> regenerates these pages from the source code automatically. Connect the repo, pick a preset (Developer Documentation, Onboarding Guide, Quick Reference, etc.), wire a webhook to a branch, and the Confluence page rewrites itself on every push. Any Jira issue linked to that page suddenly references documentation that is always current — without anyone in the team having to remember to update it.
       </p>
 
       <div class="callout callout-green">
@@ -284,7 +284,7 @@
 
       <div class="faq-item">
         <p class="faq-q">How do I keep Confluence pages linked to Jira issues from going stale?</p>
-        <p class="faq-a">Two approaches. For pages written by humans (decision logs, RFCs, specs), assign an owner and a review cadence — Confluence shows the last-updated date prominently. For technical pages whose source of truth is the codebase, regenerate them automatically: CodeDoc AI rewrites the page from source on webhook or schedule, so the linked documentation stays current as the code changes.</p>
+        <p class="faq-a">Two approaches. For pages written by humans (decision logs, RFCs, specs), assign an owner and a review cadence — Confluence shows the last-updated date prominently. For technical pages whose source of truth is the codebase, regenerate them automatically: CodeDoc rewrites the page from source on webhook or schedule, so the linked documentation stays current as the code changes.</p>
       </div>
 
       <div class="faq-item">
@@ -294,8 +294,8 @@
 
       <div class="article-cta">
         <h3>Stop maintaining technical docs by hand</h3>
-        <p>CodeDoc AI regenerates Confluence pages from your source code on every commit. Link the pages from your Jira issues once — they stay current automatically.</p>
-        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc AI →</a>
+        <p>CodeDoc regenerates Confluence pages from your source code on every commit. Link the pages from your Jira issues once — they stay current automatically.</p>
+        <a href="/codedoc-ai.html" class="btn-white">See CodeDoc →</a>
       </div>
 
     </article>
@@ -320,9 +320,9 @@
       <div class="sidebar-block">
         <h3>Related apps</h3>
         <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:14px;">
-          <img src="../img/companyLogo.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="../img/companyLogo.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Confluence · BYOK</div>
           </div>
         </a>
@@ -340,7 +340,7 @@
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
   <script>
   (function () {
     var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');

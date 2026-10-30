@@ -119,7 +119,7 @@
   {
     "file": "github-wiki-to-confluence.html",
     "title": "Von GitHub Wiki zu Confluence: Zwei Migrationswege im Vergleich",
-    "description": "Von GitHub Wiki zu Confluence wechseln: manueller Export mit pandoc oder Neuerzeugung aus dem Quellcode mit CodeDoc AI. Ein ehrlicher Vergleich, wann welcher Weg besser passt und wie du die Migration ungenutzter Seiten vermeidest.",
+    "description": "Von GitHub Wiki zu Confluence wechseln: manueller Export mit pandoc oder Neuerzeugung aus dem Quellcode mit CodeDoc. Ein ehrlicher Vergleich, wann welcher Weg besser passt und wie du die Migration ungenutzter Seiten vermeidest.",
     "date": "2026-05-21",
     "dateStr": "21. Mai 2026",
     "tags": [
@@ -336,7 +336,7 @@
   {
     "file": "confluence-documentation-github.html",
     "title": "Confluence-Dokumentation automatisch aus GitHub erzeugen",
-    "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc AI. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
+    "description": "Schrittweise Anleitung: Verbinde GitHub mit Confluence über CodeDoc. Erstelle ein persönliches Zugriffstoken, konfiguriere einen Webhook und erzeuge bei jedem Push automatisch Dokumentation.",
     "date": "2026-01-12",
     "dateStr": "12. Januar 2026",
     "tags": [

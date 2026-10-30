@@ -50,7 +50,7 @@ body.legal { color: var(--ink); background: var(--page); line-height: 1.7; }
 :where(.legal .table-wrap th) { background: #F9FAFB; color: var(--ink); font-weight: 700; }
 :where(.legal .table-wrap td:first-child) { min-width: 140px; }
 
-/* ── Data-flow diagram (CodeDoc AI privacy policy; same look as the Trust Center) ── */
+/* ── Data-flow diagram (CodeDoc privacy policy; same look as the Trust Center) ── */
 :where(.legal .flow-box) { background: #fff; border: 2px solid #DFE1E6; border-radius: 8px; padding: 10px 12px; text-align: center; font-size: 0.82rem; font-weight: 600; color: #172B4D; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 :where(.legal .flow-box.forge) { border-color: #0052CC; background: #DEEBFF; color: #0052CC; }
 :where(.legal .flow-box.byok) { border-color: #FF8B00; background: #FFF7E6; color: #974F0C; }

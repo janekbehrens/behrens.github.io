@@ -210,7 +210,7 @@
 .docs .tag-free { color: #5E4DB2; background: #F3F0FF; border-color: #B8ACF6; }
 .docs .ui { font-weight: 650; color: var(--ink); }
 .docs .dot { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; }
-/* CodeDoc AI: long values wrap anywhere; in the compact tables of statuses and events they stay on one line */
+/* CodeDoc: long values wrap anywhere; in the compact tables of statuses and events they stay on one line */
 .docs[data-app="cd"] main code { overflow-wrap: anywhere; }
 .docs[data-app="cd"] .table-wrap td code { white-space: nowrap; }
 

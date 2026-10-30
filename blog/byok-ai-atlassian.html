@@ -113,7 +113,7 @@
         "name": "Does BYOK mean I can choose which AI model to use?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. BYOK gives you full model control. CodeDoc AI supports Anthropic (all Claude models), OpenAI (GPT-4o, gpt-4o-mini, and others), and Google (Gemini models). When a provider releases a new model, it appears in the dropdown automatically — you are not locked into whatever version the vendor decided to use."
+          "text": "Yes. BYOK gives you full model control. CodeDoc supports Anthropic (all Claude models), OpenAI (GPT-4o, gpt-4o-mini, and others), and Google (Gemini models). When a provider releases a new model, it appears in the dropdown automatically — you are not locked into whatever version the vendor decided to use."
         }
       },
       {
@@ -136,7 +136,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -281,7 +281,7 @@
       </div>
 
       <p>
-        The BYOK model doesn't mean more setup complexity. In <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a>, connecting your AI provider takes two steps: paste your API key, click Connect &amp; Validate. The app fetches available models automatically and you select one from a dropdown.
+        The BYOK model doesn't mean more setup complexity. In <a href="/codedoc-ai.html">CodeDoc for Confluence</a>, connecting your AI provider takes two steps: paste your API key, click Connect &amp; Validate. The app fetches available models automatically and you select one from a dropdown.
       </p>
 
       <h2 id="gdpr">Why BYOK matters for GDPR</h2>
@@ -297,7 +297,7 @@
       <ul>
         <li><strong>The data processing agreement</strong> — you signed it with your AI provider directly.</li>
         <li><strong>Data retention</strong> — governed by your provider account settings, not the vendor's.</li>
-        <li><strong>Training opt-out</strong> — all three providers CodeDoc AI supports (Anthropic, OpenAI, Google) offer opt-out from using API traffic for model training. Enabling this in your provider account applies immediately.</li>
+        <li><strong>Training opt-out</strong> — all three providers CodeDoc supports (Anthropic, OpenAI, Google) offer opt-out from using API traffic for model training. Enabling this in your provider account applies immediately.</li>
         <li><strong>Regional data processing</strong> — you can choose provider regions where available (e.g. EU endpoints on Google or Azure OpenAI for European data residency requirements).</li>
       </ul>
 
@@ -307,10 +307,10 @@
 
       <h2 id="forge">The Forge security layer</h2>
       <p>
-        CodeDoc AI is built on <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a>, the platform for building Confluence and Jira apps that run entirely on Atlassian's own infrastructure. This adds a second layer of security context that is independent of the BYOK model.
+        CodeDoc is built on <a href="https://developer.atlassian.com/platform/forge/" target="_blank" rel="noopener">Atlassian Forge</a>, the platform for building Confluence and Jira apps that run entirely on Atlassian's own infrastructure. This adds a second layer of security context that is independent of the BYOK model.
       </p>
       <p>
-        Forge apps operate in a sandboxed runtime. They cannot make outbound network requests to arbitrary URLs — all external services must be declared explicitly in the app manifest, and Atlassian reviews those declarations as part of the app approval process on the Marketplace. For CodeDoc AI, the declared external services are:
+        Forge apps operate in a sandboxed runtime. They cannot make outbound network requests to arbitrary URLs — all external services must be declared explicitly in the app manifest, and Atlassian reviews those declarations as part of the app approval process on the Marketplace. For CodeDoc, the declared external services are:
       </p>
       <ul>
         <li>Your Git provider (GitHub, GitLab, Bitbucket, or Azure DevOps)</li>
@@ -324,7 +324,7 @@
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/SettingAIProvider.png" alt="AI Provider configuration in CodeDoc AI — BYOK key setup with Anthropic, OpenAI, and Google" loading="lazy">
+        <img src="../imgCodeDoc/SettingAIProvider.png" alt="AI Provider configuration in CodeDoc — BYOK key setup with Anthropic, OpenAI, and Google" loading="lazy">
         <p class="diagram-caption">AI Provider settings — connect your own API key from Anthropic, OpenAI, or Google</p>
       </div>
 
@@ -344,7 +344,7 @@
         <li><strong>Anthropic Claude Sonnet / OpenAI GPT-4o</strong> — higher capability at higher cost. Appropriate for complex codebases or customer-facing documentation where quality is paramount.</li>
       </ul>
       <p>
-        Because CodeDoc AI includes AI-powered file selection (the AI first identifies the most relevant files, then generates documentation from those only), typical generation costs are significantly lower than feeding an entire repository to the model. For large repositories, this can reduce token usage by 60–80%.
+        Because CodeDoc includes AI-powered file selection (the AI first identifies the most relevant files, then generates documentation from those only), typical generation costs are significantly lower than feeding an entire repository to the model. For large repositories, this can reduce token usage by 60–80%.
       </p>
 
       <h2 id="model-choice">Model choice and future-proofing</h2>
@@ -352,7 +352,7 @@
         The AI model landscape evolves quickly. A model that represents best-in-class capability today may be superseded within months. In a shared-key app, you use whatever model the vendor has decided to offer — and any model upgrades happen on the vendor's timeline, not yours.
       </p>
       <p>
-        With BYOK, the available models are fetched dynamically from your provider account at the time you connect. When Anthropic, OpenAI, or Google releases a new model, it appears in the CodeDoc AI model dropdown immediately — without a vendor update, without waiting for a new app version, without a support ticket.
+        With BYOK, the available models are fetched dynamically from your provider account at the time you connect. When Anthropic, OpenAI, or Google releases a new model, it appears in the CodeDoc model dropdown immediately — without a vendor update, without waiting for a new app version, without a support ticket.
       </p>
       <p>
         You can also switch providers entirely. If your organization decides to standardize on a different AI vendor for procurement or compliance reasons, you update the API key setting and select a model from the new provider. Everything else — jobs, trigger configuration, file selections, Confluence target pages — stays unchanged.
@@ -364,13 +364,13 @@
       </p>
       <ul>
         <li><strong>Regulated industries (healthcare, financial services, public sector)</strong> — where data processing transparency and audit trails are a compliance requirement, not a preference.</li>
-        <li><strong>Organizations with existing AI vendor agreements</strong> — enterprises that already have enterprise agreements with Anthropic, OpenAI, or Google benefit from BYOK because CodeDoc AI slots directly into existing procurement and legal frameworks.</li>
+        <li><strong>Organizations with existing AI vendor agreements</strong> — enterprises that already have enterprise agreements with Anthropic, OpenAI, or Google benefit from BYOK because CodeDoc slots directly into existing procurement and legal frameworks.</li>
         <li><strong>Teams with GDPR or data residency requirements</strong> — BYOK combined with Forge's sandboxed architecture provides a clear and auditable data flow that is easier to document for DPO review.</li>
         <li><strong>Security-conscious engineering teams</strong> — who want to know exactly where their source code goes and are unwilling to let it pass through an intermediary infrastructure they didn't vet.</li>
       </ul>
 
       <div class="callout callout-green">
-        <p><strong>For Atlassian admins:</strong> You can review CodeDoc AI's full data processing architecture on the <a href="/codedoc-ai-security.html">Security page</a> and the <a href="/trust-center.html">Trust Center</a>. Both documents are versioned and updated when the architecture changes.</p>
+        <p><strong>For Atlassian admins:</strong> You can review CodeDoc's full data processing architecture on the <a href="/codedoc-ai-security.html">Security page</a> and the <a href="/trust-center.html">Trust Center</a>. Both documents are versioned and updated when the architecture changes.</p>
       </div>
 
       <h2 id="faq">Frequently asked questions</h2>
@@ -387,28 +387,28 @@
 
       <div class="faq-item">
         <p class="faq-q">Does BYOK mean I can choose which AI model to use?</p>
-        <p class="faq-a">Yes. With CodeDoc AI, you can use any model available in your Anthropic, OpenAI, or Google account. New models appear in the dropdown automatically when providers release them — no waiting for a vendor update.</p>
+        <p class="faq-a">Yes. With CodeDoc, you can use any model available in your Anthropic, OpenAI, or Google account. New models appear in the dropdown automatically when providers release them — no waiting for a vendor update.</p>
       </div>
 
       <div class="faq-item">
         <p class="faq-q">How does BYOK help control AI costs?</p>
-        <p class="faq-a">AI usage is billed at provider rates with no vendor markup. You can set spending limits at the provider account level and choose cost-optimized models for routine tasks. AI file selection in CodeDoc AI further reduces token usage by sending only the most relevant files rather than an entire repository.</p>
+        <p class="faq-a">AI usage is billed at provider rates with no vendor markup. You can set spending limits at the provider account level and choose cost-optimized models for routine tasks. AI file selection in CodeDoc further reduces token usage by sending only the most relevant files rather than an entire repository.</p>
       </div>
 
       <div class="faq-item">
         <p class="faq-q">What is Atlassian Forge and why does it matter for AI security?</p>
-        <p class="faq-a">Forge apps run entirely on Atlassian's infrastructure in a sandboxed runtime. They can only connect to explicitly declared external services — for CodeDoc AI, that is your Git provider and your AI provider. No other outbound connections are possible.</p>
+        <p class="faq-a">Forge apps run entirely on Atlassian's infrastructure in a sandboxed runtime. They can only connect to explicitly declared external services — for CodeDoc, that is your Git provider and your AI provider. No other outbound connections are possible.</p>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Which AI providers does CodeDoc AI support?</p>
+        <p class="faq-q">Which AI providers does CodeDoc support?</p>
         <p class="faq-a">Anthropic (Claude models), OpenAI (GPT models), and Google AI (Gemini models). You can connect one provider or switch at any time by updating the API key in Settings.</p>
       </div>
 
       <!-- CTA -->
       <div class="article-cta">
         <h3>Full data control, running on Atlassian infrastructure</h3>
-        <p>CodeDoc AI is BYOK and Forge-native — your code stays between your Git provider, your AI provider, and your Confluence instance.</p>
+        <p>CodeDoc is BYOK and Forge-native — your code stays between your Git provider, your AI provider, and your Confluence instance.</p>
         <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
       </div>
 
@@ -433,9 +433,9 @@
       <div class="sidebar-block">
         <h3>The app</h3>
         <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · BYOK · Free trial</div>
           </div>
         </a>
@@ -459,7 +459,7 @@
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 
   <script>
   (function () {

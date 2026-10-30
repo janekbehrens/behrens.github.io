@@ -96,7 +96,7 @@
         "name": "Can AI write documentation for Confluence automatically?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Tools like CodeDoc AI read your source code repository and use an AI model (Anthropic Claude, OpenAI GPT, or Google Gemini) to generate structured documentation pages directly in Confluence. The output is a native Confluence page — not a PDF or export — that you can edit, comment on, or version like any other page."
+          "text": "Yes. Tools like CodeDoc read your source code repository and use an AI model (Anthropic Claude, OpenAI GPT, or Google Gemini) to generate structured documentation pages directly in Confluence. The output is a native Confluence page — not a PDF or export — that you can edit, comment on, or version like any other page."
         }
       },
       {
@@ -104,7 +104,7 @@
         "name": "What is a documentation preset?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A preset is a template that controls the structure, tone, and depth of the generated Confluence page. Different presets target different audiences: Developer Documentation produces 9 technical sections with code examples and API references; Management Overview produces a non-technical business summary; Compliance & Audit produces a security controls and GDPR mapping table. CodeDoc AI includes 8 built-in presets plus a Custom option."
+          "text": "A preset is a template that controls the structure, tone, and depth of the generated Confluence page. Different presets target different audiences: Developer Documentation produces 9 technical sections with code examples and API references; Management Overview produces a non-technical business summary; Compliance & Audit produces a security controls and GDPR mapping table. CodeDoc includes 8 built-in presets plus a Custom option."
         }
       },
       {
@@ -112,7 +112,7 @@
         "name": "How much does AI documentation for Confluence cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "CodeDoc AI charges no per-generation fee — you pay only for the Marketplace subscription. AI costs are billed directly by your provider. Google Gemini has a free tier suitable for evaluation. Anthropic Claude Haiku or OpenAI gpt-4o-mini typically cost $0.01–0.05 per generation for a medium-sized repository."
+          "text": "CodeDoc charges no per-generation fee — you pay only for the Marketplace subscription. AI costs are billed directly by your provider. Google Gemini has a free tier suitable for evaluation. Anthropic Claude Haiku or OpenAI gpt-4o-mini typically cost $0.01–0.05 per generation for a medium-sized repository."
         }
       },
       {
@@ -120,7 +120,7 @@
         "name": "What programming languages does AI documentation support?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "CodeDoc AI supports all text-based source files — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin, and more. There is no language whitelist. Binary files, build outputs, and lock files are automatically excluded from analysis."
+          "text": "CodeDoc supports all text-based source files — JavaScript, TypeScript, Python, Java, C#, Go, Rust, Ruby, PHP, Swift, Kotlin, and more. There is no language whitelist. Binary files, build outputs, and lock files are automatically excluded from analysis."
         }
       },
       {
@@ -135,7 +135,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -264,15 +264,15 @@
 
       <h2 id="what-it-does">What AI documentation for Confluence actually does</h2>
       <p>
-        <a href="/codedoc-ai.html">CodeDoc AI for Confluence</a> reads your source code from a connected Git repository (GitHub, GitLab, Bitbucket, or Azure DevOps) and generates a structured Confluence page using the AI model of your choice. It is an <a href="/blog/byok-ai-atlassian.html">BYOK (Bring Your Own Key)</a> app — you connect your own Anthropic, OpenAI, or Google AI account, and the code goes directly from Git to your AI provider. The app itself never stores your source code.
+        <a href="/codedoc-ai.html">CodeDoc for Confluence</a> reads your source code from a connected Git repository (GitHub, GitLab, Bitbucket, or Azure DevOps) and generates a structured Confluence page using the AI model of your choice. It is an <a href="/blog/byok-ai-atlassian.html">BYOK (Bring Your Own Key)</a> app — you connect your own Anthropic, OpenAI, or Google AI account, and the code goes directly from Git to your AI provider. The app itself never stores your source code.
       </p>
       <p>
         The output is a native Confluence page, not a PDF or an attachment. You can edit it, add inline comments, apply a page template to it, move it between spaces, or version it — exactly like any other page your team creates manually.
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/DashboardTop.png" alt="CodeDoc AI Dashboard showing documentation jobs, generation history, and active repositories" loading="lazy">
-        <p class="diagram-caption">The CodeDoc AI dashboard — documentation jobs, recent generations, and status at a glance</p>
+        <img src="../imgCodeDoc/DashboardTop.png" alt="CodeDoc Dashboard showing documentation jobs, generation history, and active repositories" loading="lazy">
+        <p class="diagram-caption">The CodeDoc dashboard — documentation jobs, recent generations, and status at a glance</p>
       </div>
 
       <h2 id="presets">The 8 documentation presets — who they're for</h2>
@@ -336,7 +336,7 @@
       </table>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/Presets.png" alt="Preset selection screen in CodeDoc AI showing all 8 documentation presets" loading="lazy">
+        <img src="../imgCodeDoc/Presets.png" alt="Preset selection screen in CodeDoc showing all 8 documentation presets" loading="lazy">
         <p class="diagram-caption">The 8 built-in presets — select the one that matches your audience</p>
       </div>
 
@@ -346,7 +346,7 @@
 
       <h2 id="languages">Documentation in 10 languages</h2>
       <p>
-        Multilingual teams often have Confluence spaces in multiple languages, but documentation tends to be written in English because it's the path of least resistance. With CodeDoc AI, you select the output language when creating the job. The current options are:
+        Multilingual teams often have Confluence spaces in multiple languages, but documentation tends to be written in English because it's the path of least resistance. With CodeDoc, you select the output language when creating the job. The current options are:
       </p>
       <p>
         English, German, French, Spanish, Italian, Portuguese, Japanese, Chinese (Simplified), Korean, and Custom (define your own language or dialect in the prompt).
@@ -360,11 +360,11 @@
         The quality of AI-generated documentation depends heavily on which files you feed it. A repository with 400 files — including lock files, build artifacts, migration scripts, and vendor code — produces worse documentation than a carefully selected 30-file subset of the core application logic.
       </p>
       <p>
-        CodeDoc AI addresses this with a two-step file selection process. First, the AI analyzes the repository's file names and structure to identify the most relevant source files. Then you review the selection, lock it (fixed for every run) or leave it dynamic (re-evaluated each run), and optionally apply glob-pattern filters to include or exclude specific paths.
+        CodeDoc addresses this with a two-step file selection process. First, the AI analyzes the repository's file names and structure to identify the most relevant source files. Then you review the selection, lock it (fixed for every run) or leave it dynamic (re-evaluated each run), and optionally apply glob-pattern filters to include or exclude specific paths.
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview showing selected files, token estimate, and AI-selected files in CodeDoc AI" loading="lazy">
+        <img src="../imgCodeDoc/Fileselection.png" alt="File analysis preview showing selected files, token estimate, and AI-selected files in CodeDoc" loading="lazy">
         <p class="diagram-caption">File analysis preview — token estimate and AI-selected files before generation</p>
       </div>
 
@@ -395,7 +395,7 @@
       </p>
 
       <div class="diagram">
-        <img src="../imgCodeDoc/Jobs.png" alt="Jobs overview in CodeDoc AI showing job status, last run, and approval queue" loading="lazy">
+        <img src="../imgCodeDoc/Jobs.png" alt="Jobs overview in CodeDoc showing job status, last run, and approval queue" loading="lazy">
         <p class="diagram-caption">Jobs overview — pending approvals appear here before going live in Confluence</p>
       </div>
 
@@ -405,7 +405,7 @@
 
       <h2 id="example">Real-world example: onboarding a new engineer</h2>
       <p>
-        A common pain point for growing teams is onboarding documentation that becomes outdated within weeks of being written. Here's how a team might solve this with CodeDoc AI:
+        A common pain point for growing teams is onboarding documentation that becomes outdated within weeks of being written. Here's how a team might solve this with CodeDoc:
       </p>
       <ol>
         <li>Create one job per repository using the <strong>Onboarding Guide</strong> preset.</li>
@@ -419,7 +419,7 @@
 
       <h2 id="cost">Understanding the cost</h2>
       <p>
-        CodeDoc AI charges no per-generation fee. You pay only for the Atlassian Marketplace subscription. AI costs are billed directly by your provider based on token usage:
+        CodeDoc charges no per-generation fee. You pay only for the Atlassian Marketplace subscription. AI costs are billed directly by your provider based on token usage:
       </p>
       <ul>
         <li><strong>Google Gemini</strong> has a free tier — good for evaluation and light use.</li>
@@ -434,12 +434,12 @@
 
       <div class="faq-item">
         <p class="faq-q">Can AI write documentation for Confluence automatically?</p>
-        <p class="faq-a">Yes. CodeDoc AI reads your source code from a connected Git repository and generates structured Confluence pages using an AI model you choose. Triggers include manual runs, Git webhooks (on commit or merge), and scheduled runs.</p>
+        <p class="faq-a">Yes. CodeDoc reads your source code from a connected Git repository and generates structured Confluence pages using an AI model you choose. Triggers include manual runs, Git webhooks (on commit or merge), and scheduled runs.</p>
       </div>
 
       <div class="faq-item">
         <p class="faq-q">What is a documentation preset?</p>
-        <p class="faq-a">A preset controls the structure, tone, and depth of the generated page. Developer Documentation produces technical sections with API references; Management Overview produces a non-technical business summary; Compliance &amp; Audit produces security controls and regulatory mapping tables. CodeDoc AI includes 8 built-in presets plus a fully custom option.</p>
+        <p class="faq-a">A preset controls the structure, tone, and depth of the generated page. Developer Documentation produces technical sections with API references; Management Overview produces a non-technical business summary; Compliance &amp; Audit produces security controls and regulatory mapping tables. CodeDoc includes 8 built-in presets plus a fully custom option.</p>
       </div>
 
       <div class="faq-item">
@@ -458,14 +458,14 @@
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Does CodeDoc AI support multiple Git providers?</p>
+        <p class="faq-q">Does CodeDoc support multiple Git providers?</p>
         <p class="faq-a">Yes — GitHub, GitLab, Bitbucket, and Azure DevOps (cloud). You can connect multiple providers simultaneously and create separate jobs for repositories on different platforms.</p>
       </div>
 
       <!-- CTA -->
       <div class="article-cta">
         <h3>Start generating documentation for your team</h3>
-        <p>CodeDoc AI is free to try on the Atlassian Marketplace — all 8 presets, 10 languages, and automatic triggers included.</p>
+        <p>CodeDoc is free to try on the Atlassian Marketplace — all 8 presets, 10 languages, and automatic triggers included.</p>
         <a href="https://marketplace.atlassian.com/apps/2654352538" target="_blank" rel="noopener" class="btn-white">Try it free on Marketplace →</a>
       </div>
 
@@ -493,9 +493,9 @@
       <div class="sidebar-block">
         <h3>The app</h3>
         <a href="/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc AI" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="../img/codedoc-ai-icon.png" alt="CodeDoc" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">Forge · Free trial</div>
           </div>
         </a>
@@ -514,7 +514,7 @@
 
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
 
   <script>
   (function () {

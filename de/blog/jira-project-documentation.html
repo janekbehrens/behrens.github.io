@@ -26,7 +26,7 @@
     "Confluence-Dokumentation automatisieren",
     "Jira-Confluence-Integration",
     "Bewährte Methoden für Atlassian-Dokumentation",
-    "CodeDoc AI"
+    "CodeDoc"
   ],
   "author": {
     "@type": "Person",
@@ -88,7 +88,7 @@
       "name": "Wie dokumentiere ich ein Jira-Projekt automatisch in Confluence?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Am wirkungsvollsten ist die Kombination dreier Ebenen: (1) Jira-Automatisierungsregeln, die verknüpfte Confluence-Seiten bei Statusänderungen erstellen oder aktualisieren — für Sprint-Zusammenfassungen und Versionshinweise; (2) native Jira-Confluence-Verknüpfungen für aktuelle Vorgangsmakros auf Projektseiten; (3) KI-Dokumentationswerkzeuge wie CodeDoc AI for Confluence, die technische Dokumentation automatisch aus den mit deinem Jira-Projekt verbundenen Code-Repositories erzeugen."
+        "text": "Am wirkungsvollsten ist die Kombination dreier Ebenen: (1) Jira-Automatisierungsregeln, die verknüpfte Confluence-Seiten bei Statusänderungen erstellen oder aktualisieren — für Sprint-Zusammenfassungen und Versionshinweise; (2) native Jira-Confluence-Verknüpfungen für aktuelle Vorgangsmakros auf Projektseiten; (3) KI-Dokumentationswerkzeuge wie CodeDoc for Confluence, die technische Dokumentation automatisch aus den mit deinem Jira-Projekt verbundenen Code-Repositories erzeugen."
       }
     },
     {
@@ -104,7 +104,7 @@
       "name": "Wie halte ich Confluence-Dokumentation am besten mit Jira aktuell?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Kombiniere aktuelle Makros (das Jira-Vorgangsmakro in Confluence ruft Vorgangsdaten in Echtzeit ab) mit automatischen Auslösern (Jira Automation erstellt oder aktualisiert Confluence-Seiten beim Sprintabschluss oder einer Versionsfreigabe). Für Codedokumentation erzeugen Werkzeuge wie CodeDoc AI for Confluence technische Seiten automatisch aus Codeänderungen, ausgelöst durch GitHub- oder GitLab-Webhooks. Damit entfällt die Hauptursache veralteter Dokumentation: das Warten auf manuelle Aktualisierungen durch Entwickler."
+        "text": "Kombiniere aktuelle Makros (das Jira-Vorgangsmakro in Confluence ruft Vorgangsdaten in Echtzeit ab) mit automatischen Auslösern (Jira Automation erstellt oder aktualisiert Confluence-Seiten beim Sprintabschluss oder einer Versionsfreigabe). Für Codedokumentation erzeugen Werkzeuge wie CodeDoc for Confluence technische Seiten automatisch aus Codeänderungen, ausgelöst durch GitHub- oder GitLab-Webhooks. Damit entfällt die Hauptursache veralteter Dokumentation: das Warten auf manuelle Aktualisierungen durch Entwickler."
       }
     }
   ],
@@ -132,7 +132,7 @@
   <meta name="twitter:description" content="Verbinde Jira mit Confluence, damit sich Sprint-Zusammenfassungen, Versionshinweise und Codedokumentation selbst schreiben — ohne manuelle Updates.">
   <meta name="twitter:image" content="https://janekbehrens.de/imgCodeDoc/DashboardFull.png">
 
-  <link rel="stylesheet" href="/site.css?v=44d6c0624b67">
+  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
 
   <style>
     .article-layout {
@@ -226,7 +226,7 @@
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/blog/jira-project-documentation.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/blog/jira-project-documentation.html">
   <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/blog/jira-project-documentation.html">
-  <script src="/de/ui.js?v=44d6c0624b67"></script>
+  <script src="/de/ui.js?v=ff7e95cf7422"></script>
 </head>
 <body>
 
@@ -282,7 +282,7 @@
         <div class="layer-card">
           <div class="layer-card-num">Ebene 3</div>
           <div class="layer-card-title">KI-generierte Codedokumentation</div>
-          <div class="layer-card-desc">CodeDoc AI beobachtet dein GitHub- oder GitLab-Repository und erzeugt bei jedem Push technische Dokumentation in Confluence neu. Architekturreferenzen, API-Dokumentation und READMEs — immer aktuell.</div>
+          <div class="layer-card-desc">CodeDoc beobachtet dein GitHub- oder GitLab-Repository und erzeugt bei jedem Push technische Dokumentation in Confluence neu. Architekturreferenzen, API-Dokumentation und READMEs — immer aktuell.</div>
         </div>
       </div>
 
@@ -331,31 +331,31 @@
         <p><strong>Häufiger Fehler:</strong> Automatisch erzeugte Seiten zu umfangreich gestalten wollen. Beginne mit einer einfachen Vorlage: Sprintname, Daten, Liste abgeschlossener und unvollständiger Vorgänge. Ergänze Velocity-Diagramme oder Analysen erst, wenn die grundlegende Automatisierung zuverlässig läuft. Eine einfache vorhandene Zusammenfassung ist besser als eine perfekte, die nie erzeugt wird.</p>
       </div>
 
-      <h2 id="layer3">Ebene 3 — KI-generierte Codedokumentation mit CodeDoc AI</h2>
+      <h2 id="layer3">Ebene 3 — KI-generierte Codedokumentation mit CodeDoc</h2>
       <p>
         Das schwierigste Dokumentationsproblem von Entwicklungsteams sind nicht Sprint-Zusammenfassungen, sondern technische Dokumentation: Architekturdiagramme, API-Referenzen, Beschreibungen von Datenmodellen und Einarbeitungsanleitungen. Sie erfordern Schreibkompetenz, technische Präzision und Aktualität. Gleichzeitig sind sie manuell am teuersten zu erstellen und veralten am wahrscheinlichsten.
       </p>
       <p>
-        <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> verbindet dein GitHub- oder GitLab-Repository mit Confluence und erzeugt automatisch technische Dokumentation. Bei jedem Push auf einen konfigurierten Branch liest die App die geänderten Dateien, erzeugt mit deinen Voreinstellungen Dokumentation und aktualisiert die entsprechende Confluence-Seite.
+        <a href="/de/codedoc-ai.html">CodeDoc for Confluence</a> verbindet dein GitHub- oder GitLab-Repository mit Confluence und erzeugt automatisch technische Dokumentation. Bei jedem Push auf einen konfigurierten Branch liest die App die geänderten Dateien, erzeugt mit deinen Voreinstellungen Dokumentation und aktualisiert die entsprechende Confluence-Seite.
       </p>
       <p>
         Das Ergebnis: Deine Confluence-Seite „Codebasis-Übersicht“ wird bei jeder Codeänderung neu erzeugt. Entwickler müssen nicht an Dokumentationspflege denken — die Dokumentation folgt dem Code.
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/DashboardFull.png" alt="Dashboard von CodeDoc AI for Confluence mit Dokumentationsaufträgen, Erzeugungsverlauf und Repository-Verbindungen" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
-        <p class="diagram-caption">CodeDoc-AI-Dashboard — Dokumentationsaufträge verbinden dein GitHub-Repository mit Confluence-Seiten, automatisch bei jedem Push ausgelöst</p>
+        <img src="/imgCodeDoc/DashboardFull.png" alt="Dashboard von CodeDoc for Confluence mit Dokumentationsaufträgen, Erzeugungsverlauf und Repository-Verbindungen" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">CodeDoc-Dashboard — Dokumentationsaufträge verbinden dein GitHub-Repository mit Confluence-Seiten, automatisch bei jedem Push ausgelöst</p>
       </div>
 
       <h3 id="codedoc-setup">Dokumentation von GitHub nach Confluence einrichten</h3>
       <ol class="step-list">
         <li>
           <div class="step-num">1</div>
-          <div class="step-text"><strong>Installiere CodeDoc AI for Confluence aus dem Marketplace.</strong> Es ist eine Forge-App — ohne externe Server, innerhalb von Atlassians Infrastruktur.</div>
+          <div class="step-text"><strong>Installiere CodeDoc for Confluence aus dem Marketplace.</strong> Es ist eine Forge-App — ohne externe Server, innerhalb von Atlassians Infrastruktur.</div>
         </li>
         <li>
           <div class="step-num">2</div>
-          <div class="step-text"><strong>Verbinde dein GitHub- oder GitLab-Repository.</strong> Füge ein persönliches Zugriffstoken mit Lesezugriff auf das Repository hinzu. CodeDoc AI liest deine Repository-Dateien — es schreibt nie in dein Repository.</div>
+          <div class="step-text"><strong>Verbinde dein GitHub- oder GitLab-Repository.</strong> Füge ein persönliches Zugriffstoken mit Lesezugriff auf das Repository hinzu. CodeDoc liest deine Repository-Dateien — es schreibt nie in dein Repository.</div>
         </li>
         <li>
           <div class="step-num">3</div>
@@ -377,8 +377,8 @@
       </p>
 
       <div class="diagram">
-        <img src="/imgCodeDoc/Jobs.png" alt="Auftragsliste von CodeDoc AI mit konfigurierten Dokumentationsaufträgen, Repository, Confluence-Zielseite und Status der letzten Erzeugung" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
-        <p class="diagram-caption">CodeDoc-AI-Aufträge — jeder Auftrag verbindet einen oder mehrere Repository-Pfade mit einer Confluence-Seite und konfigurierbaren Auslösereinstellungen</p>
+        <img src="/imgCodeDoc/Jobs.png" alt="Auftragsliste von CodeDoc mit konfigurierten Dokumentationsaufträgen, Repository, Confluence-Zielseite und Status der letzten Erzeugung" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(23,43,77,0.07);" loading="lazy">
+        <p class="diagram-caption">CodeDoc-Aufträge — jeder Auftrag verbindet einen oder mehrere Repository-Pfade mit einer Confluence-Seite und konfigurierbaren Auslösereinstellungen</p>
       </div>
 
       <h2 id="page-structure">Empfohlene Confluence-Struktur für ein Jira-Projekt</h2>
@@ -387,7 +387,7 @@
       </p>
       <ul>
         <li><strong>Projektübersicht</strong> — aktuelles Jira-Vorgangsmakro sowie wichtige Entscheidungen und Ziele (von Menschen geschrieben, selten verändert)</li>
-        <li><strong>Architektur und Codebasis</strong> — von CodeDoc AI erzeugt, automatisch aktualisiert</li>
+        <li><strong>Architektur und Codebasis</strong> — von CodeDoc erzeugt, automatisch aktualisiert</li>
         <li><strong>Sprint-Historie</strong> — eine Unterseite pro Sprint, beim Sprintabschluss automatisch von Jira Automation erstellt</li>
         <li><strong>Entscheidungen</strong> — Architecture Decision Records (ADRs), manuell geschrieben, in einem schlanken Format</li>
         <li><strong>Betriebsanleitungen</strong> — Betriebsleitfäden, von Entwicklern gepflegt und aus passenden Jira-Vorgangstypen verknüpft</li>
@@ -398,7 +398,7 @@
 
       <h2 id="ai-byok">Codedokumentation vertraulich halten: BYOK-KI</h2>
       <p>
-        Für Teams in regulierten Branchen ist das Senden von Quellcode an einen KI-Anbieter eine wesentliche Datenschutzfrage. CodeDoc AI unterstützt Bring Your Own Key (BYOK) — du konfigurierst deinen eigenen OpenAI- oder Anthropic-API-Schlüssel in den App-Einstellungen. Dadurch wird dein Code unter der Vereinbarung deiner Organisation mit dem KI-Anbieter verarbeitet, nicht über einen gemeinsamen Anbieterschlüssel.
+        Für Teams in regulierten Branchen ist das Senden von Quellcode an einen KI-Anbieter eine wesentliche Datenschutzfrage. CodeDoc unterstützt Bring Your Own Key (BYOK) — du konfigurierst deinen eigenen OpenAI- oder Anthropic-API-Schlüssel in den App-Einstellungen. Dadurch wird dein Code unter der Vereinbarung deiner Organisation mit dem KI-Anbieter verarbeitet, nicht über einen gemeinsamen Anbieterschlüssel.
       </p>
       <p>
         Eine ausführliche Erklärung, warum das für Unternehmens- und Compliance-Teams wichtig ist, findest du hier: <a href="/de/blog/byok-ai-atlassian.html">BYOK-KI für Atlassian: Was sie bedeutet und warum sie wichtig ist</a>.
@@ -409,7 +409,7 @@
 
       <div class="faq-item">
         <p class="faq-q">Wie dokumentiere ich ein Jira-Projekt automatisch in Confluence?</p>
-        <p class="faq-a">Kombiniere drei Ebenen: (1) Confluences Jira-Vorgangsmakro für aktuelle Vorgangseinbettungen auf Projektseiten, (2) Jira-Automatisierungsregeln für Sprint-Zusammenfassungsseiten beim Sprintabschluss und (3) KI-Codedokumentation mit <a href="/de/codedoc-ai.html">CodeDoc AI for Confluence</a> , um technische Dokumentation aus deinem GitHub- oder GitLab-Repository bei jedem Push automatisch zu erzeugen.</p>
+        <p class="faq-a">Kombiniere drei Ebenen: (1) Confluences Jira-Vorgangsmakro für aktuelle Vorgangseinbettungen auf Projektseiten, (2) Jira-Automatisierungsregeln für Sprint-Zusammenfassungsseiten beim Sprintabschluss und (3) KI-Codedokumentation mit <a href="/de/codedoc-ai.html">CodeDoc for Confluence</a> , um technische Dokumentation aus deinem GitHub- oder GitLab-Repository bei jedem Push automatisch zu erzeugen.</p>
       </div>
 
       <div class="faq-item">
@@ -419,12 +419,12 @@
 
       <div class="faq-item">
         <p class="faq-q">Wie halte ich Confluence-Dokumentation am besten mit Jira aktuell?</p>
-        <p class="faq-a">Der zuverlässigste Ansatz nimmt Menschen nach Möglichkeit aus dem Aktualisierungskreislauf. Aktuelle Jira-Makros aktualisieren sich automatisch. Sprint-Zusammenfassungen entstehen durch Automatisierung. Codedokumentation wird neu erzeugt durch <a href="/de/blog/automate-confluence-documentation.html">CodeDoc AI bei jedem Code-Push</a>. Von Menschen verfasste Seiten (Entscheidungen, Betriebsanleitungen) ändern sich langsam und können manuell bleiben. Das Ziel: Die besonders gefährdeten Seiten — Status, Architektur und API-Referenzen — benötigen nie eine manuelle Aktualisierung.</p>
+        <p class="faq-a">Der zuverlässigste Ansatz nimmt Menschen nach Möglichkeit aus dem Aktualisierungskreislauf. Aktuelle Jira-Makros aktualisieren sich automatisch. Sprint-Zusammenfassungen entstehen durch Automatisierung. Codedokumentation wird neu erzeugt durch <a href="/de/blog/automate-confluence-documentation.html">CodeDoc bei jedem Code-Push</a>. Von Menschen verfasste Seiten (Entscheidungen, Betriebsanleitungen) ändern sich langsam und können manuell bleiben. Das Ziel: Die besonders gefährdeten Seiten — Status, Architektur und API-Referenzen — benötigen nie eine manuelle Aktualisierung.</p>
       </div>
 
       <div class="article-cta">
         <h3>Confluence-Dokumentation automatisch aus deinem Code-Repository erzeugen</h3>
-        <p>CodeDoc AI for Confluence — KI-gestützte Dokumentation aus GitHub und GitLab, bei jedem Push ausgelöst. Auf Forge basierend. Kostenlose Testversion enthalten.</p>
+        <p>CodeDoc for Confluence — KI-gestützte Dokumentation aus GitHub und GitLab, bei jedem Push ausgelöst. Auf Forge basierend. Kostenlose Testversion enthalten.</p>
         <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener" class="btn-white">Im Marketplace kostenlos testen →</a>
       </div>
 
@@ -442,7 +442,7 @@
           <li><a href="#linking">Vorgänge mit Seiten verknüpfen</a></li>
           <li><a href="#layer2">Ebene 2 — Sprint-Zusammenfassungen</a></li>
           <li><a href="#layer3">Ebene 3 — KI-Codedokumentation</a></li>
-          <li><a href="#codedoc-setup">CodeDoc AI einrichten</a></li>
+          <li><a href="#codedoc-setup">CodeDoc einrichten</a></li>
           <li><a href="#page-structure">Empfohlene Confluence-Struktur</a></li>
           <li><a href="#ai-byok">BYOK für vertraulichen Code</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -452,9 +452,9 @@
       <div class="sidebar-block">
         <h3>Die App</h3>
         <a href="/de/codedoc-ai.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;">
-          <img src="/img/codedoc-ai-icon.webp" alt="CodeDoc AI for Confluence" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
+          <img src="/img/codedoc-ai-icon.webp" alt="CodeDoc for Confluence" width="36" height="36" style="border-radius:8px;object-fit:contain;flex-shrink:0;" loading="lazy">
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc AI for Confluence</div>
+            <div style="font-size:0.88rem;font-weight:700;color:var(--text);">CodeDoc for Confluence</div>
             <div style="font-size:0.8rem;color:var(--text-faint);margin-top:2px;">GitHub · GitLab · BYOK · Forge</div>
           </div>
         </a>
@@ -472,7 +472,7 @@
     </aside>
   </div>
 
-  <script src="/components.js?v=44d6c0624b67"></script>
+  <script src="/components.js?v=ff7e95cf7422"></script>
   <script>
   (function () {
     var headings = document.querySelectorAll('.article-body h2[id], .article-body h3[id]');
