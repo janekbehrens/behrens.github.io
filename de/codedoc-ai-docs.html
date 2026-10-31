@@ -356,6 +356,7 @@
           <table>
             <thead><tr><th>Anzuzeigender Inhalt</th><th>Deine Eingabe</th><th>Beispiel und Ergebnis</th></tr></thead>
             <tbody>
+              <tr><td><strong>Alle Abhängigkeiten (automatisch)</strong></td><td>Nur das Repository, optional ein Ordner</td><td>Jede Abhängigkeit mit Version, gefunden in package.json, Helm-Charts, Dockerfiles und mehr, in einer Tabelle (<a href="#sync-deps">Details</a>).</td></tr>
               <tr><td><strong>Value(s) from YAML or JSON (Werte aus YAML oder JSON)</strong></td><td> <dfn class="term" data-tip="Der Name eines Werts in einer YAML- oder JSON-Datei, mit Punkten geschrieben, etwa image.tag.">Schlüsselpfad</dfn> pro Zeile, optional <code>Label = path</code></td><td><code>image.tag</code> oder <code>App version = appVersion</code>. Ein Wert erscheint als Text, mehrere als Tabelle.</td></tr>
               <tr><td><strong>Regular expression (Regulärer Ausdruck)</strong></td><td>Ein <dfn class="term" data-tip="Ein Textsuchmuster. CodeDoc prüft zeilenweise und zeigt die erste geklammerte Gruppe.">regulärer Ausdruck</dfn>; angezeigt wird die erste geklammerte Gruppe</td><td><code>^FROM\s+(\S+)</code> zeigt die Basisimages einer Dockerfile.</td></tr>
               <tr><td><strong>Markdown section (Markdown-Abschnitt)</strong></td><td>Die Überschrift ohne <code>#</code></td><td><code>Installation</code> zeigt alles darunter bis zur nächsten Überschrift gleicher Ebene.</td></tr>
@@ -373,6 +374,22 @@
           <p><strong>Ausschnittmarkierungen:</strong> Neben <code>codedoc:start</code>  /  <code>codedoc:end</code> funktionieren auch AsciiDoc-Tags (<code>tag::install[]</code>  …  <code>end::install[]</code>) und <code>[START install]</code>  …  <code>[END install]</code> . Ausschnitte erscheinen als Code mit Syntaxhervorhebung, Markdown-Dateien formatiert.</p>
           <p><strong>Überschriften eine Ebene kleiner:</strong> Für Markdown-Inhalte kannst du <strong>Make headings one level smaller (Überschriften eine Ebene kleiner machen)</strong> aktivieren. Eine Überschrift mit <code>#</code> wird dann Ebene 2 und passt unter die Seitenüberschriften.</p>
         </details>
+
+        <h3 id="sync-deps">Alle Abhängigkeiten, automatisch gefunden</h3>
+        <p>Du musst nicht wissen, wo Versionen stehen. Wähle das Repository und klicke <strong>Find all dependencies automatically</strong> (oder unter <strong>What to show</strong> die Option <strong>All dependencies and versions of the repository</strong>). CodeDoc durchsucht das Repository und zeigt jede Abhängigkeit mit Version in einer Tabelle: Komponente, Version wie in der Datei, und die Datei, aus der sie stammt (verlinkt). Mit <strong>Compare with the latest release</strong> kommen für npm- und PyPI-Pakete und Docker-Hub-Images die neueste Version und ein Status dazu.</p>
+        <img src="/imgCodeDoc/deps/01-codedoc-deps-dialog.webp" alt="Einstellungen des CodeDoc-Sync-Blocks: Repository gewählt, All dependencies and versions of the repository ausgewählt, Versionsprüfung an, Vorschau der Tabelle" width="1600" height="2083" loading="lazy">
+        <details class="more">
+          <summary>Welche Dateien CodeDoc liest</summary>
+          <ul>
+            <li><strong>JavaScript:</strong> <code>package.json</code> (dependencies und die Node-Engine; keine devDependencies).</li>
+            <li><strong>Helm und Container:</strong> <code>Chart.yaml</code> (Chart, App-Version, Chart-Abhängigkeiten), <code>values*.yaml</code> (Image-Repository und Tag), <code>docker-compose*.yml</code> / <code>compose*.yaml</code> (Images der Services), <code>Dockerfile</code> (Basis-Image jeder Stufe).</li>
+            <li><strong>Python:</strong> <code>requirements*.txt</code>, <code>pyproject.toml</code> (PEP-621-Abhängigkeiten, Poetry-Abhängigkeiten, benötigtes Python).</li>
+            <li><strong>Go, Java, Terraform:</strong> <code>go.mod</code> (direkte Abhängigkeiten und Go-Version), <code>pom.xml</code> (Abhängigkeiten mit Version, Properties aufgelöst), <code>versions.tf</code>, <code>providers.tf</code>, <code>main.tf</code>, <code>terraform.tf</code> (Provider und Terraform-Version).</li>
+            <li><strong>Laufzeiten:</strong> <code>.nvmrc</code>, <code>.node-version</code>, <code>.python-version</code>, <code>.tool-versions</code>.</li>
+          </ul>
+          <p>Bis zu 25 Dateien, Ordner auf oberster Ebene zuerst; <code>node_modules</code>, <code>vendor</code>, Build-Ausgaben und Testdaten werden übersprungen. In großen Repositories einen <strong>Ordner</strong> eintragen (zum Beispiel <code>services/api</code>), dann zeigt der Block nur, was dort steht. Die Tabelle zeigt bis zu 200 Abhängigkeiten; ein Hinweis darunter sagt, wenn etwas weggelassen wurde oder nicht lesbar war.</p>
+        </details>
+        <img src="/imgCodeDoc/deps/02-codedoc-deps-table.webp" alt="Eine Confluence-Seite mit den Abhängigkeiten eines Repositorys: Komponente, Version, Datei, neueste Version und Status" width="1570" height="1570" loading="lazy">
 
         <h3 id="sync-latest">Compare with the latest release (Mit neuestem Release vergleichen)</h3>
         <p>Aktiviere für eine Dateiversion, etwa Imagetag oder Paketversion, <strong>Compare with the latest release (Mit neuestem Release vergleichen)</strong> (Arten „Value(s)“ und „Regular expression“). Der Block zeigt das neueste veröffentlichte Release daneben samt farbigem Status; Tabellen erhalten die Spalten <strong>Latest release (Neuestes Release)</strong> und <strong>Status</strong>.</p>

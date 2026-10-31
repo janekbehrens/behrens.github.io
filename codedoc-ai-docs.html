@@ -353,6 +353,7 @@
           <table>
             <thead><tr><th>What to show</th><th>You enter</th><th>Example and result</th></tr></thead>
             <tbody>
+              <tr><td><strong>All dependencies (automatic)</strong></td><td>Nothing but the repository; optionally a folder</td><td>Every dependency with its version, found in the repository's package.json, Helm charts, Dockerfiles and more, in one table (<a href="#sync-deps">details</a>).</td></tr>
               <tr><td><strong>Value(s) from YAML or JSON</strong></td><td>One <dfn class="term" data-tip="The name of a value in a YAML or JSON file, written with dots, for example image.tag.">key path</dfn> per line, optionally <code>Label = path</code></td><td><code>image.tag</code> or <code>App version = appVersion</code>. One value as text, several as a table.</td></tr>
               <tr><td><strong>Regular expression</strong></td><td>A <dfn class="term" data-tip="A search pattern for text. CodeDoc checks it line by line and shows the first group in parentheses.">regular expression</dfn>; the first group in parentheses is shown</td><td><code>^FROM\s+(\S+)</code> shows the base images of a Dockerfile.</td></tr>
               <tr><td><strong>Markdown section</strong></td><td>The heading, without <code>#</code></td><td><code>Installation</code> shows everything below that heading up to the next heading of the same level.</td></tr>
@@ -370,6 +371,22 @@
           <p><strong>Snippet markers:</strong> besides <code>codedoc:start</code> / <code>codedoc:end</code>, AsciiDoc tags (<code>tag::install[]</code> … <code>end::install[]</code>) and <code>[START install]</code> … <code>[END install]</code> work too. Snippets are shown as code with syntax highlighting; Markdown files formatted.</p>
           <p><strong>Headings one level smaller:</strong> for Markdown content you can tick <strong>Make headings one level smaller</strong>, so a <code>#</code> heading from the file becomes a level-2 heading and fits under the page's own headings.</p>
         </details>
+
+        <h3 id="sync-deps">All dependencies, found automatically</h3>
+        <p>You do not need to know where versions are written. Choose the repository and click <strong>Find all dependencies automatically</strong> (or choose <strong>All dependencies and versions of the repository</strong> under <strong>What to show</strong>). CodeDoc searches the repository and shows every dependency with its version in one table: component, version as written in the file, and the file it comes from (linked). Tick <strong>Compare with the latest release</strong> to add the newest version and a status for npm and PyPI packages and Docker Hub images.</p>
+        <img src="imgCodeDoc/deps/01-codedoc-deps-dialog.webp" alt="CodeDoc sync block settings: repository chosen, All dependencies and versions of the repository selected, release check ticked, preview of the table" width="1600" height="2083" loading="lazy">
+        <details class="more">
+          <summary>Which files CodeDoc reads</summary>
+          <ul>
+            <li><strong>JavaScript:</strong> <code>package.json</code> (dependencies and the Node engine; not devDependencies).</li>
+            <li><strong>Helm and containers:</strong> <code>Chart.yaml</code> (chart, app version, chart dependencies), <code>values*.yaml</code> (image repository and tag), <code>docker-compose*.yml</code> / <code>compose*.yaml</code> (service images), <code>Dockerfile</code> (base image of every stage).</li>
+            <li><strong>Python:</strong> <code>requirements*.txt</code>, <code>pyproject.toml</code> (PEP 621 dependencies, Poetry dependencies, required Python).</li>
+            <li><strong>Go, Java, Terraform:</strong> <code>go.mod</code> (direct requirements and the Go version), <code>pom.xml</code> (dependencies with a version, properties resolved), <code>versions.tf</code>, <code>providers.tf</code>, <code>main.tf</code>, <code>terraform.tf</code> (required providers and Terraform version).</li>
+            <li><strong>Runtimes:</strong> <code>.nvmrc</code>, <code>.node-version</code>, <code>.python-version</code>, <code>.tool-versions</code>.</li>
+          </ul>
+          <p>Up to 25 files, top-level folders first; <code>node_modules</code>, <code>vendor</code>, build output and test data are skipped. In large repositories, enter a <strong>Folder</strong> (for example <code>services/api</code>) to list only what is declared there. The table shows up to 200 dependencies; a note under it says when something was left out or could not be read.</p>
+        </details>
+        <img src="imgCodeDoc/deps/02-codedoc-deps-table.webp" alt="A Confluence page with the dependencies of a repository: component, version, file, latest release and status" width="1570" height="1570" loading="lazy">
 
         <h3 id="sync-latest">Compare with the latest release</h3>
         <p>For a version in a file, such as an image tag or a package version, tick <strong>Compare with the latest release</strong> (kinds "Value(s)" and "Regular expression"). The block then shows the newest published release next to it and a colored status; a table gets the columns <strong>Latest release</strong> and <strong>Status</strong>.</p>
