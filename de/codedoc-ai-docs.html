@@ -389,6 +389,11 @@
           </ul>
           <p>Bis zu 25 Dateien, Ordner auf oberster Ebene zuerst; <code>node_modules</code>, <code>vendor</code>, Build-Ausgaben und Testdaten werden übersprungen. In großen Repositories einen <strong>Ordner</strong> eintragen (zum Beispiel <code>services/api</code>), dann zeigt der Block nur, was dort steht. Die Tabelle zeigt bis zu 200 Abhängigkeiten; ein Hinweis darunter sagt, wenn etwas weggelassen wurde oder nicht lesbar war.</p>
         </details>
+        <details class="more" id="sync-deps-finetune">
+          <summary>Feinsteuerung: Dateien, Tiefe und Arten selbst wählen</summary>
+          <p>Unter der Erklärung <strong>Fine-tune (optional)</strong> aufklappen. <strong>Only these files</strong> nimmt einen Pfad pro Zeile; CodeDoc liest dann genau diese Dateien und sucht nicht. <strong>Search depth</strong> begrenzt die Ordner unterhalb des gewählten Ordners (nur der Ordner selbst, eine oder zwei Ebenen darunter). Unter <strong>Kinds</strong> lässt du weg, was die Tabelle nicht zeigen soll, etwa alles außer Container-Images. <strong>Include development dependencies</strong> nimmt die devDependencies aus package.json dazu, markiert mit „dev“. Unveränderte Einstellungen werden nicht gespeichert. Bleibt nichts zum Anzeigen übrig, sagt der Block warum, zum Beispiel welche Arten in welchen Dateien fehlen.</p>
+          <img src="/imgCodeDoc/deps/03-codedoc-deps-finetune.webp" alt="Feinsteuerung des Abhängigkeits-Blocks: nur diese Dateien, Suchtiefe, Arten und Entwicklungs-Abhängigkeiten" width="1600" height="638" loading="lazy">
+        </details>
         <img src="/imgCodeDoc/deps/02-codedoc-deps-table.webp" alt="Eine Confluence-Seite mit den Abhängigkeiten eines Repositorys: Komponente, Version, Datei, neueste Version und Status" width="1570" height="1570" loading="lazy">
 
         <h3 id="sync-latest">Compare with the latest release (Mit neuestem Release vergleichen)</h3>

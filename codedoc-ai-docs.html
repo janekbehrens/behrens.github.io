@@ -386,6 +386,11 @@
           </ul>
           <p>Up to 25 files, top-level folders first; <code>node_modules</code>, <code>vendor</code>, build output and test data are skipped. In large repositories, enter a <strong>Folder</strong> (for example <code>services/api</code>) to list only what is declared there. The table shows up to 200 dependencies; a note under it says when something was left out or could not be read.</p>
         </details>
+        <details class="more" id="sync-deps-finetune">
+          <summary>Fine-tune: choose files, depth and kinds yourself</summary>
+          <p>Open <strong>Fine-tune (optional)</strong> under the explanation. <strong>Only these files</strong> takes one path per line; CodeDoc then reads exactly these files and does not search. <strong>Search depth</strong> limits the folders below the chosen folder (only the folder itself, one or two levels of sub-folders). <strong>Kinds</strong> leaves out what the table should not show, for example everything except container images. <strong>Include development dependencies</strong> adds the devDependencies of package.json, marked “dev”. Settings you leave unchanged are not stored. If nothing is left to show, the block says why, for example which kinds were not found in which files.</p>
+          <img src="imgCodeDoc/deps/03-codedoc-deps-finetune.webp" alt="Fine-tune section of the dependency block: only these files, search depth, kinds and development dependencies" width="1600" height="638" loading="lazy">
+        </details>
         <img src="imgCodeDoc/deps/02-codedoc-deps-table.webp" alt="A Confluence page with the dependencies of a repository: component, version, file, latest release and status" width="1570" height="1570" loading="lazy">
 
         <h3 id="sync-latest">Compare with the latest release</h3>
