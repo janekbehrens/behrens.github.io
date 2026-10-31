@@ -299,7 +299,7 @@
         <h3 id="setup-git">Connect Git</h3>
         <p>CodeDoc only reads files, so a token with <strong>read</strong> permission is enough. Which token each provider needs: <a href="#providers">Supported providers</a>.</p>
         <ol>
-          <li>Select the <strong>Git provider</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps, or your own <strong>GitHub Enterprise</strong> or <strong>GitLab self-managed</strong> server (<a href="#providers-server">details</a>). A note names the token to create, with a direct link.</li>
+          <li>Select the <strong>Git provider</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps, or your own <strong>GitHub Enterprise</strong> or <strong>GitLab self-managed</strong> server (<a href="#providers-server">details</a>). A note names the token to create, with a direct link. GitHub organizations with an IP allow list choose <strong>GitHub App</strong> instead (<a href="#github-app">steps</a>).</li>
           <li>Paste the <dfn class="term" data-tip="A key from your Git provider that lets CodeDoc read repositories. A read-only token is enough.">access token</dfn>. For Azure DevOps, also enter the organization URL (<code>https://dev.azure.com/your-org</code>).</li>
           <li>Optionally set a <strong>display name</strong>, for example "Work GitHub", and click <strong>Connect and continue</strong>. If the token does not work, the message says why.</li>
         </ol>
@@ -652,10 +652,10 @@
         <img src="imgCodeDoc/screenshot-6-connections.webp" alt="Settings, Connections: a Git connection with a read-only token, and the AI card with Atlassian AI or your own AI provider" width="1840" height="900" loading="lazy">
 
         <h3 id="settings-git">Git connections</h3>
-        <p>Connect several Git providers or accounts at once, for example a work GitHub, a GitLab group and your own GitLab server. Each connection shows its provider, name, user, date added and how many repositories use it; your own servers are marked <strong>Own server</strong>.</p>
+        <p>Connect several Git providers or accounts at once, for example a work GitHub, a GitLab group and your own GitLab server. Each connection shows its provider, name, user, date added and how many repositories use it; your own servers are marked <strong>Own server</strong>, your organization's own GitHub App <strong>GitHub App</strong>.</p>
         <details class="more">
           <summary>Adding and removing connections</summary>
-          <p><strong>Add connection</strong> opens the same form as the setup. <strong>Remove</strong> deletes the stored token and the repositories of that connection; the last connection cannot be removed. Removing the last connection to an own server also withdraws its approval (Atlassian asks a site admin to confirm).</p>
+          <p><strong>Add connection</strong> opens the same form as the setup. <strong>Remove</strong> deletes the stored token (or the GitHub App's key) and the repositories of that connection; the last connection cannot be removed. Removing the last connection to an own server also withdraws its approval (Atlassian asks a site admin to confirm).</p>
         </details>
 
         <h3 id="settings-ai">AI for AI pages</h3>
@@ -712,6 +712,7 @@
             <tbody>
               <tr><td><strong>GitHub</strong> (github.com)</td><td>Fine-grained token with <strong>Contents: Read</strong>, or a classic token with the <code>repo</code> scope. <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub Docs</a></td></tr>
               <tr><td><strong>GitHub Enterprise</strong> (your server or <code>NAME.ghe.com</code>)</td><td>The same tokens, created on your server. A site admin approves the address once (<a href="#providers-server">details</a>).</td></tr>
+              <tr><td><strong>GitHub App</strong> (your organization's own app on github.com)</td><td>No token: the App ID and private key of an app your organization creates, with <strong>Contents: Read</strong>. For organizations with an IP allow list or without personal tokens (<a href="#github-app">steps</a>).</td></tr>
               <tr><td><strong>GitLab</strong> (gitlab.com)</td><td>Personal, group or project access token with <code>read_api</code> + <code>read_repository</code>. <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">GitLab Docs</a></td></tr>
               <tr><td><strong>GitLab self-managed</strong> (your server, also under a path)</td><td>The same tokens, created on your server. A site admin approves the address once.</td></tr>
               <tr><td><strong>Bitbucket Cloud</strong> (bitbucket.org)</td><td>Repository, project or workspace access token with <strong>Repositories: Read</strong>. No personal API tokens (<a href="#providers-bitbucket">why</a>). <a href="https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/" target="_blank" rel="noopener">Bitbucket Docs</a></td></tr>
@@ -732,6 +733,45 @@
           <summary>Network and approval details</summary>
           <p>CodeDoc runs on Atlassian's cloud, not inside your network. The server must be reachable from the internet over HTTPS, with a certificate from a public certificate authority. If a firewall protects it, allow Atlassian's outgoing IP addresses (<a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">IP addresses and domains for Atlassian cloud products</a>).</p>
           <p>The approval is listed in Atlassian Administration → Connected apps → CodeDoc → Data management ("Data storage, sharing, receiving and processing"), where an admin can remove it again. Repositories, file links, sync blocks, AI pages and webhooks then work as on the cloud services.</p>
+        </details>
+
+        <h3 id="github-app">GitHub App: organizations with an IP allow list</h3>
+        <p>If your GitHub organization accepts requests only from the addresses on its <strong>IP allow list</strong>, or does not allow personal access tokens, connect CodeDoc with a <strong>GitHub App that belongs to your organization</strong>. GitHub lets an organization accept an app's addresses for that app alone; for tokens, an entry on the list opens it for every request from those addresses.</p>
+        <ol>
+          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection</strong> → <strong>GitHub App</strong>, and enter your organization's name. The form shows the steps below and links straight to the right pages on GitHub.
+            <img src="imgCodeDoc/github-app/01-codedoc-form.webp" alt="CodeDoc, Add connection, GitHub App: organization name, the four steps on GitHub, App ID and private key" width="1600" height="1093" loading="lazy">
+          </li>
+          <li><strong>Create the app</strong> (an organization owner): click <strong>open the pre-filled form on GitHub</strong>. Name, description and homepage are filled in. Under <strong>Permissions</strong> only <strong>Contents: Read-only</strong> and the mandatory <strong>Metadata</strong> are set, the webhook is off, and the app can only be installed on your organization (<strong>Only on this account</strong>). Click <strong>Create GitHub App</strong>.
+            <img src="imgCodeDoc/github-app/02-github-new-app-top.webp" alt="GitHub, Create GitHub App: name, description and homepage URL already filled in" width="1600" height="1040" loading="lazy">
+            <img src="imgCodeDoc/github-app/03-github-new-app-permissions.webp" alt="GitHub, Create GitHub App: one repository permission selected, installable only on this account, button Create GitHub App" width="1600" height="1220" loading="lazy">
+          </li>
+          <li><strong>Note the App ID and create a key:</strong> the app's <strong>General</strong> page shows the App ID. Then open <strong>Credentials</strong> → <strong>Key pairs</strong> → <strong>New key</strong>; GitHub downloads a <code>.pem</code> file.
+            <img src="imgCodeDoc/github-app/04-github-app-id.webp" alt="GitHub, the General page of the new app with the App ID (blurred here) and the menu Credentials" width="1600" height="549" loading="lazy">
+            <img src="imgCodeDoc/github-app/05-github-new-key.webp" alt="GitHub, app settings, Credentials, Key pairs: button New key" width="1600" height="531" loading="lazy">
+          </li>
+          <li><strong>Install the app:</strong> <strong>Install App</strong> → <strong>Install</strong> next to your organization. Choose <strong>All repositories</strong> or <strong>Only select repositories</strong>; the page confirms <em>Read access to code and metadata</em>. Click <strong>Install</strong>.
+            <img src="imgCodeDoc/github-app/06-github-install-app.webp" alt="GitHub, app settings, Install App: button Install next to the organization" width="1600" height="342" loading="lazy">
+            <img src="imgCodeDoc/github-app/07-github-install-repositories.webp" alt="GitHub, Install: all repositories or selected ones, with read access to code and metadata" width="1120" height="1330" loading="lazy">
+          </li>
+          <li><strong>Only with an IP allow list, before you connect:</strong> on the app's <strong>General</strong> page, at the bottom under <strong>IP allow list</strong>, add <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassian's outgoing IPv4 ranges</a>, one entry each (<a href="#github-app-ips">the list</a>). Then, in the organization's <strong>Settings → Authentication security</strong>, tick <strong>Enable IP allow list configuration for installed GitHub Apps</strong> and click <strong>Save</strong>. The organization's list now shows the entries as <em>Managed by the … GitHub App</em>; they apply only to requests of this app.
+            <img src="imgCodeDoc/github-app/08-github-app-ip-allow-list.webp" alt="GitHub, IP allow list of the app with Atlassian outgoing IPv4 ranges" width="1500" height="1600" loading="lazy">
+            <img src="imgCodeDoc/github-app/09-github-org-inherit-app-ips.webp" alt="GitHub, organization settings, IP allow list: Enable IP allow list configuration for installed GitHub Apps is ticked, entries managed by the app" width="1600" height="1073" loading="lazy">
+          </li>
+          <li><strong>Connect in CodeDoc:</strong> paste the App ID and the whole content of the <code>.pem</code> file, then click <strong>Connect</strong>. Without step 5, CodeDoc answers “Nothing is saved yet” and names the missing steps. The connection then appears with the label <strong>GitHub App</strong>.
+            <img src="imgCodeDoc/github-app/10-codedoc-connected.webp" alt="CodeDoc, Git connections: the new connection marked GitHub App" width="1600" height="264" loading="lazy">
+          </li>
+          <li><strong>Use it:</strong> Repositories → choose the connection → <strong>Browse repositories</strong> → add. Sync blocks and AI pages read from it like from any other connection.
+            <img src="imgCodeDoc/github-app/11-codedoc-sync-block.webp" alt="A Confluence page with a CodeDoc sync block showing image and version from a private repository, In sync" width="1600" height="691" loading="lazy">
+          </li>
+        </ol>
+        <details class="more">
+          <summary>How CodeDoc keeps the app's key</summary>
+          <p>The App ID, the installation and the private key are stored encrypted in your Confluence site (Forge secret storage) and never shown again. For each read, CodeDoc signs a short-lived request with the key and gets a token from GitHub that is valid for one hour and may only read repository contents and metadata. CodeDoc uses only the installation in the organization that owns the app, checks at every token that the installation still belongs to that organization, and does not use a token with more than read access. No key is shared between customers: every Confluence site has its own app.</p>
+          <p>To replace the key, generate a new one on GitHub, connect the same app again in CodeDoc (the repositories stay), then delete the old key on GitHub.</p>
+        </details>
+        <details class="more" id="github-app-ips">
+          <summary>Which addresses go on the app's IP allow list</summary>
+          <p>The IPv4 ranges listed under "Outgoing connections for Atlassian apps" on <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassian's page</a>; GitHub's API is reached over IPv4. As of October 2026 they fit into 13 entries: <code>104.192.136.0/21, 185.166.140.0/22, 131.162.88.0/21, 13.52.5.96/28, 13.200.41.224/28, 13.236.8.224/28, 16.63.53.224/28, 18.136.214.96/28, 18.184.99.224/28, 18.234.32.224/28, 18.246.31.224/28, 43.202.69.96/28, 52.215.192.224/28</code>. Check Atlassian's page for changes.</p>
         </details>
 
         <h3 id="providers-bitbucket">Bitbucket tokens</h3>
@@ -854,7 +894,7 @@
         </details>
         <details class="more" id="ip-allow-list">
           <summary>"the GitHub organization accepts requests only from addresses on its IP allow list (HTTP 403)"</summary>
-          <p>Your GitHub organization accepts requests only from the addresses on its IP allow list, and CodeDoc reads your repositories from Atlassian's cloud. An owner of the organization adds <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassian's outgoing IP ranges</a> (IPv4 and IPv6) under <strong>Settings → Authentication security → IP allow list</strong>; nothing changes in CodeDoc. The ranges are shared by Atlassian's whole cloud, and GitHub still requires your access token for every request.</p>
+          <p>Your GitHub organization accepts requests only from the addresses on its IP allow list, and CodeDoc reads your repositories from Atlassian's cloud. Two ways, both done by an owner of the organization: <strong>connect a GitHub App of your organization</strong> (<a href="#github-app">steps</a>), whose IP allow list entries apply to that app only; or add <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassian's outgoing IP ranges</a> (IPv4 and IPv6) to the organization's list under <strong>Settings → Authentication security → IP allow list</strong>, and the token stays as it is. Those ranges are shared by Atlassian's whole cloud; GitHub still requires your access token for every request. Already connected with a GitHub App? Then the app's IP allow list or the tick “Enable IP allow list configuration for installed GitHub Apps” is missing.</p>
         </details>
         <details class="more">
           <summary>"On every push" does not update</summary>
