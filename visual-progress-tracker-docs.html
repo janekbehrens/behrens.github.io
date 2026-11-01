@@ -97,6 +97,7 @@
         <a href="#dashboard">Overview gadget</a>
         <a href="#jql-filter" class="sub">JQL filter</a>
         <a href="#epic-gadget">Epic Progress Tracker</a>
+        <a href="#project-page">Progress tab</a>
         <a href="#editions">What's included</a>
         <a href="#faq">FAQ &amp; troubleshooting</a>
         <a href="#support">Support</a>
@@ -115,6 +116,7 @@
           <li><strong>Add the field to your project screens.</strong> Open an issue: the bar is there.</li>
           <li><strong>Using the Status or Subtasks type?</strong> Check under Apps → Visual Progress Tracker → Status Mapping that every status you use has a percentage.</li>
           <li><strong>Optional:</strong> add the Progress Tracker Overview or Epic Progress Tracker gadget to a dashboard.</li>
+          <li><strong>Nothing to set up:</strong> every project has a <a href="#project-page">Progress tab</a> with all its epics, their trend and a forecast.</li>
         </ol>
       </div>
 
@@ -131,6 +133,7 @@
           <li><a href="#admin">Admin settings</a></li>
           <li><a href="#dashboard">Overview gadget</a></li>
           <li><a href="#epic-gadget">Epic Progress Tracker</a></li>
+          <li><a href="#project-page">Progress tab in every project</a></li>
           <li><a href="#editions">What's included</a></li>
           <li><a href="#faq">FAQ &amp; troubleshooting</a></li>
           <li><a href="#support">Support</a></li>
@@ -344,6 +347,70 @@
         </details>
       </section>
 
+      <section id="project-page">
+        <h2>Progress tab in every project</h2>
+        <p>Every Jira project gets a <strong>Progress</strong> tab next to Summary, Timeline and Backlog. It shows all <dfn class="term" data-tip="A large piece of work that groups several stories or tasks.">epics</dfn> of the project with their progress, how they moved in the last 7 days, when they will probably be finished and which ones need attention. There is nothing to configure: open a project and click <strong>Progress</strong>.</p>
+        <img src="imgVisualProgressTracker/docs-progress-tab-epics.webp" alt="Progress tab of a project: tiles for progress, health, the last 7 days, important issues and remaining work above the list of epics with progress bar, change of the last 7 days, forecast, target date and health label." width="1840" height="780" loading="lazy">
+        <ul>
+          <li><strong>Tiles at the top:</strong> the average progress of the epics shown, how many are overdue, at risk, stalled or on track, the change of the last 7 days, the important issues (see below) and what is still open.</li>
+          <li><strong>One row per epic:</strong> status, progress bar, done count, the last 7 days (percentage points, issues done, issues added), forecast, <dfn class="term" data-tip="The epic's due date; without one, the release date of its fix version, or the latest release its open issues are planned for.">target date</dfn> and a health label. Hover a label for the reason.</li>
+          <li><strong>Filters:</strong> search, open or done epics, health, release, component, label, priority and assignee. Release, component, label, priority and assignee filter the issues inside the epics, so each epic shows the progress of the matching issues only, for example only the work planned for one release.</li>
+          <li><strong>Drill down:</strong> click ▸ to open an epic's stories, tasks and bugs with status, assignee, progress and estimate, and click ▸ again for their sub-tasks.</li>
+        </ul>
+        <img src="imgVisualProgressTracker/docs-progress-tab-expanded.webp" alt="An epic opened in the Progress tab: its issues with type, status, assignee, progress bar, story points and sub-tasks, one task opened down to its sub-tasks." width="1840" height="438" loading="lazy">
+
+        <h3>Measures</h3>
+        <p>Choose the measure at the top right. Measures without data in the project (no story points, no time logged, no manual values) are not offered.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Measure</th><th>How an epic is counted</th></tr></thead>
+            <tbody>
+              <tr><td>Status progress</td><td>Each issue counts the percentage of its status from the <a href="#status">status mapping</a>; done issues count 100%. The same numbers as the Epic Progress Tracker with "Issue count".</td></tr>
+              <tr><td>Done issues</td><td>Share of issues that are done, each counting the same. Jira's own epic progress bar counts this way.</td></tr>
+              <tr><td>Story points</td><td>Status progress weighted by story points, the same numbers as the Epic Progress Tracker with "Story points".</td></tr>
+              <tr><td>Time tracking</td><td>Logged time ÷ (logged + remaining estimate), sub-tasks included. The Logged column compares logged time with the original estimate and turns red when it is exceeded.</td></tr>
+              <tr><td>Manual progress field</td><td>Average of the manual progress values set on the epic's issues.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Forecast and health</h3>
+        <p>The <strong>forecast</strong> takes the work completed per week over the last 6 weeks (or since the epic's first issue, if newer) and applies it to the remaining work. It assumes the scope stays as it is.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Health</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td>Overdue</td><td>The target date has passed and issues are still open.</td></tr>
+              <tr><td>At risk</td><td>The forecast ends after the target date, or nothing was completed in the last 6 weeks.</td></tr>
+              <tr><td>Stalled</td><td>No issue of the epic changed its status for 14 days.</td></tr>
+              <tr><td>On track</td><td>The forecast ends before the target date.</td></tr>
+              <tr><td>No target date</td><td>The epic has no due date and no release with a release date; the forecast still shows.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Important issues</h3>
+        <p>The tab uses your project's own priorities, also a custom scheme such as Critical, High, Normal, Low. Every priority above the project's default priority counts as <strong>important</strong>; you can move that limit in the "Important issues" tile. An important issue that is open and has not changed its status for 7 days is <strong>stuck</strong>: the epic list shows how many under the health label, and the Trend tab lists them. Choose <strong>Important only</strong> in the priority filter to see whether the most important work of each epic gets done.</p>
+
+        <h3>Breakdown and trend</h3>
+        <p><strong>Breakdown</strong> groups the issues by assignee, component, label, release, priority, issue type or status, for all epics or a single one. <strong>Trend</strong> shows scope and completed work of the last 12 weeks for the project or one epic, rebuilt from Jira's change history, and lists the epics that moved, stalled or grew in the last 7 days and the important issues that are stuck.</p>
+        <img src="imgVisualProgressTracker/docs-progress-tab-trend.webp" alt="Trend tab: scope and completed work of the last 12 weeks, the progress line, and lists of epics that moved, have had no status change for 14 days, or grew in the last 7 days." width="1840" height="588" loading="lazy">
+
+        <h3>Show or hide the tab</h3>
+        <p>The tab shows in every project. A Jira administrator can hide it in all projects under <strong>Apps → Visual Progress Tracker → Color Settings → Progress tab in projects</strong>. The tab changes no field, gadget or setting. Users of the dashboard gadgets and widgets see a one-line "New" hint pointing to the tab until they open it or dismiss the hint.</p>
+
+        <details class="more">
+          <summary>Limits and details</summary>
+          <ul>
+            <li>The tab reads up to 200 epics (newest first) and up to 1,000 child issues for every 20 epics. If the project has more, it says so.</li>
+            <li>Only issues you are allowed to see are counted. Sub-tasks count through their parent issue.</li>
+            <li>The trend is rebuilt from Jira's change history each time it is loaded and kept for 30 minutes; the epic list is kept for 5 minutes. <strong>Refresh</strong> reads Jira again. The app stores no history of its own.</li>
+            <li>An issue moved into an epic from elsewhere counts from the day it was created. For the time tracking and manual measures, the trend and forecast use status progress, because Jira's change history has no time logged on sub-tasks and no history of the manual field.</li>
+            <li>A status without a value in the status mapping counts as 0%, as everywhere in the app; the tab lists such statuses with the number of open issues in them.</li>
+          </ul>
+        </details>
+      </section>
+
       <section id="editions">
         <h2>What's included</h2>
         <p>There is one edition with every feature. Sites with up to 10 users use it for free. Larger sites start with a free trial and need a subscription after the trial; without one, the fields show a "Trial ended" message, the gadgets ask for an active license and the settings are read-only.</p>
@@ -354,6 +421,7 @@
               <tr><td>Manual, Status and Subtask progress fields</td><td>Yes</td></tr>
               <tr><td>Progress Tracker Overview gadget</td><td>Yes</td></tr>
               <tr><td>Epic Progress Tracker gadget (per epic or assignee, issue count or story points)</td><td>Yes</td></tr>
+              <tr><td>Progress tab in every project (forecast, health, important issues, breakdown, 12-week trend)</td><td>Yes</td></tr>
               <tr><td>Status mapping and color thresholds</td><td>Yes</td></tr>
               <tr><td>Color-coded list view columns</td><td>Yes</td></tr>
               <tr><td>Email support</td><td>Yes</td></tr>
@@ -374,6 +442,11 @@
         <details class="more">
           <summary>I added the field to a project but existing issues show "—".</summary>
           <p>Status and Subtask values are calculated when an issue is opened, so issues nobody has opened yet stay empty. Click <strong>Recalculate All Fields</strong> on the app's page to fill them.</p>
+        </details>
+
+        <details class="more">
+          <summary>Does the Progress tab show the same numbers as the Epic Progress Tracker?</summary>
+          <p>Yes, per epic: "Status progress" in the tab is the gadget's "Issue count" calculation and "Story points" its "Story points" one. The tab's headline averages the epics it shows, open epics unless you choose otherwise; the gadget averages all epics of the project.</p>
         </details>
 
         <details class="more">

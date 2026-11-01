@@ -39,7 +39,7 @@
       <li><strong>Sandboxed execution:</strong> Forge functions run in isolated, sandboxed containers with restricted system access managed by Atlassian.</li>
       <li><strong>No external network egress:</strong> The App declares no egress domains and makes no outbound requests to any server outside the Atlassian platform. No external API keys or third-party services are involved.</li>
       <li><strong>No AI services:</strong> The App does not call any AI service. Progress is deterministic arithmetic on statuses, subtasks and story points.</li>
-      <li><strong>Native user interface:</strong> The custom fields, dashboard gadgets, widgets and the admin page are built with Atlassian's UI Kit and rendered by Jira; the App loads no third-party scripts, fonts, frames or images.</li>
+      <li><strong>Native user interface:</strong> The custom fields, dashboard gadgets, widgets, the Progress tab and the admin page are built with Atlassian's UI Kit and rendered by Jira; the App loads no third-party scripts, fonts, frames or images.</li>
     </ul>
 
     <h2>3. Access Control</h2>
@@ -49,11 +49,11 @@
         <tbody>
         <tr>
           <td>Viewer's own permissions</td>
-          <td>The dashboard gadgets and widgets search work items, subtasks and epics <strong>as the user</strong> (Forge <code>asUser</code>), and the project picker and the progress details on a work item read Jira the same way. Jira applies that person's permissions, so each viewer sees only what Jira allows them to see.</td>
+          <td>The dashboard gadgets and widgets and the Progress tab search work items, subtasks, epics and their change history <strong>as the user</strong> (Forge <code>asUser</code>), and the project picker and the progress details on a work item read Jira the same way. Only the order of a project's priorities is read with the App's own account. Jira applies that person's permissions, so each viewer sees only what Jira allows them to see.</td>
         </tr>
         <tr>
           <td>Cache per viewer</td>
-          <td>Results of the gadgets and widgets are cached under the viewer's account ID, so a cached result is only ever shown to the person whose search produced it. A JQL filter appears in the cache key only as a hash.</td>
+          <td>Results of the gadgets, widgets and the Progress tab are cached under the viewer's account ID, so a cached result is only ever shown to the person whose search produced it. A JQL filter appears in the cache key only as a hash.</td>
         </tr>
         <tr>
           <td>App account for the progress fields</td>
@@ -87,7 +87,7 @@
     </ul>
     <p><strong>Data at rest:</strong></p>
     <ul>
-      <li>The App stores the admin settings, a result cache per viewer (work item keys, titles, statuses, types, priorities and progress; in the Epic Progress Tracker grouped by assignee also the assignees' account IDs and display names), the review prompt state per user, field IDs, the time of the last recalculation, the subscription state and anonymous daily usage counters in <strong>Atlassian Forge storage</strong>, hosted by Atlassian with encryption at rest and data residency in the location of your Jira site.</li>
+      <li>The App stores the admin settings, a result cache per viewer (work item keys, titles, statuses, types, priorities and progress; in the Epic Progress Tracker grouped by assignee and in the Progress tab also the assignees' account IDs and display names), the review prompt state and the Progress tab hint per user, field IDs, the time of the last recalculation, the subscription state and anonymous daily usage counters in <strong>Atlassian Forge storage</strong>, hosted by Atlassian with encryption at rest and data residency in the location of your Jira site.</li>
       <li>A cache entry is used for at most 5 minutes and then replaced by the next load; retention, including the 28 days after an uninstall, is described in the <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>.</li>
       <li>Gadget and widget settings are stored by Jira as part of the dashboard; progress values are stored by Jira in the App's custom fields.</li>
       <li>No credentials, tokens, or secrets are stored; there are none to store.</li>
@@ -98,7 +98,7 @@
     </ul>
     <p><strong>Data minimization:</strong></p>
     <ul>
-      <li>The App reads only the fields it needs: status, title, type, priority, resolution, parent and subtasks, and story points for the Epic Progress Tracker; the assignee only when work is grouped by assignee.</li>
+      <li>The App reads only the fields it needs: status, title, type, priority, resolution, parent and subtasks, and story points for the Epic Progress Tracker; the assignee only when work is grouped by assignee. The Progress tab also reads due dates, fix versions, components, labels, time tracking and the change history of status, resolution and story points.</li>
       <li>Work item descriptions, comments and attachments are never read. No email addresses, avatars or other profile data are stored.</li>
     </ul>
 
@@ -139,7 +139,7 @@
 
     <h2>9. Compliance</h2>
     <ul>
-      <li><strong>GDPR:</strong> The App stores Atlassian account IDs as keys of the per-viewer cache and of the review prompt state, and, in the cache of the Epic Progress Tracker grouped by assignee, the assignees' account IDs and display names; no email addresses or other profile data. See our <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>.</li>
+      <li><strong>GDPR:</strong> The App stores Atlassian account IDs as keys of the per-viewer caches, of the review prompt state and of the Progress tab hint, and, in the cache of the Epic Progress Tracker grouped by assignee and of the Progress tab, the assignees' account IDs and display names; no email addresses or other profile data. See our <a href="visual-progress-tracker-privacy-policy.html">Privacy Policy</a>.</li>
       <li><strong>Atlassian security requirements:</strong> Built to comply with <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a>, the <a href="https://developer.atlassian.com/platform/forge/shared-responsibility-model/" target="_blank" rel="noopener">Forge shared responsibility model</a> and the Marketplace security review.</li>
       <li><strong>Runs on Atlassian:</strong> Operates under Atlassian's trust boundary, so Atlassian's infrastructure, security controls, and compliance certifications (SOC 2, ISO 27001, etc.) apply to the underlying platform.</li>
     </ul>

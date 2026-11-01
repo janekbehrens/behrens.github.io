@@ -22,7 +22,7 @@
     </div>
 
     <h1>Datenschutzerklärung</h1>
-    <p class="updated">Visual Progress Tracker for Jira · Stand: 12. Oktober 2026</p>
+    <p class="updated">Visual Progress Tracker for Jira · Zuletzt aktualisiert: 1. November 2026</p>
 
     <h2>1. Einführung</h2>
     <p>
@@ -33,12 +33,13 @@
     <p>Die App liest die folgenden Jira-Daten ausschließlich zur Berechnung und Anzeige des Fortschritts:</p>
     <ul>
       <li><strong>Vorgänge:</strong> Schlüssel, Titel (Zusammenfassungen), Statuswerte und Statuskategorien, Vorgangstypen, Prioritäten, Lösung, Verknüpfungen zu übergeordneten Vorgängen und Unteraufgaben sowie — wenn der Epic Progress Tracker Story Points misst — die Story-Point-Schätzung.</li>
-      <li><strong>Bearbeiter:</strong> Konto-ID und Anzeigename des Bearbeiters, ausschließlich wenn der Epic Progress Tracker die Arbeit nach Bearbeitern gruppiert.</li>
+      <li><strong>Bearbeiter:</strong> Konto-ID und Anzeigename des Bearbeiters, wenn der Epic Progress Tracker nach Bearbeitern gruppiert, und im Progress-Reiter eines Projekts.</li>
+      <li><strong>Für den Progress-Reiter eines Projekts:</strong> Epics mit Fälligkeitsdatum und Fix-Versionen (Namen, Release-Daten) und zu ihren Vorgängen Komponenten, Labels, Fix-Versionen, Zeiterfassung (gebuchte Zeit, Rest- und ursprüngliche Schätzung), Erstellungsdatum und das Datum der letzten Änderung der Statuskategorie; die Reihenfolge der Prioritäten des Projekts und seine Standardpriorität; die Liste der Workflowstatus; und für den 12-Wochen-Verlauf das Änderungsprotokoll der Vorgänge, beschränkt auf Änderungen von Status, Lösung und Story Points.</li>
       <li><strong>Projekte und Felder:</strong> Projektschlüssel und -namen (Projektauswahl) sowie die Liste der Jira-Felder (zum Ermitteln der eigenen Felder der App und des Story-Point-Felds).</li>
       <li><strong>Werte benutzerdefinierter Felder:</strong> die Fortschrittswerte in den eigenen benutzerdefinierten Feldern der App.</li>
     </ul>
     <p>
-      Die Dashboard-Gadgets und Widgets, die Projektauswahl und die Fortschrittsdetails eines Vorgangs lesen Jira <strong>mit den Berechtigungen der betrachtenden Person</strong>. Die benutzerdefinierten Felder der App (Status- und Unteraufgabenfortschritt) und „Recalculate All Fields“ lesen Statuswerte und Unteraufgaben mit dem eigenen Konto der App und schreiben Fortschrittswerte in deren eigene benutzerdefinierte Felder; in Jira wird nichts anderes verändert. Vorgangsbeschreibungen, Kommentare und Anhänge werden <strong>niemals gelesen</strong>.
+      Die Dashboard-Gadgets und Widgets, der Progress-Reiter, die Projektauswahl und die Fortschrittsdetails eines Vorgangs lesen Jira <strong>mit den Berechtigungen der betrachtenden Person</strong>; nur die Reihenfolge der Prioritäten eines Projekts wird mit dem eigenen Konto der App gelesen. Die benutzerdefinierten Felder der App (Status- und Unteraufgabenfortschritt) und „Recalculate All Fields“ lesen Statuswerte und Unteraufgaben mit dem eigenen Konto der App und schreiben Fortschrittswerte in deren eigene benutzerdefinierte Felder; in Jira wird nichts anderes verändert. Vorgangsbeschreibungen, Kommentare und Anhänge werden <strong>niemals gelesen</strong>.
 
     </p>
 
@@ -48,13 +49,15 @@
     </p>
     <ul>
       <li><strong>Ergebnis-Zwischenspeicher der Dashboard-Gadgets und Widgets pro Betrachter:</strong> für den Progress Tracker Overview die angezeigten Vorgänge (Schlüssel, Titel, Statuswerte, Statuskategorien, Typen, Prioritäten und Fortschrittswerte) und der Durchschnitt; für den Epic Progress Tracker die Epics (Schlüssel und Titel) oder bei Gruppierung nach Bearbeitern die Konto-IDs und Anzeigenamen der Bearbeiter, jeweils mit ihrem Fortschritt. Jeder Eintrag wird unter der Atlassian-Konto-ID des Betrachters, dem Projektschlüssel, den Ansichtseinstellungen und einem Hash des JQL-Filters gespeichert (niemals dem Filtertext). Die Suche jedes Betrachters läuft mit dessen eigenen Berechtigungen, sodass ein zwischengespeichertes Ergebnis niemand anderem angezeigt wird. Ein Eintrag wird höchstens 5 Minuten lang verwendet (siehe Abschnitt 7).</li>
+      <li><strong>Ergebnis-Zwischenspeicher des Progress-Reiters pro Betrachter:</strong> die Epics des Projekts (Schlüssel, Titel, Statuswerte, Fälligkeitsdaten, Fix-Versionen) und ihre Vorgänge (Schlüssel, Statuswerte, Typen, Prioritäten, Komponenten, Labels, Fix-Versionen, Konto-IDs und Anzeigenamen der Bearbeiter, Schätzungen und gebuchte Zeit, Fortschrittswerte), höchstens 5 Minuten lang verwendet; und für den Verlauf der Fortschritt jedes Vorgangs an den letzten 12 Wochengrenzen (nur Vorgangs-IDs und Zahlen), höchstens 30 Minuten lang verwendet. Jeder Eintrag wird unter der Konto-ID des Betrachters und dem Projektschlüssel gespeichert (siehe Abschnitt 7).</li>
       <li><strong>Bewertungsaufforderung pro Nutzer:</strong> ob der Nutzer die Aufforderung zur Bewertung der App geschlossen hat (und wann) oder ihr nachgekommen ist, gespeichert unter seiner Konto-ID; außerdem das Installationsdatum der App.</li>
-      <li><strong>Administratoreinstellungen:</strong> die Zuordnung von Statuswerten zu Fortschritt (Jira-Statusnamen mit einem Prozentwert) und die Farbschwellen.</li>
-      <li><strong>Technische Datensätze:</strong> die IDs der benutzerdefinierten Felder der App und des Story-Point-Felds, der Zeitpunkt des letzten Laufs von „Recalculate All Fields“ und eine zufällige ID des laufenden Durchlaufs sowie der Abonnementstatus (lizenziert oder nicht, Testzeitraum oder nicht, Lizenztyp und Abrechnungszeitraum; keine Lizenz-IDs oder Ablaufdaten).</li>
+      <li><strong>Hinweis auf den Progress-Reiter pro Nutzer:</strong> wann der einzeilige Hinweis auf den Progress-Reiter dem Nutzer zuerst gezeigt wurde und ob er ihn geöffnet, geschlossen oder den Reiter besucht hat (nur Zeitpunkte), gespeichert unter der Konto-ID des Nutzers.</li>
+      <li><strong>Administratoreinstellungen:</strong> die Zuordnung von Status zu Fortschritt (Jira-Statusnamen mit Prozentwert), die Farbschwellen und ob der Progress-Reiter ausgeblendet ist (zusätzlich als App-Property in Jira, damit Jira den Reiter ausblenden kann).</li>
+      <li><strong>Technische Datensätze:</strong> die IDs der benutzerdefinierten Felder der App und des Story-Point-Felds, der Zeitpunkt des letzten Laufs von „Recalculate All Fields“ und eine zufällige ID des laufenden Durchlaufs, der Abonnementstatus (lizenziert oder nicht, Testzeitraum oder nicht, Lizenztyp und Abrechnungszeitraum; keine Lizenz-IDs oder Ablaufdaten) sowie, bis zu einer Stunde zwischengespeichert, die Liste der Workflowstatus und die Reihenfolge der Prioritäten jedes Projekts.</li>
       <li><strong>Anonyme tägliche Nutzungszähler:</strong> wie oft Funktionen pro Tag genutzt wurden (z. B. "ein Gadget wurde geladen" oder "ein Fortschrittsfeld wurde angezeigt"). Keine IDs, Namen oder Inhalte.</li>
     </ul>
     <p>
-      Die App speichert <strong>keine E-Mail-Adressen, Avatare oder sonstigen Profildaten</strong>. Atlassian-Konto-IDs werden nur als Schlüssel der Ergebnis-Zwischenspeicher pro Betrachter und des Zustands der Bewertungsaufforderung verwendet; der Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker enthält außerdem Konto-IDs und Anzeigenamen der Bearbeiter, wie Jira sie anzeigt. Titel sind von Ihrem Team verfasster Freitext: Wenn Ihr Team personenbezogene Daten in den Titel eines Vorgangs oder Epics schreibt, enthält der Zwischenspeicher diese unverändert.
+      Die App speichert <strong>keine E-Mail-Adressen, Avatare oder sonstigen Profildaten</strong>. Atlassian-Konto-IDs werden nur als Schlüssel der Zwischenspeicher pro Betrachter, des Zustands der Bewertungsaufforderung und des Hinweises auf den Progress-Reiter verwendet; der Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker und der des Progress-Reiters enthalten außerdem Konto-IDs und Anzeigenamen der Bearbeiter, wie Jira sie anzeigt. Titel sind von Ihrem Team verfasster Freitext: Wenn Ihr Team personenbezogene Daten in den Titel eines Vorgangs oder Epics schreibt, enthält der Zwischenspeicher diese unverändert.
     </p>
     <p>
       Die <strong>Gadget- und Widget-Einstellungen</strong> (z. B. Projekt, Ansicht und JQL-Filter) speichert <strong>Jira selbst</strong> als Teil des Dashboards, nicht die App. Die <strong>Fortschrittswerte</strong> in den eigenen benutzerdefinierten Feldern der App speichert Jira als Daten benutzerdefinierter Felder.
@@ -90,6 +93,8 @@
 
     <h2>7. Speicherdauer und Löschung</h2>
     <ul>
+      <li><strong>Zwischenspeicher des Progress-Reiters:</strong> Die Epic-Liste wird höchstens 5 Minuten, der Verlauf höchstens 30 Minuten lang verwendet; „Refresh“ liest Jira sofort neu. Jeder Eintrag läuft einen Tag nach dem Schreiben ab und wird dann vom Forge-Speicher gelöscht, wie der Ergebnis-Zwischenspeicher unten.</li>
+      <li><strong>Hinweis auf den Progress-Reiter:</strong> läuft 120 Tage nach der letzten Änderung ab und wird dann vom Forge-Speicher gelöscht.</li>
       <li><strong>Ergebnis-Zwischenspeicher:</strong> ein Eintrag wird höchstens 5 Minuten lang verwendet. Danach liest der nächste Aufruf durch denselben Betrachter mit denselben Einstellungen Jira erneut und ersetzt ihn; ein Klick auf „Refresh“ in einem Gadget oder Widget tut dies sofort. Jeder Eintrag läuft einen Tag nach dem Schreiben ab und wird anschließend vom Forge-Speicher gelöscht (Forge entfernt abgelaufene Einträge innerhalb von 48 Stunden); eine wöchentliche Bereinigung löscht ältere Einträge aus Versionen vor 4.65 (Oktober 2026).</li>
       <li><strong>Zustand der Bewertungsaufforderung, Administratoreinstellungen, technische Datensätze und Nutzungszähler</strong> werden aufbewahrt, solange die App installiert ist.</li>
       <li><strong>Werte benutzerdefinierter Felder</strong> speichert Jira als normale Daten benutzerdefinierter Felder. Mit dem Entfernen der benutzerdefinierten Felder aus Jira werden diese Werte gelöscht.</li>
@@ -99,7 +104,7 @@
 
     <h2>8. Personenbezogene Daten und DSGVO</h2>
     <p>
-      Die App speichert personenbezogene Daten ausschließlich wie in Abschnitt 3 beschrieben: Atlassian-Konto-IDs als Schlüssel der Ergebnis-Zwischenspeicher pro Betrachter und des Zustands der Bewertungsaufforderung sowie im Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker Konto-IDs und Anzeigenamen der Bearbeiter. Sie speichert keine E-Mail-Adressen, Avatare oder sonstigen Profildaten; sämtliche Daten bleiben im Forge-Speicher auf der Plattform von Atlassian (Abschnitt 5). Titel im Zwischenspeicher werden so aufbewahrt, wie Ihr Team sie in Jira geschrieben hat.
+      Die App speichert personenbezogene Daten ausschließlich wie in Abschnitt 3 beschrieben: Atlassian-Konto-IDs als Schlüssel der Zwischenspeicher pro Betrachter, des Zustands der Bewertungsaufforderung und des Hinweises auf den Progress-Reiter sowie im Zwischenspeicher des nach Bearbeitern gruppierten Epic Progress Tracker und im Zwischenspeicher des Progress-Reiters Konto-IDs und Anzeigenamen der Bearbeiter. Sie speichert keine E-Mail-Adressen, Avatare oder sonstigen Profildaten; sämtliche Daten bleiben im Forge-Speicher auf der Plattform von Atlassian (Abschnitt 5). Titel im Zwischenspeicher bleiben so, wie Ihr Team sie in Jira geschrieben hat.
     </p>
     <p>
       Die von Jira selbst gespeicherten Daten bleiben vollständig in Ihrer Atlassian-Site und unter der Kontrolle von Atlassian; entsprechende DSGVO-Anfragen betroffener Personen sollten an Ihren Administrator oder Atlassian gerichtet werden. Bei Anliegen zur App kontaktieren Sie uns über die unten angegebene E-Mail-Adresse. Nach der Deinstallation der App löscht Atlassian nach 28 Tagen alle appbezogenen Daten aus dem Forge-Speicher (Abschnitt 7).

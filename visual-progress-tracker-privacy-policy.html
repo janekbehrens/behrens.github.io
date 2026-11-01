@@ -21,7 +21,7 @@
     </div>
 
     <h1>Privacy Policy</h1>
-    <p class="updated">Visual Progress Tracker for Jira · Last updated: October 12, 2026</p>
+    <p class="updated">Visual Progress Tracker for Jira · Last updated: November 1, 2026</p>
 
     <h2>1. Introduction</h2>
     <p>
@@ -35,13 +35,15 @@
     <p>The App reads the following Jira data, only to calculate and show progress:</p>
     <ul>
       <li><strong>Work items:</strong> keys, titles (summaries), statuses and status categories, work item types, priorities, resolution, parent and subtask links, and, when the Epic Progress Tracker measures story points, the story point estimate.</li>
-      <li><strong>Assignees:</strong> the account ID and display name of the assignee, only when the Epic Progress Tracker groups work by assignee.</li>
+      <li><strong>Assignees:</strong> the account ID and display name of the assignee, when the Epic Progress Tracker groups work by assignee and in the Progress tab of a project.</li>
+      <li><strong>For the Progress tab of a project:</strong> epics with their due dates and fix versions (names, release dates), and for their work items components, labels, fix versions, time tracking (logged, remaining and original estimate), creation date and the date of the last status category change; the order of the project's priorities and its default priority; the list of workflow statuses; and, for the 12-week trend, the work items' change history limited to status, resolution and story point changes.</li>
       <li><strong>Projects and fields:</strong> project keys and names (project picker) and the list of Jira fields (to find the App's own fields and the story point field).</li>
       <li><strong>Custom field values:</strong> the progress values in the App's own custom fields.</li>
     </ul>
     <p>
-      The dashboard gadgets and widgets, the project picker and the progress details on a work item
-      read Jira <strong>with the permissions of the person viewing them</strong>. The App's custom fields
+      The dashboard gadgets and widgets, the Progress tab, the project picker and the progress details
+      on a work item read Jira <strong>with the permissions of the person viewing them</strong>; only the
+      order of a project's priorities is read with the App's own account. The App's custom fields
       (status and subtask progress) and "Recalculate All Fields" read statuses and subtasks with the
       App's own account and write progress values into the App's own custom fields; nothing else in
       Jira is changed. Work item descriptions, comments and attachments are <strong>never read</strong>.
@@ -54,16 +56,19 @@
     </p>
     <ul>
       <li><strong>Result cache of the dashboard gadgets and widgets, per viewer:</strong> for the Progress Tracker Overview, the work items it shows (keys, titles, statuses, status categories, types, priorities and progress values) and the average; for the Epic Progress Tracker, the epics (keys and titles) or, when grouped by assignee, the assignees' account IDs and display names, each with its progress. Each entry is stored under the viewer's Atlassian account ID, the project key, the view settings and a hash of the JQL filter (never the filter text). Every viewer's search runs with their own permissions, so a cached result is never shown to anyone else. An entry is used for at most 5 minutes (see section 7).</li>
+      <li><strong>Result cache of the Progress tab, per viewer:</strong> the epics of the project (keys, titles, statuses, due dates, fix versions) and their work items (keys, statuses, types, priorities, components, labels, fix versions, the assignees' account IDs and display names, estimates and logged time, progress values), used for at most 5 minutes; and, for the trend, each work item's progress at the last 12 week boundaries (work item IDs and numbers only), used for at most 30 minutes. Each entry is stored under the viewer's account ID and the project key (see section 7).</li>
       <li><strong>Review prompt, per user:</strong> whether the user dismissed the request to review the App (and when) or completed it, stored under the user's account ID; and the date the App was installed.</li>
-      <li><strong>Admin settings:</strong> the status-to-progress mapping (Jira status names with a percentage) and the color thresholds.</li>
-      <li><strong>Technical records:</strong> the IDs of the App's custom fields and of the story point field, the time of the last "Recalculate All Fields" run and a random ID of the run in progress, and the subscription state (licensed or not, trial or not, licence type and billing period; no licence IDs or end dates).</li>
+      <li><strong>Progress tab hint, per user:</strong> when the one-line hint pointing to the Progress tab was first shown to the user and whether they opened it, dismissed it or visited the tab (times only), stored under the user's account ID.</li>
+      <li><strong>Admin settings:</strong> the status-to-progress mapping (Jira status names with a percentage), the color thresholds, and whether the Progress tab is hidden (also kept as an app property in Jira, so that Jira can hide the tab).</li>
+      <li><strong>Technical records:</strong> the IDs of the App's custom fields and of the story point field, the time of the last "Recalculate All Fields" run and a random ID of the run in progress, the subscription state (licensed or not, trial or not, licence type and billing period; no licence IDs or end dates), and, cached for up to an hour, the list of workflow statuses and each project's order of priorities.</li>
       <li><strong>Anonymous daily usage counters:</strong> per day, how often features were used (for example "a gadget was loaded" or "a progress field was shown"). No IDs, names or content.</li>
     </ul>
     <p>
       The App stores <strong>no email addresses, avatars or other profile data</strong>. Atlassian
-      account IDs are used only as keys of the per-viewer cache entries and of the review prompt
-      state; the cache of the Epic Progress Tracker grouped by assignee also holds the assignees'
-      account IDs and display names as Jira shows them. Titles are free text written by your team:
+      account IDs are used only as keys of the per-viewer cache entries, of the review prompt state
+      and of the Progress tab hint; the cache of the Epic Progress Tracker grouped by assignee and the
+      cache of the Progress tab also hold the assignees' account IDs and display names as Jira shows
+      them. Titles are free text written by your team:
       if your team writes personal data into the title of a work item or epic, the cache contains
       it as written.
     </p>
@@ -118,6 +123,8 @@
 
     <h2>7. Data Retention and Deletion</h2>
     <ul>
+      <li><strong>Progress tab cache:</strong> the epic list is used for at most 5 minutes and the trend for at most 30 minutes; "Refresh" reads Jira again at once. Each entry expires one day after it was written and is then deleted by Forge storage, as the result cache below.</li>
+      <li><strong>Progress tab hint:</strong> expires 120 days after it last changed and is then deleted by Forge storage.</li>
       <li><strong>Result cache:</strong> an entry is used for at most 5 minutes. After that, the next load by the same viewer with the same settings reads Jira again and replaces it; clicking "Refresh" in a gadget or widget does so at once. Each entry expires one day after it was written and is then deleted by Forge storage (Forge removes expired entries within 48 hours); a weekly cleanup deletes older entries written before version 4.65 (October 2026).</li>
       <li><strong>Review prompt state, admin settings, technical records and usage counters</strong> are kept while the App is installed.</li>
       <li><strong>Custom field values</strong> are stored by Jira as standard custom field data. Removing the custom fields from Jira deletes these values.</li>
@@ -128,8 +135,9 @@
     <h2>8. Personal Data and GDPR</h2>
     <p>
       The App stores personal data only as described in section 3: Atlassian account IDs as keys of
-      the per-viewer cache and of the review prompt state, and, in the cache of the Epic Progress
-      Tracker grouped by assignee, the assignees' account IDs and display names. It stores no email
+      the per-viewer caches, of the review prompt state and of the Progress tab hint, and, in the cache
+      of the Epic Progress Tracker grouped by assignee and in the cache of the Progress tab, the
+      assignees' account IDs and display names. It stores no email
       addresses, avatars or other profile data, and all of it stays in Forge storage on Atlassian's
       platform (section 5). Titles in the cache are kept as your team wrote them in Jira.
     </p>

@@ -134,10 +134,11 @@
           <div class="switcher-body">
             <div class="switcher-list" role="tablist" aria-label="Funktionen" aria-orientation="vertical">
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f1" aria-controls="panel-vpt-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Drei Fortschrittsbalken an jedem Vorgang</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Projektübersicht auf deinem Dashboard</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Ein Balken pro Epic oder Person</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Fortschritt in Jira-Listenansichten</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Deine Status, deine Farben</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f6" aria-controls="panel-vpt-f6" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Ein Progress-Reiter in jedem Projekt</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Projektübersicht auf deinem Dashboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Ein Balken pro Epic oder Person</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Fortschritt in Jira-Listenansichten</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">6</span><span class="switcher-tab-name">Deine Status, deine Farben</span></button>
             </div>
             <div>
             <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f1" aria-labelledby="tab-vpt-f1">
@@ -152,6 +153,20 @@
                 <li><b>Manuell:</b> ein Schieberegler in 5-%-Schritten mit Schnellauswahl für 0, 10, 25, 50, 75 und 100 %.</li>
               </ul>
                 <a class="text-link feat-more" href="/de/visual-progress-tracker-docs.html#status">Mehr in der Dokumentation →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f6" aria-labelledby="tab-vpt-f6" hidden>
+              <a class="feat-shot" href="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" alt="Progress-Reiter eines Jira-Projekts: Kacheln für Fortschritt, Lage, die letzten 7 Tage und wichtige Vorgänge über der Liste der Epics mit Fortschritt, Prognose, Zieldatum und Lage" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>Ein Progress-Reiter in jedem Projekt</h3>
+                <p>Jedes Projekt erhält einen Progress-Reiter mit allen Epics: wie weit sie sind, wie sie sich diese Woche bewegt haben, wann sie voraussichtlich fertig sind und welche Aufmerksamkeit brauchen. Ohne Einrichtung.</p>
+                </div>
+                <div><ul>
+                <li>Prognose gegen Fälligkeit oder Release, überfällige, gefährdete und stehende Epics markiert.</li>
+                <li>Wichtige Vorgänge nach euren eigenen Prioritäten, mit Warnung, wenn sie festgefahren sind.</li>
+                <li>Aufschlüsselung nach Bearbeiter, Komponente, Label oder Release und ein 12-Wochen-Verlauf.</li>
+              </ul>
+                <a class="text-link feat-more" href="/de/visual-progress-tracker-docs.html#project-page">Mehr in der Dokumentation →</a></div>
               </div>
             </div>
             <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f2" aria-labelledby="tab-vpt-f2" hidden>
@@ -241,6 +256,7 @@
               <tr><td>Fortschritt an einem Vorgang</td><td class="no">Status und ein Balken mit dem Anteil erledigter untergeordneter Vorgänge</td><td class="yes">Drei Fortschrittsfelder: aus dem Status, aus den Unteraufgaben oder manuell gesetzt</td></tr>
               <tr><td>Teilfortschritt eines Status</td><td class="no">Ein Status ist entweder erledigt oder unerledigt</td><td class="yes">Du bestimmst den Wert eines Status, zum Beispiel „In Review“ = 75 %</td></tr>
               <tr><td>Fortschritt in Listenansichten</td><td class="no">Keine Spalte für Fortschritt aus Status oder Unteraufgaben</td><td class="yes">Spalten mit farbigem Punkt und Prozentwert</td></tr>
+              <tr><td>Alle Epics eines Projekts auf einen Blick</td><td class="no">Ein Balken pro Epic, der erledigte Vorgänge zählt; Story Points, Zieldaten und Prognosen nur in Premium-Plänen und mit Einrichtung</td><td class="yes">Ein Progress-Reiter in jedem Projekt mit Prognose, Lage, wichtigen Vorgängen und 12-Wochen-Verlauf, ohne Einrichtung</td></tr>
               <tr><td>Projektübersicht auf einem Dashboard</td><td class="no">Filter- und Diagramm-Gadgets, aber kein Fortschrittsbalken pro Vorgang und kein Projektdurchschnitt</td><td class="yes">Übersichtsgadget mit Projektdurchschnitt und einem Balken pro Epic oder zuständiger Person</td></tr>
             </tbody>
           </table>

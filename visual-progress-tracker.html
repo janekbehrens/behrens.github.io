@@ -97,10 +97,11 @@
           <div class="switcher-body">
             <div class="switcher-list" role="tablist" aria-label="Features" aria-orientation="vertical">
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f1" aria-controls="panel-vpt-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Three progress bars on every issue</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">A project overview on your dashboard</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">One bar per epic, or per person</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Progress in Jira list views</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Your statuses, your colors</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f6" aria-controls="panel-vpt-f6" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">A Progress tab in every project</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">A project overview on your dashboard</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">One bar per epic, or per person</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Progress in Jira list views</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">6</span><span class="switcher-tab-name">Your statuses, your colors</span></button>
             </div>
             <div>
             <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f1" aria-labelledby="tab-vpt-f1">
@@ -115,6 +116,20 @@
                 <li><b>Manual:</b> a slider in 5% steps with quick buttons for 0, 10, 25, 50, 75 and 100%.</li>
               </ul>
                 <a class="text-link feat-more" href="visual-progress-tracker-docs.html#status">More in the docs →</a></div>
+              </div>
+            </div>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f6" aria-labelledby="tab-vpt-f6" hidden>
+              <a class="feat-shot" href="imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" target="_blank" rel="noopener" title="Open the full-size screenshot"><img src="imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" alt="Progress tab of a Jira project: tiles for progress, health, the last 7 days and important issues above the list of epics with progress, forecast, target date and health label" width="1840" height="900" loading="lazy"></a>
+              <div class="feat-text">
+                <div><h3>A Progress tab in every project</h3>
+                <p>Every project gets a Progress tab with all its epics: how far they are, how they moved this week, when they will probably be done and which ones need attention. No setup.</p>
+                </div>
+                <div><ul>
+                <li>Forecast against the due date or release, with overdue, at-risk and stalled epics marked.</li>
+                <li>Important issues by your own priorities, with a warning when they are stuck.</li>
+                <li>Breakdown by assignee, component, label or release, and a 12-week trend.</li>
+              </ul>
+                <a class="text-link feat-more" href="visual-progress-tracker-docs.html#project-page">More in the docs →</a></div>
               </div>
             </div>
             <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f2" aria-labelledby="tab-vpt-f2" hidden>
@@ -204,6 +219,7 @@
               <tr><td>Progress on an issue</td><td class="no">The status, plus a bar of how many child work items are done</td><td class="yes">Three progress fields: from the status, from the subtasks, or set by hand</td></tr>
               <tr><td>Partial progress for a status</td><td class="no">A status is either done or not</td><td class="yes">You decide what a status is worth, for example In Review = 75%</td></tr>
               <tr><td>Progress in list views</td><td class="no">No column for status- or subtask-based progress</td><td class="yes">Columns with a colored dot and the percentage</td></tr>
+              <tr><td>All epics of a project at a glance</td><td class="no">A bar per epic that counts done work items; story points, target dates and forecasts only in Premium plans, with setup</td><td class="yes">A Progress tab in every project with forecast, health, important issues and a 12-week trend, no setup</td></tr>
               <tr><td>Project overview on a dashboard</td><td class="no">Filter and chart gadgets, but no progress bar per issue and no project average</td><td class="yes">Overview gadget with the project average, and one bar per epic or assignee</td></tr>
             </tbody>
           </table>

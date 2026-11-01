@@ -177,6 +177,7 @@
         <a href="#dashboard">Übersichts-Gadget</a>
         <a href="#jql-filter" class="sub">JQL-Filter</a>
         <a href="#epic-gadget">Epic Progress Tracker</a>
+        <a href="#project-page">Progress-Reiter</a>
         <a href="#editions">Enthaltene Funktionen</a>
         <a href="#faq">Häufige Fragen und Fehlerbehebung</a>
         <a href="#support">Support</a>
@@ -195,6 +196,7 @@
           <li><strong>Füge das Feld den Vorgangsmasken deines Projekts hinzu.</strong> Öffne einen Vorgang: Der Balken ist da.</li>
           <li><strong>Verwendest du den Typ Status oder Subtasks?</strong> Prüfe unter Apps → Visual Progress Tracker → Status Mapping, ob jeder verwendete Status einen Prozentwert hat.</li>
           <li><strong>Optional:</strong> Füge das Gadget Progress Tracker Overview oder Epic Progress Tracker einem Dashboard hinzu.</li>
+          <li><strong>Nichts einzurichten:</strong> jedes Projekt hat einen <a href="#project-page">Progress-Reiter</a> mit allen Epics, ihrem Verlauf und einer Prognose.</li>
         </ol>
       </div>
 
@@ -211,6 +213,7 @@
           <li><a href="#admin">Administratoreinstellungen</a></li>
           <li><a href="#dashboard">Übersichts-Gadget</a></li>
           <li><a href="#epic-gadget">Epic Progress Tracker</a></li>
+          <li><a href="#project-page">Progress-Reiter in jedem Projekt</a></li>
           <li><a href="#editions">Enthaltene Funktionen</a></li>
           <li><a href="#faq">Häufige Fragen und Fehlerbehebung</a></li>
           <li><a href="#support">Support</a></li>
@@ -424,6 +427,70 @@
         </details>
       </section>
 
+      <section id="project-page">
+        <h2>Progress-Reiter in jedem Projekt</h2>
+        <p>Jedes Jira-Projekt erhält einen Reiter <strong>Progress</strong> neben Summary, Timeline und Backlog. Er zeigt alle <dfn class="term" data-tip="Ein großer Arbeitsumfang, der mehrere Stories oder Aufgaben zusammenfasst.">Epics</dfn> des Projekts mit ihrem Fortschritt, ihrer Bewegung in den letzten 7 Tagen, dem voraussichtlichen Ende und denen, die Aufmerksamkeit brauchen. Es gibt nichts einzustellen: Öffne ein Projekt und klicke auf <strong>Progress</strong>.</p>
+        <img src="/imgVisualProgressTracker/docs-progress-tab-epics.webp" alt="Progress-Reiter eines Projekts: Kacheln für Fortschritt, Lage, die letzten 7 Tage, wichtige Vorgänge und offene Arbeit über der Liste der Epics mit Fortschrittsbalken, Änderung der letzten 7 Tage, Prognose, Zieldatum und Lage." width="1840" height="780" loading="lazy">
+        <ul>
+          <li><strong>Kacheln oben:</strong> der durchschnittliche Fortschritt der gezeigten Epics, wie viele überfällig, gefährdet, ins Stocken geraten oder im Plan sind, die Änderung der letzten 7 Tage, die wichtigen Vorgänge (siehe unten) und was noch offen ist.</li>
+          <li><strong>Eine Zeile pro Epic:</strong> Status, Fortschrittsbalken, Erledigt-Zähler, die letzten 7 Tage (Prozentpunkte, erledigte und neue Vorgänge), Prognose, <dfn class="term" data-tip="Das Fälligkeitsdatum des Epics; ohne eines das Release-Datum seiner Fix-Version oder das späteste Release, für das seine offenen Vorgänge geplant sind.">Zieldatum</dfn> und ein Lage-Label. Zeige mit der Maus auf ein Label, um den Grund zu sehen.</li>
+          <li><strong>Filter:</strong> Suche, offene oder erledigte Epics, Lage, Release, Komponente, Label, Priorität und Bearbeiter. Release, Komponente, Label, Priorität und Bearbeiter filtern die Vorgänge innerhalb der Epics: Jedes Epic zeigt dann nur den Fortschritt der passenden Vorgänge, zum Beispiel nur die Arbeit für ein Release.</li>
+          <li><strong>Aufklappen:</strong> Klicke auf ▸, um die Stories, Tasks und Bugs eines Epics mit Status, Bearbeiter, Fortschritt und Schätzung zu öffnen, und erneut auf ▸ für deren Unteraufgaben.</li>
+        </ul>
+        <img src="/imgVisualProgressTracker/docs-progress-tab-expanded.webp" alt="Ein im Progress-Reiter geöffnetes Epic: seine Vorgänge mit Typ, Status, Bearbeiter, Fortschrittsbalken, Story Points und Unteraufgaben, ein Task bis zu seinen Unteraufgaben aufgeklappt." width="1840" height="438" loading="lazy">
+
+        <h3>Fortschrittsmaße</h3>
+        <p>Wähle das Maß oben rechts. Maße ohne Daten im Projekt (keine Story Points, keine gebuchte Zeit, keine manuellen Werte) werden nicht angeboten.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Maß</th><th>So wird ein Epic gezählt</th></tr></thead>
+            <tbody>
+              <tr><td>Status progress (Statusfortschritt)</td><td>Jeder Vorgang zählt den Prozentwert seines Status aus der <a href="#status">Statuszuordnung</a>; erledigte Vorgänge zählen 100 %. Dieselben Zahlen wie im Epic Progress Tracker mit „Issue count“.</td></tr>
+              <tr><td>Done issues (erledigte Vorgänge)</td><td>Anteil der erledigten Vorgänge, jeder zählt gleich. So zählt Jiras eigener Epic-Fortschrittsbalken.</td></tr>
+              <tr><td>Story Points</td><td>Statusfortschritt gewichtet nach Story Points, dieselben Zahlen wie im Epic Progress Tracker mit „Story points“.</td></tr>
+              <tr><td>Time tracking (Zeiterfassung)</td><td>Gebuchte Zeit ÷ (gebuchte Zeit + Restschätzung), Unteraufgaben eingeschlossen. Die Spalte Logged vergleicht die gebuchte Zeit mit der ursprünglichen Schätzung und wird rot, wenn diese überschritten ist.</td></tr>
+              <tr><td>Manual progress field (manuelles Feld)</td><td>Durchschnitt der manuellen Fortschrittswerte der Vorgänge des Epics.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Prognose und Lage</h3>
+        <p> <strong>Prognose</strong> nimmt die pro Woche erledigte Arbeit der letzten 6 Wochen (oder seit dem ersten Vorgang des Epics, falls jünger) und rechnet sie auf die offene Arbeit hoch. Sie setzt voraus, dass der Umfang gleich bleibt.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Lage (Health)</th><th>Wann</th></tr></thead>
+            <tbody>
+              <tr><td>Overdue (überfällig)</td><td>Das Zieldatum ist vorbei und es sind noch Vorgänge offen.</td></tr>
+              <tr><td>At risk (gefährdet)</td><td>Die Prognose endet nach dem Zieldatum, oder in den letzten 6 Wochen wurde nichts erledigt.</td></tr>
+              <tr><td>Stalled (steht)</td><td>Seit 14 Tagen hat kein Vorgang des Epics seinen Status geändert.</td></tr>
+              <tr><td>On track (im Plan)</td><td>Die Prognose endet vor dem Zieldatum.</td></tr>
+              <tr><td>No target date (ohne Zieldatum)</td><td>Das Epic hat kein Fälligkeitsdatum und kein Release mit Release-Datum; die Prognose wird trotzdem angezeigt.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Wichtige Vorgänge</h3>
+        <p>Der Reiter nutzt die eigenen Prioritäten deines Projekts, auch ein eigenes Schema wie Critical, High, Normal, Low. Jede Priorität über der Standardpriorität des Projekts gilt als <strong>wichtig</strong>; die Grenze kannst du in der Kachel „Important issues“ verschieben. Ein wichtiger Vorgang, der offen ist und seit 7 Tagen seinen Status nicht geändert hat, gilt als <strong>festgefahren</strong>: Die Epic-Liste zeigt die Anzahl unter dem Lage-Label, der Reiter Trend listet sie auf. Wähle <strong>Important only</strong> im Prioritätsfilter, um zu sehen, ob die wichtigste Arbeit jedes Epics erledigt wird.</p>
+
+        <h3>Aufschlüsselung und Verlauf</h3>
+        <p><strong>Breakdown</strong> gruppiert die Vorgänge nach Bearbeiter, Komponente, Label, Release, Priorität, Vorgangstyp oder Status, für alle Epics oder ein einzelnes. <strong>Trend</strong> zeigt Umfang und erledigte Arbeit der letzten 12 Wochen für das Projekt oder ein Epic, rekonstruiert aus Jiras Änderungsprotokoll, und listet die Epics, die sich in den letzten 7 Tagen bewegt haben, stehen oder gewachsen sind, sowie die festgefahrenen wichtigen Vorgänge.</p>
+        <img src="/imgVisualProgressTracker/docs-progress-tab-trend.webp" alt="Reiter Trend: Umfang und erledigte Arbeit der letzten 12 Wochen, die Fortschrittslinie und Listen der Epics, die sich bewegt haben, seit 14 Tagen keine Statusänderung hatten oder in den letzten 7 Tagen gewachsen sind." width="1840" height="588" loading="lazy">
+
+        <h3>Reiter zeigen oder ausblenden</h3>
+        <p>Der Reiter erscheint in jedem Projekt. Ein Jira-Administrator kann ihn in allen Projekten ausblenden unter <strong>Apps → Visual Progress Tracker → Color Settings → Progress tab in projects</strong>. Der Reiter ändert kein Feld, kein Gadget und keine Einstellung. Nutzer der Dashboard-Gadgets und -Widgets sehen einen einzeiligen „New“-Hinweis auf den Reiter, bis sie ihn öffnen oder den Hinweis schließen.</p>
+
+        <details class="more">
+          <summary>Grenzen und Details</summary>
+          <ul>
+            <li>Der Reiter liest bis zu 200 Epics (die neuesten zuerst) und bis zu 1.000 untergeordnete Vorgänge je 20 Epics. Hat das Projekt mehr, weist er darauf hin.</li>
+            <li>Gezählt werden nur Vorgänge, die du sehen darfst. Unteraufgaben zählen über ihren übergeordneten Vorgang.</li>
+            <li>Der Verlauf wird bei jedem Laden aus Jiras Änderungsprotokoll rekonstruiert und 30 Minuten aufbewahrt; die Epic-Liste 5 Minuten. <strong>Refresh (Aktualisieren)</strong> liest Jira erneut. Die App speichert keinen eigenen Verlauf.</li>
+            <li>Ein Vorgang, der von woanders in ein Epic verschoben wurde, zählt ab dem Tag seiner Erstellung. Für die Maße Zeiterfassung und manuelles Feld nutzen Verlauf und Prognose den Statusfortschritt, weil Jiras Änderungsprotokoll keine auf Unteraufgaben gebuchte Zeit und keinen Verlauf des manuellen Felds enthält.</li>
+            <li>Ein Status ohne Wert in der Statuszuordnung zählt wie überall in der App 0 %; der Reiter nennt solche Status mit der Anzahl ihrer offenen Vorgänge.</li>
+          </ul>
+        </details>
+      </section>
+
       <section id="editions">
         <h2>Enthaltene Funktionen</h2>
         <p>Es gibt eine Edition mit allen Funktionen. Websites mit bis zu 10 Nutzern verwenden sie kostenlos. Größere Websites beginnen mit einer kostenlosen Testphase und benötigen anschließend ein Abonnement. Ohne Abonnement zeigen Felder „Trial ended“, Gadgets verlangen eine aktive Lizenz und Einstellungen sind schreibgeschützt.</p>
@@ -434,6 +501,7 @@
               <tr><td>Manuelle, statusbasierte und Unteraufgaben-Fortschrittsfelder</td><td>Ja</td></tr>
               <tr><td>Progress-Tracker-Overview-Gadget</td><td>Ja</td></tr>
               <tr><td>Epic-Progress-Tracker-Gadget (pro Epic oder Person, Vorgangsanzahl oder Story Points)</td><td>Ja</td></tr>
+              <tr><td>Progress-Reiter in jedem Projekt (Prognose, Lage, wichtige Vorgänge, Aufschlüsselung, 12-Wochen-Verlauf)</td><td>Ja</td></tr>
               <tr><td>Statuszuordnung und Farbschwellen</td><td>Ja</td></tr>
               <tr><td>Farbige Spalten in der Listenansicht</td><td>Ja</td></tr>
               <tr><td>E-Mail-Support</td><td>Ja</td></tr>
@@ -454,6 +522,11 @@
         <details class="more">
           <summary>Ich habe das Feld zum Projekt hinzugefügt, aber bestehende Vorgänge zeigen „—“.</summary>
           <p>Status- und Subtask-Werte werden beim Öffnen eines Vorgangs berechnet; noch nie geöffnete Vorgänge bleiben leer. Klicke auf <strong>Recalculate All Fields (Alle Felder neu berechnen)</strong> auf der App-Seite, um sie auszufüllen.</p>
+        </details>
+
+        <details class="more">
+          <summary>Zeigt der Progress-Reiter dieselben Zahlen wie der Epic Progress Tracker?</summary>
+          <p>Ja, pro Epic: „Status progress“ im Reiter ist die Berechnung „Issue count“ des Gadgets, „Story points“ dessen „Story points“. Die Kopfzahl des Reiters mittelt die gezeigten Epics, ohne andere Auswahl die offenen; das Gadget mittelt alle Epics des Projekts.</p>
         </details>
 
         <details class="more">
