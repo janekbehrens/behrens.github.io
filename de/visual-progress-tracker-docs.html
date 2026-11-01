@@ -439,7 +439,7 @@
         </ul>
         <img src="/imgVisualProgressTracker/docs-progress-tab-expanded.webp" alt="Ein im Progress-Reiter geöffnetes Epic: seine Vorgänge mit Typ, Status, Bearbeiter, Fortschrittsbalken, Story Points und Unteraufgaben, ein Task bis zu seinen Unteraufgaben aufgeklappt." width="1840" height="438" loading="lazy">
 
-        <h3>Fortschrittsmaße</h3>
+        <h3 id="progress-measures">Fortschrittsmaße</h3>
         <p>Wähle das Maß oben rechts. Maße ohne Daten im Projekt (keine Story Points, keine gebuchte Zeit, keine manuellen Werte) werden nicht angeboten.</p>
         <div class="table-wrap">
           <table>
@@ -454,7 +454,7 @@
           </table>
         </div>
 
-        <h3>Prognose und Lage</h3>
+        <h3 id="progress-forecast">Prognose und Lage</h3>
         <p> <strong>Prognose</strong> nimmt die pro Woche erledigte Arbeit der letzten 6 Wochen (oder seit dem ersten Vorgang des Epics, falls jünger) und rechnet sie auf die offene Arbeit hoch. Sie setzt voraus, dass der Umfang gleich bleibt.</p>
         <div class="table-wrap">
           <table>
@@ -469,14 +469,14 @@
           </table>
         </div>
 
-        <h3>Wichtige Vorgänge</h3>
+        <h3 id="progress-important">Wichtige Vorgänge</h3>
         <p>Der Reiter nutzt die eigenen Prioritäten deines Projekts, auch ein eigenes Schema wie Critical, High, Normal, Low. Jede Priorität über der Standardpriorität des Projekts gilt als <strong>wichtig</strong>; die Grenze kannst du in der Kachel „Important issues“ verschieben. Ein wichtiger Vorgang, der offen ist und seit 7 Tagen seinen Status nicht geändert hat, gilt als <strong>festgefahren</strong>: Die Epic-Liste zeigt die Anzahl unter dem Lage-Label, der Reiter Trend listet sie auf. Wähle <strong>Important only</strong> im Prioritätsfilter, um zu sehen, ob die wichtigste Arbeit jedes Epics erledigt wird.</p>
 
-        <h3>Aufschlüsselung und Verlauf</h3>
+        <h3 id="progress-trend">Aufschlüsselung und Verlauf</h3>
         <p><strong>Breakdown</strong> gruppiert die Vorgänge nach Bearbeiter, Komponente, Label, Release, Priorität, Vorgangstyp oder Status, für alle Epics oder ein einzelnes. <strong>Trend</strong> zeigt Umfang und erledigte Arbeit der letzten 12 Wochen für das Projekt oder ein Epic, rekonstruiert aus Jiras Änderungsprotokoll, und listet die Epics, die sich in den letzten 7 Tagen bewegt haben, stehen oder gewachsen sind, sowie die festgefahrenen wichtigen Vorgänge.</p>
         <img src="/imgVisualProgressTracker/docs-progress-tab-trend.webp" alt="Reiter Trend: Umfang und erledigte Arbeit der letzten 12 Wochen, die Fortschrittslinie und Listen der Epics, die sich bewegt haben, seit 14 Tagen keine Statusänderung hatten oder in den letzten 7 Tagen gewachsen sind." width="1840" height="588" loading="lazy">
 
-        <h3>Reiter zeigen oder ausblenden</h3>
+        <h3 id="progress-hide">Reiter zeigen oder ausblenden</h3>
         <p>Der Reiter erscheint in jedem Projekt. Ein Jira-Administrator kann ihn in allen Projekten ausblenden unter <strong>Apps → Visual Progress Tracker → Color Settings → Progress tab in projects</strong>. Der Reiter ändert kein Feld, kein Gadget und keine Einstellung. Nutzer der Dashboard-Gadgets und -Widgets sehen einen einzeiligen „New“-Hinweis auf den Reiter, bis sie ihn öffnen oder den Hinweis schließen.</p>
 
         <details class="more">

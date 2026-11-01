@@ -359,7 +359,7 @@
         </ul>
         <img src="imgVisualProgressTracker/docs-progress-tab-expanded.webp" alt="An epic opened in the Progress tab: its issues with type, status, assignee, progress bar, story points and sub-tasks, one task opened down to its sub-tasks." width="1840" height="438" loading="lazy">
 
-        <h3>Measures</h3>
+        <h3 id="progress-measures">Measures</h3>
         <p>Choose the measure at the top right. Measures without data in the project (no story points, no time logged, no manual values) are not offered.</p>
         <div class="table-wrap">
           <table>
@@ -374,7 +374,7 @@
           </table>
         </div>
 
-        <h3>Forecast and health</h3>
+        <h3 id="progress-forecast">Forecast and health</h3>
         <p>The <strong>forecast</strong> takes the work completed per week over the last 6 weeks (or since the epic's first issue, if newer) and applies it to the remaining work. It assumes the scope stays as it is.</p>
         <div class="table-wrap">
           <table>
@@ -389,14 +389,14 @@
           </table>
         </div>
 
-        <h3>Important issues</h3>
+        <h3 id="progress-important">Important issues</h3>
         <p>The tab uses your project's own priorities, also a custom scheme such as Critical, High, Normal, Low. Every priority above the project's default priority counts as <strong>important</strong>; you can move that limit in the "Important issues" tile. An important issue that is open and has not changed its status for 7 days is <strong>stuck</strong>: the epic list shows how many under the health label, and the Trend tab lists them. Choose <strong>Important only</strong> in the priority filter to see whether the most important work of each epic gets done.</p>
 
-        <h3>Breakdown and trend</h3>
+        <h3 id="progress-trend">Breakdown and trend</h3>
         <p><strong>Breakdown</strong> groups the issues by assignee, component, label, release, priority, issue type or status, for all epics or a single one. <strong>Trend</strong> shows scope and completed work of the last 12 weeks for the project or one epic, rebuilt from Jira's change history, and lists the epics that moved, stalled or grew in the last 7 days and the important issues that are stuck.</p>
         <img src="imgVisualProgressTracker/docs-progress-tab-trend.webp" alt="Trend tab: scope and completed work of the last 12 weeks, the progress line, and lists of epics that moved, have had no status change for 14 days, or grew in the last 7 days." width="1840" height="588" loading="lazy">
 
-        <h3>Show or hide the tab</h3>
+        <h3 id="progress-hide">Show or hide the tab</h3>
         <p>The tab shows in every project. A Jira administrator can hide it in all projects under <strong>Apps → Visual Progress Tracker → Color Settings → Progress tab in projects</strong>. The tab changes no field, gadget or setting. Users of the dashboard gadgets and widgets see a one-line "New" hint pointing to the tab until they open it or dismiss the hint.</p>
 
         <details class="more">
