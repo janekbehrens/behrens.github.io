@@ -101,7 +101,7 @@
           <h1 class="h-display">Fortschrittsbalken für jeden <em>Jira-Vorgang</em></h1>
         </div>
         <div>
-          <p class="lead">Farbiger Fortschritt, aus dem Status oder den Unteraufgaben berechnet oder manuell gesetzt. Zwei Dashboard-Gadgets zeigen ein ganzes Projekt oder einen Balken pro Epic.</p>
+          <p class="lead">Farbiger Fortschritt, aus dem Status oder den Unteraufgaben berechnet oder manuell gesetzt. Jedes Projekt erhält einen Progress-Reiter mit allen Epics, und zwei Dashboard-Gadgets zeigen ein ganzes Projekt oder einen Balken pro Epic.</p>
           <div class="btn-row">
             <a href="https://marketplace.atlassian.com/apps/4156857006/visual-progress-tracker-for-jira" target="_blank" rel="noopener" class="btn btn-solid">Kostenlos im Marketplace testen →</a>
             <a href="/de/visual-progress-tracker-docs.html" class="btn btn-ghost">Dokumentation lesen</a>
@@ -133,15 +133,15 @@
         <div class="card switcher feat-switch">
           <div class="switcher-body">
             <div class="switcher-list" role="tablist" aria-label="Funktionen" aria-orientation="vertical">
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f1" aria-controls="panel-vpt-f1" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Drei Fortschrittsbalken an jedem Vorgang</span></button>
-              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f6" aria-controls="panel-vpt-f6" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Ein Progress-Reiter in jedem Projekt</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f6" aria-controls="panel-vpt-f6" aria-selected="true"><span class="feat-num">1</span><span class="switcher-tab-name">Ein Progress-Reiter in jedem Projekt</span></button>
+              <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f1" aria-controls="panel-vpt-f1" aria-selected="false" tabindex="-1"><span class="feat-num">2</span><span class="switcher-tab-name">Drei Fortschrittsbalken an jedem Vorgang</span></button>
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f2" aria-controls="panel-vpt-f2" aria-selected="false" tabindex="-1"><span class="feat-num">3</span><span class="switcher-tab-name">Projektübersicht auf deinem Dashboard</span></button>
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f3" aria-controls="panel-vpt-f3" aria-selected="false" tabindex="-1"><span class="feat-num">4</span><span class="switcher-tab-name">Ein Balken pro Epic oder Person</span></button>
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f4" aria-controls="panel-vpt-f4" aria-selected="false" tabindex="-1"><span class="feat-num">5</span><span class="switcher-tab-name">Fortschritt in Jira-Listenansichten</span></button>
               <button class="switcher-tab feat-tab" role="tab" id="tab-vpt-f5" aria-controls="panel-vpt-f5" aria-selected="false" tabindex="-1"><span class="feat-num">6</span><span class="switcher-tab-name">Deine Status, deine Farben</span></button>
             </div>
             <div>
-            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f1" aria-labelledby="tab-vpt-f1">
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f1" aria-labelledby="tab-vpt-f1" hidden>
               <a class="feat-shot" href="/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVisualProgressTracker/highlight-1-three-progress-bars-on-every-issue.webp" alt="Jira-Vorgang mit Statusfortschritt 50 %, Unteraufgabenfortschritt 75 % und manuellem Fortschritt 30 %, dazu manueller Schieberegler mit Schnellauswahl" width="1840" height="900"></a>
               <div class="feat-text">
                 <div><h3>Drei Fortschrittsbalken an jedem Vorgang</h3>
@@ -155,8 +155,8 @@
                 <a class="text-link feat-more" href="/de/visual-progress-tracker-docs.html#status">Mehr in der Dokumentation →</a></div>
               </div>
             </div>
-            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f6" aria-labelledby="tab-vpt-f6" hidden>
-              <a class="feat-shot" href="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" alt="Progress-Reiter eines Jira-Projekts: Kacheln für Fortschritt, Lage, die letzten 7 Tage und wichtige Vorgänge über der Liste der Epics mit Fortschritt, Prognose, Zieldatum und Lage" width="1840" height="900" loading="lazy"></a>
+            <div class="switcher-panel feat-panel" role="tabpanel" id="panel-vpt-f6" aria-labelledby="tab-vpt-f6">
+              <a class="feat-shot" href="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" target="_blank" rel="noopener" title="Bildschirmaufnahme in voller Größe öffnen"><img src="/imgVisualProgressTracker/highlight-4-progress-tab-in-every-project.webp" alt="Progress-Reiter eines Jira-Projekts: Kacheln für Fortschritt, Lage, die letzten 7 Tage und wichtige Vorgänge über der Liste der Epics mit Fortschritt, Prognose, Zieldatum und Lage" width="1840" height="900"></a>
               <div class="feat-text">
                 <div><h3>Ein Progress-Reiter in jedem Projekt</h3>
                 <p>Jedes Projekt erhält einen Progress-Reiter mit allen Epics: wie weit sie sind, wie sie sich diese Woche bewegt haben, wann sie voraussichtlich fertig sind und welche Aufmerksamkeit brauchen.</p>
