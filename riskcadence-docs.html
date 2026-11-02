@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
-  <title>Riskcadence for Jira: Documentation &amp; Setup</title>
+  <title>Riskcadence for Jira and Confluence: Documentation &amp; Setup</title>
   <meta name="description" content="Guide to Riskcadence for Jira: setting up the risk register, fields, risk matrix, register, reviews, steering report, Confluence macro, dashboards, import, reminders and permissions.">
   <link rel="canonical" href="https://janekbehrens.de/riskcadence-docs.html">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://janekbehrens.de/riskcadence-docs.html">
-  <meta property="og:title" content="Riskcadence for Jira: Documentation &amp; Setup">
+  <meta property="og:title" content="Riskcadence for Jira and Confluence: Documentation &amp; Setup">
   <meta property="og:description" content="How to set up Riskcadence for Jira, assess and review risks, publish the steering report in Confluence, import a register and who can do what.">
   <meta property="og:image" content="https://janekbehrens.de/imgRiskcadence/highlight-1-risk-register-heat-map.webp">
   <meta name="twitter:card" content="summary_large_image">
@@ -28,7 +28,7 @@
       },
       {
         "@type": "TechArticle",
-        "headline": "Riskcadence for Jira: Documentation & Setup",
+        "headline": "Riskcadence for Jira and Confluence: Documentation & Setup",
         "description": "Setup and user guide for Riskcadence for Jira: project setup, fields, risk matrix, register, issue panel, reviews, steering report, Confluence macro, dashboards, import, reminders, export, permissions and limits.",
         "url": "https://janekbehrens.de/riskcadence-docs.html",
         "author": { "@type": "Person", "name": "Janek Behrens", "url": "https://janekbehrens.de" }
@@ -82,7 +82,9 @@
         <a class="sub" href="#sessions">Review sessions</a>
         <a class="sub" href="#compare">Compare with a review</a>
         <a href="#report">Steering report</a>
-        <a href="#confluence">Confluence macro</a>
+        <a href="#confluence">Riskcadence in Confluence</a>
+        <a class="sub" href="#confluence-requirements">Requirements</a>
+        <a class="sub" href="#confluence-add">Add the report to a page</a>
         <a class="sub" href="#published-state">Published review states</a>
         <a href="#dashboard">Dashboards</a>
         <a href="#import">Import</a>
@@ -96,8 +98,9 @@
     </nav>
 
     <main class="container">
-      <h1>Riskcadence for Jira — Documentation</h1>
+      <h1>Riskcadence — Documentation for Jira and Confluence</h1>
       <p class="subtitle">A risk register in Jira: risks as work items, a configurable risk matrix, reviews with an audit trail and a steering report for Jira and Confluence, and dashboard widgets for the heat map and the review inbox.</p>
+      <p>Riskcadence works in <strong>Jira</strong>, where your risks live, and optionally in <strong>Confluence</strong> on the same site, where a macro shows the steering report on a page. This guide covers both; the Confluence part starts at <a href="#confluence">Riskcadence in Confluence</a>.</p>
 
       <div class="quickstart" id="getting-started">
         <h2>Getting started</h2>
@@ -124,7 +127,7 @@
           <li><a href="#panel">Risk assessment panel</a></li>
           <li><a href="#reviews">Reviews</a></li>
           <li><a href="#report">Steering report</a></li>
-          <li><a href="#confluence">Confluence macro</a></li>
+          <li><a href="#confluence">Riskcadence in Confluence</a></li>
           <li><a href="#dashboard">Dashboards</a></li>
           <li><a href="#import">Import</a></li>
           <li><a href="#reminders">Reminders</a></li>
@@ -147,6 +150,7 @@
             <tr><td><a href="#panel">Risk assessment panel</a></td><td>Inherent and residual risk, owner, response, mitigation progress and history on the work item</td><td><span class="tag">Jira</span></td></tr>
             <tr><td><a href="#reviews">Reviews</a></td><td>A review inbox, review sessions with an audit trail and the comparison with a closed review</td><td><span class="tag">Jira</span></td></tr>
             <tr><td><a href="#report">Steering report</a></td><td>Headline numbers, heat map, top risks, changes, mitigations and open decisions</td><td><span class="tag">Jira</span> <span class="tag">Confluence</span></td></tr>
+            <tr><td><a href="#confluence">Report macro</a></td><td>The steering report on a Confluence page, live from Jira or as a dated review state, with PDF and Word export</td><td><span class="tag">Confluence</span></td></tr>
             <tr><td><a href="#dashboard">Dashboard widget</a></td><td>The risk matrix or the review inbox for one or more projects</td><td><span class="tag">Jira</span></td></tr>
             <tr><td><a href="#import">Import</a></td><td>Bring a register in from CSV or XLSX</td><td><span class="tag">Jira</span></td></tr>
           </table>
@@ -165,7 +169,7 @@
       <section>
         <h2 id="setup">Setup</h2>
         <p>Install the app, then set up each project that should hold risks. Setup adds the work type <em>Risk</em>, its fields and a link type for mitigations. It differs by <dfn class="term" data-tip="Projects whose work types, fields and screens a Jira admin manages for the whole site (formerly called classic).">company-managed</dfn> and <dfn class="term" data-tip="Projects that the team sets up itself, without a Jira admin (formerly called next-gen).">team-managed</dfn> projects.</p>
-        <p>A Jira admin installs <strong>Riskcadence</strong> once from the Atlassian Marketplace. Open the project, choose <strong>Riskcadence</strong> in its sidebar, and Riskcadence checks the project and offers the right setup.</p>
+        <p>A Jira admin installs <strong>Riskcadence</strong> once from the Atlassian Marketplace. Open the project, choose <strong>Riskcadence</strong> in its sidebar, and Riskcadence checks the project and offers the right setup. To use the report on Confluence pages, an admin also connects Riskcadence to Confluence (<a href="#confluence-requirements">details</a>).</p>
 
         <h3 id="setup-company">Company-managed projects: one click</h3>
         <p>Choose a risk matrix (<a href="#matrix">templates</a>) and click <span class="ui">Set up project</span>. This needs a Jira admin: only they can add work types and fields. Setup adds to the project:</p>
@@ -340,8 +344,25 @@
       </section>
 
       <section>
-        <h2 id="confluence">Confluence macro</h2>
-        <p>The macro <strong>Riskcadence risk report</strong> puts the steering report on a Confluence page, for example the page of a steering committee. While editing the page, insert it from the <strong>/</strong> menu.</p>
+        <h2 id="confluence">Riskcadence in Confluence</h2>
+        <p>In Confluence, Riskcadence adds one macro, <strong>Riskcadence risk report</strong>. It puts the <a href="#report">steering report</a> of one or more Jira projects on a Confluence page, for example the page of a steering committee: live from Jira, or as a dated review state that readers without Jira access can see as well. The risks stay in Jira; the macro reads them and does not change Confluence content.</p>
+
+        <h3 id="confluence-requirements">Requirements</h3>
+        <ul>
+          <li><strong>Jira and Confluence Cloud on the same site.</strong> Jira is required, Confluence is optional: Riskcadence is installed in Jira first.</li>
+          <li><strong>Riskcadence connected to Confluence.</strong> Installing the app in Jira does not connect it to Confluence. An admin connects it in Atlassian Administration. If Riskcadence is uninstalled from Jira, it is removed from Confluence as well.</li>
+          <li><strong>A Jira project set up with Riskcadence</strong> (<a href="#setup">Setup</a>), so the report has risks to show.</li>
+        </ul>
+
+        <h3 id="confluence-add">Add the report to a page</h3>
+        <ol>
+          <li>Edit a Confluence page, type <strong>/</strong> and choose <span class="ui">Riskcadence risk report</span>.</li>
+          <li>In the settings dialog, choose the report mode, the projects, a baseline and the number of top risks (<a href="#macro-settings">below</a>). The preview shows the report with your own Jira access.</li>
+          <li>Click <span class="ui">Save</span> once the preview has loaded, then publish the page.</li>
+          <li>A live report needs nothing more. For a published review state, click <span class="ui">Publish current state</span> in the macro (<a href="#published-state">details</a>).</li>
+        </ol>
+        <p>A macro without settings asks to be set up: edit the page, open the macro settings, choose the projects and the mode, and save. Readers can <span class="ui">Refresh</span> the report or <span class="ui">Print</span> it or save it as PDF.</p>
+
         <h3 id="macro-settings">Macro settings</h3>
         <p>The settings dialog <em>Riskcadence report settings</em> has these choices; the preview below them shows the report with your own Jira access:</p>
         <ul>
@@ -369,6 +390,8 @@
         </ul>
         <h3 id="confluence-export">PDF and Word export</h3>
         <p>Exporting the page to PDF or Word shows the report as text and tables, with the heat map and the risk trend as tables of counts. A page with a published state exports that state; a live macro exports the report as the person who exports. The export finds its macro on the page; if a page has several report macros with the same settings, it prints a note instead of a published state, so give each macro its own settings. If something fails, the export shows a short neutral line instead.</p>
+        <h3 id="confluence-access">What Riskcadence reads in Confluence</h3>
+        <p>Riskcadence has no permission to write Confluence content. It reads a page only to check, as the person in front of it, whether they may view or edit that page, and in a PDF or Word export to find its macro on the page. Who may publish, withdraw and see a published state is listed under <a href="#permissions">Permissions</a>.</p>
       </section>
 
       <section>
@@ -440,6 +463,9 @@
             <tr><td>Add a risk, import</td><td>Anyone who can <strong>create work items</strong> in the project.</td></tr>
             <tr><td>Delete a shared view</td><td>Its creator, or a project admin or Jira admin.</td></tr>
             <tr><td>Add a dashboard widget</td><td>Anyone who can edit the dashboard.</td></tr>
+            <tr><td>Connect Riskcadence to Confluence</td><td>An <strong>admin</strong>, once, in Atlassian Administration.</td></tr>
+            <tr><td>Insert or change the report macro in Confluence</td><td>Anyone who can <strong>edit the page</strong>; the preview shows what they can see in Jira.</td></tr>
+            <tr><td>See a live report in Confluence</td><td>Readers of the page, for the risks they can see in Jira.</td></tr>
             <tr><td>Publish a review state in Confluence</td><td>Editors of the page; the report contains what the publisher can see in Jira.</td></tr>
             <tr><td>Withdraw a published state</td><td>Editors of the page, or the publisher while they can view the page.</td></tr>
             <tr><td>See a published state</td><td>Everyone who can view the Confluence page.</td></tr>
