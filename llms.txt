@@ -11,6 +11,7 @@
 - [Team Capacity Planning for Jira](https://janekbehrens.de/team-capacity-for-jira.html): Sprint workload per person as one color-coded bar on a Jira dashboard, built from the estimates your board already uses. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2392093081/team-capacity-planning-for-jira)
 - [CodeDoc for Confluence](https://janekbehrens.de/codedoc-ai.html): Keeps Confluence pages in sync with GitHub, GitLab, Bitbucket and Azure DevOps (versions, YAML values, README sections, code snippets), with optional AI-written pages. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2654352538)
 - [Epic Progress for Confluence](https://janekbehrens.de/epic-progress-for-confluence.html): Live progress bars for Jira epics, releases and saved filters on Confluence pages, colored like in Jira, with dated snapshots for readers without Jira access. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2278189341/epic-progress-for-confluence)
+- [Riskcadence for Jira](https://janekbehrens.de/riskcadence.html): A risk register in Jira: every risk is a work item, with a configurable risk matrix, a review inbox, review sessions with an audit trail and a steering report in Jira and Confluence, plus the heat map on Jira dashboards. [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/2594377094/riskcadence-risk-register-risk-management-for-jira)
 
 ## Documentation
 
@@ -22,6 +23,7 @@
 - [CodeDoc for Confluence: Documentation](https://janekbehrens.de/codedoc-ai-docs.html)
 - [CodeDoc for Confluence: Quick start](https://janekbehrens.de/codedoc-ai-setup.html)
 - [Epic Progress for Confluence: Documentation](https://janekbehrens.de/epic-progress-docs.html)
+- [Riskcadence for Jira: Documentation](https://janekbehrens.de/riskcadence-docs.html)
 
 ## Company
 
@@ -33,6 +35,7 @@
 - [Team Capacity Planning for Jira: Support](https://janekbehrens.de/team-capacity-support.html)
 - [CodeDoc for Confluence: Support](https://janekbehrens.de/codedoc-ai-support.html)
 - [Epic Progress for Confluence: Support](https://janekbehrens.de/epic-progress-support.html)
+- [Riskcadence for Jira: Support](https://janekbehrens.de/riskcadence-support.html)
 - [Privacy policy of this website](https://janekbehrens.de/privacy-policy.html)
 - [Impressum (legal notice, German)](https://janekbehrens.de/impressum.html)
 - [Vendor profile on the Atlassian Marketplace](https://marketplace.atlassian.com/vendors/92692174/janek-behrens)

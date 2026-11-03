@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="img/companyLogo_transparent.png">
-  <link rel="stylesheet" href="/site.css?v=ff7e95cf7422">
+  <link rel="stylesheet" href="/site.css?v=d86860addd77">
   <title>Trust Center: Janek Behrens</title>
   <meta name="description" content="Trust Center of Janek Behrens: how the Atlassian apps handle data, hosting, subprocessors, GDPR and security.">
   <link rel="canonical" href="https://janekbehrens.de/trust-center.html">
@@ -122,7 +122,7 @@
       <li><strong>No data sent to servers of Janek Behrens:</strong> No app transmits any data to servers operated by Janek Behrens. Any external calls made by an app go exclusively to services that you explicitly configure using your own credentials (Bring Your Own Key model), to public package registries for CodeDoc's optional version check (public package names only), or to no external services at all. See the app overview table below for details per app.</li>
       <li><strong>Technical logs:</strong> Like most Forge apps, each app writes technical log lines and anonymous daily usage counters to Atlassian's app logging, which Atlassian makes available to us as the app vendor. They may contain IDs and keys from your site (for example project keys), but never names of people or account IDs; each app's Privacy Policy lists what they may contain.</li>
       <li><strong>No tracking:</strong> Apps do not use cookies, tracking pixels, session recording, analytics platforms, advertising networks, or any form of per-person behavioral analytics. The only usage data is the anonymous daily usage counters described above.</li>
-      <li><strong>Data in Atlassian storage only:</strong> Apps store data only in Atlassian Forge Storage — such as settings, mappings, credentials you provide, job history metadata, caches, computed results and progress snapshots that page editors publish (Epic Progress for Confluence, without person fields such as assignees or account IDs); each app's Privacy Policy lists what it stores. This data resides on Atlassian's infrastructure. Values an app writes into Jira or Confluence, such as progress or score values in the app's own custom fields or CodeDoc's documentation pages, are stored by Jira or Confluence itself. After an app is uninstalled, Atlassian keeps its stored data for 28 days and then deletes it; within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the app.</li>
+      <li><strong>Data in Atlassian storage only:</strong> Apps store data only in Atlassian Forge Storage — such as settings, mappings, credentials you provide, job history metadata, caches, computed results and progress snapshots that page editors publish (Epic Progress for Confluence, without person fields such as assignees or account IDs), and review history and published review states (Riskcadence for Jira, with the account IDs of the people involved); each app's Privacy Policy lists what it stores. This data resides on Atlassian's infrastructure. Values an app writes into Jira or Confluence, such as progress or score values in the app's own custom fields or CodeDoc's documentation pages, are stored by Jira or Confluence itself. After an app is uninstalled, Atlassian keeps its stored data for 28 days and then deletes it; within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the app.</li>
     </ul>
 
     <h2>4. App Overview</h2>
@@ -186,6 +186,13 @@
             <td>No account IDs or person fields, not even in published snapshots; the 5-minute view cache per reader is stored under a salted one-way hash of the account ID (pseudonymous, Atlassian Forge Storage only)</td>
             <td>None</td>
             <td><a href="epic-progress-privacy-policy.html">Privacy Policy</a></td>
+          </tr>
+          <tr>
+            <td><a href="riskcadence.html">Riskcadence for Jira</a></td>
+            <td>Jira Cloud (Confluence optional)</td>
+            <td>Atlassian account IDs of people who changed a risk, decided in a review, accepted a risk, own a risk, published a report or saved a view, and the display names of owners and publishers in published review states; closed accounts are erased by a weekly personal data job (Atlassian Forge Storage only)</td>
+            <td>None</td>
+            <td><a href="riskcadence-privacy-policy.html">Privacy Policy</a></td>
           </tr>
         </tbody>
       </table>
@@ -322,6 +329,18 @@
     </div>
     <p class="flow-label">All data stays within Atlassian infrastructure. No external calls.</p>
 
+    <p><strong>Riskcadence for Jira</strong></p>
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-box forge">Jira Cloud<span class="flow-sub">Risk work items and fields (read and changed as the user)</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box forge">Atlassian Forge Runtime<span class="flow-sub">Scores, reviews, reports</span></div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-box forge">Jira, dashboards &amp; Confluence page<span class="flow-sub">Views and reports; review history and published review states in Forge Storage</span></div>
+      </div>
+    </div>
+    <p class="flow-label">All data stays within Atlassian infrastructure. No external calls.</p>
+
     <h2>7. Data Processing Agreement (DPA)</h2>
     <div class="highlight-box">
       <p>
@@ -444,12 +463,19 @@
             <td>—</td>
             <td>—</td>
           </tr>
+          <tr>
+            <td>Riskcadence</td>
+            <td><em>None</em></td>
+            <td>No external calls — all processing within Atlassian Forge</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <p>
       This subprocessor list is reviewed and updated whenever a new integration is introduced.
-      Last reviewed: October 8, 2026.
+      Last reviewed: November 3, 2026.
     </p>
 
     <h2>9. Compliance &amp; Certifications</h2>
@@ -535,6 +561,6 @@
     </div>
 
   </main>
-  <script src="/components.js?v=ff7e95cf7422"></script>
+  <script src="/components.js?v=d86860addd77"></script>
 </body>
 </html>
