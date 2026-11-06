@@ -170,13 +170,13 @@
   ]
 }
 </script>
-  <link rel="stylesheet" href="/site.css?v=d86860addd77">
+  <link rel="stylesheet" href="/site.css?v=b6dfc2580415">
   <link rel="stylesheet" href="/redesign.css">
   <link rel="stylesheet" href="/docs.css">
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-docs.html">
   <link rel="alternate" hreflang="de" href="https://janekbehrens.de/de/codedoc-ai-docs.html">
   <link rel="alternate" hreflang="x-default" href="https://janekbehrens.de/codedoc-ai-docs.html">
-  <script src="/de/ui.js?v=d86860addd77"></script>
+  <script src="/de/ui.js?v=b6dfc2580415"></script>
 </head>
 <body class="rd docs" data-app="cd">
   <div class="docs-layout">
@@ -302,7 +302,7 @@
         <h3 id="setup-git">Git verbinden</h3>
         <p>CodeDoc liest nur Dateien. Deshalb genügt ein Token mit <strong>read (Lesen)</strong> als Berechtigung. Welche Tokens die Anbieter benötigen: <a href="#providers">Unterstützte Anbieter</a>.</p>
         <ol>
-          <li>Wähle den <strong>Git-Anbieter</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps oder dein eigener Server mit <strong>GitHub Enterprise</strong> oder <strong>GitLab self-managed</strong> (<a href="#providers-server">Details</a>). Ein Hinweis nennt den benötigten Token samt direktem Link. GitHub-Organisationen mit IP-Allowlist wählen stattdessen <strong>GitHub App</strong> (<a href="#github-app">Schritte</a>).</li>
+          <li>Wähle den <strong>Git-Anbieter</strong>: GitHub, GitLab, Bitbucket Cloud, Azure DevOps oder dein eigener Server mit <strong>GitHub Enterprise</strong> oder <strong>GitLab self-managed</strong> (<a href="#providers-server">Details</a>). Ein Hinweis nennt den Token, den du anlegen musst, mit direktem Link. GitHub-Organisationen mit IP-Allowlist wählen stattdessen <strong>GitHub App</strong> (<a href="#github-app">Schritte</a>).</li>
           <li>Trage ein: <dfn class="term" data-tip="Ein Schlüssel deines Git-Anbieters, mit dem CodeDoc Repositories lesen kann. Ein Token nur für Lesezugriff genügt.">Zugriffstoken</dfn>. Bei Azure DevOps trage zusätzlich die Organisations-URL ein (<code>https://dev.azure.com/your-org</code>).</li>
           <li>Optional kannst du einen <strong>Anzeigenamen</strong> festlegen, etwa „GitHub Arbeit“, und auf <strong>Connect and continue (Verbinden und fortfahren)</strong> klicken. Funktioniert der Token nicht, nennt die Meldung den Grund.</li>
         </ol>
@@ -356,7 +356,7 @@
           <table>
             <thead><tr><th>Anzuzeigender Inhalt</th><th>Deine Eingabe</th><th>Beispiel und Ergebnis</th></tr></thead>
             <tbody>
-              <tr><td><strong>Alle Abhängigkeiten (automatisch)</strong></td><td>Nur das Repository, optional ein Ordner</td><td>Jede Abhängigkeit mit Version, gefunden in package.json, Helm-Charts, Dockerfiles und mehr, in einer Tabelle (<a href="#sync-deps">Details</a>).</td></tr>
+              <tr><td><strong>Alle Abhängigkeiten (automatisch)</strong></td><td>Nur das Repository, optional ein Ordner</td><td>Jede Abhängigkeit mit ihrer Version, gefunden in package.json, Helm-Charts, Dockerfiles und weiteren Dateien des Repositorys, in einer Tabelle (<a href="#sync-deps">Details</a>).</td></tr>
               <tr><td><strong>Value(s) from YAML or JSON (Werte aus YAML oder JSON)</strong></td><td> <dfn class="term" data-tip="Der Name eines Werts in einer YAML- oder JSON-Datei, mit Punkten geschrieben, etwa image.tag.">Schlüsselpfad</dfn> pro Zeile, optional <code>Label = path</code></td><td><code>image.tag</code> oder <code>App version = appVersion</code>. Ein Wert erscheint als Text, mehrere als Tabelle.</td></tr>
               <tr><td><strong>Regular expression (Regulärer Ausdruck)</strong></td><td>Ein <dfn class="term" data-tip="Ein Textsuchmuster. CodeDoc prüft zeilenweise und zeigt die erste geklammerte Gruppe.">regulärer Ausdruck</dfn>; angezeigt wird die erste geklammerte Gruppe</td><td><code>^FROM\s+(\S+)</code> zeigt die Basisimages einer Dockerfile.</td></tr>
               <tr><td><strong>Markdown section (Markdown-Abschnitt)</strong></td><td>Die Überschrift ohne <code>#</code></td><td><code>Installation</code> zeigt alles darunter bis zur nächsten Überschrift gleicher Ebene.</td></tr>
@@ -376,23 +376,23 @@
         </details>
 
         <h3 id="sync-deps">Alle Abhängigkeiten, automatisch gefunden</h3>
-        <p>Du musst nicht wissen, wo Versionen stehen. Wähle das Repository und klicke <strong>Find all dependencies automatically</strong> (oder unter <strong>What to show</strong> die Option <strong>All dependencies and versions of the repository</strong>). CodeDoc durchsucht das Repository und zeigt jede Abhängigkeit mit Version in einer Tabelle: Komponente, Version wie in der Datei, und die Datei, aus der sie stammt (verlinkt). Mit <strong>Compare with the latest release</strong> kommen für npm- und PyPI-Pakete und Docker-Hub-Images die neueste Version und ein Status dazu.</p>
-        <img src="/imgCodeDoc/deps/01-codedoc-deps-dialog.webp" alt="Einstellungen des CodeDoc-Sync-Blocks: Repository gewählt, All dependencies and versions of the repository ausgewählt, Versionsprüfung an, Vorschau der Tabelle" width="1600" height="2083" loading="lazy">
+        <p>Du musst nicht wissen, wo die Versionen stehen. Wähle das Repository und klicke auf <strong>Find all dependencies automatically</strong> (oder wähle <strong>All dependencies and versions of the repository</strong> unter <strong>Anzuzeigender Inhalt</strong>). CodeDoc durchsucht das Repository und zeigt jede Abhängigkeit mit ihrer Version in einer Tabelle: Komponente, Version wie in der Datei geschrieben und die Datei, aus der sie stammt (verlinkt). Aktiviere <strong>Compare with the latest release (Mit neuestem Release vergleichen)</strong> , um für npm- und PyPI-Pakete und Docker-Hub-Images die neueste Version und einen Status zu ergänzen.</p>
+        <img src="/imgCodeDoc/deps/01-codedoc-deps-dialog.webp" alt="Einstellungen des CodeDoc-Synchronisierungsblocks: Repository gewählt, All dependencies and versions of the repository ausgewählt, Versionsprüfung aktiviert, Vorschau der Tabelle" width="1600" height="2083" loading="lazy">
         <details class="more">
           <summary>Welche Dateien CodeDoc liest</summary>
           <ul>
-            <li><strong>JavaScript:</strong> <code>package.json</code> (dependencies und die Node-Engine; keine devDependencies).</li>
-            <li><strong>Helm und Container:</strong> <code>Chart.yaml</code> (Chart, App-Version, Chart-Abhängigkeiten), <code>values*.yaml</code> (Image-Repository und Tag), <code>docker-compose*.yml</code> / <code>compose*.yaml</code> (Images der Services), <code>Dockerfile</code> (Basis-Image jeder Stufe).</li>
-            <li><strong>Python:</strong> <code>requirements*.txt</code>, <code>pyproject.toml</code> (PEP-621-Abhängigkeiten, Poetry-Abhängigkeiten, benötigtes Python).</li>
-            <li><strong>Go, Java, Terraform:</strong> <code>go.mod</code> (direkte Abhängigkeiten und Go-Version), <code>pom.xml</code> (Abhängigkeiten mit Version, Properties aufgelöst), <code>versions.tf</code>, <code>providers.tf</code>, <code>main.tf</code>, <code>terraform.tf</code> (Provider und Terraform-Version).</li>
-            <li><strong>Laufzeiten:</strong> <code>.nvmrc</code>, <code>.node-version</code>, <code>.python-version</code>, <code>.tool-versions</code>.</li>
+            <li><strong>JavaScript:</strong> <code>package.json</code> (Abhängigkeiten und die Node-Engine; keine devDependencies).</li>
+            <li><strong>Helm und Container:</strong> <code>Chart.yaml</code> (Chart, App-Version, Chart-Abhängigkeiten), <code>values*.yaml</code> (Image-Repository und Tag), <code>docker-compose*.yml</code>  /  <code>compose*.yaml</code> (Service-Images), <code>Dockerfile</code> (Basis-Image jeder Stage).</li>
+            <li><strong>Python:</strong> <code>requirements*.txt</code>,  <code>pyproject.toml</code> (Abhängigkeiten nach PEP 621, Poetry-Abhängigkeiten, benötigte Python-Version).</li>
+            <li><strong>Go, Java, Terraform:</strong> <code>go.mod</code> (direkte Abhängigkeiten und die Go-Version), <code>pom.xml</code> (Abhängigkeiten mit Version, Properties aufgelöst), <code>versions.tf</code>,  <code>providers.tf</code>,  <code>main.tf</code>,  <code>terraform.tf</code> (benötigte Provider und Terraform-Version).</li>
+            <li><strong>Laufzeiten:</strong> <code>.nvmrc</code>,  <code>.node-version</code>,  <code>.python-version</code>,  <code>.tool-versions</code>.</li>
           </ul>
-          <p>Bis zu 25 Dateien, Ordner auf oberster Ebene zuerst; <code>node_modules</code>, <code>vendor</code>, Build-Ausgaben und Testdaten werden übersprungen. In großen Repositories einen <strong>Ordner</strong> eintragen (zum Beispiel <code>services/api</code>), dann zeigt der Block nur, was dort steht. Die Tabelle zeigt bis zu 200 Abhängigkeiten; ein Hinweis darunter sagt, wenn etwas weggelassen wurde oder nicht lesbar war.</p>
+          <p>Bis zu 25 Dateien, Ordner der obersten Ebene zuerst; <code>node_modules</code>,  <code>vendor</code>, Build-Ausgaben und Testdaten werden übersprungen. Gib in großen Repositories einen <strong>Folder (Ordner)</strong> an (zum Beispiel <code>services/api</code>), um nur aufzulisten, was dort deklariert ist. Die Tabelle zeigt bis zu 200 Abhängigkeiten; ein Hinweis darunter sagt, wenn etwas weggelassen wurde oder nicht gelesen werden konnte.</p>
         </details>
         <details class="more" id="sync-deps-finetune">
           <summary>Feinsteuerung: Dateien, Tiefe und Arten selbst wählen</summary>
-          <p>Unter der Erklärung <strong>Fine-tune (optional)</strong> aufklappen. <strong>Only these files</strong> nimmt einen Pfad pro Zeile; CodeDoc liest dann genau diese Dateien und sucht nicht. <strong>Search depth</strong> begrenzt die Ordner unterhalb des gewählten Ordners (nur der Ordner selbst, eine oder zwei Ebenen darunter). Unter <strong>Kinds</strong> lässt du weg, was die Tabelle nicht zeigen soll, etwa alles außer Container-Images. <strong>Include development dependencies</strong> nimmt die devDependencies aus package.json dazu, markiert mit „dev“. Unveränderte Einstellungen werden nicht gespeichert. Bleibt nichts zum Anzeigen übrig, sagt der Block warum, zum Beispiel welche Arten in welchen Dateien fehlen.</p>
-          <img src="/imgCodeDoc/deps/03-codedoc-deps-finetune.webp" alt="Feinsteuerung des Abhängigkeits-Blocks: nur diese Dateien, Suchtiefe, Arten und Entwicklungs-Abhängigkeiten" width="1600" height="638" loading="lazy">
+          <p>Öffne <strong>Fine-tune (optional)</strong> unter der Erklärung. <strong>Only these files</strong> nimmt einen Pfad pro Zeile; CodeDoc liest dann genau diese Dateien und sucht nicht. <strong>Search depth</strong> begrenzt die Ordner unterhalb des gewählten Ordners (nur der Ordner selbst, eine oder zwei Ebenen Unterordner). <strong>Kinds</strong> lässt weg, was die Tabelle nicht zeigen soll, zum Beispiel alles außer Container-Images. <strong>Include development dependencies</strong> ergänzt die devDependencies aus package.json, markiert mit „dev“. Einstellungen, die du nicht änderst, werden nicht gespeichert. Bleibt nichts zu zeigen, sagt der Block warum, zum Beispiel welche Arten in welchen Dateien nicht gefunden wurden.</p>
+          <img src="/imgCodeDoc/deps/03-codedoc-deps-finetune.webp" alt="Bereich Fine-tune des Abhängigkeits-Blocks: nur diese Dateien, Suchtiefe, Arten und Entwicklungsabhängigkeiten" width="1600" height="638" loading="lazy">
         </details>
         <img src="/imgCodeDoc/deps/02-codedoc-deps-table.webp" alt="Eine Confluence-Seite mit den Abhängigkeiten eines Repositorys: Komponente, Version, Datei, neueste Version und Status" width="1570" height="1570" loading="lazy">
 
@@ -677,10 +677,10 @@
         <img src="/imgCodeDoc/screenshot-6-connections.webp" alt="Settings, Connections: Git-Verbindung mit Token nur für Lesezugriff und KI-Karte mit Atlassian AI oder eigenem KI-Anbieter" width="1840" height="900" loading="lazy">
 
         <h3 id="settings-git">Git-Verbindungen</h3>
-        <p>Verbinde mehrere Anbieter oder Konten gleichzeitig, etwa Arbeits-GitHub, GitLab-Gruppe und eigenen GitLab-Server. Jede Verbindung zeigt Anbieter, Name, Nutzer, Hinzufügungsdatum und Anzahl zugehöriger Repositories; eigene Server tragen die Kennzeichnung <strong>Own server (Eigener Server)</strong>, die eigene GitHub App deiner Organisation <strong>GitHub App</strong>.</p>
+        <p>Verbinde mehrere Anbieter oder Konten gleichzeitig, etwa Arbeits-GitHub, GitLab-Gruppe und eigenen GitLab-Server. Jede Verbindung zeigt Anbieter, Name, Nutzer, Hinzufügungsdatum und Anzahl zugehöriger Repositories; eigene Server tragen die Kennzeichnung <strong>Own server (Eigener Server)</strong>, die eigene GitHub App deiner Organisation mit <strong>GitHub App</strong>.</p>
         <details class="more">
           <summary>Verbindungen hinzufügen und entfernen</summary>
-          <p><strong>Add connection (Verbindung hinzufügen)</strong> öffnet dasselbe Formular wie bei der Einrichtung. <strong>Remove (Entfernen)</strong> löscht den gespeicherten Token (oder den Schlüssel der GitHub App) und zugehörige Repositories; die letzte Verbindung lässt sich nicht entfernen. Bei Entfernung der letzten Verbindung zu einem eigenen Server entfällt auch dessen Freigabe (Atlassian verlangt eine Bestätigung durch einen Website-Administrator).</p>
+          <p><strong>Add connection (Verbindung hinzufügen)</strong> öffnet dasselbe Formular wie bei der Einrichtung. <strong>Remove (Entfernen)</strong> löscht den gespeicherten Token (bzw. den Schlüssel der GitHub App) und die Repositories dieser Verbindung; die letzte Verbindung lässt sich nicht entfernen. Wird die letzte Verbindung zu einem eigenen Server entfernt, wird auch seine Freigabe zurückgenommen (Atlassian bittet einen Site-Admin um Bestätigung).</p>
         </details>
 
         <h3 id="settings-ai">KI für KI-Seiten</h3>
@@ -737,7 +737,7 @@
             <tbody>
               <tr><td><strong>GitHub</strong> (github.com)</td><td>Fine-grained token mit <strong>Contents: Read</strong> oder klassischer Token mit dem <code>repo</code> als Berechtigungsbereich. <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub-Dokumentation</a></td></tr>
               <tr><td><strong>GitHub Enterprise</strong> (dein Server oder <code>NAME.ghe.com</code>)</td><td>Dieselben Tokens, auf deinem Server erstellt. Ein Website-Administrator gibt die Adresse einmal frei (<a href="#providers-server">Details</a>).</td></tr>
-              <tr><td><strong>GitHub App</strong> (eigene App deiner Organisation auf github.com)</td><td>Kein Token: App-ID und privater Schlüssel einer App, die deine Organisation anlegt, mit <strong>Contents: Read</strong>. Für Organisationen mit IP-Allowlist oder ohne persönliche Tokens (<a href="#github-app">Schritte</a>).</td></tr>
+              <tr><td><strong>GitHub App</strong> (die eigene App deiner Organisation auf github.com)</td><td>Kein Token: App-ID und privater Schlüssel einer App, die deine Organisation anlegt, mit <strong>Contents: Read</strong>. Für Organisationen mit IP-Allowlist oder ohne persönliche Tokens (<a href="#github-app">Schritte</a>).</td></tr>
               <tr><td><strong>GitLab</strong> (gitlab.com)</td><td>Persönlicher, Gruppen- oder Projektzugriffstoken mit <code>read_api</code>  +  <code>read_repository</code>.  <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">GitLab-Dokumentation</a></td></tr>
               <tr><td><strong>GitLab self-managed</strong> (dein Server, auch unter einem Pfad)</td><td>Dieselben Tokens, auf deinem Server erstellt. Ein Website-Administrator gibt die Adresse einmal frei.</td></tr>
               <tr><td><strong>Bitbucket Cloud</strong> (bitbucket.org)</td><td>Repository-, Projekt- oder Workspace-Zugriffstoken mit <strong>Repositories: Read</strong>. Keine persönlichen API-Tokens (<a href="#providers-bitbucket">Begründung</a>).  <a href="https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/" target="_blank" rel="noopener">Bitbucket-Dokumentation</a></td></tr>
@@ -761,42 +761,45 @@
         </details>
 
         <h3 id="github-app">GitHub App: Organisationen mit IP-Allowlist</h3>
-        <p>Akzeptiert deine GitHub-Organisation nur Anfragen von Adressen auf ihrer <strong>IP-Allowlist</strong> oder erlaubt sie keine persönlichen Tokens, verbinde CodeDoc mit einer <strong>GitHub App, die deiner Organisation gehört</strong>. GitHub lässt eine Organisation die Adressen einer App nur für diese App zu; bei Tokens öffnet ein Eintrag die Liste für jede Anfrage von diesen Adressen.</p>
+        <p>Wenn deine GitHub-Organisation nur Anfragen von den Adressen auf ihrer <strong>IP allow list</strong> annimmt oder keine persönlichen Zugriffstokens erlaubt, verbinde CodeDoc über eine <strong>GitHub App, die deiner Organisation gehört</strong>. GitHub lässt eine Organisation die Adressen einer App nur für diese App zu; bei Tokens öffnet ein Eintrag auf der Liste sie für jede Anfrage von diesen Adressen.</p>
         <ol>
-          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection</strong> → <strong>GitHub App</strong> und den Namen deiner Organisation eintragen. Das Formular zeigt die folgenden Schritte und verlinkt direkt die richtigen Seiten auf GitHub.
-            <img src="/imgCodeDoc/github-app/01-codedoc-form.webp" alt="CodeDoc, Add connection, GitHub App: Organisationsname, die vier Schritte auf GitHub, App ID und privater Schlüssel" width="1600" height="1093" loading="lazy">
+          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection (Verbindung hinzufügen)</strong>  →  <strong>GitHub App</strong>, und gib den Namen deiner Organisation ein. Das Formular zeigt die Schritte unten und verlinkt direkt auf die richtigen Seiten bei GitHub.
+            <img src="/imgCodeDoc/github-app/01-codedoc-form.webp" alt="CodeDoc, Add connection, GitHub App: Name der Organisation, die vier Schritte bei GitHub, App-ID und privater Schlüssel" width="1600" height="1093" loading="lazy">
           </li>
-          <li><strong>App anlegen</strong> (ein Owner der Organisation): auf <strong>open the pre-filled form on GitHub</strong> klicken. Name, Beschreibung und Homepage sind ausgefüllt. Unter <strong>Permissions</strong> sind nur <strong>Contents: Read-only</strong> und das Pflichtrecht <strong>Metadata</strong> gesetzt, der Webhook ist aus, und die App lässt sich nur in deiner Organisation installieren (<strong>Only on this account</strong>). Auf <strong>Create GitHub App</strong> klicken.
-            <img src="/imgCodeDoc/github-app/02-github-new-app-top.webp" alt="GitHub, Create GitHub App: Name, Beschreibung und Homepage-URL schon ausgefüllt" width="1600" height="1040" loading="lazy">
-            <img src="/imgCodeDoc/github-app/03-github-new-app-permissions.webp" alt="GitHub, Create GitHub App: eine Repository-Berechtigung gewählt, nur in diesem Konto installierbar, Knopf Create GitHub App" width="1600" height="1220" loading="lazy">
+          <li><strong>App anlegen</strong> (ein Owner der Organisation): Klicke auf <strong>open the pre-filled form on GitHub</strong>. Name, Beschreibung und Homepage sind ausgefüllt. Unter <strong>Berechtigungen</strong> sind nur <strong>Contents: Read-only</strong> und das verpflichtende <strong>Metadata</strong> gesetzt, der Webhook ist aus, und die App lässt sich nur in deiner Organisation installieren (<strong>Only on this account</strong>). Klicke auf <strong>Create GitHub App</strong>.
+
+            <img src="/imgCodeDoc/github-app/02-github-new-app-top.webp" alt="GitHub, Create GitHub App: Name, Beschreibung und Homepage-URL bereits ausgefüllt" width="1600" height="1040" loading="lazy">
+            <img src="/imgCodeDoc/github-app/03-github-new-app-permissions.webp" alt="GitHub, Create GitHub App: ein Repository-Recht gewählt, nur in diesem Konto installierbar, Knopf Create GitHub App" width="1600" height="1220" loading="lazy">
           </li>
-          <li><strong>App ID notieren und Schlüssel erzeugen:</strong> Die Seite <strong>General</strong> der App zeigt die App ID. Dann <strong>Credentials</strong> → <strong>Key pairs</strong> → <strong>New key</strong>; GitHub lädt eine <code>.pem</code>-Datei herunter.
-            <img src="/imgCodeDoc/github-app/04-github-app-id.webp" alt="GitHub, Seite General der neuen App mit der App ID (hier unkenntlich) und dem Menüpunkt Credentials" width="1600" height="549" loading="lazy">
+          <li><strong>App-ID notieren und Schlüssel erzeugen:</strong> Die Seite <strong>General</strong> der App zeigt die App-ID. Öffne dann <strong>Credentials</strong>  →  <strong>Key pairs</strong>  →  <strong>New key</strong>; GitHub lädt eine <code>.pem</code> -Datei herunter.
+            <img src="/imgCodeDoc/github-app/04-github-app-id.webp" alt="GitHub, die Seite General der neuen App mit der App-ID (hier unscharf) und dem Menü Credentials" width="1600" height="549" loading="lazy">
             <img src="/imgCodeDoc/github-app/05-github-new-key.webp" alt="GitHub, App-Einstellungen, Credentials, Key pairs: Knopf New key" width="1600" height="531" loading="lazy">
           </li>
-          <li><strong>App installieren:</strong> <strong>Install App</strong> → <strong>Install</strong> neben deiner Organisation. <strong>All repositories</strong> oder <strong>Only select repositories</strong> wählen; die Seite bestätigt <em>Read access to code and metadata</em>. Auf <strong>Install</strong> klicken.
+          <li><strong>App installieren:</strong> <strong>Install App</strong>  →  <strong>Install</strong> neben deiner Organisation. Wähle <strong>All repositories</strong> oder <strong>Only select repositories</strong>; die Seite bestätigt <em>Read access to code and metadata</em>. Klicke auf <strong>Install</strong>.
+
             <img src="/imgCodeDoc/github-app/06-github-install-app.webp" alt="GitHub, App-Einstellungen, Install App: Knopf Install neben der Organisation" width="1600" height="342" loading="lazy">
-            <img src="/imgCodeDoc/github-app/07-github-install-repositories.webp" alt="GitHub, Install: alle oder ausgewählte Repositories, mit Lesezugriff auf Code und Metadaten" width="1120" height="1330" loading="lazy">
+            <img src="/imgCodeDoc/github-app/07-github-install-repositories.webp" alt="GitHub, Install: alle Repositories oder ausgewählte, mit Lesezugriff auf Code und Metadaten" width="1120" height="1330" loading="lazy">
           </li>
-          <li><strong>Nur mit IP-Allowlist, vor dem Verbinden:</strong> auf der Seite <strong>General</strong> der App ganz unten unter <strong>IP allow list</strong> <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians ausgehende IPv4-Bereiche</a> eintragen, je ein Eintrag (<a href="#github-app-ips">die Liste</a>). Dann in den Einstellungen der Organisation unter <strong>Settings → Authentication security</strong> den Haken <strong>Enable IP allow list configuration for installed GitHub Apps</strong> setzen und <strong>Save</strong> klicken. Die Liste der Organisation zeigt die Einträge danach als <em>Managed by the … GitHub App</em>; sie gelten nur für Anfragen dieser App.
-            <img src="/imgCodeDoc/github-app/08-github-app-ip-allow-list.webp" alt="GitHub, IP allow list der App mit Atlassians ausgehenden IPv4-Bereichen" width="1500" height="1600" loading="lazy">
-            <img src="/imgCodeDoc/github-app/09-github-org-inherit-app-ips.webp" alt="GitHub, Organisationseinstellungen, IP allow list: Haken bei Enable IP allow list configuration for installed GitHub Apps, Einträge von der App verwaltet" width="1600" height="1073" loading="lazy">
+          <li><strong>Nur mit IP-Allowlist, vor dem Verbinden:</strong> Ergänze auf der Seite <strong>General</strong> der App ganz unten unter <strong>IP allow list</strong>, ergänze Muster unter <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">die ausgehenden IPv4-Bereiche von Atlassian</a>, je einen Eintrag (<a href="#github-app-ips">die Liste</a>). Aktiviere dann in den Einstellungen der Organisation unter <strong>Settings → Authentication security</strong> das Häkchen <strong>Enable IP allow list configuration for installed GitHub Apps</strong> und klicke auf <strong>Save (Speichern)</strong>. Die Liste der Organisation zeigt die Einträge jetzt als <em>Managed by the … GitHub App</em>; sie gelten nur für Anfragen dieser App.
+            <img src="/imgCodeDoc/github-app/08-github-app-ip-allow-list.webp" alt="GitHub, IP-Allowlist der App mit den ausgehenden IPv4-Bereichen von Atlassian" width="1500" height="1600" loading="lazy">
+            <img src="/imgCodeDoc/github-app/09-github-org-inherit-app-ips.webp" alt="GitHub, Einstellungen der Organisation, IP-Allowlist: Enable IP allow list configuration for installed GitHub Apps ist aktiviert, Einträge von der App verwaltet" width="1600" height="1073" loading="lazy">
           </li>
-          <li><strong>In CodeDoc verbinden:</strong> App ID und den ganzen Inhalt der <code>.pem</code>-Datei einfügen, dann <strong>Connect</strong>. Fehlt Schritt 5, antwortet CodeDoc mit „Nothing is saved yet“ und nennt die fehlenden Schritte. Die Verbindung erscheint danach mit der Kennzeichnung <strong>GitHub App</strong>.
-            <img src="/imgCodeDoc/github-app/10-codedoc-connected.webp" alt="CodeDoc, Git-Verbindungen: die neue Verbindung mit der Kennzeichnung GitHub App" width="1600" height="264" loading="lazy">
+          <li><strong>In CodeDoc verbinden:</strong> Füge die App-ID und den gesamten Inhalt der <code>.pem</code> -Datei ein und klicke auf <strong>Connect (Verbinden)</strong>. Ohne Schritt 5 antwortet CodeDoc mit „Nothing is saved yet“ und nennt die fehlenden Schritte. Die Verbindung erscheint dann mit der Markierung <strong>GitHub App</strong>.
+
+            <img src="/imgCodeDoc/github-app/10-codedoc-connected.webp" alt="CodeDoc, Git connections: die neue Verbindung mit der Markierung GitHub App" width="1600" height="264" loading="lazy">
           </li>
-          <li><strong>Nutzen:</strong> Repositories → Verbindung wählen → <strong>Browse repositories</strong> → hinzufügen. Sync-Blöcke und KI-Seiten lesen darüber wie über jede andere Verbindung.
-            <img src="/imgCodeDoc/github-app/11-codedoc-sync-block.webp" alt="Eine Confluence-Seite mit einem CodeDoc-Sync-Block, der Image und Version aus einem privaten Repository zeigt, In sync" width="1600" height="691" loading="lazy">
+          <li><strong>Verwenden:</strong> Repositories → Verbindung wählen → <strong>Browse repositories (Repositories durchsuchen)</strong> → hinzufügen. Synchronisierungsblöcke und KI-Seiten lesen darüber wie über jede andere Verbindung.
+            <img src="/imgCodeDoc/github-app/11-codedoc-sync-block.webp" alt="Eine Confluence-Seite mit einem CodeDoc-Synchronisierungsblock, der Image und Version aus einem privaten Repository zeigt, In sync" width="1600" height="691" loading="lazy">
           </li>
         </ol>
         <details class="more">
           <summary>Wie CodeDoc den Schlüssel der App aufbewahrt</summary>
-          <p>App ID, Installation und privater Schlüssel liegen verschlüsselt in deiner Confluence-Website (Forge Secret Storage) und werden nie wieder angezeigt. Für jeden Lesevorgang signiert CodeDoc mit dem Schlüssel eine kurzlebige Anfrage und erhält von GitHub ein Token, das eine Stunde gilt und nur Repository-Inhalte und Metadaten lesen darf. CodeDoc nutzt nur die Installation in der Organisation, der die App gehört, prüft bei jedem Token, dass sie noch zu dieser Organisation gehört, und verwendet kein Token mit mehr als Lesezugriff. Kein Schlüssel wird zwischen Kunden geteilt: Jede Confluence-Website hat ihre eigene App.</p>
-          <p>Zum Austausch des Schlüssels auf GitHub einen neuen erzeugen, dieselbe App in CodeDoc erneut verbinden (die Repositories bleiben) und danach den alten Schlüssel auf GitHub löschen.</p>
+          <p>App-ID, Installation und privater Schlüssel werden verschlüsselt in deiner Confluence-Site gespeichert (Forge Secret Storage) und nie wieder angezeigt. Für jeden Lesevorgang signiert CodeDoc mit dem Schlüssel eine kurzlebige Anfrage und erhält von GitHub einen Token, der eine Stunde gilt und nur Repository-Inhalte und Metadaten lesen darf. CodeDoc nutzt nur die Installation in der Organisation, der die App gehört, prüft bei jedem Token, dass die Installation noch zu dieser Organisation gehört, und verwendet keinen Token mit mehr als Lesezugriff. Kein Schlüssel wird zwischen Kunden geteilt: Jede Confluence-Site hat ihre eigene App.</p>
+          <p>Um den Schlüssel zu ersetzen, erzeuge bei GitHub einen neuen, verbinde dieselbe App in CodeDoc erneut (die Repositories bleiben) und lösche dann den alten Schlüssel bei GitHub.</p>
         </details>
         <details class="more" id="github-app-ips">
           <summary>Welche Adressen auf die IP-Allowlist der App gehören</summary>
-          <p>Die IPv4-Bereiche unter „Outgoing connections for Atlassian apps“ auf <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians Seite</a>; GitHubs API wird über IPv4 erreicht. Stand Oktober 2026 passen sie in 13 Einträge: <code>104.192.136.0/21, 185.166.140.0/22, 131.162.88.0/21, 13.52.5.96/28, 13.200.41.224/28, 13.236.8.224/28, 16.63.53.224/28, 18.136.214.96/28, 18.184.99.224/28, 18.234.32.224/28, 18.246.31.224/28, 43.202.69.96/28, 52.215.192.224/28</code>. Änderungen auf Atlassians Seite prüfen.</p>
+          <p>Die IPv4-Bereiche, die unter „Outgoing connections for Atlassian apps“ auf <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">der Atlassian-Seite</a> stehen; GitHubs API wird über IPv4 erreicht. Stand Oktober 2026 passen sie in 13 Einträge: <code>104.192.136.0/21, 185.166.140.0/22, 131.162.88.0/21, 13.52.5.96/28, 13.200.41.224/28, 13.236.8.224/28, 16.63.53.224/28, 18.136.214.96/28, 18.184.99.224/28, 18.234.32.224/28, 18.246.31.224/28, 43.202.69.96/28, 52.215.192.224/28</code>. Prüfe die Atlassian-Seite auf Änderungen.</p>
         </details>
 
         <h3 id="providers-bitbucket">Bitbucket-Tokens</h3>
@@ -919,7 +922,7 @@
         </details>
         <details class="more" id="ip-allow-list">
           <summary>„the GitHub organization accepts requests only from addresses on its IP allow list (HTTP 403)“ (GitHub-Organisation akzeptiert nur Adressen ihrer IP-Allowlist)</summary>
-          <p>Deine GitHub-Organisation akzeptiert nur Anfragen von Adressen auf ihrer IP-Allowlist, und CodeDoc liest deine Repositories aus Atlassians Cloud. Zwei Wege, beide durch einen Owner der Organisation: <strong>eine GitHub App deiner Organisation verbinden</strong> (<a href="#github-app">Schritte</a>), deren IP-Allowlist-Einträge nur für diese App gelten; oder <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians ausgehende IP-Bereiche</a> (IPv4 und IPv6) unter <strong>Settings → Authentication security → IP allow list</strong> in die Liste der Organisation eintragen, und das Token bleibt, wie es ist. Diese Bereiche gelten für Atlassians gesamte Cloud; GitHub verlangt für jede Anfrage weiterhin dein Zugriffstoken. Schon mit einer GitHub App verbunden? Dann fehlt die IP-Allowlist der App oder der Haken „Enable IP allow list configuration for installed GitHub Apps“.</p>
+          <p>Deine GitHub-Organisation akzeptiert nur Anfragen von den Adressen auf ihrer IP-Allowlist, und CodeDoc liest deine Repositories aus Atlassians Cloud. Zwei Wege, beide erledigt ein Owner der Organisation: <strong>eine GitHub App deiner Organisation verbinden</strong>  (<a href="#github-app">Schritte</a>), deren Einträge in der IP-Allowlist nur für diese App gelten; oder <a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/#Outgoing-connections-for-Atlassian-apps" target="_blank" rel="noopener">Atlassians ausgehende IP-Bereiche</a> (IPv4 und IPv6) zur Liste der Organisation hinzufügen unter <strong>Settings → Authentication security → IP allow list</strong>, und der Token bleibt, wie er ist. Diese Bereiche teilt sich Atlassians gesamte Cloud; GitHub verlangt weiterhin für jede Anfrage deinen Zugriffstoken. Schon mit einer GitHub App verbunden? Dann fehlt die IP-Allowlist der App oder das Häkchen „Enable IP allow list configuration for installed GitHub Apps“.</p>
         </details>
         <details class="more">
           <summary>„On every push“ aktualisiert nicht</summary>
@@ -1031,7 +1034,7 @@
     </main>
   </div>
 
-  <script src="/components.js?v=d86860addd77"></script>
-  <script src="/docs.js?v=d86860addd77"></script>
+  <script src="/components.js?v=b6dfc2580415"></script>
+  <script src="/docs.js?v=b6dfc2580415"></script>
 </body>
 </html>

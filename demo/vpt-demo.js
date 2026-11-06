@@ -91,6 +91,7 @@
       ],
       ov: { calc: 'byStatus', jql: '', rows: '25', sort: { k: 'progress', d: -1 }, page: 1, open: false, d: null, flash: false },
       ep: { group: 'epic', measure: 'count', jql: '', rows: '10', sort: { k: 'progress', d: -1 }, open: false, d: null, flash: false },
+      proj: { health: 'any', measure: 'status', open: {} },
       flags: {}
     };
   }
@@ -446,6 +447,106 @@
     ].join('\n');
   }
 
+  // ── Tab 0: the Progress tab in the project ──
+  // Sample plan per epic (days relative to today): target date, forecast end, change in the last
+  // 7 days and the last status change. Health follows the rules the documentation describes.
+  var PLAN = {
+    'Live tracking':   { target: 40, forecast: 28, moved: 12, quiet: 1 },
+    'Store launch':    { target: 14, forecast: 55, moved: 0, quiet: 5 },
+    'Accessibility':   { target: null, forecast: null, moved: 0, quiet: 21 },
+    'Payments':        { target: -6, forecast: 9, moved: 4, quiet: 2 },
+    'Android release': { target: 75, forecast: 60, moved: 8, quiet: 1 }
+  };
+  var HEALTH = [
+    { v: 'any', label: 'Any health' }, { v: 'attention', label: 'Needs attention' },
+    { v: 'overdue', label: 'Overdue' }, { v: 'risk', label: 'At risk' }, { v: 'stalled', label: 'Stalled' }, { v: 'track', label: 'On track' }
+  ];
+  var MEASURES = [
+    { v: 'status', label: 'Status progress', help: 'Issues, weighted by status progress' },
+    { v: 'done', label: 'Done issues', help: 'Share of issues that are done, each issue counts the same.' },
+    { v: 'points', label: 'Story points', help: 'Story points, weighted by status progress' }
+  ];
+  function dayLabel(offset) {
+    if (offset === null) return null;
+    return new Date(Date.now() + offset * 864e5).toLocaleDateString(document.documentElement.lang === 'de' ? 'de-DE' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  function projectEpics(S) {
+    var P = S.proj;
+    return EPICS.map(function (e) {
+      var kids = S.issues.filter(function (it) { return it.epic === e.name; }).map(function (it) { return liveIssue(S, it); });
+      var pct = null;
+      if (kids.length) {
+        if (P.measure === 'done') pct = Math.round(100 * kids.filter(function (it) { return finished(it.status); }).length / kids.length);
+        else if (P.measure === 'points') {
+          var w = 0, sum = 0;
+          kids.forEach(function (it) { w += it.pts; sum += it.pts * childPct(S, it.status); });
+          pct = w ? Math.round(sum / w) : null;
+        } else pct = avg(kids.map(function (it) { return childPct(S, it.status); }));
+      }
+      var plan = PLAN[e.name], health;
+      if (pct === 100) health = 'done';
+      else if (plan.target !== null && plan.target < 0) health = 'overdue';
+      else if (plan.quiet >= 14) health = 'stalled';
+      else if (plan.target === null) health = 'none';
+      else if (plan.forecast > plan.target) health = 'risk';
+      else health = 'track';
+      return { key: e.key, name: e.name, kids: kids, pct: pct, plan: plan, health: health };
+    });
+  }
+  var HEALTH_LOZ = {
+    done: ['Done', 'green'], overdue: ['Overdue', 'red'], risk: ['At risk', 'yellow'],
+    stalled: ['Stalled', 'grey'], track: ['On track', 'blue'], none: ['No target date', 'grey']
+  };
+  var HEALTH_WHY = {
+    done: 'The epic or all its issues are done.', overdue: 'The target date has passed and the epic is not done.',
+    risk: 'The forecast ends after the target date.', stalled: 'Open epics where no issue changed its status for at least 14 days.',
+    track: 'The forecast ends before the target date.', none: 'Set a due date on the epic to get a forecast against it.'
+  };
+  function healthMatches(h, f) {
+    if (f === 'any') return true;
+    if (f === 'attention') return h === 'overdue' || h === 'risk' || h === 'stalled';
+    return h === f;
+  }
+  function renderProject(S) {
+    var P = S.proj, all = projectEpics(S);
+    var rows = all.filter(function (g) { return healthMatches(g.health, P.health); });
+    var open = all.filter(function (g) { return g.health !== 'done'; });
+    var attention = all.filter(function (g) { return healthMatches(g.health, 'attention'); }).length;
+    var moved = all.filter(function (g) { return g.plan.moved > 0; }).length;
+    var measure = MEASURES.filter(function (m) { return m.v === P.measure; })[0];
+    var body = rows.length ? rows.map(function (g) {
+      var isOpen = !!P.open[g.key], hl = HEALTH_LOZ[g.health];
+      var kids = isOpen ? '<tr class="vpt-proj-kids"><td colspan="5"><ul class="vpt-children">' + g.kids.map(function (it) {
+        var v = childPct(S, it.status);
+        return '<li><span class="d-key">' + esc(it.key) + '</span><span class="vpt-proj-sum">' + esc(it.summary) + '</span>' +
+          '<span class="d-small d-faint">' + esc(it.status) + '</span>' + D.loz(v + '%', tone(S, v)) + '</li>';
+      }).join('') + '</ul></td></tr>' : '';
+      return '<tr><td><button type="button" class="vpt-proj-epic" data-pepic="' + g.key + '" data-fid="pepic-' + g.key + '" aria-expanded="' + (isOpen ? 'true' : 'false') + '">' +
+          '<span aria-hidden="true">' + (isOpen ? '▾' : '▸') + '</span> <span class="d-key">' + esc(g.key) + '</span> ' + esc(g.name) + '</button></td>' +
+        '<td>' + (g.pct === null ? '<span class="d-faint d-small">No issues</span>' : '<div class="d-cell-bar"><span class="d-num">' + g.pct + '%</span>' + D.bar(g.pct, tone(S, g.pct)) + '</div>') + '</td>' +
+        '<td class="d-small">' + (g.plan.moved ? '+' + g.plan.moved + '%' : '<span class="d-faint">No change</span>') + '</td>' +
+        '<td class="d-small">' + (g.plan.target === null ? '<span class="d-faint">—</span>' : esc(dayLabel(g.plan.forecast)) + '<br><span class="d-faint">Target ' + esc(dayLabel(g.plan.target)) + '</span>') + '</td>' +
+        '<td><span title="' + esc(HEALTH_WHY[g.health]) + '">' + D.loz(hl[0], hl[1]) + '</span></td></tr>' + kids;
+    }).join('') : '<tr><td colspan="5" class="d-faint d-small">No epics match this filter.</td></tr>';
+    return [
+      '<div class="d-context"><span>Projects</span><span class="d-sep">/</span><span>Mobile App</span><span class="d-sep">/</span><b>Progress</b></div>',
+      '<div class="vpt-proj">',
+      '  <section class="d-app vpt-proj-page" aria-label="Progress tab of the project"><span class="d-app-tag">Visual Progress Tracker</span>',
+      '    <div class="d-h1">Progress</div>',
+      '    <div class="vpt-proj-tiles">' +
+        '<div class="vpt-proj-tile"><b>' + open.length + '</b><span>Open epics</span></div>' +
+        '<div class="vpt-proj-tile"><b>' + attention + '</b><span>Needs attention</span></div>' +
+        '<div class="vpt-proj-tile"><b>' + moved + '</b><span>Moved in the last 7 days</span></div></div>',
+      '    <div class="vpt-proj-filters">' +
+        '<label class="d-label" for="vpt-p-health">Health</label><select class="d-select" id="vpt-p-health" data-pf="health" data-fid="p-health">' + options(HEALTH, P.health) + '</select>' +
+        '<label class="d-label" for="vpt-p-measure">Measure</label><select class="d-select" id="vpt-p-measure" data-pf="measure" data-fid="p-measure">' + options(MEASURES, P.measure) + '</select>' +
+        '<span class="d-help">' + esc(measure.help) + '</span></div>',
+      '    <div class="d-table-wrap"><table class="d-table vpt-proj-table"><thead><tr><th>Epic</th><th class="vpt-col-progress">Progress</th><th>Last 7 days</th><th>Forecast</th><th>Health</th></tr></thead><tbody>' + body + '</tbody></table></div>',
+      '  </section>',
+      '</div>'
+    ].join('\n');
+  }
+
   // ── Tab 3: the app's page in the Apps menu ──
   function renderRecalc(S) {
     var R = S.recalc;
@@ -553,17 +654,24 @@
     id: 'vpt',
     title: 'Visual Progress Tracker',
     tabs: [
+      { id: 'project', label: 'Progress tab' },
       { id: 'issue', label: 'Issue view' },
       { id: 'dash', label: 'Dashboard gadgets' },
       { id: 'admin', label: 'Admin settings' }
     ],
     initialState: initialState,
     render: function (tab, S) {
+      if (tab === 'project') return renderProject(S);
       if (tab === 'dash') return renderDashboard(S);
       if (tab === 'admin') return renderAdmin(S);
       return renderIssue(S);
     },
     steps: {
+      project: [
+        { text: 'set <strong>Health</strong> to <strong>Needs attention</strong>. Only overdue, at-risk and stalled epics stay.', target: '#vpt-p-health', done: function (S) { return S.flags.phealth; } },
+        { text: 'switch <strong>Measure</strong> to <strong>Story points</strong>. Big issues now weigh more.', target: '#vpt-p-measure', done: function (S) { return S.flags.pmeasure; } },
+        { text: 'open the epic <strong>Store launch</strong> to see the issues behind its bar.', target: '[data-pepic="MOB-29"]', done: function (S) { return S.flags.popen; } }
+      ],
       issue: [
         { text: 'move the issue to <strong>In Review</strong> with the status button. Status progress follows.', target: '[data-issue-status]', done: function (S) { return S.flags.status; } },
         { text: 'set the subtask <strong>Battery test on Android</strong> to Done. Subtask progress reaches 100%.', target: '[data-sub="3"]', done: function (S) { return S.flags.sub; } },
@@ -580,12 +688,29 @@
       ]
     },
     doneText: {
+      project: '<strong>That’s the Progress tab.</strong> It sits in every project next to the board. Change the status of MOB-54 in the issue view, and Live tracking moves here too.',
       issue: '<strong>That’s the issue view.</strong> All three bars are custom fields, so they also show up as columns in Jira list views.',
       dash: '<strong>Both gadgets use the same status mapping and colors.</strong> Changes in the issue view show up here too (MOB-54).',
       admin: '<strong>Saved.</strong> Go back to the issue view or the gadgets: their bars now use your values.'
     },
     setup: function (api) {
       var S = function () { return api.state(); };
+
+      // Progress tab
+      api.on('change', '[data-pf]', function (el) {
+        var P = S().proj, k = el.dataset.pf;
+        P[k] = el.value;
+        if (k === 'health' && el.value === 'attention') S().flags.phealth = true;
+        if (k === 'measure' && el.value === 'points') S().flags.pmeasure = true;
+        api.update();
+      });
+      api.on('click', '[data-pepic]', function (el) {
+        var P = S().proj, key = el.dataset.pepic;
+        P.open[key] = !P.open[key];
+        if (key === 'MOB-29' && P.open[key]) S().flags.popen = true;
+        api.update();
+        var b = api.el('[data-pepic="' + key + '"]'); if (b) b.focus();
+      });
 
       // Issue view
       api.on('change', '[data-issue-status]', function (el) {
