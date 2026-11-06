@@ -453,7 +453,7 @@
         '<img src="/img/companyLogo_transparent.png" alt="Janek Behrens" class="author-avatar" loading="lazy" width="56" height="56" />',
         '<div class="author-meta">',
           '<div class="author-name">Janek Behrens</div>',
-          '<div class="author-bio">Independent Atlassian Forge developer. Builds <a href="/team-capacity-for-jira.html">Team Capacity</a>, <a href="/dora-metrics-for-jira.html">DevOps Metrics</a>, <a href="/velocity-chart.html">Velocity Chart</a>, <a href="/priority-scoring.html">Priority Scoring</a> and <a href="/visual-progress-tracker.html">Visual Progress Tracker</a> for Jira, and <a href="/codedoc-ai.html">CodeDoc</a> for Confluence.</div>',
+          '<div class="author-bio">Independent Atlassian Forge developer. Builds <a href="/riskcadence.html">Riskcadence</a>, <a href="/team-capacity-for-jira.html">Team Capacity</a>, <a href="/dora-metrics-for-jira.html">DevOps Metrics</a>, <a href="/velocity-chart.html">Velocity Chart</a>, <a href="/priority-scoring.html">Priority Scoring</a> and <a href="/visual-progress-tracker.html">Visual Progress Tracker</a> for Jira, and <a href="/codedoc-ai.html">CodeDoc</a> and <a href="/epic-progress-for-confluence.html">Epic Progress</a> for Confluence.</div>',
           '<div class="author-links"><a href="https://www.linkedin.com/in/janek-behrens-55b3651b6/" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://marketplace.atlassian.com/vendors/92692174/janek-behrens" target="_blank" rel="noopener">Atlassian Marketplace</a> &middot; <a href="/blog/">More articles</a></div>',
         '</div>',
       '</div>'
