@@ -441,6 +441,7 @@
             <li>Anderweitig auf die Seite gelangte Einstellungen (mit Seite oder Vorlage kopiert, per API geschrieben oder später geändert) zeigen <strong>Waiting for approval (Warten auf Freigabe)</strong> , bis ein Job Operator mit Seitenbearbeitungsrechten Repository, Datei, Branch, Inhalt, Aktualisierungsregel und Versionsprüfung prüft und anschließend <strong>Approve and sync (Freigeben und synchronisieren) anklickt</strong>.</li>
             <li>Ein Block liest nur Dateien seines verbundenen Repositories. Pfade und Branches, die <code>../</code> enthalten (auch geschrieben als <code>%2e%2e</code>), Rückstrichen oder Steuerzeichen werden abgelehnt (<strong>Settings incomplete (Einstellungen unvollständig)</strong> mit Erklärung).</li>
             <li>Zugriffstokens bleiben in CodeDoc. Die auf der Seite gespeicherten Blockeinstellungen enthalten nur Repository, Pfad und Optionen.</li>
+            <li id="sync-live-docs"><strong>Live-Dokumente</strong> öffnen im Editor, deshalb zeigt der Block seinen Status direkt dort, und ein Job Operator mit Seitenbearbeitungsrechten gibt ihn frei, indem er <strong>Approve and sync (Freigeben und synchronisieren) anklickt</strong>. Aktualisierungen erscheinen im offenen Dokument, während du arbeitest; was du tippst, bleibt erhalten.</li>
           </ul>
         </details>
 
@@ -474,6 +475,7 @@
             <li>Jede echte Aktualisierung erstellt eine Seitenversion; Confluence benachrichtigt Seitenbeobachter wie bei anderen Änderungen.</li>
             <li>Relative Markdown-Links führen zur Datei im Git-Anbieter; Bilder erscheinen als Links, da Confluence Bilder privater Repositories nicht laden kann. Die Quellenzeile unter jedem Block verlinkt die Datei.</li>
             <li>Ohne aktive Lizenz bleiben 3 Synchronisierungsblöcke aktuell; zuvor freigegebene Blöcke laufen weiter (<a href="#editions">Editionen</a>).</li>
+            <li>In einem Live-Dokument beginnt ein gerade eingefügter Block mit den Aktualisierungen, sobald Confluence die Bearbeitungssitzung gespeichert hat; bis dahin weist der Block darauf hin. CodeDoc prüft zwei Stunden lang alle 10 Minuten erneut, danach mit der nächsten Aktualisierung oder <strong>Update now (Jetzt aktualisieren)</strong>.</li>
           </ul>
         </details>
       </section>

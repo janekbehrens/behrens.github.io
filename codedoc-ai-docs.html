@@ -438,6 +438,7 @@
             <li>Settings that reach a page another way (copied with a page or template, written through the API, changed later) show <strong>Waiting for approval</strong> until a Job Operator who can edit the page checks the repository, file, branch, content, update rule and version check, and clicks <strong>Approve and sync</strong>.</li>
             <li>A block reads only files of its own connected repository: paths and branches with <code>../</code> parts (also written as <code>%2e%2e</code>), backslashes or control characters are refused (<strong>Settings incomplete</strong>, with an explanation).</li>
             <li>Access tokens stay in CodeDoc. The block settings stored on the page contain only the repository, path and options.</li>
+            <li id="sync-live-docs"><strong>Live docs</strong> open in the editor, so the block shows its status right there, and a Job Operator who can edit the doc approves it by clicking <strong>Approve and sync</strong>. Updates appear in the open doc while you work; what you type stays.</li>
           </ul>
         </details>
 
@@ -471,6 +472,7 @@
             <li>Every real update creates a page version, and Confluence notifies the page's watchers as for any other edit.</li>
             <li>Relative links in Markdown point to the file in your Git provider; images are shown as links, because Confluence cannot load images from private repositories. The source line under each block links to the file.</li>
             <li>Without an active license, 3 sync blocks are kept up to date; blocks approved before keep running (<a href="#editions">Editions</a>).</li>
+            <li>On a live doc, a block you have just added starts updating once Confluence has saved the editing session; until then the block says so. CodeDoc checks again every 10 minutes for two hours, after that with the next update or <strong>Update now</strong>.</li>
           </ul>
         </details>
       </section>
