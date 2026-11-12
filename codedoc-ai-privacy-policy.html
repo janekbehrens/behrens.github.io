@@ -21,7 +21,7 @@
     </div>
 
     <h1>Privacy Policy</h1>
-    <p class="updated">CodeDoc for Confluence · Last updated: October 12, 2026</p>
+    <p class="updated">CodeDoc for Confluence · Last updated: November 12, 2026</p>
 
     <h2>1. Introduction</h2>
     <p>
@@ -38,6 +38,20 @@
       AI services (Anthropic, OpenAI, or Google AI). The App uses these credentials solely to perform the functions you initiate.
       <strong>We do not have access to your API keys or tokens</strong> — they are stored in your Confluence instance's encrypted
       Forge storage and are never transmitted to us.
+    </p>
+    <p>
+      <strong>Connect with GitHub (version 9):</strong> Instead of entering a token, a site admin can sign in to GitHub and connect
+      repositories through the CodeDoc GitHub App, which we register and operate on GitHub. Your organization installs it on GitHub and
+      decides there which repositories it may access; it can only read repository contents and metadata, and your organization can
+      uninstall it at any time. The sign-in is handled by Atlassian: Atlassian keeps the admin's GitHub sign-in, the App's code never
+      sees it, and the admin can remove it at any time under Connected apps in their Atlassian account settings. The App uses it only
+      while that admin connects repositories, to ask GitHub which installations and repositories this person can see.
+    </p>
+    <p>
+      To read a connected repository, the App creates a short-lived token of the CodeDoc GitHub App with the app's private key: read-only,
+      limited to the repositories connected on your site, and valid for at most one hour. A repository is read only while the GitHub
+      account that connected it is still an admin of that repository. The private key belongs to us as the operator of the GitHub App.
+      It is kept only as an encrypted variable of the App on Atlassian Forge; we keep no other copy, and we do not use it outside the App.
     </p>
     <p>
       For Bitbucket, the App accepts repository, project and workspace access tokens. A Bitbucket connection made before version 8
@@ -61,8 +75,9 @@
     <h2>3. Data We Access</h2>
     <p>The App accesses the following data solely to provide its functionality:</p>
     <ul>
-      <li><strong>Source code (AI pages):</strong> Fetched from your Git repositories by the <strong>Atlassian Forge runtime</strong> (running on Atlassian's infrastructure) using your access token. The code is loaded into the Forge runtime's memory, processed there, and forwarded to your AI provider. Code is not cached or retained after the job execution completes.</li>
+      <li><strong>Source code (AI pages):</strong> Fetched from your Git repositories by the <strong>Atlassian Forge runtime</strong> (running on Atlassian's infrastructure) using your access token (with Connect with GitHub, a token of the CodeDoc GitHub App; see section 2). The code is loaded into the Forge runtime's memory, processed there, and forwarded to your AI provider. Code is not cached or retained after the job execution completes.</li>
       <li><strong>Files for sync blocks:</strong> The file a sync block shows is read from your Git repository in the same way. The App writes the part you chose into that block on the Confluence page. Nothing from sync blocks is sent to an AI provider.</li>
+      <li><strong>GitHub sign-in (Connect with GitHub):</strong> While a site admin connects repositories, Atlassian passes the admin's GitHub user name and GitHub account ID to the App, and the App asks GitHub which installations of the CodeDoc GitHub App and which repositories this admin can see, and whether the admin is an admin of each chosen repository. Before it reads a connected repository, the App asks GitHub again whether the account that connected it is still an admin there.</li>
       <li><strong>Confluence data:</strong> Space names and page IDs — used to create or update documentation pages in the spaces you select. Group names, for the group picker in Settings.</li>
       <li><strong>Your Atlassian account ID</strong>, which Confluence passes with each request, and the Confluence groups and permissions of that account — used to check your CodeDoc role and what you may do on a page. Group memberships and permissions are not stored.</li>
       <li><strong>AI API:</strong> Your source code, together with the writing instructions and page settings of the AI page, is sent to your chosen AI provider using your API key, or, with Atlassian AI (Advanced edition), to the AI models hosted on Atlassian's platform, for documentation generation. The response (generated documentation) is published to Confluence.</li>
@@ -77,6 +92,7 @@
     <ul>
       <li>AI provider configuration (provider type, encrypted API key, selected model)</li>
       <li>Git provider configuration (provider type, encrypted access token, base URL, label, and the user name and display name of the Git account the token belongs to, as your Git provider reports them)</li>
+      <li>Connect with GitHub connections: the GitHub installation ID and the name of the GitHub organization or account it belongs to; the IDs of the connected repositories; for each repository, the GitHub user name and GitHub account ID of the admin who connected it and when (kept as well while the repository waits for a new confirmation); a read-only token of the CodeDoc GitHub App for these repositories (encrypted, valid for at most one hour)</li>
       <li>Repository list (repository URLs, branches, provider references)</li>
       <li>Job configuration of AI pages (name, selected repositories, writing style and writing instructions of up to 2,000 characters, include and exclude patterns, trigger settings, target space and page)</li>
       <li>Writing styles that admins save as templates for AI pages (name and settings)</li>
@@ -97,10 +113,10 @@
 
     <h2>5. Data We Do NOT Collect</h2>
     <ul>
-      <li>We do <strong>not</strong> receive any personal data. The App stores Atlassian account IDs (see section 4) but no names, e-mail addresses or other personal profile data of Atlassian users; the only exceptions are the name of the Git account behind each Git connection and the e-mail address or user name inside an older Bitbucket personal token (see sections 2 and 4). Source code is never stored.</li>
+      <li>We do <strong>not</strong> receive any personal data. The App stores Atlassian account IDs (see section 4) but no names, e-mail addresses or other personal profile data of Atlassian users; the only exceptions are the name of the Git account behind each Git connection, the GitHub user name and GitHub account ID of each admin who connected repositories with Connect with GitHub, and the e-mail address or user name inside an older Bitbucket personal token (see sections 2 and 4). Source code is never stored.</li>
       <li>We do <strong>not</strong> send any data to our own servers or to any third-party analytics, tracking, or advertising platforms.</li>
       <li>We do <strong>not</strong> use cookies, tracking pixels, or any form of user tracking.</li>
-      <li>We do <strong>not</strong> have access to your API keys, access tokens, or source code.</li>
+      <li>We do <strong>not</strong> have access to your API keys, access tokens, or source code. For Connect with GitHub, the private key of the CodeDoc GitHub App is ours; it stays inside the App on Atlassian Forge, and we do not use it to read your repositories (see section 2).</li>
       <li>We do <strong>not</strong> retain or log the content of your source code or the generated documentation.</li>
     </ul>
     <p>
@@ -117,7 +133,7 @@
       <strong>using your own credentials</strong>:
     </p>
     <ul>
-      <li><strong>Your Git provider</strong> (GitHub, GitLab, Bitbucket, Azure DevOps, or your own GitHub Enterprise or GitLab server) — to read source code files from your repositories.</li>
+      <li><strong>Your Git provider</strong> (GitHub, GitLab, Bitbucket, Azure DevOps, or your own GitHub Enterprise or GitLab server) — to read source code files from your repositories. With Connect with GitHub, the App reads as the CodeDoc GitHub App, with the access your organization gave it on GitHub.</li>
       <li><strong>Your AI provider</strong> (Anthropic, OpenAI, or Google AI) — to generate documentation from the source code, if you use your own key.
         With Atlassian AI (Advanced edition) the code is processed on Atlassian's platform instead.</li>
       <li><strong>Public registries</strong> (Docker Hub, npm, PyPI, GitHub releases, endoflife.date) — only for sync blocks with the version check, and only the public name of an image or package.</li>
@@ -138,7 +154,7 @@
           <div class="hub-spoke-label">&#8597; fetch code (HTTPS)</div>
           <div class="flow-box byok">
             Your Git Provider
-            <span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps / own server<br>Your credentials (BYOK)</span>
+            <span class="flow-sub">GitHub / GitLab / Bitbucket / Azure DevOps / own server<br>Your credentials (BYOK) — or the CodeDoc GitHub App</span>
           </div>
           <div class="hub-spoke-note">Webhook triggers: Git &#8594; Forge (inbound)</div>
         </div>
@@ -191,6 +207,7 @@
     <h2>8. Data Retention</h2>
     <ul>
       <li><strong>Configuration data</strong> (providers, jobs, repositories, writing styles, role groups) is retained in Forge Storage as long as the App is installed. Deleting a Git or AI connection deletes its token or key at once.</li>
+      <li><strong>Connect with GitHub:</strong> Removing a repository from CodeDoc, or the whole connection, deletes the GitHub user names and account IDs stored for it, and the App ends its token at GitHub at once. The admin's GitHub sign-in stays with Atlassian until the admin removes it under Connected apps.</li>
       <li><strong>Generation history</strong> (metadata only — no source code or content) keeps the last 100 runs; older runs drop out, and admins can delete all of it with "Clear history". The account IDs of a run go with it.</li>
       <li><strong>Sync block records</strong> and their approvals, with the account ID of the Job Operator who approved them, are kept until a Job Operator removes the block in CodeDoc &rarr; Sync Blocks ("Remove", or "Remove detached" once its page is gone). Notes that someone dismissed the rating prompt, file lists of the AI file selection and the anonymous daily usage counts are kept as long as the App is installed.</li>
       <li>When the App deletes data, it is removed from Forge storage at once and the App can no longer read it. Atlassian keeps a soft-deleted copy for recovery from accidental deletion until the end of its retention period.</li>
@@ -203,6 +220,7 @@
     <h2>9. GDPR Compliance</h2>
     <p>
       As personal data, the App itself stores Atlassian account IDs (section 4), the name of the Git account behind each Git connection,
+      the GitHub user name and GitHub account ID of each admin who connected repositories with Connect with GitHub (section 4),
       and, in a Bitbucket connection made before version 8 with a personal token, the e-mail address or user name inside that token (section 2);
       everything else it keeps is configuration and run metadata. All of it stays in Forge Storage for your site. If your source code or
       generated documentation contains personal data, that data is read by the <strong>Atlassian Forge runtime</strong> and, for AI pages,
@@ -212,7 +230,7 @@
       before you process code that contains personal data.
     </p>
     <p>
-      For a request about the stored account IDs, an admin can clear the run history, remove sync blocks, or contact us; after an uninstall,
+      For a request about stored account IDs or GitHub user names, an admin can clear the run history, remove sync blocks, remove a repository or connection, or contact us; after an uninstall,
       Atlassian deletes all App data 28 days later (section 8).
     </p>
     <p>If you have any GDPR-related concerns, please contact us at the email address below.</p>
@@ -222,6 +240,7 @@
     <ul>
       <li>Runs in a sandboxed Forge environment with restricted network access (only the domains listed in the App's manifest and own Git servers a site admin approved).</li>
       <li>API keys and access tokens are stored in Atlassian Forge encrypted storage.</li>
+      <li>Connect with GitHub: tokens of the CodeDoc GitHub App are read-only, limited to the repositories connected on your site and valid for at most one hour; a repository is read only while the account that connected it is still an admin of it.</li>
       <li>All external data transfers use TLS encryption.</li>
       <li>No credentials are logged, exposed in error messages, or transmitted to us.</li>
       <li>The App uses only the Confluence scopes it needs: <code>storage:app</code>, <code>read:space:confluence</code>, <code>search:confluence</code>, <code>read:page:confluence</code>, <code>write:page:confluence</code>, <code>delete:page:confluence</code>, <code>read:confluence-user</code> and <code>read:confluence-groups</code>.</li>

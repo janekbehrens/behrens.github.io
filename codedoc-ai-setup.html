@@ -82,9 +82,9 @@
             <li>Open the repository in Bitbucket → <strong>Repository settings → Access tokens</strong>.</li>
             <li>Create a token with the permission <strong>Repositories: Read</strong> and copy it.</li>
             <li>In CodeDoc, choose <strong>Bitbucket Cloud</strong>, paste the token and click <strong>Connect and continue</strong>.</li>
-            <li>Add the repository in <strong>Repositories → Add by address</strong> (paste its address).</li>
+            <li>Add the repository in <strong>Repositories → Add repositories</strong>: the dialog asks for its address.</li>
           </ol>
-          <p><strong>Project or workspace access token</strong> (several repositories, Bitbucket Premium): create it in the project or workspace settings → <strong>Access tokens</strong> with <strong>Repositories: Read</strong>, paste it the same way and add each repository with <strong>Add by address</strong>. Bitbucket does not let access tokens list repositories, so <strong>Browse repositories</strong> is not available for Bitbucket; CodeDoc checks the token when you add a repository.</p>
+          <p><strong>Project or workspace access token</strong> (several repositories, Bitbucket Premium): create it in the project or workspace settings → <strong>Access tokens</strong> with <strong>Repositories: Read</strong>, paste it the same way and add each repository by its address in <strong>Repositories → Add repositories</strong>. Bitbucket does not let access tokens list repositories, so the dialog shows no list for Bitbucket; CodeDoc checks the token when you add a repository.</p>
           <div class="warning"><strong>No personal API tokens:</strong> Atlassian's security requirements do not allow Marketplace apps to collect or store the credentials of Atlassian accounts, so CodeDoc does not accept personal Bitbucket API tokens or app passwords. A repository access token reads only its own repository: add one connection per repository, or use a project or workspace token.</div>
         </details>
 
@@ -114,7 +114,7 @@
         <h2>2. Add your first sync block</h2>
         <p>A <dfn class="term" data-tip="A CodeDoc block on a Confluence page. It shows content from a file in your repository and keeps it up to date.">sync block</dfn> shows a value, a section or code from a file on a Confluence page and keeps it up to date. It needs no AI and causes no token costs.</p>
         <ol>
-          <li>In CodeDoc, open <strong>Repositories</strong> and add the repository: <strong>Browse repositories</strong> or <strong>Add by address</strong>.</li>
+          <li>In CodeDoc, open <strong>Repositories</strong> and click <strong>Add repositories</strong>: choose the repository from the list, or add it by its address.</li>
           <li>Edit a Confluence page, type <code>/</code> and choose <strong>CodeDoc Sync Block</strong>.</li>
           <li>Paste the link to a file, for example <code>https://github.com/helm/examples/blob/main/charts/hello-world/Chart.yaml</code>, and click <strong>Use link</strong>. Or pick the repository and the file.</li>
           <li>Choose what to show: values (pick the keys from a list), a Markdown section, the latest changelog entry, a snippet between markers, some lines or the whole file.</li>

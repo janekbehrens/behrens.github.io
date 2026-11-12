@@ -265,7 +265,7 @@
         <h2>How it works</h2>
         <ol>
           <li><strong>Connect Git</strong> with a read-only access token. An AI key is optional and can be added later.</li>
-          <li><strong>Add repositories</strong>: browse your Git account or paste the address of a repository.</li>
+          <li><strong>Add repositories</strong>: in the Repositories tab, choose them from what a Git connection can read, or paste the address of a repository.</li>
           <li><strong>Add a sync block</strong>: edit a page, type <code>/</code>, choose <strong>CodeDoc Sync Block</strong>, paste the link to a file and pick what to show (<a href="#sync">Sync blocks</a>).</li>
           <li><strong>Optional: create an AI page</strong>: choose repositories, a writing style, the target space and when to update. CodeDoc publishes the page directly or as a draft for review (<a href="#jobs">AI pages</a>).</li>
         </ol>
@@ -319,15 +319,16 @@
 
       <section id="repos">
         <h2>Repositories</h2>
-        <p>The <strong>Repositories</strong> tab lists the repositories CodeDoc may read. Sync blocks and AI pages can use only these. Only CodeDoc admins add or remove them.</p>
-        <img src="imgCodeDoc/v2/repositories.webp" alt="Repositories tab with five connected repositories, their branch and provider" width="1600" height="892" loading="lazy">
+        <p>The <strong>Repositories</strong> tab lists the repositories CodeDoc may read, grouped by the Git connection that reads them. Sync blocks and AI pages can use only these. Only CodeDoc admins add or remove them.</p>
+        <img src="imgCodeDoc/v2/repositories.webp" alt="Repositories tab: the repositories grouped by Git connection, each with its branch and the date it was added" width="1600" height="1672" loading="lazy">
         <ul>
-          <li><strong>Browse repositories</strong>: with several Git connections, choose the connection first. Search, tick the repositories and click <strong>Add N Selected Repository(ies)</strong>. The list shows up to 100 repositories.</li>
-          <li><strong>Add by address</strong>: paste the address, for example <code>https://github.com/org/repo</code>; a link to any file or branch in it works too. Leave <strong>Branch</strong> empty to use the repository's default branch, then click <strong>Add Repository</strong>. CodeDoc checks access first.</li>
+          <li><strong>Add repositories</strong>: click it on the card of a connection, or at the top and then choose the connection. CodeDoc lists the repositories that connection can read. Click the ones you want (they are marked in blue; search if the list is long), then <strong>Add N repositories</strong>.</li>
+          <li><strong>Not listed? Add by address</strong>: in the same dialog, paste the address, for example <code>https://github.com/org/repo</code>; a link to any file or branch in it works too. Leave <strong>Branch</strong> empty to use the repository's default branch, then click <strong>Add repository</strong>. CodeDoc checks access first.</li>
+          <li><strong>Remove</strong>: next to each repository. Sync blocks and AI pages that use it stop updating until it is added again; their content stays on the pages.</li>
         </ul>
         <details class="more">
           <summary>GitLab subgroups, Bitbucket and your own server</summary>
-          <p><strong>Add by address</strong> works for all token types and is the only option for Bitbucket access tokens, which cannot list repositories. GitLab projects in subgroups (<code>group/subgroup/project</code>) are supported. For your own GitHub Enterprise or GitLab server, connect the server in Settings → Connections first, then add its repositories here. If adding fails, the message names the repository and the connection CodeDoc tried.</p>
+          <p><strong>Add by address</strong> works for all token types and is the only option for Bitbucket access tokens, which cannot list repositories; for them the dialog shows the address field right away. For a connection made with <strong>Sign in with GitHub</strong>, <strong>Add repositories</strong> continues with the GitHub sign-in, because GitHub confirms there that you are an admin of each repository. GitLab projects in subgroups (<code>group/subgroup/project</code>) are supported. For your own GitHub Enterprise or GitLab server, connect the server in Settings → Connections first, then add its repositories here. If adding fails, the message names the repository and the connection CodeDoc tried.</p>
         </details>
       </section>
 
@@ -460,7 +461,7 @@
         <img src="imgCodeDoc/sync-blocks/sync-block-incomplete.webp" alt="Message on a sync block: CodeDoc Sync Block settings incomplete, missing file path and key path, with instructions" width="1460" height="296" loading="lazy">
 
         <h3 id="sync-manage">Manage all sync blocks</h3>
-        <p>The <strong>Sync blocks</strong> tab lists every block with its page, source, kind of content, update rule, status, last check and, for a problem, what to do. Filter by <strong>Needs attention</strong>, run a block with <strong>Update now</strong>, or stop syncing it with <strong>Remove</strong> (its content stays on the page as normal text). <strong>Remove detached</strong> clears entries whose page or block is gone.</p>
+        <p>The <strong>Sync blocks</strong> tab lists every block with its page, source, kind of content, update rule, status, last check and, for a problem, what to do. Filter by <strong>Needs attention</strong>, run a block with <strong>Update now</strong>, or stop syncing it with <strong>Remove</strong> (the block stays on the page with its last content and syncs again only after a Job Operator approves it there). <strong>Remove detached</strong> clears entries whose page or block is gone.</p>
         <img src="imgCodeDoc/screenshot-1-sync-blocks-overview.webp" alt="Sync blocks tab listing all blocks with page, source, kind, update rule, status and last check" width="1840" height="900" loading="lazy">
 
         <h3 id="sync-limits">Good to know</h3>
@@ -543,7 +544,7 @@
           <summary>GitHub: add the webhook</summary>
           <ol>
             <li>Repository → <strong>Settings</strong> → <strong>Webhooks</strong> → <strong>Add webhook</strong>.</li>
-            <li>Paste the <strong>Webhook URL</strong> into "Payload URL" and set <strong>Content type</strong> to <code>application/json</code>. If you created a webhook secret in CodeDoc, paste it into <strong>Secret</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong> into "Payload URL" and set <strong>Content type</strong> to <code>application/json</code>. Paste the webhook secret from CodeDoc (Settings → Webhook) into <strong>Secret</strong>.</li>
             <li>Choose <strong>Just the push event</strong>, then click <strong>Add webhook</strong>.</li>
           </ol>
         </details>
@@ -551,7 +552,7 @@
           <summary>GitLab: add the webhook</summary>
           <ol>
             <li>Project → <strong>Settings</strong> → <strong>Webhooks</strong>.</li>
-            <li>Paste the <strong>Webhook URL</strong>. If you created a webhook secret, paste it into <strong>Secret token</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong>. Paste the webhook secret from CodeDoc (Settings → Webhook) into <strong>Secret token</strong>.</li>
             <li>Under "Trigger", check <strong>Push events</strong>, then click <strong>Add webhook</strong>.</li>
           </ol>
         </details>
@@ -559,7 +560,7 @@
           <summary>Bitbucket: add the webhook</summary>
           <ol>
             <li>Repository → <strong>Repository settings</strong> → <strong>Webhooks</strong> → <strong>Add webhook</strong>.</li>
-            <li>Enter a title (e.g. "CodeDoc") and paste the <strong>Webhook URL</strong>. If you created a webhook secret, paste it into <strong>Secret</strong>.</li>
+            <li>Enter a title (e.g. "CodeDoc") and paste the <strong>Webhook URL</strong>. Paste the webhook secret from CodeDoc (Settings → Webhook) into <strong>Secret</strong>.</li>
             <li>Under "Triggers", choose <strong>Repository → Push</strong> (<code>repo:push</code>) and click <strong>Save</strong>.</li>
           </ol>
         </details>
@@ -568,7 +569,7 @@
           <ol>
             <li><strong>Project settings</strong> → <strong>Service hooks</strong> → <strong>Create subscription</strong> → <strong>Web Hooks</strong>.</li>
             <li>Select the trigger event <strong>Code pushed</strong>.</li>
-            <li>Paste the <strong>Webhook URL</strong>. If you created a webhook secret, choose <strong>Basic authentication</strong>: any user name, the secret as the password. Click <strong>Finish</strong>.</li>
+            <li>Paste the <strong>Webhook URL</strong>. Choose <strong>Basic authentication</strong>: any user name, the webhook secret from CodeDoc (Settings → Webhook) as the password. Click <strong>Finish</strong>.</li>
           </ol>
         </details>
         <p>On your own GitHub Enterprise or GitLab server the steps are the same; the server must be able to reach the webhook address on the internet.</p>
@@ -734,6 +735,7 @@
           <table>
             <thead><tr><th>Provider</th><th>Token</th></tr></thead>
             <tbody>
+              <tr><td><strong>GitHub</strong> (github.com), with a sign-in</td><td>No token: sign in to GitHub and choose the repositories. An organization owner installs the CodeDoc GitHub App once; it can only read (<a href="#github-connect">steps</a>).</td></tr>
               <tr><td><strong>GitHub</strong> (github.com)</td><td>Fine-grained token with <strong>Contents: Read</strong>, or a classic token with the <code>repo</code> scope. <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">GitHub Docs</a></td></tr>
               <tr><td><strong>GitHub Enterprise</strong> (your server or <code>NAME.ghe.com</code>)</td><td>The same tokens, created on your server. A site admin approves the address once (<a href="#providers-server">details</a>).</td></tr>
               <tr><td><strong>GitHub App</strong> (your organization's own app on github.com)</td><td>No token: the App ID and private key of an app your organization creates, with <strong>Contents: Read</strong>. For organizations with an IP allow list or without personal tokens (<a href="#github-app">steps</a>).</td></tr>
@@ -757,6 +759,53 @@
           <summary>Network and approval details</summary>
           <p>CodeDoc runs on Atlassian's cloud, not inside your network. The server must be reachable from the internet over HTTPS, with a certificate from a public certificate authority. If a firewall protects it, allow Atlassian's outgoing IP addresses (<a href="https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/" target="_blank" rel="noopener">IP addresses and domains for Atlassian cloud products</a>).</p>
           <p>The approval is listed in Atlassian Administration → Connected apps → CodeDoc → Data management ("Data storage, sharing, receiving and processing"), where an admin can remove it again. Repositories, file links, sync blocks, AI pages and webhooks then work as on the cloud services.</p>
+        </details>
+
+        <h3 id="github-connect">GitHub: connect with a sign-in</h3>
+        <p>The quickest way to connect <strong>github.com</strong>: you sign in to GitHub and choose what CodeDoc may read. No token to create, no key to copy. Behind it is the <strong>CodeDoc GitHub App</strong>, which an owner of your GitHub organization installs once, for all repositories or only for some. It can only read.</p>
+        <p><strong>Who can connect:</strong> a GitHub account with <strong>admin rights on the repository</strong> (organization owners have them for every repository). That is the same bar GitHub sets for giving an app access to a repository. If you can only read a repository, ask a repository admin or an organization owner to connect it; it takes a minute and needs no token.</p>
+        <ol>
+          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection</strong> → <strong>GitHub</strong>. <strong>Sign in with GitHub</strong> is the recommended way and already selected.
+            <img src="imgCodeDoc/github-connect/01-codedoc-tiles.webp" alt="CodeDoc, Add connection: GitHub chosen, the way "Sign in with GitHub" marked Recommended" width="1468" height="1216" loading="lazy">
+          </li>
+          <li><strong>Sign in to GitHub:</strong> click <strong>Sign in to GitHub</strong>. Atlassian's page opens in the same tab; click <strong>Continue</strong>, sign in to GitHub if it asks, and click <strong>Authorize</strong>. You land in CodeDoc again, and the window opens where you left it. CodeDoc learns which organizations and repositories your GitHub account can read, nothing else.
+            <img src="imgCodeDoc/github-connect/02-atlassian-continue.webp" alt="Atlassian's consent page for the GitHub sign-in, with Continue" width="1444" height="1212" loading="lazy"><img src="imgCodeDoc/github-connect/03-github-authorize.webp" alt="GitHub's page to authorize CodeDoc for Confluence, with the CodeDoc logo and the Authorize button" width="1316" height="1466" loading="lazy">
+          </li>
+          <li><strong>Install the app, once per organization:</strong> if your organization is not listed yet, click <strong>Install the CodeDoc app on GitHub</strong>. An organization owner chooses <strong>All repositories</strong> or <strong>Only select repositories</strong> and clicks <strong>Install</strong>; the page confirms <em>Read access to code and metadata</em>. If you are not an owner, GitHub sends the owners a request instead. CodeDoc notices the installation by itself.
+            
+          </li>
+          <li><strong>Choose the repositories:</strong> with one organization CodeDoc goes straight on to its repositories; with several, click <strong>Choose repositories</strong> next to the right one. The list shows the repositories of that organization that you are an admin of. Where the app was installed for selected repositories only, they are selected already. Click <strong>Connect</strong>.
+            <img src="imgCodeDoc/github-connect/05-codedoc-repositories.webp" alt="CodeDoc sign-in window, step 3: choose the repositories of the organization" width="1468" height="1010" loading="lazy">
+          </li>
+          <li><strong>Done:</strong> the repositories are in CodeDoc right away (Repositories tab), and the connection appears with <strong>Sign-in via the CodeDoc app</strong>. Sync blocks and AI pages read from them like from any other connection.
+            <img src="imgCodeDoc/github-connect/06-codedoc-connected.webp" alt="CodeDoc, Git connections: the new connection with "Sign-in via the CodeDoc app"" width="1600" height="895" loading="lazy">
+          </li>
+        </ol>
+        <p><strong>More repositories later:</strong> Repositories → <strong>Add repositories</strong> on the card of this connection → <strong>Continue with GitHub sign-in</strong>, then <strong>Add repositories</strong> next to the organization. <strong>Fewer:</strong> remove a repository in the Repositories tab; CodeDoc then can no longer read it. <strong>Another GitHub account:</strong> click <strong>Use another GitHub account</strong> in the window and follow the three steps it shows.</p>
+        <details class="more">
+          <summary>What CodeDoc can read, and who decides</summary>
+          <p>Three limits apply together, and GitHub enforces each of them:</p>
+          <ul>
+            <li><strong>The organization owner</strong> decides for which repositories the app is installed (all or selected), and can change or remove that at any time under organization settings → GitHub Apps → Configure.</li>
+            <li><strong>The person who connects</strong> must be an admin of each repository on GitHub. The access stays tied to that role: when it ends, for example because the person leaves the organization, CodeDoc stops reading the repository and shows <strong>Needs confirmation</strong> at the connection until a current admin confirms it (Add connection → GitHub → Add repositories). Pages keep their last content meanwhile.</li>
+            <li><strong>The CodeDoc admin</strong> can add only repositories that their own GitHub account administers. CodeDoc asks GitHub for a token that is limited to exactly the repositories added to the connection, even where the app is installed for more.</li>
+            <li><strong>Read-only:</strong> the app has the permissions <em>Contents: Read-only</em> and <em>Metadata: Read-only</em>, nothing else. The token is valid for one hour and is then requested again.</li>
+          </ul>
+          <p>Your GitHub sign-in is kept by Atlassian, not by CodeDoc, and is used only while you connect or add repositories. Afterwards CodeDoc reads through the app, so the connection keeps working when the person who set it up leaves. You can remove the sign-in under <a href="https://id.atlassian.com/manage-profile/apps" target="_blank" rel="noopener">Atlassian account → Connected apps</a>.</p>
+          <p>A repository that the organization removes from the app on GitHub drops out of the connection by itself; the other repositories keep working.</p>
+        </details>
+        <details class="more" id="github-connect-ip">
+          <summary>Organizations with an IP allow list</summary>
+          <p>One step on GitHub, by an organization owner: organization settings → Authentication security → tick <strong>Enable IP allow list configuration for installed GitHub Apps</strong>. The CodeDoc app brings Atlassian's outgoing addresses with it, so nobody has to type them in. Without the tick CodeDoc cannot reach the organization and tells you this step.</p>
+          <p>For such an organization GitHub refuses requests made in your name from Atlassian's cloud. CodeDoc therefore asks GitHub through the app which of the app's repositories your GitHub account administers, and offers only those. Where the app is installed for more than 100 repositories, you enter the repositories by name instead (<code>OWNER/NAME</code>), and CodeDoc checks each one the same way.</p>
+        </details>
+        <details class="more">
+          <summary>When to use a token or your own GitHub App instead</summary>
+          <ul>
+            <li><strong>GitHub Enterprise Server</strong> or <code>NAME.ghe.com</code>: the CodeDoc app exists on github.com only. Connect with a token (<a href="#providers-server">your own Git server</a>).</li>
+            <li><strong>Your organization does not allow apps from others:</strong> create <a href="#github-app">a GitHub App of your own</a>.</li>
+            <li><strong>A single personal repository:</strong> a fine-grained token with <strong>Contents: Read</strong> works as before.</li>
+          </ul>
         </details>
 
         <h3 id="github-app">GitHub App: organizations with an IP allow list</h3>
@@ -784,7 +833,7 @@
           <li><strong>Connect in CodeDoc:</strong> paste the App ID and the whole content of the <code>.pem</code> file, then click <strong>Connect</strong>. Without step 5, CodeDoc answers “Nothing is saved yet” and names the missing steps. The connection then appears with the label <strong>GitHub App</strong>.
             <img src="imgCodeDoc/github-app/10-codedoc-connected.webp" alt="CodeDoc, Git connections: the new connection marked GitHub App" width="1600" height="264" loading="lazy">
           </li>
-          <li><strong>Use it:</strong> Repositories → choose the connection → <strong>Browse repositories</strong> → add. Sync blocks and AI pages read from it like from any other connection.
+          <li><strong>Use it:</strong> Repositories → <strong>Add repositories</strong> on the card of the connection → click the repositories → add. Sync blocks and AI pages read from it like from any other connection.
             <img src="imgCodeDoc/github-app/11-codedoc-sync-block.webp" alt="A Confluence page with a CodeDoc sync block showing image and version from a private repository, In sync" width="1600" height="691" loading="lazy">
           </li>
         </ol>
@@ -808,7 +857,7 @@
 
       <section id="editions">
         <h2>Editions, trial and licensing</h2>
-        <p>CodeDoc is a paid app with two editions and a <strong>30-day free trial</strong>. Both editions contain every CodeDoc feature; <strong>Advanced</strong> adds Atlassian-hosted AI, so AI pages need no own AI key.</p>
+        <p>CodeDoc is a paid app with two editions and a <strong>30-day free trial</strong>. Both editions contain sync blocks and AI pages; <strong>Advanced</strong> adds Atlassian-hosted AI, so AI pages need no own AI key.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Feature</th><th>Standard</th><th>Advanced</th></tr></thead>
@@ -854,8 +903,8 @@
             <tbody>
               <tr><td><strong>Administrator</strong></td><td>App admins, team leads</td><td>Everything: Overview, Sync blocks, AI pages, Repositories, Settings including Permissions.</td></tr>
               <tr><td><strong>Job Operator</strong></td><td>Developers, documentation owners</td><td>Overview, Sync blocks (set up, approve, update), AI pages (create and run); Repositories and Settings read-only.</td></tr>
-              <tr><td><strong>Confluence Administrator</strong></td><td>Site and product admins</td><td>Always full Administrator access, no configuration needed.</td></tr>
-              <tr><td><em>No role</em></td><td>All other users</td><td>Access denied, with a link to request access from the admin.</td></tr>
+              <tr><td><strong>Confluence Administrator</strong></td><td>Site and product admins</td><td>Always full Administrator access; no group needed.</td></tr>
+              <tr><td><em>No role</em></td><td>All other users</td><td>A note that CodeDoc is not available to them yet, to ask a Confluence administrator, with a link to this guide.</td></tr>
             </tbody>
           </table>
         </div>
@@ -914,7 +963,7 @@
         </details>
         <details class="more">
           <summary>"the Git provider rejected the access token (HTTP 401)"</summary>
-          <p>The token stored in CodeDoc is invalid or expired. An administrator can replace it under <strong>Settings → Connections</strong>. The block keeps its last good content until the next successful update.</p>
+          <p>The token stored in CodeDoc is invalid or expired. A token cannot be swapped in place: an administrator adds a connection with a fresh token under <strong>Settings → Connections</strong>, removes the old one and adds its repositories again from the new connection (removing a connection also removes its repositories; sync blocks find theirs again by name, AI pages need it chosen again). On github.com, <strong>Sign in with GitHub</strong> needs no token at all. The block keeps its last good content until the next successful update.</p>
         </details>
         <details class="more" id="ip-allow-list">
           <summary>"the GitHub organization accepts requests only from addresses on its IP allow list (HTTP 403)"</summary>
@@ -926,7 +975,7 @@
         </details>
         <h3>AI pages</h3>
         <details class="more">
-          <summary>"A Confluence page with this title already exists"</summary>
+          <summary>"A Confluence page named … already exists in this space"</summary>
           <p>Page titles are unique per space. <strong>Rename the AI page</strong>, or rename or move the other page in Confluence. CodeDoc warns about conflicts when you save an AI page (<a href="#jobs-target">Confluence target</a>).</p>
         </details>
         <details class="more">
@@ -983,8 +1032,8 @@
           <p>CodeDoc accepts only Bitbucket <strong>access tokens</strong> (<a href="#providers-bitbucket">Bitbucket tokens</a>). Create a repository access token with "Repositories: Read" and paste only the token value.</p>
         </details>
         <details class="more">
-          <summary>Bitbucket: "Browse" doesn't show my repositories</summary>
-          <p>Bitbucket does not let access tokens list repositories (its account-wide repository list was removed in 2026). Add each repository with <strong>Add by address</strong>; CodeDoc checks there that the token can read it. With Bitbucket Premium, one project or workspace access token covers several repositories.</p>
+          <summary>Bitbucket: "Add repositories" shows no list</summary>
+          <p>Bitbucket does not let access tokens list repositories (its account-wide repository list was removed in 2026). In Repositories → <strong>Add repositories</strong>, the dialog therefore asks for the address of each repository; CodeDoc checks there that the token can read it. With Bitbucket Premium, one project or workspace access token covers several repositories.</p>
         </details>
         <details class="more">
           <summary>Own server: "CodeDoc may not connect to … yet" or "could not reach …"</summary>

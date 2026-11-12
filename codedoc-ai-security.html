@@ -18,7 +18,7 @@
     </div>
 
     <h1>Security Statement</h1>
-    <p class="updated">CodeDoc for Confluence · Last updated: October 12, 2026</p>
+    <p class="updated">CodeDoc for Confluence · Last updated: November 12, 2026</p>
 
     <h2>1. Overview</h2>
     <p>
@@ -74,6 +74,10 @@
         <tr>
           <td>Bitbucket</td>
           <td>Since version 8, only repository, project and workspace access tokens are accepted; personal API tokens and app passwords (entered as <em>email:token</em> or <em>username:password</em>) are refused. Connections made earlier with a personal token keep working and are marked in CodeDoc until an admin replaces them.</td>
+        </tr>
+        <tr>
+          <td>Connect with GitHub</td>
+          <td>Since version 9, a site admin can sign in to GitHub instead of entering a token. Atlassian keeps that sign-in (Forge external authentication); the App's code never sees it. The App reads with short-lived tokens of the CodeDoc GitHub App: read-only, limited to the repositories connected on the site, valid for at most one hour, stored like other credentials and ended at GitHub as soon as a repository or the connection is removed. Each repository stays tied to the GitHub account that connected it and is read only while that account is still an admin of it. The app's private key belongs to us as the operator of the GitHub App; it is kept only as an encrypted Forge variable of the App, we keep no other copy, and we do not use it outside the App.</td>
         </tr>
       </table>
     </div>
@@ -225,16 +229,16 @@
 
     <h2>11. Compliance</h2>
     <ul>
-      <li><strong>GDPR:</strong> As personal data, the App stores Atlassian account IDs (who approved, discarded or undid a run, approved a sync block or dismissed the rating prompt) and the name of the Git account behind each Git connection, all in Forge storage for your site. Code that contains personal data is sent to the AI provider you connected with your own key, or processed by Atlassian AI. See our <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> for details.</li>
+      <li><strong>GDPR:</strong> As personal data, the App stores Atlassian account IDs (who approved, discarded or undid a run, approved a sync block or dismissed the rating prompt) the name of the Git account behind each Git connection, and the GitHub user name and account ID of each admin who connected repositories with Connect with GitHub, all in Forge storage for your site. Code that contains personal data is sent to the AI provider you connected with your own key, or processed by Atlassian AI. See our <a href="codedoc-ai-privacy-policy.html">Privacy Policy</a> for details.</li>
       <li><strong>Atlassian Security:</strong> The App follows <a href="https://developer.atlassian.com/platform/forge/security/" target="_blank" rel="noopener">Atlassian Forge security requirements</a>. Because it connects to Git and AI services outside Atlassian, it is not part of Atlassian's <a href="https://developer.atlassian.com/platform/forge/runs-on-atlassian/" target="_blank" rel="noopener">Runs on Atlassian</a> program and offers no data residency options.</li>
-      <li><strong>Sub-processors:</strong> Atlassian only — it hosts the App on Forge (runtime and storage) under Atlassian's <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum</a>, which includes Standard Contractual Clauses for transfers outside the EEA. All other third-party data transmission is initiated by the user via their own credentials, or reads public registry data; Atlassian AI is part of Atlassian's platform.</li>
+      <li><strong>Sub-processors:</strong> Atlassian only — it hosts the App on Forge (runtime and storage) under Atlassian's <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf" target="_blank" rel="noopener">Forge Data Processing Addendum</a>, which includes Standard Contractual Clauses for transfers outside the EEA. All other third-party data transmission is initiated by the user via their own credentials or, with Connect with GitHub, via the CodeDoc GitHub App the customer's organization installed, or reads public registry data; Atlassian AI is part of Atlassian's platform.</li>
     </ul>
 
     <h2>12. What We Do NOT Have Access To</h2>
     <p>For complete transparency:</p>
     <ul>
       <li>Your API keys or Git access tokens</li>
-      <li>Your source code or repository contents</li>
+      <li>Your source code or repository contents (with Connect with GitHub, the App reads with the private key of the CodeDoc GitHub App; we do not use that key outside the App, see section 3)</li>
       <li>The generated documentation content</li>
       <li>Your Confluence instance data beyond what the App's scopes allow</li>
       <li>User identity, email addresses, or personal data (the account IDs the App stores stay in your site's Forge storage)</li>
