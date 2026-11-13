@@ -21,7 +21,7 @@
     </div>
 
     <h1>Privacy Policy</h1>
-    <p class="updated">Riskcadence for Jira · Last updated: November 6, 2026</p>
+    <p class="updated">Riskcadence for Jira · Last updated: November 13, 2026</p>
 
     <h2>1. Introduction</h2>
     <p>
@@ -49,7 +49,7 @@
     <p>
       The App also <strong>changes</strong> data in Jira, only when a person asks it to and with that person's
       permissions: the risk fields, the owner, the response and the next review date; a Jira comment when someone
-      requests a re-assessment; the status when a risk is closed in a review or an import; risks created in the register or by an import;
+      requests a re-assessment; a label and a comment that mentions the risk owner when a project admin has switched on the optional overdue-review check (section 3); the status when a risk is closed in a review or an import; risks created in the register or by an import;
       and, during setup, the Risk work type, the fields, the link type and the screen entries.
     </p>
 
@@ -70,6 +70,10 @@
       <li><strong>Import markers (2 days):</strong> while an import runs, per imported row a work item key under a hash of the project and the source ID, so that no risk is created twice.</li>
       <li><strong>Anonymous daily usage counters:</strong> per day and site, how often features were used (for example "the register was opened" or "a review was closed"). No IDs, names, project keys or content.</li>
       <li><strong>Import information on the risk, in Jira:</strong> risks created or updated by an import carry a Jira work item property named riskcadence with the source ID, the time of the import and the imported values (descriptions up to 6,000 characters; the owner column only as a short checksum, which lets the next import detect a change; it is not anonymised or encrypted). Jira stores it with the risk, and everyone who can see the risk can read it.</li>
+      <li><strong>Overdue reviews (optional, stored only after a project admin switches it on for a project):</strong> in Jira, the label <code>risk-review-overdue</code> on the work item (removed when the risk is reviewed or closed and, for all risks of the project, also those labelled by hand, when the feature is switched off; it stays if you uninstall the App without switching it off, and on a risk that was moved to another project until it is reviewed there or that project switches the feature off); the work item property <code>riskcadence-overdue</code> with two dates, the review date that was announced and the time of the announcement, and no person (it stays when the feature is switched off, so that switching it on again posts no second comment); and one comment per review date that mentions the risk owner. Jira stores the owner's account ID in the mention and shows the display name. In Jira Service Management projects the comment is internal. The App does not delete comments.</li>
+      <li><strong>JQL search (optional, stored only after a project admin switches it on for a project):</strong> the work item property <code>riskcadence-jql</code> with the score, the residual score and the level of the risk. It holds no personal data. It is removed from the risks of the project when the feature is switched off. It stays if you uninstall the App without switching it off, and on a risk that was moved to another project until that project switches the feature off.</li>
+      <li><strong>Closing rule (optional):</strong> when an admin adds it to a workflow, the configuration is part of the Jira workflow and holds only field and work type IDs.</li>
+      <li><strong>Settings of these features, in Forge storage:</strong> the settings per project, the state of the background jobs, locks that expire after 15 minutes and a retry list of up to 200 work item IDs. None of it contains personal data.</li>
       <li><strong>In your browser:</strong> the welcome and the Getting started card remember in your browser's storage that you saw or hid them, and whether the checklist is expanded. This is never sent to us.</li>
     </ul>
     <p>
@@ -110,7 +114,7 @@
       Everything listed in section 3 as stored by the App is kept in Forge hosted storage, which supports Atlassian's
       <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">data residency</a>:
       it is held in the same location as your Jira site and moves with it when an admin moves the site's data to another
-      location. The technical logs in section 4 are handled by Atlassian's app logging and are not part of the App's stored data.
+      location. The technical logs in section 4 are handled by Atlassian's app logging and are not part of the App's stored data. Labels, work item properties, comments and workflow configuration are Jira data of your site and stay in its data residency.
     </p>
 
     <h2>6. Third-Party Services</h2>
@@ -125,6 +129,7 @@
       <li><strong>Closed accounts:</strong> a weekly personal data job erases the account IDs of closed Atlassian accounts from everything the App stores (section 8).</li>
       <li><strong>Saved views and configuration</strong> are kept while the App is installed; a project admin can delete a view, and the full export lets you take the data of a project with you (<a href="riskcadence-docs.html#export">documentation</a>).</li>
       <li>Only <strong>import markers</strong> (after 2 days) and <strong>anonymous daily usage counters</strong> (after 8 days) expire automatically; Forge storage deletes them itself.</li>
+      <li><strong>Labels, work item properties and comments in Jira</strong> (section 3) stay after you uninstall the App, as part of your Jira data. Before uninstalling, a project admin can switch both features off: that removes the overdue label and the JQL property from the risks of the project (a risk moved to another project keeps them).</li>
       <li>When the App deletes data, it is removed from Forge storage at once and the App can no longer read it. Atlassian keeps a soft-deleted copy for recovery from accidental deletion until the end of its retention period.</li>
       <li><strong>After you uninstall the App</strong>, Atlassian keeps the App's storage for <strong>28 days</strong> and then deletes it (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Data lifecycle for Forge-hosted storage</a>). During that time the App cannot read it. Within 21 days of the uninstall, you can ask us to have Atlassian restore it to a new installation of the App. The risks, the fields and their values remain in Jira; they are Jira's data. The calculated fields go with the App and can be recalculated from the other fields.</li>
     </ul>

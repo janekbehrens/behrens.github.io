@@ -126,6 +126,7 @@
         <a class="sub" href="#setup-company">Unternehmensverwaltete Projekte</a>
         <a class="sub" href="#setup-team">Teamverwaltete Projekte</a>
         <a class="sub" href="#setup-repair">Einrichtung reparieren</a>
+        <a class="sub" href="#get-started-page">Seite „Get started“</a>
         <a class="sub" href="#examples">Beispielrisiken</a>
         <a href="#fields">Felder</a>
         <a href="#matrix">Risikomatrix</a>
@@ -146,8 +147,13 @@
         <a href="#dashboard">Dashboards</a>
         <a href="#import">Import</a>
         <a href="#reminders">Erinnerungen</a>
+        <a href="#automation">Automatisierung</a>
+        <a class="sub" href="#overdue">Overdue reviews (Überfällige Reviews)</a>
+        <a class="sub" href="#jql">Suche mit JQL</a>
+        <a class="sub" href="#closing-rule">Schließregel</a>
         <a href="#export">Export</a>
         <a href="#permissions">Berechtigungen</a>
+        <a class="sub" href="#app-permissions">Warum diese Berechtigungen</a>
         <a href="#limits">Limits</a>
         <a href="#faq">Häufige Fragen und Meldungen</a>
         <a href="#support">Support</a>
@@ -169,7 +175,7 @@
           <li>Führe dein erstes Review durch: <span class="ui">Review</span>  →  <span class="ui">Sessions (Sitzungen)</span>  →  <span class="ui">Start review (Review starten)</span> und entscheide über jedes Risiko, dann klicke auf <span class="ui">Close review… (Review abschließen…)</span>  (<a href="#reviews">Details</a>).</li>
           <li>Teile das Ergebnis über den Tab <span class="ui">Report</span> oder über das Makro <span class="ui">Riskcadence risk report</span> auf einer Confluence-Seite (<a href="#confluence">Details</a>), oder über die Risikomatrix auf einem Jira-Dashboard (<a href="#dashboard">Details</a>).</li>
         </ol>
-        <p>In der App erklärt ein kurzes <em>Welcome to Riskcadence (Willkommen bei Riskcadence)</em> in vier Ideen, wie es funktioniert: Risiken leben in Jira, du bewertest sie auf deiner Matrix, du überprüfst sie regelmäßig, und du berichtest, was sich geändert hat. Es erscheint auf der Einrichtungsseite und bei deinem ersten Besuch, und die Checkliste <em>Erste Schritte</em> hakt diese Schritte anhand deiner Daten ab. Jeder Tab hat den Link <span class="ui">Help (Hilfe)</span> zum passenden Abschnitt dieser Dokumentation.</p>
+        <p>In der App erklärt ein kurzes <em>Welcome to Riskcadence (Willkommen bei Riskcadence)</em> in vier Ideen, wie es funktioniert: Risiken leben in Jira, du bewertest sie auf deiner Matrix, du überprüfst sie regelmäßig, und du berichtest, was sich geändert hat. Es erscheint auf der Einrichtungsseite und bei deinem ersten Besuch, und die Checkliste <em>Erste Schritte</em> hakt diese Schritte anhand deiner Daten ab. Jeder Tab hat den Link <span class="ui">Help (Hilfe)</span> zum passenden Abschnitt dieser Dokumentation. Jira-Administratoren finden außerdem unter <span class="ui">Apps → Manage apps → Riskcadence → Get started</span>  (<a href="#get-started-page">Details</a>).</p>
       </div>
 
       <details class="toc">
@@ -188,6 +194,7 @@
           <li><a href="#dashboard">Dashboards</a></li>
           <li><a href="#import">Import</a></li>
           <li><a href="#reminders">Erinnerungen</a></li>
+          <li><a href="#automation">Automatisierung: überfällige Reviews, JQL-Suche, Schließregel</a></li>
           <li><a href="#export">Export</a></li>
           <li><a href="#permissions">Berechtigungen: wer was darf</a></li>
           <li><a href="#limits">Limits</a></li>
@@ -250,6 +257,9 @@
 
         <h3 id="setup-repair">Einrichtung reparieren</h3>
         <p>Lehnt Jira einen Schritt ab, listet Riskcadence die fehlgeschlagenen Schritte auf und macht weiter. Ein Projektadministrator kann die Einrichtung jederzeit erneut ausführen: <span class="ui">Settings → Project setup → Repair setup</span>. Jeder Schritt sucht oder legt an, das erneute Ausführen ist also sicher und ändert keine Daten. In teamverwalteten Projekten prüft sie den Vorgangstyp und die Felder erneut.</p>
+
+        <h3 id="get-started-page">Die Seite „Get started“ in Manage apps</h3>
+        <p>Jira-Administratoren finden unter <span class="ui">Apps → Manage apps → Riskcadence → Get started</span> eine kurze Einführung: was Riskcadence tut, die drei ersten Schritte (ein Projekt einrichten, Risiken bewerten, regelmäßig prüfen) und deine Projekte. Bereits eingerichtete Projekte verlinken direkt auf ihr Register, ihre Einstellungen und ihre Automatisierung. Bei jedem anderen Projekt öffnet <span class="ui">Set up Riskcadence (Riskcadence einrichten)</span> den Einrichtungsassistenten auf der Projektseite. Erst wenn du die Einrichtung dort bestätigst, ändert sich etwas.</p>
 
         <h3 id="examples">Beispielrisiken</h3>
         <p>Aktiviere <span class="ui">Add 6 example risks to try Riskcadence (6 Beispielrisiken zum Ausprobieren hinzufügen)</span> bei der Einrichtung oder klicke später auf <span class="ui">Settings → Add example risks</span> (Projektadministratoren). Die sechs Risiken tragen das Label <code>riskcadence_example</code>, zeigen Register, Matrix, Review-Posteingang und Bericht mit Daten, und bei einigen bist du Risikoeigner. Wer sie zweimal hinzufügt, erzeugt keine Duplikate; bei einer kleineren Matrix werden ihre Werte herunterskaliert. <span class="ui">Remove example risks (Beispielrisiken entfernen)</span> löscht sie, wo Jira es erlaubt, und schließt die übrigen.</p>
@@ -494,6 +504,45 @@
           <li><span class="ui">Create filter: reviews due in this project (Filter erstellen: fällige Reviews in diesem Projekt)</span> erstellt einen Jira-Filter mit allen offenen Risiken, deren nächstes Review innerhalb von 7 Tagen fällig oder überfällig ist. <span class="ui">Create filter: my reviews due (Filter erstellen: meine fälligen Reviews)</span> tut dasselbe für die Risiken, deren Risikoeigner du bist. Öffne den Filter in Jira, und mit <span class="ui">Subscribe (Abonnieren)</span> erhältst du die Liste per E-Mail.</li>
           <li><strong>Jeden Risikoeigner erinnern</strong> zeigt die Schritte einer geplanten Jira-Automation-Regel: Trigger <em>Scheduled (Geplant)</em>,  <em>Run a JQL search (JQL-Suche ausführen)</em> mit dem JQL, das Riskcadence bereitstellt (<span class="ui">Copy JQL (JQL kopieren)</span>), und die Aktion <em>Send email (E-Mail senden)</em> an den Nutzer im Feld <em>Risk owner</em>.</li>
         </ul>
+        <p>Wenn Riskcadence die Prüfung übernehmen soll, schalte <a href="#overdue">überfällige Reviews</a> ein: Riskcadence erwähnt den Risikoeigner pro Review-Datum einmal in einem Jira-Kommentar.</p>
+      </section>
+
+      <section>
+        <h2 id="automation">Automatisierung: überfällige Reviews, JQL-Suche, Schließregel</h2>
+        <p>Drei optionale Funktionen, die ein Projektadministrator oder Jira-Administrator einschaltet. Sie sind aus, bis jemand sie einschaltet; bestehende Risiken und Einstellungen bleiben unverändert. Die beiden Projektschalter findest du unter <span class="ui">Settings → Automation</span>; alle anderen sehen nur ihren Stand.</p>
+
+        <h3 id="overdue">Überfällige Reviews (optional)</h3>
+        <p>Schalte <span class="ui">Settings → Automation → Mark overdue reviews and notify the risk owner</span> ein, damit Riskcadence dein Projekt einmal täglich prüft. Offene Risiken, deren nächstes Review-Datum verstrichen ist, erhalten das Label <code>risk-review-overdue</code> und einen Kommentar, der den Risikoeigner erwähnt. Jira stellt ihn als normale Erwähnungs-Benachrichtigung zu.</p>
+        <ul>
+          <li><strong>Einmal pro Review-Datum.</strong> Riskcadence kommentiert einmal pro Review-Datum. Es erinnert erst dann wieder, wenn das Datum verschoben wurde und erneut verstrichen ist.</li>
+          <li><strong>Das Label verschwindet,</strong> sobald das Risiko geprüft oder geschlossen wird. Änderungen, die direkt in Jira erfolgen, erfasst die nächste tägliche Prüfung.</li>
+          <li><strong>Kein Risikoeigner oder deaktiviertes Konto des Eigners:</strong> Der Kommentar erwähnt niemanden und bittet darum, einen Risikoeigner festzulegen. Beobachter erhalten weiterhin die normale Kommentar-E-Mail von Jira.</li>
+          <li><strong>Keine zu frühen Erinnerungen.</strong> Ein Datum gilt als überfällig, sobald es in jeder Zeitzone verstrichen ist; so wird niemand zu früh erinnert. Der Register-Filter <em>Overdue (Überfällig)</em> zählt nach dem UTC-Datum und kann ein Risiko einen Tag früher zeigen.</li>
+          <li><span class="ui">Check now (Jetzt prüfen)</span> führt die Prüfung sofort aus. Lehnt Jira eine Änderung ab, etwa wegen fehlender Berechtigungen an einem Vorgang, schreibt Riskcadence dafür keinen Kommentar, und die Statuszeile unter dem Schalter sagt, was zu tun ist.</li>
+          <li><strong>Beim Ausschalten</strong> wird das Label <code>risk-review-overdue</code> von den Risiken dieses Projekts entfernt, auch dort, wo jemand es von Hand gesetzt hat. Ein Risiko, das in ein anderes Projekt verschoben wurde, behält sein Label, bis es dort geprüft wird oder jenes Projekt die Funktion ausschaltet. Schaltest du wieder ein, erhält ein bereits angekündigtes Datum keinen zweiten Kommentar.</li>
+        </ul>
+        <p>Die Prüfung läuft als App, die Kommentare erscheinen also unter dem Namen Riskcadence. Die Grenzen stehen unter <a href="#limits">Limits</a>.</p>
+
+        <h3 id="jql">Score und Stufe per JQL suchen (optional)</h3>
+        <p>Schalte <span class="ui">Settings → Automation → Make score and level searchable with JQL</span> ein und verwende <code>riskcadenceScore</code>,  <code>riskcadenceResidualScore</code> und <code>riskcadenceLevel</code> in jedem JQL. Das funktioniert in unternehmensverwalteten und teamverwalteten Projekten gleichermaßen; in teamverwalteten Projekten lassen sich App-Felder nicht durchsuchen, dies ist dort also der einzige Weg, nach dem Score zu filtern.</p>
+        <p>Beispiel: <code>project = RISK AND riskcadenceScore &gt;= 12 ORDER BY riskcadenceScore DESC</code>. Ein Risiko, das noch nicht bewertet ist, hat keinen Wert; mit <code>riskcadenceScore is EMPTY</code> findest du die unbewerteten Risiken. <code>riskcadenceLevel</code> vergleicht mit dem Namen der Stufe, zum Beispiel <code>riskcadenceLevel = "High"</code>.</p>
+        <p>Der volle Pfad des gespeicherten Werts funktioniert ebenfalls: <code>issue.property[riskcadence-jql].score</code> (oder <code>.residualScore</code>,  <code>.level</code>). Beim Ausschalten verschwinden die Werte von den Risiken dieses Projekts; ein Risiko, das in ein anderes Projekt verschoben wurde, behält sie, bis jenes Projekt die Funktion ausschaltet. Die Felder <em>Risk score</em>,  <em>Residual score</em> und <em>Risk level</em> bleiben unverändert.</p>
+
+        <h3 id="closing-rule">Schließregel (optional)</h3>
+        <p>Die Schließregel hält ein Risiko offen, bis die von dir gewählten Werte erfasst sind. Sie ist ein Workflow-Validator: Füge <strong>Riskcadence closing rule</strong> zu dem Übergang hinzu, der Risiken schließt, in unternehmensverwalteten Projekten unter <span class="ui">Jira settings → Work items → Workflows</span>, in teamverwalteten Projekten unter <span class="ui">Project settings → Workflows</span>. Wähle dann, was zuerst erfasst sein muss.</p>
+        <ul>
+          <li><strong>Standardmäßig</strong> braucht ein Risiko eine <strong>Risikoreaktion</strong> und eine <strong>Restrisikobewertung</strong>: Die Behandlung ist entschieden und das verbleibende Risiko bewertet, wie ISO 31000 es beschreibt.</li>
+          <li><strong>Optional</strong> sind außerdem möglich: ein <strong>Risikoeigner</strong> und dass <strong>alle verknüpften Gegenmaßnahmen erledigt sind</strong>.</li>
+          <li>Andere Vorgangstypen im selben Workflow sind nicht betroffen.</li>
+          <li>Schlägt eine Prüfung fehl, zeigt Jira, welche Werte fehlen. Die Person ergänzt sie im <a href="#panel">Panel „Risk assessment“</a> und schließt das Risiko erneut.</li>
+          <li>Solange keine Konfiguration gespeichert ist, lässt die Regel den Übergang zu.</li>
+        </ul>
+        <p>Wer sie hinzufügen darf: ein Jira-Administrator in unternehmensverwalteten Projekten, der Projektadministrator in einem teamverwalteten Projekt (<a href="#permissions">Berechtigungen</a>).</p>
+
+        <h4 id="closing-rule-uninstall">Die Schließregel entfernen, bevor du Riskcadence deinstallierst</h4>
+        <div class="warning"><strong>Entferne die Regel aus dem Workflow, bevor du die App deinstallierst.</strong> Jira blockiert jeden Übergang, dessen Validator zu einer nicht mehr installierten App gehört. Das gilt für alle Apps, die Workflow-Regeln hinzufügen, nicht nur für Riskcadence.</div>
+        <p>Schalte vor der Deinstallation außerdem überfällige Reviews und die JQL-Suche aus unter <span class="ui">Settings → Automation</span> : Das entfernt die Labels und JQL-Werte von den Risiken dieses Projekts. Allein durch die Deinstallation bleiben sie an den Risiken, und ein Risiko, das in ein anderes Projekt verschoben wurde, behält sie.</p>
+        <p>Öffne den Workflow, wähle den Übergang, lösche die Regel <strong>Riskcadence closing rule</strong> und veröffentliche den Workflow. Ist Riskcadence bereits deinstalliert, entfernt ein Jira-Administrator die Regel auf demselben Weg; die Fehlermeldung am blockierten Übergang weist darauf hin.</p>
       </section>
 
       <section>
@@ -519,6 +568,9 @@
             <tr><td>Eine Gegenmaßnahme im Panel „Risk assessment“ hinzufügen</td><td>Die Projektberechtigungen <strong>Vorgänge anlegen</strong> (für einen neuen Vorgang) und <strong>Vorgänge verknüpfen</strong>.</td></tr>
             <tr><td>Ein Risiko hinzufügen, importieren</td><td>Alle, die <strong>Vorgänge anlegen</strong> dürfen (im Projekt).</td></tr>
             <tr><td>Eine geteilte Ansicht löschen</td><td>Ihr Ersteller oder ein Projektadministrator oder Jira-Administrator.</td></tr>
+            <tr><td>Überfällige Reviews oder JQL-Suche ein- oder ausschalten (<a href="#automation">Settings → Automation</a>)</td><td>Ein <strong>Projektadministrator</strong> oder Jira-Administrator. Alle anderen sehen den Stand.</td></tr>
+            <tr><td>Die <a href="#closing-rule">Schließregel</a> in einem Workflow hinzufügen oder ändern</td><td>Unternehmensverwaltet: ein <strong>Jira-Administrator</strong>. Teamverwaltet: der <strong>Projektadministrator</strong> dieses Projekts.</td></tr>
+            <tr><td>Öffne <a href="#get-started-page">Get started</a> unter Manage apps öffnen</td><td>Ein <strong>Jira-Administrator</strong>.</td></tr>
             <tr><td>Ein Dashboard-Widget hinzufügen</td><td>Alle, die das Dashboard bearbeiten dürfen.</td></tr>
             <tr><td>Riskcadence mit Confluence verbinden</td><td>Ein <strong>Administrator</strong>, einmalig, in der Atlassian Administration.</td></tr>
             <tr><td>Das Berichts-Makro in Confluence einfügen oder ändern</td><td>Alle, die <strong>die Seite bearbeiten</strong> können; die Vorschau zeigt jeweils, was die Person in Jira sieht.</td></tr>
@@ -528,7 +580,25 @@
             <tr><td>Einen veröffentlichten Stand sehen</td><td>Alle, die die Confluence-Seite sehen dürfen.</td></tr>
           </table>
         </div>
-        <p>Riskcadence verwendet sein eigenes App-Konto nur für die berechneten Felder und ihre Neuberechnung im Hintergrund, die Metadaten der Felder, den Abschlussstand eines Reviews und die Anzeigenamen-Abfragen des wöchentlichen Jobs für personenbezogene Daten. Was es speichert, wird vor der Anzeige danach gefiltert, was die lesende Person in Jira sehen kann. Details: <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
+        <p>Riskcadence verwendet sein eigenes App-Konto nur für die berechneten Felder und ihre Neuberechnung im Hintergrund, Feldmetadaten, den Abschlussstand eines Reviews, die Anzeigenamen-Abfragen des wöchentlichen Datenschutzberichts und, wenn du sie einschaltest, die tägliche Prüfung auf überfällige Reviews und die Werte für die JQL-Suche. Alles, was gespeichert ist, wird danach gefiltert, was die lesende Person in Jira sehen darf, bevor es angezeigt wird. Details: <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
+
+        <h3 id="app-permissions">Warum Riskcadence diese Berechtigungen anfordert</h3>
+        <p>Wenn ein Jira-Administrator eine Forge-App installiert, zeigt Atlassian die Berechtigungen, die die App anfordert. Hier steht, wofür Riskcadence jede einzelne braucht. Diese Scopes sind etwas anderes als das, was eine Person in Riskcadence darf; das richtet sich immer nach ihren eigenen Jira-Berechtigungen (siehe oben).</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Berechtigung (Scope)</th><th>Wofür Riskcadence sie braucht</th></tr>
+            <tr><td><code>read:jira-work</code></td><td>Um deine Risiken, Projekte, Felder und Suchergebnisse zu lesen, damit Register, Matrix, Reviews und Berichte sie anzeigen können.</td></tr>
+            <tr><td><code>write:jira-work</code></td><td>Um zu speichern, was du an einem Risiko änderst, und um Vorgänge, Kommentare, Übergänge, Filter für Erinnerungen und Vorgangseigenschaften zu schreiben (die Quell-ID des Imports, den Überfällig-Stand und die Werte für die JQL-Suche).</td></tr>
+            <tr><td><code>read:jira-user</code></td><td>Um Anzeigenamen für Risikoeigner, den Verlauf und die Personenauswahl nachzuschlagen.</td></tr>
+            <tr><td><code>manage:jira-configuration</code></td><td>Um den Vorgangstyp Risk, die Felder, den Verknüpfungstyp und die Bildschirme anzulegen, wenn ein Jira-Administrator ein unternehmensverwaltetes Projekt einrichtet; nur bei Einrichtung und Reparatur.</td></tr>
+            <tr><td><code>manage:jira-project</code></td><td>Um den Vorgangstyp und die Felder bei der Einrichtung in die Schemata und Bildschirme des Projekts aufzunehmen.</td></tr>
+            <tr><td><code>storage:app</code></td><td>Um Risikomatrix, Review-Sitzungen, Entscheidungen, gespeicherte Ansichten und Einstellungen im Forge-Speicher und in Forge SQL abzulegen, die auf der Infrastruktur von Atlassian laufen.</td></tr>
+            <tr><td><code>write:app-data:jira</code></td><td>Um die berechneten Felder Risk score, Residual score und Risk level zu schreiben.</td></tr>
+            <tr><td><code>read:page:confluence</code></td><td>Um zu prüfen, ob eine Person eine Confluence-Seite ansehen oder bearbeiten darf, bevor ein veröffentlichter Review-Stand angezeigt oder veröffentlicht wird. Es wird kein Seiteninhalt gelesen.</td></tr>
+            <tr><td><code>report:personal-data</code></td><td>Um den wöchentlichen Datenschutzbericht auszuführen, den Atlassian verlangt: Er meldet die Konto-IDs, die Riskcadence speichert, und löscht oder aktualisiert, was zu geschlossenen oder geänderten Konten gehört.</td></tr>
+          </table>
+        </div>
+        <p>Die Schließregel und die Seite „Get started“ brauchen keine weitere Berechtigung. Riskcadence fordert keinen Netzwerkzugriff auf andere Server an. Details: <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
       </section>
 
       <section>
@@ -544,6 +614,7 @@
             <tr><td>Risikoverlauf</td><td>Die letzten 6 abgeschlossenen Reviews und jetzt, im Bericht eines einzelnen Projekts.</td></tr>
             <tr><td>Import</td><td>5 MB und 5.000 Zeilen pro Datei, geschrieben in Stapeln zu je 25.</td></tr>
             <tr><td>Matrix</td><td>2 bis 7 Stufen pro Skala, 2 bis 6 Risikostufen, Review-Intervalle von 1 bis 730 Tagen.</td></tr>
+            <tr><td>Überfällig-Prüfung</td><td>Einmal täglich pro Projekt, mit höchstens 100 Kommentaren pro Projekt und Lauf. Bittet Jira die App, langsamer zu machen, oder erreicht der Lauf sein Zeitbudget, folgt der Rest am nächsten Tag.</td></tr>
             <tr><td>Gespeicherte Ansichten</td><td>30 pro Projekt und 30 für das Portfolio.</td></tr>
             <tr><td>Verlauf im Panel</td><td>Die letzten 20 Einträge.</td></tr>
           </table>

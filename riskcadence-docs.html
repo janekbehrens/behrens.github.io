@@ -68,6 +68,7 @@
         <a class="sub" href="#setup-company">Company-managed projects</a>
         <a class="sub" href="#setup-team">Team-managed projects</a>
         <a class="sub" href="#setup-repair">Repair setup</a>
+        <a class="sub" href="#get-started-page">Get started page</a>
         <a class="sub" href="#examples">Example risks</a>
         <a href="#fields">Fields</a>
         <a href="#matrix">Risk matrix</a>
@@ -88,8 +89,13 @@
         <a href="#dashboard">Dashboards</a>
         <a href="#import">Import</a>
         <a href="#reminders">Reminders</a>
+        <a href="#automation">Automation</a>
+        <a class="sub" href="#overdue">Overdue reviews</a>
+        <a class="sub" href="#jql">Search with JQL</a>
+        <a class="sub" href="#closing-rule">Closing rule</a>
         <a href="#export">Export</a>
         <a href="#permissions">Permissions</a>
+        <a class="sub" href="#app-permissions">Why these permissions</a>
         <a href="#limits">Limits</a>
         <a href="#faq">FAQ and messages</a>
         <a href="#support">Support</a>
@@ -111,7 +117,7 @@
           <li>Hold your first review: <span class="ui">Review</span> → <span class="ui">Sessions</span> → <span class="ui">Start review</span>, decide on each risk and click <span class="ui">Close review…</span> (<a href="#reviews">details</a>).</li>
           <li>Share the result: the <span class="ui">Report</span> tab, a <span class="ui">Riskcadence risk report</span> macro on a Confluence page (<a href="#confluence">details</a>), or the risk matrix on a Jira dashboard (<a href="#dashboard">details</a>).</li>
         </ol>
-        <p>In the app, a short <em>Welcome to Riskcadence</em> explains how it works in four ideas: risks live in Jira, you assess them on your matrix, you review them regularly and you report what changed. It appears on the setup page and on your first visit, and the <em>Getting started</em> checklist ticks these steps from your data. Every tab has a <span class="ui">Help</span> link to the matching section of this documentation.</p>
+        <p>In the app, a short <em>Welcome to Riskcadence</em> explains how it works in four ideas: risks live in Jira, you assess them on your matrix, you review them regularly and you report what changed. It appears on the setup page and on your first visit, and the <em>Getting started</em> checklist ticks these steps from your data. Every tab has a <span class="ui">Help</span> link to the matching section of this documentation. Jira admins also find a short introduction under <span class="ui">Apps → Manage apps → Riskcadence → Get started</span> (<a href="#get-started-page">details</a>).</p>
       </div>
 
       <details class="toc">
@@ -130,6 +136,7 @@
           <li><a href="#dashboard">Dashboards</a></li>
           <li><a href="#import">Import</a></li>
           <li><a href="#reminders">Reminders</a></li>
+          <li><a href="#automation">Automation: overdue reviews, JQL search, closing rule</a></li>
           <li><a href="#export">Export</a></li>
           <li><a href="#permissions">Permissions: who can do what</a></li>
           <li><a href="#limits">Limits</a></li>
@@ -192,6 +199,9 @@
 
         <h3 id="setup-repair">Repair setup</h3>
         <p>If Jira refused a step, Riskcadence lists the failed steps and keeps going. A project admin can run the setup again at any time: <span class="ui">Settings → Project setup → Repair setup</span>. Every step finds or creates, so running it again is safe and changes no data. In team-managed projects it checks the work type and the fields again.</p>
+
+        <h3 id="get-started-page">Get started page in Manage apps</h3>
+        <p>Jira admins find a short introduction under <span class="ui">Apps → Manage apps → Riskcadence → Get started</span>: what Riskcadence does, the three first steps (set up a project, assess your risks, review regularly) and your projects. Projects that are already set up link straight to their register, settings and automation. For any other project, <span class="ui">Set up Riskcadence</span> opens the setup assistant on its project page. Nothing changes before you confirm the setup there.</p>
 
         <h3 id="examples">Example risks</h3>
         <p>Tick <span class="ui">Add 6 example risks to try Riskcadence</span> during setup, or click <span class="ui">Settings → Add example risks</span> later (project admins). The six risks carry the label <code>riskcadence_example</code>, show the register, the matrix, the review inbox and the report with data, and some are assigned to you. Adding them twice creates no duplicates; on a smaller matrix their values are scaled down. <span class="ui">Remove example risks</span> deletes them where Jira allows it and closes the others.</p>
@@ -436,6 +446,45 @@
           <li><span class="ui">Create filter: reviews due in this project</span> creates a Jira filter with all open risks whose next review is due within 7 days or overdue. <span class="ui">Create filter: my reviews due</span> does the same for the risks you own. Open the filter in Jira and use <span class="ui">Subscribe</span> to get the list by e-mail.</li>
           <li><strong>Remind every risk owner</strong> shows the steps of a scheduled Jira Automation rule: trigger <em>Scheduled</em>, <em>Run a JQL search</em> with the JQL that Riskcadence provides (<span class="ui">Copy JQL</span>), and an action <em>Send email</em> to the user in the field <em>Risk owner</em>.</li>
         </ul>
+        <p>If you prefer to have Riskcadence do the check, switch on <a href="#overdue">overdue reviews</a>: it mentions the risk owner in a Jira comment once per review date.</p>
+      </section>
+
+      <section>
+        <h2 id="automation">Automation: overdue reviews, JQL search, closing rule</h2>
+        <p>Three optional features that a project admin or Jira admin switches on. They are off until someone does, and existing risks and settings stay as they are. The two project switches are under <span class="ui">Settings → Automation</span>; everyone else sees their state.</p>
+
+        <h3 id="overdue">Overdue reviews (optional)</h3>
+        <p>Switch on <span class="ui">Settings → Automation → Mark overdue reviews and notify the risk owner</span> to let Riskcadence check your project once a day. Open risks whose next review date has passed get the label <code>risk-review-overdue</code> and one comment that mentions the risk owner. Jira delivers it as a normal mention notification.</p>
+        <ul>
+          <li><strong>Once per review date.</strong> Riskcadence comments once per review date. It reminds again only after the date was moved and has passed again.</li>
+          <li><strong>The label goes</strong> as soon as the risk is reviewed or closed. Changes made directly in Jira are picked up by the next daily check.</li>
+          <li><strong>No risk owner, or the owner's account is deactivated:</strong> the comment mentions nobody and asks to choose a risk owner. Watchers still get Jira's normal comment e-mail.</li>
+          <li><strong>No early reminders.</strong> A date counts as overdue once it has passed in every time zone, so nobody is reminded early. The register filter <em>Overdue</em> counts by the UTC date and can show a risk one day earlier.</li>
+          <li><span class="ui">Check now</span> runs the check right away. If Jira refuses an edit, for example because of missing permissions on a work item, Riskcadence posts no comment for it, and the status line under the switch says what to do.</li>
+          <li><strong>Switching off</strong> removes the label <code>risk-review-overdue</code> from the risks of this project, also where someone set it by hand. A risk that was moved to another project keeps its label until it is reviewed there or that project switches the feature off. If you switch on again, a date that was already announced gets no second comment.</li>
+        </ul>
+        <p>The check runs as the app, so the comments appear under Riskcadence's name. Limits are listed under <a href="#limits">Limits</a>.</p>
+
+        <h3 id="jql">Search score and level with JQL (optional)</h3>
+        <p>Switch on <span class="ui">Settings → Automation → Make score and level searchable with JQL</span> and use <code>riskcadenceScore</code>, <code>riskcadenceResidualScore</code> and <code>riskcadenceLevel</code> in any JQL. This works in company-managed and team-managed projects alike; in team-managed projects, app fields cannot be searched, so this is the only way to filter by score.</p>
+        <p>Example: <code>project = RISK AND riskcadenceScore &gt;= 12 ORDER BY riskcadenceScore DESC</code>. A risk that is not assessed yet has no value, so <code>riskcadenceScore is EMPTY</code> finds the unassessed risks. <code>riskcadenceLevel</code> compares with the level name, for example <code>riskcadenceLevel = "High"</code>.</p>
+        <p>The full path of the stored value works as well: <code>issue.property[riskcadence-jql].score</code> (or <code>.residualScore</code>, <code>.level</code>). Switching off removes the values from the risks of this project; a risk that was moved to another project keeps them until that project switches the feature off. The fields <em>Risk score</em>, <em>Residual score</em> and <em>Risk level</em> stay as they are.</p>
+
+        <h3 id="closing-rule">Closing rule (optional)</h3>
+        <p>The closing rule keeps a risk open until the values you choose are recorded. It is a workflow validator: add <strong>Riskcadence closing rule</strong> to the transition that closes risks, in company-managed projects under <span class="ui">Jira settings → Work items → Workflows</span>, in team-managed projects under <span class="ui">Project settings → Workflows</span>. Then choose what must be recorded first.</p>
+        <ul>
+          <li><strong>By default</strong> a risk needs a <strong>risk response</strong> and a <strong>residual assessment</strong>: the treatment is decided and the remaining risk is rated, as ISO 31000 describes.</li>
+          <li><strong>Optional</strong> checks: a <strong>risk owner</strong>, and that <strong>all linked mitigations are done</strong>.</li>
+          <li>Other work types in the same workflow are not affected.</li>
+          <li>When a check fails, Jira shows which values are missing. The person adds them in the <a href="#panel">Risk assessment panel</a> and closes the risk again.</li>
+          <li>Until a configuration is saved, the rule allows the transition.</li>
+        </ul>
+        <p>Who can add it: a Jira admin in company-managed projects, the project admin in a team-managed project (<a href="#permissions">permissions</a>).</p>
+
+        <h4 id="closing-rule-uninstall">Remove the closing rule before uninstalling Riskcadence</h4>
+        <div class="warning"><strong>Remove the rule from the workflow before you uninstall the app.</strong> Jira blocks every transition whose validator belongs to an app that is no longer installed. This applies to all apps that add workflow rules, not only to Riskcadence.</div>
+        <p>Also switch off overdue reviews and JQL search in <span class="ui">Settings → Automation</span> before you uninstall: that removes the labels and JQL values from the risks of this project. Uninstalling alone leaves them on the risks, and a risk that was moved to another project keeps them.</p>
+        <p>Open the workflow, select the transition, delete the rule <strong>Riskcadence closing rule</strong> and publish the workflow. If Riskcadence is already uninstalled, a Jira admin removes the rule the same way; the error message on the blocked transition says so.</p>
       </section>
 
       <section>
@@ -461,6 +510,9 @@
             <tr><td>Add a mitigation in the risk assessment panel</td><td>The project permissions <strong>Create work items</strong> (for a new work item) and <strong>Link work items</strong>.</td></tr>
             <tr><td>Add a risk, import</td><td>Anyone who can <strong>create work items</strong> in the project.</td></tr>
             <tr><td>Delete a shared view</td><td>Its creator, or a project admin or Jira admin.</td></tr>
+            <tr><td>Switch overdue reviews or JQL search on or off (<a href="#automation">Settings → Automation</a>)</td><td>A <strong>project admin</strong> or Jira admin. Everyone else sees the state.</td></tr>
+            <tr><td>Add or change the <a href="#closing-rule">closing rule</a> in a workflow</td><td>Company-managed: a <strong>Jira admin</strong>. Team-managed: the <strong>project admin</strong> of that project.</td></tr>
+            <tr><td>Open <a href="#get-started-page">Get started</a> under Manage apps</td><td>A <strong>Jira admin</strong>.</td></tr>
             <tr><td>Add a dashboard widget</td><td>Anyone who can edit the dashboard.</td></tr>
             <tr><td>Connect Riskcadence to Confluence</td><td>An <strong>admin</strong>, once, in Atlassian Administration.</td></tr>
             <tr><td>Insert or change the report macro in Confluence</td><td>Anyone who can <strong>edit the page</strong>; the preview shows what they can see in Jira.</td></tr>
@@ -470,7 +522,25 @@
             <tr><td>See a published state</td><td>Everyone who can view the Confluence page.</td></tr>
           </table>
         </div>
-        <p>Riskcadence uses its own app account only for the calculated fields and their background recalculation, field metadata, the closing state of a review and the display-name lookups of the weekly personal data job. Whatever it stores is filtered by what the reader can see in Jira before it is shown. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
+        <p>Riskcadence uses its own app account only for the calculated fields and their background recalculation, field metadata, the closing state of a review, the display-name lookups of the weekly personal data job and, if you switch them on, the daily overdue check and the values for JQL search. Whatever it stores is filtered by what the reader can see in Jira before it is shown. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
+
+        <h3 id="app-permissions">Why Riskcadence asks for these permissions</h3>
+        <p>When a Jira admin installs a Forge app, Atlassian shows the permissions the app requests. This is what Riskcadence uses each one for. The scopes are separate from what a person may do in Riskcadence, which always follows their own Jira permissions (above).</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Permission (scope)</th><th>What Riskcadence needs it for</th></tr>
+            <tr><td><code>read:jira-work</code></td><td>To read your risks, projects, fields and search results, so that the register, matrix, reviews and reports can show them.</td></tr>
+            <tr><td><code>write:jira-work</code></td><td>To save what you change on a risk and to create work items, comments, transitions, filters for reminders and work item properties (the import source ID, the overdue state and the values for JQL search).</td></tr>
+            <tr><td><code>read:jira-user</code></td><td>To look up display names for risk owners, the history and the people pickers.</td></tr>
+            <tr><td><code>manage:jira-configuration</code></td><td>To create the work type Risk, the fields, the link type and the screens when a Jira admin sets up a company-managed project; used only during setup and repair.</td></tr>
+            <tr><td><code>manage:jira-project</code></td><td>To add the work type and the fields to the project's schemes and screens during setup.</td></tr>
+            <tr><td><code>storage:app</code></td><td>To keep the risk matrix, review sessions, decisions, saved views and settings in Forge storage and Forge SQL, which run on Atlassian's infrastructure.</td></tr>
+            <tr><td><code>write:app-data:jira</code></td><td>To write the calculated fields Risk score, Residual score and Risk level.</td></tr>
+            <tr><td><code>read:page:confluence</code></td><td>To check whether a person may view or edit a Confluence page before a published review state is shown or published. No page content is read.</td></tr>
+            <tr><td><code>report:personal-data</code></td><td>To run the weekly personal data report that Atlassian requires: it reports the account IDs Riskcadence stores and erases or refreshes what belongs to closed or updated accounts.</td></tr>
+          </table>
+        </div>
+        <p>The closing rule and the Get started page need no further permission. Riskcadence requests no network access to other servers. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
       </section>
 
       <section>
@@ -486,6 +556,7 @@
             <tr><td>Risk trend</td><td>The last 6 closed reviews and now, in the report of a single project.</td></tr>
             <tr><td>Import</td><td>5 MB and 5,000 rows per file, written in batches of 25.</td></tr>
             <tr><td>Matrix</td><td>2 to 7 steps per scale, 2 to 6 levels, review intervals of 1 to 730 days.</td></tr>
+            <tr><td>Overdue check</td><td>Once a day per project, with up to 100 comments per project and run. If Jira asks the app to slow down or the run reaches its time budget, the rest follows the next day.</td></tr>
             <tr><td>Saved views</td><td>30 per project and 30 for the portfolio.</td></tr>
             <tr><td>History in the panel</td><td>The latest 20 entries.</td></tr>
           </table>

@@ -22,7 +22,7 @@
     </div>
 
     <h1>Datenschutzerklärung</h1>
-    <p class="updated">Riskcadence for Jira · Zuletzt aktualisiert: 6. November 2026</p>
+    <p class="updated">Riskcadence for Jira · Zuletzt aktualisiert: 13. November 2026</p>
 
     <h2>1. Einführung</h2>
     <p>
@@ -41,7 +41,7 @@
       Die App <strong>liest niemals</strong> Vorgangsbeschreibungen, Kommentare oder Anhänge und auch nicht den Inhalt von Confluence-Seiten. Zusammenfassungen von Risiken und Namen von Risikoeignern werden live den Personen angezeigt, die sie sehen dürfen; gespeichert werden sie nur in einem veröffentlichten Review-Stand (Abschnitt 3).
     </p>
     <p>
-      Die App <strong>ändert außerdem</strong> Daten in Jira, und zwar nur, wenn eine Person es verlangt, und mit deren Berechtigungen: die Risikofelder, den Risikoeigner, die Reaktion und das Datum des nächsten Reviews; einen Jira-Kommentar, wenn jemand eine Neubewertung anfordert; den Status, wenn ein Risiko in einem Review oder einem Import geschlossen wird; Risiken, die im Register oder durch einen Import angelegt werden; und bei der Einrichtung den Vorgangstyp Risk, die Felder, den Verknüpfungstyp und die Bildschirmeinträge.
+      Die App <strong>ändert außerdem</strong> Daten in Jira, und zwar nur, wenn eine Person es verlangt, und mit deren Berechtigungen: die Risikofelder, den Risikoeigner, die Reaktion und das Datum des nächsten Reviews; einen Jira-Kommentar, wenn jemand eine Neubewertung anfordert; ein Label und einen Kommentar, der den Risikoeigner erwähnt, wenn ein Projektadministrator die optionale Prüfung auf überfällige Reviews eingeschaltet hat (Abschnitt 3); den Status, wenn ein Risiko in einem Review oder einem Import geschlossen wird; Risiken, die im Register oder durch einen Import angelegt werden; und bei der Einrichtung den Vorgangstyp Risk, die Felder, den Verknüpfungstyp und die Bildschirmeinträge.
     </p>
 
     <h2>3. Daten, die wir speichern</h2>
@@ -60,6 +60,10 @@
       <li><strong>Import-Markierungen (2 Tage):</strong> während ein Import läuft, pro importierter Zeile ein Vorgangsschlüssel unter einem Hash aus Projekt und Quell-ID, damit kein Risiko doppelt angelegt wird.</li>
       <li><strong>Anonyme tägliche Nutzungszähler:</strong> pro Tag und Site, wie oft Funktionen genutzt wurden (zum Beispiel „das Register wurde geöffnet“ oder „ein Review wurde abgeschlossen“). Keine IDs, Namen, Projektschlüssel oder Inhalte.</li>
       <li><strong>Importinformationen am Risiko, in Jira:</strong> Risiken, die durch einen Import angelegt oder aktualisiert wurden, tragen eine Jira-Vorgangseigenschaft namens riskcadence mit der Quell-ID, dem Zeitpunkt des Imports und den importierten Werten (Beschreibungen bis zu 6.000 Zeichen; die Spalte mit dem Risikoeigner nur als kurze Prüfsumme, mit der der nächste Import eine Änderung erkennt; sie ist weder anonymisiert noch verschlüsselt). Jira speichert sie zusammen mit dem Risiko, und jeder, der das Risiko sehen darf, kann sie lesen.</li>
+      <li><strong>Überfällige Reviews (optional, nur gespeichert, wenn ein Projektadministrator sie für ein Projekt einschaltet):</strong> in Jira das Label <code>risk-review-overdue</code> am Vorgang (es wird entfernt, wenn das Risiko geprüft oder geschlossen wird und, für alle Risiken des Projekts, auch solche mit von Hand gesetztem Label, wenn die Funktion ausgeschaltet wird; es bleibt, wenn Sie die App deinstallieren, ohne sie auszuschalten, und an einem in ein anderes Projekt verschobenen Risiko, bis es dort geprüft wird oder jenes Projekt die Funktion ausschaltet); die Vorgangseigenschaft <code>riskcadence-overdue</code> mit zwei Datumsangaben, dem angekündigten Review-Datum und dem Zeitpunkt der Ankündigung, ohne Person (sie bleibt beim Ausschalten erhalten, damit das erneute Einschalten keinen zweiten Kommentar schreibt); und ein Kommentar je Review-Datum, der den Risikoeigner erwähnt. Jira speichert dabei die Konto-ID des Eigners und zeigt den Anzeigenamen. In Jira-Service-Management-Projekten ist der Kommentar intern. Die App löscht keine Kommentare.</li>
+      <li><strong>JQL-Suche (optional, nur gespeichert, wenn ein Projektadministrator sie für ein Projekt einschaltet):</strong> die Vorgangseigenschaft <code>riskcadence-jql</code> mit dem Score, dem Rest-Score und der Stufe des Risikos. Sie enthält keine personenbezogenen Daten. Sie wird beim Ausschalten der Funktion von den Risiken des Projekts entfernt. Sie bleibt, wenn Sie die App deinstallieren, ohne sie auszuschalten, und an einem in ein anderes Projekt verschobenen Risiko, bis jenes Projekt die Funktion ausschaltet.</li>
+      <li><strong>Schließregel (optional):</strong> Fügt ein Administrator sie einem Workflow hinzu, ist die Konfiguration Teil des Jira-Workflows und enthält nur Feld- und Vorgangstyp-IDs.</li>
+      <li><strong>Einstellungen dieser Funktionen, im Forge-Speicher:</strong> die Einstellungen je Projekt, der Status der Hintergrundaufgaben, Sperren, die nach 15 Minuten ablaufen, und eine Wiederholungsliste mit bis zu 200 Vorgangs-IDs. Nichts davon enthält personenbezogene Daten.</li>
       <li><strong>In Ihrem Browser:</strong> die Willkommenskarte und die Karte „Getting started“ merken sich im Speicher Ihres Browsers, dass Sie sie gesehen oder ausgeblendet haben, und ob die Checkliste aufgeklappt ist. Das wird nie an uns gesendet.</li>
     </ul>
     <p>
@@ -91,7 +95,7 @@
     </p>
     <p>
       Alles, was in Abschnitt 3 als von der App gespeichert aufgeführt ist, liegt im gehosteten Forge-Speicher, der die
-      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a> von Atlassian unterstützt: Die Daten liegen am selben Standort wie Ihre Jira-Site und ziehen mit ihr um, wenn ein Administrator die Daten der Site an einen anderen Standort verlegt. Die technischen Logs in Abschnitt 4 werden von der App-Protokollierung von Atlassian verarbeitet und sind kein Teil der von der App gespeicherten Daten.
+      <a href="https://developer.atlassian.com/platform/forge/data-residency/" target="_blank" rel="noopener">Datenresidenz</a> von Atlassian unterstützt: Die Daten liegen am selben Standort wie Ihre Jira-Site und ziehen mit ihr um, wenn ein Administrator die Daten der Site an einen anderen Standort verlegt. Die technischen Logs in Abschnitt 4 werden von der App-Protokollierung von Atlassian verarbeitet und sind kein Teil der von der App gespeicherten Daten. Labels, Vorgangseigenschaften, Kommentare und die Workflow-Konfiguration sind Jira-Daten Ihrer Site und unterliegen deren Datenresidenz.
     </p>
 
     <h2>6. Dienste Dritter</h2>
@@ -105,6 +109,7 @@
       <li><strong>Geschlossene Konten:</strong> ein wöchentlicher Job für personenbezogene Daten löscht die Konto-IDs geschlossener Atlassian-Konten aus allem, was die App speichert (Abschnitt 8).</li>
       <li><strong>Gespeicherte Ansichten und Konfiguration</strong> bleiben erhalten, solange die App installiert ist; ein Projektadministrator kann eine Ansicht löschen, und mit dem vollständigen Export können Sie die Daten eines Projekts mitnehmen (<a href="/de/riskcadence-docs.html#export">Dokumentation</a>).</li>
       <li>Nur <strong>Import-Markierungen</strong> (nach 2 Tagen) und <strong>anonyme tägliche Nutzungszähler</strong> (nach 8 Tagen) laufen automatisch ab; der Forge-Speicher löscht sie selbst.</li>
+      <li><strong>Labels, Vorgangseigenschaften und Kommentare in Jira</strong> (Abschnitt 3) bleiben nach der Deinstallation der App als Teil Ihrer Jira-Daten erhalten. Vor der Deinstallation kann ein Projektadministrator beide Funktionen ausschalten: Das entfernt das Überfällig-Label und die JQL-Eigenschaft von den Risiken des Projekts (ein in ein anderes Projekt verschobenes Risiko behält sie).</li>
       <li>Wenn die App Daten löscht, werden sie sofort aus dem Forge-Speicher entfernt und die App kann sie nicht mehr lesen. Atlassian bewahrt bis zum Ende seiner Aufbewahrungsfrist eine als gelöscht markierte Kopie zur Wiederherstellung nach versehentlicher Löschung auf.</li>
       <li><strong>Nach der Deinstallation der App</strong> bewahrt Atlassian den Speicher der App <strong>28 Tage lang</strong> auf und löscht ihn anschließend (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/" target="_blank" rel="noopener">Datenlebenszyklus für von Forge gehosteten Speicher</a>). Während dieser Zeit kann die App ihn nicht lesen. Innerhalb von 21 Tagen nach der Deinstallation können Sie uns bitten, Atlassian um seine Wiederherstellung in einer neuen Installation der App zu ersuchen. Die Risiken, die Felder und ihre Werte bleiben in Jira erhalten; es sind Daten von Jira. Die berechneten Felder gehen mit der App und lassen sich aus den übrigen Feldern neu berechnen.</li>
     </ul>
