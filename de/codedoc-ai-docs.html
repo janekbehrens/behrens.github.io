@@ -268,7 +268,7 @@
         <h2>Funktionsweise</h2>
         <ol>
           <li><strong>Git verbinden</strong> mit einem Token nur für Lesezugriff. Ein KI-Schlüssel ist optional und später ergänzbar.</li>
-          <li><strong>Repositories hinzufügen</strong>: Durchsuche dein Git-Konto oder füge eine Repositoryadresse ein.</li>
+          <li><strong>Add repositories</strong>: Durchsuche dein Git-Konto oder füge eine Repositoryadresse ein.</li>
           <li><strong>Synchronisierungsblock hinzufügen</strong>: Bearbeite eine Seite, öffne das Makromenü mit <code>/</code> und wähle <strong>CodeDoc Sync Block</strong>, füge den Dateilink ein und wähle den Inhalt (<a href="#sync">Synchronisierungsblöcke</a>).</li>
           <li><strong>Optional: KI-Seite erstellen</strong>: Wähle Repositories, Schreibstil, Zielbereich und Aktualisierungszeitpunkt. CodeDoc veröffentlicht direkt oder als Entwurf zur Prüfung (<a href="#jobs">KI-Seiten</a>).</li>
         </ol>
@@ -322,16 +322,16 @@
 
       <section id="repos">
         <h2>Repositories</h2>
-        <p>Der Reiter <strong>Repositories</strong> listet die Repositories, die CodeDoc lesen darf, gruppiert nach der Git-Verbindung, die sie liest. Nur diese stehen für Sync-Blöcke und KI-Seiten zur Verfügung. Nur CodeDoc-Administratoren dürfen sie hinzufügen oder entfernen.</p>
+        <p> <strong>Repositories</strong> ist der Reiter mit den Repositories, die CodeDoc lesen darf, gruppiert nach der Git-Verbindung, die sie liest. Nur diese stehen für Sync-Blöcke und KI-Seiten zur Verfügung. Nur CodeDoc-Administratoren dürfen sie hinzufügen oder entfernen.</p>
         <img src="/imgCodeDoc/v2/repositories.webp" alt="Reiter Repositories: die Repositories nach Git-Verbindung gruppiert, jeweils mit Branch und Datum der Aufnahme" width="1600" height="1672" loading="lazy">
         <ul>
-          <li><strong>Add repositories (Repositories hinzufügen)</strong>: Klicke auf der Karte einer Verbindung darauf, oder oben und wähle dann die Verbindung. CodeDoc listet die Repositories, die diese Verbindung lesen kann. Klicke die gewünschten an (sie werden blau markiert; bei langen Listen hilft die Suche) und dann auf <strong>Add N repositories</strong>.</li>
+          <li><strong>Add repositories</strong>: Klicke auf der Karte einer Verbindung darauf, oder oben und wähle dann die Verbindung. CodeDoc listet die Repositories, die diese Verbindung lesen kann. Klicke die gewünschten an (sie werden blau markiert; bei langen Listen hilft die Suche) und dann auf <strong>Add N repositories</strong>.</li>
           <li><strong>Not listed? Add by address (Nicht in der Liste? Per Adresse)</strong>: Füge im selben Dialog die Adresse ein, etwa <code>https://github.com/org/repo</code>; auch Datei- oder Branchlinks funktionieren. Lasse <strong>Branch</strong> leer für den Standardbranch und klicke auf <strong>Add repository</strong>. CodeDoc prüft zuerst den Zugriff.</li>
           <li><strong>Remove (Entfernen)</strong>: neben jedem Repository. Sync-Blöcke und KI-Seiten, die es nutzen, werden nicht mehr aktualisiert, bis es wieder hinzugefügt ist; ihr Inhalt bleibt auf den Seiten.</li>
         </ul>
         <details class="more">
           <summary>GitLab-Untergruppen, Bitbucket und eigener Server</summary>
-          <p>Die Eingabe per Adresse funktioniert mit allen Tokentypen und ist die einzige Möglichkeit bei Bitbucket-Zugriffstokens, die keine Repositories auflisten können; dort zeigt der Dialog das Adressfeld gleich. Bei einer Verbindung über <strong>Sign in with GitHub</strong> führt <strong>Add repositories</strong> weiter zur GitHub-Anmeldung, weil GitHub dort bestätigt, dass du in jedem Repository Administrator bist. GitLab-Projekte in Untergruppen (<code>group/subgroup/project</code>) werden unterstützt. Bei eigenem GitHub-Enterprise- oder GitLab-Server verbinde ihn zuerst unter Settings → Connections und füge dann hier Repositories hinzu. Bei Fehlern nennt die Meldung Repository und verwendete Verbindung.</p>
+          <p><strong>Add by address (Per Adresse hinzufügen)</strong> funktioniert mit allen Tokentypen und ist die einzige Möglichkeit bei Bitbucket-Zugriffstokens, die keine Repositories auflisten können; dort zeigt der Dialog das Adressfeld gleich. Bei einer Verbindung über <strong>Sign in with GitHub</strong>,  <strong>Add repositories</strong> führt weiter zur GitHub-Anmeldung, weil GitHub dort bestätigt, dass du in jedem Repository Administrator bist. GitLab-Projekte in Untergruppen (<code>group/subgroup/project</code>) werden unterstützt. Bei eigenem GitHub-Enterprise- oder GitLab-Server verbinde ihn zuerst unter Settings → Connections und füge dann hier Repositories hinzu. Bei Fehlern nennt die Meldung Repository und verwendete Verbindung.</p>
         </details>
       </section>
 
@@ -547,7 +547,7 @@
           <summary>GitHub: Webhook hinzufügen</summary>
           <ol>
             <li>Repository → <strong>Einstellungen</strong>  →  <strong>Webhooks</strong>  →  <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
-            <li>Trage ein: <strong>Webhook-URL</strong> in „Payload URL“. Setze <strong>Content type (Inhaltstyp)</strong> auf <code>application/json</code>. Füge das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret (Geheimnis)</strong> ein.</li>
+            <li>Trage ein: <strong>Webhook-URL</strong> in „Payload URL“. Setze <strong>Content type (Inhaltstyp)</strong> auf <code>application/json</code>. Hinterlege das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret (Geheimnis)</strong>.</li>
             <li>Wähle <strong>Just the push event (Nur Push-Ereignisse)</strong> und klicke dann auf <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
           </ol>
         </details>
@@ -555,7 +555,7 @@
           <summary>GitLab: Webhook hinzufügen</summary>
           <ol>
             <li>Project (Projekt) → <strong>Einstellungen</strong>  →  <strong>Webhooks</strong>.</li>
-            <li>Trage ein: <strong>Webhook-URL</strong>. Füge das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret token (Geheimnistoken)</strong> ein.</li>
+            <li>Trage ein: <strong>Webhook-URL</strong>. Hinterlege das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret token (Geheimnistoken)</strong>.</li>
             <li>Aktiviere unter „Trigger“ <strong>Push events (Push-Ereignisse)</strong> und klicke dann auf <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
           </ol>
         </details>
@@ -563,7 +563,7 @@
           <summary>Bitbucket: Webhook hinzufügen</summary>
           <ol>
             <li>Repository → <strong>Repository settings (Repositoryeinstellungen)</strong>  →  <strong>Webhooks</strong>  →  <strong>Add webhook (Webhook hinzufügen)</strong>.</li>
-            <li>Gib einen Titel ein (etwa „CodeDoc“) und trage ein: <strong>Webhook-URL</strong>. Füge das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret (Geheimnis)</strong> ein.</li>
+            <li>Gib einen Titel ein (etwa „CodeDoc“) und trage ein: <strong>Webhook-URL</strong>. Hinterlege das Webhook-Geheimnis aus CodeDoc (Settings → Webhook) unter <strong>Secret (Geheimnis)</strong>.</li>
             <li>Wähle unter „Triggers“ <strong>Repository → Push</strong>  (<code>repo:push</code>) und klicke auf <strong>Save (Speichern)</strong>.</li>
           </ol>
         </details>
@@ -768,33 +768,34 @@
         <p>Der schnellste Weg, <strong>github.com</strong> zu verbinden: Du meldest dich bei GitHub an und wählst, was CodeDoc lesen darf. Kein Token, kein Schlüssel. Dahinter steht die <strong>CodeDoc GitHub App</strong>, die ein Owner deiner GitHub-Organisation einmal installiert, für alle Repositories oder nur für einige. Sie kann nur lesen.</p>
         <p><strong>Wer verbinden kann:</strong> ein GitHub-Konto mit <strong>Admin-Recht am Repository</strong> (Owner der Organisation haben es für jedes Repository). Das ist dieselbe Schwelle, die GitHub selbst verlangt, um einer App Zugriff auf ein Repository zu geben. Kannst du ein Repository nur lesen, bitte einen Repository-Admin oder einen Owner der Organisation, es zu verbinden; das dauert eine Minute und braucht kein Token.</p>
         <ol>
-          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection</strong> → <strong>GitHub</strong>. <strong>Sign in with GitHub</strong> ist der empfohlene Weg und schon ausgewählt.
-            <img src="/imgCodeDoc/github-connect/01-codedoc-tiles.webp" alt="CodeDoc, Add connection: GitHub gewählt, der Weg „Sign in with GitHub“ als empfohlen markiert" width="1468" height="1216" loading="lazy">
+          <li><strong>In CodeDoc:</strong> Settings → Connections → <strong>Add connection (Verbindung hinzufügen)</strong>  →  <strong>GitHub</strong>.  <strong>Sign in with GitHub</strong> ist der empfohlene Weg und schon ausgewählt.
+            <img src="/imgCodeDoc/github-connect/01-codedoc-tiles.webp" alt="CodeDoc, Add connection: GitHub gewählt, der Weg „Sign in with GitHub“ als empfohlen markiert"Sign in with GitHub" marked Recommended" width="1468" height="1216" loading="lazy">
           </li>
           <li><strong>Bei GitHub anmelden:</strong> Klicke auf <strong>Sign in to GitHub</strong>. Im selben Tab öffnet sich eine Seite von Atlassian; klicke auf <strong>Continue</strong>, melde dich bei GitHub an, falls GitHub danach fragt, und klicke auf <strong>Authorize</strong>. Du landest wieder in CodeDoc, und das Fenster öffnet sich dort, wo du warst. CodeDoc erfährt, welche Organisationen und Repositories dein GitHub-Konto lesen kann, sonst nichts.
             <img src="/imgCodeDoc/github-connect/02-atlassian-continue.webp" alt="Zustimmungsseite von Atlassian für die GitHub-Anmeldung, mit Continue" width="1444" height="1212" loading="lazy"><img src="/imgCodeDoc/github-connect/03-github-authorize.webp" alt="GitHub-Seite zum Autorisieren von CodeDoc for Confluence, mit CodeDoc-Logo und dem Knopf Authorize" width="1316" height="1466" loading="lazy">
           </li>
           <li><strong>App installieren, einmal pro Organisation:</strong> Steht deine Organisation noch nicht in der Liste, klicke auf <strong>Install the CodeDoc app on GitHub</strong>. Ein Owner der Organisation wählt <strong>All repositories</strong> oder <strong>Only select repositories</strong> und klickt auf <strong>Install</strong>; die Seite bestätigt <em>Read access to code and metadata</em>. Bist du kein Owner, schickt GitHub den Ownern stattdessen eine Anfrage. CodeDoc bemerkt die Installation von selbst.
-            
+
           </li>
-          <li><strong>Repositories wählen:</strong> Bei einer Organisation geht CodeDoc direkt zu deren Repositories weiter; bei mehreren klickst du neben der richtigen auf <strong>Choose repositories</strong>. Die Liste zeigt die Repositories dieser Organisation, bei denen du Admin bist. Wurde die App nur für ausgewählte Repositories installiert, sind sie schon ausgewählt. Klicke auf <strong>Connect</strong>.
+          <li><strong>Repositories wählen:</strong> Bei einer Organisation geht CodeDoc direkt zu deren Repositories weiter; bei mehreren klickst du auf <strong>Choose repositories</strong> neben der richtigen. Die Liste zeigt die Repositories dieser Organisation, bei denen du Admin bist. Wurde die App nur für ausgewählte Repositories installiert, sind sie schon ausgewählt. Klicke auf <strong>Connect (Verbinden)</strong>.
+
             <img src="/imgCodeDoc/github-connect/05-codedoc-repositories.webp" alt="CodeDoc-Anmeldefenster, Schritt 3: Repositories der Organisation wählen" width="1468" height="1010" loading="lazy">
           </li>
           <li><strong>Fertig:</strong> Die Repositories stehen sofort in CodeDoc (Reiter Repositories), und die Verbindung erscheint mit <strong>Sign-in via the CodeDoc app</strong>. Sync-Blöcke und KI-Seiten lesen daraus wie aus jeder anderen Verbindung.
-            <img src="/imgCodeDoc/github-connect/06-codedoc-connected.webp" alt="CodeDoc, Git-Verbindungen: die neue Verbindung mit „Sign-in via the CodeDoc app“" width="1600" height="895" loading="lazy">
+            <img src="/imgCodeDoc/github-connect/06-codedoc-connected.webp" alt="CodeDoc, Git-Verbindungen: die neue Verbindung mit „Sign-in via the CodeDoc app“"Sign-in via the CodeDoc app"" width="1600" height="895" loading="lazy">
           </li>
         </ol>
-        <p><strong>Später mehr Repositories:</strong> Repositories → <strong>Add repositories</strong> auf der Karte dieser Verbindung → <strong>Continue with GitHub sign-in</strong>, dann neben der Organisation <strong>Add repositories</strong>. <strong>Weniger:</strong> Entferne ein Repository im Reiter Repositories; CodeDoc kann es danach nicht mehr lesen. <strong>Anderes GitHub-Konto:</strong> Klicke im Fenster auf <strong>Use another GitHub account</strong> und folge den drei Schritten, die es zeigt.</p>
+        <p><strong>Später mehr Repositories:</strong> Repositories → <strong>Add repositories</strong> auf der Karte dieser Verbindung → <strong>Continue with GitHub sign-in</strong>, dann auf <strong>Add repositories</strong> neben der Organisation. <strong>Weniger:</strong> Entferne ein Repository im Reiter Repositories; CodeDoc kann es danach nicht mehr lesen. <strong>Anderes GitHub-Konto:</strong> Klicke auf <strong>Use another GitHub account</strong> und folge den drei Schritten, die es zeigt.</p>
         <details class="more">
           <summary>Was CodeDoc lesen kann und wer das entscheidet</summary>
           <p>Drei Grenzen gelten zusammen, und GitHub setzt jede davon durch:</p>
           <ul>
             <li><strong>Der Owner der Organisation</strong> entscheidet, für welche Repositories die App installiert ist (alle oder ausgewählte), und kann das jederzeit unter Organisationseinstellungen → GitHub Apps → Configure ändern oder die App entfernen.</li>
-            <li><strong>Wer verbindet</strong>, muss bei GitHub Admin jedes Repositorys sein. Der Zugriff bleibt an diese Rolle gebunden: Endet sie, etwa weil die Person die Organisation verlässt, liest CodeDoc das Repository nicht mehr und zeigt an der Verbindung <strong>Needs confirmation</strong>, bis ein aktueller Admin es bestätigt (Add connection → GitHub → Add repositories). Die Seiten behalten so lange ihren letzten Inhalt.</li>
+            <li><strong>Wer verbindet,</strong> muss bei GitHub Admin jedes Repositorys sein. Der Zugriff bleibt an diese Rolle gebunden: Endet sie, etwa weil die Person die Organisation verlässt, liest CodeDoc das Repository nicht mehr und zeigt <strong>Needs confirmation</strong> an der Verbindung, bis ein aktueller Admin es bestätigt (Add connection → GitHub → Add repositories). Die Seiten behalten so lange ihren letzten Inhalt.</li>
             <li><strong>Der CodeDoc-Administrator</strong> kann nur Repositories hinzufügen, die sein eigenes GitHub-Konto verwaltet. CodeDoc fordert bei GitHub einen Token an, der auf genau die Repositories der Verbindung begrenzt ist, auch wenn die App für mehr installiert ist.</li>
             <li><strong>Nur lesen:</strong> Die App hat die Berechtigungen <em>Contents: Read-only</em> und <em>Metadata: Read-only</em>, sonst keine. Der Token gilt eine Stunde und wird danach neu angefordert.</li>
           </ul>
-          <p>Deine GitHub-Anmeldung liegt bei Atlassian, nicht bei CodeDoc, und wird nur gebraucht, während du verbindest oder Repositories hinzufügst. Danach liest CodeDoc über die App; die Verbindung funktioniert also weiter, wenn die Person, die sie eingerichtet hat, das Unternehmen verlässt. Du kannst die Anmeldung unter <a href="https://id.atlassian.com/manage-profile/apps" target="_blank" rel="noopener">Atlassian-Konto → Verbundene Apps</a> entfernen.</p>
+          <p>Deine GitHub-Anmeldung liegt bei Atlassian, nicht bei CodeDoc, und wird nur gebraucht, während du verbindest oder Repositories hinzufügst. Danach liest CodeDoc über die App; die Verbindung funktioniert also weiter, wenn die Person, die sie eingerichtet hat, das Unternehmen verlässt. Du kannst die Anmeldung unter <a href="https://id.atlassian.com/manage-profile/apps" target="_blank" rel="noopener">Atlassian-Konto → Verbundene Apps</a>.</p>
           <p>Ein Repository, das die Organisation bei GitHub aus der App herausnimmt, fällt von selbst aus der Verbindung; die anderen Repositories laufen weiter.</p>
         </details>
         <details class="more" id="github-connect-ip">
@@ -806,7 +807,7 @@
           <summary>Wann stattdessen ein Token oder eine eigene GitHub App</summary>
           <ul>
             <li><strong>GitHub Enterprise Server</strong> oder <code>NAME.ghe.com</code>: Die CodeDoc-App gibt es nur auf github.com. Verbinde mit einem Token (<a href="#providers-server">eigener Git-Server</a>).</li>
-            <li><strong>Deine Organisation lässt keine fremden Apps zu:</strong> Lege <a href="#github-app">eine eigene GitHub App</a> an.</li>
+            <li><strong>Deine Organisation lässt keine fremden Apps zu:</strong> Erstelle <a href="#github-app">eine eigene GitHub App</a>.</li>
             <li><strong>Ein einzelnes persönliches Repository:</strong> Ein Fine-grained Token mit <strong>Contents: Read</strong> funktioniert wie bisher.</li>
           </ul>
         </details>
