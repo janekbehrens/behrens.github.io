@@ -171,6 +171,7 @@
         <a href="#ai-rollout" class="sub">KI-Einführung (Pro)</a>
         <a href="#calc">So werden die Metriken berechnet</a>
         <a href="#trends" class="sub">Trenddiagramme</a>
+        <a href="#fit">Zahlen an deinen Ablauf anpassen</a>
         <a href="#quality">Datenqualität</a>
         <a href="#ai">KI-Auswirkungen</a>
         <a href="#card">Metric-Card-Gadget</a>
@@ -203,6 +204,7 @@
           <li><a href="#start">Einrichtung</a></li>
           <li><a href="#config">Konfiguration</a></li>
           <li><a href="#calc">So werden die Metriken berechnet</a></li>
+          <li><a href="#fit">Zahlen an deinen Ablauf anpassen</a></li>
           <li><a href="#quality">Datenqualität</a></li>
           <li><a href="#ai">KI-Auswirkungen</a></li>
           <li><a href="#card">Metric-Card-Gadget</a></li>
@@ -220,9 +222,9 @@
           <li><strong>Deployment-Häufigkeit:</strong> Wie oft du Änderungen auslieferst.</li>
           <li><strong>Durchlaufzeit für Änderungen:</strong> Wie lange Arbeit vom Beginn bis zum Abschluss dauert.</li>
           <li><strong>Änderungsfehlerrate:</strong> Der Anteil der Releases, die Probleme verursacht haben.</li>
-          <li><strong>Wiederherstellungszeit:</strong> Wie schnell der Betrieb nach einer Störung wiederhergestellt wird. Gemessen wird der <dfn class="term" data-tip="Der mittlere Wert: Die Hälfte der Vorgänge dauert kürzer, die andere Hälfte länger. Ein einzelner sehr langsamer Vorgang verändert ihn kaum.">Median</dfn>, obwohl die gebräuchliche Abkürzung MTTR lautet.</li>
+          <li><strong>Wiederherstellungszeit:</strong> Wie lange Fehler- und Störungsvorgänge von der Erstellung bis zur Lösung brauchen. Gemessen wird der <dfn class="term" data-tip="Der mittlere Wert: Die Hälfte der Vorgänge dauert kürzer, die andere Hälfte länger. Ein einzelner sehr langsamer Vorgang verändert ihn kaum.">Median</dfn>, obwohl die gebräuchliche Abkürzung MTTR lautet.</li>
         </ul>
-        <p>Alle Werte stammen aus Jira-Releases, Statusänderungen, Fehlern und Störungstickets. Jede Zahl hat einen <dfn class="term" data-tip="Eine Leistungsstufe aus der DORA™-Forschung (Elite, High, Medium oder Low), die eine Zahl einordnet.">Benchmark-Bereich</dfn>, eine verständliche Erklärung und ein ⓘ zur Berechnung. Das Gadget hat drei Registerkarten: <strong>Übersicht</strong>,  <strong>Trends</strong> und <strong>KI-Auswirkungen</strong> (Pro).</p>
+        <p>Alle Werte stammen aus Jira-Releases, Statusänderungen, Fehlern und Störungstickets, und die App ordnet sie den vier DORA™-Metriken zu. <a href="#fit">Zahlen an deinen Ablauf anpassen</a> zeigt, welche Einstellungen sie am nächsten an die Arbeitsweise deines Teams bringen. Jede Zahl hat einen <dfn class="term" data-tip="Eine Leistungsstufe aus der DORA™-Forschung (Elite, High, Medium oder Low), die eine Zahl einordnet.">Benchmark-Bereich</dfn>, eine verständliche Erklärung und ein ⓘ zur Berechnung. Das Gadget hat drei Registerkarten: <strong>Übersicht</strong>,  <strong>Trends</strong> und <strong>KI-Auswirkungen</strong> (Pro).</p>
         <img src="/imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps-Metrics-Overview-Gadget mit vier Metrikkacheln (Deployment-Häufigkeit, Durchlaufzeit, Änderungsfehlerrate, Wiederherstellungszeit) und der Registerkarte Trends mit wöchentlicher Durchlaufzeit, Benchmark-Bereichen sowie Markierungen für eine neue CI-Pipeline und die KI-Einführung" loading="lazy" width="1840" height="900">
         <div class="video-wrapper">
           <div class="yt-consent" style="background-image: url(&#x27;/imgDoraMetricsForJira/video-poster.webp&#x27;)"
@@ -260,14 +262,18 @@
         <h3>Schritt 2 — Was zählt als Deployment?</h3>
         <ul>
           <li><strong>Releases:</strong> Jede Jira-Version, die als <em>veröffentlicht</em> markiert ist und ein Veröffentlichungsdatum hat, zählt als ein Deployment.</li>
-          <li><strong>Issues reaching a status (Vorgänge, die einen Status erreichen):</strong> Jeder Vorgang zählt bei seinem <em>ersten</em> Übergang in einen ausgewählten Status als ein Deployment. Standardmäßig sind deine Done-Status ausgewählt.</li>
+          <li><strong>Issues reaching a status (Vorgänge, die einen Status erreichen):</strong> Jeder Vorgang zählt bei seinem <em>ersten</em> Übergang in einen ausgewählten Status als ein Deployment. Standardmäßig sind deine Done-Status ausgewählt. Das misst <strong>Durchsatz</strong>: Zehn Vorgänge, die gemeinsam live gehen, zählen zehnfach. Das Gadget beschriftet die Kachel mit „issues reaching a status · throughput“ und zeigt die Änderungsfehlerrate als Wiederöffnungsrate.</li>
         </ul>
-        <p>Beide Optionen sind in der kostenlosen Version enthalten.</p>
+        <p>Beide Optionen sind in der kostenlosen Version enthalten. In beiden Fällen behandelt die App <strong>Done (Erledigt)</strong> als „in Produktion“. Veröffentlicht dein Team später, als es Vorgänge abschließt, zähle <em>Releases</em> und schalte <em>Also show lead time until release (Durchlaufzeit bis zum Release zusätzlich anzeigen)</em> ein (Pro, <a href="#advanced">Advanced (Erweitert)</a>).</p>
         <h3 id="advanced">Advanced (Erweitert) <span class="pro">PRO</span></h3>
         <ul>
           <li><strong>Störungstypen:</strong> Welche Vorgangstypen bei der Wiederherstellungszeit als Störung zählen. Standard: Typen mit bug, incident, outage oder defect im Namen.</li>
+          <li><strong>Fehlertypen:</strong> Welche Vorgangstypen bei der Änderungsfehlerrate als Fehler zählen. <em>Automatic (Automatisch)</em> (Standard) nimmt die Typen mit bug im Namen; <em>Choose the types (Typen auswählen)</em> lässt dich eigene ankreuzen, zum Beispiel Incident, Defect oder Problem.</li>
           <li><strong>Unteraufgaben:</strong> In Durchlaufzeit und Durchsatz einbeziehen oder auslassen (Standard).</li>
+          <li><strong>Leave out epics (Epics auslassen):</strong> Epics werden nicht als abgeschlossene Vorgänge gezählt und fließen daher weder in die Durchlaufzeit noch in den Durchsatz ein. Standard: Epics sind enthalten.</li>
+          <li><strong>Also show lead time until release (Durchlaufzeit bis zum Release zusätzlich anzeigen)</strong> (Modus „Releases“): liest die Fix-Version abgeschlossener Vorgänge und zeigt die Zeit bis zum Release-Datum dieser Version, als <em>Until release (Bis zum Release)</em> neben der Durchlaufzeit, mit der Anzahl der Vorgänge, die erledigt, aber noch nicht released sind. Die Durchlaufzeit selbst bleibt unverändert.</li>
         </ul>
+        <p>Die Advanced-Optionen sind standardmäßig aus oder auf „automatisch“. Das Einschalten einer Option startet eine Neuberechnung; der gespeicherte Verlauf und deine aktuellen Zahlen ändern sich durch das Einspielen eines Updates nicht.</p>
         <h3 id="ai-rollout">Schritt 3 — KI-Einführung <span class="pro">PRO</span> (optional)</h3>
         <p>Liefert die Grundlage für die <a href="#ai">Registerkarte AI Impact (KI-Auswirkungen)</a>: Einführungsdatum, Labels für KI-unterstützte Vorgänge (bis zu 10), zu verwendende KI-Signale, optionale Vorgangstypen für „AI task“ und bis zu fünf zusätzliche Diagrammmarkierungen (Beschriftung bis zu 24 Zeichen). In der kostenlosen Version ist dieser Schritt ausgegraut.</p>
       </section>
@@ -278,16 +284,16 @@
         <div class="table-wrap">
           <table>
             <tr><th>Metrik</th><th>Berechnung (Standarddefinitionen)</th></tr>
-            <tr><td><strong>Deployment-Häufigkeit</strong></td><td>Veröffentlichte Jira-Versionen (oder erste Übergänge in die gewählten Status) pro Woche, gemittelt über die abgeschlossenen Wochen des Zeitraums; die laufende Woche wird ausgelassen. Anzeige pro Woche oder Monat, je nach Lesbarkeit.</td></tr>
-            <tr><td><strong>Durchlaufzeit für Änderungen</strong></td><td>Medianzeit vom <em>ersten</em> Übergang in die <dfn class="term" data-tip="Jira ordnet jeden Workflowstatus einer von drei Kategorien zu: To Do, In Progress oder Done. Die App verwendet die Kategorien, nicht die Statusnamen.">Statuskategorie</dfn> <strong>In Progress (In Bearbeitung)</strong> bis zum <em>letzten</em> Übergang in <strong>Done (Erledigt)</strong>, für im Zeitraum abgeschlossene Vorgänge. Wieder geöffnete Vorgänge zählen ab ihrem endgültigen Abschluss.</td></tr>
-            <tr><td><strong>Änderungsfehlerrate</strong></td><td>Anteil der Releases mit mindestens einem <strong>innerhalb von 14 Tagen erfassten Fehler</strong> nach dem Release, zugeordnet über <dfn class="term" data-tip="Jira-Felder, die einen Vorgang mit einem Release verbinden: die Version, die ihn behebt, oder die Version, in der der Fehler gefunden wurde.">Fix versions oder Affected versions</dfn>. Ein Fehler ohne Version wird dem jüngsten vorherigen Release zugeordnet, wenn dieses höchstens 14 Tage zurückliegt. Im Modus „Issues reaching a status“ ist es die Wiederöffnungsrate (Übergänge aus Done ÷ Übergänge in Done).</td></tr>
-            <tr><td><strong>Wiederherstellungszeit</strong></td><td>Medianzeit von der <strong>Erstellung</strong> bis zur <strong>Behebung</strong> eines Störungsvorgangs, für im Zeitraum behobene Störungen.</td></tr>
+            <tr><td><strong>Deployment-Häufigkeit</strong></td><td>Veröffentlichte Jira-Versionen (oder erste Übergänge in die gewählten Status) pro Woche, gemittelt über die abgeschlossenen Wochen des Zeitraums; die laufende Woche wird ausgelassen. Anzeige pro Woche oder Monat, je nach Lesbarkeit. Im Modus „Issues reaching a status“ ist das der Durchsatz. Bei mehreren Projekten (Pro) werden die Deployments addiert, die Rate wächst also mit der Projektzahl; die Kachel weist darauf hin.</td></tr>
+            <tr><td><strong>Durchlaufzeit für Änderungen</strong></td><td>Medianzeit vom <em>ersten</em> Übergang in die <dfn class="term" data-tip="Jira ordnet jeden Workflowstatus einer von drei Kategorien zu: To Do, In Progress oder Done. Die App verwendet die Kategorien, nicht die Statusnamen.">Statuskategorie</dfn> <strong>In Progress (In Bearbeitung)</strong> bis zum <em>letzten</em> Übergang in <strong>Done (Erledigt)</strong>, für im Zeitraum abgeschlossene Vorgänge. Wieder geöffnete Vorgänge zählen ab ihrem endgültigen Abschluss. Sie endet bei Done, das die App als deployt behandelt. Kommen deine Releases später als Done, ergänzt „Lead time until release“ (Pro, Advanced, Modus Releases) die Zeit bis zum Release-Datum der Fix-Version; damit liegt der Wert näher an der DORA-Durchlaufzeit vom Commit bis zur Produktion.</td></tr>
+            <tr><td><strong>Änderungsfehlerrate</strong></td><td>Anteil der Releases mit mindestens einem <strong>innerhalb von 14 Tagen erfassten Fehler</strong> nach dem Release, zugeordnet über <dfn class="term" data-tip="Jira-Felder, die einen Vorgang mit einem Release verbinden: die Version, die ihn behebt, oder die Version, in der der Fehler gefunden wurde.">Fix versions oder Affected versions</dfn>. Ein Fehler ohne Version wird dem jüngsten vorherigen Release zugeordnet, wenn dieses höchstens 14 Tage zurückliegt. Im Modus „Issues reaching a status“ ist es die Wiederöffnungsrate (Übergänge aus Done ÷ Übergänge in Done). Standardmäßig zählt jeder Fehler; sollen nur Ausfälle in Produktion zählen, wähle diese Typen unter Advanced (Pro), zum Beispiel Incident. Releases der letzten 14 Tage sind als noch offen markiert, weil noch Fehler hinzukommen können. Ohne Fehlertyp zeigt die Kachel „—“ und „no bug issue type“ statt einer Rate.</td></tr>
+            <tr><td><strong>Wiederherstellungszeit</strong></td><td>Medianzeit von der <strong>Erstellung</strong> bis zur <strong>Behebung</strong> eines Störungsvorgangs, für im Zeitraum behobene Störungen. Seit 2023 heißt die nächstliegende DORA-Metrik „Failed Deployment Recovery Time“; wähle unter Advanced (Pro) die Störungstypen, damit nur Störungen in Produktion zählen.</td></tr>
           </table>
         </div>
-        <p>Der Pfeil (▲/▼) vergleicht mit dem vorherigen Zeitraum gleicher Länge. Die Benchmark-Bereiche folgen der veröffentlichten DORA™-Forschung (klassisches Modell Elite/High/Medium/Low) und lassen sich nicht ändern.</p>
+        <p>Der Pfeil (▲/▼) vergleicht mit dem vorherigen Zeitraum gleicher Länge. Die Benchmark-Bereiche verwenden das Modell Elite/High/Medium/Low der DORA™-Forschung und lassen sich nicht ändern. Die Grenzen für Deployment-Häufigkeit und Durchlaufzeit folgen den DORA-Clustern; die Grenzen für Änderungsfehlerrate und Wiederherstellungszeit sind gerundet, damit jeder Bereich leicht lesbar ist. Nutze die Bereiche als Orientierung für dein Team.</p>
         <details class="more">
           <summary>Bereichsgrenzen, kleine Stichproben und fehlende Vergleiche</summary>
-          <p>Bei weniger als 5 Releases oder Störungen ergänzen die Kacheln für Änderungsfehlerrate und Wiederherstellungszeit den Hinweis „treat as directional“ (nur als Tendenz werten). Fehler sind Vorgänge eines Typs wie „Bug“. Deckt der analysierte Verlauf den vorherigen Zeitraum nicht ab, zeigt die Kachel <em>„— not enough history for a comparison“ (nicht genügend Verlaufsdaten für einen Vergleich)</em> anstelle eines Pfeils (siehe <a href="#faq">Häufige Fragen</a>).</p>
+          <p>Bei weniger als 5 Releases oder Störungen ergänzen die Kacheln für Änderungsfehlerrate und Wiederherstellungszeit den Hinweis „treat as directional“ (nur als Tendenz werten). Standardmäßig sind Fehler Vorgänge eines Typs wie „Bug“; mit Pro wählst du die Typen unter Advanced. Deckt der analysierte Verlauf den vorherigen Zeitraum nicht ab, zeigt die Kachel <em>„— not enough history for a comparison“ (nicht genügend Verlaufsdaten für einen Vergleich)</em> anstelle eines Pfeils (siehe <a href="#faq">Häufige Fragen</a>).</p>
           <div class="table-wrap">
             <table>
               <tr><th>Metrik</th><th>Elite</th><th>Hoch</th><th>Mittel</th><th>Niedrig</th></tr>
@@ -303,6 +309,20 @@
         <h3 id="trends">Trenddiagramme lesen</h3>
         <p> <strong>Trends</strong> zeigt als Registerkarte eine Metrik für den gewählten Zeitraum, <strong>Weekly (Wöchentlich)</strong> oder <strong>Monthly (Monatlich)</strong>. In der Wochenansicht ist die gestrichelte Linie ein <dfn class="term" data-tip="Für jede Woche der Median aus dieser Woche und den drei vorherigen Wochen. Er glättet einzelne Ausreißer.">gleitender 4-Wochen-Median</dfn>. Bewege die Maus über einen Punkt, um die Anzahl der zugrunde liegenden Vorgänge zu sehen.</p>
         <p><em>Benchmarks (Vergleichsbereiche)</em> hinterlegt die Bereiche hinter der Linie farbig. Gestrichelte senkrechte Linien markieren Ereignisse: automatisch das Datum deiner KI-Einführung sowie bis zu fünf eigene Markierungen <span class="pro">PRO</span> aus <a href="#ai-rollout">Schritt 3 des Assistenten</a>.</p>
+      </section>
+
+      <section id="fit">
+        <h2>Zahlen an deinen Ablauf anpassen</h2>
+        <p>DevOps Metrics liest die vier DORA™-Metriken aus den Daten, die dein Team in Jira pflegt. Mit diesen Einstellungen passen die Zahlen am besten zu eurer Arbeitsweise:</p>
+        <ul>
+          <li><strong>Du zählst Vorgänge, die einen Status erreichen.</strong> Die Kachel zeigt dann Durchsatz (zehn Vorgänge, die gemeinsam live gehen, zählen zehnfach) und sagt das auch; die Änderungsfehlerrate ist die Wiederöffnungsrate. Sollen Deployments zählen, wähle in Schritt 2 des Assistenten <em>Releases</em>.</li>
+          <li><strong>Du veröffentlichst in Paketen.</strong> Die Durchlaufzeit endet bei Done. Zähle <em>Releases</em> und schalte <em>Also show lead time until release (Durchlaufzeit bis zum Release zusätzlich anzeigen)</em> ein (Pro, <a href="#advanced">Advanced (Erweitert)</a>), wenn du Fix-Versionen setzt.</li>
+          <li><strong>Du lieferst kontinuierlich ohne Jira-Versionen aus.</strong> Zähle die Vorgänge, die den Status erreichen, der in deinem Workflow „deployt“ bedeutet, zum Beispiel Deployed oder Released.</li>
+          <li><strong>Deine Fehler sind kein Vorgangstyp wie „Bug“.</strong> Wähle unter Advanced (Pro) deine Fehlertypen; ohne Fehlertyp zeigt die Änderungsfehlerrate „no bug issue type“ statt einer Rate.</li>
+          <li><strong>Deine Epics durchlaufen In Progress bis Done.</strong> Lass sie unter Advanced (Pro) aus.</li>
+          <li><strong>Du kombinierst mehrere Projekte.</strong> Die Deployments werden addiert, die Wochenrate wächst also mit der Projektzahl, und die Kachel sagt das. Für den Benchmark-Bereich eines einzelnen Teams bekommt das Projekt jedes Teams ein eigenes Gadget.</li>
+          <li><strong>Du hast nur wenige Releases.</strong> Die Änderungsfehlerrate springt dann in großen Schritten; bei weniger als 5 Releases steht auf der Kachel „treat as directional“.</li>
+        </ul>
       </section>
 
       <section id="quality">
@@ -369,13 +389,13 @@
 
       <section id="plans">
         <h2>Kostenlos und Pro im Vergleich</h2>
-        <p>Kostenlos für Jira-Websites mit bis zu 10 Nutzern; größere Websites beginnen mit einer kostenlosen Testphase. <strong>Pro-Funktionen sind während eines aktiven Abonnements verfügbar</strong>, einschließlich der Testphase. Ohne aktives Abonnement, etwa nach der Testphase, arbeitet das Overview-Gadget im Modus <strong>Kostenlos</strong> weiter. Preise stehen im <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
+        <p>Kostenlos für Jira-Websites mit bis zu 10 Nutzern; größere Websites beginnen mit einer kostenlosen Testphase. <strong>Pro-Funktionen sind während eines aktiven Abonnements verfügbar</strong>, einschließlich der Testphase. Ohne aktives Abonnement, etwa nach der Testphase, arbeitet das Overview-Gadget im Modus <strong>Kostenlos</strong> weiter: Es nennt, welche gespeicherten Pro-Einstellungen pausiert sind, nichts wird gelöscht, und sie gelten mit Pro wieder. Preise stehen im <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace-Eintrag</a>.</p>
         <div class="table-wrap">
           <table>
             <tr><th></th><th>Kostenlos</th><th>Pro</th></tr>
             <tr><td>Overview-Gadget (Kacheln, Benchmark-Bereiche, Trends, verständliche Erklärungen)</td><td>✓ (1 Projekt)</td><td>✓</td></tr>
             <tr><td>Deployment-Definition (Releases oder Status)</td><td>✓</td><td>✓</td></tr>
-            <tr><td>Erweiterte Einstellungen: Störungstypen, Unteraufgaben</td><td>—</td><td>✓</td></tr>
+            <tr><td>Erweiterte Einstellungen: Störungstypen, Fehlertypen, Unteraufgaben, Epics, Durchlaufzeit bis zum Release</td><td>—</td><td>✓</td></tr>
             <tr><td>Mehrere Projekte in einem Gadget (bis zu 10)</td><td>—</td><td>✓</td></tr>
             <tr><td>Registerkarte AI Impact und Einstellungen zur KI-Einführung</td><td>—</td><td>✓</td></tr>
             <tr><td>Zusätzliche Ereignismarkierungen in Trenddiagrammen</td><td>—</td><td>✓</td></tr>
@@ -428,6 +448,11 @@
         <details class="more">
           <summary>Die Änderungsfehlerrate erscheint zu hoch oder zu niedrig.</summary>
           <p>Prüfe im Fenster <strong>Details</strong> , wie Fehler Releases zugeordnet wurden. Das Feld Affected versions bei Fehlern liefert die genaueste Zuordnung; bei wenigen Releases schwankt die Rate stark.</p>
+        </details>
+
+        <details class="more">
+          <summary>Die Änderungsfehlerrate zeigt „—“ und „no bug issue type“.</summary>
+          <p>Das Projekt hat keinen Vorgangstyp, der als Fehler zählt, die App hat also nichts zu zählen; sie wertet das nicht als Rate von 0 %. Öffne im Assistenten <strong>Advanced (Erweitert)</strong> und wähle deine Fehlertypen (Pro).</p>
         </details>
 
         <details class="more">

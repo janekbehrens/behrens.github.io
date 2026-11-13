@@ -78,6 +78,7 @@
         <a href="#ai-rollout" class="sub">AI rollout (Pro)</a>
         <a href="#calc">How the metrics are calculated</a>
         <a href="#trends" class="sub">Trend charts</a>
+        <a href="#fit">Match the numbers to your process</a>
         <a href="#quality">Data quality</a>
         <a href="#ai">AI Impact</a>
         <a href="#card">Metric Card gadget</a>
@@ -110,6 +111,7 @@
           <li><a href="#start">Setup</a></li>
           <li><a href="#config">Configuration</a></li>
           <li><a href="#calc">How the metrics are calculated</a></li>
+          <li><a href="#fit">Match the numbers to your process</a></li>
           <li><a href="#quality">Data quality</a></li>
           <li><a href="#ai">AI Impact</a></li>
           <li><a href="#card">Metric Card gadget</a></li>
@@ -127,9 +129,9 @@
           <li><strong>Deployment frequency:</strong> how often you ship.</li>
           <li><strong>Lead time for changes:</strong> how long work takes from start to done.</li>
           <li><strong>Change failure rate:</strong> the share of releases that caused problems.</li>
-          <li><strong>Time to restore:</strong> how quickly you recover when something breaks. It is a <dfn class="term" data-tip="The middle value: half of the items took less time, half took more. One very slow item hardly moves it.">median</dfn>, even though the common abbreviation is MTTR.</li>
+          <li><strong>Time to restore:</strong> how long bug and incident issues take from created to resolved. It is a <dfn class="term" data-tip="The middle value: half of the items took less time, half took more. One very slow item hardly moves it.">median</dfn>, even though the common abbreviation is MTTR.</li>
         </ul>
-        <p>Everything comes from Jira releases, status changes, bugs and incident tickets. Every number has a <dfn class="term" data-tip="A performance level from the DORA™ research (Elite, High, Medium or Low) that puts a number into context.">benchmark band</dfn>, a plain-language sentence and an ⓘ that explains the calculation. The gadget has three tabs: <strong>Overview</strong>, <strong>Trends</strong> and <strong>AI Impact</strong> (Pro).</p>
+        <p>Everything comes from Jira releases, status changes, bugs and incident tickets, and the app maps them onto the four DORA™ metrics. <a href="#fit">Match the numbers to your process</a> shows which settings bring them closest to how your team works. Every number has a <dfn class="term" data-tip="A performance level from the DORA™ research (Elite, High, Medium or Low) that puts a number into context.">benchmark band</dfn>, a plain-language sentence and an ⓘ that explains the calculation. The gadget has three tabs: <strong>Overview</strong>, <strong>Trends</strong> and <strong>AI Impact</strong> (Pro).</p>
         <img src="imgDoraMetricsForJira/highlight-1-four-delivery-metrics-one-gadget.webp" alt="DevOps Metrics — Overview gadget with four metric tiles (deployment frequency, lead time, change failure rate, time to restore) and the Trends tab with the weekly lead time, benchmark zones and markers for a new CI pipeline and the AI rollout" loading="lazy" width="1840" height="900">
         <div class="video-wrapper">
           <div class="yt-consent" style="background-image: url('imgDoraMetricsForJira/video-poster.webp')"
@@ -167,14 +169,18 @@
         <h3>Step 2 — What counts as a deployment?</h3>
         <ul>
           <li><strong>Releases:</strong> every Jira version marked as <em>released</em> with a release date counts as one deployment.</li>
-          <li><strong>Issues reaching a status:</strong> every issue that <em>first</em> reaches one of the statuses you pick counts as one deployment. The statuses default to your Done statuses.</li>
+          <li><strong>Issues reaching a status:</strong> every issue that <em>first</em> reaches one of the statuses you pick counts as one deployment. The statuses default to your Done statuses. This measures <strong>throughput</strong>: ten issues that go live together count ten times. The gadget labels the tile “issues reaching a status · throughput” and shows the change failure rate as the re-open rate.</li>
         </ul>
-        <p>Both options are in Free.</p>
+        <p>Both options are in Free. Either way, the app treats <strong>Done</strong> as “in production”: if your team releases later than it finishes issues, count <em>Releases</em> and switch on <em>Also show lead time until release</em> (Pro, <a href="#advanced">Advanced</a>).</p>
         <h3 id="advanced">Advanced <span class="pro">PRO</span></h3>
         <ul>
           <li><strong>Incident types:</strong> which issue types count as incidents for time to restore. Default: types whose name contains bug, incident, outage or defect.</li>
+          <li><strong>Bug types:</strong> which issue types count as bugs for the change failure rate. <em>Automatic</em> (default) uses the types whose name contains bug; <em>Choose the types</em> lets you tick your own, for example Incident, Defect or Problem.</li>
           <li><strong>Sub-tasks:</strong> include them in lead time and throughput, or leave them out (default).</li>
+          <li><strong>Leave out epics:</strong> do not count epics as completed issues, so they do not enter the lead time or the throughput. Default: epics are included.</li>
+          <li><strong>Also show lead time until release</strong> (Releases mode): reads the fix version of completed issues and shows the time until the release date of that version, as <em>Until release</em> next to the lead time, with the number of issues that are done but not released yet. The lead time itself stays as it is.</li>
         </ul>
+        <p>The Advanced options are off or on automatic by default. Switching one on starts one recalculation; saved history and your current numbers are not changed by installing an update.</p>
         <h3 id="ai-rollout">Step 3 — AI rollout <span class="pro">PRO</span> (optional)</h3>
         <p>Feeds the <a href="#ai">AI Impact tab</a>: the rollout date, the labels that mark AI-assisted issues (up to 10), which AI signals to use, optional “AI task” issue types, and up to five extra chart markers (label up to 24 characters). Free sites see this step greyed out.</p>
       </section>
@@ -185,16 +191,16 @@
         <div class="table-wrap">
           <table>
             <tr><th>Metric</th><th>Calculation (default definitions)</th></tr>
-            <tr><td><strong>Deployment frequency</strong></td><td>Released Jira versions (or first transitions into your chosen statuses) per week, averaged over the completed weeks of the period; the week in progress is left out. Shown per week or per month, whichever reads better.</td></tr>
-            <tr><td><strong>Lead time for changes</strong></td><td>Median time from the <em>first</em> transition into the <dfn class="term" data-tip="Jira sorts every workflow status into one of three categories: To Do, In Progress or Done. The app uses the categories, not the status names.">status category</dfn> <strong>In Progress</strong> to the <em>last</em> transition into <strong>Done</strong>, for issues completed in the period. Re-opened issues count from their final completion.</td></tr>
-            <tr><td><strong>Change failure rate</strong></td><td>Share of releases with at least one <strong>bug raised within 14 days</strong> after the release, linked via <dfn class="term" data-tip="Jira fields that tie an issue to a release: the version that fixes it, or the version in which the bug was found.">fix or affected version</dfn>. A bug without a version counts for the most recent release before it, if that was within 14 days. In “Issues reaching a status” mode it is the re-open rate (transitions out of Done ÷ into Done).</td></tr>
-            <tr><td><strong>Time to restore</strong></td><td>Median time from an incident-type issue being <strong>created</strong> to it being <strong>resolved</strong>, for incidents resolved in the period.</td></tr>
+            <tr><td><strong>Deployment frequency</strong></td><td>Released Jira versions (or first transitions into your chosen statuses) per week, averaged over the completed weeks of the period; the week in progress is left out. Shown per week or per month, whichever reads better. In “Issues reaching a status” mode this is throughput. With several projects (Pro) the deployments are added up, so the rate grows with the number of projects; the tile says so.</td></tr>
+            <tr><td><strong>Lead time for changes</strong></td><td>Median time from the <em>first</em> transition into the <dfn class="term" data-tip="Jira sorts every workflow status into one of three categories: To Do, In Progress or Done. The app uses the categories, not the status names.">status category</dfn> <strong>In Progress</strong> to the <em>last</em> transition into <strong>Done</strong>, for issues completed in the period. Re-opened issues count from their final completion. It ends at Done, which the app treats as deployed. If your releases come later than Done, “Lead time until release” (Pro, Advanced, Releases mode) adds the time until the release date of the fix version, which brings the number closer to DORA’s lead time from commit to production.</td></tr>
+            <tr><td><strong>Change failure rate</strong></td><td>Share of releases with at least one <strong>bug raised within 14 days</strong> after the release, linked via <dfn class="term" data-tip="Jira fields that tie an issue to a release: the version that fixes it, or the version in which the bug was found.">fix or affected version</dfn>. A bug without a version counts for the most recent release before it, if that was within 14 days. In “Issues reaching a status” mode it is the re-open rate (transitions out of Done ÷ into Done). By default every bug counts; to count only failures in production, choose those types under Advanced (Pro), for example Incident. Releases from the last 14 days are marked as still open, because bugs can still come in. Without a bug issue type the tile shows “—” and “no bug issue type” instead of a rate.</td></tr>
+            <tr><td><strong>Time to restore</strong></td><td>Median time from an incident-type issue being <strong>created</strong> to it being <strong>resolved</strong>, for incidents resolved in the period. Since 2023 DORA calls the closest metric “failed deployment recovery time”; choose the incident types under Advanced (Pro) so that only incidents in production count.</td></tr>
           </table>
         </div>
-        <p>The arrow (▲/▼) compares with the previous period of the same length. Benchmark bands follow the published DORA™ research (the classic Elite/High/Medium/Low model) and can’t be changed.</p>
+        <p>The arrow (▲/▼) compares with the previous period of the same length. Benchmark bands use the Elite/High/Medium/Low model of the DORA™ research and can’t be changed. The limits for deployment frequency and lead time follow the DORA clusters; the limits for change failure rate and time to restore are rounded so that every band is easy to read. Use the bands as orientation for your team.</p>
         <details class="more">
           <summary>Band limits, small samples and missing comparisons</summary>
-          <p>With fewer than 5 releases or incidents, the change failure rate and time to restore tiles add “treat as directional”. Bugs are issues of a type named like “Bug”. When the analysed history doesn’t cover the previous period, the tile shows <em>“— not enough history for a comparison”</em> instead of an arrow (see the <a href="#faq">FAQ</a>).</p>
+          <p>With fewer than 5 releases or incidents, the change failure rate and time to restore tiles add “treat as directional”. By default, bugs are issues of a type named like “Bug”; Pro lets you choose the types under Advanced. When the analysed history doesn’t cover the previous period, the tile shows <em>“— not enough history for a comparison”</em> instead of an arrow (see the <a href="#faq">FAQ</a>).</p>
           <div class="table-wrap">
             <table>
               <tr><th>Metric</th><th>Elite</th><th>High</th><th>Medium</th><th>Low</th></tr>
@@ -210,6 +216,20 @@
         <h3 id="trends">Reading the trend charts</h3>
         <p>The <strong>Trends</strong> tab plots one metric over the selected period, <strong>Weekly</strong> or <strong>Monthly</strong>. In the weekly view the dashed line is a <dfn class="term" data-tip="For each week, the median of that week and the three weeks before it. It smooths out single outliers.">4-week rolling median</dfn>. Hover a point to see how many items it is based on.</p>
         <p><em>Benchmarks</em> shades the bands behind the line. Dashed vertical lines mark events: your AI rollout date automatically, plus up to five of your own <span class="pro">PRO</span> from <a href="#ai-rollout">step 3 of the wizard</a>.</p>
+      </section>
+
+      <section id="fit">
+        <h2>Match the numbers to your process</h2>
+        <p>DevOps Metrics reads the four DORA™ metrics from the data your team keeps in Jira. These settings bring the numbers closest to how you work:</p>
+        <ul>
+          <li><strong>You count issues reaching a status.</strong> The tile then shows throughput (ten issues that go live together count ten times) and says so; the change failure rate is the re-open rate. To count deployments, choose <em>Releases</em> in step 2 of the wizard.</li>
+          <li><strong>You release in batches.</strong> The lead time ends at Done. Count <em>Releases</em> and switch on <em>Also show lead time until release</em> (Pro, <a href="#advanced">Advanced</a>) if you set fix versions.</li>
+          <li><strong>You deploy continuously without Jira versions.</strong> Count issues reaching the status that means “deployed” in your workflow, for example Deployed or Released.</li>
+          <li><strong>Your bugs are not an issue type named like “Bug”.</strong> Choose your bug types under Advanced (Pro); without a bug type, the change failure rate shows “no bug issue type” instead of a rate.</li>
+          <li><strong>Epics move through In Progress to Done.</strong> Leave them out under Advanced (Pro).</li>
+          <li><strong>You combine several projects.</strong> Deployments are added up, so the weekly rate grows with the number of projects, and the tile says so. For the benchmark band of a single team, give each team’s project its own gadget.</li>
+          <li><strong>You have only a few releases.</strong> The change failure rate then moves in large steps; with fewer than 5 releases the tile says “treat as directional”.</li>
+        </ul>
       </section>
 
       <section id="quality">
@@ -276,13 +296,13 @@
 
       <section id="plans">
         <h2>Free vs Pro</h2>
-        <p>Free for Jira sites with up to 10 users; larger sites start with a free trial. <strong>Pro features are on while your site has an active subscription</strong>, the trial included. Without one, for example after the trial, the Overview gadget keeps working in <strong>Free</strong> mode. Pricing is on the <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace listing</a>.</p>
+        <p>Free for Jira sites with up to 10 users; larger sites start with a free trial. <strong>Pro features are on while your site has an active subscription</strong>, the trial included. Without one, for example after the trial, the Overview gadget keeps working in <strong>Free</strong> mode: it says which saved Pro settings are paused, nothing is deleted, and they apply again with Pro. Pricing is on the <a href="https://marketplace.atlassian.com/apps/1055828654/devops-metrics-deployment-frequency-lead-time-for-jira?tab=pricing" target="_blank" rel="noopener">Marketplace listing</a>.</p>
         <div class="table-wrap">
           <table>
             <tr><th></th><th>Free</th><th>Pro</th></tr>
             <tr><td>Overview gadget (tiles, benchmark bands, trends, plain-language sentences)</td><td>✓ (1 project)</td><td>✓</td></tr>
             <tr><td>Deployment definition (releases or status)</td><td>✓</td><td>✓</td></tr>
-            <tr><td>Advanced: incident types, sub-tasks</td><td>—</td><td>✓</td></tr>
+            <tr><td>Advanced: incident types, bug types, sub-tasks, epics, lead time until release</td><td>—</td><td>✓</td></tr>
             <tr><td>Several projects in one gadget (up to 10)</td><td>—</td><td>✓</td></tr>
             <tr><td>AI Impact tab and AI rollout settings</td><td>—</td><td>✓</td></tr>
             <tr><td>Extra event markers on trend charts</td><td>—</td><td>✓</td></tr>
@@ -335,6 +355,11 @@
         <details class="more">
           <summary>The change failure rate seems too high or too low.</summary>
           <p>Check the <strong>Details</strong> popup for how bugs were matched to releases. Setting the affected version on bugs makes it most accurate; with few releases the rate swings widely.</p>
+        </details>
+
+        <details class="more">
+          <summary>The change failure rate shows “—” and “no bug issue type”.</summary>
+          <p>The project has no issue type that counts as a bug, so the app has nothing to count; it does not treat that as a rate of 0%. In the wizard, open <strong>Advanced</strong> and choose your bug types (Pro).</p>
         </details>
 
         <details class="more">
