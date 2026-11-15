@@ -406,7 +406,7 @@
         <details class="more">
           <summary>Limits and details</summary>
           <ul>
-            <li>The tab reads up to 200 epics (newest first) and up to 1,000 child issues for every 20 epics. If the project has more, it says so.</li>
+            <li>The tab reads up to 200 epics (newest first) and their child issues, up to 15,000 per load. If the project has more, or Jira answers too slowly, it says so. The trend and forecast use Jira's change history for up to 1,000 child issues for every 20 epics; issues beyond that count with their current status from the day they were created.</li>
             <li>Only issues you are allowed to see are counted. Sub-tasks count through their parent issue.</li>
             <li>The trend is rebuilt from Jira's change history each time it is loaded and kept for 30 minutes; the epic list is kept for 5 minutes. <strong>Refresh</strong> reads Jira again. The app stores no history of its own.</li>
             <li>An issue moved into an epic from elsewhere counts from the day it was created. For the time tracking and manual measures, the trend and forecast use status progress, because Jira's change history has no time logged on sub-tasks and no history of the manual field.</li>
