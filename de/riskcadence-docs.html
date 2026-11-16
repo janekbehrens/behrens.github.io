@@ -130,7 +130,12 @@
         <a class="sub" href="#examples">Beispielrisiken</a>
         <a href="#fields">Felder</a>
         <a href="#matrix">Risikomatrix</a>
+        <a class="sub" href="#templates">Vorlagen im Stil von Normen</a>
+        <a class="sub" href="#appetite">Risikoappetit</a>
         <a href="#register">Register</a>
+        <a class="sub" href="#categories">Risikokategorien</a>
+        <a class="sub" href="#trend">Trend</a>
+        <a class="sub" href="#statement">Strukturierte Risikoaussage</a>
         <a class="sub" href="#saved-views">Gespeicherte Ansichten</a>
         <a class="sub" href="#bulk-edit">Massenbearbeitung</a>
         <a class="sub" href="#portfolio">Portfolio</a>
@@ -152,6 +157,7 @@
         <a class="sub" href="#jql">Suche mit JQL</a>
         <a class="sub" href="#closing-rule">Schließregel</a>
         <a href="#export">Export</a>
+        <a class="sub" href="#audit">Audit-Verlauf</a>
         <a href="#permissions">Berechtigungen</a>
         <a class="sub" href="#app-permissions">Warum diese Berechtigungen</a>
         <a href="#limits">Limits</a>
@@ -295,7 +301,7 @@
         <h2 id="matrix">Risikomatrix</h2>
         <p>Die Matrix legt fest, was eine Kombination aus Eintrittswahrscheinlichkeit und Auswirkung bedeutet. Starte mit einer Vorlage und passe sie an:</p>
         <ul>
-          <li><strong>Vorlagen:</strong> <em>Project risk 5×5</em>,  <em>Project risk 4×4</em> und <em>Simple 3×3</em>, jeweils mit vier Risikostufen: Low, Medium, High und Critical.</li>
+          <li><strong>Vorlagen:</strong> <em>Project risk 5×5</em>,  <em>Project risk 4×4</em> und <em>Simple 3×3</em>, jeweils mit vier Risikostufen: Low, Medium, High und Critical, sowie Vorlagen im Stil von ISO 31000, ISO/IEC 27005, NIST SP 800-30 und PMI (<a href="#templates">Details</a>).</li>
           <li><strong>Eigene Bezeichnungen:</strong> benenne jede Stufe der Skalen für Eintrittswahrscheinlichkeit und Auswirkung um (je 2 bis 7 Stufen).</li>
           <li><strong>Eigene Stufen:</strong> benenne die Stufen um und wähle ihre Farben (2 bis 6 Stufen).</li>
           <li><strong>Eine Stufe für jede Zelle:</strong> klicke auf eine Zelle, um durch die Stufen zu wechseln (Pfeiltasten, Eingabe- oder Leertaste funktionieren ebenfalls), die Stufe ist also nicht nur ein Score-Bereich.</li>
@@ -310,15 +316,23 @@
           <li><strong>Eine kleinere Matrix braucht eine Bestätigung.</strong> Risiken mit Werten oberhalb der neuen Skala gelten als nicht bewertet, bis jemand sie erneut bewertet. Ihre Werte bleiben in Jira erhalten.</li>
           <li><strong>Mehrere Projekte in einem Bericht oder Widget</strong> brauchen dieselbe Matrixversion. Sobald ein Projekt Änderungen speichert, hat es eine eigene Matrix.</li>
         </ul>
+
+        <h3 id="templates">Vorlagen im Stil von Normen</h3>
+        <p>Neben den drei allgemeinen Matrizen bietet Riskcadence Vorlagen im Stil von <strong>ISO 31000</strong>,  <strong>ISO/IEC 27005</strong> (Informationssicherheit), <strong>NIST SP 800-30</strong> sowie der Wahrscheinlichkeits- und Auswirkungsmatrix nach <strong>PMI</strong> (Probability and Impact Matrix). Jede Vorlage bringt zu jeder Stufe von Eintrittswahrscheinlichkeit und Auswirkung eine Definition in einem Satz mit und zu jeder Risikostufe eine Bedeutung. Fahre in der Matrix, im Register oder im Panel mit der Maus über eine Stufe, um sie zu sehen; der Bericht zeigt sie unter <em>Scale definitions</em>.</p>
+        <p>Alle Werte sind Beispiele: Die Normen verlangen dokumentierte Risikokriterien, schreiben diese Skalen aber nicht vor. Ersetze sie durch deine eigenen Kriterien unter <span class="ui">Settings → Risk matrix</span>, wo sich jede Definition und jede Bedeutung bearbeiten lässt. Die Vorlagen folgen dem Stil der Normen und beanspruchen keine Konformität. Eine gewählte Vorlage ersetzt die Matrix erst beim Speichern; die drei allgemeinen Vorlagen bleiben unverändert.</p>
+
+        <h3 id="appetite">Risikoappetit</h3>
+        <p>Wähle unter <span class="ui">Settings → Risk matrix → Risk appetite</span> die niedrigste Risikostufe, die über deinem Risikoappetit liegt, oder <em>No appetite line</em>. Die Matrix zeigt dann eine gestrichelte Linie, der Bericht und das Dashboard-Widget zählen die offenen Risiken darüber, und das Register filtert sie mit <span class="ui">Above appetite</span>. Ein Risiko zählt mit seiner Restrisikostufe, wo diese bewertet ist, sonst mit seiner inhärenten Stufe.</p>
+        <p>Wer ein solches Risiko akzeptiert, sieht einen Hinweis, die freigebende Person zu nennen und die Entscheidung zu begründen. Riskcadence blockiert das nicht, und der Bericht nennt es unter den offenen Entscheidungen. Die Vorlagen im Stil von ISO 31000 und ISO 27005 setzen die Linie auf High; ohne Linie ändert sich nichts.</p>
       </section>
 
       <section>
         <h2 id="register">Register</h2>
         <p>Der Tab <span class="ui">Register</span> zeigt die Risiken des Projekts an, die schwersten zuerst. Die meisten Zellen lassen sich direkt bearbeiten: Eintrittswahrscheinlichkeit, Auswirkung, Rest-Eintrittswahrscheinlichkeit und -Auswirkung, Risikoeigner, Reaktion und nächstes Review. Eine Änderung wird sofort mit deinen Berechtigungen in den Vorgang in Jira geschrieben.</p>
         <ul>
-          <li><strong>Ein Risiko hinzufügen</strong> in der Zeile über der Tabelle: Beschreibe, was passieren könnte und was es auslösen würde, wähle Eintrittswahrscheinlichkeit und Auswirkung und klicke auf <span class="ui">Add risk (Risiko hinzufügen)</span>. Dafür brauchst du das Recht, Vorgänge anzulegen.</li>
+          <li><strong>Ein Risiko hinzufügen</strong> in der Zeile über der Tabelle: Beschreibe, was passieren könnte und was es auslösen würde, wähle Eintrittswahrscheinlichkeit und Auswirkung und klicke auf <span class="ui">Add risk (Risiko hinzufügen)</span>. Dafür brauchst du das Recht, Vorgänge anzulegen. Mit <span class="ui">Structured statement</span> formulierst du es als Ursache, Ereignis und Folge (<a href="#statement">Details</a>).</li>
           <li><strong>Suche und Filter:</strong> Schlüssel oder Zusammenfassung, Stufe, Risikoeigner (<em>My risks (Meine Risiken)</em>,  <em>Without owner (Ohne Risikoeigner)</em>), Reaktion, <span class="ui">Overdue reviews (Überfällige Reviews)</span> und eine Matrixzelle. Geschlossene Risiken bleiben ausgeblendet; zeige sie mit der Option <span class="ui">Show closed (Geschlossene anzeigen)</span>.</li>
-          <li><strong>Gruppierung und Spalten:</strong> gruppiere nach Stufe, Risikoeigner, Reaktion, Status, Komponente oder Kategorie (Jira-Labels), sortiere nach jeder Spalte und wähle die Spalten unter <span class="ui">Columns (Spalten)</span>.</li>
+          <li><strong>Gruppierung und Spalten:</strong> gruppiere nach Stufe, Risikoeigner, Reaktion, Status, Komponente oder Kategorie (Jira-Labels oder die <a href="#categories">Kategorienliste</a> des Projekts), sortiere nach jeder Spalte und wähle die Spalten unter <span class="ui">Columns (Spalten)</span>, darunter <a href="#trend">Trend</a>.</li>
           <li><strong>Mitigation (Gegenmaßnahmen)</strong> zeigt, wie viele verknüpfte Vorgänge für Gegenmaßnahmen erledigt sind (<a href="#panel">Details</a>).</li>
           <li><strong>Export</strong> der aktuellen Ansicht als CSV oder XLSX (<a href="#export">Details</a>).</li>
         </ul>
@@ -329,6 +343,16 @@
 
         <h3 id="bulk-edit">Massenbearbeitung</h3>
         <p>Hake Risiken in der ersten Spalte an, hake die zu ändernden Felder an (Risikoeigner, Reaktion, nächstes Review, Eintrittswahrscheinlichkeit, Auswirkung, Rest-Eintrittswahrscheinlichkeit, Rest-Auswirkung), klicke auf <span class="ui">Review changes… (Änderungen prüfen…)</span> und danach auf <span class="ui">Apply to … risks… (Auf … Risiken anwenden…)</span>. Riskcadence sendet die Auswahl in Stapeln zu je 25 und listet jedes Risiko auf, das sich nicht ändern ließ, mit dem Grund. Felder, die du nicht ankreuzt, bleiben unverändert.</p>
+
+        <h3 id="categories">Risikokategorien</h3>
+        <p>Schalte <span class="ui">Settings → Risk categories</span> ein, um jedem Risiko eine Kategorie aus einer festen Liste zu geben: Starte mit einer Liste für Projekte, für das Unternehmen oder für Informationssicherheit, oder schreibe deine eigene (bis zu 12 Einträge). Das Register zeigt die Kategorie als Spalte, die du filtern, gruppieren, sortieren und exportieren kannst; das Panel hat ein Feld <em>Kategorie</em> und der Bericht zählt die offenen Risiken je Kategorie. Die Liste ändert ein Projekt- oder Jira-Administrator; die Kategorie eines Risikos setzen darf, wer das Risiko bearbeiten darf.</p>
+        <p>Suche mit JQL: <code>riskcadenceCategory = "Technical"</code>;  <code>riskcadenceCategory is EMPTY</code> findet Risiken ohne Kategorie. Der volle Pfad funktioniert ebenfalls: <code>issue.property[riskcadence-category].category</code>. Ohne Liste zeigt die Spalte Category wie bisher die Jira-Labels. Ausschalten blendet die Listen aus; bereits gesetzte Kategorien bleiben an den Risiken und sind nach dem Wiedereinschalten zurück. Wer eine Kategorie entfernt oder umbenennt, die Risiken tragen, wird vor dem Speichern gefragt; diese Risiken behalten den alten Namen, bis jemand einen neuen wählt.</p>
+
+        <h3 id="trend">Trend</h3>
+        <p>Riskcadence vergleicht jedes Risiko mit seinem Stand beim letzten abgeschlossenen Review des Projekts: ↑ schlechter oder wieder geöffnet, ↓ besser, → unverändert, • neu, ✓ geschlossen. Es gilt dieselbe Regel wie bei <a href="#compare">Compare (Vergleichen)</a>: zuerst der Rang der Stufe, dann der Score. Blende die Spalte <em>Trend</em> unter <span class="ui">Columns (Spalten)</span> ein; fahre mit der Maus über einen Pfeil, um das Review und beide Stände zu sehen. Der Review-Posteingang und die Top-Risiken im Bericht zeigen dieselben Pfeile, und <em>Score across reviews</em> im Panel zeigt den Score bei den letzten sechs abgeschlossenen Reviews. Projekte ohne abgeschlossenes Review zeigen keinen Trend.</p>
+
+        <h3 id="statement">Strukturierte Risikoaussage</h3>
+        <p>Wenn du im Register ein Risiko hinzufügst, kannst du es mit <span class="ui">Structured statement</span> als Ursache, Ereignis und Folge formulieren, optional mit einem Frühwarnzeichen. Das Ereignis wird zur Zusammenfassung; alle Teile landen mit fett gesetzten Bezeichnungen in der Jira-Beschreibung. Es gibt kein zusätzliches Feld, und bestehende Risiken bleiben, wie sie sind.</p>
 
         <h3 id="portfolio">Portfolio</h3>
         <p>Öffne <span class="ui">Apps → Riskcadence</span> in Jira für das <em>Risk portfolio (Risikoportfolio)</em>: ein Register und ein Bericht über alle Projekte, die für Riskcadence eingerichtet sind und die du ansehen darfst. <span class="ui">Projects ▾</span> wählt aus, welche Projekte einbezogen werden. Zum Speichern einer geteilten Portfolio-Ansicht ist ein Jira-Administrator oder ein Projektadministrator eines eingerichteten Projekts nötig.</p>
@@ -343,7 +367,8 @@
           <li><strong>Fortschritt der Gegenmaßnahmen</strong> aus den Vorgängen, die verknüpft sind mit <em>is mitigated by</em>, die erledigten sind markiert (<a href="#faq">so verknüpfst du</a>). Sind alle Gegenmaßnahmen erledigt und das Restrisiko nicht bewertet, erinnert dich das Panel daran, es zu bewerten.</li>
           <li><span class="ui">Add mitigation (Gegenmaßnahme hinzufügen)</span> legt einen neuen Vorgang an (mit Zusammenfassung und, wenn du möchtest, einem Bearbeiter) und verknüpft ihn mit dem Risiko über <em>is mitigated by</em>, oder verknüpft einen vorhandenen Vorgang, den du per Schlüssel oder Zusammenfassung findest. Ein neuer Vorgang hat den Typ Task, sofern das Projekt ihn hat. Das läuft mit deinen eigenen Jira-Berechtigungen: Für einen neuen Vorgang brauchst du die Berechtigung zum Anlegen von Vorgängen, für die Verknüpfung die Berechtigung zum Verknüpfen von Vorgängen. Schlägt die Verknüpfung fehl, nachdem der Vorgang angelegt wurde, behält das Panel ihn und bietet an, ihn zu verknüpfen.</li>
           <li><span class="ui">Request re-assessment (Neubewertung anfordern)</span> setzt das nächste Review auf heute und fügt einen Jira-Kommentar hinzu, der den Risikoeigner erwähnt, optional mit einer Notiz, damit Jira ihn benachrichtigt. Das Risiko erscheint dann als fällig im <a href="#inbox">Review-Posteingang</a>.</li>
-          <li><strong>History (Verlauf)</strong>: jede Änderung an den Bewertungsfeldern, am Risikoeigner, an der Reaktion, am nächsten Review und am Status, egal wo sie vorgenommen wurde, mit wer und wann, dazu Review-Entscheidungen und Neubewertungsanfragen. Das Panel zeigt die letzten 20.</li>
+          <li><strong>History (Verlauf)</strong>: jede Änderung an den Bewertungsfeldern, am Risikoeigner, an der Reaktion, am nächsten Review, an der Kategorie und am Status, egal wo sie vorgenommen wurde, mit wer und wann, dazu Review-Entscheidungen und Neubewertungsanfragen. Das Panel zeigt die letzten 20.</li>
+          <li><strong>Kategorie</strong>, wenn das Projekt eine <a href="#categories">Kategorienliste</a> nutzt, und <strong>Score across reviews</strong>: Klicke darauf, um Score und Stufe bei den letzten sechs abgeschlossenen Reviews und jetzt zu sehen (<a href="#trend">Trend</a>).</li>
         </ul>
         <img src="/imgRiskcadence/screenshot-1-issue-panel.webp" alt="Das Panel „Risk assessment“ an einem Risiko: das inhärente und das Restrisiko auf zwei Matrizen, Risikoeigner, Reaktion und nächstes Review, die Gegenmaßnahmen-Vorgänge mit ihrem Fortschritt, eine Schaltfläche „Request re-assessment“ und der Änderungsverlauf." loading="lazy" width="1840" height="900">
       </section>
@@ -531,7 +556,7 @@
         <h3 id="closing-rule">Schließregel (optional)</h3>
         <p>Die Schließregel hält ein Risiko offen, bis die von dir gewählten Werte erfasst sind. Sie ist ein Workflow-Validator: Füge <strong>Riskcadence closing rule</strong> zu dem Übergang hinzu, der Risiken schließt, in unternehmensverwalteten Projekten unter <span class="ui">Jira settings → Work items → Workflows</span>, in teamverwalteten Projekten unter <span class="ui">Project settings → Workflows</span>. Wähle dann, was zuerst erfasst sein muss.</p>
         <ul>
-          <li><strong>Standardmäßig</strong> braucht ein Risiko eine <strong>Risikoreaktion</strong> und eine <strong>Restrisikobewertung</strong>: Die Behandlung ist entschieden und das verbleibende Risiko bewertet, wie ISO 31000 es beschreibt.</li>
+          <li><strong>Standardmäßig</strong> braucht ein Risiko eine <strong>Risikoreaktion</strong> und eine <strong>Restrisikobewertung</strong>: Die Behandlung ist entschieden und das verbleibende Risiko bewertet, im Stil von ISO 31000.</li>
           <li><strong>Optional</strong> sind außerdem möglich: ein <strong>Risikoeigner</strong> und dass <strong>alle verknüpften Gegenmaßnahmen erledigt sind</strong>.</li>
           <li>Andere Vorgangstypen im selben Workflow sind nicht betroffen.</li>
           <li>Schlägt eine Prüfung fehl, zeigt Jira, welche Werte fehlen. Die Person ergänzt sie im <a href="#panel">Panel „Risk assessment“</a> und schließt das Risiko erneut.</li>
@@ -550,7 +575,11 @@
         <ul>
           <li><strong>Das Register:</strong> <span class="ui">Export ▾</span> im Register speichert die aktuelle Ansicht als CSV oder XLSX: jedes gefilterte Risiko, mit den sichtbaren Spalten und der Gruppierung.</li>
           <li><strong>Alles, was Riskcadence für ein Projekt speichert:</strong> ein Projektadministrator klickt auf <span class="ui">Settings → Download full export (JSON)</span>. Die Datei enthält die Matrixversionen, Review-Sitzungen mit ihren Einträgen, Entscheidungen und Abschlussstände sowie den Verlauf, beschränkt auf die Risiken, die die Person in Jira sehen kann, mit dem Hinweis, dass Konto-IDs Personen identifizieren. Die Risiken selbst sind Jira-Vorgänge; exportiere sie mit Jiras eigenen Werkzeugen oder dem Register-Export.</li>
+          <li><strong>Der Audit-Verlauf:</strong> Ein Projektadministrator erhält ihn als CSV unter <span class="ui">Settings → Audit history</span>  (<a href="#audit">Details</a>).</li>
         </ul>
+
+        <h3 id="audit">Audit-Verlauf</h3>
+        <p>Projektadministratoren wählen einen Zeitraum unter <span class="ui">Settings → Audit history</span> und klicken auf <span class="ui">Download audit history (CSV)</span>. Die Datei enthält jede Änderung an Bewertung, Risikoeigner, Reaktion, nächstem Review und Kategorie sowie jede Review-Entscheidung mit akzeptierender Person, Datum und Begründung: Datum und Uhrzeit in UTC, Risiko, Quelle, Feld oder Entscheidung, alter und neuer Wert, wer es geändert hat (Anzeigename), Begründung oder Notiz, akzeptierende Person und Akzeptanzdatum. Enthalten sind nur Risiken, die du in Jira sehen kannst, bis zu 5.000 Einträge je Datei; Zellen, die eine Tabellenkalkulation als Formel lesen würde, werden entschärft. Riskcadence erstellt die Datei in deinem Browser und behält keine Kopie.</p>
       </section>
 
       <section>
@@ -562,9 +591,9 @@
             <tr><td>App installieren</td><td>Ein <strong>Jira-Administrator</strong>, einmal aus dem Atlassian Marketplace.</td></tr>
             <tr><td>Ein unternehmensverwaltetes Projekt einrichten</td><td>Ein <strong>Jira-Administrator</strong>.</td></tr>
             <tr><td>Ein teamverwaltetes Projekt einrichten</td><td>Ein <strong>Projektadministrator</strong>, der auch den Vorgangstyp und die Felder anlegt.</td></tr>
-            <tr><td>Matrix ändern, Felder neu berechnen, Einrichtung reparieren, Beispielrisiken, vollständiger Export</td><td>Ein <strong>Projektadministrator</strong> oder Jira-Administrator.</td></tr>
+            <tr><td>Matrix ändern, Felder neu berechnen, Einrichtung reparieren, Beispielrisiken, vollständiger Export, Kategorienliste, Audit-Verlauf</td><td>Ein <strong>Projektadministrator</strong> oder Jira-Administrator.</td></tr>
             <tr><td>Register, Matrix, Review-Posteingang, Sitzungen, Vergleiche und Berichte sehen</td><td>Alle, die <strong>das Projekt ansehen</strong> dürfen, für die Risiken, die sie sehen können.</td></tr>
-            <tr><td>Ein Risiko bearbeiten, Massenbearbeitung, Neubewertung anfordern, in einem Review entscheiden, ein Review starten oder schließen, eine Ansicht speichern</td><td>Alle, die <strong>Vorgänge bearbeiten</strong> dürfen (im Projekt).</td></tr>
+            <tr><td>Ein Risiko bearbeiten, seine Kategorie setzen, Massenbearbeitung, Neubewertung anfordern, in einem Review entscheiden, ein Review starten oder schließen, eine Ansicht speichern</td><td>Alle, die <strong>Vorgänge bearbeiten</strong> dürfen (im Projekt).</td></tr>
             <tr><td>Eine Gegenmaßnahme im Panel „Risk assessment“ hinzufügen</td><td>Die Projektberechtigungen <strong>Vorgänge anlegen</strong> (für einen neuen Vorgang) und <strong>Vorgänge verknüpfen</strong>.</td></tr>
             <tr><td>Ein Risiko hinzufügen, importieren</td><td>Alle, die <strong>Vorgänge anlegen</strong> dürfen (im Projekt).</td></tr>
             <tr><td>Eine geteilte Ansicht löschen</td><td>Ihr Ersteller oder ein Projektadministrator oder Jira-Administrator.</td></tr>
@@ -588,13 +617,13 @@
           <table>
             <tr><th>Berechtigung (Scope)</th><th>Wofür Riskcadence sie braucht</th></tr>
             <tr><td><code>read:jira-work</code></td><td>Um deine Risiken, Projekte, Felder und Suchergebnisse zu lesen, damit Register, Matrix, Reviews und Berichte sie anzeigen können.</td></tr>
-            <tr><td><code>write:jira-work</code></td><td>Um zu speichern, was du an einem Risiko änderst, und um Vorgänge, Kommentare, Übergänge, Filter für Erinnerungen und Vorgangseigenschaften zu schreiben (die Quell-ID des Imports, den Überfällig-Stand und die Werte für die JQL-Suche).</td></tr>
+            <tr><td><code>write:jira-work</code></td><td>Um zu speichern, was du an einem Risiko änderst, und um Vorgänge, Kommentare, Übergänge, Filter für Erinnerungen und Vorgangseigenschaften zu schreiben (die Quell-ID des Imports, den Überfällig-Stand, die Werte für die JQL-Suche und die Kategorie).</td></tr>
             <tr><td><code>read:jira-user</code></td><td>Um Anzeigenamen für Risikoeigner, den Verlauf und die Personenauswahl nachzuschlagen.</td></tr>
             <tr><td><code>manage:jira-configuration</code></td><td>Um den Vorgangstyp Risk, die Felder, den Verknüpfungstyp und die Bildschirme anzulegen, wenn ein Jira-Administrator ein unternehmensverwaltetes Projekt einrichtet; nur bei Einrichtung und Reparatur.</td></tr>
             <tr><td><code>manage:jira-project</code></td><td>Um den Vorgangstyp und die Felder bei der Einrichtung in die Schemata und Bildschirme des Projekts aufzunehmen.</td></tr>
             <tr><td><code>storage:app</code></td><td>Um Risikomatrix, Review-Sitzungen, Entscheidungen, gespeicherte Ansichten und Einstellungen im Forge-Speicher und in Forge SQL abzulegen, die auf der Infrastruktur von Atlassian laufen.</td></tr>
             <tr><td><code>write:app-data:jira</code></td><td>Um die berechneten Felder Risk score, Residual score und Risk level zu schreiben.</td></tr>
-            <tr><td><code>read:page:confluence</code></td><td>Um zu prüfen, ob eine Person eine Confluence-Seite ansehen oder bearbeiten darf, bevor ein veröffentlichter Review-Stand angezeigt oder veröffentlicht wird. Es wird kein Seiteninhalt gelesen.</td></tr>
+            <tr><td><code>read:page:confluence</code></td><td>Um zu prüfen, ob eine Person eine Confluence-Seite ansehen oder bearbeiten darf, bevor ein veröffentlichter Review-Stand angezeigt oder veröffentlicht wird. Seiteninhalt wird nur beim PDF- oder Word-Export gelesen, um das Makro auf der Seite zu finden; davon wird nichts gespeichert.</td></tr>
             <tr><td><code>report:personal-data</code></td><td>Um den wöchentlichen Datenschutzbericht auszuführen, den Atlassian verlangt: Er meldet die Konto-IDs, die Riskcadence speichert, und löscht oder aktualisiert, was zu geschlossenen oder geänderten Konten gehört.</td></tr>
           </table>
         </div>
@@ -606,7 +635,7 @@
         <div class="table-wrap">
           <table>
             <tr><th>Was</th><th>Limit</th></tr>
-            <tr><td>Registerliste</td><td>2.000 Risiken. In einem größeren Register laufen die Filter in Jira und erreichen jedes Risiko, und die Liste zeigt die 2.000 zuletzt aktualisierten Treffer. Die Seite zeigt 200 Zeilen auf einmal.</td></tr>
+            <tr><td>Registerliste</td><td>2.000 Risiken. In einem größeren Register laufen die Filter in Jira und erreichen jedes Risiko (außer Stufe und <em>Above appetite</em>, die nur auf die geladenen Risiken wirken), und die Liste zeigt die 2.000 zuletzt aktualisierten Treffer. Die Seite zeigt 200 Zeilen auf einmal.</td></tr>
             <tr><td>Review-Posteingang</td><td>Die ersten 100 Risiken pro Gruppe, mit genauen Gesamtzahlen.</td></tr>
             <tr><td>Review-Sitzung</td><td>1.000 Risiken. Wähle für ein größeres Register einen engeren Umfang.</td></tr>
             <tr><td>Steering-Report</td><td>20 Projekte mit derselben Matrix. Lange Listen zeigen bis zu 100 Einträge, mit genauen Gesamtzahlen. Bei mehr als 20.000 Risiken liest der Bericht zuerst die offenen Risiken und weist darauf hin, dass er unvollständig ist; der Matrix-Tab und das Dashboard zählen offene Risiken.</td></tr>
@@ -628,7 +657,7 @@
         <h3>Warum fehlen „Risk score“ und „Risk level“ am Vorgang in meinem teamverwalteten Projekt?</h3>
         <p>Jira zeigt von Apps berechnete Felder in teamverwalteten Projekten nicht an. Riskcadence zeigt Score und Stufe trotzdem im Register, in der Matrix, im Vorgangspanel, in den Review-Ansichten und in den Berichten.</p>
         <h3>Warum zeigt das Register nur 2.000 Risiken?</h3>
-        <p>Ein Register mit mehr als 2.000 Risiken zeigt die 2.000 zuletzt aktualisierten Treffer. Die Filter laufen in Jira und erreichen jedes Risiko; grenze die Ansicht daher mit einem Filter oder einer Matrixzelle ein.</p>
+        <p>Ein Register mit mehr als 2.000 Risiken zeigt die 2.000 zuletzt aktualisierten Treffer. Die Filter laufen in Jira und erreichen jedes Risiko, außer Stufe und <em>Above appetite</em>, die nur auf die geladenen Risiken wirken; grenze die Ansicht daher mit einer Suche, dem Risikoeigner, der Reaktion, der Kategorie oder einer Matrixzelle ein.</p>
         <h3>Wie verknüpfe ich eine Gegenmaßnahme mit einem Risiko?</h3>
         <p>Verknüpfe einen Vorgang mit dem Risiko über den Verknüpfungstyp <em>is mitigated by</em> (am Vorgang der Gegenmaßnahme selbst: <em>mitigates</em>). Riskcadence legt diesen Verknüpfungstyp bei der Einrichtung an. Das Risiko zeigt dann im Register und im Panel, wie viele seiner Gegenmaßnahmen erledigt sind.</p>
         <h3>Senken erledigte Gegenmaßnahmen den Score?</h3>

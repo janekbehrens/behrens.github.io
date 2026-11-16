@@ -72,7 +72,12 @@
         <a class="sub" href="#examples">Example risks</a>
         <a href="#fields">Fields</a>
         <a href="#matrix">Risk matrix</a>
+        <a class="sub" href="#templates">Standard-style templates</a>
+        <a class="sub" href="#appetite">Risk appetite</a>
         <a href="#register">Register</a>
+        <a class="sub" href="#categories">Risk categories</a>
+        <a class="sub" href="#trend">Trend</a>
+        <a class="sub" href="#statement">Structured risk statement</a>
         <a class="sub" href="#saved-views">Saved views</a>
         <a class="sub" href="#bulk-edit">Bulk edit</a>
         <a class="sub" href="#portfolio">Portfolio</a>
@@ -94,6 +99,7 @@
         <a class="sub" href="#jql">Search with JQL</a>
         <a class="sub" href="#closing-rule">Closing rule</a>
         <a href="#export">Export</a>
+        <a class="sub" href="#audit">Audit history</a>
         <a href="#permissions">Permissions</a>
         <a class="sub" href="#app-permissions">Why these permissions</a>
         <a href="#limits">Limits</a>
@@ -237,7 +243,7 @@
         <h2 id="matrix">Risk matrix</h2>
         <p>The matrix decides what a combination of likelihood and impact means. Start from a template and make it yours:</p>
         <ul>
-          <li><strong>Templates:</strong> <em>Project risk 5×5</em>, <em>Project risk 4×4</em> and <em>Simple 3×3</em>, with four risk levels: Low, Medium, High and Critical.</li>
+          <li><strong>Templates:</strong> <em>Project risk 5×5</em>, <em>Project risk 4×4</em> and <em>Simple 3×3</em>, with four risk levels: Low, Medium, High and Critical, and templates in the style of ISO 31000, ISO/IEC 27005, NIST SP 800-30 and PMI (<a href="#templates">details</a>).</li>
           <li><strong>Your own labels:</strong> rename every step of the likelihood and impact scales (2 to 7 steps each).</li>
           <li><strong>Your own levels:</strong> rename the levels and choose their colours (2 to 6 levels).</li>
           <li><strong>A level for every cell:</strong> click a cell to cycle through the levels (arrow keys, Enter or Space also work), so the level is not just a band of the score.</li>
@@ -252,15 +258,23 @@
           <li><strong>A smaller matrix needs a confirmation.</strong> Risks with values above the new scale count as not assessed until someone assesses them again. Their values stay in Jira.</li>
           <li><strong>Several projects in one report or widget</strong> need the same matrix version. Once a project saves changes, it has a matrix of its own.</li>
         </ul>
+
+        <h3 id="templates">Templates in the style of standards</h3>
+        <p>Besides the three general matrices, Riskcadence offers templates in the style of <strong>ISO 31000</strong>, <strong>ISO/IEC 27005</strong> (information security), <strong>NIST SP 800-30</strong> and the <strong>PMI</strong> probability and impact matrix. Each comes with a one-sentence definition for every likelihood and impact step and a meaning for every risk level. Hover over a step in the matrix, the register or the issue panel to see it; the report lists them under <em>Scale definitions</em>.</p>
+        <p>All values are examples: the standards ask for documented risk criteria but do not prescribe these scales. Replace them with your own criteria under <span class="ui">Settings → Risk matrix</span>, where every definition and meaning can be edited. The templates follow the style of the standards and make no claim of conformity. Choosing a template replaces the matrix only when you save it; the three general templates are unchanged.</p>
+
+        <h3 id="appetite">Risk appetite</h3>
+        <p>Under <span class="ui">Settings → Risk matrix → Risk appetite</span>, choose the lowest risk level that is above your appetite, or <em>No appetite line</em>. The matrix then shows a dashed line, the report and the dashboard widget count the open risks above it, and the register can filter them with <span class="ui">Above appetite</span>. A risk counts with its residual level where it is assessed, otherwise with its inherent level.</p>
+        <p>Accepting such a risk shows a warning to name the approver and justify the decision. Riskcadence does not block it, and the report lists it under open decisions. The ISO 31000 and ISO 27005 style templates preset the line at High; without a line, nothing changes.</p>
       </section>
 
       <section>
         <h2 id="register">Register</h2>
         <p>The <span class="ui">Register</span> tab lists the risks of the project, most severe first. Most cells are editable in place: likelihood, impact, residual likelihood and impact, owner, response and next review. A change is written to the work item in Jira at once, with your permissions.</p>
         <ul>
-          <li><strong>Add a risk</strong> in the line above the table: describe what could happen and what it would cause, choose likelihood and impact, click <span class="ui">Add risk</span>. This needs the permission to create work items.</li>
+          <li><strong>Add a risk</strong> in the line above the table: describe what could happen and what it would cause, choose likelihood and impact, click <span class="ui">Add risk</span>. This needs the permission to create work items. Tick <span class="ui">Structured statement</span> to write it as cause, event and consequence (<a href="#statement">details</a>).</li>
           <li><strong>Search and filters:</strong> key or summary, level, owner (<em>My risks</em>, <em>Without owner</em>), response, <span class="ui">Overdue reviews</span> and a matrix cell. Closed risks are hidden until you tick <span class="ui">Show closed</span>.</li>
-          <li><strong>Grouping and columns:</strong> group by level, owner, response, status, component or category (Jira labels), sort by any column and choose the columns under <span class="ui">Columns</span>.</li>
+          <li><strong>Grouping and columns:</strong> group by level, owner, response, status, component or category (Jira labels, or the <a href="#categories">category list</a> of the project), sort by any column and choose the columns under <span class="ui">Columns</span>, including <a href="#trend">Trend</a>.</li>
           <li><strong>Mitigation</strong> shows how many linked mitigation work items are done (<a href="#panel">details</a>).</li>
           <li><strong>Export</strong> the current view as CSV or XLSX (<a href="#export">details</a>).</li>
         </ul>
@@ -271,6 +285,16 @@
 
         <h3 id="bulk-edit">Bulk edit</h3>
         <p>Tick risks in the first column, tick the fields to change (owner, response, next review, likelihood, impact, residual likelihood, residual impact), click <span class="ui">Review changes…</span> and then <span class="ui">Apply to … risks…</span>. Riskcadence sends the selection in batches of 25 and lists every risk that could not be changed, with the reason. Fields you leave unticked stay as they are.</p>
+
+        <h3 id="categories">Risk categories</h3>
+        <p>Switch on <span class="ui">Settings → Risk categories</span> to give every risk one category from a fixed list: start from a project, enterprise or information security list, or write your own (up to 12 entries). The register shows the category as a column you can filter, group, sort and export; the issue panel has a <em>Category</em> field; the report counts open risks per category. Changing the list needs a project or Jira admin; setting the category of a risk needs the permission to edit it.</p>
+        <p>Search with JQL: <code>riskcadenceCategory = "Technical"</code>; <code>riskcadenceCategory is EMPTY</code> finds risks without one. The full path works as well: <code>issue.property[riskcadence-category].category</code>. Without a list, the Category column shows the Jira labels as before. Switching off hides the lists; categories already set stay on the risks and are back when you switch on again. Removing or renaming a category that risks carry asks before saving; those risks keep the old name until someone picks a new one.</p>
+
+        <h3 id="trend">Trend</h3>
+        <p>Riskcadence compares every risk with its state at the project's last closed review: ↑ worse or reopened, ↓ better, → unchanged, • new, ✓ closed. It uses the same rule as <a href="#compare">Compare</a>: the rank of the level first, then the score. Add the <em>Trend</em> column under <span class="ui">Columns</span>; hover over an arrow to see the review and both states. The review inbox and the report's top risks show the same arrows, and <em>Score across reviews</em> in the issue panel shows the score at the last six closed reviews. Projects without a closed review show no trend.</p>
+
+        <h3 id="statement">Structured risk statement</h3>
+        <p>When you add a risk in the register, tick <span class="ui">Structured statement</span> to write it as cause, event and consequence, with an optional early warning. The event becomes the summary; all parts go into the Jira description with their names in bold. There is no extra field, and existing risks stay as they are.</p>
 
         <h3 id="portfolio">Portfolio</h3>
         <p>Open <span class="ui">Apps → Riskcadence</span> in Jira for the <em>Risk portfolio</em>: a register and a report across all projects that are set up for Riskcadence and that you can browse. <span class="ui">Projects ▾</span> chooses which projects to include. Saving a shared portfolio view needs a Jira admin or a project admin of a set-up project.</p>
@@ -285,7 +309,8 @@
           <li><strong>Mitigation progress</strong> from the work items linked with <em>is mitigated by</em>, with the finished ones marked (<a href="#faq">how to link</a>). When all mitigations are done and the residual risk is not assessed, the panel reminds you to assess it.</li>
           <li><span class="ui">Add mitigation</span> creates a new work item (a summary and, if you like, an assignee) and links it to the risk with <em>is mitigated by</em>, or links an existing work item that you find by key or summary. A new work item has the type Task where the project has it. This runs with your own Jira permissions: a new work item needs the permission to create work items, the link needs the permission to link work items. If the link fails after the work item was created, the panel keeps it and offers to link it.</li>
           <li><span class="ui">Request re-assessment</span> sets the next review to today and adds a Jira comment that mentions the risk owner, with an optional note, so Jira notifies them. The risk then shows as due in the <a href="#inbox">review inbox</a>.</li>
-          <li><strong>History</strong>: every change to the assessment fields, the owner, the response, the next review and the status, wherever it was made, with who and when, plus review decisions and re-assessment requests. The panel shows the latest 20.</li>
+          <li><strong>History</strong>: every change to the assessment fields, the owner, the response, the next review, the category and the status, wherever it was made, with who and when, plus review decisions and re-assessment requests. The panel shows the latest 20.</li>
+          <li><strong>Category</strong>, when the project uses a <a href="#categories">category list</a>, and <strong>Score across reviews</strong>: click it to see the score and level at the last six closed reviews and now (<a href="#trend">trend</a>).</li>
         </ul>
         <img src="imgRiskcadence/screenshot-1-issue-panel.webp" alt="The Risk assessment panel on a risk: the inherent and the residual risk on two matrices, owner, response and next review, the mitigation work items with their progress, a Request re-assessment button and the history of changes." loading="lazy" width="1840" height="900">
       </section>
@@ -473,7 +498,7 @@
         <h3 id="closing-rule">Closing rule (optional)</h3>
         <p>The closing rule keeps a risk open until the values you choose are recorded. It is a workflow validator: add <strong>Riskcadence closing rule</strong> to the transition that closes risks, in company-managed projects under <span class="ui">Jira settings → Work items → Workflows</span>, in team-managed projects under <span class="ui">Project settings → Workflows</span>. Then choose what must be recorded first.</p>
         <ul>
-          <li><strong>By default</strong> a risk needs a <strong>risk response</strong> and a <strong>residual assessment</strong>: the treatment is decided and the remaining risk is rated, as ISO 31000 describes.</li>
+          <li><strong>By default</strong> a risk needs a <strong>risk response</strong> and a <strong>residual assessment</strong>: the treatment is decided and the remaining risk is rated, in the style of ISO 31000.</li>
           <li><strong>Optional</strong> checks: a <strong>risk owner</strong>, and that <strong>all linked mitigations are done</strong>.</li>
           <li>Other work types in the same workflow are not affected.</li>
           <li>When a check fails, Jira shows which values are missing. The person adds them in the <a href="#panel">Risk assessment panel</a> and closes the risk again.</li>
@@ -492,7 +517,11 @@
         <ul>
           <li><strong>The register:</strong> <span class="ui">Export ▾</span> in the register saves the current view as CSV or XLSX: every filtered risk, with the visible columns and the grouping.</li>
           <li><strong>Everything Riskcadence stores for a project:</strong> a project admin clicks <span class="ui">Settings → Download full export (JSON)</span>. The file holds the matrix versions, review sessions with their entries, decisions and closing states, and the history, limited to the risks the person can see in Jira, with a note that account IDs identify people. The risks themselves are Jira work items; export them with Jira's own tools or the register export.</li>
+          <li><strong>The audit history:</strong> a project admin downloads it as CSV under <span class="ui">Settings → Audit history</span> (<a href="#audit">details</a>).</li>
         </ul>
+
+        <h3 id="audit">Audit history</h3>
+        <p>Project admins choose a period under <span class="ui">Settings → Audit history</span> and click <span class="ui">Download audit history (CSV)</span>. The file lists every change to the assessment, owner, response, next review and category, and every review decision with the accepting person, the date and the justification: date and time in UTC, risk, source, field or decision, old and new value, who made it (display name), justification or note, accepting person and acceptance date. Only risks you can see in Jira are included, up to 5,000 entries per file; cells that a spreadsheet would read as a formula are neutralised. Riskcadence creates the file in your browser and does not keep a copy.</p>
       </section>
 
       <section>
@@ -504,9 +533,9 @@
             <tr><td>Install the app</td><td>A <strong>Jira admin</strong>, once, from the Atlassian Marketplace.</td></tr>
             <tr><td>Set up a company-managed project</td><td>A <strong>Jira admin</strong>.</td></tr>
             <tr><td>Set up a team-managed project</td><td>A <strong>project admin</strong>, who also adds the work type and the fields.</td></tr>
-            <tr><td>Change the matrix, recalculate fields, repair setup, example risks, full export</td><td>A <strong>project admin</strong> or Jira admin.</td></tr>
+            <tr><td>Change the matrix, recalculate fields, repair setup, example risks, full export, category list, audit history</td><td>A <strong>project admin</strong> or Jira admin.</td></tr>
             <tr><td>See the register, matrix, review inbox, sessions, comparisons and reports</td><td>Anyone who can <strong>browse the project</strong>, for the risks they can see.</td></tr>
-            <tr><td>Edit a risk, bulk edit, request a re-assessment, decide in a review, start or close a review, save a view</td><td>Anyone who can <strong>edit work items</strong> in the project.</td></tr>
+            <tr><td>Edit a risk, set its category, bulk edit, request a re-assessment, decide in a review, start or close a review, save a view</td><td>Anyone who can <strong>edit work items</strong> in the project.</td></tr>
             <tr><td>Add a mitigation in the risk assessment panel</td><td>The project permissions <strong>Create work items</strong> (for a new work item) and <strong>Link work items</strong>.</td></tr>
             <tr><td>Add a risk, import</td><td>Anyone who can <strong>create work items</strong> in the project.</td></tr>
             <tr><td>Delete a shared view</td><td>Its creator, or a project admin or Jira admin.</td></tr>
@@ -530,13 +559,13 @@
           <table>
             <tr><th>Permission (scope)</th><th>What Riskcadence needs it for</th></tr>
             <tr><td><code>read:jira-work</code></td><td>To read your risks, projects, fields and search results, so that the register, matrix, reviews and reports can show them.</td></tr>
-            <tr><td><code>write:jira-work</code></td><td>To save what you change on a risk and to create work items, comments, transitions, filters for reminders and work item properties (the import source ID, the overdue state and the values for JQL search).</td></tr>
+            <tr><td><code>write:jira-work</code></td><td>To save what you change on a risk and to create work items, comments, transitions, filters for reminders and work item properties (the import source ID, the overdue state, the values for JQL search and the category).</td></tr>
             <tr><td><code>read:jira-user</code></td><td>To look up display names for risk owners, the history and the people pickers.</td></tr>
             <tr><td><code>manage:jira-configuration</code></td><td>To create the work type Risk, the fields, the link type and the screens when a Jira admin sets up a company-managed project; used only during setup and repair.</td></tr>
             <tr><td><code>manage:jira-project</code></td><td>To add the work type and the fields to the project's schemes and screens during setup.</td></tr>
             <tr><td><code>storage:app</code></td><td>To keep the risk matrix, review sessions, decisions, saved views and settings in Forge storage and Forge SQL, which run on Atlassian's infrastructure.</td></tr>
             <tr><td><code>write:app-data:jira</code></td><td>To write the calculated fields Risk score, Residual score and Risk level.</td></tr>
-            <tr><td><code>read:page:confluence</code></td><td>To check whether a person may view or edit a Confluence page before a published review state is shown or published. No page content is read.</td></tr>
+            <tr><td><code>read:page:confluence</code></td><td>To check whether a person may view or edit a Confluence page before a published review state is shown or published. Page content is read only during a PDF or Word export, to find the macro on the page; nothing of it is stored.</td></tr>
             <tr><td><code>report:personal-data</code></td><td>To run the weekly personal data report that Atlassian requires: it reports the account IDs Riskcadence stores and erases or refreshes what belongs to closed or updated accounts.</td></tr>
           </table>
         </div>
@@ -548,7 +577,7 @@
         <div class="table-wrap">
           <table>
             <tr><th>What</th><th>Limit</th></tr>
-            <tr><td>Register list</td><td>2,000 risks. In a bigger register the filters run in Jira and reach every risk, and the list shows the 2,000 most recently updated matches. The page shows 200 rows at a time.</td></tr>
+            <tr><td>Register list</td><td>2,000 risks. In a bigger register the filters run in Jira and reach every risk (except level and <em>Above appetite</em>, which apply to the listed risks), and the list shows the 2,000 most recently updated matches. The page shows 200 rows at a time.</td></tr>
             <tr><td>Review inbox</td><td>The first 100 risks per group, with exact totals.</td></tr>
             <tr><td>Review session</td><td>1,000 risks. Choose a narrower scope for a bigger register.</td></tr>
             <tr><td>Steering report</td><td>20 projects with the same matrix. Long lists show up to 100 entries, with exact totals. Above 20,000 risks the report reads open risks first and says that it is incomplete; the matrix tab and the dashboard count open risks.</td></tr>
@@ -570,7 +599,7 @@
         <h3>Why are Risk score and Risk level missing on the work item in my team-managed project?</h3>
         <p>Jira does not show app-calculated fields in team-managed projects. Riskcadence still shows score and level in the register, the matrix, the issue panel, the review views and the reports.</p>
         <h3>Why does the register show only 2,000 risks?</h3>
-        <p>A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, so narrow the view with a filter or a matrix cell.</p>
+        <p>A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, except level and <em>Above appetite</em>, which apply to the listed risks; so narrow the view with a search, owner, response, category or a matrix cell.</p>
         <h3>How do I link a mitigation to a risk?</h3>
         <p>Link a work item to the risk with the link type <em>is mitigated by</em> (on the mitigation work item itself: <em>mitigates</em>). Riskcadence adds this link type during setup. The risk then shows how many of its mitigations are done, in the register and in the panel.</p>
         <h3>Do finished mitigations lower the score?</h3>
