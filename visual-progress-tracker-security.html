@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td>App account for the progress fields</td>
-          <td>The status and subtask progress fields are computed with the App's own account (<code>asApp</code>) when Jira asks for their value, reading only the statuses of that work item and its subtasks. "Recalculate All Fields" runs only after Jira confirms, as the person starting it, that they may browse the project; it writes with the App's account and only into the App's own progress fields, at most once every 7 days.</td>
+          <td>The status and subtask progress fields are computed with the App's own account (<code>asApp</code>) when Jira asks for their value, reading only the statuses of that work item and its subtasks. "Recalculate All Fields" can be started only by Jira administrators (apart from a one-time automatic run on sites where it has never run) and runs only after Jira confirms, as the person starting it, that they may browse the project; it writes with the App's account and only into the App's own progress fields, at most once every 7 days.</td>
         </tr>
         <tr>
           <td>Minimal API scopes</td>
