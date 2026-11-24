@@ -68,10 +68,10 @@
         },
         {
           "@type": "Question",
-          "name": "„You do not have permission to view this board“ (Du hast keine Berechtigung, dieses Board anzusehen)",
+          "name": "„Team Capacity cannot show this board“ (Team Capacity kann dieses Board nicht anzeigen)",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Die App zeigt ein Board nur Personen, die dessen Projekt ansehen dürfen. Bitte deinen Jira-Administrator um die Berechtigung Browse Projects für das Projekt des Boards."
+            "text": "Jira führt das Board nicht unter den Boards, die du sehen darfst: Sein Filter ist nicht für dich freigegeben, du darfst sein Projekt nicht ansehen, oder das Board wurde gelöscht. Bitte den Board-Verantwortlichen oder einen Jira-Admin um Zugriff oder wähle ein anderes Board."
           }
         },
         {
@@ -79,7 +79,7 @@
           "name": "Mein Board fehlt in der Liste",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Aufgelistet werden Scrum-Boards und vom Team verwaltete Boards in Projekten, die du ansehen darfst. Ein vom Team verwaltetes Board ohne Sprints zeigt „No active or recent sprint found“. Klassische Kanban-Boards fehlen, da sie keine Sprints haben."
+            "text": "Die Liste zeigt die Scrum-Boards und teamverwalteten Boards, die Jira dir anzeigt. Ein teamverwaltetes Board ohne Sprints meldet „Team Capacity needs a board with sprints“ (Team Capacity braucht ein Board mit Sprints): Schalte unter Projekteinstellungen > Funktionen die Sprints ein oder wähle ein Scrum-Board. Klassische Kanban-Boards fehlen, da sie keine Sprints haben."
           }
         },
         {
@@ -196,7 +196,7 @@
         <h2>Einrichtung</h2>
         <p>Jeder Nutzer kann das Gadget zu einem Dashboard hinzufügen, das er bearbeiten darf. Das Menü <strong>Edit (Bearbeiten)</strong> (Stiftsymbol) enthält diese Einstellungen:</p>
         <ul>
-          <li><strong>Board</strong> — ein <dfn class="term" data-tip="Ein Jira-Board, das Arbeit in Sprints plant: feste Zeiträume, meist eine bis vier Wochen.">Scrum-Board</dfn>,  <dfn class="term" data-tip="Projekte, deren Einrichtung Jira-Administratoren für die gesamte Website verwalten (früher „classic“).">vom Unternehmen verwaltet</dfn> oder <dfn class="term" data-tip="Projekte, die das Team selbst ohne Jira-Administrator einrichtet (früher „next-gen“).">vom Team verwaltet</dfn>. Die Liste enthält Scrum-Boards in Projekten, die du ansehen darfst.</li>
+          <li><strong>Board</strong> — ein <dfn class="term" data-tip="Ein Jira-Board, das Arbeit in Sprints plant: feste Zeiträume, meist eine bis vier Wochen.">Scrum-Board</dfn>,  <dfn class="term" data-tip="Projekte, deren Einrichtung Jira-Administratoren für die gesamte Website verwalten (früher „classic“).">vom Unternehmen verwaltet</dfn> oder <dfn class="term" data-tip="Projekte, die das Team selbst ohne Jira-Administrator einrichtet (früher „next-gen“).">vom Team verwaltet</dfn>. Die Liste enthält die Scrum-Boards, die Jira dir anzeigt.</li>
           <li><strong>Sprint</strong> — belasse die Einstellung bei <em>Active sprint (auto) (Aktiver Sprint, automatisch)</em> oder wähle einen festen Sprint. Die Automatik zeigt den aktiven Sprint; wenn es keinen gibt, einen geplanten Sprint, sonst den zuletzt abgeschlossenen.</li>
           <li><strong>Measure workload by (Auslastung messen nach)</strong> — die Schätzung des Boards (Story Points oder Zeit) oder die Anzahl der Vorgänge. Siehe <a href="#measure">So wird die Auslastung gemessen</a>.</li>
           <li><strong>Capacity per person (Kapazität pro Person)</strong> — ein Standardwert für alle in dieser Einheit (Punkte, Stunden oder Vorgänge pro Sprint). Das Formular beginnt bei 20. Pro-Einstellungen: siehe <a href="#capacity">Kapazität</a>.</li>
@@ -224,7 +224,11 @@
         </ul>
         <details class="more">
           <summary>Leere Schätzfelder</summary>
-          <p>Wenn das Story-Point-Feld des Boards bei einem Vorgang leer ist, wird stattdessen das Standardfeld Story Points verwendet. Hat keiner der Sprintvorgänge eine Schätzung, zeigt das Gadget „No estimates on these issues“: Ergänze Schätzungen oder wechsle zu Issue count.</p>
+          <p>Hat keiner der Sprintvorgänge eine Schätzung, zeigt das Gadget „No estimates on these issues“: Ergänze Schätzungen oder wechsle zu Issue count.</p>
+        </details>
+        <details class="more">
+          <summary>Geteilte Sprints</summary>
+          <p>Die Heatmap zählt die Vorgänge des Sprints, die dieses Board zeigt. Teilen sich mehrere Boards einen Sprint, zählt jedes Board nur die Vorgänge, die zu seinem Filter passen. Kann Team Capacity nicht feststellen, welche Vorgänge das Board zeigt, zählt es den ganzen Sprint und weist über der Heatmap darauf hin.</p>
         </details>
         <h3>Issue count (Vorgangsanzahl)</h3>
         <p>Für Teams ohne Aufwandsschätzungen: Jeder Vorgang zählt als 1, und die Kapazität entspricht „Vorgängen pro Sprint“.</p>
@@ -285,7 +289,7 @@
             <tr><td>App installieren</td><td>Ein Jira-Administrator mit der Rolle <strong>Website-Administrator</strong>, einmal über den Atlassian Marketplace.</td></tr>
             <tr><td>Gadget hinzufügen und konfigurieren</td><td><strong>Jeder Nutzer</strong> — keine Administratorrechte erforderlich. Verwende dein eigenes Dashboard oder eines, das du bearbeiten darfst.</td></tr>
             <tr><td>Ansicht teilen</td><td>Übliche <strong>Freigabe von Jira-Dashboards</strong> (Projekt, Gruppe oder alle). Betrachter müssen nichts einrichten.</td></tr>
-            <tr><td>Boarddaten sehen</td><td>Nur Personen, die das <strong>Projekt des Boards ansehen dürfen</strong>. Alle anderen erhalten eine Berechtigungsmeldung und sehen keine Daten.</td></tr>
+            <tr><td>Boarddaten sehen</td><td>Nur Personen, die <strong>das Board in Jira sehen dürfen</strong>; Vorgänge, die sie nicht öffnen dürfen, fehlen. Alle anderen erhalten eine Berechtigungsmeldung und sehen keine Daten.</td></tr>
           </table>
         </div>
         <img src="/imgTeamCapacityForJira/screenshot-1-two-teams-one-dashboard.webp" alt="Zwei Team-Capacity-Gadgets nebeneinander auf einem Jira-Dashboard, jeweils mit eigenem Board, Sprint, Personen und Kapazität" loading="lazy" width="1840" height="900">
@@ -296,7 +300,7 @@
         <p>Welche Daten die App sehen kann und wo deine Daten bleiben.</p>
         <ul>
           <li>Die App hat <strong>nur Lesezugriff</strong>: Sie kann keine Jira-Daten ändern.</li>
-          <li>Deine Jira-Projektberechtigungen (<dfn class="term" data-tip="Die Jira-Berechtigung zum Ansehen eines Projekts und seiner Vorgänge.">Browse Projects (Projekte ansehen)</dfn>) werden bei jeder Anfrage auf dem Server geprüft.</li>
+          <li>Bevor Board- oder Sprintdaten erscheinen, fragt der Server Jira in deinem Namen, ob du das Board und jeden gezählten Vorgang sehen darfst (<dfn class="term" data-tip="Die Jira-Berechtigung zum Ansehen eines Projekts und seiner Vorgänge.">Browse Projects (Projekte ansehen)</dfn>).</li>
           <li>Basiert auf <dfn class="term" data-tip="Atlassians App-Plattform. Forge-Apps laufen in Atlassians eigener Cloud.">Atlassian Forge</dfn> ohne <strong>externe Datenübertragung</strong> — deine Daten bleiben bei Atlassian („Runs on Atlassian“).</li>
           <li>Details: <a href="/de/team-capacity-privacy-policy.html">Datenschutzerklärung</a>  ·  <a href="/team-capacity-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</li>
         </ul>
@@ -314,12 +318,12 @@
           <p>Das Board hat noch keine Sprints. Erstelle einen oder wähle unter Edit ein anderes Board. Wenn Sprints vorhanden sind, aber keiner aktiv ist, zeigt das Gadget den nächsten geplanten oder den zuletzt abgeschlossenen Sprint.</p>
         </details>
         <details class="more">
-          <summary>„You do not have permission to view this board“ (Du hast keine Berechtigung, dieses Board anzusehen)</summary>
-          <p>Die App zeigt ein Board nur Personen, die dessen Projekt ansehen dürfen. Bitte deinen Jira-Administrator um <em>Browse Projects (Projekte ansehen)</em> für das Projekt des Boards.</p>
+          <summary>„Team Capacity cannot show this board“ (Team Capacity kann dieses Board nicht anzeigen)</summary>
+          <p>Jira führt das Board nicht unter den Boards, die du sehen darfst: Sein Filter ist nicht für dich freigegeben, du darfst sein Projekt nicht ansehen, oder das Board wurde gelöscht. Bitte den Board-Verantwortlichen oder einen Jira-Admin um Zugriff oder wähle ein anderes Board.</p>
         </details>
         <details class="more">
           <summary>Mein Board fehlt in der Liste</summary>
-          <p>Aufgelistet werden Scrum-Boards und vom Team verwaltete Boards in Projekten, die du ansehen darfst. Ein vom Team verwaltetes Board ohne Sprints zeigt „No active or recent sprint found“. Klassische Kanban-Boards fehlen, da sie keine Sprints haben.</p>
+          <p>Die Liste zeigt die Scrum-Boards und teamverwalteten Boards, die Jira dir anzeigt. Ein teamverwaltetes Board ohne Sprints meldet „Team Capacity needs a board with sprints“ (Team Capacity braucht ein Board mit Sprints): Schalte unter Projekteinstellungen &gt; Funktionen die Sprints ein oder wähle ein Scrum-Board. Klassische Kanban-Boards fehlen, da sie keine Sprints haben.</p>
         </details>
         <details class="more">
           <summary>Kann ich für Teilzeitmitglieder eine andere Kapazität festlegen?</summary>

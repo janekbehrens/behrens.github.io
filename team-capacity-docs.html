@@ -38,8 +38,8 @@
         "mainEntity": [
           { "@type": "Question", "name": "“No estimates on these issues”", "acceptedAnswer": { "@type": "Answer", "text": "The board estimates in points or time, but the sprint's issues have no estimate yet. Add estimates, or switch Measure workload by to Issue count in Edit." } },
           { "@type": "Question", "name": "“No active or recent sprint found on this board”", "acceptedAnswer": { "@type": "Answer", "text": "The board has no sprints at all. Create one, or pick a different board in Edit. With sprints but none active, the gadget shows the next upcoming or the latest closed sprint." } },
-          { "@type": "Question", "name": "“You do not have permission to view this board”", "acceptedAnswer": { "@type": "Answer", "text": "The app shows a board only to people who can browse its project. Ask your Jira admin for Browse Projects on the board's project." } },
-          { "@type": "Question", "name": "My board is not in the list", "acceptedAnswer": { "@type": "Answer", "text": "Scrum boards and team-managed boards in projects you can browse are listed; a team-managed board without sprints shows “No active or recent sprint found”. Classic Kanban boards are not, because they have no sprints." } },
+          { "@type": "Question", "name": "“Team Capacity cannot show this board”", "acceptedAnswer": { "@type": "Answer", "text": "Jira does not list it among the boards you may view: its filter is not shared with you, you cannot browse its project, or the board was deleted. Ask the board's owner or a Jira admin for access, or pick another board." } },
+          { "@type": "Question", "name": "My board is not in the list", "acceptedAnswer": { "@type": "Answer", "text": "The list shows the Scrum boards and team-managed boards Jira lets you see. A team-managed board without sprints says “Team Capacity needs a board with sprints”: switch on Sprints under Project settings > Features, or pick a Scrum board. Classic Kanban boards are not listed, because they have no sprints." } },
           { "@type": "Question", "name": "Can I set a different capacity for part-time team members?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, with Pro: override the default capacity per person, for example for part-timers or new joiners. The app does not track absences, so you enter the lower number yourself. Without Pro, one default capacity applies to everyone." } },
           { "@type": "Question", "name": "Why is there an “Unassigned” row?", "acceptedAnswer": { "@type": "Answer", "text": "Work without an assignee is real load. Hiding it would make the team look less busy than it is." } },
           { "@type": "Question", "name": "Very large sprints", "acceptedAnswer": { "@type": "Answer", "text": "The gadget reads up to 500 issues per sprint. A larger sprint shows a banner, and the loads are partial sums." } }
@@ -133,7 +133,7 @@
         <h2>Setup</h2>
         <p>Any user can add the gadget to a dashboard they can edit. The <strong>Edit</strong> (pencil) menu has these settings:</p>
         <ul>
-          <li><strong>Board</strong> — a <dfn class="term" data-tip="A Jira board that plans work in sprints: fixed time boxes, usually one to four weeks.">Scrum board</dfn>, <dfn class="term" data-tip="Projects whose setup Jira admins manage for the whole site (formerly called classic).">company-managed</dfn> or <dfn class="term" data-tip="Projects the team sets up itself, without a Jira admin (formerly called next-gen).">team-managed</dfn>. The list shows Scrum boards in projects you can browse.</li>
+          <li><strong>Board</strong> — a <dfn class="term" data-tip="A Jira board that plans work in sprints: fixed time boxes, usually one to four weeks.">Scrum board</dfn>, <dfn class="term" data-tip="Projects whose setup Jira admins manage for the whole site (formerly called classic).">company-managed</dfn> or <dfn class="term" data-tip="Projects the team sets up itself, without a Jira admin (formerly called next-gen).">team-managed</dfn>. The list shows the Scrum boards Jira lets you see.</li>
           <li><strong>Sprint</strong> — keep <em>Active sprint (auto)</em> or pin one. Auto shows the active sprint; with none, an upcoming sprint, otherwise the most recent closed one.</li>
           <li><strong>Measure workload by</strong> — the board's estimate (story points or time) or issue count. See <a href="#measure">How workload is measured</a>.</li>
           <li><strong>Capacity per person</strong> — one default for everyone, in that unit (points, hours or issues per sprint). The form starts at 20. Pro settings: see <a href="#capacity">Capacity</a>.</li>
@@ -163,7 +163,11 @@
         </ul>
         <details class="more">
           <summary>Empty estimate fields</summary>
-          <p>Where the board's story point field is empty on an issue, the standard Story Points field is used instead. If none of the sprint's issues has an estimate, the gadget says “No estimates on these issues”: add estimates, or switch to Issue count.</p>
+          <p>If none of the sprint's issues has an estimate, the gadget says “No estimates on these issues”: add estimates, or switch to Issue count.</p>
+        </details>
+        <details class="more">
+          <summary>Shared sprints</summary>
+          <p>The heatmap counts the sprint's issues that this board shows. If several boards share a sprint, each board counts only the issues that match its filter. If Team Capacity cannot tell which issues the board shows, it counts the whole sprint and says so above the heatmap.</p>
         </details>
         <h3>Issue count</h3>
         <p>For teams that don't estimate: every issue counts as 1, and capacity is “issues per sprint”.</p>
@@ -224,7 +228,7 @@
             <tr><td>Install the app</td><td>A Jira <strong>site admin</strong>, once, via the Atlassian Marketplace.</td></tr>
             <tr><td>Add &amp; configure the gadget</td><td><strong>Any user</strong> — no admin rights. Use your own dashboard or one you can edit.</td></tr>
             <tr><td>Share the view</td><td>Standard <strong>Jira dashboard sharing</strong> (project, group or everyone). Viewers need no setup.</td></tr>
-            <tr><td>See board data</td><td>Only people who can <strong>browse the board's project</strong>. Everyone else gets a permission message, never data.</td></tr>
+            <tr><td>See board data</td><td>Only people who can <strong>see the board in Jira</strong>; work items they may not open are left out. Everyone else gets a permission message, never data.</td></tr>
           </table>
         </div>
         <img src="imgTeamCapacityForJira/screenshot-1-two-teams-one-dashboard.webp" alt="Two Team Capacity gadgets side by side on one Jira dashboard, each showing its own board, sprint, people and capacity" loading="lazy" width="1840" height="900">
@@ -235,7 +239,7 @@
         <p>What the app can see and where your data stays.</p>
         <ul>
           <li>The app is <strong>read-only</strong>: it cannot change any Jira data.</li>
-          <li>Your Jira project permissions (<dfn class="term" data-tip="The Jira permission to see a project and its issues.">Browse Projects</dfn>) are checked on the server for every request.</li>
+          <li>Before any board or sprint data is shown, the server asks Jira, as you, whether you may see the board and each work item it counts (<dfn class="term" data-tip="The Jira permission to see a project and its issues.">Browse Projects</dfn>).</li>
           <li>Built on <dfn class="term" data-tip="Atlassian's app platform. Forge apps run inside Atlassian's own cloud.">Atlassian Forge</dfn> with <strong>no external data transfer</strong> — your data stays in Atlassian (“Runs on Atlassian”).</li>
           <li>Details: <a href="team-capacity-privacy-policy.html">Privacy Policy</a> · <a href="team-capacity-security.html">Security Policy</a>.</li>
         </ul>
@@ -253,12 +257,12 @@
           <p>The board has no sprints at all. Create one, or pick a different board in Edit. With sprints but none active, the gadget shows the next upcoming or the latest closed sprint.</p>
         </details>
         <details class="more">
-          <summary>“You do not have permission to view this board”</summary>
-          <p>The app shows a board only to people who can browse its project. Ask your Jira admin for <em>Browse Projects</em> on the board's project.</p>
+          <summary>“Team Capacity cannot show this board”</summary>
+          <p>Jira does not list it among the boards you may view: its filter is not shared with you, you cannot browse its project, or the board was deleted. Ask the board's owner or a Jira admin for access, or pick another board.</p>
         </details>
         <details class="more">
           <summary>My board is not in the list</summary>
-          <p>Scrum boards and team-managed boards in projects you can browse are listed; a team-managed board without sprints shows “No active or recent sprint found”. Classic Kanban boards are not, because they have no sprints.</p>
+          <p>The list shows the Scrum boards and team-managed boards Jira lets you see. A team-managed board without sprints says “Team Capacity needs a board with sprints”: switch on Sprints under Project settings > Features, or pick a Scrum board. Classic Kanban boards are not listed, because they have no sprints.</p>
         </details>
         <details class="more">
           <summary>Can I set a different capacity for part-time team members?</summary>

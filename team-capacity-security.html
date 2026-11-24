@@ -49,11 +49,11 @@
         </tr>
         <tr>
           <td>Minimal API scopes</td>
-          <td><code>read:jira-work</code> (sprint issues via JQL), <code>read:project:jira</code> (permission gate), <code>read:board-scope:jira-software</code> and <code>read:board-scope.admin:jira-software</code> (boards and their estimation configuration — read-only), <code>read:sprint:jira-software</code> (sprints), <code>storage:app</code> (non-personal caches and anonymous usage counters). No admin or write permissions are requested.</td>
+          <td><code>read:jira-work</code> (sprint issues via JQL), <code>read:project:jira</code> (board list), <code>read:board-scope:jira-software</code> and <code>read:board-scope.admin:jira-software</code> (boards and their estimation configuration — read-only), <code>read:sprint:jira-software</code> (sprints), <code>storage:app</code> (non-personal caches and anonymous usage counters). No admin or write permissions are requested.</td>
         </tr>
         <tr>
           <td>Per-viewer permission enforcement</td>
-          <td>Data reads run with app-level access, but <strong>every</strong> request from a viewer is checked against that user's own Jira project permissions (Browse Projects) via Atlassian's Authorize API before any data is returned — <strong>fail-closed</strong>: if the check cannot complete, no data is served. Board pickers are filtered the same way.</td>
+          <td>Data reads run with app-level access, except one search as the viewer that returns only the IDs of the board's issues in the sprint. Before any data is returned, Jira itself is asked as the viewer: the board must be in Jira's board list for that viewer, and every work item the app counts is checked with Jira's permission check (Browse Projects, including issue security) — <strong>fail-closed</strong>: if a check cannot complete, no data is served. Board pickers show Jira's own board list for the viewer.</td>
         </tr>
         <tr>
           <td>Input validation</td>
