@@ -54,7 +54,7 @@
           {
             "@type": "Question",
             "name": "A board is missing from the picker.",
-            "acceptedAnswer": { "@type": "Answer", "text": "Only Scrum boards (company- and team-managed) in projects you can browse are listed, taken from the first 200 boards of the site. Classic Kanban boards are excluded because they have no sprints. New boards appear immediately." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Only Scrum boards (company- and team-managed) in projects you can browse are listed, taken from up to the first 1,000 boards of the site (boards of every type count). Classic Kanban boards are excluded because they have no sprints. New boards appear immediately." }
           },
           {
             "@type": "Question",
@@ -214,9 +214,9 @@
         <details class="more">
           <summary>Which boards are listed?</summary>
           <ul>
-            <li>Scrum boards, company- and team-managed, in projects you can browse in Jira; the picker reads the first 200 boards of the site. Team-managed boards are tagged “team-managed”.</li>
+            <li>Scrum boards, company- and team-managed, in projects you can browse in Jira; the picker reads up to the first 1,000 boards of the site (boards of every type count) and says when the list is incomplete. Team-managed boards are tagged “team-managed”.</li>
             <li>With more than 7 boards a search box filters by board name, project name or project key. Ticked boards stay visible while you search.</li>
-            <li>Classic Kanban boards have no sprints and are not listed. A team-managed Kanban board may be listed but shows no closed sprints.</li>
+            <li>Classic Kanban boards have no sprints and are not listed. A team-managed board without sprints (Kanban, or Sprints switched off) may be listed; the gadget or widget then says that the board has no sprints.</li>
             <li>New boards appear immediately; the picker is not cached.</li>
           </ul>
         </details>
@@ -256,6 +256,7 @@
           <summary>More about estimation and sub-tasks</summary>
           <ul>
             <li>Issues without a value count as 0, except with <em>Issue count</em>.</li>
+            <li>A board that estimates by Original Time Estimate is charted in hours (“h”) with <em>Board default</em> and <em>Story points</em> and on Free, without the fallback to the story points field. To chart story points on such a board, choose <em>Custom numeric field</em> and the story point field (Pro).</li>
             <li>Without Pro the gadget uses the board's setting: its estimation field, or the issue count when the board estimates by issue count.</li>
             <li><dfn class="term" data-tip="A small piece of work that belongs to an issue.">Sub-tasks</dfn> are left out unless you tick <em>Include sub-tasks</em>.</li>
           </ul>
@@ -363,6 +364,7 @@
         <ul>
           <li><strong>Export CSV</strong> downloads <code>velocity.csv</code>, a <dfn class="term" data-tip="A plain-text table that Excel, Google Sheets and other spreadsheets open.">CSV</dfn> file with board, sprint, committed, completed and say/do % for every shown sprint of all boards in the gadget (UTF-8).</li>
           <li><strong>Download SVG</strong> saves each board's chart as an <dfn class="term" data-tip="An image format that stays sharp at any size, good for slides.">SVG</dfn> image with a white background, for slides and reports.</li>
+          <li>Export needs every board of the gadget to load with complete numbers; otherwise a line under the chart says why nothing was downloaded.</li>
           <li><strong>Issues CSV</strong> in the <a href="#details">sprint details</a> downloads the issue list of one sprint: issue, title, estimate at start, estimate at close, committed, done when the sprint closed, status at the close and now, sub-task and a counting note. “Committed” and “Done when the sprint closed” say what the bars count; the counting note explains issues the bars leave out or count only as completed. With <em>Issue count</em> the estimate columns are replaced by a single “Counts” column. If you read the file by column position or name, check your import: older exports had one “Estimate” column and no counting note.</li>
         </ul>
         <img src="imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" alt="The Export CSV and Download SVG buttons below a chart, and the exported velocity.csv with board, sprint, committed, completed and say/do columns" width="1840" height="900" loading="lazy">
@@ -399,7 +401,7 @@
         <p>Open a question for the answer.</p>
         <details class="more"><summary>It says “No closed sprints on this board yet”.</summary><p>The board has no completed sprint yet. Start and complete a sprint, or pick a board that already has closed sprints. Classic Kanban boards have no sprints and are not listed.</p></details>
         <details class="more"><summary>The bars are empty or zero.</summary><p>Your issues are estimated in a different field than the board's default. Open the gadget's Edit view, go to Estimation and choose the field your team actually uses (for example <code>Story point estimate</code>), or switch to <em>Issue count</em>. Estimation, Done statuses and sub-task handling are Pro settings.</p></details>
-        <details class="more"><summary>A board is missing from the picker.</summary><p>Only Scrum boards (company- and team-managed) in projects you can browse are listed, taken from the first 200 boards of the site. Classic Kanban boards are excluded because they have no sprints. New boards appear immediately.</p></details>
+        <details class="more"><summary>A board is missing from the picker.</summary><p>Only Scrum boards (company- and team-managed) in projects you can browse are listed, taken from up to the first 1,000 boards of the site (boards of every type count). Classic Kanban boards are excluded because they have no sprints. New boards appear immediately.</p></details>
         <details class="more"><summary>It says “You do not have permission to view this board”.</summary><p>The gadget only shows boards whose project you can browse in Jira, so ask your Jira admin for access to the board's project. The message can also appear for a board you can open if Jira did not answer the check, for example during a short outage. Reload the dashboard after a couple of minutes and the app checks again.</p></details>
         <details class="more"><summary>A colleague sees different numbers on the same dashboard.</summary><p>Each person sees only the issues they can open in Jira. When a sprint holds issues of a project, or with a security level, that one of you cannot open, those issues are left out for that person, as in Jira's own velocity chart. The line “N issues hidden” under the chart tells you that this applies to you. See <a href="#permissions">who sees which numbers</a>.</p></details>
         <details class="more"><summary>It says “Velocity Chart could not check issue permissions; numbers may be incomplete”.</summary><p>Jira did not answer the permission check for your issues in time, usually a short rate limit or outage. The chart then counts only issues whose check went through, so nothing you may not see is shown, and the numbers can be lower than usual. Click <strong>Refresh</strong> after a moment. If it keeps happening, ask your Jira admin to check that Velocity Chart is installed and has access to Jira.</p></details>

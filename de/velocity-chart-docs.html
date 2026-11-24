@@ -71,7 +71,7 @@
           "name": "Ein Board fehlt in der Auswahl.",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus den ersten 200 Boards der Website. Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort."
+            "text": "Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus bis zu den ersten 1.000 Boards der Website (Boards jeder Art zählen mit). Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort."
           }
         },
         {
@@ -273,9 +273,9 @@
         <details class="more">
           <summary>Welche Boards werden aufgelistet?</summary>
           <ul>
-            <li>Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten, die du in Jira ansehen darfst; die Auswahl liest die ersten 200 Boards der Website. Vom Team verwaltete Boards tragen die Kennzeichnung „team-managed“.</li>
+            <li>Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten, die du in Jira ansehen darfst; die Auswahl liest bis zu den ersten 1.000 Boards der Website (Boards jeder Art zählen mit) und sagt dir, wenn die Liste unvollständig ist. Vom Team verwaltete Boards tragen die Kennzeichnung „team-managed“.</li>
             <li>Bei mehr als 7 Boards filtert ein Suchfeld nach Boardname, Projektname oder Projektschlüssel. Ausgewählte Boards bleiben während der Suche sichtbar.</li>
-            <li>Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet. Ein vom Team verwaltetes Kanban-Board kann erscheinen, zeigt aber keine abgeschlossenen Sprints.</li>
+            <li>Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet. Ein vom Team verwaltetes Board ohne Sprints (Kanban oder Sprints ausgeschaltet) kann erscheinen; das Gadget oder Widget sagt dir dann, dass das Board keine Sprints hat.</li>
             <li>Neue Boards erscheinen sofort; die Auswahl wird nicht zwischengespeichert.</li>
           </ul>
         </details>
@@ -315,6 +315,7 @@
           <summary>Weitere Informationen zu Schätzungen und Unteraufgaben</summary>
           <ul>
             <li>Vorgänge ohne Wert zählen als 0, außer bei <em>Issue count (Vorgangsanzahl)</em>.</li>
+            <li>Ein Board, das nach Original Time Estimate schätzt, wird mit <em>Board default</em> und <em>Story points</em> sowie im Free-Plan in Stunden („h“) dargestellt, ohne Rückgriff auf das Story-Points-Feld. Um auf so einem Board Story Points darzustellen, wähle <em>Custom numeric field (Eigenes Zahlenfeld)</em> und das Story-Points-Feld (Pro).</li>
             <li>Ohne Pro verwendet das Gadget die Boardeinstellung: dessen Schätzfeld oder die Vorgangsanzahl, falls das Board danach schätzt.</li>
             <li><dfn class="term" data-tip="Ein kleiner Arbeitsumfang, der zu einem Vorgang gehört.">Unteraufgaben</dfn> werden ausgelassen, sofern du nicht folgende Option aktivierst: <em>Include sub-tasks (Unteraufgaben einbeziehen)</em>.</li>
           </ul>
@@ -422,6 +423,7 @@
         <ul>
           <li><strong>Export CSV (CSV exportieren)</strong> lädt <code>velocity.csv</code> herunter, eine <dfn class="term" data-tip="Eine Klartexttabelle, die Excel, Google Sheets und andere Tabellenprogramme öffnen können.">CSV-Datei</dfn> mit Board, Sprint, geplanter Arbeit, abgeschlossener Arbeit und Say/Do in % für jeden angezeigten Sprint aller Gadget-Boards (UTF-8).</li>
           <li><strong>Download SVG (SVG herunterladen)</strong> speichert jedes Boarddiagramm als <dfn class="term" data-tip="Ein Bildformat, das in jeder Größe scharf bleibt, gut für Präsentationen.">SVG-Bild</dfn> mit weißem Hintergrund für Präsentationen und Berichte.</li>
+          <li>Der Export braucht alle Boards des Gadgets vollständig geladen; sonst sagt dir eine Zeile unter dem Diagramm, warum nichts heruntergeladen wurde.</li>
           <li><strong>Issues CSV (Vorgänge als CSV)</strong> in den <a href="#details">Sprintdetails</a> lädt die Vorgangsliste eines Sprints herunter: Vorgang, Titel, Schätzung bei Beginn und Abschluss, geplant, bei Abschluss erledigt, damaliger und aktueller Status, Unteraufgabe und Zählhinweis. „Committed“ und „Done when the sprint closed“ beschreiben die Balkenzählung; der Zählhinweis erklärt ausgelassene oder nur als abgeschlossen zählende Vorgänge. Bei <em>Issue count (Vorgangsanzahl)</em> werden die Schätzspalten durch eine einzige Spalte „Counts“ ersetzt. Wenn du Spaltenpositionen oder -namen zum Einlesen nutzt, prüfe deinen Import: Ältere Exporte hatten nur eine Spalte „Estimate“ und keinen Zählhinweis.</li>
         </ul>
         <img src="/imgVelocityChartForJira/screenshot-3-export-csv-and-svg.webp" alt="Schaltflächen Export CSV und Download SVG unter einem Diagramm sowie die exportierte velocity.csv mit Spalten für Board, Sprint, geplante und abgeschlossene Arbeit und Say/Do" width="1840" height="900" loading="lazy">
@@ -458,7 +460,7 @@
         <p>Öffne eine Frage, um die Antwort zu sehen.</p>
         <details class="more"><summary>Die Meldung lautet „No closed sprints on this board yet“ (Noch keine abgeschlossenen Sprints auf diesem Board).</summary><p>Das Board hat noch keinen abgeschlossenen Sprint. Starte und beende einen Sprint oder wähle ein Board mit abgeschlossenen Sprints. Klassische Kanban-Boards haben keine Sprints und werden nicht aufgelistet.</p></details>
         <details class="more"><summary>Die Balken sind leer oder zeigen null.</summary><p>Deine Vorgänge werden in einem anderen Feld als dem Boardstandard geschätzt. Öffne die Edit-Ansicht des Gadgets, gehe zu Estimation und wähle das tatsächlich verwendete Feld (zum Beispiel <code>Story point estimate</code>) oder wechsle zu <em>Issue count (Vorgangsanzahl)</em>. Estimation, Done-Status und der Umgang mit Unteraufgaben sind Pro-Einstellungen.</p></details>
-        <details class="more"><summary>Ein Board fehlt in der Auswahl.</summary><p>Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus den ersten 200 Boards der Website. Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort.</p></details>
+        <details class="more"><summary>Ein Board fehlt in der Auswahl.</summary><p>Es werden nur Scrum-Boards in vom Unternehmen und vom Team verwalteten Projekten aufgelistet, die du ansehen darfst, aus bis zu den ersten 1.000 Boards der Website (Boards jeder Art zählen mit). Klassische Kanban-Boards fehlen, weil sie keine Sprints haben. Neue Boards erscheinen sofort.</p></details>
         <details class="more"><summary>Die Meldung lautet „You do not have permission to view this board“ (Du darfst dieses Board nicht ansehen).</summary><p>Das Gadget zeigt nur Boards, deren Projekt du in Jira ansehen darfst. Bitte deinen Jira-Administrator um Zugriff auf das Projekt des Boards. Die Meldung kann auch bei einem zugänglichen Board erscheinen, wenn Jira die Prüfung nicht beantwortet hat, etwa bei einer kurzen Störung. Lade das Dashboard nach einigen Minuten neu; die App prüft dann erneut.</p></details>
         <details class="more"><summary>Ein Kollege sieht auf demselben Dashboard andere Zahlen.</summary><p>Jeder sieht nur in Jira zugängliche Vorgänge. Enthält ein Sprint Projektvorgänge oder Vorgänge mit Sicherheitsstufe, die einer von euch nicht öffnen darf, fehlen sie für diese Person, wie in Jiras Velocity-Diagramm. Die Zeile „N issues hidden“ unter dem Diagramm zeigt das an. Siehe <a href="#permissions">wer welche Zahlen sieht</a>.</p></details>
         <details class="more"><summary>Die Meldung lautet „Velocity Chart could not check issue permissions; numbers may be incomplete“ (Vorgangsberechtigungen konnten nicht geprüft werden; Zahlen können unvollständig sein).</summary><p>Jira hat die Berechtigungsprüfung nicht rechtzeitig beantwortet, meist wegen einer kurzen Anfragebegrenzung oder Störung. Das Diagramm zählt nur erfolgreich geprüfte Vorgänge und zeigt keine unerlaubten Daten; die Zahlen können niedriger sein. Klicke auf <strong>Refresh (Aktualisieren)</strong> nach einem Moment. Falls das wiederholt passiert, bitte deinen Jira-Administrator zu prüfen, ob Velocity Chart installiert ist und Jira-Zugriff hat.</p></details>
