@@ -129,7 +129,7 @@
           "name": "Rovos Liste unbewerteter Vorgänge enthält nicht alle meine Vorgänge.",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Der Agent prüft die 50 ältesten offenen Projektvorgänge auf fehlende Bewertungen, da Jira diese Bewertungsfelder nicht durchsuchen kann. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored."
+            "text": "Der Agent nennt je Anfrage höchstens 50 unbewertete offene Vorgänge, die ältesten zuerst. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored."
           }
         },
         {
@@ -363,6 +363,7 @@
           <li>Klicke zum Sortieren auf eine Spaltenüberschrift. Filtere mit <strong>All assignees (Alle zugewiesenen Personen)</strong> (einschließlich <em>Unassigned (Nicht zugewiesen)</em>) und bei Vorgängen in <dfn class="term" data-tip="Ein fester Zeitraum, oft zwei Wochen, in dem ein Scrum-Team eine Auswahl von Vorgängen bearbeitet.">Sprints</dfn>,  <strong>All Sprints (Alle Sprints)</strong>. Zeige 10, 25 (Standard), 50 oder 100 Zeilen.</li>
           <li><strong>Due (Fällig)</strong> ist rot bei überfälligen Vorgängen (und bei <em>Today (Heute)</em>), gelb für die nächsten 7 Tage, sonst wird das Datum angezeigt.</li>
           <li><strong>Export CSV (CSV exportieren)</strong> zeigt die Rangfolge als <dfn class="term" data-tip="Klartext mit kommagetrennten Werten. Tabellenprogramme öffnen ihn als Tabelle.">CSV</dfn> mit Schlüssel, Zusammenfassung, Typ, Status und Bewertung aller offenen Vorgänge, nicht nur der aktuellen Seite oder Filterung. Kopiere den Text in ein Tabellenprogramm; <strong>Close CSV (CSV schließen)</strong> blendet ihn aus.</li>
+          <li>In sehr großen Projekten (mehrere tausend offene Vorgänge) umfasst das Ranking die Vorgänge, die Jira innerhalb des Zeitlimits liefert, die höchste Priorität zuerst, und weist darauf hin, dass es unvollständig ist.</li>
         </ul>
         <img src="/imgPriorityScorer/screenshot-2-rank-by-wsjf-filter-by-assignee.webp" alt="Priority Ranking auf WSJF Score mit geöffnetem Personenfilter, zwei Personen und Unassigned; überfällige Vorgänge sind rot markiert" width="1840" height="900" loading="lazy">
         <details class="more">
@@ -448,7 +449,7 @@
                 <tr><td>„Bewerte alle unbewerteten Aufgaben im Projekt SP“</td><td>Findet unbewertete Vorgänge, schlägt Werte vor und wendet sie in einem Durchlauf bis zur Sammelgrenze an</td><td>Auto</td></tr>
                 <tr><td>„Erkläre die Bewertung für PROJ-55“</td><td>Zeigt gespeicherte Dimensionswerte und ihre Bedeutung</td><td>Beliebig</td></tr>
                 <tr><td>„Wie ist Board Health für Projekt SP?“</td><td>Liefert Board-Health-Wert, Stufe und Anzahlen deiner aktivierten Kriterien</td><td>Beliebig</td></tr>
-                <tr><td>„Finde unbewertete Vorgänge im Projekt PROJ“</td><td>Listet veraltete Vorgänge sowie Vorgänge ohne Beschreibung, Story Points oder Bewertung auf (für ein genanntes Framework nur dessen Bewertungen). Prüft die 50 ältesten offenen Vorgänge auf fehlende Bewertung, 25 für die übrigen Kategorien.</td><td>Beliebig</td></tr>
+                <tr><td>„Finde unbewertete Vorgänge im Projekt PROJ“</td><td>Listet veraltete Vorgänge sowie Vorgänge ohne Beschreibung, Story Points oder Bewertung auf (für ein genanntes Framework nur dessen Bewertungen). Liefert bis zu 50 unbewertete offene Vorgänge (die ältesten zuerst), bei den anderen Kategorien 25.</td><td>Beliebig</td></tr>
                 <tr><td>„Welche Vorgänge im aktuellen Sprint brauchen eine WSJF-Bewertung?“</td><td>Listet offene Vorgänge des aktiven oder eines benannten Sprints und fehlende Bewertungen. Benötigt einen offenen Sprint.</td><td>Beliebig</td></tr>
                 <tr><td>„Vergleiche den Zustand von PROJ, CORE und INFRA“</td><td>Fasst bis zu 5 Projekte anhand ihres Board Health der letzten Stunde zusammen. Andere Projekte benötigen zuerst <strong>Check (Prüfen)</strong> auf der Registerkarte Portfolio.</td><td>Beliebig</td></tr>
               </tbody>
@@ -507,13 +508,13 @@
         </details>
 
         <h3>Dimension Weights (Dimensionsgewichte)</h3>
-        <p>Gib einer Dimension mehr Einfluss, von ×1 (Standard) bis ×5, etwa Reach ×3 für ein RICE-Wachstumsteam oder Business Value ×2 für umsatzkritische WSJF-Arbeit. <strong>Reset all weights to ×1 (Alle Gewichte auf ×1 zurücksetzen)</strong> stellt die Standardwerte wieder her.</p>
+        <p>Gib einer Dimension mehr Einfluss, von ×1 (Standard) bis ×5, etwa Business Value ×2 für umsatzkritische WSJF-Arbeit. Bei RICE und ICE ist der Score ein Produkt: Ein Gewicht multipliziert jeden Score mit demselben Faktor; die Zahlen werden größer, die Reihenfolge der Vorgänge bleibt gleich. Vor einer Änderung gespeicherte Scores behalten ihren alten Wert, bis sie neu gespeichert werden. <strong>Reset all weights to ×1 (Alle Gewichte auf ×1 zurücksetzen)</strong> stellt die Standardwerte wieder her.</p>
         <div class="warning">
           <strong>Bestehende Bewertungen werden nicht neu berechnet.</strong> Neue Gewichte gelten beim nächsten Speichern der Vorgangsbewertung per Schieberegler oder Rovo. Prüfe auch die Schwellen, da sich der Wertebereich verschiebt.
         </div>
         <details class="more">
           <summary>Warum Effort und Job Size kein Gewicht haben</summary>
-          <p>Sie bilden den <dfn class="term" data-tip="Die Zahl, durch die geteilt wird: Effort bei RICE, Job Size bei WSJF.">Nenner</dfn>. Ein Gewicht ×2 würde dort den Wert <em>halbieren</em> — entgegen der Erwartung. Um Aufwand weniger zu betonen, erhöhe stattdessen die anderen Gewichte. Bei ICE lassen sich alle drei Dimensionen gewichten.</p>
+          <p>Sie bilden den <dfn class="term" data-tip="Die Zahl, durch die geteilt wird: Effort bei RICE, Job Size bei WSJF.">Nenner</dfn>. Ein Gewicht ×2 würde dort den Wert <em>halbieren</em> — entgegen der Erwartung. Bei ICE lassen sich alle drei Dimensionen gewichten.</p>
         </details>
 
         <h3>Score Thresholds (Bewertungsschwellen)</h3>
@@ -583,7 +584,7 @@
             <li><strong>Erkannt:</strong> „RICE Score“, „RICE Priority“, „WSJF“, „WSJF Score“, „ICE Score“ und Dimensionsfelder wie „RICE Reach“ oder „RICE Effort“.</li>
             <li><strong>Nicht erkannt:</strong> „Priority Score“, „Scoring Value“, „Custom Prioritization“ (kein Frameworkwort).</li>
           </ul>
-          <p><strong>Nur Gesamtwert oder mit Dimensionen:</strong> Hat die andere App nur einen Gesamtwert gespeichert, wird nur dieser importiert und <em>Explain Priority Score (Prioritätsbewertung erklären)</em> kann bis zur erneuten Bewertung nichts erklären. Bei getrennten Dimensionsfeldern übernimmt die App die Werte und berechnet mit eigener Formel und deinen Gewichten. Das Ergebnis kann daher von der alten App abweichen.</p>
+          <p><strong>Nur Gesamtwert oder mit Dimensionen:</strong> Hat die andere App nur einen Gesamtwert gespeichert, wird nur dieser importiert und <em>Explain Priority Score (Prioritätsbewertung erklären)</em> kann bis zur erneuten Bewertung nichts erklären. Bei getrennten Dimensionsfeldern übernimmt die App die Werte und berechnet mit eigener Formel und deinen Gewichten. Das Ergebnis kann daher von der alten App abweichen. Ist ein Dimensionsfeld an einem Vorgang leer, rechnet die App dafür mit dem neutralen Wert der Formel (RICE: Reach 1, Impact 1, Confidence 100 %, Effort 1; WSJF und ICE: 1) und nennt in Vorschau und Zusammenfassung, wie viele Vorgänge das betrifft.</p>
         </details>
       </section>
 
@@ -616,7 +617,7 @@
         <details class="more"><summary>Ich habe Apply Mode geändert, aber Rovo verwendet den alten Modus.</summary><p>Der Agent liest den Anwendungsmodus beim Chatbeginn. Öffne nach der Änderung einen neuen Rovo-Chat. Jeder Schreibvorgang wird dennoch gegen den aktuellen Modus geprüft: Bei Suggest only wird auch aus älteren Chats nichts geschrieben.</p></details>
         <details class="more"><summary>Im Auto-Modus zeigt Rovo trotzdem einen Bestätigungsdialog. Ist das ein Fehler?</summary><p>Nein. Im Auto-Modus überspringt der Agent seine eigene Chatfrage, aber Atlassian zeigt vor Schreibaktionen immer einen Sicherheitsdialog. Die App kann ihn nicht abschalten. Bestätige ihn.</p></details>
         <details class="more"><summary>Board Health wirkt falsch oder hat sich nach Refresh nicht geändert.</summary><p>Refresh berechnet sofort neu. Board Health betrachtet bis zu 100 offene Vorgänge, beginnend mit den am längsten nicht aktualisierten. In großen Projekten kann ein gerade bearbeiteter Vorgang außerhalb der Stichprobe liegen. Prüfe auch, ob Bewertungsfelder auf der Projektmaske und die erwarteten Health Criteria aktiviert sind.</p></details>
-        <details class="more"><summary>Rovos Liste unbewerteter Vorgänge enthält nicht alle meine Vorgänge.</summary><p>Der Agent prüft die 50 ältesten offenen Projektvorgänge auf fehlende Bewertungen, da Jira diese Bewertungsfelder nicht durchsuchen kann. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored.</p></details>
+        <details class="more"><summary>Rovos Liste unbewerteter Vorgänge enthält nicht alle meine Vorgänge.</summary><p>Der Agent nennt je Anfrage höchstens 50 unbewertete offene Vorgänge, die ältesten zuerst. Für eine vollständige Liste nutze Priority Ranking auf der App-Seite: Alle offenen Vorgänge werden aufgeführt, unbewertete zeigen Not scored.</p></details>
         <details class="more"><summary>Das Kriterium „Missing Story Points“ erkennt die Story Points nicht.</summary><p>Die App erkennt ohne Einrichtung die beiden häufigsten Story-Point-Felder in Jira Cloud. Werden deine Punkte trotzdem nicht erkannt, kontaktiere den Support mit der URL deiner Jira-Website.</p></details>
         <details class="more"><summary>Werden bestehende Bewertungen nach Änderungen an Dimension Weights automatisch aktualisiert?</summary><p>Nein. Bestehende Bewertungen werden nicht neu berechnet. Sie ändern sich beim nächsten Speichern pro Vorgang per Schieberegler oder Rovo. Nach größeren Gewichtsänderungen kannst du Rovo im Auto-Modus um eine Sammelbewertung bitten.</p></details>
         <details class="more"><summary>Was unterscheidet RICE, WSJF und ICE?</summary><p>RICE (Reach, Impact, Confidence, Effort) ist bei Produkt- und Roadmapplanung verbreitet. WSJF (Weighted Shortest Job First) stammt aus SAFe und priorisiert nach Verzögerungskosten je Aufgabengröße. ICE (Impact, Confidence, Ease) ist ein einfaches Framework für schnelle Bewertungen. Priority Scoring bietet für jedes ein eigenes Feld.</p></details>
