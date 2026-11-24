@@ -21,7 +21,7 @@
     </div>
 
     <h1>Privacy Policy</h1>
-    <p class="updated">Riskcadence for Jira · Last updated: November 16, 2026</p>
+    <p class="updated">Riskcadence for Jira · Last updated: November 24, 2026</p>
 
     <h2>1. Introduction</h2>
     <p>
@@ -38,7 +38,7 @@
     <ul>
       <li><strong>Jira work items of the type Risk:</strong> keys, summaries, status and status category, project, assignee, labels, components, the dates of creation and last update, the values of the seven risk fields (likelihood, impact, residual likelihood, residual impact, risk owner, risk response, next review) and the work items linked with "is mitigated by" (key, summary, status).</li>
       <li><strong>Jira people:</strong> the display names of risk owners and of people in the history and in reviews, and the users that the owner pickers and the spreadsheet import look up (by name or e-mail address) to find a risk owner.</li>
-      <li><strong>Jira structure:</strong> projects (keys and names), work types, fields, work type schemes, screens and link types (to set up a project), the current user's permissions in a project (to decide what they may do), and saved filters the App creates for review reminders.</li>
+      <li><strong>Jira structure:</strong> projects (keys and names), work types, fields, work type schemes, screens and link types (to set up a project and to find the link type for mitigations), the current user's permissions in a project (to decide what they may do), and saved filters the App creates for review reminders.</li>
       <li><strong>Confluence:</strong> the title of a page that holds the macro, and whether the current user may view or edit it (checked before a published review state is shown, published or withdrawn).</li>
     </ul>
     <p>
@@ -64,7 +64,7 @@
       <li><strong>Review entries and closing state:</strong> per risk in a review, its assessment at the start and at closing (likelihood, impact, residual values, level, status category, owner as account ID, response, next review date), the decision, the justification (up to 500 characters), and who decided and when. The closing state is the baseline for later comparisons and reports.</li>
       <li><strong>Review decisions (audit trail):</strong> every decision with its kind (confirm, re-assess, accept, close), the justification (up to 1,000 characters), the account ID of the person who decided and the time. For an acceptance also the account ID of the accepting person and the acceptance date; for a decision that changes the owner, the account ID of the new owner.</li>
       <li><strong>Published review states</strong>, when an editor of a Confluence page publishes the steering report: the page and macro IDs, the account ID and display name of the publisher, the time, the version of the risk matrix and the report as published: risk keys, summaries, levels, scores, owners (account ID and display name), responses, review dates, mitigation counts, the counts of the headline numbers and the open risks per level at the last closed reviews, and with it the project names, the name and date of the review it compares with, the categories, the risk matrix with its definitions and the lists of changes since that review. A published state is shown to everyone who can view the page, including people without Jira access.</li>
-      <li><strong>Configuration:</strong> the IDs of the fields, the work type and the link type, the projects that are set up, the versions of the risk matrix (names of the steps and their definitions, level names and meanings, colours, review intervals and the risk appetite), the setup state of each project and, when a project admin switches it on, the category list of the project (up to 12 names).</li>
+      <li><strong>Configuration:</strong> the IDs of the fields, the work type and the link type, the projects that are set up, the versions of the risk matrix (names of the steps and their definitions, level names and meanings, colours, review intervals and the risk appetite), the setup state of each project, the time the App last looked for the link type for mitigations while it is missing (no personal data) and, when a project admin switches it on, the category list of the project (up to 12 names).</li>
       <li><strong>Saved register views:</strong> name, filters (including search text), sorting, grouping, visible columns, the account ID of the person who saved the view and the date. A view is shared with the people who can open the register.</li>
       <li><strong>Job status:</strong> the state, time and counts of the last background recalculation of the calculated fields, and the time of the last personal data report (section 8).</li>
       <li><strong>Import markers (2 days):</strong> while an import runs, per imported row a work item key under a hash of the project and the source ID, so that no risk is created twice.</li>

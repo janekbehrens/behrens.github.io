@@ -36,7 +36,7 @@
         "@type": "FAQPage",
         "mainEntity": [
           { "@type": "Question", "name": "Why are Risk score and Risk level missing on the work item in my team-managed project?", "acceptedAnswer": { "@type": "Answer", "text": "Jira does not show app-calculated fields in team-managed projects. Riskcadence still shows score and level in the register, the matrix, the issue panel, the review views and the reports." } },
-          { "@type": "Question", "name": "Why does the register show only 2,000 risks?", "acceptedAnswer": { "@type": "Answer", "text": "A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, so narrow the view with a filter or a matrix cell." } },
+          { "@type": "Question", "name": "Why does the register show only 2,000 risks?", "acceptedAnswer": { "@type": "Answer", "text": "A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, except level and Above appetite, which apply to the listed risks; so narrow the view with a search, owner, response, category or a matrix cell." } },
           { "@type": "Question", "name": "How do I link a mitigation to a risk?", "acceptedAnswer": { "@type": "Answer", "text": "Link a work item to the risk with the link type “is mitigated by” (on the mitigation itself: “mitigates”). The risk then shows how many of its mitigations are done." } },
           { "@type": "Question", "name": "Do finished mitigations lower the score?", "acceptedAnswer": { "@type": "Answer", "text": "No. Riskcadence never changes an assessment by itself. When all mitigations are done and the residual risk is not assessed, the risk appears in the review inbox under Needs re-assessment." } },
           { "@type": "Question", "name": "What does “Former user” mean in a report?", "acceptedAnswer": { "@type": "Answer", "text": "The risk owner's Atlassian account was closed. Once a week Riskcadence asks Atlassian which accounts were closed and erases them from what it stores; published reports then show “Former user” for the owner and “Unknown publisher” if the publisher's account was closed." } },
@@ -210,7 +210,7 @@
         <p>Jira admins find a short introduction under <span class="ui">Apps → Manage apps → Riskcadence → Get started</span>: what Riskcadence does, the three first steps (set up a project, assess your risks, review regularly) and your projects. Projects that are already set up link straight to their register, settings and automation. For any other project, <span class="ui">Set up Riskcadence</span> opens the setup assistant on its project page. Nothing changes before you confirm the setup there.</p>
 
         <h3 id="examples">Example risks</h3>
-        <p>Tick <span class="ui">Add 6 example risks to try Riskcadence</span> during setup, or click <span class="ui">Settings → Add example risks</span> later (project admins). The six risks carry the label <code>riskcadence_example</code>, show the register, the matrix, the review inbox and the report with data, and some are assigned to you. Adding them twice creates no duplicates; on a smaller matrix their values are scaled down. <span class="ui">Remove example risks</span> deletes them where Jira allows it and closes the others.</p>
+        <p>Tick <span class="ui">Add 6 example risks to try Riskcadence</span> during setup, or click <span class="ui">Settings → Add example risks</span> later (project admins). The six risks carry the label <code>riskcadence_example</code>, show the register, the matrix, the review inbox and the report with data, and some are assigned to you. Adding them twice creates no duplicates; on a smaller matrix their values are scaled down. <span class="ui">Remove example risks</span> deletes them where Jira allows it and closes the others; it removes only examples whose summary and description are unchanged since they were added, and examples you turned into real risks or copied stay and are listed.</p>
       </section>
 
       <section>
@@ -454,7 +454,7 @@
         <h3 id="import-columns">Columns and values</h3>
         <ul>
           <li><strong>Targets:</strong> source ID, summary, description, likelihood, impact, residual likelihood, residual impact, owner, response, next review, category and status. Columns you do not map are ignored, and fields without a mapped column stay unchanged on updates.</li>
-          <li><strong>Likelihood and impact</strong> as numbers on the scale of your matrix, as the labels of your matrix, or as words such as Low, Medium and High (also in German). Likelihood can also be a percentage.</li>
+          <li><strong>Likelihood and impact</strong> as numbers on the scale of your matrix, as the labels of your matrix, or as words such as Low, Medium and High (also in German). Likelihood can also be a percentage. On a matrix with fewer than 5 steps, Low, Medium and High that would share a step are spread over the whole scale, and a column of whole numbers that goes above the top step but not above 5 is read as a 5-step scale.</li>
           <li><strong>Owner</strong> by e-mail address or exact display name. If no single active user matches, the owner stays empty and the row gets a warning.</li>
           <li><strong>Response</strong> as Avoid, Mitigate, Transfer or Accept, or a common synonym.</li>
           <li><strong>Category</strong> becomes a Jira label of the risk.</li>
@@ -551,7 +551,7 @@
             <tr><td>See a published state</td><td>Everyone who can view the Confluence page.</td></tr>
           </table>
         </div>
-        <p>Riskcadence uses its own app account only for the calculated fields and their background recalculation, field metadata, the closing state of a review, the display-name lookups of the weekly personal data job and, if you switch them on, the daily overdue check and the values for JQL search. Whatever it stores is filtered by what the reader can see in Jira before it is shown. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
+        <p>Riskcadence uses its own app account only for the calculated fields and their background recalculation, field metadata and the link type for mitigations, the closing state of a review, the display-name lookups of the weekly personal data job and, if you switch them on, the daily overdue check and the values for JQL search. Whatever it stores is filtered by what the reader can see in Jira before it is shown. Details: <a href="riskcadence-security.html">Security Policy</a>.</p>
 
         <h3 id="app-permissions">Why Riskcadence asks for these permissions</h3>
         <p>When a Jira admin installs a Forge app, Atlassian shows the permissions the app requests. This is what Riskcadence uses each one for. The scopes are separate from what a person may do in Riskcadence, which always follows their own Jira permissions (above).</p>
@@ -601,7 +601,7 @@
         <h3>Why does the register show only 2,000 risks?</h3>
         <p>A register with more than 2,000 risks shows the 2,000 most recently updated matches. The filters run in Jira and reach every risk, except level and <em>Above appetite</em>, which apply to the listed risks; so narrow the view with a search, owner, response, category or a matrix cell.</p>
         <h3>How do I link a mitigation to a risk?</h3>
-        <p>Link a work item to the risk with the link type <em>is mitigated by</em> (on the mitigation work item itself: <em>mitigates</em>). Riskcadence adds this link type during setup. The risk then shows how many of its mitigations are done, in the register and in the panel.</p>
+        <p>Link a work item to the risk with the link type <em>is mitigated by</em> (on the mitigation work item itself: <em>mitigates</em>). Riskcadence adds this link type during setup. Only a Jira admin can add a link type: if it is missing when a project admin sets up a team-managed project, Riskcadence says so on the project page, and a Jira admin runs Repair setup once. Until then, Riskcadence counts no mitigations. The risk then shows how many of its mitigations are done, in the register and in the panel.</p>
         <h3>Do finished mitigations lower the score?</h3>
         <p>No. Riskcadence never changes an assessment by itself. When all mitigations are done and the residual risk is not assessed, the risk appears in the review inbox under <em>Needs re-assessment</em>, and the panel reminds you.</p>
         <h3>What does “Former user” mean in a report?</h3>

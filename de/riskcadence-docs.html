@@ -62,7 +62,7 @@
           "name": "Warum zeigt das Register nur 2.000 Risiken?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ein Register mit mehr als 2.000 Risiken zeigt die 2.000 zuletzt aktualisierten Treffer. Die Filter laufen in Jira und erreichen jedes Risiko; grenze die Ansicht daher mit einem Filter oder einer Matrixzelle ein."
+            "text": "Ein Register mit mehr als 2.000 Risiken zeigt die 2.000 zuletzt aktualisierten Treffer. Die Filter laufen in Jira und erreichen jedes Risiko, außer Stufe und „Above appetite“, die nur auf die geladenen Risiken wirken; grenze die Ansicht daher mit Suche, Owner, Response, Kategorie oder einer Matrixzelle ein."
           }
         },
         {
@@ -268,7 +268,7 @@
         <p>Jira-Administratoren finden unter <span class="ui">Apps → Manage apps → Riskcadence → Get started</span> eine kurze Einführung: was Riskcadence tut, die drei ersten Schritte (ein Projekt einrichten, Risiken bewerten, regelmäßig prüfen) und deine Projekte. Bereits eingerichtete Projekte verlinken direkt auf ihr Register, ihre Einstellungen und ihre Automatisierung. Bei jedem anderen Projekt öffnet <span class="ui">Set up Riskcadence (Riskcadence einrichten)</span> den Einrichtungsassistenten auf der Projektseite. Erst wenn du die Einrichtung dort bestätigst, ändert sich etwas.</p>
 
         <h3 id="examples">Beispielrisiken</h3>
-        <p>Aktiviere <span class="ui">Add 6 example risks to try Riskcadence (6 Beispielrisiken zum Ausprobieren hinzufügen)</span> bei der Einrichtung oder klicke später auf <span class="ui">Settings → Add example risks</span> (Projektadministratoren). Die sechs Risiken tragen das Label <code>riskcadence_example</code>, zeigen Register, Matrix, Review-Posteingang und Bericht mit Daten, und bei einigen bist du Risikoeigner. Wer sie zweimal hinzufügt, erzeugt keine Duplikate; bei einer kleineren Matrix werden ihre Werte herunterskaliert. <span class="ui">Remove example risks (Beispielrisiken entfernen)</span> löscht sie, wo Jira es erlaubt, und schließt die übrigen.</p>
+        <p>Aktiviere <span class="ui">Add 6 example risks to try Riskcadence (6 Beispielrisiken zum Ausprobieren hinzufügen)</span> bei der Einrichtung oder klicke später auf <span class="ui">Settings → Add example risks</span> (Projektadministratoren). Die sechs Risiken tragen das Label <code>riskcadence_example</code>, zeigen Register, Matrix, Review-Posteingang und Bericht mit Daten, und bei einigen bist du Risikoeigner. Wer sie zweimal hinzufügt, erzeugt keine Duplikate; bei einer kleineren Matrix werden ihre Werte herunterskaliert. <span class="ui">Remove example risks (Beispielrisiken entfernen)</span> löscht sie, wo Jira es erlaubt, und schließt die übrigen; entfernt werden nur Beispiele, deren Zusammenfassung und Beschreibung seit dem Hinzufügen unverändert sind. Beispiele, die du zu echten Risiken umgeschrieben oder kopiert hast, bleiben und werden aufgelistet.</p>
       </section>
 
       <section>
@@ -512,7 +512,7 @@
         <h3 id="import-columns">Spalten und Werte</h3>
         <ul>
           <li><strong>Ziele:</strong> Quell-ID, Zusammenfassung, Beschreibung, Eintrittswahrscheinlichkeit, Auswirkung, Rest-Eintrittswahrscheinlichkeit, Rest-Auswirkung, Risikoeigner, Reaktion, nächstes Review, Kategorie und Status. Spalten, die du nicht zuordnest, werden ignoriert, und Felder ohne zugeordnete Spalte bleiben bei Aktualisierungen unverändert.</li>
-          <li><strong>Eintrittswahrscheinlichkeit und Auswirkung</strong> als Zahlen auf der Skala deiner Matrix, als Bezeichnungen deiner Matrix oder als Wörter wie Low, Medium und High (auch auf Deutsch). Die Eintrittswahrscheinlichkeit kann auch ein Prozentwert sein.</li>
+          <li><strong>Eintrittswahrscheinlichkeit und Auswirkung</strong> als Zahlen auf der Skala deiner Matrix, als Bezeichnungen deiner Matrix oder als Wörter wie Low, Medium und High (auch auf Deutsch). Die Eintrittswahrscheinlichkeit kann auch ein Prozentwert sein. Bei einer Matrix mit weniger als 5 Stufen verteilt Riskcadence Low, Medium und High über die ganze Skala, wenn sie sonst auf derselben Stufe landen würden, und eine Spalte mit ganzen Zahlen, die über die oberste Stufe hinausgeht, aber nicht über 5, gilt als 5-stufige Skala.</li>
           <li><strong>Risikoeigner</strong> per E-Mail-Adresse oder exaktem Anzeigenamen. Passt kein einzelner aktiver Nutzer, bleibt der Risikoeigner leer, und die Zeile erhält eine Warnung.</li>
           <li><strong>Reaktion</strong> als Avoid, Mitigate, Transfer oder Accept oder ein gängiges Synonym.</li>
           <li><strong>Kategorie</strong> wird zu einem Jira-Label des Risikos.</li>
@@ -609,7 +609,7 @@
             <tr><td>Einen veröffentlichten Stand sehen</td><td>Alle, die die Confluence-Seite sehen dürfen.</td></tr>
           </table>
         </div>
-        <p>Riskcadence verwendet sein eigenes App-Konto nur für die berechneten Felder und ihre Neuberechnung im Hintergrund, Feldmetadaten, den Abschlussstand eines Reviews, die Anzeigenamen-Abfragen des wöchentlichen Datenschutzberichts und, wenn du sie einschaltest, die tägliche Prüfung auf überfällige Reviews und die Werte für die JQL-Suche. Alles, was gespeichert ist, wird danach gefiltert, was die lesende Person in Jira sehen darf, bevor es angezeigt wird. Details: <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
+        <p>Riskcadence verwendet sein eigenes App-Konto nur für die berechneten Felder und ihre Neuberechnung im Hintergrund, Feldmetadaten und den Verknüpfungstyp für Gegenmaßnahmen, den Abschlussstand eines Reviews, die Anzeigenamen-Abfragen des wöchentlichen Datenschutzberichts und, wenn du sie einschaltest, die tägliche Prüfung auf überfällige Reviews und die Werte für die JQL-Suche. Alles, was gespeichert ist, wird danach gefiltert, was die lesende Person in Jira sehen darf, bevor es angezeigt wird. Details: <a href="/riskcadence-security.html" hreflang="en">Sicherheitsrichtlinie (EN)</a>.</p>
 
         <h3 id="app-permissions">Warum Riskcadence diese Berechtigungen anfordert</h3>
         <p>Wenn ein Jira-Administrator eine Forge-App installiert, zeigt Atlassian die Berechtigungen, die die App anfordert. Hier steht, wofür Riskcadence jede einzelne braucht. Diese Scopes sind etwas anderes als das, was eine Person in Riskcadence darf; das richtet sich immer nach ihren eigenen Jira-Berechtigungen (siehe oben).</p>
@@ -659,7 +659,7 @@
         <h3>Warum zeigt das Register nur 2.000 Risiken?</h3>
         <p>Ein Register mit mehr als 2.000 Risiken zeigt die 2.000 zuletzt aktualisierten Treffer. Die Filter laufen in Jira und erreichen jedes Risiko, außer Stufe und <em>Above appetite</em>, die nur auf die geladenen Risiken wirken; grenze die Ansicht daher mit einer Suche, dem Risikoeigner, der Reaktion, der Kategorie oder einer Matrixzelle ein.</p>
         <h3>Wie verknüpfe ich eine Gegenmaßnahme mit einem Risiko?</h3>
-        <p>Verknüpfe einen Vorgang mit dem Risiko über den Verknüpfungstyp <em>is mitigated by</em> (am Vorgang der Gegenmaßnahme selbst: <em>mitigates</em>). Riskcadence legt diesen Verknüpfungstyp bei der Einrichtung an. Das Risiko zeigt dann im Register und im Panel, wie viele seiner Gegenmaßnahmen erledigt sind.</p>
+        <p>Verknüpfe einen Vorgang mit dem Risiko über den Verknüpfungstyp <em>is mitigated by</em> (am Vorgang der Gegenmaßnahme selbst: <em>mitigates</em>). Riskcadence legt diesen Verknüpfungstyp bei der Einrichtung an. Einen Verknüpfungstyp kann nur ein Jira-Admin anlegen: Fehlt er, wenn du als Projekt-Admin ein teamverwaltetes Projekt einrichtest, weist Riskcadence auf der Projektseite darauf hin, und ein Jira-Admin führt einmal „Repair setup“ aus. Bis dahin zählt Riskcadence keine Gegenmaßnahmen. Das Risiko zeigt dann im Register und im Panel, wie viele seiner Gegenmaßnahmen erledigt sind.</p>
         <h3>Senken erledigte Gegenmaßnahmen den Score?</h3>
         <p>Nein. Riskcadence ändert eine Bewertung nie von selbst. Sind alle Gegenmaßnahmen erledigt und das Restrisiko nicht bewertet, erscheint das Risiko im Review-Posteingang unter <em>Needs re-assessment (Neubewertung nötig)</em>, und das Panel erinnert dich daran.</p>
         <h3>Was bedeutet „Former user“ in einem Bericht?</h3>
