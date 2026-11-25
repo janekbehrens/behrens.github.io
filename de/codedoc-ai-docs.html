@@ -471,7 +471,7 @@
         <details class="more">
           <summary>Grenzen und Verhalten der Synchronisierungsblöcke</summary>
           <ul>
-            <li>Dateien bis 1 MB. Ausschnitte, Zeilenbereiche und vollständige Dateien werden bis 20.000 Zeichen angezeigt; Markdown-Abschnitte haben keine Zeichengrenze, nur die 1-MB-Dateigrenze. Bis zu 20 Schlüsselpfade oder 50 Tabellenzeilen pro Block, reguläre Ausdrücke bis 200 Zeichen.</li>
+            <li>Dateien bis 1 MB; größere Dateien liefert GitHub ohne Inhalt, der Block zeigt dann einen Fehler und behält seinen letzten Inhalt. Ausschnitte, Zeilenbereiche und vollständige Dateien werden bis 20.000 Zeichen angezeigt; Markdown-Abschnitte haben keine Zeichengrenze, nur die 1-MB-Dateigrenze. Bis zu 20 Schlüsselpfade oder 50 Tabellenzeilen pro Block, reguläre Ausdrücke bis 200 Zeichen.</li>
             <li>Änderungen innerhalb eines Blocks werden bei der nächsten Aktualisierung ersetzt. Schreibe eigenen Text darüber oder darunter.</li>
             <li>Jede echte Aktualisierung erstellt eine Seitenversion; Confluence benachrichtigt Seitenbeobachter wie bei anderen Änderungen.</li>
             <li>Relative Markdown-Links führen zur Datei im Git-Anbieter; Bilder erscheinen als Links, da Confluence Bilder privater Repositories nicht laden kann. Die Quellenzeile unter jedem Block verlinkt die Datei.</li>
@@ -523,7 +523,7 @@
             <thead><tr><th>Aktualisierungsregel</th><th>Funktionsweise</th></tr></thead>
             <tbody>
               <tr><td><strong>Manually (Manuell)</strong></td><td>Klicke auf <strong>Run (Ausführen)</strong> auf der KI-Seite.</td></tr>
-              <tr><td><strong>On every push (Bei jedem Push)</strong></td><td>Startet nach einem Push auf den konfigurierten Branch. Benötigt den Webhook (unten).</td></tr>
+              <tr><td><strong>On every push (Bei jedem Push)</strong></td><td>Startet nach einem Push auf den konfigurierten Branch. Benötigt den Webhook (unten). Kommt ein Push, während die KI-Seite noch läuft, startet CodeDoc keinen zweiten Lauf parallel; der nächste Push oder ein Klick auf Run bringt die Seite auf den neuesten Stand.</td></tr>
               <tr><td><strong>On a schedule (Nach Zeitplan)</strong></td><td>Startet täglich, wöchentlich oder monatlich. Alle Zeiten sind UTC.</td></tr>
             </tbody>
           </table>
@@ -588,9 +588,10 @@
           <li><strong>Automatically (recommended) (Automatisch, empfohlen)</strong>: Bis zu 30 Codedateien werden vollständig gelesen. Bei mehr Dateien wählt dein KI-Anbieter pro Durchlauf die wichtigsten bis zur Dateigrenze, einschließlich neuer Dateien; dafür ist ein kleiner zusätzlicher KI-Aufruf nötig.</li>
           <li><strong>From my file list (Aus meiner Dateiliste)</strong>: Jeder Durchlauf liest genau deine ausgewählten Dateien. CodeDoc beginnt mit den wichtigsten (Einstiegspunkte, Konfiguration, READMEs); <strong>Suggest files with AI (Dateien mit KI vorschlagen)</strong> lässt deinen KI-Anbieter eine Liste vorschlagen. Neue Dateien werden nicht automatisch ergänzt.</li>
         </ul>
-        <p>Um ein Modul eines großen Repositories zu dokumentieren, trage dessen <strong>Folder (Ordner)</strong> in Schritt 1 ein.</p>
+        <p>Um ein Modul eines großen Repositories zu dokumentieren, trage dessen <strong>Folder (Ordner)</strong> in Schritt 1 ein. Folder liest diesen Ordner und seine Unterordner; Ordner, die nur gleich anfangen (docs-internal neben docs), liest CodeDoc nicht. Gibt es keinen Ordner mit genau diesem Namen, liest CodeDoc wie bisher die Pfade, die so anfangen.</p>
         <details class="more">
           <summary>„Too large for one page“ (Zu groß für eine Seite)</summary>
+          <p>Grenzen der Dateiliste: Bei GitLab liest CodeDoc die ersten 1.000 Einträge des Dateibaums; bei Bitbucket Cloud höchstens 500 Dateien aus etwa 50 Ordnern mit bis zu 100 Einträgen je Ordner. Was dahinter liegt, sieht CodeDoc nicht, auch nicht mit einem Folder; sind die 1.000 Einträge oder die 500 Dateien erreicht, weisen Schritt 1 und der Lauf darauf hin.</p>
           <p>Eine Seite wird aus höchstens 50 Dateien (in Settings anpassbar) innerhalb etwa 120.000 Tokens erstellt. Bei mehr als 1.500 Codedateien im gewählten Umfang oder über 10.000 Repositorydateien meldet Schritt 1 <strong>„Too large for one page“ (Zu groß für eine Seite)</strong> mit Zahlen und nächsten Schritten. Ein trotzdem gestarteter Durchlauf stoppt direkt nach Lesen der Dateiliste vor jedem KI-Aufruf; keine Tokens werden verbraucht. Grenze mit dem Feld <strong>Folder (Ordner)</strong> ein (ein Modul oder Dienst pro KI-Seite), wähle <strong>From my file list (Aus meiner Dateiliste)</strong> (dann werden unabhängig von der Repositorygröße nur markierte Dateien gelesen) oder halte einzelne Fakten aktuell mit einem <a href="#sync">Synchronisierungsblock</a>.</p>
           <p>Die Dateiliste wird pro Editorsitzung einmal gelesen; Zurückspringen oder Rückkehr zu einem früheren Ordner fragt Git nicht erneut ab. <strong>Dateien anzeigen</strong>  /  <strong>Choose files (Dateien auswählen)</strong> öffnet die Liste mit Filterfeld; lange Listen zeigen die ersten 60 Dateien und <strong>Show all (Alle anzeigen)</strong>. Nach Ordnerwechsel fallen außerhalb liegende Dateien aus deiner Auswahl.</p>
         </details>
@@ -981,6 +982,10 @@
           <p>Push-Aktualisierungen benötigen den CodeDoc-Webhook mit Geheimnis im Repository (<a href="#jobs-webhooks">Webhook-Einrichtung</a>) und einen Push auf den Branch des Blocks (Einstellung <strong>Branch</strong> oder Standardbranch des Repositories). <strong>Update now (Jetzt aktualisieren)</strong> prüft den Block zwischenzeitlich.</p>
         </details>
         <h3>KI-Seiten</h3>
+        <details class="more">
+          <summary>Die Seite dieser KI-Seite liegt im Papierkorb</summary>
+          <p>CodeDoc schreibt nie in eine Seite im Papierkorb. Liegt die Seite beim Start eines Laufs im Papierkorb, stoppt der Lauf vor dem KI-Aufruf; wird sie während des Laufs gelöscht, stoppt er vor dem Schreiben. Stell die Seite aus dem Papierkorb des Space wieder her und starte die KI-Seite erneut, oder lösch die KI-Seite, wenn du sie nicht mehr brauchst. Mit Freigabe lehnt Publish ab, und der Entwurf bleibt unverändert.</p>
+        </details>
         <details class="more">
           <summary>„A Confluence page named … already exists in this space“ (Seitentitel bereits vorhanden)</summary>
           <p>Seitentitel sind je Bereich eindeutig. <strong>Benenne die KI-Seite um</strong> oder benenne beziehungsweise verschiebe die andere Confluence-Seite. CodeDoc warnt beim Speichern vor Konflikten (<a href="#jobs-target">Confluence-Ziel</a>).</p>

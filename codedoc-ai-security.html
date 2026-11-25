@@ -191,7 +191,7 @@
         and credential or secret files are never sent to an AI provider, whatever the include patterns of an AI page say.</li>
       <li><strong>Time limits:</strong> Reading a file into a sync block and applying include/exclude patterns stop after 8 seconds with a message, so a
         complex regular expression or pattern cannot block the App.</li>
-      <li><strong>Content sanitization:</strong> AI-generated documentation passes through a multi-layer XML validation and repair pipeline before publishing to Confluence, preventing malformed content from being injected.</li>
+      <li><strong>Content sanitization:</strong> AI-generated documentation passes through a multi-layer XML validation and repair pipeline before publishing to Confluence, preventing malformed content from being injected. CodeDoc does not embed images or widgets from other websites in AI pages; it shows them as links, and it tells the AI to treat repository file contents as material to document, not as instructions.</li>
       <li><strong>Token budget limits:</strong> File fetching is bounded by configurable token budgets (~120,000 tokens) and content size limits (~1 MB) to prevent resource exhaustion.</li>
       <li><strong>Webhook deduplication:</strong> Duplicate webhook events are detected and rejected to prevent replay-style abuse.</li>
     </ul>

@@ -468,7 +468,7 @@
         <details class="more">
           <summary>Limits and behaviour of sync blocks</summary>
           <ul>
-            <li>Files up to 1 MB. Snippets, line ranges and whole files are shown up to 20,000 characters; a Markdown section has no such cut, only the 1 MB file limit. Up to 20 key paths or 50 table rows per block; regular expressions up to 200 characters.</li>
+            <li>Files up to 1 MB; GitHub delivers larger files without content, so the block shows an error and keeps its last content. Snippets, line ranges and whole files are shown up to 20,000 characters; a Markdown section has no such cut, only the 1 MB file limit. Up to 20 key paths or 50 table rows per block; regular expressions up to 200 characters.</li>
             <li>Edits inside a block are replaced on the next update. Write your own text above or below the block.</li>
             <li>Every real update creates a page version, and Confluence notifies the page's watchers as for any other edit.</li>
             <li>Relative links in Markdown point to the file in your Git provider; images are shown as links, because Confluence cannot load images from private repositories. The source line under each block links to the file.</li>
@@ -520,7 +520,7 @@
             <thead><tr><th>Update rule</th><th>How it works</th></tr></thead>
             <tbody>
               <tr><td><strong>Manually</strong></td><td>Click <strong>Run</strong> on the AI page.</td></tr>
-              <tr><td><strong>On every push</strong></td><td>Runs when code is pushed to the configured branch. Needs the webhook (below).</td></tr>
+              <tr><td><strong>On every push</strong></td><td>Runs when code is pushed to the configured branch. Needs the webhook (below). If code is pushed while the AI page is still running, CodeDoc does not start a second run at the same time; the next push or Run brings the page up to date.</td></tr>
               <tr><td><strong>On a schedule</strong></td><td>Runs daily, weekly or monthly. All times are in UTC.</td></tr>
             </tbody>
           </table>
@@ -585,9 +585,10 @@
           <li><strong>Automatically (recommended)</strong>: up to 30 code files are all read. With more, your AI provider picks the most relevant files (up to the file limit) on each run, so new files are included; that costs one small extra AI call per run.</li>
           <li><strong>From my file list</strong>: each run reads exactly the files you tick. CodeDoc starts with the most important files (entry points, configuration, READMEs); <strong>Suggest files with AI</strong> lets your AI provider propose a list. New files are not added on their own.</li>
         </ul>
-        <p>To document one module of a large repository, enter its <strong>Folder</strong> in step 1.</p>
+        <p>To document one module of a large repository, enter its <strong>Folder</strong> in step 1. Folder reads this folder and its subfolders; folders that only start with the same name (docs-internal next to docs) are not read. If no folder has exactly that name, CodeDoc reads the paths that start with it, as before.</p>
         <details class="more">
           <summary>"Too large for one page"</summary>
+          <p>File list limits: on GitLab CodeDoc reads the first 1,000 entries of a repository's file tree; on Bitbucket Cloud at most 500 files from about 50 folders, with up to 100 entries per folder. Files beyond that are not seen, also not with a Folder set; when the 1,000 entries or the 500 files are reached, step 1 and the run say so.</p>
           <p>A page is written from at most 50 files (adjustable in Settings) within about 120k tokens. If the scope has more than 1,500 code files, or the repository more than 10,000 files, step 1 says <strong>"Too large for one page"</strong> with the numbers and next steps, and a run started anyway stops right after reading the file list, before any AI call, so no tokens are used. Narrow the scope with the <strong>Folder</strong> field (one module or service per AI page), choose <strong>From my file list</strong> (then only the ticked files are read, whatever the repository size), or keep single facts current with a <a href="#sync">sync block</a>.</p>
           <p>The file list is read once per editor session: going back to the step or to an earlier folder does not ask Git again. <strong>Show the files</strong> / <strong>Choose files</strong> opens the list with a filter field; long lists show the first 60 files and <strong>Show all</strong>. If you change the folder, files outside it drop out of your list.</p>
         </details>
@@ -974,6 +975,10 @@
           <p>Push updates need the CodeDoc webhook with its secret in the repository (<a href="#jobs-webhooks">Webhook setup</a>) and a push to the branch the block follows (its <strong>Branch</strong> setting, or the repository's default branch). <strong>Update now</strong> checks the block in the meantime.</p>
         </details>
         <h3>AI pages</h3>
+        <details class="more">
+          <summary>The page of this AI page is in the trash</summary>
+          <p>CodeDoc never writes to a page in the trash. If the page is in the trash when a run starts, the run stops before any AI call; if it is moved to the trash during a run, the run stops before writing. Restore the page from the space trash and run the AI page again, or delete the AI page if you no longer need it. With approval, Publish refuses and the draft stays unchanged.</p>
+        </details>
         <details class="more">
           <summary>"A Confluence page named … already exists in this space"</summary>
           <p>Page titles are unique per space. <strong>Rename the AI page</strong>, or rename or move the other page in Confluence. CodeDoc warns about conflicts when you save an AI page (<a href="#jobs-target">Confluence target</a>).</p>
