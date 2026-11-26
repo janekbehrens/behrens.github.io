@@ -641,7 +641,7 @@
     { id: 'helm', name: 'helm/examples', branch: 'main', code: 15, total: 15, tokens: 6860 }
   ];
   // Most credits one run of helm/examples can take, per page length (sample values)
-  var CREDITS = { bal: { 8192: '1.4', 16384: '2.7', 32768: '5.1' }, fst: { 8192: '0.5', 16384: '0.9', 32768: '1.7' } };
+  var CREDITS = { bal: { 8192: '1.4', 16384: '2.7', 32768: '5.1' }, fst: { 8192: '0.2', 16384: '0.4', 32768: '0.9' } };
   var HELM_FILES = ['README.md', 'charts/hello-world/Chart.yaml', 'charts/hello-world/values.yaml', 'charts/hello-world/README.md', 'charts/hello-world/templates/deployment.yaml',
     'charts/hello-world/templates/service.yaml', 'charts/hello-world/templates/serviceaccount.yaml', 'charts/hello-world/templates/_helpers.tpl', 'charts/hello-world/templates/NOTES.txt',
     'charts/hello-world/.helmignore', 'ct.yaml', '.github/workflows/lint-test.yaml', 'CODEOWNERS', '.gitignore', 'LICENSE'];
@@ -1296,11 +1296,11 @@
         '<label class="cd-radio"><input type="radio" name="cd-src" value="atl" data-src data-fid="src-atl"' + (src === 'atl' ? ' checked' : '') + '> Atlassian AI, included in CodeDoc Advanced: Claude models on Atlassian\'s platform, no own key</label>' +
         '<label class="cd-radio"><input type="radio" name="cd-src" value="byok" data-src data-fid="src-own"' + (src === 'byok' ? ' checked' : '') + '> Your own AI provider: Google AI (Gemini) (gemini-2.5-flash)</label></div>';
       if (src === 'atl') {
-        ai += '<div class="cd-field">' + fieldLabel('cd-quality', 'Model', 'Balanced writes the most thorough pages. Fast finishes quicker and uses about a third of the credits. CodeDoc picks the newest available model of the chosen family; choosing the files of large repositories always uses the fast model.') +
-          sel('cd-quality', [['bal', 'Balanced: Claude Sonnet (recommended)'], ['fst', 'Fast: Claude Haiku (about a third of the credits)']], quality, ' data-quality' + next(!P.flags.quick)) + '</div>';
+        ai += '<div class="cd-field">' + fieldLabel('cd-quality', 'Model', 'Fast is the default: it finishes quicker and uses about a sixth of the credits. Balanced writes the most thorough pages. CodeDoc picks the newest available model of the chosen family; choosing the files of large repositories always uses the fast model.') +
+          sel('cd-quality', [['fst', 'Fast: Claude Haiku (recommended, about a sixth of the credits)'], ['bal', 'Balanced: Claude Sonnet (most thorough pages)']], quality, ' data-quality' + next(!P.flags.quick)) + '</div>';
       }
       ai += '<div class="cd-meter"><div class="cd-row"><b>' + (src === 'atl' ? 'AI allowance this month' : 'AI allowance') + '</b>' +
-        q('Atlassian AI is included in CodeDoc Advanced. A run uses credits for the code it reads and the page it writes: a typical page 2–5 credits, with the fast model about a third. Before a run starts, CodeDoc checks that its largest possible use still fits; when the allowance is used up, AI pages wait for the next month or use your own AI provider. CodeDoc credits are separate from Rovo credits: nothing is taken from your Atlassian AI or Rovo allowance.', 'About the AI allowance') + '</div>' +
+        q('Atlassian AI is included in CodeDoc Advanced. A run uses credits for the code it reads and the page it writes: a typical page 2–5 credits with the balanced model, about a sixth of that with the fast model. Before a run starts, CodeDoc checks that its largest possible use still fits; when the allowance is used up, AI pages wait for the next month or use your own AI provider. CodeDoc credits are separate from Rovo credits: nothing is taken from your Atlassian AI or Rovo allowance.', 'About the AI allowance') + '</div>' +
         D.bar(23.4, 'blue') + '<p class="d-small">23.4 of 100 credits used · 76.6 left · resets on November 1</p>' +
         (src === 'atl' ? '<p class="d-small d-faint">9 AI runs this month · 412,880 tokens read, 61,240 written</p>' : '') + '</div></div>';
     } else {
@@ -1376,7 +1376,7 @@
     api.on('click', '[data-byaddr]', function () { api.toast('Paste a repository address; CodeDoc detects the default branch'); });
     api.on('change', '[data-src]', function (el) { S().app.writer = el.value; api.update(); api.toast(el.value === 'atl' ? 'AI pages now use Atlassian AI.' : 'AI pages now use Google AI (Gemini).'); });
     api.on('change', '[data-quality]', function (el) {
-      var P = S().app; P.speed = el.value; if (el.value === 'fst') P.flags.quick = true;
+      var P = S().app; P.speed = el.value; if (el.value === 'bal') P.flags.quick = true;
       api.update(); api.toast('Atlassian AI now uses the ' + (el.value === 'fst' ? 'fast' : 'balanced') + ' model.');
     });
     api.on('click', '[data-refreshmodels]', function () { api.toast('Model list loaded from your provider'); });
@@ -1421,7 +1421,7 @@
           { when: 'Oct 2, 2026, 11:02 AM', name: 'Keep a Changelog — Management Overview', status: 'disc', model: 'gemini-2.5-flash', files: '3 of 3', tokens: '5,240 / 1,980' }
         ]
       },
-      app: { top: 'overview', set: 'connections', ed: 'adv', writer: 'atl', speed: 'bal', filter: 'all', howto: false, drafts: 1, draftResult: 'inrev',
+      app: { top: 'overview', set: 'connections', ed: 'adv', writer: 'atl', speed: 'fst', filter: 'all', howto: false, drafts: 1, draftResult: 'inrev',
         secret: false, showSecret: false, secretValue: '', confirm: null, addConn: null, flags: { filtered: false, quick: false, secret: false } }
     };
   }
@@ -1449,7 +1449,7 @@
       ],
       app: [
         { text: 'in <strong>Needs attention</strong>, click <strong>Open sync blocks</strong> and filter by <strong>Needs attention</strong>.', target: '[data-next]', done: function (S) { return S.app.flags.filtered; } },
-        { text: 'open <strong>Settings</strong> and switch the Atlassian AI model to <strong>Fast</strong>. The demo switch at the top shows the Standard edition.', target: '[data-next]', done: function (S) { return S.app.flags.quick; } },
+        { text: 'open <strong>Settings</strong> and switch the Atlassian AI model from <strong>Fast</strong> (the default) to <strong>Balanced</strong>. The demo switch at the top shows the Standard edition.', target: '[data-next]', done: function (S) { return S.app.flags.quick; } },
         { text: 'open <strong>Webhook</strong> and click <strong>Create secret</strong>, so only your Git provider can start updates.', target: '[data-next]', done: function (S) { return S.app.flags.secret; } }
       ]
     },

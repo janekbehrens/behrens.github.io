@@ -168,7 +168,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="site.css?v=d851f09fb46f">
+  <link rel="stylesheet" href="site.css?v=104a24422a6c">
   <link rel="stylesheet" href="redesign.css">
   <link rel="stylesheet" href="docs.css">
   <link rel="alternate" hreflang="en" href="https://janekbehrens.de/codedoc-ai-docs.html">
@@ -685,7 +685,7 @@
         </details>
 
         <h3 id="settings-ai">AI for AI pages</h3>
-        <p>AI is optional and used only for AI pages. The card shows your edition. With <strong>Advanced</strong>, choose who writes the pages: <dfn class="term" data-tip="Claude models hosted on Atlassian's platform (Forge LLMs). Included in CodeDoc Advanced, no own key needed.">Atlassian AI</dfn> (included, no key; model <em>Balanced</em> or <em>Fast</em>, with the allowance meter) or <strong>your own AI provider</strong> (<a href="#editions-ai">allowance</a>).</p>
+        <p>AI is optional and used only for AI pages. The card shows your edition. With <strong>Advanced</strong>, choose who writes the pages: <dfn class="term" data-tip="Claude models hosted on Atlassian's platform (Forge LLMs). Included in CodeDoc Advanced, no own key needed.">Atlassian AI</dfn> (included, no key; model <em>Fast</em> (default) or <em>Balanced</em>, with the allowance meter) or <strong>your own AI provider</strong> (<a href="#editions-ai">allowance</a>).</p>
         <p>For your own provider, <strong>Connect AI provider</strong> (or <strong>Change provider or key</strong>) checks a key and loads the models. <strong>Turn AI off</strong> (Standard) or <strong>Remove own key</strong> (Advanced) deletes the stored key: sync blocks keep working, and AI pages stay as they are; with Advanced they continue with Atlassian AI.</p>
         <details class="more">
           <summary>The model list</summary>
@@ -725,7 +725,7 @@
               <tr><td><strong>Anthropic</strong></td><td>Claude Opus, Sonnet, Haiku</td><td>Complete model list of your account, recommended first.</td></tr>
               <tr><td><strong>OpenAI</strong></td><td>GPT and GPT mini</td><td>Only the text models of your account.</td></tr>
               <tr><td><strong>Google AI</strong></td><td>Gemini Pro and Flash</td><td>Free tier for first tests (Google may use free-tier data to improve its products).</td></tr>
-              <tr><td><strong>Atlassian AI</strong> (Advanced)</td><td>Claude Sonnet (Balanced), newest Claude Haiku (Fast)</td><td>No own key; hosted on Atlassian's platform with a monthly allowance (<a href="#editions-ai">below</a>).</td></tr>
+              <tr><td><strong>Atlassian AI</strong> (Advanced)</td><td>Newest Claude Haiku (Fast, default), Claude Sonnet (Balanced)</td><td>No own key; hosted on Atlassian's platform with a monthly allowance (<a href="#editions-ai">below</a>).</td></tr>
             </tbody>
           </table>
         </div>
@@ -875,8 +875,8 @@
 
         <h3 id="editions-ai">Atlassian AI and the monthly allowance</h3>
         <ul>
-          <li>Atlassian AI writes AI pages with Claude models hosted on Atlassian's platform (Forge LLMs), with the same content moderation as Atlassian's own AI features. In Settings → Connections choose <strong>Balanced</strong> (Claude Sonnet, the most thorough pages) or <strong>Fast</strong> (the newest Claude Haiku Atlassian offers, about a third of the <dfn class="term" data-tip="CodeDoc's unit for Atlassian AI usage. A typical page takes 2–5 credits with Balanced.">credits</dfn>). Choosing the files of a large repository always uses the fast model.</li>
-          <li>Each site gets <strong>100 credits a month</strong>; the trial of Advanced has 100 for the whole trial. A typical page takes 2–5 credits with Balanced, a small one well under one. The editor shows the most a page can take ("up to N credits per run").</li>
+          <li>Atlassian AI writes AI pages with Claude models hosted on Atlassian's platform (Forge LLMs), with the same content moderation as Atlassian's own AI features. In Settings → Connections choose <strong>Fast</strong> (the default: the newest Claude Haiku Atlassian offers, about a sixth of the <dfn class="term" data-tip="CodeDoc's unit for Atlassian AI usage. A typical page takes 2–5 credits with Balanced and under one with Fast.">credits</dfn>) or <strong>Balanced</strong> (Claude Sonnet, the most thorough pages). Choosing the files of a large repository always uses the fast model.</li>
+          <li>Each site gets <strong>100 credits a month</strong>; the trial of Advanced has 100 for the whole trial. A typical page takes 2–5 credits with Balanced and under one with Fast. The editor shows the most a page can take ("up to N credits per run").</li>
           <li>Before a run starts, CodeDoc checks that its largest possible use still fits. If it doesn't, the run does not start, and the message says when the allowance resets (the first day of the next month, UTC). Until then, AI pages can use your own AI provider. The 100 trial credits do not reset; when they are used up, AI pages can use your own AI provider for the rest of the trial.</li>
           <li>Settings shows the meter: credits used and left, runs and tokens this month; the Overview warns from 80 %. CodeDoc credits are separate from Rovo credits: nothing is taken from your Atlassian AI or Rovo allowance, and there is no extra charge.</li>
         </ul>
@@ -1084,7 +1084,7 @@
     </main>
   </div>
 
-  <script src="components.js?v=d851f09fb46f"></script>
-  <script src="docs.js?v=d851f09fb46f"></script>
+  <script src="components.js?v=104a24422a6c"></script>
+  <script src="docs.js?v=104a24422a6c"></script>
 </body>
 </html>
